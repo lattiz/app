@@ -1,0 +1,175 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "HealthController_health",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Service health (public)",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/me": {
+      "get": {
+        "operationId": "MeController_me",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Current user (protected — requires Supabase JWT)",
+        "tags": [
+          "me"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Lattiz API",
+    "description": "Lattiz resource server. Auth is handled by Supabase; this API only validates Supabase-issued JWTs (JWKS / ES256, audience `authenticated`).",
+    "version": "0.0.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http",
+        "description": "Supabase access token (JWT)."
+      }
+    },
+    "schemas": {
+      "DependencyStatusDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "mock",
+            "description": "Dependency name."
+          },
+          "status": {
+            "enum": [
+              "up",
+              "down"
+            ],
+            "type": "string",
+            "example": "up"
+          }
+        },
+        "required": [
+          "name",
+          "status"
+        ]
+      },
+      "HealthResponseDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "enum": [
+              "ok",
+              "degraded"
+            ],
+            "type": "string",
+            "example": "ok",
+            "description": "Overall service status."
+          },
+          "dependencies": {
+            "description": "Per-dependency probe results.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DependencyStatusDto"
+            }
+          }
+        },
+        "required": [
+          "status",
+          "dependencies"
+        ]
+      },
+      "UserProfileDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Profile id (matches the Supabase user id)."
+          },
+          "displayName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "displayName"
+        ]
+      },
+      "MeResponseDto": {
+        "type": "object",
+        "properties": {
+          "sub": {
+            "type": "string",
+            "description": "Supabase user id (the `sub` claim of the verified JWT)."
+          },
+          "email": {
+            "type": "string",
+            "nullable": true,
+            "description": "Email claim, when present in the token."
+          },
+          "claims": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "The full set of verified JWT claims."
+          },
+          "profile": {
+            "nullable": true,
+            "description": "Application profile, or null if none exists yet.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UserProfileDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "sub",
+          "email",
+          "claims",
+          "profile"
+        ]
+      }
+    }
+  }
+}
