@@ -9,7 +9,7 @@ import { HealthController } from './interface/health.controller';
   providers: [
     CheckHealthUseCase,
     // Wire the port to its mock adapter. Swap this single line for a real
-    // adapter (Drizzle/Prisma DB ping) when persistence is chosen.
+    // adapter (e.g. a Drizzle DB ping) if health should reflect dependencies.
     { provide: HEALTH_CHECK_PORT, useClass: MockHealthCheckAdapter },
   ],
 })

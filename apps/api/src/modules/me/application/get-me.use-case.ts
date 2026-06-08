@@ -12,11 +12,7 @@ export interface MeView {
   profile: UserProfile | null;
 }
 
-/**
- * Returns the caller's identity (from the verified token) enriched with their
- * application profile (from the repository port). The profile is `null` until
- * one exists — the in-memory store starts empty this session.
- */
+/** Returns token identity + application profile (null if none exists yet). */
 @Injectable()
 export class GetMeUseCase {
   constructor(

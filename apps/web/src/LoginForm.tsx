@@ -5,11 +5,7 @@ interface LoginFormProps {
   onSignedIn: () => void;
 }
 
-/**
- * Stub email/password login using `supabase-js` directly — auth flows live in
- * Supabase, never in the Lattiz API (see CONVENTIONS.md). This is intentionally
- * minimal: just enough to obtain a session and exercise the protected `/me` route.
- */
+/** Email/password login via supabase-js. Auth lives in Supabase, not in the API. */
 export function LoginForm({ onSignedIn }: LoginFormProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,7 +32,10 @@ export function LoginForm({ onSignedIn }: LoginFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+    <form
+      onSubmit={handleSubmit}
+      style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}
+    >
       <input
         type="email"
         placeholder="email"

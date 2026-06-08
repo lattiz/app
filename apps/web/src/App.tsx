@@ -7,11 +7,7 @@ import { useState } from 'react';
 import { LoginForm } from './LoginForm';
 import { isSupabaseConfigured } from './supabase';
 
-/**
- * Minimal screen proving the end-to-end type pipeline: the shapes returned by
- * `useQuery` below come straight from `apps/api/openapi.json` via
- * `@lattiz/api-client` — nothing here is hand-typed.
- */
+/** Smoke-test screen: exercises /health (public) and /me (protected) via generated hooks. */
 export function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -23,9 +19,14 @@ export function App() {
   });
 
   return (
-    <main style={{ fontFamily: 'sans-serif', maxWidth: 640, margin: '2rem auto' }}>
+    <main
+      style={{ fontFamily: 'sans-serif', maxWidth: 640, margin: '2rem auto' }}
+    >
       <h1>Lattiz</h1>
-      <p>Type pipeline smoke test: API → openapi.json → @lattiz/api-client → React.</p>
+      <p>
+        Type pipeline smoke test: API → openapi.json → @lattiz/api-client →
+        React.
+      </p>
 
       <section>
         <h2>Auth (Supabase)</h2>
@@ -33,8 +34,9 @@ export function App() {
           <LoginForm onSignedIn={() => setLoggedIn(true)} />
         ) : (
           <p>
-            <code>VITE_SUPABASE_URL</code> / <code>VITE_SUPABASE_ANON_KEY</code> not
-            set — copy <code>.env.example</code> to <code>.env</code> to enable login.
+            <code>VITE_SUPABASE_URL</code> / <code>VITE_SUPABASE_ANON_KEY</code>{' '}
+            not set — copy <code>.env.example</code> to <code>.env</code> to
+            enable login.
           </p>
         )}
       </section>

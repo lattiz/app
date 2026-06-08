@@ -1,10 +1,6 @@
 import { DocumentBuilder } from '@nestjs/swagger';
 
-/**
- * Single source of truth for the OpenAPI document config, shared by the
- * runtime Swagger UI (`main.ts`) and the `generate:openapi` script so the
- * served spec and the emitted `openapi.json` never drift.
- */
+/** Shared by main.ts and generate-openapi.ts so the served spec and openapi.json never drift. */
 export function buildSwaggerConfig() {
   return new DocumentBuilder()
     .setTitle('Lattiz API')

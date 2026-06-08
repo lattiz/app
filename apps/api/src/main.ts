@@ -8,28 +8,22 @@ import { buildSwaggerConfig } from './swagger';
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
 
-  // CORS for the local web app during development.
-  app.enableCors({ origin: true, credentials: true });
+  // Dev: allow all origins. Prod: CORS_ORIGIN env (comma-separated) or deny.
+  const isProd = process.env.NODE_ENV === 'production';
+  const allowedOrigins = process.env.CORS_ORIGIN?.split(',')
+    .map((o) => o.trim())
+    .filter(Boolean);
+  app.enableCors({ origin: isProd ? (allowedOrigins ?? false) : true, credentials: true });
 
-  // DTO validation lives in the backend with class-validator/class-transformer.
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
-    }),
-  );
-
-  // Consistent, typable error envelope for every error.
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }));
   app.useGlobalFilters(new DomainExceptionFilter());
 
-  // Swagger UI at /docs, raw spec at /docs-json.
   const document = SwaggerModule.createDocument(app, buildSwaggerConfig());
   SwaggerModule.setup('docs', app, document);
 
   const port = Number(process.env.PORT ?? 3000);
   await app.listen(port);
-  // eslint-disable-next-line no-console
+
   console.log(`Lattiz API listening on http://localhost:${port} (docs: /docs)`);
 }
 

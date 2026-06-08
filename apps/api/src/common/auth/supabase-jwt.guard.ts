@@ -6,36 +6,17 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import type { Request } from 'express';
-import {
-  createRemoteJWKSet,
-  jwtVerify,
-  type JWTVerifyGetKey,
-} from 'jose';
+import { createRemoteJWKSet, jwtVerify, type JWTVerifyGetKey } from 'jose';
 import type { AuthenticatedUser } from './authenticated-user';
 
-/**
- * Validates Supabase-issued JWTs as a *resource server*.
- *
- * Verification is fully local and asymmetric:
- * - keys are fetched from the project JWKS endpoint
- *   (`${SUPABASE_URL}/auth/v1/.well-known/jwks.json`) and cached by `jose`,
- *   which matches the signing key by `kid`;
- * - only the asymmetric `ES256` algorithm is accepted (the legacy HS256 shared
- *   secret is intentionally NOT supported);
- * - the audience must be `authenticated` and the issuer must be the project's
- *   `auth/v1` endpoint.
- *
- * Without a configured `SUPABASE_URL`/`SUPABASE_JWKS_URL` the JWKS cannot be
- * reached, so protected routes respond `401` — this is expected until a real
- * Supabase project is wired up, and the guard is deliberately NOT mocked.
- */
+/** Verifies Supabase JWTs locally via JWKS (ES256 only — HS256 legacy secret intentionally rejected). */
 @Injectable()
 export class SupabaseJwtGuard implements CanActivate {
   private readonly logger = new Logger(SupabaseJwtGuard.name);
   private static readonly AUDIENCE = 'authenticated';
   private static readonly ALGORITHMS = ['ES256'];
 
-  /** Memoized remote JWKS resolver (created lazily on first authenticated request). */
+  /** Lazy — created on first request, then reused. */
   private jwks?: JWTVerifyGetKey;
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -48,7 +29,7 @@ export class SupabaseJwtGuard implements CanActivate {
 
     const jwks = this.resolveJwks();
     if (!jwks) {
-      // No JWKS configured — cannot verify, so deny. (See class docs.)
+      // SUPABASE_URL not set — cannot verify.
       throw new UnauthorizedException(
         'Auth is not configured (SUPABASE_URL is missing).',
       );

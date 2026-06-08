@@ -1,12 +1,6 @@
 import { type UserProfile } from './user.entity';
 
-/**
- * Port for reading/writing application user profiles.
- *
- * This is the seam the deferred ORM decision plugs into: the in-memory adapter
- * used this session implements it, and a Drizzle/Prisma adapter will later
- * implement the same interface with zero changes to the application layer.
- */
+/** Port for user profile persistence. Swap adapter (Drizzle, mock) without touching use cases. */
 export interface UserRepositoryPort {
   findById(id: string): Promise<UserProfile | null>;
   save(profile: UserProfile): Promise<UserProfile>;

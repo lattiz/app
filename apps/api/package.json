@@ -7,7 +7,7 @@
     "build": "nest build",
     "dev": "nest start --watch",
     "start": "node dist/main.js",
-    "lint": "tsc --noEmit -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "echo \"[@lattiz/api] no tests yet\" && exit 0",
     "generate:openapi": "nest build && node dist/generate-openapi.js",
     "db:generate": "drizzle-kit generate",

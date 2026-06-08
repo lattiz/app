@@ -4,12 +4,7 @@ import {
   type HealthCheckPort,
 } from '../domain/health-check.port';
 
-/**
- * Mock adapter for {@link HealthCheckPort}.
- *
- * No real dependencies are connected in this session, so every probe reports
- * `up`. Replace with a real adapter (e.g. a DB ping) when persistence lands.
- */
+/** Always reports `up` — replace with a real probe when adding monitored dependencies. */
 @Injectable()
 export class MockHealthCheckAdapter implements HealthCheckPort {
   async probe(): Promise<DependencyStatus[]> {

@@ -9,18 +9,7 @@ import {
 import type { Request, Response } from 'express';
 import { DomainException } from '../exceptions/domain.exception';
 
-/**
- * Consistent, typable error envelope returned for every unhandled error:
- *
- * ```json
- * { "error": { "code": "string", "message": "string", "details"?: unknown } }
- * ```
- *
- * - {@link DomainException} → its `code` / `status` / `details`.
- * - Nest `HttpException` (incl. `ValidationPipe`, `UnauthorizedException`) →
- *   mapped to a code derived from the status.
- * - Anything else → `500 INTERNAL_ERROR` (details hidden).
- */
+/** Normalizes every error to { "error": { "code", "message", "details"? } }. */
 @Catch()
 export class DomainExceptionFilter implements ExceptionFilter {
   private readonly logger = new Logger(DomainExceptionFilter.name);
@@ -63,10 +52,12 @@ export class DomainExceptionFilter implements ExceptionFilter {
       const message =
         typeof body === 'string'
           ? body
-          : ((body as Record<string, unknown>).message as string) ??
-            exception.message;
+          : (((body as Record<string, unknown>).message as string) ??
+            exception.message);
       const details =
-        typeof body === 'object' ? (body as Record<string, unknown>) : undefined;
+        typeof body === 'object'
+          ? (body as Record<string, unknown>)
+          : undefined;
       return { status, code: this.codeFromStatus(status), message, details };
     }
 
