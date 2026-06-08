@@ -4,6 +4,7 @@ packages:
 allowBuilds:
   '@nestjs/core': false
   '@scarf/scarf': false
+  esbuild: true
 minimumReleaseAgeExclude:
   - '@hey-api/codegen-core@0.9.0'
   - '@hey-api/openapi-ts@0.98.2'
