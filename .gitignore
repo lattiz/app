@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+.turbo/
+
+# Vite
+apps/web/dist/
+
+# Env files (keep .env.example committed)
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Claude Code local state (personal, not shared)
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+
+# Coverage
+coverage/
