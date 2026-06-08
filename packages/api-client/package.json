@@ -1,0 +1,33 @@
+{
+  "name": "@lattiz/api-client",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Typed Lattiz API client + TanStack Query bindings, generated from openapi.json",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "tsc --noEmit -p tsconfig.json",
+    "test": "echo \"[@lattiz/api-client] no tests yet\" && exit 0",
+    "generate:client": "openapi-ts"
+  },
+  "dependencies": {
+    "@hey-api/client-fetch": "^0.13.1"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "^5"
+  },
+  "devDependencies": {
+    "@hey-api/openapi-ts": "^0.98.2",
+    "@tanstack/react-query": "^5.101.0",
+    "typescript": "^5.8.3"
+  }
+}
