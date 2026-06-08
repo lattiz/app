@@ -1,0 +1,9 @@
+node_modules
+dist
+build
+.turbo
+coverage
+pnpm-lock.yaml
+packages/api-client/src/generated
+apps/api/drizzle
+apps/api/openapi.json

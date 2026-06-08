@@ -24,7 +24,7 @@ y déjalo anotado en `CONVENTIONS.md` en vez de inventar arquitectura.
   en las fronteras con dependencias externas reales — **no** ceremonia sobre CRUD trivial.
 - **Auth:** **Supabase Auth**. El front usa `supabase-js` directamente para los flujos de
   auth (signup, login email/password, OAuth Google/Apple, reset). **NestJS NO implementa
-  endpoints de auth.** NestJS actúa como *resource server*: valida el JWT de Supabase.
+  endpoints de auth.** NestJS actúa como _resource server_: valida el JWT de Supabase.
 - **Validación de JWT en NestJS:** verificación local vía **JWKS** (ES256 asimétrico),
   endpoint `https://<project-ref>.supabase.co/auth/v1/.well-known/jwks.json`, audiencia
   `authenticated`. Cachear el JWKS, hacer match por `kid`. Usar `jose` o `passport-jwt` + `jwks-rsa`.
@@ -70,18 +70,21 @@ Scope de paquetes: `@lattiz/*` (ej. `@lattiz/api-client`). El root `package.json
 ## 5. Archivos de configuración base
 
 `.nvmrc`:
+
 ```
 24
 ```
 
 `pnpm-workspace.yaml`:
+
 ```yaml
 packages:
-  - "apps/*"
-  - "packages/*"
+  - 'apps/*'
+  - 'packages/*'
 ```
 
 `package.json` (raíz):
+
 ```json
 {
   "name": "lattiz",
@@ -100,16 +103,20 @@ packages:
 ```
 
 `turbo.json`:
+
 ```json
 {
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
-    "build":            { "dependsOn": ["^build"], "outputs": ["dist/**"] },
-    "dev":              { "cache": false, "persistent": true },
-    "lint":             {},
-    "test":             { "dependsOn": ["^build"] },
+    "build": { "dependsOn": ["^build"], "outputs": ["dist/**"] },
+    "dev": { "cache": false, "persistent": true },
+    "lint": {},
+    "test": { "dependsOn": ["^build"] },
     "generate:openapi": { "cache": false, "outputs": ["openapi.json"] },
-    "generate:client":  { "dependsOn": ["api#generate:openapi"], "outputs": ["src/generated/**"] }
+    "generate:client": {
+      "dependsOn": ["api#generate:openapi"],
+      "outputs": ["src/generated/**"]
+    }
   }
 }
 ```
@@ -138,6 +145,7 @@ apps/api/src/
 ```
 
 Reglas:
+
 - Los puertos (interfaces) se definen en `domain/`. Los adaptadores en `infrastructure/`.
   Se cablean por DI de Nest con tokens (`useClass`/`useFactory` + `provide`).
 - En esta sesión, el adapter de repositorio es **in-memory/mock**. El puerto queda definido
@@ -151,6 +159,7 @@ Reglas:
   swagger debe estar activo para auto-documentarlos.
 
 Crear **un módulo de ejemplo** (ej. `health` o `me`) que demuestre el patrón completo:
+
 - un puerto + adapter mock,
 - un caso de uso en `application/`,
 - un controller con DTO documentado,
@@ -198,6 +207,7 @@ documentado, no mockear el guard para que "pase".
 ## 10. Variables de entorno (crear `.env.example` por app, sin valores reales)
 
 `apps/api/.env.example`:
+
 ```
 SUPABASE_URL=
 SUPABASE_JWKS_URL=            # opcional si se deriva de SUPABASE_URL
@@ -206,6 +216,7 @@ PORT=3000
 ```
 
 `apps/web/.env.example`:
+
 ```
 VITE_SUPABASE_URL=
 VITE_SUPABASE_ANON_KEY=

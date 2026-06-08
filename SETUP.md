@@ -35,11 +35,11 @@ cp apps/web/.env.example apps/web/.env
 
 `apps/api/.env`:
 
-| Variable | Dónde encontrarla |
-|---|---|
+| Variable       | Dónde encontrarla                                 |
+| -------------- | ------------------------------------------------- |
 | `SUPABASE_URL` | Supabase Dashboard → Settings → API → Project URL |
-| `DATABASE_URL` | Ver nota abajo — usa el **Session Pooler** |
-| `PORT` | Déjalo en `3000` |
+| `DATABASE_URL` | Ver nota abajo — usa el **Session Pooler**        |
+| `PORT`         | Déjalo en `3000`                                  |
 
 > **`DATABASE_URL` — Session Pooler (importante):**
 > Los proyectos free de Supabase solo tienen IPv6 en la conexión directa, lo que falla en la mayoría de redes locales. Usa siempre el **Session Pooler**:
@@ -47,18 +47,20 @@ cp apps/web/.env.example apps/web/.env
 > **Dashboard → Settings → Database → Connection pooling → Session mode** (puerto **5432**)
 >
 > El string tiene esta forma:
+>
 > ```
 > postgresql://postgres.xxxxxxxxxxxx:[PASSWORD]@aws-0-us-east-1.pooler.supabase.com:5432/postgres
 > ```
+>
 > No uses el string de "Direct connection" (`db.xxxx.supabase.co`) — no resuelve en IPv4.
 
 `apps/web/.env`:
 
-| Variable | Dónde encontrarla |
-|---|---|
-| `VITE_SUPABASE_URL` | Mismo valor que `SUPABASE_URL` |
+| Variable                 | Dónde encontrarla                                           |
+| ------------------------ | ----------------------------------------------------------- |
+| `VITE_SUPABASE_URL`      | Mismo valor que `SUPABASE_URL`                              |
 | `VITE_SUPABASE_ANON_KEY` | Supabase Dashboard → Settings → API → `anon` / `public` key |
-| `VITE_API_BASE_URL` | `http://localhost:3000` (desarrollo local) |
+| `VITE_API_BASE_URL`      | `http://localhost:3000` (desarrollo local)                  |
 
 > **Nunca** pongas la `service_role key` en `apps/web/.env` ni en ningún bundle del cliente.
 
@@ -71,6 +73,7 @@ pnpm dev
 ```
 
 Esto arranca en paralelo vía Turborepo:
+
 - API → `http://localhost:3000` (Swagger UI en `http://localhost:3000/docs`)
 - Web → `http://localhost:5173`
 
@@ -99,20 +102,22 @@ Abre `http://localhost:5173` — deberías ver el JSON de `/health` en pantalla.
 
 ## Comandos útiles
 
-| Comando | Qué hace |
-|---|---|
-| `pnpm build` | Build de producción de los 3 paquetes en orden |
+| Comando             | Qué hace                                                         |
+| ------------------- | ---------------------------------------------------------------- |
+| `pnpm build`        | Build de producción de los 3 paquetes en orden                   |
 | `pnpm generate:api` | Regenera `openapi.json` + cliente tipado de `@lattiz/api-client` |
-| `pnpm lint` | Type-check en todos los paquetes |
-| `pnpm test` | Tests (pendientes de implementar) |
+| `pnpm lint`         | ESLint sobre todo el repo (`pnpm lint:fix` autocorrige)          |
+| `pnpm format`       | Prettier `--write` (`pnpm format:check` solo valida)             |
+| `pnpm typecheck`    | `tsc --noEmit` en todos los paquetes                             |
+| `pnpm test`         | Tests (pendientes de implementar)                                |
 
 ### Base de datos (correr desde `apps/api/`)
 
-| Comando | Qué hace |
-|---|---|
+| Comando            | Qué hace                                                                  |
+| ------------------ | ------------------------------------------------------------------------- |
 | `pnpm db:generate` | Genera un nuevo archivo de migración SQL a partir de cambios en el schema |
-| `pnpm db:migrate` | Aplica las migraciones pendientes en la base de datos |
-| `pnpm db:studio` | Abre Drizzle Studio (UI para explorar la DB en el navegador) |
+| `pnpm db:migrate`  | Aplica las migraciones pendientes en la base de datos                     |
+| `pnpm db:studio`   | Abre Drizzle Studio (UI para explorar la DB en el navegador)              |
 
 ## Regenerar el cliente tipado
 
