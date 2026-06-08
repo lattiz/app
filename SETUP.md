@@ -38,7 +38,19 @@ cp apps/web/.env.example apps/web/.env
 | Variable | Dónde encontrarla |
 |---|---|
 | `SUPABASE_URL` | Supabase Dashboard → Settings → API → Project URL |
+| `DATABASE_URL` | Ver nota abajo — usa el **Session Pooler** |
 | `PORT` | Déjalo en `3000` |
+
+> **`DATABASE_URL` — Session Pooler (importante):**
+> Los proyectos free de Supabase solo tienen IPv6 en la conexión directa, lo que falla en la mayoría de redes locales. Usa siempre el **Session Pooler**:
+>
+> **Dashboard → Settings → Database → Connection pooling → Session mode** (puerto **5432**)
+>
+> El string tiene esta forma:
+> ```
+> postgresql://postgres.xxxxxxxxxxxx:[PASSWORD]@aws-0-us-east-1.pooler.supabase.com:5432/postgres
+> ```
+> No uses el string de "Direct connection" (`db.xxxx.supabase.co`) — no resuelve en IPv4.
 
 `apps/web/.env`:
 
@@ -94,6 +106,14 @@ Abre `http://localhost:5173` — deberías ver el JSON de `/health` en pantalla.
 | `pnpm lint` | Type-check en todos los paquetes |
 | `pnpm test` | Tests (pendientes de implementar) |
 
+### Base de datos (correr desde `apps/api/`)
+
+| Comando | Qué hace |
+|---|---|
+| `pnpm db:generate` | Genera un nuevo archivo de migración SQL a partir de cambios en el schema |
+| `pnpm db:migrate` | Aplica las migraciones pendientes en la base de datos |
+| `pnpm db:studio` | Abre Drizzle Studio (UI para explorar la DB en el navegador) |
+
 ## Regenerar el cliente tipado
 
 Si alguien cambia el API (nuevas rutas, DTOs, etc.), actualiza los tipos del front con:
@@ -120,3 +140,9 @@ construye el JWKS endpoint como `${SUPABASE_URL}/auth/v1/.well-known/jwks.json`.
 
 **Cambié un DTO y el front no refleja el cambio**
 → Ejecuta `pnpm generate:api` y reinicia el servidor de Vite.
+
+**`DATABASE_URL is not set` al arrancar la API**
+→ Asegúrate de que existe `apps/api/.env` (no solo `.env.example`) con `DATABASE_URL` relleno.
+
+**`getaddrinfo ENOTFOUND db.xxxx.supabase.co`**
+→ Estás usando la conexión directa (IPv6). Cambia a la Session Pooler URL — ver nota en la sección de variables de entorno.
