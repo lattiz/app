@@ -70,10 +70,19 @@ apps/api → openapi.json → packages/api-client (hey-api) → apps/web
 ## Auth — Supabase + JWKS
 
 - Supabase es la única fuente de identidad. **NestJS no implementa login/signup/logout.**
-- El front usa `supabase-js` solo para auth — con la `anon key`. La `service_role key` nunca va en el cliente.
+- El front usa `supabase-js` directamente para todos los flujos de auth (signup+OTP, verify, set-password, login, logout) — con la `anon key`. Helpers en `apps/web/src/lib/auth.ts`; estado de sesión reflejado en el store Zustand `apps/web/src/stores/auth.store.ts` (respaldado por `sessionStorage`).
 - NestJS verifica JWTs localmente vía JWKS (ES256, `aud=authenticated`). HS256 legacy: **no soportado**.
-- El front adjunta el token como `Authorization: Bearer <token>` via interceptor (`apps/web/src/api.ts`).
+- El front adjunta el token como `Authorization: Bearer <token>` via interceptor (`apps/web/src/lib/api.ts`); un interceptor de respuesta cierra la sesión ante cualquier `401`.
 - Todos los datos de aplicación van por NestJS — el front nunca habla directo con la DB.
+
+### Excepción service_role — borrado de cuenta
+
+`supabase.auth.admin.deleteUser` requiere la `service_role key` y no puede correr en el navegador. Es **la única** operación privilegiada del API:
+
+- `SUPABASE_SERVICE_ROLE_KEY` vive **solo** en `apps/api/.env` — nunca en el front ni en ningún `VITE_*`.
+- Se usa exclusivamente en `SupabaseAuthAdminAdapter` (`modules/me/infrastructure/`), detrás del puerto `AuthAdminPort`, alcanzable solo vía `DELETE /me` (protegido por `SupabaseJwtGuard`).
+- El cliente admin se crea de forma perezosa: el API arranca sin la key; solo falla si se intenta borrar una cuenta sin ella configurada.
+- `DELETE /me` borra el `profile` (Drizzle) y luego el auth user, en ese orden.
 
 ## ORM — Drizzle
 

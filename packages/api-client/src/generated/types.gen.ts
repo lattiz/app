@@ -65,6 +65,29 @@ export type HealthControllerHealthResponses = {
 
 export type HealthControllerHealthResponse = HealthControllerHealthResponses[keyof HealthControllerHealthResponses];
 
+export type MeControllerDeleteMeData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/me';
+};
+
+export type MeControllerDeleteMeErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+};
+
+export type MeControllerDeleteMeResponses = {
+    /**
+     * Account deleted.
+     */
+    204: void;
+};
+
+export type MeControllerDeleteMeResponse = MeControllerDeleteMeResponses[keyof MeControllerDeleteMeResponses];
+
 export type MeControllerMeData = {
     body?: never;
     path?: never;

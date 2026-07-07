@@ -51,6 +51,27 @@
         "tags": [
           "me"
         ]
+      },
+      "delete": {
+        "operationId": "MeController_deleteMe",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": "Account deleted."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete current account (protected — requires Supabase JWT)",
+        "tags": [
+          "me"
+        ]
       }
     }
   },

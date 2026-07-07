@@ -36,4 +36,8 @@ export class DrizzleUserRepository implements UserRepositoryPort {
 
     return { id: row.id, displayName: row.displayName };
   }
+
+  async delete(id: string): Promise<void> {
+    await this.db.delete(profiles).where(eq(profiles.id, id));
+  }
 }

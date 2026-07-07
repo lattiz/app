@@ -2,7 +2,7 @@
 
 import type { Client, ClientMeta, Options as Options2, RequestResult, TDataShape } from './client';
 import { client } from './client.gen';
-import type { HealthControllerHealthData, HealthControllerHealthResponses, MeControllerMeData, MeControllerMeErrors, MeControllerMeResponses } from './types.gen';
+import type { HealthControllerHealthData, HealthControllerHealthResponses, MeControllerDeleteMeData, MeControllerDeleteMeErrors, MeControllerDeleteMeResponses, MeControllerMeData, MeControllerMeErrors, MeControllerMeResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -22,6 +22,15 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
  * Service health (public)
  */
 export const healthControllerHealth = <ThrowOnError extends boolean = false>(options?: Options<HealthControllerHealthData, ThrowOnError>): RequestResult<HealthControllerHealthResponses, unknown, ThrowOnError> => (options?.client ?? client).get<HealthControllerHealthResponses, unknown, ThrowOnError>({ url: '/health', ...options });
+
+/**
+ * Delete current account (protected — requires Supabase JWT)
+ */
+export const meControllerDeleteMe = <ThrowOnError extends boolean = false>(options?: Options<MeControllerDeleteMeData, ThrowOnError>): RequestResult<MeControllerDeleteMeResponses, MeControllerDeleteMeErrors, ThrowOnError> => (options?.client ?? client).delete<MeControllerDeleteMeResponses, MeControllerDeleteMeErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/me',
+    ...options
+});
 
 /**
  * Current user (protected — requires Supabase JWT)

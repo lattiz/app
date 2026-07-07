@@ -18,6 +18,7 @@ export default tseslint.config(
       '**/.turbo/**',
       '**/node_modules/**',
       'packages/api-client/src/generated/**',
+      'apps/web/src/routeTree.gen.ts',
       'apps/api/drizzle/**',
       'apps/api/openapi.json',
     ],

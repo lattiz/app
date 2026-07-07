@@ -4,6 +4,7 @@ import { type UserProfile } from './user.entity';
 export interface UserRepositoryPort {
   findById(id: string): Promise<UserProfile | null>;
   save(profile: UserProfile): Promise<UserProfile>;
+  delete(id: string): Promise<void>;
 }
 
 /** DI token for {@link UserRepositoryPort}. */
