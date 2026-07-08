@@ -15,6 +15,8 @@ export interface SiteStatus {
   sslActive: boolean;
   templateName: string | null;
   templateId: string | null;
+  visits: number | null;
+  visitsDelta: number | null;
 }
 
 export interface SubscriptionStatus {

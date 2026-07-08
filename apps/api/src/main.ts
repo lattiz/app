@@ -1,12 +1,16 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import type { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { DomainExceptionFilter } from './common/filters/domain-exception.filter';
 import { buildSwaggerConfig } from './swagger';
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  // GrapesJS project JSON payloads far exceed Express's 100kb default.
+  app.useBodyParser('json', { limit: '10mb' });
 
   // Dev: allow all origins. Prod: CORS_ORIGIN env (comma-separated) or deny.
   const isProd = process.env.NODE_ENV === 'production';

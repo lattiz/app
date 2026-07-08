@@ -21,6 +21,8 @@ const MOCK_SITE: Record<DashboardState, SiteStatus | null> = {
     sslActive: true,
     templateName: 'Modern Pro',
     templateId: 'modern-pro-v1',
+    visits: 1240,
+    visitsDelta: 12,
   },
   'no-template': {
     isOnline: false,
@@ -33,6 +35,8 @@ const MOCK_SITE: Record<DashboardState, SiteStatus | null> = {
     sslActive: false,
     templateName: null,
     templateId: null,
+    visits: null,
+    visitsDelta: null,
   },
   'no-subscription': {
     isOnline: false,
@@ -45,6 +49,8 @@ const MOCK_SITE: Record<DashboardState, SiteStatus | null> = {
     sslActive: false,
     templateName: null,
     templateId: null,
+    visits: null,
+    visitsDelta: null,
   },
 };
 

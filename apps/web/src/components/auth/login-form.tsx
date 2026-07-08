@@ -1,4 +1,4 @@
-import { Link, useNavigate } from '@tanstack/react-router';
+import { Link, useNavigate, useSearch } from '@tanstack/react-router';
 import { useState, type FormEvent } from 'react';
 import { FormError } from '@/components/auth/form-error';
 import { PasswordInput } from '@/components/auth/password-input';
@@ -8,9 +8,10 @@ import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 import { login } from '@/lib/auth';
 
-/** Email + password login. Auth call and navigation are unchanged. */
+/** Email + password login. On success, honors the `?redirect=` search param. */
 export function LoginForm() {
   const navigate = useNavigate();
+  const { redirect } = useSearch({ from: '/login' });
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -22,7 +23,12 @@ export function LoginForm() {
     setError(null);
     try {
       await login(email, password);
-      await navigate({ to: '/dashboard' });
+      // Only follow internal paths ("/…", never "//…") to avoid open redirects.
+      const target =
+        redirect && redirect.startsWith('/') && !redirect.startsWith('//')
+          ? redirect
+          : '/dashboard';
+      await navigate({ to: target });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Credenciales inválidas');
       setPending(false);

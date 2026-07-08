@@ -20,6 +20,7 @@ import { Route as ForgotPasswordVerifyRouteImport } from './routes/forgot-passwo
 import { Route as ForgotPasswordResetRouteImport } from './routes/forgot-password/reset'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
+import { Route as AuthenticatedEditorTenantIdRouteImport } from './routes/_authenticated/editor.$tenantId'
 import { Route as AuthenticatedDashboardTemplatesRouteImport } from './routes/_authenticated/dashboard.templates'
 import { Route as AuthenticatedDashboardSubscriptionRouteImport } from './routes/_authenticated/dashboard.subscription'
 import { Route as AuthenticatedDashboardSiteRouteImport } from './routes/_authenticated/dashboard.site'
@@ -83,6 +84,12 @@ const AuthenticatedDashboardIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedEditorTenantIdRoute =
+  AuthenticatedEditorTenantIdRouteImport.update({
+    id: '/editor/$tenantId',
+    path: '/editor/$tenantId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedDashboardTemplatesRoute =
   AuthenticatedDashboardTemplatesRouteImport.update({
     id: '/templates',
@@ -143,6 +150,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/site': typeof AuthenticatedDashboardSiteRoute
   '/dashboard/subscription': typeof AuthenticatedDashboardSubscriptionRoute
   '/dashboard/templates': typeof AuthenticatedDashboardTemplatesRoute
+  '/editor/$tenantId': typeof AuthenticatedEditorTenantIdRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRoutesByTo {
@@ -161,6 +169,7 @@ export interface FileRoutesByTo {
   '/dashboard/site': typeof AuthenticatedDashboardSiteRoute
   '/dashboard/subscription': typeof AuthenticatedDashboardSubscriptionRoute
   '/dashboard/templates': typeof AuthenticatedDashboardTemplatesRoute
+  '/editor/$tenantId': typeof AuthenticatedEditorTenantIdRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRoutesById {
@@ -182,6 +191,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/site': typeof AuthenticatedDashboardSiteRoute
   '/_authenticated/dashboard/subscription': typeof AuthenticatedDashboardSubscriptionRoute
   '/_authenticated/dashboard/templates': typeof AuthenticatedDashboardTemplatesRoute
+  '/_authenticated/editor/$tenantId': typeof AuthenticatedEditorTenantIdRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRouteTypes {
@@ -203,6 +213,7 @@ export interface FileRouteTypes {
     | '/dashboard/site'
     | '/dashboard/subscription'
     | '/dashboard/templates'
+    | '/editor/$tenantId'
     | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -221,6 +232,7 @@ export interface FileRouteTypes {
     | '/dashboard/site'
     | '/dashboard/subscription'
     | '/dashboard/templates'
+    | '/editor/$tenantId'
     | '/dashboard'
   id:
     | '__root__'
@@ -241,6 +253,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/site'
     | '/_authenticated/dashboard/subscription'
     | '/_authenticated/dashboard/templates'
+    | '/_authenticated/editor/$tenantId'
     | '/_authenticated/dashboard/'
   fileRoutesById: FileRoutesById
 }
@@ -335,6 +348,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/editor/$tenantId': {
+      id: '/_authenticated/editor/$tenantId'
+      path: '/editor/$tenantId'
+      fullPath: '/editor/$tenantId'
+      preLoaderRoute: typeof AuthenticatedEditorTenantIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/dashboard/templates': {
       id: '/_authenticated/dashboard/templates'
       path: '/templates'
@@ -418,11 +438,13 @@ const AuthenticatedDashboardRouteWithChildren =
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRouteWithChildren
   AuthenticatedAccountDeleteRoute: typeof AuthenticatedAccountDeleteRoute
+  AuthenticatedEditorTenantIdRoute: typeof AuthenticatedEditorTenantIdRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRouteWithChildren,
   AuthenticatedAccountDeleteRoute: AuthenticatedAccountDeleteRoute,
+  AuthenticatedEditorTenantIdRoute: AuthenticatedEditorTenantIdRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(

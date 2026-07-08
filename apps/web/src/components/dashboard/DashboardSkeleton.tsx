@@ -3,17 +3,19 @@ import { Skeleton } from '@/components/ui/skeleton';
 export function DashboardSkeleton() {
   return (
     <div className="flex flex-col gap-4">
-      <Skeleton className="h-8 w-48" />
-      <div className="grid grid-cols-3 gap-3">
-        <Skeleton className="h-24" />
-        <Skeleton className="h-24" />
-        <Skeleton className="h-24" />
+      {/* Metrics row */}
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <Skeleton className="h-20 rounded-lg" />
+        <Skeleton className="h-20 rounded-lg" />
+        <Skeleton className="h-20 rounded-lg" />
       </div>
-      <div className="grid grid-cols-2 gap-3">
-        <Skeleton className="h-40" />
-        <Skeleton className="h-40" />
+      {/* Two-col cards */}
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+        <Skeleton className="h-36 rounded-lg" />
+        <Skeleton className="h-36 rounded-lg" />
       </div>
-      <Skeleton className="h-28" />
+      {/* Sub card */}
+      <Skeleton className="h-28 rounded-lg" />
     </div>
   );
 }
