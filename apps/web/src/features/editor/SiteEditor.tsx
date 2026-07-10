@@ -38,6 +38,16 @@ function buildOptions(
   }));
 
   return {
+    theme: 'light',
+    customTheme: {
+      default: {
+        colors: {
+          global: {
+            background1: 'var(--primary)',
+          }
+        }
+      }
+    },
     licenseKey: import.meta.env.VITE_GRAPESJS_LICENSE_KEY ?? 'DEV_LICENSE_KEY',
     project: { type: 'web' as const },
     storage: {

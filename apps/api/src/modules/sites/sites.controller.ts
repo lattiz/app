@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   ParseUUIDPipe,
   Patch,
@@ -11,7 +13,9 @@ import {
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
+  ApiConflictResponse,
   ApiForbiddenResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -20,11 +24,15 @@ import {
 import { type AuthenticatedUser } from '../../common/auth/authenticated-user';
 import { CurrentUser } from '../../common/auth/current-user.decorator';
 import { SupabaseJwtGuard } from '../../common/auth/supabase-jwt.guard';
+import { ChangeTemplateDto } from './dto/change-template.dto';
 import { PublishSiteDto } from './dto/publish-site.dto';
 import { SaveSchemaDto } from './dto/save-schema.dto';
+import { SelectTemplateDto } from './dto/select-template.dto';
 import {
+  ChangeTemplateResponseDto,
   PublishSiteResponseDto,
   SaveSchemaResponseDto,
+  SelectTemplateResponseDto,
   SiteSchemaResponseDto,
 } from './dto/sites.response.dto';
 import { SitesService } from './sites.service';
@@ -79,6 +87,42 @@ export class SitesController {
       requireSub(user),
       dto.project,
       dto.exportedHtml,
+    );
+  }
+
+  /** First-time explicit template selection (creates the site schema). */
+  @Post('select-template')
+  @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Select a template for the caller tenant (protected)' })
+  @ApiOkResponse({ type: SelectTemplateResponseDto })
+  @ApiUnauthorizedResponse({ description: 'Missing or invalid bearer token.' })
+  @ApiNotFoundResponse({ description: 'No tenant for this user, or template not found.' })
+  @ApiConflictResponse({ description: 'Site schema already exists for this tenant.' })
+  async selectTemplate(
+    @Body() dto: SelectTemplateDto,
+    @CurrentUser() user?: AuthenticatedUser,
+  ): Promise<SelectTemplateResponseDto> {
+    return this.sites.selectTemplate(requireSub(user), dto.templateId);
+  }
+
+  /** Switches an existing site to a different template. */
+  @Patch(':tenantId/template')
+  @ApiOperation({ summary: 'Change the template for the tenant site (protected)' })
+  @ApiOkResponse({ type: ChangeTemplateResponseDto })
+  @ApiUnauthorizedResponse({ description: 'Missing or invalid bearer token.' })
+  @ApiForbiddenResponse({ description: 'Tenant does not belong to the caller.' })
+  @ApiNotFoundResponse({ description: 'No site schema found, or template not found.' })
+  @ApiConflictResponse({ description: 'Confirmation required to reset existing site content.' })
+  async changeTemplate(
+    @Param('tenantId', ParseUUIDPipe) tenantId: string,
+    @Body() dto: ChangeTemplateDto,
+    @CurrentUser() user?: AuthenticatedUser,
+  ): Promise<ChangeTemplateResponseDto> {
+    return this.sites.changeTemplate(
+      tenantId,
+      requireSub(user),
+      dto.templateId,
+      dto.confirm ?? false,
     );
   }
 }

@@ -1,11 +1,21 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { sql, type SQL } from 'drizzle-orm';
 import { type Database, DATABASE } from '../../database/database.module';
-import { PublishSiteResponseDto, SaveSchemaResponseDto, SiteSchemaResponseDto } from './dto/sites.response.dto';
+import {
+  ChangeTemplateResponseDto,
+  PublishSiteResponseDto,
+  SaveSchemaResponseDto,
+  SelectTemplateResponseDto,
+  SiteSchemaResponseDto,
+} from './dto/sites.response.dto';
 import {
   NoTemplateAvailableException,
   SiteNotFoundException,
+  SiteSchemaAlreadyExistsException,
+  TemplateChangeRequiresConfirmationException,
+  TemplateNotFoundException,
   TenantAccessDeniedException,
+  TenantNotFoundException,
 } from './sites.exceptions';
 
 type Json = Record<string, unknown>;
@@ -22,6 +32,15 @@ interface UpdatedAtRow {
 }
 interface PublishedAtRow {
   published_at: string | Date;
+}
+interface CreatedAtRow {
+  created_at: string | Date;
+}
+interface CurrentSiteSchemaRow {
+  status: string;
+  published_at: string | Date | null;
+  updated_at: string | Date;
+  created_at: string | Date;
 }
 
 @Injectable()
@@ -98,6 +117,87 @@ export class SitesService {
 
     // TODO: call revalidatePath after Next.js app is ready
     return { published: true, publishedAt: toIso(row.published_at) };
+  }
+
+  /** First-time explicit template selection; creates the site_schemas row. */
+  async selectTemplate(userSub: string, templateId: string): Promise<SelectTemplateResponseDto> {
+    const tenantId = await this.resolveTenantId(userSub);
+    const template = await this.requireActiveTemplate(templateId);
+
+    const rows = await this.query<CreatedAtRow>(
+      sql`INSERT INTO public.site_schemas (tenant_id, template_id, grapesjs_json, status)
+          SELECT ${tenantId}::uuid, ${template.id}, ${JSON.stringify(template.grapesjs_json)}::jsonb, 'draft'
+          WHERE NOT EXISTS (
+            SELECT 1 FROM public.site_schemas WHERE tenant_id = ${tenantId}::uuid
+          )
+          RETURNING created_at`,
+    );
+    const row = rows[0];
+    if (!row) throw new SiteSchemaAlreadyExistsException();
+
+    return { tenantId, templateId: template.id, createdAt: toIso(row.created_at) };
+  }
+
+  /** Switches an existing site to a different template, resetting publish state. */
+  async changeTemplate(
+    tenantId: string,
+    userSub: string,
+    templateId: string,
+    confirm: boolean,
+  ): Promise<ChangeTemplateResponseDto> {
+    await this.assertTenantOwnership(tenantId, userSub);
+
+    const currentRows = await this.query<CurrentSiteSchemaRow>(
+      sql`SELECT status, published_at, updated_at, created_at
+          FROM public.site_schemas
+          WHERE tenant_id = ${tenantId}::uuid
+          LIMIT 1`,
+    );
+    const current = currentRows[0];
+    if (!current) throw new SiteNotFoundException();
+
+    const hasContent =
+      current.status === 'published' ||
+      current.published_at !== null ||
+      toIso(current.updated_at) !== toIso(current.created_at);
+    if (hasContent && !confirm) throw new TemplateChangeRequiresConfirmationException();
+
+    const template = await this.requireActiveTemplate(templateId);
+
+    const rows = await this.query<UpdatedAtRow>(
+      sql`UPDATE public.site_schemas
+          SET template_id = ${template.id},
+              grapesjs_json = ${JSON.stringify(template.grapesjs_json)}::jsonb,
+              exported_html = NULL,
+              status = 'draft',
+              published_at = NULL
+          WHERE tenant_id = ${tenantId}::uuid
+          RETURNING updated_at`,
+    );
+    const row = rows[0];
+    if (!row) throw new SiteNotFoundException();
+
+    return { tenantId, templateId: template.id, updatedAt: toIso(row.updated_at) };
+  }
+
+  private async resolveTenantId(userSub: string): Promise<string> {
+    const rows = await this.query<{ id: string }>(
+      sql`SELECT id FROM public.tenants WHERE user_id = ${userSub}::uuid LIMIT 1`,
+    );
+    const row = rows[0];
+    if (!row) throw new TenantNotFoundException();
+    return row.id;
+  }
+
+  private async requireActiveTemplate(templateId: string): Promise<TemplateRow> {
+    const rows = await this.query<TemplateRow>(
+      sql`SELECT id, grapesjs_json FROM public.templates
+          WHERE id = ${templateId} AND is_active = true
+          LIMIT 1`,
+    );
+    const template = rows[0];
+    if (!template) throw new TemplateNotFoundException();
+    return template;
   }
 
   private async assertTenantOwnership(tenantId: string, userSub: string): Promise<void> {

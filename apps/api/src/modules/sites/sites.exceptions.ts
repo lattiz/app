@@ -30,3 +30,46 @@ export class NoTemplateAvailableException extends DomainException {
     super('No active template is available to initialize a site.');
   }
 }
+
+/** The requested template id does not exist or is not active. */
+export class TemplateNotFoundException extends DomainException {
+  readonly code = 'TEMPLATE_NOT_FOUND';
+  readonly status = HttpStatus.NOT_FOUND;
+
+  constructor() {
+    super('Template not found.');
+  }
+}
+
+/** A site schema already exists for this tenant; use the change-template flow instead. */
+export class SiteSchemaAlreadyExistsException extends DomainException {
+  readonly code = 'SITE_SCHEMA_ALREADY_EXISTS';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor() {
+    super('Site schema already exists. Use PATCH to change template.');
+  }
+}
+
+/** Changing the template would reset existing site content; caller must resend with confirm: true. */
+export class TemplateChangeRequiresConfirmationException extends DomainException {
+  readonly code = 'TEMPLATE_CHANGE_REQUIRES_CONFIRMATION';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor() {
+    super(
+      'Changing the template will reset your current site content. Send the request again with { confirm: true } to proceed.',
+      { requiresConfirmation: true },
+    );
+  }
+}
+
+/** No tenant row exists yet for the authenticated user. */
+export class TenantNotFoundException extends DomainException {
+  readonly code = 'TENANT_NOT_FOUND';
+  readonly status = HttpStatus.NOT_FOUND;
+
+  constructor() {
+    super('No tenant exists for this user.');
+  }
+}

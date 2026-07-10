@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { PlaceholderPage } from '@/pages/dashboard/PlaceholderPage';
+import { TemplatesPage } from '@/pages/dashboard/TemplatesPage';
 
 export const Route = createFileRoute('/_authenticated/dashboard/templates')({
-  component: PlaceholderPage,
+  component: TemplatesPage,
 });

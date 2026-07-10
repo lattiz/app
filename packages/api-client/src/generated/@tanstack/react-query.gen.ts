@@ -3,8 +3,8 @@
 import { type DefaultError, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options } from '../sdk.gen';
-import type { HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse } from '../types.gen';
+import { healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options, sitesControllerChangeTemplate, sitesControllerGetSchema, sitesControllerPublish, sitesControllerSaveSchema, sitesControllerSelectTemplate, templatesControllerFindAll, tenantsControllerMe } from '../sdk.gen';
+import type { HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse, SitesControllerChangeTemplateData, SitesControllerChangeTemplateResponse, SitesControllerGetSchemaData, SitesControllerGetSchemaResponse, SitesControllerPublishData, SitesControllerPublishResponse, SitesControllerSaveSchemaData, SitesControllerSaveSchemaResponse, SitesControllerSelectTemplateData, SitesControllerSelectTemplateResponse, TemplatesControllerFindAllData, TemplatesControllerFindAllResponse, TenantsControllerMeData, TenantsControllerMeResponse } from '../types.gen';
 
 export type QueryKey<TOptions extends Options> = [
     Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
@@ -90,4 +90,126 @@ export const meControllerMeOptions = (options?: Options<MeControllerMeData>) => 
         return data;
     },
     queryKey: meControllerMeQueryKey(options)
+});
+
+export const sitesControllerGetSchemaQueryKey = (options: Options<SitesControllerGetSchemaData>) => createQueryKey('sitesControllerGetSchema', options);
+
+/**
+ * Load the tenant site editor project (protected)
+ */
+export const sitesControllerGetSchemaOptions = (options: Options<SitesControllerGetSchemaData>) => queryOptions<SitesControllerGetSchemaResponse, DefaultError, SitesControllerGetSchemaResponse, ReturnType<typeof sitesControllerGetSchemaQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await sitesControllerGetSchema({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: sitesControllerGetSchemaQueryKey(options)
+});
+
+/**
+ * Autosave the tenant site editor project (protected)
+ */
+export const sitesControllerSaveSchemaMutation = (options?: Partial<Options<SitesControllerSaveSchemaData>>): UseMutationOptions<SitesControllerSaveSchemaResponse, DefaultError, Options<SitesControllerSaveSchemaData>> => {
+    const mutationOptions: UseMutationOptions<SitesControllerSaveSchemaResponse, DefaultError, Options<SitesControllerSaveSchemaData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await sitesControllerSaveSchema({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Publish the tenant site (protected)
+ */
+export const sitesControllerPublishMutation = (options?: Partial<Options<SitesControllerPublishData>>): UseMutationOptions<SitesControllerPublishResponse, DefaultError, Options<SitesControllerPublishData>> => {
+    const mutationOptions: UseMutationOptions<SitesControllerPublishResponse, DefaultError, Options<SitesControllerPublishData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await sitesControllerPublish({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Select a template for the caller tenant (protected)
+ */
+export const sitesControllerSelectTemplateMutation = (options?: Partial<Options<SitesControllerSelectTemplateData>>): UseMutationOptions<SitesControllerSelectTemplateResponse, DefaultError, Options<SitesControllerSelectTemplateData>> => {
+    const mutationOptions: UseMutationOptions<SitesControllerSelectTemplateResponse, DefaultError, Options<SitesControllerSelectTemplateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await sitesControllerSelectTemplate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Change the template for the tenant site (protected)
+ */
+export const sitesControllerChangeTemplateMutation = (options?: Partial<Options<SitesControllerChangeTemplateData>>): UseMutationOptions<SitesControllerChangeTemplateResponse, DefaultError, Options<SitesControllerChangeTemplateData>> => {
+    const mutationOptions: UseMutationOptions<SitesControllerChangeTemplateResponse, DefaultError, Options<SitesControllerChangeTemplateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await sitesControllerChangeTemplate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const templatesControllerFindAllQueryKey = (options?: Options<TemplatesControllerFindAllData>) => createQueryKey('templatesControllerFindAll', options);
+
+/**
+ * List active templates (protected)
+ */
+export const templatesControllerFindAllOptions = (options?: Options<TemplatesControllerFindAllData>) => queryOptions<TemplatesControllerFindAllResponse, DefaultError, TemplatesControllerFindAllResponse, ReturnType<typeof templatesControllerFindAllQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await templatesControllerFindAll({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: templatesControllerFindAllQueryKey(options)
+});
+
+export const tenantsControllerMeQueryKey = (options?: Options<TenantsControllerMeData>) => createQueryKey('tenantsControllerMe', options);
+
+/**
+ * Get the authenticated user tenant (protected)
+ */
+export const tenantsControllerMeOptions = (options?: Options<TenantsControllerMeData>) => queryOptions<TenantsControllerMeResponse, DefaultError, TenantsControllerMeResponse, ReturnType<typeof tenantsControllerMeQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await tenantsControllerMe({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: tenantsControllerMeQueryKey(options)
 });

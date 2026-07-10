@@ -21,3 +21,25 @@ export class PublishSiteResponseDto {
   @ApiProperty({ description: 'ISO timestamp the site was published.' })
   publishedAt!: string;
 }
+
+export class SelectTemplateResponseDto {
+  @ApiProperty()
+  tenantId!: string;
+
+  @ApiProperty()
+  templateId!: string;
+
+  @ApiProperty({ description: 'ISO timestamp the site schema was created.' })
+  createdAt!: string;
+}
+
+export class ChangeTemplateResponseDto {
+  @ApiProperty()
+  tenantId!: string;
+
+  @ApiProperty()
+  templateId!: string;
+
+  @ApiProperty({ description: 'ISO timestamp of the persisted change.' })
+  updatedAt!: string;
+}

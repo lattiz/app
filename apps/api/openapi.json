@@ -73,6 +73,320 @@
           "me"
         ]
       }
+    },
+    "/sites/{tenantId}/schema": {
+      "get": {
+        "operationId": "SitesController_getSchema",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SiteSchemaResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Tenant does not belong to the caller."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Load the tenant site editor project (protected)",
+        "tags": [
+          "sites"
+        ]
+      },
+      "patch": {
+        "operationId": "SitesController_saveSchema",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveSchemaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaveSchemaResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Tenant does not belong to the caller."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Autosave the tenant site editor project (protected)",
+        "tags": [
+          "sites"
+        ]
+      }
+    },
+    "/sites/{tenantId}/publish": {
+      "post": {
+        "operationId": "SitesController_publish",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublishSiteDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublishSiteResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Tenant does not belong to the caller."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Publish the tenant site (protected)",
+        "tags": [
+          "sites"
+        ]
+      }
+    },
+    "/sites/select-template": {
+      "post": {
+        "operationId": "SitesController_selectTemplate",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SelectTemplateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SelectTemplateResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "404": {
+            "description": "No tenant for this user, or template not found."
+          },
+          "409": {
+            "description": "Site schema already exists for this tenant."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Select a template for the caller tenant (protected)",
+        "tags": [
+          "sites"
+        ]
+      }
+    },
+    "/sites/{tenantId}/template": {
+      "patch": {
+        "operationId": "SitesController_changeTemplate",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeTemplateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangeTemplateResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Tenant does not belong to the caller."
+          },
+          "404": {
+            "description": "No site schema found, or template not found."
+          },
+          "409": {
+            "description": "Confirmation required to reset existing site content."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Change the template for the tenant site (protected)",
+        "tags": [
+          "sites"
+        ]
+      }
+    },
+    "/templates": {
+      "get": {
+        "operationId": "TemplatesController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TemplateListItemDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List active templates (protected)",
+        "tags": [
+          "templates"
+        ]
+      }
+    },
+    "/tenants/me": {
+      "get": {
+        "operationId": "TenantsController_me",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantMeResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "404": {
+            "description": "No tenant exists for this user."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get the authenticated user tenant (protected)",
+        "tags": [
+          "tenants"
+        ]
+      }
     }
   },
   "info": {
@@ -189,6 +503,277 @@
           "email",
           "claims",
           "profile"
+        ]
+      },
+      "SiteSchemaResponseDto": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "type": "object",
+            "description": "The GrapesJS project JSON to load into the editor (`storage.project`).",
+            "additionalProperties": true
+          }
+        },
+        "required": [
+          "project"
+        ]
+      },
+      "SaveSchemaDto": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "type": "object",
+            "description": "The full GrapesJS project JSON (editor state) to persist.",
+            "additionalProperties": true
+          }
+        },
+        "required": [
+          "project"
+        ]
+      },
+      "SaveSchemaResponseDto": {
+        "type": "object",
+        "properties": {
+          "saved": {
+            "type": "boolean"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "ISO timestamp of the persisted change."
+          }
+        },
+        "required": [
+          "saved",
+          "updatedAt"
+        ]
+      },
+      "PublishSiteDto": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "type": "object",
+            "description": "The GrapesJS project JSON (editor state) at publish time.",
+            "additionalProperties": true
+          },
+          "exportedHtml": {
+            "type": "string",
+            "description": "HTML generated by the `studio:projectFiles` command."
+          }
+        },
+        "required": [
+          "project",
+          "exportedHtml"
+        ]
+      },
+      "PublishSiteResponseDto": {
+        "type": "object",
+        "properties": {
+          "published": {
+            "type": "boolean"
+          },
+          "publishedAt": {
+            "type": "string",
+            "description": "ISO timestamp the site was published."
+          }
+        },
+        "required": [
+          "published",
+          "publishedAt"
+        ]
+      },
+      "SelectTemplateDto": {
+        "type": "object",
+        "properties": {
+          "templateId": {
+            "type": "string",
+            "description": "Id of the template to seed the tenant's site from."
+          }
+        },
+        "required": [
+          "templateId"
+        ]
+      },
+      "SelectTemplateResponseDto": {
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string"
+          },
+          "templateId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "ISO timestamp the site schema was created."
+          }
+        },
+        "required": [
+          "tenantId",
+          "templateId",
+          "createdAt"
+        ]
+      },
+      "ChangeTemplateDto": {
+        "type": "object",
+        "properties": {
+          "templateId": {
+            "type": "string",
+            "description": "Id of the template to switch the tenant's site to."
+          },
+          "confirm": {
+            "type": "boolean",
+            "description": "Must be true when the site already has content, to acknowledge the reset."
+          }
+        },
+        "required": [
+          "templateId"
+        ]
+      },
+      "ChangeTemplateResponseDto": {
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string"
+          },
+          "templateId": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "ISO timestamp of the persisted change."
+          }
+        },
+        "required": [
+          "tenantId",
+          "templateId",
+          "updatedAt"
+        ]
+      },
+      "TemplateListItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "previewUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "thumbnailUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "sortOrder": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "category",
+          "previewUrl",
+          "thumbnailUrl",
+          "sortOrder"
+        ]
+      },
+      "TenantSiteMetaDto": {
+        "type": "object",
+        "properties": {
+          "templateId": {
+            "type": "string",
+            "nullable": true
+          },
+          "templateName": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteStatus": {
+            "nullable": true,
+            "enum": [
+              "draft",
+              "published"
+            ],
+            "type": "string"
+          },
+          "lastPublishedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "templateId",
+          "templateName",
+          "siteStatus",
+          "lastPublishedAt",
+          "updatedAt"
+        ]
+      },
+      "TenantMeResponseDto": {
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string",
+            "description": "`tenants.id` — the id expected by the editor route (`/editor/:tenantId`)."
+          },
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "plan": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "inactive",
+              "cancelled"
+            ],
+            "type": "string"
+          },
+          "domain": {
+            "type": "string",
+            "nullable": true
+          },
+          "vercelDomainMapped": {
+            "type": "boolean"
+          },
+          "site": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TenantSiteMetaDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "tenantId",
+          "slug",
+          "name",
+          "plan",
+          "status",
+          "domain",
+          "vercelDomainMapped",
+          "site"
         ]
       }
     }

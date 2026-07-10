@@ -6,10 +6,12 @@ import { NoSubscriptionGate } from '@/components/dashboard/home/NoSubscriptionGa
 import { QuickActionsCard } from '@/components/dashboard/home/QuickActionsCard';
 import { SiteCard } from '@/components/dashboard/home/SiteCard';
 import { SubscriptionCard } from '@/components/dashboard/home/SubscriptionCard';
-import { useDashboardHome } from '@/hooks/use-dashboard-home';
+import { useDashboardStore } from '@/stores/dashboard.store';
 
 export function DashboardHomePage() {
-  const { state, site, subscription } = useDashboardHome();
+  const state = useDashboardStore((s) => s.state);
+  const site = useDashboardStore((s) => s.site);
+  const subscription = useDashboardStore((s) => s.subscription);
 
   if (state === 'loading') return <DashboardSkeleton />;
 

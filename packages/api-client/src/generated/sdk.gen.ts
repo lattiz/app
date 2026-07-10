@@ -2,7 +2,7 @@
 
 import type { Client, ClientMeta, Options as Options2, RequestResult, TDataShape } from './client';
 import { client } from './client.gen';
-import type { HealthControllerHealthData, HealthControllerHealthResponses, MeControllerDeleteMeData, MeControllerDeleteMeErrors, MeControllerDeleteMeResponses, MeControllerMeData, MeControllerMeErrors, MeControllerMeResponses } from './types.gen';
+import type { HealthControllerHealthData, HealthControllerHealthResponses, MeControllerDeleteMeData, MeControllerDeleteMeErrors, MeControllerDeleteMeResponses, MeControllerMeData, MeControllerMeErrors, MeControllerMeResponses, SitesControllerChangeTemplateData, SitesControllerChangeTemplateErrors, SitesControllerChangeTemplateResponses, SitesControllerGetSchemaData, SitesControllerGetSchemaErrors, SitesControllerGetSchemaResponses, SitesControllerPublishData, SitesControllerPublishErrors, SitesControllerPublishResponses, SitesControllerSaveSchemaData, SitesControllerSaveSchemaErrors, SitesControllerSaveSchemaResponses, SitesControllerSelectTemplateData, SitesControllerSelectTemplateErrors, SitesControllerSelectTemplateResponses, TemplatesControllerFindAllData, TemplatesControllerFindAllErrors, TemplatesControllerFindAllResponses, TenantsControllerMeData, TenantsControllerMeErrors, TenantsControllerMeResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -38,5 +38,84 @@ export const meControllerDeleteMe = <ThrowOnError extends boolean = false>(optio
 export const meControllerMe = <ThrowOnError extends boolean = false>(options?: Options<MeControllerMeData, ThrowOnError>): RequestResult<MeControllerMeResponses, MeControllerMeErrors, ThrowOnError> => (options?.client ?? client).get<MeControllerMeResponses, MeControllerMeErrors, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/me',
+    ...options
+});
+
+/**
+ * Load the tenant site editor project (protected)
+ */
+export const sitesControllerGetSchema = <ThrowOnError extends boolean = false>(options: Options<SitesControllerGetSchemaData, ThrowOnError>): RequestResult<SitesControllerGetSchemaResponses, SitesControllerGetSchemaErrors, ThrowOnError> => (options.client ?? client).get<SitesControllerGetSchemaResponses, SitesControllerGetSchemaErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/sites/{tenantId}/schema',
+    ...options
+});
+
+/**
+ * Autosave the tenant site editor project (protected)
+ */
+export const sitesControllerSaveSchema = <ThrowOnError extends boolean = false>(options: Options<SitesControllerSaveSchemaData, ThrowOnError>): RequestResult<SitesControllerSaveSchemaResponses, SitesControllerSaveSchemaErrors, ThrowOnError> => (options.client ?? client).patch<SitesControllerSaveSchemaResponses, SitesControllerSaveSchemaErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/sites/{tenantId}/schema',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Publish the tenant site (protected)
+ */
+export const sitesControllerPublish = <ThrowOnError extends boolean = false>(options: Options<SitesControllerPublishData, ThrowOnError>): RequestResult<SitesControllerPublishResponses, SitesControllerPublishErrors, ThrowOnError> => (options.client ?? client).post<SitesControllerPublishResponses, SitesControllerPublishErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/sites/{tenantId}/publish',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Select a template for the caller tenant (protected)
+ */
+export const sitesControllerSelectTemplate = <ThrowOnError extends boolean = false>(options: Options<SitesControllerSelectTemplateData, ThrowOnError>): RequestResult<SitesControllerSelectTemplateResponses, SitesControllerSelectTemplateErrors, ThrowOnError> => (options.client ?? client).post<SitesControllerSelectTemplateResponses, SitesControllerSelectTemplateErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/sites/select-template',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Change the template for the tenant site (protected)
+ */
+export const sitesControllerChangeTemplate = <ThrowOnError extends boolean = false>(options: Options<SitesControllerChangeTemplateData, ThrowOnError>): RequestResult<SitesControllerChangeTemplateResponses, SitesControllerChangeTemplateErrors, ThrowOnError> => (options.client ?? client).patch<SitesControllerChangeTemplateResponses, SitesControllerChangeTemplateErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/sites/{tenantId}/template',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * List active templates (protected)
+ */
+export const templatesControllerFindAll = <ThrowOnError extends boolean = false>(options?: Options<TemplatesControllerFindAllData, ThrowOnError>): RequestResult<TemplatesControllerFindAllResponses, TemplatesControllerFindAllErrors, ThrowOnError> => (options?.client ?? client).get<TemplatesControllerFindAllResponses, TemplatesControllerFindAllErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/templates',
+    ...options
+});
+
+/**
+ * Get the authenticated user tenant (protected)
+ */
+export const tenantsControllerMe = <ThrowOnError extends boolean = false>(options?: Options<TenantsControllerMeData, ThrowOnError>): RequestResult<TenantsControllerMeResponses, TenantsControllerMeErrors, ThrowOnError> => (options?.client ?? client).get<TenantsControllerMeResponses, TenantsControllerMeErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/tenants/me',
     ...options
 });
