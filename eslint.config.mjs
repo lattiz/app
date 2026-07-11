@@ -21,6 +21,8 @@ export default tseslint.config(
       'apps/web/src/routeTree.gen.ts',
       'apps/api/drizzle/**',
       'apps/api/openapi.json',
+      '**/.next/**',
+      '**/next-env.d.ts',
     ],
   },
   js.configs.recommended,
@@ -41,6 +43,11 @@ export default tseslint.config(
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
     },
+  },
+  // Tenant sites (Next.js) run on the Node runtime and use Web platform APIs.
+  {
+    files: ['apps/tenant-sites/**/*.{ts,tsx}'],
+    languageOptions: { globals: { ...globals.node, ...globals.browser } },
   },
   // Disables stylistic rules that conflict with Prettier. Must come last.
   prettier,

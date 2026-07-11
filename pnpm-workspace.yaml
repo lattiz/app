@@ -5,6 +5,8 @@ allowBuilds:
   '@nestjs/core': false
   '@scarf/scarf': false
   esbuild: true
+  # tenant-sites uses raw <img> + next/og (wasm), not next/image — no native build.
+  sharp: false
 minimumReleaseAgeExclude:
   - '@hey-api/codegen-core@0.9.0'
   - '@hey-api/openapi-ts@0.98.2'

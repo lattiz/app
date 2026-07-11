@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { sql, type SQL } from 'drizzle-orm';
 import { type Database, DATABASE } from '../../database/database.module';
 import {
@@ -45,6 +45,8 @@ interface CurrentSiteSchemaRow {
 
 @Injectable()
 export class SitesService {
+  private readonly logger = new Logger(SitesService.name);
+
   constructor(@Inject(DATABASE) private readonly db: Database) {}
 
   /** Returns the editor project for a tenant, seeding it from a template on first load. */
@@ -115,7 +117,8 @@ export class SitesService {
     const row = rows[0];
     if (!row) throw new SiteNotFoundException();
 
-    // TODO: call revalidatePath after Next.js app is ready
+    await this.triggerRevalidation(tenantId);
+
     return { published: true, publishedAt: toIso(row.published_at) };
   }
 
@@ -178,6 +181,46 @@ export class SitesService {
     if (!row) throw new SiteNotFoundException();
 
     return { tenantId, templateId: template.id, updatedAt: toIso(row.updated_at) };
+  }
+
+  /**
+   * Best-effort cache purge of the tenant's public site after publish. Skipped
+   * when the tenant has no domain, or the tenant-sites app isn't configured.
+   */
+  private async triggerRevalidation(tenantId: string): Promise<void> {
+    const rows = await this.query<{ domain: string | null }>(
+      sql`SELECT domain FROM public.tenants WHERE id = ${tenantId}::uuid LIMIT 1`,
+    );
+    const domain = rows[0]?.domain;
+    if (!domain) return;
+
+    const baseUrl = process.env.TENANT_SITES_URL;
+    const secret = process.env.REVALIDATION_SECRET;
+    if (!baseUrl || !secret) return;
+
+    try {
+      const response = await fetch(`${baseUrl}/api/revalidate`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${secret}`,
+        },
+        body: JSON.stringify({ tenantHostname: domain }),
+        signal: AbortSignal.timeout(10_000),
+      });
+      if (!response.ok) {
+        this.logger.warn(
+          `Revalidation returned ${response.status} for ${domain}`,
+        );
+      }
+    } catch (error) {
+      // Non-fatal: the site is published; the cache will expire on its own.
+      this.logger.warn(
+        `Revalidation call failed for ${domain}: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
+    }
   }
 
   private async resolveTenantId(userSub: string): Promise<string> {
