@@ -20,7 +20,7 @@ export interface SiteStatus {
 }
 
 export interface SubscriptionStatus {
-  plan: 'starter' | 'pro' | null;
+  plan: 'starter' | 'basico' | 'pro' | null;
   status: 'active' | 'trialing' | 'past_due' | 'canceled' | null;
   currentPeriodEnd: string | null;
   paymentFailed: boolean;

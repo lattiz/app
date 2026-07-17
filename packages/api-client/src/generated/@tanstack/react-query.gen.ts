@@ -3,8 +3,42 @@
 import { type DefaultError, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options, sitesControllerChangeTemplate, sitesControllerGetSchema, sitesControllerPublish, sitesControllerSaveSchema, sitesControllerSelectTemplate, templatesControllerFindAll, tenantsControllerMe } from '../sdk.gen';
-import type { HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse, SitesControllerChangeTemplateData, SitesControllerChangeTemplateResponse, SitesControllerGetSchemaData, SitesControllerGetSchemaResponse, SitesControllerPublishData, SitesControllerPublishResponse, SitesControllerSaveSchemaData, SitesControllerSaveSchemaResponse, SitesControllerSelectTemplateData, SitesControllerSelectTemplateResponse, TemplatesControllerFindAllData, TemplatesControllerFindAllResponse, TenantsControllerMeData, TenantsControllerMeResponse } from '../types.gen';
+import { billingControllerCreateCheckoutSession, billingControllerCreatePortalSession, billingControllerGetSubscription, domainsControllerGetDomain, domainsControllerGetJobStatus, domainsControllerGetQuote, domainsControllerPurchase, domainsControllerSearch, healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options, sitesControllerChangeTemplate, sitesControllerGetSchema, sitesControllerPublish, sitesControllerSaveSchema, sitesControllerSelectTemplate, templatesControllerFindAll, tenantsControllerMe } from '../sdk.gen';
+import type { BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponse, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponse, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionResponse, DomainsControllerGetDomainData, DomainsControllerGetDomainResponse, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponse, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponse, DomainsControllerPurchaseData, DomainsControllerPurchaseResponse, DomainsControllerSearchData, DomainsControllerSearchResponse, HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse, SitesControllerChangeTemplateData, SitesControllerChangeTemplateResponse, SitesControllerGetSchemaData, SitesControllerGetSchemaResponse, SitesControllerPublishData, SitesControllerPublishResponse, SitesControllerSaveSchemaData, SitesControllerSaveSchemaResponse, SitesControllerSelectTemplateData, SitesControllerSelectTemplateResponse, TemplatesControllerFindAllData, TemplatesControllerFindAllResponse, TenantsControllerMeData, TenantsControllerMeResponse } from '../types.gen';
+
+/**
+ * Create a Stripe Checkout session (protected)
+ */
+export const billingControllerCreateCheckoutSessionMutation = (options?: Partial<Options<BillingControllerCreateCheckoutSessionData>>): UseMutationOptions<BillingControllerCreateCheckoutSessionResponse, DefaultError, Options<BillingControllerCreateCheckoutSessionData>> => {
+    const mutationOptions: UseMutationOptions<BillingControllerCreateCheckoutSessionResponse, DefaultError, Options<BillingControllerCreateCheckoutSessionData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await billingControllerCreateCheckoutSession({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Create a Stripe billing portal session (protected)
+ */
+export const billingControllerCreatePortalSessionMutation = (options?: Partial<Options<BillingControllerCreatePortalSessionData>>): UseMutationOptions<BillingControllerCreatePortalSessionResponse, DefaultError, Options<BillingControllerCreatePortalSessionData>> => {
+    const mutationOptions: UseMutationOptions<BillingControllerCreatePortalSessionResponse, DefaultError, Options<BillingControllerCreatePortalSessionData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await billingControllerCreatePortalSession({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
 
 export type QueryKey<TOptions extends Options> = [
     Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
@@ -38,6 +72,112 @@ const createQueryKey = <TOptions extends Options>(id: string, options?: TOptions
     }
     return [params];
 };
+
+export const billingControllerGetSubscriptionQueryKey = (options?: Options<BillingControllerGetSubscriptionData>) => createQueryKey('billingControllerGetSubscription', options);
+
+/**
+ * Get the tenant current subscription (protected)
+ */
+export const billingControllerGetSubscriptionOptions = (options?: Options<BillingControllerGetSubscriptionData>) => queryOptions<BillingControllerGetSubscriptionResponse, DefaultError, BillingControllerGetSubscriptionResponse, ReturnType<typeof billingControllerGetSubscriptionQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await billingControllerGetSubscription({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: billingControllerGetSubscriptionQueryKey(options)
+});
+
+export const domainsControllerSearchQueryKey = (options: Options<DomainsControllerSearchData>) => createQueryKey('domainsControllerSearch', options);
+
+/**
+ * Search available domains (protected)
+ */
+export const domainsControllerSearchOptions = (options: Options<DomainsControllerSearchData>) => queryOptions<DomainsControllerSearchResponse, DefaultError, DomainsControllerSearchResponse, ReturnType<typeof domainsControllerSearchQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await domainsControllerSearch({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: domainsControllerSearchQueryKey(options)
+});
+
+/**
+ * Get a locked registration quote (protected)
+ */
+export const domainsControllerGetQuoteMutation = (options?: Partial<Options<DomainsControllerGetQuoteData>>): UseMutationOptions<DomainsControllerGetQuoteResponse, DefaultError, Options<DomainsControllerGetQuoteData>> => {
+    const mutationOptions: UseMutationOptions<DomainsControllerGetQuoteResponse, DefaultError, Options<DomainsControllerGetQuoteData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await domainsControllerGetQuote({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Purchase a domain (protected, async)
+ */
+export const domainsControllerPurchaseMutation = (options?: Partial<Options<DomainsControllerPurchaseData>>): UseMutationOptions<DomainsControllerPurchaseResponse, DefaultError, Options<DomainsControllerPurchaseData>> => {
+    const mutationOptions: UseMutationOptions<DomainsControllerPurchaseResponse, DefaultError, Options<DomainsControllerPurchaseData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await domainsControllerPurchase({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const domainsControllerGetJobStatusQueryKey = (options: Options<DomainsControllerGetJobStatusData>) => createQueryKey('domainsControllerGetJobStatus', options);
+
+/**
+ * Get domain purchase job status (protected)
+ */
+export const domainsControllerGetJobStatusOptions = (options: Options<DomainsControllerGetJobStatusData>) => queryOptions<DomainsControllerGetJobStatusResponse, DefaultError, DomainsControllerGetJobStatusResponse, ReturnType<typeof domainsControllerGetJobStatusQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await domainsControllerGetJobStatus({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: domainsControllerGetJobStatusQueryKey(options)
+});
+
+export const domainsControllerGetDomainQueryKey = (options?: Options<DomainsControllerGetDomainData>) => createQueryKey('domainsControllerGetDomain', options);
+
+/**
+ * Get the tenant current domain + DNS/SSL status (protected)
+ */
+export const domainsControllerGetDomainOptions = (options?: Options<DomainsControllerGetDomainData>) => queryOptions<DomainsControllerGetDomainResponse, DefaultError, DomainsControllerGetDomainResponse, ReturnType<typeof domainsControllerGetDomainQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await domainsControllerGetDomain({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: domainsControllerGetDomainQueryKey(options)
+});
 
 export const healthControllerHealthQueryKey = (options?: Options<HealthControllerHealthData>) => createQueryKey('healthControllerHealth', options);
 

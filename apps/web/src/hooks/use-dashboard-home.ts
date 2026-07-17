@@ -4,6 +4,7 @@ import { tenantsControllerMeOptions, type TenantMeResponseDto } from '@lattiz/ap
 import {
   getMockSite,
   getMockSubscription,
+  SIMULATE_ENABLED,
   SIMULATE_STATE,
 } from '@/lib/simulate-dashboard-state';
 import { useDashboardStore } from '@/stores/dashboard.store';
@@ -13,15 +14,16 @@ import type {
   SubscriptionStatus,
 } from '@/types/dashboard.types';
 
-const SIMULATE = Boolean(import.meta.env.VITE_SIMULATE_DASHBOARD);
+const SIMULATE = SIMULATE_ENABLED;
 
 function deriveDashboardState(
   tenantMe: TenantMeResponseDto | undefined,
   isLoading: boolean,
 ): DashboardState {
   if (isLoading || !tenantMe) return 'loading';
-  // No Stripe integration yet — treat all tenants as having an active subscription.
-  // TODO: derive from tenantMe.plan / tenantMe.status once Stripe is integrated.
+  const subStatus = tenantMe.subscription?.status;
+  const hasActiveSub = subStatus === 'active' || subStatus === 'trialing';
+  if (!hasActiveSub) return 'no-subscription';
   if (!tenantMe.site?.templateId) return 'no-template';
   return 'active';
 }
@@ -32,10 +34,10 @@ function mapToSiteStatus(tenantMe: TenantMeResponseDto): SiteStatus {
     lastPublished: tenantMe.site?.lastPublishedAt ?? null,
     domain: tenantMe.domain,
     domainConnected: tenantMe.vercelDomainMapped,
-    dnsError: false, // TODO: wire when GoDaddy integration exists
-    dnsPropagating: false, // TODO: wire when DNS provisioning exists
+    dnsError: tenantMe.domainStatus?.dnsStatus === 'error',
+    dnsPropagating: tenantMe.domainStatus?.dnsStatus === 'propagating',
     deployInProgress: false,
-    sslActive: tenantMe.vercelDomainMapped,
+    sslActive: tenantMe.domainStatus?.sslActive ?? tenantMe.vercelDomainMapped,
     templateName: tenantMe.site?.templateName ?? null,
     templateId: tenantMe.site?.templateId ?? null,
     visits: null, // TODO: wire when analytics integration exists
@@ -44,11 +46,12 @@ function mapToSiteStatus(tenantMe: TenantMeResponseDto): SiteStatus {
 }
 
 function mapToSubscriptionStatus(tenantMe: TenantMeResponseDto): SubscriptionStatus {
+  const sub = tenantMe.subscription;
   return {
-    plan: tenantMe.plan === 'starter' || tenantMe.plan === 'pro' ? tenantMe.plan : null,
-    status: tenantMe.status === 'active' ? 'active' : null,
-    currentPeriodEnd: null, // TODO: wire when Stripe integration exists
-    paymentFailed: false,
+    plan: sub?.plan ?? null,
+    status: (sub?.status ?? null) as SubscriptionStatus['status'],
+    currentPeriodEnd: sub?.currentPeriodEnd ?? null,
+    paymentFailed: sub?.status === 'past_due',
     paymentAttempts: 0,
   };
 }

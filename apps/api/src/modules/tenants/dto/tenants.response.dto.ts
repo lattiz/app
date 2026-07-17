@@ -17,6 +17,46 @@ export class TenantSiteMetaDto {
   updatedAt!: string | null;
 }
 
+export class TenantSubscriptionDto {
+  @ApiProperty({ type: String, nullable: true, enum: ['basico', 'pro'] })
+  plan!: 'basico' | 'pro' | null;
+
+  @ApiProperty({ type: String, nullable: true })
+  status!: string | null;
+
+  @ApiProperty({ type: String, nullable: true, enum: ['monthly', 'annual'] })
+  billingPeriod!: 'monthly' | 'annual' | null;
+
+  @ApiProperty({ type: String, nullable: true })
+  currentPeriodEnd!: string | null;
+
+  @ApiProperty()
+  cancelAtPeriodEnd!: boolean;
+}
+
+export class TenantDomainDto {
+  @ApiProperty()
+  domain!: string;
+
+  @ApiProperty({
+    type: String,
+    enum: ['pending', 'configuring', 'propagating', 'active', 'error'],
+  })
+  dnsStatus!: 'pending' | 'configuring' | 'propagating' | 'active' | 'error';
+
+  @ApiProperty()
+  vercelMapped!: boolean;
+
+  @ApiProperty()
+  sslActive!: boolean;
+
+  @ApiProperty()
+  isMock!: boolean;
+
+  @ApiProperty({ type: String, nullable: true })
+  expiresAt!: string | null;
+}
+
 export class TenantMeResponseDto {
   /** `tenants.id` — the id expected by the editor route (`/editor/:tenantId`). */
   @ApiProperty()
@@ -40,6 +80,13 @@ export class TenantMeResponseDto {
   @ApiProperty()
   vercelDomainMapped!: boolean;
 
+  /** Provisioning state of the purchased domain (null until one is bought). */
+  @ApiProperty({ type: TenantDomainDto, nullable: true })
+  domainStatus!: TenantDomainDto | null;
+
   @ApiProperty({ type: TenantSiteMetaDto, nullable: true })
   site!: TenantSiteMetaDto | null;
+
+  @ApiProperty({ type: TenantSubscriptionDto, nullable: true })
+  subscription!: TenantSubscriptionDto | null;
 }

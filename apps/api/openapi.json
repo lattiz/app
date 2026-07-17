@@ -1,6 +1,291 @@
 {
   "openapi": "3.0.0",
   "paths": {
+    "/billing/checkout-session": {
+      "post": {
+        "operationId": "BillingController_createCheckoutSession",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCheckoutSessionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BillingRedirectResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a Stripe Checkout session (protected)",
+        "tags": [
+          "billing"
+        ]
+      }
+    },
+    "/billing/portal-session": {
+      "post": {
+        "operationId": "BillingController_createPortalSession",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BillingRedirectResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a Stripe billing portal session (protected)",
+        "tags": [
+          "billing"
+        ]
+      }
+    },
+    "/billing/subscription": {
+      "get": {
+        "operationId": "BillingController_getSubscription",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/SubscriptionResponseDto"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get the tenant current subscription (protected)",
+        "tags": [
+          "billing"
+        ]
+      }
+    },
+    "/domains/search": {
+      "get": {
+        "operationId": "DomainsController_search",
+        "parameters": [
+          {
+            "name": "q",
+            "required": true,
+            "in": "query",
+            "description": "Keyword to search domains for (no TLD — variants are generated server-side).",
+            "schema": {
+              "minLength": 2,
+              "maxLength": 63,
+              "pattern": "^[a-z0-9][a-z0-9-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DomainSearchResultDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Search available domains (protected)",
+        "tags": [
+          "domains"
+        ]
+      }
+    },
+    "/domains/quote": {
+      "post": {
+        "operationId": "DomainsController_getQuote",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetQuoteDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainQuoteResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get a locked registration quote (protected)",
+        "tags": [
+          "domains"
+        ]
+      }
+    },
+    "/domains/purchase": {
+      "post": {
+        "operationId": "DomainsController_purchase",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurchaseDomainDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainPurchaseResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Purchase a domain (protected, async)",
+        "tags": [
+          "domains"
+        ]
+      }
+    },
+    "/domains/jobs/{jobId}": {
+      "get": {
+        "operationId": "DomainsController_getJobStatus",
+        "parameters": [
+          {
+            "name": "jobId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainJobStatusDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get domain purchase job status (protected)",
+        "tags": [
+          "domains"
+        ]
+      }
+    },
+    "/domains": {
+      "get": {
+        "operationId": "DomainsController_getDomain",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/DomainStatusResponseDto"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get the tenant current domain + DNS/SSL status (protected)",
+        "tags": [
+          "domains"
+        ]
+      }
+    },
     "/health": {
       "get": {
         "operationId": "HealthController_health",
@@ -407,6 +692,327 @@
       }
     },
     "schemas": {
+      "CreateCheckoutSessionDto": {
+        "type": "object",
+        "properties": {
+          "plan": {
+            "enum": [
+              "basico",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "period": {
+            "enum": [
+              "monthly",
+              "annual"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "plan",
+          "period"
+        ]
+      },
+      "BillingRedirectResponseDto": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "url"
+        ]
+      },
+      "SubscriptionResponseDto": {
+        "type": "object",
+        "properties": {
+          "plan": {
+            "enum": [
+              "basico",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "billingPeriod": {
+            "enum": [
+              "monthly",
+              "annual"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "trialing",
+              "past_due",
+              "canceled",
+              "incomplete",
+              "incomplete_expired",
+              "unpaid",
+              "paused"
+            ]
+          },
+          "currentPeriodEnd": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancelAtPeriodEnd": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "plan",
+          "billingPeriod",
+          "status",
+          "currentPeriodEnd",
+          "cancelAtPeriodEnd"
+        ]
+      },
+      "DomainSearchResultDto": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string"
+          },
+          "available": {
+            "type": "boolean"
+          },
+          "priceUsdCents": {
+            "type": "number"
+          },
+          "coveredByPlan": {
+            "type": "boolean",
+            "description": "Whether the Lattiz plan absorbs the cost (price <= DOMAIN_MAX_COST_USD_CENTS)."
+          }
+        },
+        "required": [
+          "domain",
+          "available",
+          "priceUsdCents",
+          "coveredByPlan"
+        ]
+      },
+      "GetQuoteDto": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Fully-qualified domain to quote, e.g. \"miempresa.com\"."
+          }
+        },
+        "required": [
+          "domain"
+        ]
+      },
+      "DomainAgreementDto": {
+        "type": "object",
+        "properties": {
+          "agreementType": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "agreementType",
+          "title",
+          "url"
+        ]
+      },
+      "DomainQuoteResponseDto": {
+        "type": "object",
+        "properties": {
+          "quoteToken": {
+            "type": "string",
+            "description": "Single-use token that locks the price for 10 minutes."
+          },
+          "expiresAt": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "available": {
+            "type": "boolean"
+          },
+          "priceUsdCents": {
+            "type": "number"
+          },
+          "renewalPriceUsdCents": {
+            "type": "number"
+          },
+          "coveredByPlan": {
+            "type": "boolean"
+          },
+          "requiredAgreements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DomainAgreementDto"
+            }
+          },
+          "irreversible": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "quoteToken",
+          "expiresAt",
+          "domain",
+          "available",
+          "priceUsdCents",
+          "renewalPriceUsdCents",
+          "coveredByPlan",
+          "requiredAgreements",
+          "irreversible"
+        ]
+      },
+      "PurchaseDomainDto": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Fully-qualified domain to purchase."
+          },
+          "quoteToken": {
+            "type": "string",
+            "description": "Single-use quote token from POST /domains/quote (10-minute TTL).",
+            "minLength": 1
+          },
+          "agreementTypes": {
+            "description": "Agreement types the user accepted — must match the quote's requiredAgreements.",
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "agreedAt": {
+            "type": "string",
+            "description": "ISO timestamp of when the user actually clicked \"Acepto\" — never fabricated."
+          },
+          "priceUsdCents": {
+            "type": "number",
+            "description": "Locked price from the quote, in USD cents.",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "domain",
+          "quoteToken",
+          "agreementTypes",
+          "agreedAt",
+          "priceUsdCents"
+        ]
+      },
+      "DomainPurchaseResponseDto": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string",
+            "description": "Poll GET /domains/jobs/:jobId with this id for pipeline progress."
+          }
+        },
+        "required": [
+          "jobId"
+        ]
+      },
+      "DomainJobStatusDto": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "purchasing",
+              "configuring_dns",
+              "registering_vercel",
+              "completed",
+              "failed"
+            ],
+            "type": "string"
+          },
+          "stepsCompleted": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorStep": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "jobId",
+          "domain",
+          "status",
+          "stepsCompleted",
+          "errorMessage",
+          "errorStep"
+        ]
+      },
+      "DomainStatusResponseDto": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string"
+          },
+          "dnsStatus": {
+            "enum": [
+              "pending",
+              "configuring",
+              "propagating",
+              "active",
+              "error"
+            ],
+            "type": "string"
+          },
+          "vercelMapped": {
+            "type": "boolean"
+          },
+          "sslActive": {
+            "type": "boolean"
+          },
+          "isMock": {
+            "type": "boolean"
+          },
+          "expiresAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "purchaseCompletedAt": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "domain",
+          "dnsStatus",
+          "vercelMapped",
+          "sslActive",
+          "isMock",
+          "expiresAt",
+          "purchaseCompletedAt"
+        ]
+      },
       "DependencyStatusDto": {
         "type": "object",
         "properties": {
@@ -688,6 +1294,45 @@
           "sortOrder"
         ]
       },
+      "TenantDomainDto": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string"
+          },
+          "dnsStatus": {
+            "enum": [
+              "pending",
+              "configuring",
+              "propagating",
+              "active",
+              "error"
+            ],
+            "type": "string"
+          },
+          "vercelMapped": {
+            "type": "boolean"
+          },
+          "sslActive": {
+            "type": "boolean"
+          },
+          "isMock": {
+            "type": "boolean"
+          },
+          "expiresAt": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "domain",
+          "dnsStatus",
+          "vercelMapped",
+          "sslActive",
+          "isMock",
+          "expiresAt"
+        ]
+      },
       "TenantSiteMetaDto": {
         "type": "object",
         "properties": {
@@ -724,6 +1369,45 @@
           "updatedAt"
         ]
       },
+      "TenantSubscriptionDto": {
+        "type": "object",
+        "properties": {
+          "plan": {
+            "nullable": true,
+            "enum": [
+              "basico",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "billingPeriod": {
+            "nullable": true,
+            "enum": [
+              "monthly",
+              "annual"
+            ],
+            "type": "string"
+          },
+          "currentPeriodEnd": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancelAtPeriodEnd": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "plan",
+          "status",
+          "billingPeriod",
+          "currentPeriodEnd",
+          "cancelAtPeriodEnd"
+        ]
+      },
       "TenantMeResponseDto": {
         "type": "object",
         "properties": {
@@ -755,12 +1439,31 @@
           "vercelDomainMapped": {
             "type": "boolean"
           },
+          "domainStatus": {
+            "nullable": true,
+            "description": "Provisioning state of the purchased domain (null until one is bought).",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TenantDomainDto"
+              }
+            ]
+          },
           "site": {
             "nullable": true,
             "type": "object",
             "allOf": [
               {
                 "$ref": "#/components/schemas/TenantSiteMetaDto"
+              }
+            ]
+          },
+          "subscription": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TenantSubscriptionDto"
               }
             ]
           }
@@ -773,7 +1476,9 @@
           "status",
           "domain",
           "vercelDomainMapped",
-          "site"
+          "domainStatus",
+          "site",
+          "subscription"
         ]
       }
     }

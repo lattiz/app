@@ -4,9 +4,21 @@ import type {
   SubscriptionStatus,
 } from '@/types/dashboard.types';
 
-export const SIMULATE_STATE: DashboardState =
-  (import.meta.env.VITE_SIMULATE_DASHBOARD as DashboardState | undefined) ??
-  'active';
+// VITE_SIMULATE_DASHBOARD selects a mocked dashboard state for local dev.
+// The special value 'live' turns simulation OFF: the dashboard renders from the
+// real /tenants/me response with no mock overrides. Any recognized state
+// ('active' | 'no-template' | 'no-subscription' | 'loading') forces that mock.
+const RAW_SIMULATE = import.meta.env.VITE_SIMULATE_DASHBOARD as
+  | string
+  | undefined;
+
+/** True only when a mocked state is active. 'live' (or unset) → real API data. */
+export const SIMULATE_ENABLED =
+  RAW_SIMULATE != null && RAW_SIMULATE !== '' && RAW_SIMULATE !== 'live';
+
+export const SIMULATE_STATE: DashboardState = SIMULATE_ENABLED
+  ? (RAW_SIMULATE as DashboardState)
+  : 'active';
 
 const MOCK_SITE: Record<DashboardState, SiteStatus | null> = {
   loading: null,

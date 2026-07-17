@@ -7,7 +7,10 @@ import { DomainExceptionFilter } from './common/filters/domain-exception.filter'
 import { buildSwaggerConfig } from './swagger';
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  // rawBody preserves the exact bytes Stripe signs; required for webhook verification.
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    rawBody: true,
+  });
 
   // GrapesJS project JSON payloads far exceed Express's 100kb default.
   app.useBodyParser('json', { limit: '10mb' });

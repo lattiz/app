@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { BillingModule } from './modules/billing/billing.module';
+import { DomainsModule } from './modules/domains/domains.module';
 import { HealthModule } from './modules/health/health.module';
 import { MeModule } from './modules/me/me.module';
 import { SitesModule } from './modules/sites/sites.module';
@@ -9,6 +11,8 @@ import { TenantsModule } from './modules/tenants/tenants.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    BillingModule,
+    DomainsModule,
     HealthModule,
     MeModule,
     SitesModule,

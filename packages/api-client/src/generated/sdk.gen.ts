@@ -2,7 +2,7 @@
 
 import type { Client, ClientMeta, Options as Options2, RequestResult, TDataShape } from './client';
 import { client } from './client.gen';
-import type { HealthControllerHealthData, HealthControllerHealthResponses, MeControllerDeleteMeData, MeControllerDeleteMeErrors, MeControllerDeleteMeResponses, MeControllerMeData, MeControllerMeErrors, MeControllerMeResponses, SitesControllerChangeTemplateData, SitesControllerChangeTemplateErrors, SitesControllerChangeTemplateResponses, SitesControllerGetSchemaData, SitesControllerGetSchemaErrors, SitesControllerGetSchemaResponses, SitesControllerPublishData, SitesControllerPublishErrors, SitesControllerPublishResponses, SitesControllerSaveSchemaData, SitesControllerSaveSchemaErrors, SitesControllerSaveSchemaResponses, SitesControllerSelectTemplateData, SitesControllerSelectTemplateErrors, SitesControllerSelectTemplateResponses, TemplatesControllerFindAllData, TemplatesControllerFindAllErrors, TemplatesControllerFindAllResponses, TenantsControllerMeData, TenantsControllerMeErrors, TenantsControllerMeResponses } from './types.gen';
+import type { BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponses, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponses, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionResponses, DomainsControllerGetDomainData, DomainsControllerGetDomainResponses, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponses, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponses, DomainsControllerPurchaseData, DomainsControllerPurchaseResponses, DomainsControllerSearchData, DomainsControllerSearchResponses, HealthControllerHealthData, HealthControllerHealthResponses, MeControllerDeleteMeData, MeControllerDeleteMeErrors, MeControllerDeleteMeResponses, MeControllerMeData, MeControllerMeErrors, MeControllerMeResponses, SitesControllerChangeTemplateData, SitesControllerChangeTemplateErrors, SitesControllerChangeTemplateResponses, SitesControllerGetSchemaData, SitesControllerGetSchemaErrors, SitesControllerGetSchemaResponses, SitesControllerPublishData, SitesControllerPublishErrors, SitesControllerPublishResponses, SitesControllerSaveSchemaData, SitesControllerSaveSchemaErrors, SitesControllerSaveSchemaResponses, SitesControllerSelectTemplateData, SitesControllerSelectTemplateErrors, SitesControllerSelectTemplateResponses, TemplatesControllerFindAllData, TemplatesControllerFindAllErrors, TemplatesControllerFindAllResponses, TenantsControllerMeData, TenantsControllerMeErrors, TenantsControllerMeResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -17,6 +17,90 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
      */
     meta?: keyof ClientMeta extends never ? Record<string, unknown> : ClientMeta;
 };
+
+/**
+ * Create a Stripe Checkout session (protected)
+ */
+export const billingControllerCreateCheckoutSession = <ThrowOnError extends boolean = false>(options: Options<BillingControllerCreateCheckoutSessionData, ThrowOnError>): RequestResult<BillingControllerCreateCheckoutSessionResponses, unknown, ThrowOnError> => (options.client ?? client).post<BillingControllerCreateCheckoutSessionResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/billing/checkout-session',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Create a Stripe billing portal session (protected)
+ */
+export const billingControllerCreatePortalSession = <ThrowOnError extends boolean = false>(options?: Options<BillingControllerCreatePortalSessionData, ThrowOnError>): RequestResult<BillingControllerCreatePortalSessionResponses, unknown, ThrowOnError> => (options?.client ?? client).post<BillingControllerCreatePortalSessionResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/billing/portal-session',
+    ...options
+});
+
+/**
+ * Get the tenant current subscription (protected)
+ */
+export const billingControllerGetSubscription = <ThrowOnError extends boolean = false>(options?: Options<BillingControllerGetSubscriptionData, ThrowOnError>): RequestResult<BillingControllerGetSubscriptionResponses, unknown, ThrowOnError> => (options?.client ?? client).get<BillingControllerGetSubscriptionResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/billing/subscription',
+    ...options
+});
+
+/**
+ * Search available domains (protected)
+ */
+export const domainsControllerSearch = <ThrowOnError extends boolean = false>(options: Options<DomainsControllerSearchData, ThrowOnError>): RequestResult<DomainsControllerSearchResponses, unknown, ThrowOnError> => (options.client ?? client).get<DomainsControllerSearchResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/domains/search',
+    ...options
+});
+
+/**
+ * Get a locked registration quote (protected)
+ */
+export const domainsControllerGetQuote = <ThrowOnError extends boolean = false>(options: Options<DomainsControllerGetQuoteData, ThrowOnError>): RequestResult<DomainsControllerGetQuoteResponses, unknown, ThrowOnError> => (options.client ?? client).post<DomainsControllerGetQuoteResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/domains/quote',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Purchase a domain (protected, async)
+ */
+export const domainsControllerPurchase = <ThrowOnError extends boolean = false>(options: Options<DomainsControllerPurchaseData, ThrowOnError>): RequestResult<DomainsControllerPurchaseResponses, unknown, ThrowOnError> => (options.client ?? client).post<DomainsControllerPurchaseResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/domains/purchase',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get domain purchase job status (protected)
+ */
+export const domainsControllerGetJobStatus = <ThrowOnError extends boolean = false>(options: Options<DomainsControllerGetJobStatusData, ThrowOnError>): RequestResult<DomainsControllerGetJobStatusResponses, unknown, ThrowOnError> => (options.client ?? client).get<DomainsControllerGetJobStatusResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/domains/jobs/{jobId}',
+    ...options
+});
+
+/**
+ * Get the tenant current domain + DNS/SSL status (protected)
+ */
+export const domainsControllerGetDomain = <ThrowOnError extends boolean = false>(options?: Options<DomainsControllerGetDomainData, ThrowOnError>): RequestResult<DomainsControllerGetDomainResponses, unknown, ThrowOnError> => (options?.client ?? client).get<DomainsControllerGetDomainResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/domains',
+    ...options
+});
 
 /**
  * Service health (public)

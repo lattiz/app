@@ -4,6 +4,110 @@ export type ClientOptions = {
     baseUrl: string;
 };
 
+export type CreateCheckoutSessionDto = {
+    plan: 'basico' | 'pro';
+    period: 'monthly' | 'annual';
+};
+
+export type BillingRedirectResponseDto = {
+    url: string;
+};
+
+export type SubscriptionResponseDto = {
+    plan: 'basico' | 'pro';
+    billingPeriod: 'monthly' | 'annual';
+    status: 'active' | 'trialing' | 'past_due' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'unpaid' | 'paused';
+    currentPeriodEnd: string | null;
+    cancelAtPeriodEnd: boolean;
+};
+
+export type DomainSearchResultDto = {
+    domain: string;
+    available: boolean;
+    priceUsdCents: number;
+    /**
+     * Whether the Lattiz plan absorbs the cost (price <= DOMAIN_MAX_COST_USD_CENTS).
+     */
+    coveredByPlan: boolean;
+};
+
+export type GetQuoteDto = {
+    /**
+     * Fully-qualified domain to quote, e.g. "miempresa.com".
+     */
+    domain: string;
+};
+
+export type DomainAgreementDto = {
+    agreementType: string;
+    title: string;
+    url: string | null;
+};
+
+export type DomainQuoteResponseDto = {
+    /**
+     * Single-use token that locks the price for 10 minutes.
+     */
+    quoteToken: string;
+    expiresAt: string;
+    domain: string;
+    available: boolean;
+    priceUsdCents: number;
+    renewalPriceUsdCents: number;
+    coveredByPlan: boolean;
+    requiredAgreements: Array<DomainAgreementDto>;
+    irreversible: boolean;
+};
+
+export type PurchaseDomainDto = {
+    /**
+     * Fully-qualified domain to purchase.
+     */
+    domain: string;
+    /**
+     * Single-use quote token from POST /domains/quote (10-minute TTL).
+     */
+    quoteToken: string;
+    /**
+     * Agreement types the user accepted — must match the quote's requiredAgreements.
+     */
+    agreementTypes: Array<string>;
+    /**
+     * ISO timestamp of when the user actually clicked "Acepto" — never fabricated.
+     */
+    agreedAt: string;
+    /**
+     * Locked price from the quote, in USD cents.
+     */
+    priceUsdCents: number;
+};
+
+export type DomainPurchaseResponseDto = {
+    /**
+     * Poll GET /domains/jobs/:jobId with this id for pipeline progress.
+     */
+    jobId: string;
+};
+
+export type DomainJobStatusDto = {
+    jobId: string;
+    domain: string;
+    status: 'pending' | 'purchasing' | 'configuring_dns' | 'registering_vercel' | 'completed' | 'failed';
+    stepsCompleted: Array<string>;
+    errorMessage: string | null;
+    errorStep: string | null;
+};
+
+export type DomainStatusResponseDto = {
+    domain: string;
+    dnsStatus: 'pending' | 'configuring' | 'propagating' | 'active' | 'error';
+    vercelMapped: boolean;
+    sslActive: boolean;
+    isMock: boolean;
+    expiresAt: string | null;
+    purchaseCompletedAt: string | null;
+};
+
 export type DependencyStatusDto = {
     /**
      * Dependency name.
@@ -145,12 +249,29 @@ export type TemplateListItemDto = {
     sortOrder: number;
 };
 
+export type TenantDomainDto = {
+    domain: string;
+    dnsStatus: 'pending' | 'configuring' | 'propagating' | 'active' | 'error';
+    vercelMapped: boolean;
+    sslActive: boolean;
+    isMock: boolean;
+    expiresAt: string | null;
+};
+
 export type TenantSiteMetaDto = {
     templateId: string | null;
     templateName: string | null;
     siteStatus: 'draft' | 'published';
     lastPublishedAt: string | null;
     updatedAt: string | null;
+};
+
+export type TenantSubscriptionDto = {
+    plan: 'basico' | 'pro';
+    status: string | null;
+    billingPeriod: 'monthly' | 'annual';
+    currentPeriodEnd: string | null;
+    cancelAtPeriodEnd: boolean;
 };
 
 export type TenantMeResponseDto = {
@@ -164,8 +285,124 @@ export type TenantMeResponseDto = {
     status: 'active' | 'inactive' | 'cancelled';
     domain: string | null;
     vercelDomainMapped: boolean;
+    /**
+     * Provisioning state of the purchased domain (null until one is bought).
+     */
+    domainStatus: TenantDomainDto | null;
     site: TenantSiteMetaDto | null;
+    subscription: TenantSubscriptionDto | null;
 };
+
+export type BillingControllerCreateCheckoutSessionData = {
+    body: CreateCheckoutSessionDto;
+    path?: never;
+    query?: never;
+    url: '/billing/checkout-session';
+};
+
+export type BillingControllerCreateCheckoutSessionResponses = {
+    200: BillingRedirectResponseDto;
+};
+
+export type BillingControllerCreateCheckoutSessionResponse = BillingControllerCreateCheckoutSessionResponses[keyof BillingControllerCreateCheckoutSessionResponses];
+
+export type BillingControllerCreatePortalSessionData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/billing/portal-session';
+};
+
+export type BillingControllerCreatePortalSessionResponses = {
+    200: BillingRedirectResponseDto;
+};
+
+export type BillingControllerCreatePortalSessionResponse = BillingControllerCreatePortalSessionResponses[keyof BillingControllerCreatePortalSessionResponses];
+
+export type BillingControllerGetSubscriptionData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/billing/subscription';
+};
+
+export type BillingControllerGetSubscriptionResponses = {
+    200: SubscriptionResponseDto | unknown;
+};
+
+export type BillingControllerGetSubscriptionResponse = BillingControllerGetSubscriptionResponses[keyof BillingControllerGetSubscriptionResponses];
+
+export type DomainsControllerSearchData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Keyword to search domains for (no TLD — variants are generated server-side).
+         */
+        q: string;
+    };
+    url: '/domains/search';
+};
+
+export type DomainsControllerSearchResponses = {
+    200: Array<DomainSearchResultDto>;
+};
+
+export type DomainsControllerSearchResponse = DomainsControllerSearchResponses[keyof DomainsControllerSearchResponses];
+
+export type DomainsControllerGetQuoteData = {
+    body: GetQuoteDto;
+    path?: never;
+    query?: never;
+    url: '/domains/quote';
+};
+
+export type DomainsControllerGetQuoteResponses = {
+    200: DomainQuoteResponseDto;
+};
+
+export type DomainsControllerGetQuoteResponse = DomainsControllerGetQuoteResponses[keyof DomainsControllerGetQuoteResponses];
+
+export type DomainsControllerPurchaseData = {
+    body: PurchaseDomainDto;
+    path?: never;
+    query?: never;
+    url: '/domains/purchase';
+};
+
+export type DomainsControllerPurchaseResponses = {
+    200: DomainPurchaseResponseDto;
+};
+
+export type DomainsControllerPurchaseResponse = DomainsControllerPurchaseResponses[keyof DomainsControllerPurchaseResponses];
+
+export type DomainsControllerGetJobStatusData = {
+    body?: never;
+    path: {
+        jobId: string;
+    };
+    query?: never;
+    url: '/domains/jobs/{jobId}';
+};
+
+export type DomainsControllerGetJobStatusResponses = {
+    200: DomainJobStatusDto;
+};
+
+export type DomainsControllerGetJobStatusResponse = DomainsControllerGetJobStatusResponses[keyof DomainsControllerGetJobStatusResponses];
+
+export type DomainsControllerGetDomainData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/domains';
+};
+
+export type DomainsControllerGetDomainResponses = {
+    200: DomainStatusResponseDto | unknown;
+};
+
+export type DomainsControllerGetDomainResponse = DomainsControllerGetDomainResponses[keyof DomainsControllerGetDomainResponses];
 
 export type HealthControllerHealthData = {
     body?: never;

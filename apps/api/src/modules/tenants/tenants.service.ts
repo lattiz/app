@@ -1,7 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { sql, type SQL } from 'drizzle-orm';
 import { type Database, DATABASE } from '../../database/database.module';
-import { TenantMeResponseDto, TenantSiteMetaDto } from './dto/tenants.response.dto';
+import {
+  TenantDomainDto,
+  TenantMeResponseDto,
+  TenantSiteMetaDto,
+  TenantSubscriptionDto,
+} from './dto/tenants.response.dto';
 import { TenantNotFoundException } from './tenants.exceptions';
 
 interface TenantRow {
@@ -20,6 +25,23 @@ interface SiteMetaRow {
   published_at: string | Date | null;
   updated_at: string | Date;
   template_name: string | null;
+}
+
+interface DomainStatusRow {
+  domain: string;
+  dns_status: TenantDomainDto['dnsStatus'];
+  vercel_mapped: boolean;
+  ssl_active: boolean;
+  is_mock: boolean;
+  expires_at: string | Date | null;
+}
+
+interface SubscriptionRow {
+  plan: 'basico' | 'pro';
+  billing_period: 'monthly' | 'annual';
+  status: string;
+  current_period_end: string | Date | null;
+  cancel_at_period_end: boolean;
 }
 
 @Injectable()
@@ -45,7 +67,55 @@ export class TenantsService {
       status: row.status as TenantMeResponseDto['status'],
       domain: row.domain,
       vercelDomainMapped: row.vercel_domain_mapped,
+      domainStatus: await this.getDomainStatus(row.id),
       site: await this.getSiteMeta(row.id),
+      subscription: await this.getSubscription(row.id),
+    };
+  }
+
+  private async getDomainStatus(
+    tenantId: string,
+  ): Promise<TenantDomainDto | null> {
+    const rows = await this.query<DomainStatusRow>(
+      sql`SELECT domain, dns_status, vercel_mapped, ssl_active, is_mock, expires_at
+          FROM public.domains
+          WHERE tenant_id = ${tenantId}::uuid
+          LIMIT 1`,
+    );
+    const row = rows[0];
+    if (!row) return null;
+
+    return {
+      domain: row.domain,
+      dnsStatus: row.dns_status,
+      vercelMapped: row.vercel_mapped,
+      sslActive: row.ssl_active,
+      isMock: row.is_mock,
+      expiresAt: row.expires_at ? toIso(row.expires_at) : null,
+    };
+  }
+
+  private async getSubscription(
+    tenantId: string,
+  ): Promise<TenantSubscriptionDto | null> {
+    const rows = await this.query<SubscriptionRow>(
+      sql`SELECT plan, billing_period, status, current_period_end, cancel_at_period_end
+          FROM public.subscriptions
+          WHERE tenant_id = ${tenantId}::uuid
+          ORDER BY created_at DESC
+          LIMIT 1`,
+    );
+    const row = rows[0];
+    if (!row) return null;
+
+    return {
+      plan: row.plan,
+      status: row.status,
+      billingPeriod: row.billing_period,
+      currentPeriodEnd: row.current_period_end
+        ? toIso(row.current_period_end)
+        : null,
+      cancelAtPeriodEnd: row.cancel_at_period_end,
     };
   }
 

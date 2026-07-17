@@ -54,8 +54,7 @@ export function SubscriptionCard({ subscription }: SubscriptionCardProps) {
 
   const badge = statusBadge(subscription.status);
   const includesDomain = subscription.plan === 'pro';
-  const showUpgrade =
-    subscription.plan === 'starter' || subscription.plan === null;
+  const showUpgrade = subscription.plan !== 'pro';
 
   return (
     <Card>
