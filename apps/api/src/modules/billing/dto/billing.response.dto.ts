@@ -33,3 +33,42 @@ export class SubscriptionResponseDto {
   @ApiProperty()
   cancelAtPeriodEnd!: boolean;
 }
+
+export class InvoiceDto {
+  @ApiProperty()
+  id!: string;
+
+  /** Unix timestamp (seconds). */
+  @ApiProperty()
+  date!: number;
+
+  /** Amount paid, in cents. */
+  @ApiProperty()
+  amountPaid!: number;
+
+  @ApiProperty()
+  currency!: string;
+
+  @ApiProperty()
+  status!: string;
+
+  @ApiProperty()
+  periodStart!: number;
+
+  @ApiProperty()
+  periodEnd!: number;
+
+  @ApiProperty({ type: String, nullable: true })
+  invoicePdf!: string | null;
+
+  @ApiProperty({ type: String, nullable: true })
+  hostedInvoiceUrl!: string | null;
+
+  @ApiProperty({ type: String, nullable: true })
+  description!: string | null;
+}
+
+export class InvoiceListResponseDto {
+  @ApiProperty({ type: InvoiceDto, isArray: true })
+  invoices!: InvoiceDto[];
+}

@@ -24,6 +24,7 @@ import { SupabaseJwtGuard } from '../../common/auth/supabase-jwt.guard';
 import { BillingService } from './billing.service';
 import {
   BillingRedirectResponseDto,
+  InvoiceListResponseDto,
   SubscriptionResponseDto,
 } from './dto/billing.response.dto';
 import { CreateCheckoutSessionDto } from './dto/create-checkout-session.dto';
@@ -73,6 +74,17 @@ export class BillingController {
     @CurrentUser() user?: AuthenticatedUser,
   ): Promise<SubscriptionResponseDto | null> {
     return this.billing.getSubscriptionForUser(requireSub(user));
+  }
+
+  @Get('invoices')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get the tenant paid invoice history (protected)' })
+  @ApiOkResponse({ type: InvoiceListResponseDto })
+  @UseGuards(SupabaseJwtGuard)
+  async getInvoices(
+    @CurrentUser() user?: AuthenticatedUser,
+  ): Promise<InvoiceListResponseDto> {
+    return this.billing.getInvoicesForUser(requireSub(user));
   }
 
   /** Verified by Stripe signature over the raw body — no JWT guard. */

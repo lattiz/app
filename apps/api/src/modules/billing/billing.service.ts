@@ -15,7 +15,10 @@ import {
   PriceNotConfiguredException,
 } from './billing.exceptions';
 import type { CreateCheckoutSessionDto } from './dto/create-checkout-session.dto';
-import type { SubscriptionResponseDto } from './dto/billing.response.dto';
+import type {
+  InvoiceListResponseDto,
+  SubscriptionResponseDto,
+} from './dto/billing.response.dto';
 import { STRIPE_CLIENT } from './stripe.provider';
 
 interface TenantRow {
@@ -125,6 +128,33 @@ export class BillingService {
         ? toIso(row.current_period_end)
         : null,
       cancelAtPeriodEnd: row.cancel_at_period_end,
+    };
+  }
+
+  // ── Invoices ──────────────────────────────────────────────────────────────
+  async getInvoicesForUser(userSub: string): Promise<InvoiceListResponseDto> {
+    const tenant = await this.getTenantByUserSub(userSub);
+    if (!tenant.stripe_customer_id) return { invoices: [] };
+
+    const invoices = await this.stripe.invoices.list({
+      customer: tenant.stripe_customer_id,
+      limit: 12,
+      status: 'paid',
+    });
+
+    return {
+      invoices: invoices.data.map((inv) => ({
+        id: inv.id ?? '',
+        date: inv.created,
+        amountPaid: inv.amount_paid,
+        currency: inv.currency,
+        status: inv.status ?? 'paid',
+        periodStart: inv.period_start,
+        periodEnd: inv.period_end,
+        invoicePdf: inv.invoice_pdf ?? null,
+        hostedInvoiceUrl: inv.hosted_invoice_url ?? null,
+        description: inv.description ?? inv.lines.data[0]?.description ?? null,
+      })),
     };
   }
 

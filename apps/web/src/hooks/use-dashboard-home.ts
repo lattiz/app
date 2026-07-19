@@ -16,11 +16,26 @@ import type {
 
 const SIMULATE = SIMULATE_ENABLED;
 
+/**
+ * The generated client throws the raw DomainExceptionFilter body on a
+ * non-2xx response (`{ error: { code, message } }`) — not an Error with a
+ * `.response.status` — so a 404 is identified by `error.code`, not a status.
+ */
+function isTenantNotFoundError(error: unknown): boolean {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    (error as { error?: { code?: unknown } }).error?.code === 'TENANT_NOT_FOUND'
+  );
+}
+
 function deriveDashboardState(
   tenantMe: TenantMeResponseDto | undefined,
   isLoading: boolean,
+  isSettledError: boolean,
 ): DashboardState {
-  if (isLoading || !tenantMe) return 'loading';
+  if (isLoading) return 'loading';
+  if (isSettledError || !tenantMe) return 'no-tenant';
   const subStatus = tenantMe.subscription?.status;
   const hasActiveSub = subStatus === 'active' || subStatus === 'trialing';
   if (!hasActiveSub) return 'no-subscription';
@@ -64,7 +79,26 @@ export function useDashboardHome() {
   const setSite = useDashboardStore((s) => s.setSite);
   const setSubscription = useDashboardStore((s) => s.setSubscription);
 
-  const tenant = useQuery({ ...tenantsControllerMeOptions(), enabled: !SIMULATE });
+  const tenant = useQuery({
+    ...tenantsControllerMeOptions(),
+    enabled: !SIMULATE,
+    // TENANT_NOT_FOUND retries are handled below via refetchInterval instead —
+    // the default retry backoff would otherwise waste time on an error that
+    // won't resolve itself faster than the trigger-provisioning race allows.
+    retry: (failureCount, error) =>
+      isTenantNotFoundError(error) ? false : failureCount < 2,
+    refetchInterval: (query) => {
+      // A brand-new signup's tenants row lands via a DB trigger in the same
+      // transaction, so this is normally already committed — but as a safety
+      // net, retry once ~2s after a TENANT_NOT_FOUND before giving up.
+      if (!isTenantNotFoundError(query.state.error)) return false;
+      return query.state.errorUpdateCount < 2 ? 2000 : false;
+    },
+  });
+
+  const isOnboardingRetryPending =
+    isTenantNotFoundError(tenant.error) && tenant.errorUpdateCount < 2;
+  const isSettledError = tenant.isError && !isOnboardingRetryPending;
 
   useEffect(() => {
     if (SIMULATE) {
@@ -77,12 +111,12 @@ export function useDashboardHome() {
       return;
     }
 
-    setState(deriveDashboardState(tenant.data, tenant.isLoading));
+    setState(deriveDashboardState(tenant.data, tenant.isLoading, isSettledError));
     if (tenant.data) {
       setSite(mapToSiteStatus(tenant.data));
       setSubscription(mapToSubscriptionStatus(tenant.data));
     }
-  }, [tenant.data, tenant.isLoading, setState, setSite, setSubscription]);
+  }, [tenant.data, tenant.isLoading, isSettledError, setState, setSite, setSubscription]);
 
   return { state, site, subscription };
 }

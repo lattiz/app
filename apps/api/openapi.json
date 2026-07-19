@@ -99,6 +99,33 @@
         ]
       }
     },
+    "/billing/invoices": {
+      "get": {
+        "operationId": "BillingController_getInvoices",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceListResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get the tenant paid invoice history (protected)",
+        "tags": [
+          "billing"
+        ]
+      }
+    },
     "/domains/search": {
       "get": {
         "operationId": "DomainsController_search",
@@ -807,6 +834,72 @@
           "status",
           "currentPeriodEnd",
           "cancelAtPeriodEnd"
+        ]
+      },
+      "InvoiceDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "date": {
+            "type": "number",
+            "description": "Unix timestamp (seconds)."
+          },
+          "amountPaid": {
+            "type": "number",
+            "description": "Amount paid, in cents."
+          },
+          "currency": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "periodStart": {
+            "type": "number"
+          },
+          "periodEnd": {
+            "type": "number"
+          },
+          "invoicePdf": {
+            "type": "string",
+            "nullable": true
+          },
+          "hostedInvoiceUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "date",
+          "amountPaid",
+          "currency",
+          "status",
+          "periodStart",
+          "periodEnd",
+          "invoicePdf",
+          "hostedInvoiceUrl",
+          "description"
+        ]
+      },
+      "InvoiceListResponseDto": {
+        "type": "object",
+        "properties": {
+          "invoices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InvoiceDto"
+            }
+          }
+        },
+        "required": [
+          "invoices"
         ]
       },
       "DomainSearchResultDto": {

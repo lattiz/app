@@ -2,6 +2,7 @@ export type DashboardState =
   | 'active' // has template + active subscription + site published
   | 'no-template' // subscription active, no template selected
   | 'no-subscription' // no active subscription
+  | 'no-tenant' // GET /tenants/me failed (no tenant row, or a persistent error)
   | 'loading'; // initial load skeleton
 
 export interface SiteStatus {

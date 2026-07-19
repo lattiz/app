@@ -21,6 +21,29 @@ export type SubscriptionResponseDto = {
     cancelAtPeriodEnd: boolean;
 };
 
+export type InvoiceDto = {
+    id: string;
+    /**
+     * Unix timestamp (seconds).
+     */
+    date: number;
+    /**
+     * Amount paid, in cents.
+     */
+    amountPaid: number;
+    currency: string;
+    status: string;
+    periodStart: number;
+    periodEnd: number;
+    invoicePdf: string | null;
+    hostedInvoiceUrl: string | null;
+    description: string | null;
+};
+
+export type InvoiceListResponseDto = {
+    invoices: Array<InvoiceDto>;
+};
+
 export type DomainSearchResultDto = {
     domain: string;
     available: boolean;
@@ -358,6 +381,19 @@ export type BillingControllerGetSubscriptionResponses = {
 };
 
 export type BillingControllerGetSubscriptionResponse = BillingControllerGetSubscriptionResponses[keyof BillingControllerGetSubscriptionResponses];
+
+export type BillingControllerGetInvoicesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/billing/invoices';
+};
+
+export type BillingControllerGetInvoicesResponses = {
+    200: InvoiceListResponseDto;
+};
+
+export type BillingControllerGetInvoicesResponse = BillingControllerGetInvoicesResponses[keyof BillingControllerGetInvoicesResponses];
 
 export type DomainsControllerSearchData = {
     body?: never;

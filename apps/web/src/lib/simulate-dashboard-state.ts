@@ -7,7 +7,8 @@ import type {
 // VITE_SIMULATE_DASHBOARD selects a mocked dashboard state for local dev.
 // The special value 'live' turns simulation OFF: the dashboard renders from the
 // real /tenants/me response with no mock overrides. Any recognized state
-// ('active' | 'no-template' | 'no-subscription' | 'loading') forces that mock.
+// ('active' | 'no-template' | 'no-subscription' | 'no-tenant' | 'loading')
+// forces that mock.
 const RAW_SIMULATE = import.meta.env.VITE_SIMULATE_DASHBOARD as
   | string
   | undefined;
@@ -22,6 +23,7 @@ export const SIMULATE_STATE: DashboardState = SIMULATE_ENABLED
 
 const MOCK_SITE: Record<DashboardState, SiteStatus | null> = {
   loading: null,
+  'no-tenant': null,
   active: {
     isOnline: true,
     lastPublished: '2026-07-04T10:00:00Z',
@@ -68,6 +70,7 @@ const MOCK_SITE: Record<DashboardState, SiteStatus | null> = {
 
 const MOCK_SUB: Record<DashboardState, SubscriptionStatus | null> = {
   loading: null,
+  'no-tenant': null,
   active: {
     plan: 'pro',
     status: 'active',
