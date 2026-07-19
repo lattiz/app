@@ -89,6 +89,31 @@ export type DomainPurchaseResponseDto = {
     jobId: string;
 };
 
+export type ConnectDomainDto = {
+    /**
+     * Domain the tenant already owns at another registrar, e.g. "miempresa.com".
+     */
+    domain: string;
+};
+
+export type CnameInstructionDto = {
+    type: 'CNAME';
+    /**
+     * '@' for the apex, 'www' for the subdomain.
+     */
+    name: string;
+    value: string;
+    ttl: number;
+};
+
+export type ConnectDomainResponseDto = {
+    jobId: string;
+    /**
+     * DNS records the tenant must create manually at their registrar.
+     */
+    dnsInstructions: Array<CnameInstructionDto>;
+};
+
 export type DomainJobStatusDto = {
     jobId: string;
     domain: string;
@@ -100,6 +125,7 @@ export type DomainJobStatusDto = {
 
 export type DomainStatusResponseDto = {
     domain: string;
+    source: 'godaddy_managed' | 'user_provided';
     dnsStatus: 'pending' | 'configuring' | 'propagating' | 'active' | 'error';
     vercelMapped: boolean;
     sslActive: boolean;
@@ -251,6 +277,7 @@ export type TemplateListItemDto = {
 
 export type TenantDomainDto = {
     domain: string;
+    source: 'godaddy_managed' | 'user_provided';
     dnsStatus: 'pending' | 'configuring' | 'propagating' | 'active' | 'error';
     vercelMapped: boolean;
     sslActive: boolean;
@@ -375,6 +402,19 @@ export type DomainsControllerPurchaseResponses = {
 };
 
 export type DomainsControllerPurchaseResponse = DomainsControllerPurchaseResponses[keyof DomainsControllerPurchaseResponses];
+
+export type DomainsControllerConnectData = {
+    body: ConnectDomainDto;
+    path?: never;
+    query?: never;
+    url: '/domains/connect';
+};
+
+export type DomainsControllerConnectResponses = {
+    200: ConnectDomainResponseDto;
+};
+
+export type DomainsControllerConnectResponse = DomainsControllerConnectResponses[keyof DomainsControllerConnectResponses];
 
 export type DomainsControllerGetJobStatusData = {
     body?: never;

@@ -4,6 +4,8 @@ import { sql, type SQL } from 'drizzle-orm';
 import { randomUUID } from 'node:crypto';
 import { type Database, DATABASE } from '../../database/database.module';
 import {
+  CnameInstructionDto,
+  ConnectDomainResponseDto,
   DomainJobStatusDto,
   DomainQuoteResponseDto,
   DomainSearchResultDto,
@@ -22,10 +24,18 @@ import { VercelDomainsService } from './vercel-domains.service';
 
 const VERCEL_CNAME = 'cname.vercel-dns.com';
 
+const CNAME_INSTRUCTIONS: CnameInstructionDto[] = [
+  { type: 'CNAME', name: '@', value: VERCEL_CNAME, ttl: 600 },
+  { type: 'CNAME', name: 'www', value: VERCEL_CNAME, ttl: 600 },
+];
+
+type DomainSource = 'godaddy_managed' | 'user_provided';
+
 interface DomainRow {
   id: string;
   tenant_id: string;
   domain: string;
+  source: DomainSource;
   tld: string;
   godaddy_registration_id: string | null;
   godaddy_idempotency_key: string | null;
@@ -169,6 +179,7 @@ export class DomainsService {
         agreementTypes: params.agreementTypes,
         agreedAt: params.agreedAt,
         isMock: this.godaddy.isMockMode,
+        source: 'godaddy_managed',
       });
     }
 
@@ -264,6 +275,59 @@ export class DomainsService {
     }
   }
 
+  // ── Connect a domain the tenant already owns ──────────────────────────────
+  // No GoDaddy involved — Lattiz only maps the domain in Vercel and hands the
+  // tenant the CNAME records to create at their registrar.
+  async initiateConnect(
+    userSub: string,
+    domain: string,
+  ): Promise<ConnectDomainResponseDto> {
+    const tenantId = await this.getTenantIdByUserSub(userSub);
+
+    const existing = await this.getDomainByTenant(tenantId);
+    if (existing) {
+      if (existing.purchase_completed_at) {
+        throw new TenantAlreadyHasDomainException();
+      }
+      // Leftover of an incomplete purchase/connect attempt — replace it.
+      await this.deleteDomainRecord(existing.id);
+    }
+
+    const tld = '.' + domain.split('.').slice(1).join('.');
+    const jobId = await this.createDomainJob(tenantId, domain, 'connect');
+
+    await this.createDomainRecord({
+      tenantId,
+      domain,
+      tld,
+      idempotencyKey: null,
+      priceUsdCents: null,
+      agreementTypes: [],
+      agreedAt: null,
+      isMock: false,
+      source: 'user_provided',
+    });
+
+    try {
+      await this.updateJobStatus(jobId, 'registering_vercel');
+      await this.vercel.addDomain(domain);
+      await this.addCompletedStep(jobId, 'registering_vercel');
+    } catch (err) {
+      this.logger.error(`Connect failed for ${domain} (job ${jobId}): ${String(err)}`);
+      await this.failJob(jobId, 'registering_vercel', String(err));
+      await this.setDnsStatus(domain, 'error');
+      throw err;
+    }
+
+    await this.markVercelMapped(domain, domain);
+    await this.setDnsStatus(domain, 'propagating');
+    await this.updateTenantDomain(tenantId, domain);
+    await this.updateJobStatus(jobId, 'completed');
+    this.logger.log(`Domain connected: ${domain} (job: ${jobId})`);
+
+    return { jobId, dnsInstructions: CNAME_INSTRUCTIONS };
+  }
+
   // ── Job status (frontend polls this) ──────────────────────────────────────
   async getJobStatus(userSub: string, jobId: string): Promise<DomainJobStatusDto> {
     const tenantId = await this.getTenantIdByUserSub(userSub);
@@ -339,7 +403,7 @@ export class DomainsService {
 
   private async getDomainByTenant(tenantId: string): Promise<DomainRow | null> {
     const rows = await this.query<DomainRow>(
-      sql`SELECT id, tenant_id, domain, tld, godaddy_registration_id,
+      sql`SELECT id, tenant_id, domain, source, tld, godaddy_registration_id,
                  godaddy_idempotency_key, annual_cost_usd_cents, period_years,
                  expires_at, dns_status, vercel_domain_id, vercel_mapped,
                  ssl_active, is_mock, purchase_completed_at
@@ -354,21 +418,23 @@ export class DomainsService {
     tenantId: string;
     domain: string;
     tld: string;
-    idempotencyKey: string;
-    priceUsdCents: number;
+    idempotencyKey: string | null;
+    priceUsdCents: number | null;
     agreementTypes: string[];
-    agreedAt: string;
+    agreedAt: string | null;
     isMock: boolean;
+    source: DomainSource;
   }): Promise<void> {
     await this.query(
       sql`INSERT INTO public.domains (
             tenant_id, domain, tld, godaddy_idempotency_key,
-            annual_cost_usd_cents, agreement_types_accepted, agreed_at, is_mock
+            annual_cost_usd_cents, agreement_types_accepted, agreed_at, is_mock,
+            source
           ) VALUES (
             ${params.tenantId}::uuid, ${params.domain}, ${params.tld},
             ${params.idempotencyKey}, ${params.priceUsdCents},
             ${toPgTextArray(params.agreementTypes)}::text[], ${params.agreedAt}::timestamptz,
-            ${params.isMock}
+            ${params.isMock}, ${params.source}
           )`,
     );
   }
@@ -377,10 +443,14 @@ export class DomainsService {
     await this.query(sql`DELETE FROM public.domains WHERE id = ${id}::uuid`);
   }
 
-  private async createDomainJob(tenantId: string, domain: string): Promise<string> {
+  private async createDomainJob(
+    tenantId: string,
+    domain: string,
+    jobType: 'purchase' | 'connect' = 'purchase',
+  ): Promise<string> {
     const rows = await this.query<{ id: string }>(
-      sql`INSERT INTO public.domain_jobs (tenant_id, domain)
-          VALUES (${tenantId}::uuid, ${domain})
+      sql`INSERT INTO public.domain_jobs (tenant_id, domain, job_type)
+          VALUES (${tenantId}::uuid, ${domain}, ${jobType})
           RETURNING id`,
     );
     return rows[0].id;
@@ -450,6 +520,8 @@ export class DomainsService {
   }
 }
 
+// TODO: post-MVP — monitor expiry of user_provided domains (no renewal handling,
+//       no expiry notifications; if the tenant lets it lapse the site goes dark).
 // TODO: domain transfer to tenant on subscription cancellation (30-day grace).
 // TODO: annual renewal via cron job — v1 POST /domains/{domain}/renew.
 // TODO: multiple domains per tenant — remove domains_tenant_id_idx + update UI.
@@ -461,6 +533,7 @@ export class DomainsService {
 function toStatusDto(row: DomainRow): DomainStatusResponseDto {
   return {
     domain: row.domain,
+    source: row.source,
     dnsStatus: row.dns_status,
     vercelMapped: row.vercel_mapped,
     sslActive: row.ssl_active,

@@ -62,6 +62,30 @@ export class DomainPurchaseResponseDto {
   jobId!: string;
 }
 
+export class CnameInstructionDto {
+  @ApiProperty({ enum: ['CNAME'] })
+  type!: 'CNAME';
+
+  /** '@' for the apex, 'www' for the subdomain. */
+  @ApiProperty()
+  name!: string;
+
+  @ApiProperty()
+  value!: string;
+
+  @ApiProperty()
+  ttl!: number;
+}
+
+export class ConnectDomainResponseDto {
+  @ApiProperty()
+  jobId!: string;
+
+  /** DNS records the tenant must create manually at their registrar. */
+  @ApiProperty({ type: [CnameInstructionDto] })
+  dnsInstructions!: CnameInstructionDto[];
+}
+
 export const DOMAIN_JOB_STATUSES = [
   'pending',
   'purchasing',
@@ -103,9 +127,16 @@ export const DNS_STATUSES = [
 
 export type DnsStatus = (typeof DNS_STATUSES)[number];
 
+export const DOMAIN_SOURCES = ['godaddy_managed', 'user_provided'] as const;
+
+export type DomainSourceValue = (typeof DOMAIN_SOURCES)[number];
+
 export class DomainStatusResponseDto {
   @ApiProperty()
   domain!: string;
+
+  @ApiProperty({ enum: DOMAIN_SOURCES })
+  source!: DomainSourceValue;
 
   @ApiProperty({ enum: DNS_STATUSES })
   dnsStatus!: DnsStatus;

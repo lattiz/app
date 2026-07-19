@@ -216,6 +216,43 @@
         ]
       }
     },
+    "/domains/connect": {
+      "post": {
+        "operationId": "DomainsController_connect",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConnectDomainDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectDomainResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Connect a tenant-owned domain (protected)",
+        "tags": [
+          "domains"
+        ]
+      }
+    },
     "/domains/jobs/{jobId}": {
       "get": {
         "operationId": "DomainsController_getJobStatus",
@@ -925,6 +962,64 @@
           "jobId"
         ]
       },
+      "ConnectDomainDto": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Domain the tenant already owns at another registrar, e.g. \"miempresa.com\"."
+          }
+        },
+        "required": [
+          "domain"
+        ]
+      },
+      "CnameInstructionDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "CNAME"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "description": "'@' for the apex, 'www' for the subdomain."
+          },
+          "value": {
+            "type": "string"
+          },
+          "ttl": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "value",
+          "ttl"
+        ]
+      },
+      "ConnectDomainResponseDto": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string"
+          },
+          "dnsInstructions": {
+            "description": "DNS records the tenant must create manually at their registrar.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CnameInstructionDto"
+            }
+          }
+        },
+        "required": [
+          "jobId",
+          "dnsInstructions"
+        ]
+      },
       "DomainJobStatusDto": {
         "type": "object",
         "properties": {
@@ -975,6 +1070,13 @@
           "domain": {
             "type": "string"
           },
+          "source": {
+            "enum": [
+              "godaddy_managed",
+              "user_provided"
+            ],
+            "type": "string"
+          },
           "dnsStatus": {
             "enum": [
               "pending",
@@ -1005,6 +1107,7 @@
         },
         "required": [
           "domain",
+          "source",
           "dnsStatus",
           "vercelMapped",
           "sslActive",
@@ -1300,6 +1403,13 @@
           "domain": {
             "type": "string"
           },
+          "source": {
+            "enum": [
+              "godaddy_managed",
+              "user_provided"
+            ],
+            "type": "string"
+          },
           "dnsStatus": {
             "enum": [
               "pending",
@@ -1326,6 +1436,7 @@
         },
         "required": [
           "domain",
+          "source",
           "dnsStatus",
           "vercelMapped",
           "sslActive",

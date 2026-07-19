@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
-import type { WizardStep } from '../store/domain-wizard.store';
+import type { DomainSource, WizardStep } from '../store/domain-wizard.store';
 
-const STEPS: Array<{ key: WizardStep; label: string }> = [
+const PURCHASE_STEPS: Array<{ key: WizardStep; label: string }> = [
   { key: 'search', label: 'Buscar' },
   { key: 'quote', label: 'Confirmar' },
   { key: 'purchasing', label: 'Compra' },
@@ -9,7 +9,21 @@ const STEPS: Array<{ key: WizardStep; label: string }> = [
   { key: 'active', label: 'En vivo' },
 ];
 
-export function DomainWizardProgress({ currentStep }: { currentStep: WizardStep }) {
+const CONNECT_STEPS: Array<{ key: WizardStep; label: string }> = [
+  { key: 'connect-form', label: 'Conectar' },
+  { key: 'dns-instructions', label: 'DNS' },
+  { key: 'propagating', label: 'Propagación' },
+  { key: 'active', label: 'En vivo' },
+];
+
+interface Props {
+  currentStep: WizardStep;
+  domainSource: DomainSource | null;
+}
+
+export function DomainWizardProgress({ currentStep, domainSource }: Props) {
+  const STEPS =
+    domainSource === 'user_provided' ? CONNECT_STEPS : PURCHASE_STEPS;
   const currentIndex = STEPS.findIndex((s) => s.key === currentStep);
 
   return (

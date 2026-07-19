@@ -29,6 +29,7 @@ interface SiteMetaRow {
 
 interface DomainStatusRow {
   domain: string;
+  source: TenantDomainDto['source'];
   dns_status: TenantDomainDto['dnsStatus'];
   vercel_mapped: boolean;
   ssl_active: boolean;
@@ -77,7 +78,7 @@ export class TenantsService {
     tenantId: string,
   ): Promise<TenantDomainDto | null> {
     const rows = await this.query<DomainStatusRow>(
-      sql`SELECT domain, dns_status, vercel_mapped, ssl_active, is_mock, expires_at
+      sql`SELECT domain, source, dns_status, vercel_mapped, ssl_active, is_mock, expires_at
           FROM public.domains
           WHERE tenant_id = ${tenantId}::uuid
           LIMIT 1`,
@@ -87,6 +88,7 @@ export class TenantsService {
 
     return {
       domain: row.domain,
+      source: row.source,
       dnsStatus: row.dns_status,
       vercelMapped: row.vercel_mapped,
       sslActive: row.ssl_active,

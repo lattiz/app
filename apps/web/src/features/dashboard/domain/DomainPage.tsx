@@ -4,6 +4,9 @@ import { tenantsControllerMeOptions } from '@lattiz/api-client';
 import { DashboardSkeleton } from '@/components/dashboard/DashboardSkeleton';
 import { DomainWizardProgress } from './components/DomainWizardProgress';
 import { ActiveStep } from './steps/ActiveStep';
+import { ConnectFormStep } from './steps/ConnectFormStep';
+import { DnsInstructionsStep } from './steps/DnsInstructionsStep';
+import { EntryStep } from './steps/EntryStep';
 import { PropagatingStep } from './steps/PropagatingStep';
 import { PurchasingStep } from './steps/PurchasingStep';
 import { QuoteStep } from './steps/QuoteStep';
@@ -11,30 +14,35 @@ import { SearchStep } from './steps/SearchStep';
 import { useDomainWizardStore, type WizardStep } from './store/domain-wizard.store';
 
 const STEP_VIEWS: Record<WizardStep, React.ReactNode> = {
+  entry: <EntryStep />,
   search: <SearchStep />,
   quote: <QuoteStep />,
   purchasing: <PurchasingStep />,
+  'connect-form': <ConnectFormStep />,
+  'dns-instructions': <DnsInstructionsStep />,
   propagating: <PropagatingStep />,
   active: <ActiveStep />,
 };
 
 export function DomainPage() {
   const step = useDomainWizardStore((s) => s.step);
+  const domainSource = useDomainWizardStore((s) => s.domainSource);
   const { data: tenantMe, isLoading } = useQuery(tenantsControllerMeOptions());
 
   const domainStatus = tenantMe?.domainStatus ?? null;
 
   // A tenant with a provisioned domain skips the wizard. Rows from an
-  // in-flight purchase (not yet Vercel-mapped) don't redirect — the job
-  // polling in PurchasingStep owns those transitions.
+  // in-flight purchase/connect (not yet Vercel-mapped) don't redirect — the
+  // wizard steps own those transitions.
   useEffect(() => {
     if (!domainStatus) return;
-    const current = useDomainWizardStore.getState().step;
-    if (current !== 'search') return;
+    const store = useDomainWizardStore.getState();
+    if (store.step !== 'entry') return;
+    store.setDomainSource(domainStatus.source);
     if (domainStatus.dnsStatus === 'active') {
-      useDomainWizardStore.getState().setStep('active');
+      store.setStep('active');
     } else if (domainStatus.vercelMapped) {
-      useDomainWizardStore.getState().setStep('propagating');
+      store.setStep('propagating');
     }
   }, [domainStatus]);
 
@@ -42,7 +50,9 @@ export function DomainPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <DomainWizardProgress currentStep={step} />
+      {step !== 'entry' && (
+        <DomainWizardProgress currentStep={step} domainSource={domainSource} />
+      )}
       {STEP_VIEWS[step]}
     </div>
   );

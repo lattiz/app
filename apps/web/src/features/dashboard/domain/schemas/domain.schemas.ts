@@ -8,6 +8,19 @@ export const DomainSearchSchema = z.object({
     .regex(/^[a-z0-9][a-z0-9-]*$/, 'Solo letras minúsculas, números y guiones'),
 });
 
+export const ConnectDomainSchema = z.object({
+  domain: z
+    .string()
+    .min(4, 'Dominio demasiado corto')
+    .regex(
+      /^(?!:\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-_]+\.[a-zA-Z]{2,11}$/,
+      'Ingresa un dominio válido (ej: miempresa.com)',
+    )
+    .transform((v) =>
+      v.toLowerCase().replace(/^https?:\/\//, '').replace(/\/$/, ''),
+    ),
+});
+
 export const DomainPurchaseSchema = z.object({
   domain: z.string().includes('.'),
   quoteToken: z.string().min(1),

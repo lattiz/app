@@ -1,7 +1,7 @@
 // Local stand-in for the GoDaddy API (v3 + v1) so the DomainsModule pipeline
-// can be exercised end-to-end without a GODADDY_PAT. Run: node godaddy-mock.js
-const http = require('node:http');
-const { randomUUID } = require('node:crypto');
+// can be exercised end-to-end without a GODADDY_PAT. Run: node godaddy-mock.mjs
+import http from 'node:http';
+import { randomUUID } from 'node:crypto';
 
 const PORT = 4001;
 

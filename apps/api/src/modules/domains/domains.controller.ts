@@ -19,7 +19,9 @@ import { type AuthenticatedUser } from '../../common/auth/authenticated-user';
 import { CurrentUser } from '../../common/auth/current-user.decorator';
 import { SupabaseJwtGuard } from '../../common/auth/supabase-jwt.guard';
 import { DomainsService } from './domains.service';
+import { ConnectDomainDto } from './dto/connect-domain.dto';
 import {
+  ConnectDomainResponseDto,
   DomainJobStatusDto,
   DomainPurchaseResponseDto,
   DomainQuoteResponseDto,
@@ -70,6 +72,17 @@ export class DomainsController {
     @CurrentUser() user?: AuthenticatedUser,
   ): Promise<DomainPurchaseResponseDto> {
     return this.domains.initiatePurchase(requireSub(user), dto);
+  }
+
+  /** Connect a domain the tenant already owns — returns the CNAME records to create. */
+  @Post('connect')
+  @ApiOperation({ summary: 'Connect a tenant-owned domain (protected)' })
+  @ApiOkResponse({ type: ConnectDomainResponseDto })
+  async connect(
+    @Body() dto: ConnectDomainDto,
+    @CurrentUser() user?: AuthenticatedUser,
+  ): Promise<ConnectDomainResponseDto> {
+    return this.domains.initiateConnect(requireSub(user), dto.domain);
   }
 
   /** Poll the purchase job status. */
