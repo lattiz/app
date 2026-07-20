@@ -306,7 +306,7 @@ export class BillingService {
   ): Promise<void> {
     const period = periodBounds(subscription);
     const canceledAt = subscription.canceled_at
-      ? new Date(subscription.canceled_at * 1000)
+      ? new Date(subscription.canceled_at * 1000).toISOString()
       : null;
 
     await this.query(
@@ -353,15 +353,15 @@ export class BillingService {
 
 /** In Stripe's Basil API the billing period lives on subscription items. */
 function periodBounds(subscription: Stripe.Subscription): {
-  start: Date | null;
-  end: Date | null;
+  start: string | null;
+  end: string | null;
 } {
   const item = subscription.items?.data?.[0];
   const start = item?.current_period_start;
   const end = item?.current_period_end;
   return {
-    start: start ? new Date(start * 1000) : null,
-    end: end ? new Date(end * 1000) : null,
+    start: start ? new Date(start * 1000).toISOString() : null,
+    end: end ? new Date(end * 1000).toISOString() : null,
   };
 }
 
