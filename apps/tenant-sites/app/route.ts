@@ -95,10 +95,8 @@ export async function GET(request: NextRequest): Promise<Response> {
     status: 200,
     headers: {
       'Content-Type': 'text/html; charset=utf-8',
-      // Long-lived shared-cache; busted when the API calls /api/revalidate,
-      // which invalidates the "use cache" tag in getTenantSiteByHostname.
-      'Cache-Control':
-        'public, s-maxage=31536000, stale-while-revalidate=86400',
+      'Content-Security-Policy': 'frame-ancestors *',
+      'Cache-Control': 'public, max-age=0, must-revalidate',
     },
   });
 }

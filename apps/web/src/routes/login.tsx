@@ -26,7 +26,7 @@ function LoginPage() {
     ) : deleted ? (
       <Alert>
         <AlertDescription>
-          Tu cuenta fue eliminada. Puedes registrarte de nuevo cuando quieras.
+          Tu cuenta fue eliminada. Puedes registrarte de nuevo.
         </AlertDescription>
       </Alert>
     ) : undefined;

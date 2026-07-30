@@ -32,8 +32,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     );
   }
 
-  // Next.js 16 requires a cacheLife profile; 'max' = stale-while-revalidate.
-  revalidateTag(`tenant-site:${tenantHostname}`, 'max');
+  // { expire: 0 } expires the Data Cache entry immediately so the next request
+  // fetches fresh data (publish must be visible now, not on background refresh).
+  revalidateTag(`tenant-site:${tenantHostname}`, { expire: 0 });
 
   return NextResponse.json({
     revalidated: true,

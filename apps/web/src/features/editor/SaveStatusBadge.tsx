@@ -54,7 +54,7 @@ export function SaveStatusBadge({
   return (
     <span
       className={cn(
-        'flex items-center gap-1.5 text-xs text-muted-foreground',
+        'flex items-center gap-1.5 text-xs text-primary bg-accent px-2 py-1 rounded-3xl transition-opacity duration-300',
         !saved && 'opacity-0',
       )}
     >
