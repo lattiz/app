@@ -39,12 +39,12 @@ export function LoginForm() {
     <form onSubmit={handleSubmit}>
       <FieldGroup>
         <Field>
-          <FieldLabel htmlFor="login-email">Correo electrónico</FieldLabel>
+          <FieldLabel htmlFor="login-email">Correo electrónico: </FieldLabel>
           <Input
             id="login-email"
             type="email"
             autoComplete="email"
-            placeholder="Ingresa tu correo"
+            placeholder="ejemplo@correo.com"
             className="h-11"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -53,11 +53,11 @@ export function LoginForm() {
           />
         </Field>
         <Field>
-          <FieldLabel htmlFor="login-password">Contraseña</FieldLabel>
+          <FieldLabel htmlFor="login-password">Contraseña: </FieldLabel>
           <PasswordInput
             id="login-password"
             autoComplete="current-password"
-            placeholder="Ingresa tu contraseña"
+            placeholder="**************"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             disabled={pending}

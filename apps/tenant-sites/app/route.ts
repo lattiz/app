@@ -32,6 +32,9 @@ function injectSeo(html: string, meta: SeoMeta): string {
     `<meta name="twitter:card" content="summary_large_image">`,
     `<meta name="twitter:title" content="${esc(meta.title)}">`,
     `<meta name="twitter:image" content="${meta.ogImageUrl}">`,
+    `<link rel="icon" href="/favicon.png" sizes="any">`,
+    // `<link rel="icon" href="/icon.icon" type="image/svg+xml">`,
+    `<link rel="apple-touch-icon" href="/apple-touch-icon.png">`,
   ].join('\n  ');
 
   return html
@@ -96,7 +99,10 @@ export async function GET(request: NextRequest): Promise<Response> {
     headers: {
       'Content-Type': 'text/html; charset=utf-8',
       'Content-Security-Policy': 'frame-ancestors *',
-      'Cache-Control': 'public, max-age=0, must-revalidate',
+      // s-maxage=0 keeps the CDN out of the way so a publish is never masked by
+      // an edge cache; the browser holds the page for 5s at most.
+      'Cache-Control':
+        'public, max-age=5, stale-while-revalidate=10, s-maxage=0',
     },
   });
 }

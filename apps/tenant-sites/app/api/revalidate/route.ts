@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { revalidateTag } from 'next/cache';
 
-// Called by @lattiz/api after a tenant publishes their site.
+// Called by @lattiz/api after a tenant publishes their site. There is no cache
+// left to invalidate — getTenantSiteByHostname hits Supabase on every request —
+// so this is a no-op kept so the API's publish call keeps getting a 200. The
+// auth check stays: an unauthenticated endpoint is a target even when inert.
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const secret = process.env.REVALIDATION_SECRET;
   if (!secret) {
@@ -32,12 +34,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     );
   }
 
-  // { expire: 0 } expires the Data Cache entry immediately so the next request
-  // fetches fresh data (publish must be visible now, not on background refresh).
-  revalidateTag(`tenant-site:${tenantHostname}`, { expire: 0 });
+  console.log(
+    `[revalidate] Received for ${tenantHostname} — no-op (direct DB fetch enabled)`,
+  );
 
   return NextResponse.json({
-    revalidated: true,
+    received: true,
     tenantHostname,
     timestamp: new Date().toISOString(),
   });

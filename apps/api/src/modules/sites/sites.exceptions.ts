@@ -64,6 +64,36 @@ export class TemplateChangeRequiresConfirmationException extends DomainException
   }
 }
 
+/** Storage rejected one of the uploaded editor assets. */
+export class AssetUploadFailedException extends DomainException {
+  readonly code = 'ASSET_UPLOAD_FAILED';
+  readonly status = HttpStatus.BAD_GATEWAY;
+
+  constructor(filename: string) {
+    super(`Could not upload "${filename}". Please try again.`, { filename });
+  }
+}
+
+/** Only images may be uploaded to the public assets bucket. */
+export class UnsupportedAssetTypeException extends DomainException {
+  readonly code = 'UNSUPPORTED_ASSET_TYPE';
+  readonly status = HttpStatus.UNSUPPORTED_MEDIA_TYPE;
+
+  constructor(mimeType: string) {
+    super(`"${mimeType}" is not a supported image type.`, { mimeType });
+  }
+}
+
+/** The upload request carried no files. */
+export class NoAssetsProvidedException extends DomainException {
+  readonly code = 'NO_ASSETS_PROVIDED';
+  readonly status = HttpStatus.BAD_REQUEST;
+
+  constructor() {
+    super('No files were provided.');
+  }
+}
+
 /** No tenant row exists yet for the authenticated user. */
 export class TenantNotFoundException extends DomainException {
   readonly code = 'TENANT_NOT_FOUND';

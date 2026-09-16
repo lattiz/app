@@ -567,6 +567,70 @@
         ]
       }
     },
+    "/sites/{tenantId}/assets": {
+      "post": {
+        "operationId": "SitesController_uploadAssets",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "files": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UploadedAssetResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Tenant does not belong to the caller."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Upload assets for the tenant site editor (protected)",
+        "tags": [
+          "sites"
+        ]
+      }
+    },
     "/sites/select-template": {
       "post": {
         "operationId": "SitesController_selectTemplate",
@@ -1381,6 +1445,32 @@
         "required": [
           "published",
           "publishedAt"
+        ]
+      },
+      "UploadedAssetResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Stable id for the asset in the GrapesJS asset manager."
+          },
+          "src": {
+            "type": "string",
+            "description": "Public Supabase Storage URL, embedded as-is in the exported HTML."
+          },
+          "name": {
+            "type": "string",
+            "description": "Original filename as uploaded."
+          },
+          "mimeType": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "src",
+          "name",
+          "mimeType"
         ]
       },
       "SelectTemplateDto": {

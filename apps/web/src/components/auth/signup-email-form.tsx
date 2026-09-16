@@ -36,7 +36,7 @@ export function SignupEmailForm() {
             id="signup-email"
             type="email"
             autoComplete="email"
-            placeholder="Ingresa tu correo"
+            placeholder="ejemplo@correo.com"
             className="h-11"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -47,7 +47,7 @@ export function SignupEmailForm() {
         </Field>
         <FormError message={error} />
         <Button type="submit" className="h-11 w-full" disabled={pending}>
-          {pending && <Spinner data-icon="inline-start" />  }
+          {pending && <Spinner data-icon="inline-start" />}
           {pending ? 'Enviando...' : 'Continuar'}
         </Button>
       </FieldGroup>

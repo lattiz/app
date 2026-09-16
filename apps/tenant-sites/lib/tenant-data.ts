@@ -1,4 +1,3 @@
-import { cacheLife, cacheTag } from 'next/cache';
 import { supabase } from './supabase';
 
 export interface TenantSiteData {
@@ -25,17 +24,14 @@ interface TenantRow {
 }
 
 /**
- * Fetches and caches the published site for a hostname (Cache Components:
- * "use cache" + cacheTag + cacheLife). Invalidated on publish by the API
- * calling POST /api/revalidate with the matching `tenant-site:{hostname}` tag.
+ * Fetches the published site for a hostname directly from Supabase on every
+ * call. No "use cache": tag invalidation from a raw-Response Route Handler
+ * never reached Vercel's Full Route Cache, so publishes kept serving stale
+ * HTML. Browser-level freshness is handled by Cache-Control in app/route.ts.
  */
 export async function getTenantSiteByHostname(
   hostname: string,
 ): Promise<TenantSiteData | null> {
-  'use cache';
-  cacheTag(`tenant-site:${hostname}`);
-  cacheLife('max');
-
   const { data, error } = await supabase
     .from('tenants')
     .select(

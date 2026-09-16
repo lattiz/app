@@ -5,7 +5,12 @@ import { Loader2Icon, ArrowLeft } from 'lucide-react';
 import { type ComponentProps, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { getEditorProject, publishSite, saveEditorProject } from './api';
+import {
+  getEditorProject,
+  publishSite,
+  saveEditorProject,
+  uploadAssets,
+} from './api';
 import { SaveStatusBadge } from './SaveStatusBadge';
 import type {
   EditorInstance,
@@ -90,6 +95,7 @@ const studioSdkLocaleEs = {
 // GrapesJS SDK does not auto-load plugins referenced inside the project JSON —
 // they must be declared explicitly in the SDK options.
 function buildOptions(
+  tenantId: string,
   projectJSON: GrapesJSProjectJSON,
   onSave: (project: GrapesJSProjectJSON) => void,
 ): StudioOptions {
@@ -179,6 +185,17 @@ function buildOptions(
           a.id !== 'componentOutline' &&
           a.id !== 'clearCanvas',
       ),
+
+    // ── Assets ─────────────────────────────────────────────────────────────
+    // Sin onUpload el SDK deja URLs `blob:`/`data:` de la sesión del editor en
+    // el HTML exportado, que dan 404 en el sitio publicado. Se suben al API y
+    // se devuelve la URL pública de Supabase Storage.
+    // Sin `onLoad` las referencias siguen guardándose en el project JSON, así
+    // que las imágenes ya subidas reaparecen en sesiones posteriores.
+    assets: {
+      storageType: 'self',
+      onUpload: async ({ files }) => uploadAssets(tenantId, files),
+    },
 
     // ── Core ───────────────────────────────────────────────────────────────
     licenseKey: import.meta.env.VITE_GRAPESJS_LICENSE_KEY ?? 'DEV_LICENSE_KEY',
@@ -277,7 +294,7 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
         ? 'saved'
         : 'idle';
 
-  const options = buildOptions(query.data.project, handleSave);
+  const options = buildOptions(tenantId, query.data.project, handleSave);
   const isPublishing = publishMutation.isPending;
 
   return (

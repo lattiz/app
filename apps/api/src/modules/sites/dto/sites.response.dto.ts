@@ -33,6 +33,25 @@ export class SelectTemplateResponseDto {
   createdAt!: string;
 }
 
+export class UploadedAssetResponseDto {
+  @ApiProperty({
+    description: 'Stable id for the asset in the GrapesJS asset manager.',
+  })
+  id!: string;
+
+  @ApiProperty({
+    description:
+      'Public Supabase Storage URL, embedded as-is in the exported HTML.',
+  })
+  src!: string;
+
+  @ApiProperty({ description: 'Original filename as uploaded.' })
+  name!: string;
+
+  @ApiProperty()
+  mimeType!: string;
+}
+
 export class ChangeTemplateResponseDto {
   @ApiProperty()
   tenantId!: string;

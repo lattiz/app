@@ -252,6 +252,22 @@ export type PublishSiteResponseDto = {
     publishedAt: string;
 };
 
+export type UploadedAssetResponseDto = {
+    /**
+     * Stable id for the asset in the GrapesJS asset manager.
+     */
+    id: string;
+    /**
+     * Public Supabase Storage URL, embedded as-is in the exported HTML.
+     */
+    src: string;
+    /**
+     * Original filename as uploaded.
+     */
+    name: string;
+    mimeType: string;
+};
+
 export type SelectTemplateDto = {
     /**
      * Id of the template to seed the tenant's site from.
@@ -613,6 +629,34 @@ export type SitesControllerPublishResponses = {
 };
 
 export type SitesControllerPublishResponse = SitesControllerPublishResponses[keyof SitesControllerPublishResponses];
+
+export type SitesControllerUploadAssetsData = {
+    body: {
+        files?: Array<Blob | File>;
+    };
+    path: {
+        tenantId: string;
+    };
+    query?: never;
+    url: '/sites/{tenantId}/assets';
+};
+
+export type SitesControllerUploadAssetsErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Tenant does not belong to the caller.
+     */
+    403: unknown;
+};
+
+export type SitesControllerUploadAssetsResponses = {
+    200: Array<UploadedAssetResponseDto>;
+};
+
+export type SitesControllerUploadAssetsResponse = SitesControllerUploadAssetsResponses[keyof SitesControllerUploadAssetsResponses];
 
 export type SitesControllerSelectTemplateData = {
     body: SelectTemplateDto;

@@ -3,8 +3,8 @@
 import { type DefaultError, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { billingControllerCreateCheckoutSession, billingControllerCreatePortalSession, billingControllerGetInvoices, billingControllerGetSubscription, domainsControllerConnect, domainsControllerGetDomain, domainsControllerGetJobStatus, domainsControllerGetQuote, domainsControllerPurchase, domainsControllerSearch, healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options, sitesControllerChangeTemplate, sitesControllerGetSchema, sitesControllerPublish, sitesControllerSaveSchema, sitesControllerSelectTemplate, templatesControllerFindAll, tenantsControllerMe } from '../sdk.gen';
-import type { BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponse, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponse, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponse, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionResponse, DomainsControllerConnectData, DomainsControllerConnectResponse, DomainsControllerGetDomainData, DomainsControllerGetDomainResponse, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponse, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponse, DomainsControllerPurchaseData, DomainsControllerPurchaseResponse, DomainsControllerSearchData, DomainsControllerSearchResponse, HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse, SitesControllerChangeTemplateData, SitesControllerChangeTemplateResponse, SitesControllerGetSchemaData, SitesControllerGetSchemaResponse, SitesControllerPublishData, SitesControllerPublishResponse, SitesControllerSaveSchemaData, SitesControllerSaveSchemaResponse, SitesControllerSelectTemplateData, SitesControllerSelectTemplateResponse, TemplatesControllerFindAllData, TemplatesControllerFindAllResponse, TenantsControllerMeData, TenantsControllerMeResponse } from '../types.gen';
+import { billingControllerCreateCheckoutSession, billingControllerCreatePortalSession, billingControllerGetInvoices, billingControllerGetSubscription, domainsControllerConnect, domainsControllerGetDomain, domainsControllerGetJobStatus, domainsControllerGetQuote, domainsControllerPurchase, domainsControllerSearch, healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options, sitesControllerChangeTemplate, sitesControllerGetSchema, sitesControllerPublish, sitesControllerSaveSchema, sitesControllerSelectTemplate, sitesControllerUploadAssets, templatesControllerFindAll, tenantsControllerMe } from '../sdk.gen';
+import type { BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponse, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponse, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponse, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionResponse, DomainsControllerConnectData, DomainsControllerConnectResponse, DomainsControllerGetDomainData, DomainsControllerGetDomainResponse, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponse, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponse, DomainsControllerPurchaseData, DomainsControllerPurchaseResponse, DomainsControllerSearchData, DomainsControllerSearchResponse, HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse, SitesControllerChangeTemplateData, SitesControllerChangeTemplateResponse, SitesControllerGetSchemaData, SitesControllerGetSchemaResponse, SitesControllerPublishData, SitesControllerPublishResponse, SitesControllerSaveSchemaData, SitesControllerSaveSchemaResponse, SitesControllerSelectTemplateData, SitesControllerSelectTemplateResponse, SitesControllerUploadAssetsData, SitesControllerUploadAssetsResponse, TemplatesControllerFindAllData, TemplatesControllerFindAllResponse, TenantsControllerMeData, TenantsControllerMeResponse } from '../types.gen';
 
 /**
  * Create a Stripe Checkout session (protected)
@@ -309,6 +309,23 @@ export const sitesControllerPublishMutation = (options?: Partial<Options<SitesCo
     const mutationOptions: UseMutationOptions<SitesControllerPublishResponse, DefaultError, Options<SitesControllerPublishData>> = {
         mutationFn: async (fnOptions) => {
             const { data } = await sitesControllerPublish({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Upload assets for the tenant site editor (protected)
+ */
+export const sitesControllerUploadAssetsMutation = (options?: Partial<Options<SitesControllerUploadAssetsData>>): UseMutationOptions<SitesControllerUploadAssetsResponse, DefaultError, Options<SitesControllerUploadAssetsData>> => {
+    const mutationOptions: UseMutationOptions<SitesControllerUploadAssetsResponse, DefaultError, Options<SitesControllerUploadAssetsData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await sitesControllerUploadAssets({
                 ...options,
                 ...fnOptions,
                 throwOnError: true

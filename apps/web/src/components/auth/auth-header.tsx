@@ -1,8 +1,8 @@
 /** Brand logo mark — a rounded tile with a soft purple blob, matching the reference. */
 function AuthLogo() {
   return (
-    <div className="bg-card ring-border relative size-12 overflow-hidden rounded-2xl shadow-sm ring-1">
-      <div className="bg-primary absolute top-1/2 left-1/2 size-6 -translate-x-1/2 -translate-y-1/2 rounded-full blur-[3px]" />
+    <div className="bg-card relative size-8 overflow-hidden rounded-2xl">
+      <img src='/favicon-32x32.png' alt='logo' className='size-full object-cover' />
     </div>
   );
 }

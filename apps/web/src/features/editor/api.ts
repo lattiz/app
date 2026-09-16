@@ -1,6 +1,7 @@
 import { client } from '@lattiz/api-client';
 import type {
   EditorProjectResponse,
+  GrapesJSAsset,
   GrapesJSProjectJSON,
   PublishSitePayload,
   PublishSiteResult,
@@ -36,6 +37,28 @@ export async function saveEditorProject(
     throw new Error(`No se pudo guardar (${response?.status ?? 'error'}).`);
   }
   return data as SaveSchemaResult;
+}
+
+/** Uploads editor images and returns their public URLs (what ends up in the exported HTML). */
+export async function uploadAssets(
+  tenantId: string,
+  files: File[],
+): Promise<GrapesJSAsset[]> {
+  const body = new FormData();
+  files.forEach((file) => body.append('files', file));
+
+  const { data, error, response } = await client.post({
+    url: `/sites/${tenantId}/assets`,
+    body,
+    // Send the FormData untouched; the null header drops the client's default
+    // application/json so fetch can set the multipart boundary itself.
+    bodySerializer: null,
+    headers: { 'Content-Type': null },
+  });
+  if (error || !data) {
+    throw new Error(`No se pudieron subir las imágenes (${response?.status ?? 'error'}).`);
+  }
+  return data as GrapesJSAsset[];
 }
 
 export async function publishSite(

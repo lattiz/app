@@ -8,8 +8,7 @@ export async function GET(request: NextRequest): Promise<Response> {
   try {
     const hostname = request.nextUrl.searchParams.get('h') ?? '';
     const site = hostname ? await getTenantSiteByHostname(hostname) : null;
-    const tenantName = site?.tenantName ?? 'Mi Sitio';
-    const subtitle = site?.domain ?? hostname;
+    const tenantDomain = site?.domain ?? 'Mi Sitio';
 
     return new ImageResponse(
       (
@@ -21,22 +20,84 @@ export async function GET(request: NextRequest): Promise<Response> {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            background: '#0f172a',
-            color: '#ffffff',
-            fontFamily: 'system-ui, sans-serif',
+            background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
             padding: '48px',
+            fontFamily: 'system-ui, sans-serif',
+            position: 'relative',
           }}
         >
-          <div style={{ fontSize: 72, fontWeight: 700, textAlign: 'center' }}>
-            {tenantName}
+          {/* Top accent bar */}
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: '6px',
+              background: 'linear-gradient(90deg, #1447e6, #3b82f6)',
+            }}
+          />
+
+          {/* Tenant name */}
+          <div
+            style={{
+              fontSize: 72,
+              fontWeight: 800,
+              color: '#ffffff',
+              textAlign: 'center',
+              lineHeight: 1.1,
+              marginBottom: '16px',
+              letterSpacing: '-1px',
+            }}
+          >
+            {tenantDomain}
           </div>
-          <div style={{ fontSize: 28, marginTop: 24, opacity: 0.7 }}>
-            {subtitle}
+
+          {/* Domain */}
+          <div
+            style={{
+              fontSize: 28,
+              color: '#94a3b8',
+              textAlign: 'center',
+            }}
+          >
+            {site?.tenantName ?? hostname}
+          </div>
+
+          {/* Powered by Lattiz */}
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '32px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}
+          >
+            <div
+              style={{
+                width: '24px',
+                height: '24px',
+                background: '#1447e6',
+                borderRadius: '5px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '14px',
+                fontWeight: '700',
+                color: '#ffffff',
+              }}
+            >
+              L
+            </div>
+            <span style={{ color: '#64748b', fontSize: '18px' }}>
+              Desarrollado por Lattiz
+            </span>
           </div>
         </div>
       ),
       { width: 1200, height: 630 },
-    );
+    )
   } catch {
     return new Response('Failed to generate image', { status: 500 });
   }

@@ -9,11 +9,16 @@ import {
   Patch,
   Post,
   UnauthorizedException,
+  UploadedFiles,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import {
   ApiBearerAuth,
+  ApiBody,
   ApiConflictResponse,
+  ApiConsumes,
   ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -34,8 +39,12 @@ import {
   SaveSchemaResponseDto,
   SelectTemplateResponseDto,
   SiteSchemaResponseDto,
+  UploadedAssetResponseDto,
 } from './dto/sites.response.dto';
-import { SitesService } from './sites.service';
+import { SitesService, type UploadedFile } from './sites.service';
+
+const MAX_ASSET_FILES = 10;
+const MAX_ASSET_BYTES = 10 * 1024 * 1024;
 
 @ApiTags('sites')
 @ApiBearerAuth()
@@ -88,6 +97,34 @@ export class SitesController {
       dto.project,
       dto.exportedHtml,
     );
+  }
+
+  /** Uploads editor assets (images) and returns their public Supabase Storage URLs. */
+  @Post(':tenantId/assets')
+  @UseInterceptors(
+    FilesInterceptor('files', MAX_ASSET_FILES, {
+      limits: { fileSize: MAX_ASSET_BYTES, files: MAX_ASSET_FILES },
+    }),
+  )
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        files: { type: 'array', items: { type: 'string', format: 'binary' } },
+      },
+    },
+  })
+  @ApiOperation({ summary: 'Upload assets for the tenant site editor (protected)' })
+  @ApiOkResponse({ type: UploadedAssetResponseDto, isArray: true })
+  @ApiUnauthorizedResponse({ description: 'Missing or invalid bearer token.' })
+  @ApiForbiddenResponse({ description: 'Tenant does not belong to the caller.' })
+  async uploadAssets(
+    @Param('tenantId', ParseUUIDPipe) tenantId: string,
+    @UploadedFiles() files: UploadedFile[],
+    @CurrentUser() user?: AuthenticatedUser,
+  ): Promise<UploadedAssetResponseDto[]> {
+    return this.sites.uploadAssets(tenantId, requireSub(user), files);
   }
 
   /** First-time explicit template selection (creates the site schema). */

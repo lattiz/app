@@ -41,7 +41,7 @@ export function ForgotPasswordForm() {
             id="forgot-email"
             type="email"
             autoComplete="email"
-            placeholder="Ingresa tu correo"
+            placeholder="ejemplo@correo.com"
             className="h-11"
             value={email}
             onChange={(e) => setEmail(e.target.value)}

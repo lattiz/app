@@ -1,5 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { sql, type SQL } from 'drizzle-orm';
+import { randomUUID } from 'node:crypto';
+import { extname } from 'node:path';
 import { type Database, DATABASE } from '../../database/database.module';
 import {
   ChangeTemplateResponseDto,
@@ -7,8 +9,11 @@ import {
   SaveSchemaResponseDto,
   SelectTemplateResponseDto,
   SiteSchemaResponseDto,
+  UploadedAssetResponseDto,
 } from './dto/sites.response.dto';
 import {
+  AssetUploadFailedException,
+  NoAssetsProvidedException,
   NoTemplateAvailableException,
   SiteNotFoundException,
   SiteSchemaAlreadyExistsException,
@@ -16,9 +21,18 @@ import {
   TemplateNotFoundException,
   TenantAccessDeniedException,
   TenantNotFoundException,
+  UnsupportedAssetTypeException,
 } from './sites.exceptions';
+import { SupabaseStorageService } from './supabase-storage.service';
 
 type Json = Record<string, unknown>;
+
+/** The part of a multer file we use — avoids the ambient `Express.Multer` global. */
+export interface UploadedFile {
+  originalname: string;
+  mimetype: string;
+  buffer: Buffer;
+}
 
 interface ProjectRow {
   grapesjs_json: Json;
@@ -47,7 +61,10 @@ interface CurrentSiteSchemaRow {
 export class SitesService {
   private readonly logger = new Logger(SitesService.name);
 
-  constructor(@Inject(DATABASE) private readonly db: Database) {}
+  constructor(
+    @Inject(DATABASE) private readonly db: Database,
+    private readonly storage: SupabaseStorageService,
+  ) { }
 
   /** Returns the editor project for a tenant, seeding it from a template on first load. */
   async getEditorProject(tenantId: string, userSub: string): Promise<SiteSchemaResponseDto> {
@@ -184,8 +201,58 @@ export class SitesService {
   }
 
   /**
-   * Best-effort cache purge of the tenant's public site after publish. Skipped
-   * when the tenant has no domain, or the tenant-sites app isn't configured.
+   * Stores editor assets in the public bucket and returns their CDN URLs, which
+   * is what GrapesJS writes into the exported HTML — blob:/data: sources from
+   * the editor session would 404 on the published site.
+   */
+  async uploadAssets(
+    tenantId: string,
+    userSub: string,
+    files: UploadedFile[],
+  ): Promise<UploadedAssetResponseDto[]> {
+    await this.assertTenantOwnership(tenantId, userSub);
+    if (!files?.length) throw new NoAssetsProvidedException();
+
+    const assets: UploadedAssetResponseDto[] = [];
+
+    for (const file of files) {
+      if (!file.mimetype.startsWith('image/')) {
+        throw new UnsupportedAssetTypeException(file.mimetype);
+      }
+
+      const assetId = randomUUID();
+      // Path is derived server-side: a tenant can never write outside its prefix.
+      const storagePath = `tenant-assets/${tenantId}/${assetId}${safeExtension(file.originalname)}`;
+
+      try {
+        const src = await this.storage.uploadPublic(
+          storagePath,
+          file.buffer,
+          file.mimetype,
+        );
+        assets.push({
+          id: assetId,
+          src,
+          name: file.originalname,
+          mimeType: file.mimetype,
+        });
+      } catch (error) {
+        this.logger.error(
+          `[assets] Upload failed for ${file.originalname}: ${error instanceof Error ? error.message : String(error)
+          }`,
+        );
+        throw new AssetUploadFailedException(file.originalname);
+      }
+    }
+
+    return assets;
+  }
+
+  /**
+   * Pings tenant-sites after publish. tenant-sites now reads from Supabase on
+   * every request, so /api/revalidate is a no-op kept for backward
+   * compatibility — the publish is live within seconds either way. Skipped when
+   * the tenant has no domain, or the tenant-sites app isn't configured.
    */
   private async triggerRevalidation(tenantId: string): Promise<void> {
     const rows = await this.query<{ domain: string | null }>(
@@ -207,17 +274,22 @@ export class SitesService {
         },
         body: JSON.stringify({ tenantHostname: domain }),
         signal: AbortSignal.timeout(10_000),
+        redirect: 'error',
       });
+      console.log(`Revalidation response for ${domain}: ${response.status}`);
       if (!response.ok) {
+        const body = await response.text().catch(() => '');
         this.logger.warn(
-          `Revalidation returned ${response.status} for ${domain}`,
+          `[revalidate] ${response.status} for ${domain}. ` +
+          `Check TENANT_SITES_URL (no trailing slash) and ` +
+          `REVALIDATION_SECRET in Vercel env vars. Body: ${body}`,
         );
+        return;
       }
+      this.logger.log(`[revalidate] Success for ${domain}`);
     } catch (error) {
-      // Non-fatal: the site is published; the cache will expire on its own.
       this.logger.warn(
-        `Revalidation call failed for ${domain}: ${
-          error instanceof Error ? error.message : String(error)
+        `[revalidate] Failed for ${domain}: ${error instanceof Error ? error.message : String(error)
         }`,
       );
     }
@@ -256,6 +328,12 @@ export class SitesService {
     const rows = await this.db.execute(statement);
     return rows as unknown as T[];
   }
+}
+
+/** Keeps only a plain alphanumeric extension so the filename can't shape the storage path. */
+function safeExtension(filename: string): string {
+  const ext = extname(filename).slice(1).toLowerCase();
+  return /^[a-z0-9]{1,10}$/.test(ext) ? `.${ext}` : '.bin';
 }
 
 function toIso(value: string | Date): string {

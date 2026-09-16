@@ -72,7 +72,7 @@ export function QuickActionsCard({
             disabled={!action.enabled}
             onClick={action.onClick}
             className={cn(
-              'flex items-start gap-3 rounded-2xl border p-3 text-left transition-colors hover:bg-muted',
+              'flex items-start gap-3 rounded-2xl border p-3 text-left transition-colors hover:bg-muted hover:cursor-pointer',
               !action.enabled && 'opacity-40 cursor-not-allowed pointer-events-none',
             )}
           >
