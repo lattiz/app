@@ -8,6 +8,6 @@ import { SupabaseStorageService } from './supabase-storage.service';
   imports: [DatabaseModule],
   controllers: [SitesController],
   providers: [SitesService, SupabaseStorageService],
-  exports: [SitesService],
+  exports: [SitesService, SupabaseStorageService],
 })
 export class SitesModule {}

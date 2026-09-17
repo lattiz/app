@@ -75,12 +75,12 @@ apps/api → openapi.json → packages/api-client (hey-api) → apps/web
 - El front adjunta el token como `Authorization: Bearer <token>` via interceptor (`apps/web/src/lib/api.ts`); un interceptor de respuesta cierra la sesión ante cualquier `401`.
 - Todos los datos de aplicación van por NestJS — el front nunca habla directo con la DB.
 
-### Excepción service_role — borrado de cuenta y subida de assets
+### Excepción service_role — borrado de cuenta y subida de imágenes
 
-Dos operaciones requieren la `service_role key` y no pueden correr en el navegador. Son **las únicas** privilegiadas del API:
+Tres operaciones requieren la `service_role key` y no pueden correr en el navegador. Son **las únicas** privilegiadas del API:
 
 - `SUPABASE_SERVICE_ROLE_KEY` vive **solo** en `apps/api/.env` — nunca en el front ni en ningún `VITE_*`.
-- En ambos casos el cliente admin se crea de forma perezosa: el API arranca sin la key; solo falla la ruta que la necesita.
+- En los tres casos el cliente admin se crea de forma perezosa: el API arranca sin la key; solo falla la ruta que la necesita.
 
 **1. Borrado de cuenta** — `supabase.auth.admin.deleteUser`:
 
@@ -91,6 +91,12 @@ Dos operaciones requieren la `service_role key` y no pueden correr en el navegad
 
 - `SupabaseStorageService` (`modules/sites/`), alcanzable solo vía `POST /sites/:tenantId/assets`, tras verificar que el tenant pertenece al usuario.
 - Bypassa las RLS de Storage a propósito: la ruta de destino (`tenant-assets/{tenantId}/{uuid}.{ext}`) se construye en el servidor, nunca desde el cliente, y solo se aceptan mime types `image/*` porque el bucket es público.
+
+**3. Branding del tenant (favicon / vista previa social)** — mismo `SupabaseStorageService`, reexportado por `SitesModule` y consumido por `TenantsModule`:
+
+- Alcanzable solo vía `POST /tenants/:tenantId/branding` y `DELETE /tenants/:tenantId/branding/:type`, tras verificar que el tenant pertenece al usuario.
+- Ruta `tenant-branding/{tenantId}/{type}.{ext}` con `upsert: true` — la extensión sale del mime type validado, nunca del nombre de archivo del cliente. Whitelist por slot: PNG/ICO ≤ 1MB para favicons, PNG/JPEG ≤ 4MB para la vista previa.
+- La URL pública se guarda con `?v={timestamp}` en `tenants.favicon_light_url` / `favicon_dark_url` / `social_preview_url`: como `upsert` reusa la ruta, sin versionar el CDN seguiría sirviendo los bytes viejos.
 
 ## ORM — Drizzle
 

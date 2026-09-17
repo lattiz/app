@@ -2,7 +2,7 @@
 
 import { type Client, type ClientMeta, formDataBodySerializer, type Options as Options2, type RequestResult, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponses, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponses, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponses, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionResponses, DomainsControllerConnectData, DomainsControllerConnectResponses, DomainsControllerGetDomainData, DomainsControllerGetDomainResponses, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponses, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponses, DomainsControllerPurchaseData, DomainsControllerPurchaseResponses, DomainsControllerSearchData, DomainsControllerSearchResponses, HealthControllerHealthData, HealthControllerHealthResponses, MeControllerDeleteMeData, MeControllerDeleteMeErrors, MeControllerDeleteMeResponses, MeControllerMeData, MeControllerMeErrors, MeControllerMeResponses, SitesControllerChangeTemplateData, SitesControllerChangeTemplateErrors, SitesControllerChangeTemplateResponses, SitesControllerGetSchemaData, SitesControllerGetSchemaErrors, SitesControllerGetSchemaResponses, SitesControllerPublishData, SitesControllerPublishErrors, SitesControllerPublishResponses, SitesControllerSaveSchemaData, SitesControllerSaveSchemaErrors, SitesControllerSaveSchemaResponses, SitesControllerSelectTemplateData, SitesControllerSelectTemplateErrors, SitesControllerSelectTemplateResponses, SitesControllerUploadAssetsData, SitesControllerUploadAssetsErrors, SitesControllerUploadAssetsResponses, TemplatesControllerFindAllData, TemplatesControllerFindAllErrors, TemplatesControllerFindAllResponses, TenantsControllerMeData, TenantsControllerMeErrors, TenantsControllerMeResponses } from './types.gen';
+import type { BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponses, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponses, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponses, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionResponses, DomainsControllerConnectData, DomainsControllerConnectResponses, DomainsControllerGetDomainData, DomainsControllerGetDomainResponses, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponses, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponses, DomainsControllerPurchaseData, DomainsControllerPurchaseResponses, DomainsControllerSearchData, DomainsControllerSearchResponses, HealthControllerHealthData, HealthControllerHealthResponses, MeControllerDeleteMeData, MeControllerDeleteMeErrors, MeControllerDeleteMeResponses, MeControllerMeData, MeControllerMeErrors, MeControllerMeResponses, SitesControllerChangeTemplateData, SitesControllerChangeTemplateErrors, SitesControllerChangeTemplateResponses, SitesControllerGetSchemaData, SitesControllerGetSchemaErrors, SitesControllerGetSchemaResponses, SitesControllerPublishData, SitesControllerPublishErrors, SitesControllerPublishResponses, SitesControllerSaveSchemaData, SitesControllerSaveSchemaErrors, SitesControllerSaveSchemaResponses, SitesControllerSelectTemplateData, SitesControllerSelectTemplateErrors, SitesControllerSelectTemplateResponses, SitesControllerUploadAssetsData, SitesControllerUploadAssetsErrors, SitesControllerUploadAssetsResponses, TemplatesControllerFindAllData, TemplatesControllerFindAllErrors, TemplatesControllerFindAllResponses, TenantsControllerMeData, TenantsControllerMeErrors, TenantsControllerMeResponses, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingErrors, TenantsControllerRemoveBrandingResponses, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingErrors, TenantsControllerUploadBrandingResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -237,5 +237,28 @@ export const templatesControllerFindAll = <ThrowOnError extends boolean = false>
 export const tenantsControllerMe = <ThrowOnError extends boolean = false>(options?: Options<TenantsControllerMeData, ThrowOnError>): RequestResult<TenantsControllerMeResponses, TenantsControllerMeErrors, ThrowOnError> => (options?.client ?? client).get<TenantsControllerMeResponses, TenantsControllerMeErrors, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/tenants/me',
+    ...options
+});
+
+/**
+ * Upload a tenant branding image (protected)
+ */
+export const tenantsControllerUploadBranding = <ThrowOnError extends boolean = false>(options: Options<TenantsControllerUploadBrandingData, ThrowOnError>): RequestResult<TenantsControllerUploadBrandingResponses, TenantsControllerUploadBrandingErrors, ThrowOnError> => (options.client ?? client).post<TenantsControllerUploadBrandingResponses, TenantsControllerUploadBrandingErrors, ThrowOnError>({
+    ...formDataBodySerializer,
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/tenants/{tenantId}/branding',
+    ...options,
+    headers: {
+        'Content-Type': null,
+        ...options.headers
+    }
+});
+
+/**
+ * Remove a tenant branding image (protected)
+ */
+export const tenantsControllerRemoveBranding = <ThrowOnError extends boolean = false>(options: Options<TenantsControllerRemoveBrandingData, ThrowOnError>): RequestResult<TenantsControllerRemoveBrandingResponses, TenantsControllerRemoveBrandingErrors, ThrowOnError> => (options.client ?? client).delete<TenantsControllerRemoveBrandingResponses, TenantsControllerRemoveBrandingErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/tenants/{tenantId}/branding/{type}',
     ...options
 });

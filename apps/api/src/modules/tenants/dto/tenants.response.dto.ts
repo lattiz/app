@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { TenantBrandingDto } from './branding.response.dto';
 
 export class TenantSiteMetaDto {
   @ApiProperty({ type: String, nullable: true })
@@ -92,4 +93,8 @@ export class TenantMeResponseDto {
 
   @ApiProperty({ type: TenantSubscriptionDto, nullable: true })
   subscription!: TenantSubscriptionDto | null;
+
+  /** Favicon / social-preview images injected into the published tenant site. */
+  @ApiProperty({ type: TenantBrandingDto })
+  branding!: TenantBrandingDto;
 }

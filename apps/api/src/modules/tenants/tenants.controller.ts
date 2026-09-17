@@ -1,22 +1,48 @@
 import {
+  Body,
   Controller,
+  Delete,
   Get,
+  Param,
+  ParseEnumPipe,
+  ParseUUIDPipe,
+  Post,
   UnauthorizedException,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiBearerAuth,
+  ApiBody,
+  ApiConsumes,
+  ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiParam,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { type AuthenticatedUser } from '../../common/auth/authenticated-user';
 import { CurrentUser } from '../../common/auth/current-user.decorator';
 import { SupabaseJwtGuard } from '../../common/auth/supabase-jwt.guard';
+import {
+  BrandingUploadResponseDto,
+  TenantBrandingDto,
+} from './dto/branding.response.dto';
 import { TenantMeResponseDto } from './dto/tenants.response.dto';
-import { TenantsService } from './tenants.service';
+import {
+  BRANDING_TYPES,
+  type BrandingType,
+  UploadBrandingDto,
+} from './dto/upload-branding.dto';
+import { TenantsService, type UploadedBrandingFile } from './tenants.service';
+
+// Ceiling for the multipart parser — the per-slot limit (1MB favicon, 4MB
+// social preview) is enforced in the service, which knows the slot.
+const MAX_BRANDING_BYTES = 4 * 1024 * 1024;
 
 @ApiTags('tenants')
 @ApiBearerAuth()
@@ -35,6 +61,57 @@ export class TenantsController {
     @CurrentUser() user?: AuthenticatedUser,
   ): Promise<TenantMeResponseDto> {
     return this.tenants.getMyTenant(requireSub(user));
+  }
+
+  /** Uploads a favicon or social-preview image for the tenant site. */
+  @Post(':tenantId/branding')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      limits: { fileSize: MAX_BRANDING_BYTES, files: 1 },
+    }),
+  )
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      required: ['type', 'file'],
+      properties: {
+        type: { type: 'string', enum: [...BRANDING_TYPES] },
+        file: { type: 'string', format: 'binary' },
+      },
+    },
+  })
+  @ApiOperation({ summary: 'Upload a tenant branding image (protected)' })
+  @ApiOkResponse({ type: BrandingUploadResponseDto })
+  @ApiUnauthorizedResponse({ description: 'Missing or invalid bearer token.' })
+  @ApiForbiddenResponse({ description: 'Tenant does not belong to the caller.' })
+  async uploadBranding(
+    @Param('tenantId', ParseUUIDPipe) tenantId: string,
+    @Body() dto: UploadBrandingDto,
+    @UploadedFile() file?: UploadedBrandingFile,
+    @CurrentUser() user?: AuthenticatedUser,
+  ): Promise<BrandingUploadResponseDto> {
+    return this.tenants.uploadBranding(
+      tenantId,
+      requireSub(user),
+      dto.type,
+      file,
+    );
+  }
+
+  /** Clears one branding slot and deletes the stored image. */
+  @Delete(':tenantId/branding/:type')
+  @ApiParam({ name: 'type', enum: [...BRANDING_TYPES] })
+  @ApiOperation({ summary: 'Remove a tenant branding image (protected)' })
+  @ApiOkResponse({ type: TenantBrandingDto })
+  @ApiUnauthorizedResponse({ description: 'Missing or invalid bearer token.' })
+  @ApiForbiddenResponse({ description: 'Tenant does not belong to the caller.' })
+  async removeBranding(
+    @Param('tenantId', ParseUUIDPipe) tenantId: string,
+    @Param('type', new ParseEnumPipe(BRANDING_TYPES)) type: BrandingType,
+    @CurrentUser() user?: AuthenticatedUser,
+  ): Promise<TenantBrandingDto> {
+    return this.tenants.removeBranding(tenantId, requireSub(user), type);
   }
 }
 

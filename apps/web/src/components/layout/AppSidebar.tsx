@@ -33,6 +33,7 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { buildNavItems, type NavItem } from '@/config/nav.config';
 import { logout } from '@/lib/auth';
 import { useAuthStore } from '@/stores/auth.store';
@@ -178,6 +179,8 @@ export function AppSidebar() {
 
       <SidebarFooter className="border-t border-sidebar-border p-2">
         <SidebarMenu>
+          <ThemeToggle />
+
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger

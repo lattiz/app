@@ -340,6 +340,15 @@ export type TenantSubscriptionDto = {
     cancelAtPeriodEnd: boolean;
 };
 
+export type TenantBrandingDto = {
+    faviconLightUrl: string | null;
+    faviconDarkUrl: string | null;
+    /**
+     * Null means the tenant site falls back to the auto-generated OG image.
+     */
+    socialPreviewUrl: string | null;
+};
+
 export type TenantMeResponseDto = {
     /**
      * `tenants.id` — the id expected by the editor route (`/editor/:tenantId`).
@@ -357,6 +366,17 @@ export type TenantMeResponseDto = {
     domainStatus: TenantDomainDto | null;
     site: TenantSiteMetaDto | null;
     subscription: TenantSubscriptionDto | null;
+    /**
+     * Favicon / social-preview images injected into the published tenant site.
+     */
+    branding: TenantBrandingDto;
+};
+
+export type BrandingUploadResponseDto = {
+    /**
+     * Public Supabase Storage URL, versioned so a replacement busts the CDN cache.
+     */
+    url: string;
 };
 
 export type BillingControllerCreateCheckoutSessionData = {
@@ -763,3 +783,59 @@ export type TenantsControllerMeResponses = {
 };
 
 export type TenantsControllerMeResponse = TenantsControllerMeResponses[keyof TenantsControllerMeResponses];
+
+export type TenantsControllerUploadBrandingData = {
+    body: {
+        type: 'favicon_light' | 'favicon_dark' | 'social_preview';
+        file: Blob | File;
+    };
+    path: {
+        tenantId: string;
+    };
+    query?: never;
+    url: '/tenants/{tenantId}/branding';
+};
+
+export type TenantsControllerUploadBrandingErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Tenant does not belong to the caller.
+     */
+    403: unknown;
+};
+
+export type TenantsControllerUploadBrandingResponses = {
+    200: BrandingUploadResponseDto;
+};
+
+export type TenantsControllerUploadBrandingResponse = TenantsControllerUploadBrandingResponses[keyof TenantsControllerUploadBrandingResponses];
+
+export type TenantsControllerRemoveBrandingData = {
+    body?: never;
+    path: {
+        tenantId: string;
+        type: 'favicon_light' | 'favicon_dark' | 'social_preview';
+    };
+    query?: never;
+    url: '/tenants/{tenantId}/branding/{type}';
+};
+
+export type TenantsControllerRemoveBrandingErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Tenant does not belong to the caller.
+     */
+    403: unknown;
+};
+
+export type TenantsControllerRemoveBrandingResponses = {
+    200: TenantBrandingDto;
+};
+
+export type TenantsControllerRemoveBrandingResponse = TenantsControllerRemoveBrandingResponses[keyof TenantsControllerRemoveBrandingResponses];

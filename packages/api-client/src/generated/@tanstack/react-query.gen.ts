@@ -3,8 +3,8 @@
 import { type DefaultError, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { billingControllerCreateCheckoutSession, billingControllerCreatePortalSession, billingControllerGetInvoices, billingControllerGetSubscription, domainsControllerConnect, domainsControllerGetDomain, domainsControllerGetJobStatus, domainsControllerGetQuote, domainsControllerPurchase, domainsControllerSearch, healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options, sitesControllerChangeTemplate, sitesControllerGetSchema, sitesControllerPublish, sitesControllerSaveSchema, sitesControllerSelectTemplate, sitesControllerUploadAssets, templatesControllerFindAll, tenantsControllerMe } from '../sdk.gen';
-import type { BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponse, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponse, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponse, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionResponse, DomainsControllerConnectData, DomainsControllerConnectResponse, DomainsControllerGetDomainData, DomainsControllerGetDomainResponse, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponse, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponse, DomainsControllerPurchaseData, DomainsControllerPurchaseResponse, DomainsControllerSearchData, DomainsControllerSearchResponse, HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse, SitesControllerChangeTemplateData, SitesControllerChangeTemplateResponse, SitesControllerGetSchemaData, SitesControllerGetSchemaResponse, SitesControllerPublishData, SitesControllerPublishResponse, SitesControllerSaveSchemaData, SitesControllerSaveSchemaResponse, SitesControllerSelectTemplateData, SitesControllerSelectTemplateResponse, SitesControllerUploadAssetsData, SitesControllerUploadAssetsResponse, TemplatesControllerFindAllData, TemplatesControllerFindAllResponse, TenantsControllerMeData, TenantsControllerMeResponse } from '../types.gen';
+import { billingControllerCreateCheckoutSession, billingControllerCreatePortalSession, billingControllerGetInvoices, billingControllerGetSubscription, domainsControllerConnect, domainsControllerGetDomain, domainsControllerGetJobStatus, domainsControllerGetQuote, domainsControllerPurchase, domainsControllerSearch, healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options, sitesControllerChangeTemplate, sitesControllerGetSchema, sitesControllerPublish, sitesControllerSaveSchema, sitesControllerSelectTemplate, sitesControllerUploadAssets, templatesControllerFindAll, tenantsControllerMe, tenantsControllerRemoveBranding, tenantsControllerUploadBranding } from '../sdk.gen';
+import type { BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponse, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponse, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponse, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionResponse, DomainsControllerConnectData, DomainsControllerConnectResponse, DomainsControllerGetDomainData, DomainsControllerGetDomainResponse, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponse, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponse, DomainsControllerPurchaseData, DomainsControllerPurchaseResponse, DomainsControllerSearchData, DomainsControllerSearchResponse, HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse, SitesControllerChangeTemplateData, SitesControllerChangeTemplateResponse, SitesControllerGetSchemaData, SitesControllerGetSchemaResponse, SitesControllerPublishData, SitesControllerPublishResponse, SitesControllerSaveSchemaData, SitesControllerSaveSchemaResponse, SitesControllerSelectTemplateData, SitesControllerSelectTemplateResponse, SitesControllerUploadAssetsData, SitesControllerUploadAssetsResponse, TemplatesControllerFindAllData, TemplatesControllerFindAllResponse, TenantsControllerMeData, TenantsControllerMeResponse, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingResponse, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingResponse } from '../types.gen';
 
 /**
  * Create a Stripe Checkout session (protected)
@@ -405,3 +405,37 @@ export const tenantsControllerMeOptions = (options?: Options<TenantsControllerMe
     },
     queryKey: tenantsControllerMeQueryKey(options)
 });
+
+/**
+ * Upload a tenant branding image (protected)
+ */
+export const tenantsControllerUploadBrandingMutation = (options?: Partial<Options<TenantsControllerUploadBrandingData>>): UseMutationOptions<TenantsControllerUploadBrandingResponse, DefaultError, Options<TenantsControllerUploadBrandingData>> => {
+    const mutationOptions: UseMutationOptions<TenantsControllerUploadBrandingResponse, DefaultError, Options<TenantsControllerUploadBrandingData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await tenantsControllerUploadBranding({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Remove a tenant branding image (protected)
+ */
+export const tenantsControllerRemoveBrandingMutation = (options?: Partial<Options<TenantsControllerRemoveBrandingData>>): UseMutationOptions<TenantsControllerRemoveBrandingResponse, DefaultError, Options<TenantsControllerRemoveBrandingData>> => {
+    const mutationOptions: UseMutationOptions<TenantsControllerRemoveBrandingResponse, DefaultError, Options<TenantsControllerRemoveBrandingData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await tenantsControllerRemoveBranding({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};

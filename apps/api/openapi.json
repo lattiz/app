@@ -800,6 +800,131 @@
           "tenants"
         ]
       }
+    },
+    "/tenants/{tenantId}/branding": {
+      "post": {
+        "operationId": "TenantsController_uploadBranding",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "file"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "favicon_light",
+                      "favicon_dark",
+                      "social_preview"
+                    ]
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrandingUploadResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Tenant does not belong to the caller."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Upload a tenant branding image (protected)",
+        "tags": [
+          "tenants"
+        ]
+      }
+    },
+    "/tenants/{tenantId}/branding/{type}": {
+      "delete": {
+        "operationId": "TenantsController_removeBranding",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "enum": [
+                "favicon_light",
+                "favicon_dark",
+                "social_preview"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantBrandingDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Tenant does not belong to the caller."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Remove a tenant branding image (protected)",
+        "tags": [
+          "tenants"
+        ]
+      }
     }
   },
   "info": {
@@ -1702,6 +1827,29 @@
           "cancelAtPeriodEnd"
         ]
       },
+      "TenantBrandingDto": {
+        "type": "object",
+        "properties": {
+          "faviconLightUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "faviconDarkUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "socialPreviewUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "Null means the tenant site falls back to the auto-generated OG image."
+          }
+        },
+        "required": [
+          "faviconLightUrl",
+          "faviconDarkUrl",
+          "socialPreviewUrl"
+        ]
+      },
       "TenantMeResponseDto": {
         "type": "object",
         "properties": {
@@ -1760,6 +1908,14 @@
                 "$ref": "#/components/schemas/TenantSubscriptionDto"
               }
             ]
+          },
+          "branding": {
+            "description": "Favicon / social-preview images injected into the published tenant site.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TenantBrandingDto"
+              }
+            ]
           }
         },
         "required": [
@@ -1772,7 +1928,20 @@
           "vercelDomainMapped",
           "domainStatus",
           "site",
-          "subscription"
+          "subscription",
+          "branding"
+        ]
+      },
+      "BrandingUploadResponseDto": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Public Supabase Storage URL, versioned so a replacement busts the CDN cache."
+          }
+        },
+        "required": [
+          "url"
         ]
       }
     }

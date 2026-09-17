@@ -3,6 +3,7 @@ import { RouterProvider } from '@tanstack/react-router';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Spinner } from '@/components/ui/spinner';
+import { ThemeProvider } from '@/lib/theme-provider';
 import { configureApiClient } from './lib/api';
 import { queryClient, router } from './router';
 import { useAuthStore } from './stores/auth.store';
@@ -35,8 +36,10 @@ if (!root) throw new Error('Missing #root element');
 
 createRoot(root).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RootGate />
-    </QueryClientProvider>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <RootGate />
+      </QueryClientProvider>
+    </ThemeProvider>
   </StrictMode>,
 );

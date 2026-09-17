@@ -1,13 +1,66 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { sql, type SQL } from 'drizzle-orm';
 import { type Database, DATABASE } from '../../database/database.module';
+import {
+  ASSETS_BUCKET,
+  SupabaseStorageService,
+} from '../sites/supabase-storage.service';
+import {
+  BrandingUploadResponseDto,
+  TenantBrandingDto,
+} from './dto/branding.response.dto';
+import type { BrandingType } from './dto/upload-branding.dto';
 import {
   TenantDomainDto,
   TenantMeResponseDto,
   TenantSiteMetaDto,
   TenantSubscriptionDto,
 } from './dto/tenants.response.dto';
-import { TenantNotFoundException } from './tenants.exceptions';
+import {
+  BrandingFileTooLargeException,
+  BrandingUploadFailedException,
+  NoBrandingFileProvidedException,
+  TenantAccessDeniedException,
+  TenantNotFoundException,
+  UnsupportedBrandingTypeException,
+} from './tenants.exceptions';
+
+/** Per-slot upload rules. Sizes are recommendations for the UI; only the max is enforced. */
+const BRANDING_RULES: Record<
+  BrandingType,
+  { column: string; maxBytes: number; mimeTypes: readonly string[] }
+> = {
+  favicon_light: {
+    column: 'favicon_light_url',
+    maxBytes: 1024 * 1024,
+    mimeTypes: ['image/png', 'image/x-icon', 'image/vnd.microsoft.icon'],
+  },
+  favicon_dark: {
+    column: 'favicon_dark_url',
+    maxBytes: 1024 * 1024,
+    mimeTypes: ['image/png', 'image/x-icon', 'image/vnd.microsoft.icon'],
+  },
+  social_preview: {
+    column: 'social_preview_url',
+    maxBytes: 4 * 1024 * 1024,
+    mimeTypes: ['image/png', 'image/jpeg'],
+  },
+};
+
+/** The part of a multer file we use — avoids the ambient `Express.Multer` global. */
+export interface UploadedBrandingFile {
+  originalname: string;
+  mimetype: string;
+  size: number;
+  buffer: Buffer;
+}
+
+const BRANDING_EXTENSIONS: Record<string, string> = {
+  'image/png': 'png',
+  'image/jpeg': 'jpg',
+  'image/x-icon': 'ico',
+  'image/vnd.microsoft.icon': 'ico',
+};
 
 interface TenantRow {
   id: string;
@@ -37,6 +90,12 @@ interface DomainStatusRow {
   expires_at: string | Date | null;
 }
 
+interface BrandingRow {
+  favicon_light_url: string | null;
+  favicon_dark_url: string | null;
+  social_preview_url: string | null;
+}
+
 interface SubscriptionRow {
   plan: 'basico' | 'pro';
   billing_period: 'monthly' | 'annual';
@@ -47,7 +106,12 @@ interface SubscriptionRow {
 
 @Injectable()
 export class TenantsService {
-  constructor(@Inject(DATABASE) private readonly db: Database) {}
+  private readonly logger = new Logger(TenantsService.name);
+
+  constructor(
+    @Inject(DATABASE) private readonly db: Database,
+    private readonly storage: SupabaseStorageService,
+  ) {}
 
   /** Resolves the authenticated user's tenant (single-tenant-per-user model). */
   async getMyTenant(userSub: string): Promise<TenantMeResponseDto> {
@@ -71,6 +135,7 @@ export class TenantsService {
       domainStatus: await this.getDomainStatus(row.id),
       site: await this.getSiteMeta(row.id),
       subscription: await this.getSubscription(row.id),
+      branding: await this.getBranding(row.id),
     };
   }
 
@@ -141,6 +206,132 @@ export class TenantsService {
     };
   }
 
+  /** Stores one branding image and points the matching `tenants` column at it. */
+  async uploadBranding(
+    tenantId: string,
+    userSub: string,
+    type: BrandingType,
+    file?: UploadedBrandingFile,
+  ): Promise<BrandingUploadResponseDto> {
+    await this.assertTenantOwnership(tenantId, userSub);
+    if (!file?.buffer?.length) throw new NoBrandingFileProvidedException();
+
+    const rule = BRANDING_RULES[type];
+    if (!rule.mimeTypes.includes(file.mimetype)) {
+      throw new UnsupportedBrandingTypeException(file.mimetype, rule.mimeTypes);
+    }
+    if (file.size > rule.maxBytes) {
+      throw new BrandingFileTooLargeException(rule.maxBytes);
+    }
+
+    // Path is derived from the validated mime type, never the client filename.
+    const storagePath = `tenant-branding/${tenantId}/${type}.${BRANDING_EXTENSIONS[file.mimetype]}`;
+    const previousUrl = (await this.getBrandingColumn(tenantId, rule.column)) ?? null;
+
+    let publicUrl: string;
+    try {
+      publicUrl = await this.storage.uploadPublic(
+        storagePath,
+        file.buffer,
+        file.mimetype,
+        { upsert: true },
+      );
+    } catch (error) {
+      this.logger.error(
+        `[branding] Upload failed for ${tenantId}/${type}: ${error instanceof Error ? error.message : String(error)}`,
+      );
+      throw new BrandingUploadFailedException();
+    }
+
+    // upsert reuses the path, so the CDN would keep serving the old bytes.
+    const url = `${publicUrl}?v=${Date.now()}`;
+
+    await this.db.execute(
+      sql`UPDATE public.tenants
+          SET ${sql.raw(rule.column)} = ${url}
+          WHERE id = ${tenantId}::uuid`,
+    );
+
+    const previousPath = storagePathFromUrl(previousUrl);
+    if (previousPath && previousPath !== storagePath) {
+      await this.removeQuietly(previousPath);
+    }
+
+    return { url };
+  }
+
+  /** Clears one branding slot and deletes the stored object. */
+  async removeBranding(
+    tenantId: string,
+    userSub: string,
+    type: BrandingType,
+  ): Promise<TenantBrandingDto> {
+    await this.assertTenantOwnership(tenantId, userSub);
+
+    const rule = BRANDING_RULES[type];
+    const previousUrl = await this.getBrandingColumn(tenantId, rule.column);
+
+    await this.db.execute(
+      sql`UPDATE public.tenants
+          SET ${sql.raw(rule.column)} = NULL
+          WHERE id = ${tenantId}::uuid`,
+    );
+
+    const previousPath = storagePathFromUrl(previousUrl);
+    if (previousPath) await this.removeQuietly(previousPath);
+
+    return this.getBranding(tenantId);
+  }
+
+  private async getBranding(tenantId: string): Promise<TenantBrandingDto> {
+    const rows = await this.query<BrandingRow>(
+      sql`SELECT favicon_light_url, favicon_dark_url, social_preview_url
+          FROM public.tenants
+          WHERE id = ${tenantId}::uuid
+          LIMIT 1`,
+    );
+    const row = rows[0];
+
+    return {
+      faviconLightUrl: row?.favicon_light_url ?? null,
+      faviconDarkUrl: row?.favicon_dark_url ?? null,
+      socialPreviewUrl: row?.social_preview_url ?? null,
+    };
+  }
+
+  private async getBrandingColumn(
+    tenantId: string,
+    column: string,
+  ): Promise<string | null> {
+    const rows = await this.query<Record<string, string | null>>(
+      sql`SELECT ${sql.raw(column)} FROM public.tenants WHERE id = ${tenantId}::uuid LIMIT 1`,
+    );
+    return rows[0]?.[column] ?? null;
+  }
+
+  /** A stale object left behind must not fail an otherwise successful request. */
+  private async removeQuietly(path: string): Promise<void> {
+    try {
+      await this.storage.removePublic(path);
+    } catch (error) {
+      this.logger.warn(
+        `[branding] Could not delete ${path}: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
+  }
+
+  private async assertTenantOwnership(
+    tenantId: string,
+    userSub: string,
+  ): Promise<void> {
+    const rows = await this.query<{ ok: number }>(
+      sql`SELECT 1 AS ok FROM public.tenants
+          WHERE id = ${tenantId}::uuid AND user_id = ${userSub}::uuid
+          LIMIT 1`,
+    );
+    if (!rows[0]) throw new TenantAccessDeniedException();
+  }
+
   private async query<T>(statement: SQL): Promise<T[]> {
     const rows = await this.db.execute(statement);
     return rows as unknown as T[];
@@ -149,4 +340,13 @@ export class TenantsService {
 
 function toIso(value: string | Date): string {
   return value instanceof Date ? value.toISOString() : new Date(value).toISOString();
+}
+
+/** Maps a stored public URL back to its object path so replacements can be cleaned up. */
+function storagePathFromUrl(url: string | null): string | null {
+  if (!url) return null;
+  const marker = `/storage/v1/object/public/${ASSETS_BUCKET}/`;
+  const index = url.indexOf(marker);
+  if (index === -1) return null;
+  return url.slice(index + marker.length).split('?')[0];
 }

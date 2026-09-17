@@ -14,6 +14,40 @@ interface SeoMeta {
   description: string;
   canonicalUrl: string;
   ogImageUrl: string;
+  faviconLightUrl: string | null;
+  faviconDarkUrl: string | null;
+}
+
+// Tenant favicons are per-scheme. Browsers that ignore `media` on <link
+// rel="icon"> need an unconditional icon last, so one is always emitted.
+function buildFaviconTags(meta: {
+  faviconLightUrl: string | null;
+  faviconDarkUrl: string | null;
+}): string[] {
+  const { faviconLightUrl, faviconDarkUrl } = meta;
+  if (!faviconLightUrl && !faviconDarkUrl) {
+    return [
+      `<link rel="icon" href="/favicon.png" sizes="any">`,
+      `<link rel="apple-touch-icon" href="/apple-touch-icon.png">`,
+    ];
+  }
+
+  const tags: string[] = [];
+  if (faviconLightUrl) {
+    tags.push(
+      `<link rel="icon" href="${esc(faviconLightUrl)}" media="(prefers-color-scheme: light)">`,
+    );
+  }
+  if (faviconDarkUrl) {
+    tags.push(
+      `<link rel="icon" href="${esc(faviconDarkUrl)}" media="(prefers-color-scheme: dark)">`,
+    );
+  }
+
+  const fallback = esc(faviconLightUrl ?? faviconDarkUrl ?? '');
+  tags.push(`<link rel="icon" href="${fallback}">`);
+  tags.push(`<link rel="apple-touch-icon" href="${fallback}">`);
+  return tags;
 }
 
 // Inject SEO tags into GrapesJS's exported <head>. If the document has no
@@ -28,13 +62,11 @@ function injectSeo(html: string, meta: SeoMeta): string {
     `<meta property="og:url" content="${meta.canonicalUrl}">`,
     `<meta property="og:title" content="${esc(meta.title)}">`,
     `<meta property="og:description" content="${esc(meta.description)}">`,
-    `<meta property="og:image" content="${meta.ogImageUrl}">`,
+    `<meta property="og:image" content="${esc(meta.ogImageUrl)}">`,
     `<meta name="twitter:card" content="summary_large_image">`,
     `<meta name="twitter:title" content="${esc(meta.title)}">`,
-    `<meta name="twitter:image" content="${meta.ogImageUrl}">`,
-    `<link rel="icon" href="/favicon.png" sizes="any">`,
-    // `<link rel="icon" href="/icon.icon" type="image/svg+xml">`,
-    `<link rel="apple-touch-icon" href="/apple-touch-icon.png">`,
+    `<meta name="twitter:image" content="${esc(meta.ogImageUrl)}">`,
+    ...buildFaviconTags(meta),
   ].join('\n  ');
 
   return html
@@ -85,13 +117,18 @@ export async function GET(request: NextRequest): Promise<Response> {
   }
 
   const siteUrl = site.domain ? `https://${site.domain}` : `http://${hostname}`;
-  const ogImageUrl = `${siteUrl}/api/og?h=${encodeURIComponent(hostname)}`;
+  // An uploaded social preview wins; otherwise the auto-generated OG image.
+  const ogImageUrl =
+    site.socialPreviewUrl ??
+    `${siteUrl}/api/og?h=${encodeURIComponent(hostname)}`;
 
   const html = injectSeo(site.exportedHtml, {
     title: site.tenantName,
     description: `Sitio web de ${site.tenantName}`,
     canonicalUrl: siteUrl,
     ogImageUrl,
+    faviconLightUrl: site.faviconLightUrl,
+    faviconDarkUrl: site.faviconDarkUrl,
   });
 
   return new Response(html, {

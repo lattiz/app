@@ -19,16 +19,25 @@ export class SupabaseStorageService {
     path: string,
     body: Buffer,
     contentType: string,
+    options: { upsert?: boolean } = {},
   ): Promise<string> {
     const storage = this.admin().storage.from(ASSETS_BUCKET);
 
     const { error } = await storage.upload(path, body, {
       contentType,
-      upsert: false,
+      upsert: options.upsert ?? false,
     });
     if (error) throw new Error(error.message);
 
     return storage.getPublicUrl(path).data.publicUrl;
+  }
+
+  /** Removes an object; a missing object is not an error for the caller. */
+  async removePublic(path: string): Promise<void> {
+    const { error } = await this.admin()
+      .storage.from(ASSETS_BUCKET)
+      .remove([path]);
+    if (error) throw new Error(error.message);
   }
 
   private admin(): SupabaseClient {

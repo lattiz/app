@@ -6,6 +6,7 @@ import { DashboardSkeleton } from '@/components/dashboard/DashboardSkeleton';
 import { EditorGatewayCard } from '@/components/dashboard/customization/EditorGatewayCard';
 import { FlowChecklist } from '@/components/dashboard/customization/FlowChecklist';
 import { TemplateSection } from '@/components/dashboard/customization/TemplateSection';
+import { SiteImagesSection } from '@/components/dashboard/customization/SiteImagesSection';
 import { NoSubscriptionGate } from '@/components/dashboard/home/NoSubscriptionGate';
 import { Button } from '@/components/ui/button';
 import { useDashboardStore } from '@/stores/dashboard.store';
@@ -64,6 +65,10 @@ export function CustomizationPage() {
   return (
     <div className="flex flex-col gap-4">
       <EditorGatewayCard tenantId={tenant.data.tenantId} site={site} />
+      <SiteImagesSection
+        tenantId={tenant.data.tenantId}
+        branding={tenant.data.branding}
+      />
       <TemplateSection site={site} />
       <FlowChecklist site={site} subscription={subscription} />
     </div>

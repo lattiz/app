@@ -9,6 +9,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lattiz</title>
   <link rel="icon" type="image/png" sizes="32x32" href="/logo.svg">
+  <script>
+    // Applies the stored theme before first paint; ThemeProvider takes over on mount.
+    (function () {
+      var theme = localStorage.getItem('lattiz-theme') || 'system';
+      var isDark =
+        theme === 'dark' ||
+        (theme === 'system' &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.classList.toggle('dark', isDark);
+    })()
+  </script>
 </head>
 
 <body>
