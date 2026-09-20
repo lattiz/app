@@ -1,5 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { sql, type SQL } from 'drizzle-orm';
+import { computeIsEntitled } from '../../common/billing/entitlement';
 import { type Database, DATABASE } from '../../database/database.module';
 import {
   ASSETS_BUCKET,
@@ -124,6 +125,8 @@ export class TenantsService {
     const row = rows[0];
     if (!row) throw new TenantNotFoundException();
 
+    const subscription = await this.getSubscription(row.id);
+
     return {
       tenantId: row.id,
       slug: row.slug,
@@ -134,7 +137,8 @@ export class TenantsService {
       vercelDomainMapped: row.vercel_domain_mapped,
       domainStatus: await this.getDomainStatus(row.id),
       site: await this.getSiteMeta(row.id),
-      subscription: await this.getSubscription(row.id),
+      subscription,
+      isEntitled: computeIsEntitled(subscription),
       branding: await this.getBranding(row.id),
     };
   }

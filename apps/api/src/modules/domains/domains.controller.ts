@@ -17,6 +17,7 @@ import {
 } from '@nestjs/swagger';
 import { type AuthenticatedUser } from '../../common/auth/authenticated-user';
 import { CurrentUser } from '../../common/auth/current-user.decorator';
+import { SubscriptionActiveGuard } from '../../common/auth/subscription-active.guard';
 import { SupabaseJwtGuard } from '../../common/auth/supabase-jwt.guard';
 import { DomainsService } from './domains.service';
 import { ConnectDomainDto } from './dto/connect-domain.dto';
@@ -41,6 +42,7 @@ export class DomainsController {
 
   /** Search available domains for a keyword (TLD variants generated server-side). */
   @Get('search')
+  @UseGuards(SubscriptionActiveGuard)
   @ApiOperation({ summary: 'Search available domains (protected)' })
   @ApiOkResponse({ type: [DomainSearchResultDto] })
   async search(
@@ -53,6 +55,7 @@ export class DomainsController {
 
   /** Get a locked price quote for a domain — free, no commitment, 10-min TTL. */
   @Post('quote')
+  @UseGuards(SubscriptionActiveGuard)
   @ApiOperation({ summary: 'Get a locked registration quote (protected)' })
   @ApiOkResponse({ type: DomainQuoteResponseDto })
   async getQuote(
@@ -65,6 +68,7 @@ export class DomainsController {
 
   /** Initiate the async purchase pipeline — returns a jobId immediately. */
   @Post('purchase')
+  @UseGuards(SubscriptionActiveGuard)
   @ApiOperation({ summary: 'Purchase a domain (protected, async)' })
   @ApiOkResponse({ type: DomainPurchaseResponseDto })
   async purchase(
@@ -76,6 +80,7 @@ export class DomainsController {
 
   /** Connect a domain the tenant already owns — returns the CNAME records to create. */
   @Post('connect')
+  @UseGuards(SubscriptionActiveGuard)
   @ApiOperation({ summary: 'Connect a tenant-owned domain (protected)' })
   @ApiOkResponse({ type: ConnectDomainResponseDto })
   async connect(

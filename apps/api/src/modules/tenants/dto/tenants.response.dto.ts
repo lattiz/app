@@ -94,6 +94,15 @@ export class TenantMeResponseDto {
   @ApiProperty({ type: TenantSubscriptionDto, nullable: true })
   subscription!: TenantSubscriptionDto | null;
 
+  /**
+   * Whether the tenant may use the service right now. Top-level rather than
+   * inside `subscription`, which is null exactly when a tenant has none —
+   * the case that most needs the flag. The only value the guard and the
+   * frontend trust; never recompute the date math anywhere else.
+   */
+  @ApiProperty()
+  isEntitled!: boolean;
+
   /** Favicon / social-preview images injected into the published tenant site. */
   @ApiProperty({ type: TenantBrandingDto })
   branding!: TenantBrandingDto;

@@ -25,6 +25,7 @@ import { BillingService } from './billing.service';
 import {
   BillingRedirectResponseDto,
   InvoiceListResponseDto,
+  ReconcileResponseDto,
   SubscriptionResponseDto,
 } from './dto/billing.response.dto';
 import { CreateCheckoutSessionDto } from './dto/create-checkout-session.dto';
@@ -85,6 +86,17 @@ export class BillingController {
     @CurrentUser() user?: AuthenticatedUser,
   ): Promise<InvoiceListResponseDto> {
     return this.billing.getInvoicesForUser(requireSub(user));
+  }
+
+  /** Dev/ops escape hatch so the 15-minute cron need not be waited out. */
+  @Post('reconcile')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Force a stale-subscription reconciliation (protected)' })
+  @ApiOkResponse({ type: ReconcileResponseDto })
+  @UseGuards(SupabaseJwtGuard)
+  async triggerReconciliation(): Promise<ReconcileResponseDto> {
+    await this.billing.reconcileStaleSubscriptions();
+    return { triggered: true };
   }
 
   /** Verified by Stripe signature over the raw body — no JWT guard. */

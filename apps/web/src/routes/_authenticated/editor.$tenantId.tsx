@@ -1,5 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, redirect } from '@tanstack/react-router';
 import { lazy, Suspense } from 'react';
+import { tenantsControllerMeOptions } from '@lattiz/api-client';
 
 // Code-split the editor: the GrapesJS SDK is large and only needed on this route.
 const SiteEditor = lazy(() =>
@@ -7,6 +8,14 @@ const SiteEditor = lazy(() =>
 );
 
 export const Route = createFileRoute('/_authenticated/editor/$tenantId')({
+  // The editor lives outside the /dashboard layout, so it needs its own gate —
+  // otherwise a lapsed tenant loads the whole SDK only to have every save 403.
+  beforeLoad: async ({ context }) => {
+    const tenant = await context.queryClient
+      .ensureQueryData(tenantsControllerMeOptions())
+      .catch(() => null);
+    if (tenant && !tenant.isEntitled) throw redirect({ to: '/dashboard' });
+  },
   component: EditorPage,
 });
 

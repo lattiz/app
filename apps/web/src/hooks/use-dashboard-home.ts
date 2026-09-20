@@ -36,9 +36,9 @@ function deriveDashboardState(
 ): DashboardState {
   if (isLoading) return 'loading';
   if (isSettledError || !tenantMe) return 'no-tenant';
-  const subStatus = tenantMe.subscription?.status;
-  const hasActiveSub = subStatus === 'active' || subStatus === 'trialing';
-  if (!hasActiveSub) return 'no-subscription';
+  // `isEntitled` is the backend's single source of truth: status alone still
+  // reads 'active' whenever a Stripe webhook was missed past current_period_end.
+  if (!tenantMe.isEntitled) return 'no-subscription';
   if (!tenantMe.site?.templateId) return 'no-template';
   return 'active';
 }

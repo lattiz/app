@@ -28,6 +28,7 @@ import {
 } from '@nestjs/swagger';
 import { type AuthenticatedUser } from '../../common/auth/authenticated-user';
 import { CurrentUser } from '../../common/auth/current-user.decorator';
+import { SubscriptionActiveGuard } from '../../common/auth/subscription-active.guard';
 import { SupabaseJwtGuard } from '../../common/auth/supabase-jwt.guard';
 import { ChangeTemplateDto } from './dto/change-template.dto';
 import { PublishSiteDto } from './dto/publish-site.dto';
@@ -68,6 +69,7 @@ export class SitesController {
 
   /** Persists an autosave of the editor project. */
   @Patch(':tenantId/schema')
+  @UseGuards(SubscriptionActiveGuard)
   @ApiOperation({ summary: 'Autosave the tenant site editor project (protected)' })
   @ApiOkResponse({ type: SaveSchemaResponseDto })
   @ApiUnauthorizedResponse({ description: 'Missing or invalid bearer token.' })
@@ -82,6 +84,7 @@ export class SitesController {
 
   /** Publishes the tenant site (stores exported HTML). */
   @Post(':tenantId/publish')
+  @UseGuards(SubscriptionActiveGuard)
   @ApiOperation({ summary: 'Publish the tenant site (protected)' })
   @ApiOkResponse({ type: PublishSiteResponseDto })
   @ApiUnauthorizedResponse({ description: 'Missing or invalid bearer token.' })
@@ -101,6 +104,7 @@ export class SitesController {
 
   /** Uploads editor assets (images) and returns their public Supabase Storage URLs. */
   @Post(':tenantId/assets')
+  @UseGuards(SubscriptionActiveGuard)
   @UseInterceptors(
     FilesInterceptor('files', MAX_ASSET_FILES, {
       limits: { fileSize: MAX_ASSET_BYTES, files: MAX_ASSET_FILES },
@@ -129,6 +133,7 @@ export class SitesController {
 
   /** First-time explicit template selection (creates the site schema). */
   @Post('select-template')
+  @UseGuards(SubscriptionActiveGuard)
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Select a template for the caller tenant (protected)' })
   @ApiOkResponse({ type: SelectTemplateResponseDto })
@@ -144,6 +149,7 @@ export class SitesController {
 
   /** Switches an existing site to a different template. */
   @Patch(':tenantId/template')
+  @UseGuards(SubscriptionActiveGuard)
   @ApiOperation({ summary: 'Change the template for the tenant site (protected)' })
   @ApiOkResponse({ type: ChangeTemplateResponseDto })
   @ApiUnauthorizedResponse({ description: 'Missing or invalid bearer token.' })

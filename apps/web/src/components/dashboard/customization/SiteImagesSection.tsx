@@ -46,7 +46,7 @@ function UploadSlot({
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className="flex min-w-0 flex-1 flex-col gap-2">
+    <div className="flex min-w-0 flex-1 flex-col gap-2 max-h-48">
       <div className="flex items-center justify-between">
         <span className="text-xs font-medium text-muted-foreground">
           {label}
@@ -196,7 +196,7 @@ export function SiteImagesSection({
             label="Imagen al compartir"
             url={branding.socialPreviewUrl}
             busy={pending === 'social_preview'}
-            aspect="aspect-[1200/630]"
+            aspect="aspect-[20/9]"
             onFile={handleFile}
             onRemove={handleRemove}
           />

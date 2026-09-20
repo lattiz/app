@@ -391,6 +391,35 @@ export class DomainsService {
     }
   }
 
+  // ── Offboarding ───────────────────────────────────────────────────────────
+  /**
+   * Takes the tenant's site offline after their subscription lapsed. Idempotent:
+   * safe to call when there is no domain, or when it was already released.
+   */
+  async releaseDomainForTenant(tenantId: string): Promise<void> {
+    const domain = await this.getDomainByTenant(tenantId);
+    if (!domain) return;
+
+    // Unmapping from Vercel is what actually takes the site offline. Non-fatal:
+    // removeDomain already swallows a 404 on an already-unmapped domain.
+    try {
+      await this.vercel.removeDomain(domain.domain);
+    } catch (err) {
+      this.logger.warn(
+        `[release] Vercel unmap failed for ${domain.domain} (non-fatal): ${String(err)}`,
+      );
+    }
+
+    // The GoDaddy registration itself is deliberately left alone: there is no
+    // reliable self-serve API to cancel or refund a paid registration. auto_renew
+    // is already false from purchase time, so the name lapses at expires_at and
+    // returns to the registrar pool on its own — that is the only reuse mechanism
+    // available, and Lattiz does not control it beyond not renewing.
+    await this.markDomainReleased(domain.id);
+    await this.clearTenantDomain(tenantId);
+    this.logger.log(`[release] Domain ${domain.domain} released for tenant ${tenantId}`);
+  }
+
   // ── Private DB helpers ────────────────────────────────────────────────────
   private async getTenantIdByUserSub(userSub: string): Promise<string> {
     const rows = await this.query<{ id: string }>(
@@ -503,6 +532,24 @@ export class DomainsService {
           SET vercel_mapped = true, vercel_domain_id = ${vercelDomainId},
               purchase_completed_at = now()
           WHERE domain = ${domain}`,
+    );
+  }
+
+  private async markDomainReleased(domainId: string): Promise<void> {
+    await this.query(
+      sql`UPDATE public.domains
+          SET released_at = now(), vercel_mapped = false, ssl_active = false,
+              updated_at = now()
+          WHERE id = ${domainId}::uuid`,
+    );
+  }
+
+  /** Keeps "does this tenant already have a domain" honest if they resubscribe. */
+  private async clearTenantDomain(tenantId: string): Promise<void> {
+    await this.query(
+      sql`UPDATE public.tenants
+          SET domain = NULL, vercel_domain_mapped = false
+          WHERE id = ${tenantId}::uuid`,
     );
   }
 

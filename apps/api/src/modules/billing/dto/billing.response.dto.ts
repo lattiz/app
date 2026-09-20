@@ -72,3 +72,9 @@ export class InvoiceListResponseDto {
   @ApiProperty({ type: InvoiceDto, isArray: true })
   invoices!: InvoiceDto[];
 }
+
+/** Acknowledgement that a reconciliation pass ran (see the API logs for detail). */
+export class ReconcileResponseDto {
+  @ApiProperty()
+  triggered!: boolean;
+}

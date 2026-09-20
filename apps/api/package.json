@@ -20,6 +20,7 @@
     "@nestjs/config": "^4.0.4",
     "@nestjs/core": "^11.0.13",
     "@nestjs/platform-express": "^11.0.13",
+    "@nestjs/schedule": "^12.0.2",
     "@nestjs/swagger": "^11.0.6",
     "@supabase/supabase-js": "^2.108.0",
     "class-transformer": "^0.5.1",
