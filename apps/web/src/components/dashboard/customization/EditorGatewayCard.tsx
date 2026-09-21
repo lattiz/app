@@ -22,6 +22,7 @@ function mockRepublish(): Promise<{ publishedAt: string }> {
 
 export function EditorGatewayCard({ tenantId, site }: EditorGatewayCardProps) {
   const republish = useMutation({ mutationFn: mockRepublish });
+  const isFirstPublish = site.lastPublished === null;
 
   return (
     <Card>
@@ -53,8 +54,10 @@ export function EditorGatewayCard({ tenantId, site }: EditorGatewayCardProps) {
                 <Loader2Icon className="size-3 animate-spin" />
                 Publicando…
               </>
+            ) : isFirstPublish ? (
+              'Publicar sitio'
             ) : (
-              'Republicar sitio'
+              'Actualizar sitio web'
             )}
           </Button>
         </div>

@@ -89,6 +89,7 @@ interface DomainStatusRow {
   ssl_active: boolean;
   is_mock: boolean;
   expires_at: string | Date | null;
+  suspended_at: string | Date | null;
 }
 
 interface BrandingRow {
@@ -147,7 +148,8 @@ export class TenantsService {
     tenantId: string,
   ): Promise<TenantDomainDto | null> {
     const rows = await this.query<DomainStatusRow>(
-      sql`SELECT domain, source, dns_status, vercel_mapped, ssl_active, is_mock, expires_at
+      sql`SELECT domain, source, dns_status, vercel_mapped, ssl_active, is_mock, expires_at,
+                 suspended_at
           FROM public.domains
           WHERE tenant_id = ${tenantId}::uuid
           LIMIT 1`,
@@ -163,6 +165,7 @@ export class TenantsService {
       sslActive: row.ssl_active,
       isMock: row.is_mock,
       expiresAt: row.expires_at ? toIso(row.expires_at) : null,
+      suspended: row.suspended_at !== null,
     };
   }
 

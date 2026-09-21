@@ -11,6 +11,7 @@ import { PropagatingStep } from './steps/PropagatingStep';
 import { PurchasingStep } from './steps/PurchasingStep';
 import { QuoteStep } from './steps/QuoteStep';
 import { SearchStep } from './steps/SearchStep';
+import { SuspendedStep } from './steps/SuspendedStep';
 import { useDomainWizardStore, type WizardStep } from './store/domain-wizard.store';
 
 const STEP_VIEWS: Record<WizardStep, React.ReactNode> = {
@@ -22,6 +23,7 @@ const STEP_VIEWS: Record<WizardStep, React.ReactNode> = {
   'dns-instructions': <DnsInstructionsStep />,
   propagating: <PropagatingStep />,
   active: <ActiveStep />,
+  suspended: <SuspendedStep />,
 };
 
 export function DomainPage() {
@@ -37,6 +39,12 @@ export function DomainPage() {
   useEffect(() => {
     if (!domainStatus) return;
     const store = useDomainWizardStore.getState();
+    // Suspension overrides dnsStatus: DNS still resolves, but Vercel has no mapping.
+    if (domainStatus.suspended) {
+      store.setDomainSource(domainStatus.source);
+      store.setStep('suspended');
+      return;
+    }
     if (store.step !== 'entry') return;
     store.setDomainSource(domainStatus.source);
     if (domainStatus.dnsStatus === 'active') {
@@ -50,7 +58,7 @@ export function DomainPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      {step !== 'entry' && (
+      {step !== 'entry' && step !== 'suspended' && (
         <DomainWizardProgress currentStep={step} domainSource={domainSource} />
       )}
       {STEP_VIEWS[step]}

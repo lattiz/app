@@ -48,6 +48,7 @@ interface DomainRow {
   ssl_active: boolean;
   is_mock: boolean;
   purchase_completed_at: string | Date | null;
+  suspended_at: string | Date | null;
 }
 
 interface JobRow {
@@ -391,33 +392,59 @@ export class DomainsService {
     }
   }
 
-  // ── Offboarding ───────────────────────────────────────────────────────────
+  // ── Suspension / relaunch ─────────────────────────────────────────────
   /**
-   * Takes the tenant's site offline after their subscription lapsed. Idempotent:
-   * safe to call when there is no domain, or when it was already released.
+   * Takes the tenant's site offline after their subscription lapsed by removing
+   * only the Vercel mapping. The domains row, `tenants.domain` and the DNS
+   * records all stay intact so `relaunchDomain` can restore service without
+   * re-running the purchase/connect wizard. Idempotent.
    */
-  async releaseDomainForTenant(tenantId: string): Promise<void> {
+  async suspendDomainForTenant(tenantId: string): Promise<void> {
     const domain = await this.getDomainByTenant(tenantId);
     if (!domain) return;
 
-    // Unmapping from Vercel is what actually takes the site offline. Non-fatal:
-    // removeDomain already swallows a 404 on an already-unmapped domain.
+    // Non-fatal: removeDomain does not throw on an already-unmapped domain.
     try {
       await this.vercel.removeDomain(domain.domain);
     } catch (err) {
       this.logger.warn(
-        `[release] Vercel unmap failed for ${domain.domain} (non-fatal): ${String(err)}`,
+        `[suspend] Vercel unmap failed for ${domain.domain} (non-fatal): ${String(err)}`,
       );
     }
 
-    // The GoDaddy registration itself is deliberately left alone: there is no
-    // reliable self-serve API to cancel or refund a paid registration. auto_renew
-    // is already false from purchase time, so the name lapses at expires_at and
-    // returns to the registrar pool on its own — that is the only reuse mechanism
-    // available, and Lattiz does not control it beyond not renewing.
-    await this.markDomainReleased(domain.id);
-    await this.clearTenantDomain(tenantId);
-    this.logger.log(`[release] Domain ${domain.domain} released for tenant ${tenantId}`);
+    // GoDaddy is deliberately untouched: the CNAMEs must survive for relaunch,
+    // and auto_renew is already false so an abandoned name lapses on its own.
+    await this.markDomainSuspended(domain.id, tenantId);
+    this.logger.log(`[suspend] Domain ${domain.domain} suspended for tenant ${tenantId}`);
+  }
+
+  /**
+   * Re-registers a suspended domain with Vercel. DNS was never touched, so this
+   * skips GoDaddy entirely. Idempotent — shared by the billing webhooks, the
+   * reconcile cron and `POST /domains/relaunch`. Throws on Vercel failure so
+   * each caller picks its own retry policy.
+   */
+  async relaunchDomain(
+    tenantId: string,
+  ): Promise<{ relaunched: boolean; domain: string | null }> {
+    const domain = await this.getDomainByTenant(tenantId);
+    if (!domain) return { relaunched: false, domain: null };
+    if (!domain.suspended_at) return { relaunched: false, domain: domain.domain };
+
+    this.logger.log(`[relaunch] Restoring Vercel mapping for ${domain.domain}`);
+    if (!(await this.vercel.hasDomain(domain.domain))) {
+      await this.vercel.addDomain(domain.domain);
+    }
+    await this.markDomainRelaunched(domain.id, tenantId, domain.domain);
+
+    this.logger.log(`[relaunch] Success: ${domain.domain}`);
+    return { relaunched: true, domain: domain.domain };
+  }
+
+  async relaunchDomainForUser(
+    userSub: string,
+  ): Promise<{ relaunched: boolean; domain: string | null }> {
+    return this.relaunchDomain(await this.getTenantIdByUserSub(userSub));
   }
 
   // ── Private DB helpers ────────────────────────────────────────────────────
@@ -435,7 +462,7 @@ export class DomainsService {
       sql`SELECT id, tenant_id, domain, source, tld, godaddy_registration_id,
                  godaddy_idempotency_key, annual_cost_usd_cents, period_years,
                  expires_at, dns_status, vercel_domain_id, vercel_mapped,
-                 ssl_active, is_mock, purchase_completed_at
+                 ssl_active, is_mock, purchase_completed_at, suspended_at
           FROM public.domains
           WHERE tenant_id = ${tenantId}::uuid
           LIMIT 1`,
@@ -535,22 +562,35 @@ export class DomainsService {
     );
   }
 
-  private async markDomainReleased(domainId: string): Promise<void> {
+  private async markDomainSuspended(domainId: string, tenantId: string): Promise<void> {
     await this.query(
       sql`UPDATE public.domains
-          SET released_at = now(), vercel_mapped = false, ssl_active = false,
+          SET suspended_at = now(), vercel_mapped = false, ssl_active = false,
               updated_at = now()
           WHERE id = ${domainId}::uuid`,
     );
+    await this.query(
+      sql`UPDATE public.tenants SET vercel_domain_mapped = false WHERE id = ${tenantId}::uuid`,
+    );
   }
 
-  /** Keeps "does this tenant already have a domain" honest if they resubscribe. */
-  private async clearTenantDomain(tenantId: string): Promise<void> {
+  /**
+   * Back to 'propagating' so checkDnsStatus re-verifies and flips ssl_active once
+   * Vercel reissues the cert. Also restores tenants.domain, which the old release
+   * flow used to clear.
+   */
+  private async markDomainRelaunched(
+    domainId: string,
+    tenantId: string,
+    domain: string,
+  ): Promise<void> {
     await this.query(
-      sql`UPDATE public.tenants
-          SET domain = NULL, vercel_domain_mapped = false
-          WHERE id = ${tenantId}::uuid`,
+      sql`UPDATE public.domains
+          SET suspended_at = NULL, relaunched_at = now(), vercel_mapped = true,
+              dns_status = 'propagating', updated_at = now()
+          WHERE id = ${domainId}::uuid`,
     );
+    await this.updateTenantDomain(tenantId, domain);
   }
 
   private async updateTenantDomain(tenantId: string, domain: string): Promise<void> {

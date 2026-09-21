@@ -307,6 +307,33 @@
         ]
       }
     },
+    "/domains/relaunch": {
+      "post": {
+        "operationId": "DomainsController_relaunch",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelaunchDomainResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Relaunch a suspended domain (protected)",
+        "tags": [
+          "domains"
+        ]
+      }
+    },
     "/domains/jobs/{jobId}": {
       "get": {
         "operationId": "DomainsController_getJobStatus",
@@ -1340,6 +1367,23 @@
           "dnsInstructions"
         ]
       },
+      "RelaunchDomainResponseDto": {
+        "type": "object",
+        "properties": {
+          "relaunched": {
+            "type": "boolean",
+            "description": "False when there was nothing to relaunch (no domain, or not suspended)."
+          },
+          "domain": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "relaunched",
+          "domain"
+        ]
+      },
       "DomainJobStatusDto": {
         "type": "object",
         "properties": {
@@ -1778,6 +1822,10 @@
           "expiresAt": {
             "type": "string",
             "nullable": true
+          },
+          "suspended": {
+            "type": "boolean",
+            "description": "Vercel mapping removed after a lapsed subscription; DNS and ownership are intact."
           }
         },
         "required": [
@@ -1787,7 +1835,8 @@
           "vercelMapped",
           "sslActive",
           "isMock",
-          "expiresAt"
+          "expiresAt",
+          "suspended"
         ]
       },
       "TenantSiteMetaDto": {

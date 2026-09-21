@@ -43,6 +43,16 @@ export class VercelDomainsService {
     return (await res.json()) as { name: string; verified: boolean };
   }
 
+  async hasDomain(domain: string): Promise<boolean> {
+    const res = await fetch(
+      `https://api.vercel.com/v9/projects/${this.projectId}/domains/${domain}`,
+      { headers: { Authorization: `Bearer ${this.token}` } },
+    );
+    if (res.status === 404) return false;
+    if (!res.ok) throw new Error(`Vercel domain lookup failed: ${res.status}`);
+    return true;
+  }
+
   async removeDomain(domain: string): Promise<void> {
     await fetch(
       `https://api.vercel.com/v10/projects/${this.projectId}/domains/${domain}`,

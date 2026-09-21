@@ -2,6 +2,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { sql, type SQL } from 'drizzle-orm';
 import Stripe from 'stripe';
+import { computeIsEntitled } from '../../common/billing/entitlement';
 import { type Database, DATABASE } from '../../database/database.module';
 import { DomainsService } from '../domains/domains.service';
 import {
@@ -41,6 +42,12 @@ interface TenantRow {
 interface StaleSubscriptionRow {
   tenant_id: string;
   stripe_subscription_id: string;
+}
+
+interface SuspendedDomainCandidateRow {
+  tenant_id: string;
+  status: string | null;
+  current_period_end: string | Date | null;
 }
 
 interface SubscriptionRow {
@@ -287,6 +294,33 @@ export class BillingService {
     this.logger.log(
       `Tenant ${tenantId}: ${resolved.plan} (${subscription.status})`,
     );
+
+    const period = periodBounds(subscription);
+    if (
+      computeIsEntitled({
+        status: subscription.status,
+        currentPeriodEnd: period.end,
+      })
+    ) {
+      await this.tryRelaunchDomain(tenantId);
+    }
+  }
+
+  /**
+   * Best-effort: the reconcile cron and `POST /domains/relaunch` are the
+   * fallbacks, so a Vercel hiccup must not fail the webhook.
+   */
+  private async tryRelaunchDomain(tenantId: string): Promise<void> {
+    try {
+      const result = await this.domains.relaunchDomain(tenantId);
+      if (result.relaunched) {
+        this.logger.log(`[billing] Auto-relaunched domain for tenant ${tenantId}`);
+      }
+    } catch (err) {
+      this.logger.warn(
+        `[billing] Auto-relaunch failed for tenant ${tenantId} (will retry via cron): ${String(err)}`,
+      );
+    }
   }
 
   private async onSubscriptionDeleted(
@@ -301,7 +335,7 @@ export class BillingService {
       'none',
       subscription.customer as string,
     );
-    await this.domains.releaseDomainForTenant(tenantId);
+    await this.domains.suspendDomainForTenant(tenantId);
     this.logger.log(`Tenant ${tenantId} subscription canceled + offboarded`);
   }
 
@@ -341,6 +375,12 @@ export class BillingService {
    */
   @Cron('*/15 * * * *')
   async reconcileStaleSubscriptions(): Promise<void> {
+    await this.reconcileLapsedSubscriptions();
+    // Same class of risk as a missed webhook: the auto-relaunch can fail transiently.
+    await this.reconcileSuspendedDomains();
+  }
+
+  private async reconcileLapsedSubscriptions(): Promise<void> {
     const stale = await this.findStaleSubscriptions();
     if (stale.length === 0) return;
     this.logger.log(`[reconcile] Found ${stale.length} stale subscription(s)`);
@@ -353,7 +393,7 @@ export class BillingService {
         await this.syncSubscriptionFromStripe(row.tenant_id, fresh);
 
         if (TERMINAL_STATUSES.includes(fresh.status)) {
-          await this.domains.releaseDomainForTenant(row.tenant_id);
+          await this.domains.suspendDomainForTenant(row.tenant_id);
         }
       } catch (err) {
         this.logger.error(
@@ -361,6 +401,43 @@ export class BillingService {
         );
       }
     }
+  }
+
+  private async reconcileSuspendedDomains(): Promise<void> {
+    const candidates = await this.findSuspendedDomainCandidates();
+    const entitled = candidates.filter((row) =>
+      computeIsEntitled({
+        status: row.status,
+        currentPeriodEnd: row.current_period_end,
+      }),
+    );
+    for (const row of entitled) {
+      try {
+        await this.domains.relaunchDomain(row.tenant_id);
+      } catch (err) {
+        this.logger.warn(
+          `[reconcile] Relaunch retry failed for ${row.tenant_id}: ${String(err)}`,
+        );
+      }
+    }
+  }
+
+  /** Entitlement is filtered in JS via computeIsEntitled, never re-derived in SQL. */
+  private async findSuspendedDomainCandidates(): Promise<
+    SuspendedDomainCandidateRow[]
+  > {
+    return this.query<SuspendedDomainCandidateRow>(
+      sql`SELECT d.tenant_id, s.status, s.current_period_end
+          FROM public.domains d
+          LEFT JOIN LATERAL (
+            SELECT status, current_period_end
+            FROM public.subscriptions
+            WHERE tenant_id = d.tenant_id
+            ORDER BY created_at DESC
+            LIMIT 1
+          ) s ON true
+          WHERE d.suspended_at IS NOT NULL`,
+    );
   }
 
   private async findStaleSubscriptions(): Promise<StaleSubscriptionRow[]> {

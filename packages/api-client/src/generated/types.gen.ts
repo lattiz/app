@@ -141,6 +141,14 @@ export type ConnectDomainResponseDto = {
     dnsInstructions: Array<CnameInstructionDto>;
 };
 
+export type RelaunchDomainResponseDto = {
+    /**
+     * False when there was nothing to relaunch (no domain, or not suspended).
+     */
+    relaunched: boolean;
+    domain: string | null;
+};
+
 export type DomainJobStatusDto = {
     jobId: string;
     domain: string;
@@ -326,6 +334,10 @@ export type TenantDomainDto = {
     sslActive: boolean;
     isMock: boolean;
     expiresAt: string | null;
+    /**
+     * Vercel mapping removed after a lapsed subscription; DNS and ownership are intact.
+     */
+    suspended: boolean;
 };
 
 export type TenantSiteMetaDto = {
@@ -511,6 +523,19 @@ export type DomainsControllerConnectResponses = {
 };
 
 export type DomainsControllerConnectResponse = DomainsControllerConnectResponses[keyof DomainsControllerConnectResponses];
+
+export type DomainsControllerRelaunchData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/domains/relaunch';
+};
+
+export type DomainsControllerRelaunchResponses = {
+    200: RelaunchDomainResponseDto;
+};
+
+export type DomainsControllerRelaunchResponse = DomainsControllerRelaunchResponses[keyof DomainsControllerRelaunchResponses];
 
 export type DomainsControllerGetJobStatusData = {
     body?: never;

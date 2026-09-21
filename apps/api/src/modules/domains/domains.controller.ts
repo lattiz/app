@@ -28,6 +28,7 @@ import {
   DomainQuoteResponseDto,
   DomainSearchResultDto,
   DomainStatusResponseDto,
+  RelaunchDomainResponseDto,
 } from './dto/domains.response.dto';
 import { GetQuoteDto } from './dto/get-quote.dto';
 import { PurchaseDomainDto } from './dto/purchase-domain.dto';
@@ -88,6 +89,17 @@ export class DomainsController {
     @CurrentUser() user?: AuthenticatedUser,
   ): Promise<ConnectDomainResponseDto> {
     return this.domains.initiateConnect(requireSub(user), dto.domain);
+  }
+
+  /** Restore the Vercel mapping of a domain suspended by a lapsed subscription. Idempotent. */
+  @Post('relaunch')
+  @UseGuards(SubscriptionActiveGuard)
+  @ApiOperation({ summary: 'Relaunch a suspended domain (protected)' })
+  @ApiOkResponse({ type: RelaunchDomainResponseDto })
+  async relaunch(
+    @CurrentUser() user?: AuthenticatedUser,
+  ): Promise<RelaunchDomainResponseDto> {
+    return this.domains.relaunchDomainForUser(requireSub(user));
   }
 
   /** Poll the purchase job status. */

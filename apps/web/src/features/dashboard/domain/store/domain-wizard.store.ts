@@ -12,7 +12,8 @@ export type WizardStep =
   | 'connect-form'
   | 'dns-instructions'
   | 'propagating'
-  | 'active';
+  | 'active'
+  | 'suspended';
 
 export type DomainSource = 'godaddy_managed' | 'user_provided';
 

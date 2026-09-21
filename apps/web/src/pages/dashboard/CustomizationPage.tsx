@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
 import { tenantsControllerMeOptions } from '@lattiz/api-client';
-import { LayoutIcon } from 'lucide-react';
+import { LayoutIcon, TriangleAlertIcon } from 'lucide-react';
 import { DashboardSkeleton } from '@/components/dashboard/DashboardSkeleton';
 import { EditorGatewayCard } from '@/components/dashboard/customization/EditorGatewayCard';
 import { FlowChecklist } from '@/components/dashboard/customization/FlowChecklist';
@@ -64,6 +64,20 @@ export function CustomizationPage() {
 
   return (
     <div className="flex flex-col gap-4">
+      {tenant.data.domainStatus?.suspended && (
+        <div className="flex items-center gap-3 rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-4 text-sm">
+          <TriangleAlertIcon className="size-5 shrink-0 text-yellow-700 dark:text-yellow-400" />
+          <div className="flex-1">
+            <p className="font-medium">Tu sitio está pausado</p>
+            <p className="text-muted-foreground">
+              Estamos restaurando tu dominio automáticamente.
+            </p>
+          </div>
+          <Button size="sm" variant="outline" render={<Link to="/dashboard/domain" />}>
+            Ver estado
+          </Button>
+        </div>
+      )}
       <EditorGatewayCard tenantId={tenant.data.tenantId} site={site} />
       <SiteImagesSection
         tenantId={tenant.data.tenantId}

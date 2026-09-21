@@ -62,6 +62,15 @@ export class DomainPurchaseResponseDto {
   jobId!: string;
 }
 
+export class RelaunchDomainResponseDto {
+  /** False when there was nothing to relaunch (no domain, or not suspended). */
+  @ApiProperty()
+  relaunched!: boolean;
+
+  @ApiProperty({ type: String, nullable: true })
+  domain!: string | null;
+}
+
 export class CnameInstructionDto {
   @ApiProperty({ enum: ['CNAME'] })
   type!: 'CNAME';

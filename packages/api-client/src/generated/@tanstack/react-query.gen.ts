@@ -3,8 +3,8 @@
 import { type DefaultError, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { billingControllerCreateCheckoutSession, billingControllerCreatePortalSession, billingControllerGetInvoices, billingControllerGetSubscription, billingControllerTriggerReconciliation, domainsControllerConnect, domainsControllerGetDomain, domainsControllerGetJobStatus, domainsControllerGetQuote, domainsControllerPurchase, domainsControllerSearch, healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options, sitesControllerChangeTemplate, sitesControllerGetSchema, sitesControllerPublish, sitesControllerSaveSchema, sitesControllerSelectTemplate, sitesControllerUploadAssets, templatesControllerFindAll, tenantsControllerMe, tenantsControllerRemoveBranding, tenantsControllerUploadBranding } from '../sdk.gen';
-import type { BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponse, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponse, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponse, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionResponse, BillingControllerTriggerReconciliationData, BillingControllerTriggerReconciliationResponse, DomainsControllerConnectData, DomainsControllerConnectResponse, DomainsControllerGetDomainData, DomainsControllerGetDomainResponse, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponse, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponse, DomainsControllerPurchaseData, DomainsControllerPurchaseResponse, DomainsControllerSearchData, DomainsControllerSearchResponse, HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse, SitesControllerChangeTemplateData, SitesControllerChangeTemplateResponse, SitesControllerGetSchemaData, SitesControllerGetSchemaResponse, SitesControllerPublishData, SitesControllerPublishResponse, SitesControllerSaveSchemaData, SitesControllerSaveSchemaResponse, SitesControllerSelectTemplateData, SitesControllerSelectTemplateResponse, SitesControllerUploadAssetsData, SitesControllerUploadAssetsResponse, TemplatesControllerFindAllData, TemplatesControllerFindAllResponse, TenantsControllerMeData, TenantsControllerMeResponse, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingResponse, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingResponse } from '../types.gen';
+import { billingControllerCreateCheckoutSession, billingControllerCreatePortalSession, billingControllerGetInvoices, billingControllerGetSubscription, billingControllerTriggerReconciliation, domainsControllerConnect, domainsControllerGetDomain, domainsControllerGetJobStatus, domainsControllerGetQuote, domainsControllerPurchase, domainsControllerRelaunch, domainsControllerSearch, healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options, sitesControllerChangeTemplate, sitesControllerGetSchema, sitesControllerPublish, sitesControllerSaveSchema, sitesControllerSelectTemplate, sitesControllerUploadAssets, templatesControllerFindAll, tenantsControllerMe, tenantsControllerRemoveBranding, tenantsControllerUploadBranding } from '../sdk.gen';
+import type { BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponse, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponse, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponse, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionResponse, BillingControllerTriggerReconciliationData, BillingControllerTriggerReconciliationResponse, DomainsControllerConnectData, DomainsControllerConnectResponse, DomainsControllerGetDomainData, DomainsControllerGetDomainResponse, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponse, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponse, DomainsControllerPurchaseData, DomainsControllerPurchaseResponse, DomainsControllerRelaunchData, DomainsControllerRelaunchResponse, DomainsControllerSearchData, DomainsControllerSearchResponse, HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse, SitesControllerChangeTemplateData, SitesControllerChangeTemplateResponse, SitesControllerGetSchemaData, SitesControllerGetSchemaResponse, SitesControllerPublishData, SitesControllerPublishResponse, SitesControllerSaveSchemaData, SitesControllerSaveSchemaResponse, SitesControllerSelectTemplateData, SitesControllerSelectTemplateResponse, SitesControllerUploadAssetsData, SitesControllerUploadAssetsResponse, TemplatesControllerFindAllData, TemplatesControllerFindAllResponse, TenantsControllerMeData, TenantsControllerMeResponse, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingResponse, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingResponse } from '../types.gen';
 
 /**
  * Create a Stripe Checkout session (protected)
@@ -185,6 +185,23 @@ export const domainsControllerConnectMutation = (options?: Partial<Options<Domai
     const mutationOptions: UseMutationOptions<DomainsControllerConnectResponse, DefaultError, Options<DomainsControllerConnectData>> = {
         mutationFn: async (fnOptions) => {
             const { data } = await domainsControllerConnect({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Relaunch a suspended domain (protected)
+ */
+export const domainsControllerRelaunchMutation = (options?: Partial<Options<DomainsControllerRelaunchData>>): UseMutationOptions<DomainsControllerRelaunchResponse, DefaultError, Options<DomainsControllerRelaunchData>> => {
+    const mutationOptions: UseMutationOptions<DomainsControllerRelaunchResponse, DefaultError, Options<DomainsControllerRelaunchData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await domainsControllerRelaunch({
                 ...options,
                 ...fnOptions,
                 throwOnError: true

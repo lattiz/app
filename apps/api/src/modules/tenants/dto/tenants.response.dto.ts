@@ -59,6 +59,10 @@ export class TenantDomainDto {
 
   @ApiProperty({ type: String, nullable: true })
   expiresAt!: string | null;
+
+  /** Vercel mapping removed after a lapsed subscription; DNS and ownership are intact. */
+  @ApiProperty()
+  suspended!: boolean;
 }
 
 export class TenantMeResponseDto {
