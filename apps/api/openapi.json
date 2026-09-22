@@ -925,6 +925,58 @@
         ]
       }
     },
+    "/tenants/{tenantId}/site-settings": {
+      "patch": {
+        "operationId": "TenantsController_updateSiteSettings",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSiteSettingsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantBrandingDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Tenant does not belong to the caller."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update tenant site SEO settings (protected)",
+        "tags": [
+          "tenants"
+        ]
+      }
+    },
     "/tenants/{tenantId}/branding/{type}": {
       "delete": {
         "operationId": "TenantsController_removeBranding",
@@ -1929,12 +1981,30 @@
             "type": "string",
             "nullable": true,
             "description": "Null means the tenant site falls back to the auto-generated OG image."
+          },
+          "seoTitle": {
+            "type": "string",
+            "nullable": true,
+            "description": "Null means the tenant site falls back to the tenant name."
+          },
+          "seoDescription": {
+            "type": "string",
+            "nullable": true,
+            "description": "Null means the tenant site falls back to a generic description."
+          },
+          "ogSiteName": {
+            "type": "string",
+            "nullable": true,
+            "description": "Null means og:site_name falls back to the resolved title."
           }
         },
         "required": [
           "faviconLightUrl",
           "faviconDarkUrl",
-          "socialPreviewUrl"
+          "socialPreviewUrl",
+          "seoTitle",
+          "seoDescription",
+          "ogSiteName"
         ]
       },
       "TenantMeResponseDto": {
@@ -2035,6 +2105,23 @@
         "required": [
           "url"
         ]
+      },
+      "UpdateSiteSettingsDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 70
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "ogSiteName": {
+            "type": "string",
+            "maxLength": 60
+          }
+        }
       }
     }
   }

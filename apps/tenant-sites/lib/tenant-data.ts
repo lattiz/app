@@ -10,6 +10,9 @@ export interface TenantSiteData {
   faviconLightUrl: string | null;
   faviconDarkUrl: string | null;
   socialPreviewUrl: string | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  ogSiteName: string | null;
 }
 
 interface SiteSchemaRow {
@@ -26,6 +29,9 @@ interface TenantRow {
   favicon_light_url: string | null;
   favicon_dark_url: string | null;
   social_preview_url: string | null;
+  seo_title: string | null;
+  seo_description: string | null;
+  og_site_name: string | null;
   site_schemas: SiteSchemaRow | SiteSchemaRow[] | null;
 }
 
@@ -49,6 +55,9 @@ export async function getTenantSiteByHostname(
       favicon_light_url,
       favicon_dark_url,
       social_preview_url,
+      seo_title,
+      seo_description,
+      og_site_name,
       site_schemas (
         exported_html,
         status,
@@ -80,5 +89,8 @@ export async function getTenantSiteByHostname(
     faviconLightUrl: tenant.favicon_light_url ?? null,
     faviconDarkUrl: tenant.favicon_dark_url ?? null,
     socialPreviewUrl: tenant.social_preview_url ?? null,
+    seoTitle: tenant.seo_title ?? null,
+    seoDescription: tenant.seo_description ?? null,
+    ogSiteName: tenant.og_site_name ?? null,
   };
 }

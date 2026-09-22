@@ -81,6 +81,12 @@ export function CustomizationPage() {
       <EditorGatewayCard tenantId={tenant.data.tenantId} site={site} />
       <SiteImagesSection
         tenantId={tenant.data.tenantId}
+        tenantName={tenant.data.name}
+        domain={
+          tenant.data.domainStatus?.domain ??
+          tenant.data.domain ??
+          'tudominio.com'
+        }
         branding={tenant.data.branding}
       />
       <TemplateSection site={site} />

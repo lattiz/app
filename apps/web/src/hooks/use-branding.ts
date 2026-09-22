@@ -3,6 +3,7 @@ import {
   type TenantsControllerUploadBrandingData,
   tenantsControllerMeQueryKey,
   tenantsControllerRemoveBrandingMutation,
+  tenantsControllerUpdateSiteSettingsMutation,
   tenantsControllerUploadBrandingMutation,
 } from '@lattiz/api-client';
 import { toast } from 'sonner';
@@ -62,6 +63,23 @@ export function useRemoveBranding() {
     },
     onError: () => {
       toast.error('No se pudo eliminar la imagen. Intenta de nuevo.');
+    },
+  });
+}
+
+export function useUpdateSiteSettings() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    ...tenantsControllerUpdateSiteSettingsMutation(),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({
+        queryKey: tenantsControllerMeQueryKey(),
+      });
+      toast.success('Cambios guardados.');
+    },
+    onError: () => {
+      toast.error('No se pudieron guardar los cambios. Intenta de nuevo.');
     },
   });
 }

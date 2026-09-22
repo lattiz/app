@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
 import {
   BRANDING_RULES,
@@ -18,9 +19,12 @@ import {
   useUploadBranding,
 } from '@/hooks/use-branding';
 import { cn } from '@/lib/utils';
+import { SiteSeoFields } from './SiteSeoFields';
 
 interface SiteImagesSectionProps {
   tenantId: string;
+  tenantName: string;
+  domain: string;
   branding: TenantBrandingDto;
 }
 
@@ -115,6 +119,8 @@ function UploadSlot({
 
 export function SiteImagesSection({
   tenantId,
+  tenantName,
+  domain,
   branding,
 }: SiteImagesSectionProps) {
   const [pending, setPending] = useState<BrandingType | null>(null);
@@ -152,9 +158,10 @@ export function SiteImagesSection({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Imágenes del sitio</CardTitle>
+        <CardTitle>Configuración del sitio</CardTitle>
         <CardDescription>
-          El favicon y la vista previa que se muestran al compartir tu sitio.
+          Cómo aparece tu sitio en buscadores, pestañas del navegador y al
+          compartirlo.
         </CardDescription>
       </CardHeader>
 
@@ -206,6 +213,17 @@ export function SiteImagesSection({
             </p>
           )}
         </div>
+
+        <Separator />
+
+        {/* Keyed on saved values so the form resets to what the server stored (trimmed). */}
+        <SiteSeoFields
+          key={`${branding.seoTitle}|${branding.seoDescription}|${branding.ogSiteName}`}
+          tenantId={tenantId}
+          tenantName={tenantName}
+          domain={domain}
+          branding={branding}
+        />
       </CardContent>
     </Card>
   );

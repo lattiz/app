@@ -6,6 +6,7 @@ import {
   Param,
   ParseEnumPipe,
   ParseUUIDPipe,
+  Patch,
   Post,
   UnauthorizedException,
   UploadedFile,
@@ -33,6 +34,7 @@ import {
   TenantBrandingDto,
 } from './dto/branding.response.dto';
 import { TenantMeResponseDto } from './dto/tenants.response.dto';
+import { UpdateSiteSettingsDto } from './dto/update-site-settings.dto';
 import {
   BRANDING_TYPES,
   type BrandingType,
@@ -97,6 +99,20 @@ export class TenantsController {
       dto.type,
       file,
     );
+  }
+
+  /** Updates the tenant site's SEO title, description and og:site_name. */
+  @Patch(':tenantId/site-settings')
+  @ApiOperation({ summary: 'Update tenant site SEO settings (protected)' })
+  @ApiOkResponse({ type: TenantBrandingDto })
+  @ApiUnauthorizedResponse({ description: 'Missing or invalid bearer token.' })
+  @ApiForbiddenResponse({ description: 'Tenant does not belong to the caller.' })
+  async updateSiteSettings(
+    @Param('tenantId', ParseUUIDPipe) tenantId: string,
+    @Body() dto: UpdateSiteSettingsDto,
+    @CurrentUser() user?: AuthenticatedUser,
+  ): Promise<TenantBrandingDto> {
+    return this.tenants.updateSiteSettings(tenantId, requireSub(user), dto);
   }
 
   /** Clears one branding slot and deletes the stored image. */

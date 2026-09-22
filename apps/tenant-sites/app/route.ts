@@ -12,6 +12,7 @@ function esc(str: string): string {
 interface SeoMeta {
   title: string;
   description: string;
+  ogSiteName: string | null;
   canonicalUrl: string;
   ogImageUrl: string;
   faviconLightUrl: string | null;
@@ -60,6 +61,7 @@ function injectSeo(html: string, meta: SeoMeta): string {
     `<meta name="robots" content="index, follow">`,
     `<meta property="og:type" content="website">`,
     `<meta property="og:url" content="${meta.canonicalUrl}">`,
+    `<meta property="og:site_name" content="${esc(meta.ogSiteName || meta.title)}">`,
     `<meta property="og:title" content="${esc(meta.title)}">`,
     `<meta property="og:description" content="${esc(meta.description)}">`,
     `<meta property="og:image" content="${esc(meta.ogImageUrl)}">`,
@@ -123,8 +125,9 @@ export async function GET(request: NextRequest): Promise<Response> {
     `${siteUrl}/api/og?h=${encodeURIComponent(hostname)}`;
 
   const html = injectSeo(site.exportedHtml, {
-    title: site.tenantName,
-    description: `Sitio web de ${site.tenantName}`,
+    title: site.seoTitle || site.tenantName,
+    description: site.seoDescription || `Sitio web de ${site.tenantName}`,
+    ogSiteName: site.ogSiteName,
     canonicalUrl: siteUrl,
     ogImageUrl,
     faviconLightUrl: site.faviconLightUrl,

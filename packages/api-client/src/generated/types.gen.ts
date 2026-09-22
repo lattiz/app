@@ -363,6 +363,18 @@ export type TenantBrandingDto = {
      * Null means the tenant site falls back to the auto-generated OG image.
      */
     socialPreviewUrl: string | null;
+    /**
+     * Null means the tenant site falls back to the tenant name.
+     */
+    seoTitle: string | null;
+    /**
+     * Null means the tenant site falls back to a generic description.
+     */
+    seoDescription: string | null;
+    /**
+     * Null means og:site_name falls back to the resolved title.
+     */
+    ogSiteName: string | null;
 };
 
 export type TenantMeResponseDto = {
@@ -400,6 +412,12 @@ export type BrandingUploadResponseDto = {
      * Public Supabase Storage URL, versioned so a replacement busts the CDN cache.
      */
     url: string;
+};
+
+export type UpdateSiteSettingsDto = {
+    title?: string;
+    description?: string;
+    ogSiteName?: string;
 };
 
 export type BillingControllerCreateCheckoutSessionData = {
@@ -861,6 +879,32 @@ export type TenantsControllerUploadBrandingResponses = {
 };
 
 export type TenantsControllerUploadBrandingResponse = TenantsControllerUploadBrandingResponses[keyof TenantsControllerUploadBrandingResponses];
+
+export type TenantsControllerUpdateSiteSettingsData = {
+    body: UpdateSiteSettingsDto;
+    path: {
+        tenantId: string;
+    };
+    query?: never;
+    url: '/tenants/{tenantId}/site-settings';
+};
+
+export type TenantsControllerUpdateSiteSettingsErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Tenant does not belong to the caller.
+     */
+    403: unknown;
+};
+
+export type TenantsControllerUpdateSiteSettingsResponses = {
+    200: TenantBrandingDto;
+};
+
+export type TenantsControllerUpdateSiteSettingsResponse = TenantsControllerUpdateSiteSettingsResponses[keyof TenantsControllerUpdateSiteSettingsResponses];
 
 export type TenantsControllerRemoveBrandingData = {
     body?: never;

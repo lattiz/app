@@ -11,6 +11,7 @@ import {
   TenantBrandingDto,
 } from './dto/branding.response.dto';
 import type { BrandingType } from './dto/upload-branding.dto';
+import type { UpdateSiteSettingsDto } from './dto/update-site-settings.dto';
 import {
   TenantDomainDto,
   TenantMeResponseDto,
@@ -96,6 +97,9 @@ interface BrandingRow {
   favicon_light_url: string | null;
   favicon_dark_url: string | null;
   social_preview_url: string | null;
+  seo_title: string | null;
+  seo_description: string | null;
+  og_site_name: string | null;
 }
 
 interface SubscriptionRow {
@@ -292,7 +296,8 @@ export class TenantsService {
 
   private async getBranding(tenantId: string): Promise<TenantBrandingDto> {
     const rows = await this.query<BrandingRow>(
-      sql`SELECT favicon_light_url, favicon_dark_url, social_preview_url
+      sql`SELECT favicon_light_url, favicon_dark_url, social_preview_url,
+                 seo_title, seo_description, og_site_name
           FROM public.tenants
           WHERE id = ${tenantId}::uuid
           LIMIT 1`,
@@ -303,7 +308,41 @@ export class TenantsService {
       faviconLightUrl: row?.favicon_light_url ?? null,
       faviconDarkUrl: row?.favicon_dark_url ?? null,
       socialPreviewUrl: row?.social_preview_url ?? null,
+      seoTitle: row?.seo_title ?? null,
+      seoDescription: row?.seo_description ?? null,
+      ogSiteName: row?.og_site_name ?? null,
     };
+  }
+
+  /** Updates only the provided SEO fields; a blank value is stored as NULL. */
+  async updateSiteSettings(
+    tenantId: string,
+    userSub: string,
+    dto: UpdateSiteSettingsDto,
+  ): Promise<TenantBrandingDto> {
+    await this.assertTenantOwnership(tenantId, userSub);
+
+    const fields: Array<[string, string | undefined]> = [
+      ['seo_title', dto.title],
+      ['seo_description', dto.description],
+      ['og_site_name', dto.ogSiteName],
+    ];
+    const assignments = fields
+      .filter(([, value]) => value !== undefined)
+      .map(
+        ([column, value]) =>
+          sql`${sql.raw(column)} = ${value?.trim() || null}`,
+      );
+
+    if (assignments.length > 0) {
+      await this.db.execute(
+        sql`UPDATE public.tenants
+            SET ${sql.join(assignments, sql`, `)}
+            WHERE id = ${tenantId}::uuid`,
+      );
+    }
+
+    return this.getBranding(tenantId);
   }
 
   private async getBrandingColumn(
