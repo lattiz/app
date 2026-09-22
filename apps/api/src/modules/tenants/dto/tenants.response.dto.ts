@@ -16,6 +16,10 @@ export class TenantSiteMetaDto {
 
   @ApiProperty({ type: String, nullable: true })
   updatedAt!: string | null;
+
+  /** Set once, at `site_schemas` row creation — lets callers detect edits (`updatedAt !== createdAt`). */
+  @ApiProperty({ type: String, nullable: true })
+  createdAt!: string | null;
 }
 
 export class TenantSubscriptionDto {

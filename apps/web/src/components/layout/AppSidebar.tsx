@@ -35,6 +35,7 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { buildNavItems, type NavItem } from '@/config/nav.config';
+import { OnboardingProgressPanel } from '@/features/onboarding/OnboardingProgressPanel';
 import { logout } from '@/lib/auth';
 import { useAuthStore } from '@/stores/auth.store';
 import { useDashboardStore } from '@/stores/dashboard.store';
@@ -106,7 +107,7 @@ function NavMenuItem({ item, isActive }: { item: NavItem; isActive: boolean }) {
       <SidebarMenuButton
         isActive={isActive}
         className="transition-colors duration-150"
-        render={<Link to={item.to} />}
+        render={<Link to={item.to} data-tour={item.id === 'domain' ? 'domain-nav-link' : undefined} />}
       >
         {Icon ? <Icon /> : null}
         <span>{item.label}</span>
@@ -175,6 +176,8 @@ export function AppSidebar() {
             ))}
           </SidebarMenu>
         </SidebarGroup>
+
+        <OnboardingProgressPanel />
       </SidebarContent>
 
       <SidebarFooter className="border-t border-sidebar-border p-2">

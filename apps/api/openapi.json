@@ -1917,6 +1917,11 @@
           "updatedAt": {
             "type": "string",
             "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "Set once, at `site_schemas` row creation — lets callers detect edits (`updatedAt !== createdAt`)."
           }
         },
         "required": [
@@ -1924,7 +1929,8 @@
           "templateName",
           "siteStatus",
           "lastPublishedAt",
-          "updatedAt"
+          "updatedAt",
+          "createdAt"
         ]
       },
       "TenantSubscriptionDto": {

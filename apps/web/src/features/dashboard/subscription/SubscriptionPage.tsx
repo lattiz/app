@@ -115,7 +115,7 @@ export function SubscriptionPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6" data-tour="subscription-cta">
       <div className="flex flex-col items-start gap-3">
         <div className="space-y-1">
           <h1 className="font-heading text-xl font-semibold">Elige tu plan</h1>

@@ -79,6 +79,7 @@ interface SiteMetaRow {
   status: string;
   published_at: string | Date | null;
   updated_at: string | Date;
+  created_at: string | Date;
   template_name: string | null;
 }
 
@@ -199,7 +200,7 @@ export class TenantsService {
 
   private async getSiteMeta(tenantId: string): Promise<TenantSiteMetaDto | null> {
     const rows = await this.query<SiteMetaRow>(
-      sql`SELECT s.template_id, s.status, s.published_at, s.updated_at, t.name AS template_name
+      sql`SELECT s.template_id, s.status, s.published_at, s.updated_at, s.created_at, t.name AS template_name
           FROM public.site_schemas s
           LEFT JOIN public.templates t ON t.id = s.template_id
           WHERE s.tenant_id = ${tenantId}::uuid
@@ -214,6 +215,7 @@ export class TenantsService {
       siteStatus: row.status as TenantSiteMetaDto['siteStatus'],
       lastPublishedAt: row.published_at ? toIso(row.published_at) : null,
       updatedAt: toIso(row.updated_at),
+      createdAt: toIso(row.created_at),
     };
   }
 

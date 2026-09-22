@@ -217,13 +217,15 @@ export function SiteImagesSection({
         <Separator />
 
         {/* Keyed on saved values so the form resets to what the server stored (trimmed). */}
-        <SiteSeoFields
-          key={`${branding.seoTitle}|${branding.seoDescription}|${branding.ogSiteName}`}
-          tenantId={tenantId}
-          tenantName={tenantName}
-          domain={domain}
-          branding={branding}
-        />
+        <div data-tour="site-settings-section">
+          <SiteSeoFields
+            key={`${branding.seoTitle}|${branding.seoDescription}|${branding.ogSiteName}`}
+            tenantId={tenantId}
+            tenantName={tenantName}
+            domain={domain}
+            branding={branding}
+          />
+        </div>
       </CardContent>
     </Card>
   );

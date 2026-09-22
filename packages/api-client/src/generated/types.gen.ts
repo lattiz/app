@@ -346,6 +346,10 @@ export type TenantSiteMetaDto = {
     siteStatus: 'draft' | 'published';
     lastPublishedAt: string | null;
     updatedAt: string | null;
+    /**
+     * Set once, at `site_schemas` row creation — lets callers detect edits (`updatedAt !== createdAt`).
+     */
+    createdAt: string | null;
 };
 
 export type TenantSubscriptionDto = {

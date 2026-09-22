@@ -1,4 +1,5 @@
 import { Separator } from '@/components/ui/separator';
+import { OnboardingTourSection } from './sections/OnboardingTourSection';
 import { PaymentHistorySection } from './sections/PaymentHistorySection';
 import { ProfileSection } from './sections/ProfileSection';
 import { SubscriptionSection } from './sections/SubscriptionSection';
@@ -11,6 +12,8 @@ export function AccountPage() {
       <SubscriptionSection />
       <Separator />
       <PaymentHistorySection />
+      <Separator />
+      <OnboardingTourSection />
     </div>
   );
 }

@@ -143,16 +143,6 @@ export function SiteSeoFields({
               maxLength={SITE_NAME_MAX}
               onChange={(e) => setSiteName(e.target.value)}
             />
-            <HintText
-              hint={
-                siteName.trim()
-                  ? null
-                  : {
-                      tone: 'warning',
-                      text: 'Falta el nombre del sitio. Discord lo muestra arriba del título — sin él, la tarjeta se ve anónima.',
-                    }
-              }
-            />
           </div>
         </div>
 

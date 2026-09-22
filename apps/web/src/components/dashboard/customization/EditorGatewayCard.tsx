@@ -25,7 +25,7 @@ export function EditorGatewayCard({ tenantId, site }: EditorGatewayCardProps) {
   const isFirstPublish = site.lastPublished === null;
 
   return (
-    <Card>
+    <Card data-tour="editor-gateway-card">
       <CardContent className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-start gap-3">
           <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent text-accent-foreground">
