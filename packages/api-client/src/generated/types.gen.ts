@@ -4,6 +4,67 @@ export type ClientOptions = {
     baseUrl: string;
 };
 
+export type AnalyticsStatus = 'not_eligible' | 'unavailable' | 'provisioning' | 'failed' | 'ready';
+
+export type AnalyticsDailyPointDto = {
+    /**
+     * Calendar day in the GA property time zone, `YYYY-MM-DD`.
+     */
+    date: string;
+    sessions: number;
+};
+
+export type AnalyticsChannelDto = {
+    /**
+     * GA `sessionDefaultChannelGroup` value, untranslated.
+     */
+    key: string;
+    /**
+     * Spanish display label.
+     */
+    label: string;
+    sessions: number;
+    /**
+     * Share of all sessions in the window, 0–100.
+     */
+    sharePct: number;
+};
+
+export type AnalyticsReportDto = {
+    rangeDays: number;
+    sessions: number;
+    /**
+     * Null when the previous period had zero sessions.
+     */
+    sessionsDeltaPct: number | null;
+    activeUsers: number;
+    activeUsersDeltaPct: number | null;
+    /**
+     * Exactly `rangeDays` points, oldest first, gap-filled with zeros.
+     */
+    daily: Array<AnalyticsDailyPointDto>;
+    /**
+     * Top channels by sessions (at most 5).
+     */
+    channels: Array<AnalyticsChannelDto>;
+    topChannel: AnalyticsChannelDto | null;
+    hasData: boolean;
+};
+
+export type AnalyticsOverviewDto = {
+    status: AnalyticsStatus;
+    report: AnalyticsReportDto | null;
+    fetchedAt: string | null;
+    /**
+     * True when the Data API failed and an expired cached report is served instead.
+     */
+    stale: boolean;
+    /**
+     * When `POST /analytics/retry` will be accepted again (only for `failed`).
+     */
+    retryAvailableAt: string | null;
+};
+
 export type CreateCheckoutSessionDto = {
     plan: 'basico' | 'pro';
     period: 'monthly' | 'annual';
@@ -423,6 +484,32 @@ export type UpdateSiteSettingsDto = {
     description?: string;
     ogSiteName?: string;
 };
+
+export type AnalyticsControllerOverviewData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/analytics/overview';
+};
+
+export type AnalyticsControllerOverviewResponses = {
+    200: AnalyticsOverviewDto;
+};
+
+export type AnalyticsControllerOverviewResponse = AnalyticsControllerOverviewResponses[keyof AnalyticsControllerOverviewResponses];
+
+export type AnalyticsControllerRetryData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/analytics/retry';
+};
+
+export type AnalyticsControllerRetryResponses = {
+    200: AnalyticsOverviewDto;
+};
+
+export type AnalyticsControllerRetryResponse = AnalyticsControllerRetryResponses[keyof AnalyticsControllerRetryResponses];
 
 export type BillingControllerCreateCheckoutSessionData = {
     body: CreateCheckoutSessionDto;

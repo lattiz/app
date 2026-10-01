@@ -16,6 +16,7 @@ import { useDashboardStore } from '@/stores/dashboard.store';
 const BREADCRUMB_MAP: Record<string, string> = {
   '/dashboard': 'Inicio',
   '/dashboard/site': 'Mi sitio',
+  '/dashboard/analytics': 'Analíticas',
   '/dashboard/customization': 'Personalización',
   '/dashboard/templates': 'Plantillas',
   '/dashboard/domain': 'Dominio y DNS',

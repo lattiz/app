@@ -5,12 +5,15 @@ export interface NavItem {
   label: string;
   icon: string; // Lucide icon name
   to: string; // TanStack Router route path
-  badge?: 'new' | 'error' | 'warning' | null;
+  badge?: 'new' | 'error' | 'warning' | 'pro' | null;
   disabled?: boolean;
   visibleIn: DashboardState[]; // which states show this item
 }
 
-export function buildNavItems(state: DashboardState): NavItem[] {
+export function buildNavItems(
+  state: DashboardState,
+  plan: string | null = null,
+): NavItem[] {
   const items: NavItem[] = [
     {
       id: 'home',
@@ -25,6 +28,14 @@ export function buildNavItems(state: DashboardState): NavItem[] {
       icon: 'Globe',
       to: '/dashboard/site',
       visibleIn: ['active'], // only visible when site is active
+    },
+    {
+      id: 'analytics',
+      label: 'Analíticas',
+      icon: 'ChartArea',
+      to: '/dashboard/analytics',
+      badge: plan === 'pro' ? null : 'pro',
+      visibleIn: ['active', 'no-template'],
     },
     {
       id: 'customization',

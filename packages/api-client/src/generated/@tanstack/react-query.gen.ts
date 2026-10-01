@@ -3,8 +3,76 @@
 import { type DefaultError, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { billingControllerCreateCheckoutSession, billingControllerCreatePortalSession, billingControllerGetInvoices, billingControllerGetSubscription, billingControllerTriggerReconciliation, domainsControllerConnect, domainsControllerGetDomain, domainsControllerGetJobStatus, domainsControllerGetQuote, domainsControllerPurchase, domainsControllerRelaunch, domainsControllerSearch, healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options, sitesControllerChangeTemplate, sitesControllerGetSchema, sitesControllerPublish, sitesControllerSaveSchema, sitesControllerSelectTemplate, sitesControllerUploadAssets, templatesControllerFindAll, tenantsControllerMe, tenantsControllerRemoveBranding, tenantsControllerUpdateSiteSettings, tenantsControllerUploadBranding } from '../sdk.gen';
-import type { BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponse, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponse, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponse, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionResponse, BillingControllerTriggerReconciliationData, BillingControllerTriggerReconciliationResponse, DomainsControllerConnectData, DomainsControllerConnectResponse, DomainsControllerGetDomainData, DomainsControllerGetDomainResponse, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponse, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponse, DomainsControllerPurchaseData, DomainsControllerPurchaseResponse, DomainsControllerRelaunchData, DomainsControllerRelaunchResponse, DomainsControllerSearchData, DomainsControllerSearchResponse, HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse, SitesControllerChangeTemplateData, SitesControllerChangeTemplateResponse, SitesControllerGetSchemaData, SitesControllerGetSchemaResponse, SitesControllerPublishData, SitesControllerPublishResponse, SitesControllerSaveSchemaData, SitesControllerSaveSchemaResponse, SitesControllerSelectTemplateData, SitesControllerSelectTemplateResponse, SitesControllerUploadAssetsData, SitesControllerUploadAssetsResponse, TemplatesControllerFindAllData, TemplatesControllerFindAllResponse, TenantsControllerMeData, TenantsControllerMeResponse, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingResponse, TenantsControllerUpdateSiteSettingsData, TenantsControllerUpdateSiteSettingsResponse, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingResponse } from '../types.gen';
+import { analyticsControllerOverview, analyticsControllerRetry, billingControllerCreateCheckoutSession, billingControllerCreatePortalSession, billingControllerGetInvoices, billingControllerGetSubscription, billingControllerTriggerReconciliation, domainsControllerConnect, domainsControllerGetDomain, domainsControllerGetJobStatus, domainsControllerGetQuote, domainsControllerPurchase, domainsControllerRelaunch, domainsControllerSearch, healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options, sitesControllerChangeTemplate, sitesControllerGetSchema, sitesControllerPublish, sitesControllerSaveSchema, sitesControllerSelectTemplate, sitesControllerUploadAssets, templatesControllerFindAll, tenantsControllerMe, tenantsControllerRemoveBranding, tenantsControllerUpdateSiteSettings, tenantsControllerUploadBranding } from '../sdk.gen';
+import type { AnalyticsControllerOverviewData, AnalyticsControllerOverviewResponse, AnalyticsControllerRetryData, AnalyticsControllerRetryResponse, BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponse, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponse, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponse, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionResponse, BillingControllerTriggerReconciliationData, BillingControllerTriggerReconciliationResponse, DomainsControllerConnectData, DomainsControllerConnectResponse, DomainsControllerGetDomainData, DomainsControllerGetDomainResponse, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponse, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponse, DomainsControllerPurchaseData, DomainsControllerPurchaseResponse, DomainsControllerRelaunchData, DomainsControllerRelaunchResponse, DomainsControllerSearchData, DomainsControllerSearchResponse, HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse, SitesControllerChangeTemplateData, SitesControllerChangeTemplateResponse, SitesControllerGetSchemaData, SitesControllerGetSchemaResponse, SitesControllerPublishData, SitesControllerPublishResponse, SitesControllerSaveSchemaData, SitesControllerSaveSchemaResponse, SitesControllerSelectTemplateData, SitesControllerSelectTemplateResponse, SitesControllerUploadAssetsData, SitesControllerUploadAssetsResponse, TemplatesControllerFindAllData, TemplatesControllerFindAllResponse, TenantsControllerMeData, TenantsControllerMeResponse, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingResponse, TenantsControllerUpdateSiteSettingsData, TenantsControllerUpdateSiteSettingsResponse, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingResponse } from '../types.gen';
+
+export type QueryKey<TOptions extends Options> = [
+    Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
+        _id: string;
+        _infinite?: boolean;
+        tags?: ReadonlyArray<string>;
+    }
+];
+
+const createQueryKey = <TOptions extends Options>(id: string, options?: TOptions, infinite?: boolean, tags?: ReadonlyArray<string>): [
+    QueryKey<TOptions>[0]
+] => {
+    const params: QueryKey<TOptions>[0] = { _id: id, baseUrl: options?.baseUrl || (options?.client ?? client).getConfig().baseUrl } as QueryKey<TOptions>[0];
+    if (infinite) {
+        params._infinite = infinite;
+    }
+    if (tags) {
+        params.tags = tags;
+    }
+    if (options?.body) {
+        params.body = options.body;
+    }
+    if (options?.headers) {
+        params.headers = options.headers;
+    }
+    if (options?.path) {
+        params.path = options.path;
+    }
+    if (options?.query) {
+        params.query = options.query;
+    }
+    return [params];
+};
+
+export const analyticsControllerOverviewQueryKey = (options?: Options<AnalyticsControllerOverviewData>) => createQueryKey('analyticsControllerOverview', options);
+
+/**
+ * Get the tenant analytics overview (protected, Pro)
+ */
+export const analyticsControllerOverviewOptions = (options?: Options<AnalyticsControllerOverviewData>) => queryOptions<AnalyticsControllerOverviewResponse, DefaultError, AnalyticsControllerOverviewResponse, ReturnType<typeof analyticsControllerOverviewQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await analyticsControllerOverview({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: analyticsControllerOverviewQueryKey(options)
+});
+
+/**
+ * Retry failed analytics provisioning (protected, Pro)
+ */
+export const analyticsControllerRetryMutation = (options?: Partial<Options<AnalyticsControllerRetryData>>): UseMutationOptions<AnalyticsControllerRetryResponse, DefaultError, Options<AnalyticsControllerRetryData>> => {
+    const mutationOptions: UseMutationOptions<AnalyticsControllerRetryResponse, DefaultError, Options<AnalyticsControllerRetryData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await analyticsControllerRetry({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
 
 /**
  * Create a Stripe Checkout session (protected)
@@ -38,39 +106,6 @@ export const billingControllerCreatePortalSessionMutation = (options?: Partial<O
         }
     };
     return mutationOptions;
-};
-
-export type QueryKey<TOptions extends Options> = [
-    Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
-        _id: string;
-        _infinite?: boolean;
-        tags?: ReadonlyArray<string>;
-    }
-];
-
-const createQueryKey = <TOptions extends Options>(id: string, options?: TOptions, infinite?: boolean, tags?: ReadonlyArray<string>): [
-    QueryKey<TOptions>[0]
-] => {
-    const params: QueryKey<TOptions>[0] = { _id: id, baseUrl: options?.baseUrl || (options?.client ?? client).getConfig().baseUrl } as QueryKey<TOptions>[0];
-    if (infinite) {
-        params._infinite = infinite;
-    }
-    if (tags) {
-        params.tags = tags;
-    }
-    if (options?.body) {
-        params.body = options.body;
-    }
-    if (options?.headers) {
-        params.headers = options.headers;
-    }
-    if (options?.path) {
-        params.path = options.path;
-    }
-    if (options?.query) {
-        params.query = options.query;
-    }
-    return [params];
 };
 
 export const billingControllerGetSubscriptionQueryKey = (options?: Options<BillingControllerGetSubscriptionData>) => createQueryKey('billingControllerGetSubscription', options);

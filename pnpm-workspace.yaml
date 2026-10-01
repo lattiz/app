@@ -5,6 +5,8 @@ allowBuilds:
   '@nestjs/core': false
   '@scarf/scarf': false
   esbuild: true
+  # protobufjs postinstall only warns about version mismatches (GA clients) — not needed.
+  protobufjs: false
   # tenant-sites uses raw <img> + next/og (wasm), not next/image — no native build.
   sharp: false
 minimumReleaseAgeExclude:

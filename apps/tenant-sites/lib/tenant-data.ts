@@ -13,6 +13,16 @@ export interface TenantSiteData {
   seoTitle: string | null;
   seoDescription: string | null;
   ogSiteName: string | null;
+  /** Non-null only for a Pro tenant with a ready, well-formed GA4 Measurement ID. */
+  analyticsMeasurementId: string | null;
+}
+
+const MEASUREMENT_ID_RE = /^G-[A-Z0-9]{4,20}$/;
+
+// GA4_MOCK rows live in the same DB as real ones; never ship a fake tag to a live site.
+function isUsableMeasurementId(id: string): boolean {
+  if (!MEASUREMENT_ID_RE.test(id)) return false;
+  return !(process.env.NODE_ENV === 'production' && id.startsWith('G-MOCK'));
 }
 
 interface SiteSchemaRow {
@@ -21,9 +31,16 @@ interface SiteSchemaRow {
   published_at: string | null;
 }
 
+// anon may read only these columns, and only rows with status 'ready'.
+interface TenantAnalyticsRow {
+  ga4_measurement_id: string | null;
+  provisioning_status: string;
+}
+
 interface TenantRow {
   id: string;
   name: string;
+  plan: string;
   slug: string;
   domain: string | null;
   favicon_light_url: string | null;
@@ -33,6 +50,7 @@ interface TenantRow {
   seo_description: string | null;
   og_site_name: string | null;
   site_schemas: SiteSchemaRow | SiteSchemaRow[] | null;
+  tenant_analytics: TenantAnalyticsRow | TenantAnalyticsRow[] | null;
 }
 
 /**
@@ -50,6 +68,7 @@ export async function getTenantSiteByHostname(
       `
       id,
       name,
+      plan,
       slug,
       domain,
       favicon_light_url,
@@ -62,6 +81,10 @@ export async function getTenantSiteByHostname(
         exported_html,
         status,
         published_at
+      ),
+      tenant_analytics (
+        ga4_measurement_id,
+        provisioning_status
       )
     `,
     )
@@ -79,6 +102,18 @@ export async function getTenantSiteByHostname(
 
   if (!schema?.exported_html) return null;
 
+  const analytics = Array.isArray(tenant.tenant_analytics)
+    ? tenant.tenant_analytics[0]
+    : tenant.tenant_analytics;
+  // Plan is checked at read time so a downgrade stops the tag immediately.
+  const measurementId =
+    tenant.plan === 'pro' &&
+    analytics?.provisioning_status === 'ready' &&
+    analytics.ga4_measurement_id &&
+    isUsableMeasurementId(analytics.ga4_measurement_id)
+      ? analytics.ga4_measurement_id
+      : null;
+
   return {
     tenantId: tenant.id,
     tenantName: tenant.name,
@@ -92,5 +127,6 @@ export async function getTenantSiteByHostname(
     seoTitle: tenant.seo_title ?? null,
     seoDescription: tenant.seo_description ?? null,
     ogSiteName: tenant.og_site_name ?? null,
+    analyticsMeasurementId: measurementId,
   };
 }

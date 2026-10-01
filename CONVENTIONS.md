@@ -98,6 +98,16 @@ Tres operaciones requieren la `service_role key` y no pueden correr en el navega
 - Ruta `tenant-branding/{tenantId}/{type}.{ext}` con `upsert: true` — la extensión sale del mime type validado, nunca del nombre de archivo del cliente. Whitelist por slot: PNG/ICO ≤ 1MB para favicons, PNG/JPEG ≤ 4MB para la vista previa.
 - La URL pública se guarda con `?v={timestamp}` en `tenants.favicon_light_url` / `favicon_dark_url` / `social_preview_url`: como `upsert` reusa la ruta, sin versionar el CDN seguiría sirviendo los bytes viejos.
 
+### Google Analytics 4 — credenciales solo en NestJS
+
+Analíticas del plan Pro: Lattiz es dueño de una cuenta de GA y crea una propiedad + un web stream por tenant (`modules/analytics/`).
+
+- `GOOGLE_SERVICE_ACCOUNT_JSON_BASE64` y `GA4_ACCOUNT_ID` viven **solo** en `apps/api/.env`, con la misma regla que la `service_role key`: nunca en `apps/web`, `apps/tenant-sites` ni en ningún `VITE_*` / `NEXT_PUBLIC_*`.
+- Los datos de GA se leen **solo a través de NestJS** (`GET /analytics/overview`, caché de 1 h en `analytics_report_cache`). El front nunca llama a la Data API.
+- `tenant-sites` (anon key) solo puede leer tres columnas de `tenant_analytics` — `tenant_id`, `ga4_measurement_id`, `provisioning_status` — y solo filas `ready` (grant por columna + RLS). Nunca le des más columnas a `anon`.
+- La elegibilidad (plan `pro` + suscripción vigente) se deriva al leer; no hay un flag que pueda quedar desincronizado. Las propiedades de GA nunca se borran automáticamente.
+- `GA4_MOCK=true` funciona sin credenciales; `tenant-sites` nunca inyecta un ID `G-MOCK…` en producción.
+
 ## ORM — Drizzle
 
 - Schema en `apps/api/src/database/schema/`. Migraciones en `apps/api/drizzle/migrations/`.

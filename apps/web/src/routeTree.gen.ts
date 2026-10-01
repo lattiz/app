@@ -26,6 +26,7 @@ import { Route as AuthenticatedDashboardSubscriptionRouteImport } from './routes
 import { Route as AuthenticatedDashboardSiteRouteImport } from './routes/_authenticated/dashboard.site'
 import { Route as AuthenticatedDashboardDomainRouteImport } from './routes/_authenticated/dashboard.domain'
 import { Route as AuthenticatedDashboardCustomizationRouteImport } from './routes/_authenticated/dashboard.customization'
+import { Route as AuthenticatedDashboardAnalyticsRouteImport } from './routes/_authenticated/dashboard.analytics'
 import { Route as AuthenticatedDashboardAccountRouteImport } from './routes/_authenticated/dashboard.account'
 import { Route as AuthenticatedAccountDeleteRouteImport } from './routes/_authenticated/account.delete'
 
@@ -120,6 +121,12 @@ const AuthenticatedDashboardCustomizationRoute =
     path: '/customization',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedDashboardAnalyticsRoute =
+  AuthenticatedDashboardAnalyticsRouteImport.update({
+    id: '/analytics',
+    path: '/analytics',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 const AuthenticatedDashboardAccountRoute =
   AuthenticatedDashboardAccountRouteImport.update({
     id: '/account',
@@ -145,6 +152,7 @@ export interface FileRoutesByFullPath {
   '/signup/': typeof SignupIndexRoute
   '/account/delete': typeof AuthenticatedAccountDeleteRoute
   '/dashboard/account': typeof AuthenticatedDashboardAccountRoute
+  '/dashboard/analytics': typeof AuthenticatedDashboardAnalyticsRoute
   '/dashboard/customization': typeof AuthenticatedDashboardCustomizationRoute
   '/dashboard/domain': typeof AuthenticatedDashboardDomainRoute
   '/dashboard/site': typeof AuthenticatedDashboardSiteRoute
@@ -164,6 +172,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupIndexRoute
   '/account/delete': typeof AuthenticatedAccountDeleteRoute
   '/dashboard/account': typeof AuthenticatedDashboardAccountRoute
+  '/dashboard/analytics': typeof AuthenticatedDashboardAnalyticsRoute
   '/dashboard/customization': typeof AuthenticatedDashboardCustomizationRoute
   '/dashboard/domain': typeof AuthenticatedDashboardDomainRoute
   '/dashboard/site': typeof AuthenticatedDashboardSiteRoute
@@ -186,6 +195,7 @@ export interface FileRoutesById {
   '/signup/': typeof SignupIndexRoute
   '/_authenticated/account/delete': typeof AuthenticatedAccountDeleteRoute
   '/_authenticated/dashboard/account': typeof AuthenticatedDashboardAccountRoute
+  '/_authenticated/dashboard/analytics': typeof AuthenticatedDashboardAnalyticsRoute
   '/_authenticated/dashboard/customization': typeof AuthenticatedDashboardCustomizationRoute
   '/_authenticated/dashboard/domain': typeof AuthenticatedDashboardDomainRoute
   '/_authenticated/dashboard/site': typeof AuthenticatedDashboardSiteRoute
@@ -208,6 +218,7 @@ export interface FileRouteTypes {
     | '/signup/'
     | '/account/delete'
     | '/dashboard/account'
+    | '/dashboard/analytics'
     | '/dashboard/customization'
     | '/dashboard/domain'
     | '/dashboard/site'
@@ -227,6 +238,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/account/delete'
     | '/dashboard/account'
+    | '/dashboard/analytics'
     | '/dashboard/customization'
     | '/dashboard/domain'
     | '/dashboard/site'
@@ -248,6 +260,7 @@ export interface FileRouteTypes {
     | '/signup/'
     | '/_authenticated/account/delete'
     | '/_authenticated/dashboard/account'
+    | '/_authenticated/dashboard/analytics'
     | '/_authenticated/dashboard/customization'
     | '/_authenticated/dashboard/domain'
     | '/_authenticated/dashboard/site'
@@ -390,6 +403,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardCustomizationRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/dashboard/analytics': {
+      id: '/_authenticated/dashboard/analytics'
+      path: '/analytics'
+      fullPath: '/dashboard/analytics'
+      preLoaderRoute: typeof AuthenticatedDashboardAnalyticsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
     '/_authenticated/dashboard/account': {
       id: '/_authenticated/dashboard/account'
       path: '/account'
@@ -409,6 +429,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardAccountRoute: typeof AuthenticatedDashboardAccountRoute
+  AuthenticatedDashboardAnalyticsRoute: typeof AuthenticatedDashboardAnalyticsRoute
   AuthenticatedDashboardCustomizationRoute: typeof AuthenticatedDashboardCustomizationRoute
   AuthenticatedDashboardDomainRoute: typeof AuthenticatedDashboardDomainRoute
   AuthenticatedDashboardSiteRoute: typeof AuthenticatedDashboardSiteRoute
@@ -420,6 +441,7 @@ interface AuthenticatedDashboardRouteChildren {
 const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
   {
     AuthenticatedDashboardAccountRoute: AuthenticatedDashboardAccountRoute,
+    AuthenticatedDashboardAnalyticsRoute: AuthenticatedDashboardAnalyticsRoute,
     AuthenticatedDashboardCustomizationRoute:
       AuthenticatedDashboardCustomizationRoute,
     AuthenticatedDashboardDomainRoute: AuthenticatedDashboardDomainRoute,

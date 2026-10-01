@@ -1,5 +1,8 @@
+import { useQuery } from '@tanstack/react-query';
 import { Link, useNavigate, useRouterState } from '@tanstack/react-router';
+import { tenantsControllerMeOptions } from '@lattiz/api-client';
 import {
+  ChartArea,
   ChevronsUpDown,
   CreditCard,
   Globe,
@@ -43,6 +46,7 @@ import { useDashboardStore } from '@/stores/dashboard.store';
 const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   Home,
   Globe,
+  ChartArea,
   Paintbrush,
   LayoutGrid,
   Network,
@@ -62,6 +66,13 @@ function NavBadge({ badge }: { badge: NavItem['badge'] }) {
     return (
       <Badge variant="destructive" className="ml-auto text-[10px]">
         !
+      </Badge>
+    );
+  }
+  if (badge === 'pro') {
+    return (
+      <Badge variant="outline" className="ml-auto text-[10px]">
+        Pro
       </Badge>
     );
   }
@@ -121,9 +132,12 @@ export function AppSidebar() {
   const navigate = useNavigate();
   const user = useAuthStore((s) => s.user);
   const state = useDashboardStore((s) => s.state);
+  const subscriptionPlan = useDashboardStore((s) => s.subscription?.plan ?? null);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  // Same cached query the dashboard layout already runs; `tenants.plan` is what the API gates on.
+  const { data: tenantMe } = useQuery(tenantsControllerMeOptions());
 
-  const navItems = buildNavItems(state);
+  const navItems = buildNavItems(state, tenantMe?.plan ?? subscriptionPlan);
   const email = user?.email ?? null;
   const name = email?.split('@')[0] ?? '—';
   const initials = (email?.slice(0, 2) ?? '—').toUpperCase();

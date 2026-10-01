@@ -16,6 +16,8 @@
     "db:push": "drizzle-kit push"
   },
   "dependencies": {
+    "@google-analytics/admin": "^10.1.1",
+    "@google-analytics/data": "^7.2.1",
     "@nestjs/common": "^11.0.13",
     "@nestjs/config": "^4.0.4",
     "@nestjs/core": "^11.0.13",

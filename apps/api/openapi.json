@@ -1,6 +1,60 @@
 {
   "openapi": "3.0.0",
   "paths": {
+    "/analytics/overview": {
+      "get": {
+        "operationId": "AnalyticsController_overview",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalyticsOverviewDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get the tenant analytics overview (protected, Pro)",
+        "tags": [
+          "analytics"
+        ]
+      }
+    },
+    "/analytics/retry": {
+      "post": {
+        "operationId": "AnalyticsController_retry",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalyticsOverviewDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Retry failed analytics provisioning (protected, Pro)",
+        "tags": [
+          "analytics"
+        ]
+      }
+    },
     "/billing/checkout-session": {
       "post": {
         "operationId": "BillingController_createCheckoutSession",
@@ -1051,6 +1105,159 @@
       }
     },
     "schemas": {
+      "AnalyticsStatus": {
+        "type": "string",
+        "enum": [
+          "not_eligible",
+          "unavailable",
+          "provisioning",
+          "failed",
+          "ready"
+        ]
+      },
+      "AnalyticsDailyPointDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "Calendar day in the GA property time zone, `YYYY-MM-DD`."
+          },
+          "sessions": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "date",
+          "sessions"
+        ]
+      },
+      "AnalyticsChannelDto": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "GA `sessionDefaultChannelGroup` value, untranslated."
+          },
+          "label": {
+            "type": "string",
+            "description": "Spanish display label."
+          },
+          "sessions": {
+            "type": "number"
+          },
+          "sharePct": {
+            "type": "number",
+            "description": "Share of all sessions in the window, 0–100."
+          }
+        },
+        "required": [
+          "key",
+          "label",
+          "sessions",
+          "sharePct"
+        ]
+      },
+      "AnalyticsReportDto": {
+        "type": "object",
+        "properties": {
+          "rangeDays": {
+            "type": "number"
+          },
+          "sessions": {
+            "type": "number"
+          },
+          "sessionsDeltaPct": {
+            "type": "number",
+            "nullable": true,
+            "description": "Null when the previous period had zero sessions."
+          },
+          "activeUsers": {
+            "type": "number"
+          },
+          "activeUsersDeltaPct": {
+            "type": "number",
+            "nullable": true
+          },
+          "daily": {
+            "description": "Exactly `rangeDays` points, oldest first, gap-filled with zeros.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AnalyticsDailyPointDto"
+            }
+          },
+          "channels": {
+            "description": "Top channels by sessions (at most 5).",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AnalyticsChannelDto"
+            }
+          },
+          "topChannel": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AnalyticsChannelDto"
+              }
+            ]
+          },
+          "hasData": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "rangeDays",
+          "sessions",
+          "sessionsDeltaPct",
+          "activeUsers",
+          "activeUsersDeltaPct",
+          "daily",
+          "channels",
+          "topChannel",
+          "hasData"
+        ]
+      },
+      "AnalyticsOverviewDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AnalyticsStatus"
+              }
+            ]
+          },
+          "report": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AnalyticsReportDto"
+              }
+            ]
+          },
+          "fetchedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "stale": {
+            "type": "boolean",
+            "description": "True when the Data API failed and an expired cached report is served instead."
+          },
+          "retryAvailableAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "When `POST /analytics/retry` will be accepted again (only for `failed`)."
+          }
+        },
+        "required": [
+          "status",
+          "report",
+          "fetchedAt",
+          "stale",
+          "retryAvailableAt"
+        ]
+      },
       "CreateCheckoutSessionDto": {
         "type": "object",
         "properties": {

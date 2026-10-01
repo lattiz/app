@@ -2,7 +2,7 @@
 
 import { type Client, type ClientMeta, formDataBodySerializer, type Options as Options2, type RequestResult, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponses, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponses, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponses, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionResponses, BillingControllerTriggerReconciliationData, BillingControllerTriggerReconciliationResponses, DomainsControllerConnectData, DomainsControllerConnectResponses, DomainsControllerGetDomainData, DomainsControllerGetDomainResponses, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponses, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponses, DomainsControllerPurchaseData, DomainsControllerPurchaseResponses, DomainsControllerRelaunchData, DomainsControllerRelaunchResponses, DomainsControllerSearchData, DomainsControllerSearchResponses, HealthControllerHealthData, HealthControllerHealthResponses, MeControllerDeleteMeData, MeControllerDeleteMeErrors, MeControllerDeleteMeResponses, MeControllerMeData, MeControllerMeErrors, MeControllerMeResponses, SitesControllerChangeTemplateData, SitesControllerChangeTemplateErrors, SitesControllerChangeTemplateResponses, SitesControllerGetSchemaData, SitesControllerGetSchemaErrors, SitesControllerGetSchemaResponses, SitesControllerPublishData, SitesControllerPublishErrors, SitesControllerPublishResponses, SitesControllerSaveSchemaData, SitesControllerSaveSchemaErrors, SitesControllerSaveSchemaResponses, SitesControllerSelectTemplateData, SitesControllerSelectTemplateErrors, SitesControllerSelectTemplateResponses, SitesControllerUploadAssetsData, SitesControllerUploadAssetsErrors, SitesControllerUploadAssetsResponses, TemplatesControllerFindAllData, TemplatesControllerFindAllErrors, TemplatesControllerFindAllResponses, TenantsControllerMeData, TenantsControllerMeErrors, TenantsControllerMeResponses, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingErrors, TenantsControllerRemoveBrandingResponses, TenantsControllerUpdateSiteSettingsData, TenantsControllerUpdateSiteSettingsErrors, TenantsControllerUpdateSiteSettingsResponses, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingErrors, TenantsControllerUploadBrandingResponses } from './types.gen';
+import type { AnalyticsControllerOverviewData, AnalyticsControllerOverviewResponses, AnalyticsControllerRetryData, AnalyticsControllerRetryResponses, BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponses, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponses, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponses, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionResponses, BillingControllerTriggerReconciliationData, BillingControllerTriggerReconciliationResponses, DomainsControllerConnectData, DomainsControllerConnectResponses, DomainsControllerGetDomainData, DomainsControllerGetDomainResponses, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponses, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponses, DomainsControllerPurchaseData, DomainsControllerPurchaseResponses, DomainsControllerRelaunchData, DomainsControllerRelaunchResponses, DomainsControllerSearchData, DomainsControllerSearchResponses, HealthControllerHealthData, HealthControllerHealthResponses, MeControllerDeleteMeData, MeControllerDeleteMeErrors, MeControllerDeleteMeResponses, MeControllerMeData, MeControllerMeErrors, MeControllerMeResponses, SitesControllerChangeTemplateData, SitesControllerChangeTemplateErrors, SitesControllerChangeTemplateResponses, SitesControllerGetSchemaData, SitesControllerGetSchemaErrors, SitesControllerGetSchemaResponses, SitesControllerPublishData, SitesControllerPublishErrors, SitesControllerPublishResponses, SitesControllerSaveSchemaData, SitesControllerSaveSchemaErrors, SitesControllerSaveSchemaResponses, SitesControllerSelectTemplateData, SitesControllerSelectTemplateErrors, SitesControllerSelectTemplateResponses, SitesControllerUploadAssetsData, SitesControllerUploadAssetsErrors, SitesControllerUploadAssetsResponses, TemplatesControllerFindAllData, TemplatesControllerFindAllErrors, TemplatesControllerFindAllResponses, TenantsControllerMeData, TenantsControllerMeErrors, TenantsControllerMeResponses, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingErrors, TenantsControllerRemoveBrandingResponses, TenantsControllerUpdateSiteSettingsData, TenantsControllerUpdateSiteSettingsErrors, TenantsControllerUpdateSiteSettingsResponses, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingErrors, TenantsControllerUploadBrandingResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -17,6 +17,24 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
      */
     meta?: keyof ClientMeta extends never ? Record<string, unknown> : ClientMeta;
 };
+
+/**
+ * Get the tenant analytics overview (protected, Pro)
+ */
+export const analyticsControllerOverview = <ThrowOnError extends boolean = false>(options?: Options<AnalyticsControllerOverviewData, ThrowOnError>): RequestResult<AnalyticsControllerOverviewResponses, unknown, ThrowOnError> => (options?.client ?? client).get<AnalyticsControllerOverviewResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/analytics/overview',
+    ...options
+});
+
+/**
+ * Retry failed analytics provisioning (protected, Pro)
+ */
+export const analyticsControllerRetry = <ThrowOnError extends boolean = false>(options?: Options<AnalyticsControllerRetryData, ThrowOnError>): RequestResult<AnalyticsControllerRetryResponses, unknown, ThrowOnError> => (options?.client ?? client).post<AnalyticsControllerRetryResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/analytics/retry',
+    ...options
+});
 
 /**
  * Create a Stripe Checkout session (protected)

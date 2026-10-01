@@ -1,4 +1,5 @@
 import type { NextRequest } from 'next/server';
+import { injectAnalytics } from '@/lib/analytics-snippet';
 import { getTenantSiteByHostname } from '@/lib/tenant-data';
 
 function esc(str: string): string {
@@ -124,7 +125,7 @@ export async function GET(request: NextRequest): Promise<Response> {
     site.socialPreviewUrl ??
     `${siteUrl}/api/og?h=${encodeURIComponent(hostname)}`;
 
-  const html = injectSeo(site.exportedHtml, {
+  const seoHtml = injectSeo(site.exportedHtml, {
     title: site.seoTitle || site.tenantName,
     description: site.seoDescription || `Sitio web de ${site.tenantName}`,
     ogSiteName: site.ogSiteName,
@@ -133,6 +134,11 @@ export async function GET(request: NextRequest): Promise<Response> {
     faviconLightUrl: site.faviconLightUrl,
     faviconDarkUrl: site.faviconDarkUrl,
   });
+  // No CSP script-src today; if one is added it must allow googletagmanager.com
+  // and google-analytics.com.
+  const html = site.analyticsMeasurementId
+    ? injectAnalytics(seoHtml, site.analyticsMeasurementId)
+    : seoHtml;
 
   return new Response(html, {
     status: 200,
