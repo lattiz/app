@@ -17,10 +17,12 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { SkipThrottle } from '@nestjs/throttler';
 import type { Request } from 'express';
 import { type AuthenticatedUser } from '../../common/auth/authenticated-user';
 import { CurrentUser } from '../../common/auth/current-user.decorator';
 import { SupabaseJwtGuard } from '../../common/auth/supabase-jwt.guard';
+import { SensitiveActionRateLimit } from '../../common/throttling/rate-limits';
 import { BillingService } from './billing.service';
 import {
   BillingRedirectResponseDto,
@@ -41,6 +43,7 @@ export class BillingController {
   constructor(private readonly billing: BillingService) {}
 
   @Post('checkout-session')
+  @SensitiveActionRateLimit()
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create a Stripe Checkout session (protected)' })
   @ApiOkResponse({ type: BillingRedirectResponseDto })
@@ -53,6 +56,7 @@ export class BillingController {
   }
 
   @Post('portal-session')
+  @SensitiveActionRateLimit()
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create a Stripe billing portal session (protected)' })
   @ApiOkResponse({ type: BillingRedirectResponseDto })
@@ -90,6 +94,7 @@ export class BillingController {
 
   /** Dev/ops escape hatch so the 15-minute cron need not be waited out. */
   @Post('reconcile')
+  @SensitiveActionRateLimit()
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Force a stale-subscription reconciliation (protected)' })
   @ApiOkResponse({ type: ReconcileResponseDto })
@@ -101,6 +106,7 @@ export class BillingController {
 
   /** Verified by Stripe signature over the raw body — no JWT guard. */
   @Post('webhooks')
+  @SkipThrottle()
   @HttpCode(200)
   @ApiExcludeEndpoint()
   async handleWebhook(

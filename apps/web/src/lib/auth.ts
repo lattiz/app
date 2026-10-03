@@ -63,6 +63,12 @@ export async function resetPassword(password: string): Promise<void> {
 /** Hard-deletes the account: API deletes the profile + auth user, then we clear the local session. */
 export async function deleteAccount(): Promise<void> {
   const { error } = await meControllerDeleteMe();
-  if (error) throw new Error('Account deletion failed.');
+  if (error) {
+    throw new Error(
+      (error as { error?: { code?: string } }).error?.code === 'SUBSCRIPTION_CANCELLATION_FAILED'
+        ? 'No pudimos cancelar tu suscripción, así que no eliminamos tu cuenta para que no se te siga cobrando. Inténtalo de nuevo en unos minutos o contacta a soporte.'
+        : 'No pudimos eliminar tu cuenta. Inténtalo de nuevo en unos minutos o contacta a soporte.',
+    );
+  }
   await supabase.auth.signOut();
 }

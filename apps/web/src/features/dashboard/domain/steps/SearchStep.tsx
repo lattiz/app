@@ -7,6 +7,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
 import { DomainResultCard } from '../components/DomainResultCard';
 import { useDomainQuote } from '../hooks/useDomainQuote';
+import { searchErrorMessage } from '../lib/domain-errors';
 import { useDomainSearch } from '../hooks/useDomainSearch';
 import { DomainSearchSchema } from '../schemas/domain.schemas';
 import { useDomainWizardStore } from '../store/domain-wizard.store';
@@ -87,9 +88,7 @@ export function SearchStep() {
       )}
 
       {search.isError && (
-        <p className="text-sm text-destructive">
-          No se pudo buscar dominios. Intenta de nuevo en unos segundos.
-        </p>
+        <p className="text-sm text-destructive">{searchErrorMessage(search.error)}</p>
       )}
 
       {!search.isFetching && search.data && search.data.length === 0 && (

@@ -16,6 +16,7 @@ import {
   InvalidWebhookSignatureException,
   NoStripeCustomerException,
   PriceNotConfiguredException,
+  SubscriptionCancellationFailedException,
 } from './billing.exceptions';
 import type { CreateCheckoutSessionDto } from './dto/create-checkout-session.dto';
 import type {
@@ -30,6 +31,12 @@ const MAX_PAYMENT_ATTEMPTS = 3;
 const TERMINAL_STATUSES: Stripe.Subscription.Status[] = [
   'canceled',
   'unpaid',
+  'incomplete_expired',
+];
+
+// Only these can never bill again; `unpaid` still generates invoices, so it is canceled too.
+const ENDED_STATUSES: Stripe.Subscription.Status[] = [
+  'canceled',
   'incomplete_expired',
 ];
 
@@ -337,6 +344,41 @@ export class BillingService {
     );
     await this.domains.suspendDomainForTenant(tenantId);
     this.logger.log(`Tenant ${tenantId} subscription canceled + offboarded`);
+  }
+
+  // ── Account deletion ──────────────────────────────────────────────────────
+  /**
+   * Cancels every live subscription of the user's Stripe customer immediately. Reads Stripe, not our
+   * table, so a subscription a missed webhook never recorded is still canceled. Throws if any cancel
+   * fails: deleting the account anyway would keep charging a customer who can no longer log in.
+   */
+  async cancelSubscriptionsForUser(userSub: string): Promise<void> {
+    const rows = await this.query<{ stripe_customer_id: string | null }>(
+      sql`SELECT stripe_customer_id FROM public.tenants WHERE user_id = ${userSub}::uuid`,
+    );
+    const customerIds = rows
+      .map((r) => r.stripe_customer_id)
+      .filter((id): id is string => !!id);
+
+    try {
+      for (const customer of customerIds) {
+        for await (const subscription of this.stripe.subscriptions.list({
+          customer,
+          status: 'all',
+        })) {
+          if (ENDED_STATUSES.includes(subscription.status)) continue;
+          await this.stripe.subscriptions.cancel(subscription.id);
+          this.logger.log(
+            `[billing] Canceled ${subscription.id} for account deletion of ${userSub}`,
+          );
+        }
+      }
+    } catch (err) {
+      this.logger.error(
+        `[billing] Could not cancel subscriptions for account deletion of ${userSub}: ${String(err)}`,
+      );
+      throw new SubscriptionCancellationFailedException();
+    }
   }
 
   // ── Payment retries ───────────────────────────────────────────────────────

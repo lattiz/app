@@ -12,6 +12,9 @@ async function bootstrap(): Promise<void> {
     rawBody: true,
   });
 
+  // Behind Caddy the client IP is in X-Forwarded-For; rate limiting keys on it. 0 when exposed directly.
+  app.set('trust proxy', Number(process.env.TRUST_PROXY_HOPS ?? 0));
+
   // GrapesJS project JSON payloads far exceed Express's 100kb default.
   app.useBodyParser('json', { limit: '10mb' });
 

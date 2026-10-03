@@ -33,6 +33,16 @@ export class NoStripeCustomerException extends DomainException {
   }
 }
 
+/** Stripe could not confirm the cancellation, so deleting the account would leave the customer being charged. */
+export class SubscriptionCancellationFailedException extends DomainException {
+  readonly code = 'SUBSCRIPTION_CANCELLATION_FAILED';
+  readonly status = HttpStatus.BAD_GATEWAY;
+
+  constructor() {
+    super('The subscription could not be canceled; the account was not deleted.');
+  }
+}
+
 /** Stripe webhook signature verification failed. */
 export class InvalidWebhookSignatureException extends DomainException {
   readonly code = 'INVALID_WEBHOOK_SIGNATURE';

@@ -18,6 +18,10 @@ import {
 import { type AuthenticatedUser } from '../../common/auth/authenticated-user';
 import { CurrentUser } from '../../common/auth/current-user.decorator';
 import { SubscriptionActiveGuard } from '../../common/auth/subscription-active.guard';
+import {
+  ProviderLookupRateLimit,
+  SensitiveActionRateLimit,
+} from '../../common/throttling/rate-limits';
 import { SupabaseJwtGuard } from '../../common/auth/supabase-jwt.guard';
 import { DomainsService } from './domains.service';
 import { ConnectDomainDto } from './dto/connect-domain.dto';
@@ -43,6 +47,7 @@ export class DomainsController {
 
   /** Search available domains for a keyword (TLD variants generated server-side). */
   @Get('search')
+  @ProviderLookupRateLimit()
   @UseGuards(SubscriptionActiveGuard)
   @ApiOperation({ summary: 'Search available domains (protected)' })
   @ApiOkResponse({ type: [DomainSearchResultDto] })
@@ -56,6 +61,7 @@ export class DomainsController {
 
   /** Get the current price, renewal price and required agreements for a domain — free, no commitment. */
   @Post('quote')
+  @ProviderLookupRateLimit()
   @UseGuards(SubscriptionActiveGuard)
   @ApiOperation({ summary: 'Get a registration quote (protected)' })
   @ApiOkResponse({ type: DomainQuoteResponseDto })
@@ -69,6 +75,7 @@ export class DomainsController {
 
   /** Initiate the async purchase pipeline — returns a jobId immediately. */
   @Post('purchase')
+  @SensitiveActionRateLimit()
   @UseGuards(SubscriptionActiveGuard)
   @ApiOperation({ summary: 'Purchase a domain (protected, async)' })
   @ApiOkResponse({ type: DomainPurchaseResponseDto })
@@ -81,6 +88,7 @@ export class DomainsController {
 
   /** Connect a domain the tenant already owns — returns the DNS records to create. */
   @Post('connect')
+  @SensitiveActionRateLimit()
   @UseGuards(SubscriptionActiveGuard)
   @ApiOperation({ summary: 'Connect a tenant-owned domain (protected)' })
   @ApiOkResponse({ type: ConnectDomainResponseDto })
@@ -93,6 +101,7 @@ export class DomainsController {
 
   /** Restore the Vercel mapping of a domain suspended by a lapsed subscription. Idempotent. */
   @Post('relaunch')
+  @SensitiveActionRateLimit()
   @UseGuards(SubscriptionActiveGuard)
   @ApiOperation({ summary: 'Relaunch a suspended domain (protected)' })
   @ApiOkResponse({ type: RelaunchDomainResponseDto })

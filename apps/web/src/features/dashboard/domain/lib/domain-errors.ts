@@ -21,10 +21,24 @@ export function currentPriceFromError(err: unknown): number | undefined {
 const PROVIDER_UNAVAILABLE =
   'Nuestro proveedor de dominios no está disponible en este momento. Inténtalo de nuevo en unos minutos.';
 
+const TOO_MANY_REQUESTS =
+  'Hiciste demasiadas solicitudes en poco tiempo. Espera un minuto e inténtalo de nuevo.';
+
+export function searchErrorMessage(err: unknown): string {
+  return apiErrorCode(err) === 'TOO_MANY_REQUESTS'
+    ? TOO_MANY_REQUESTS
+    : 'No se pudo buscar dominios. Intenta de nuevo en unos segundos.';
+}
+
 export function quoteErrorMessage(err: unknown): string {
-  return apiErrorCode(err) === 'REGISTRAR_API_ERROR'
-    ? PROVIDER_UNAVAILABLE
-    : 'No se pudo obtener el precio';
+  switch (apiErrorCode(err)) {
+    case 'REGISTRAR_API_ERROR':
+      return PROVIDER_UNAVAILABLE;
+    case 'TOO_MANY_REQUESTS':
+      return TOO_MANY_REQUESTS;
+    default:
+      return 'No se pudo obtener el precio';
+  }
 }
 
 export function purchaseErrorMessage(err: unknown): string {
@@ -42,6 +56,8 @@ export function purchaseErrorMessage(err: unknown): string {
       return PROVIDER_UNAVAILABLE;
     case 'DOMAIN_PURCHASE_IN_PROGRESS':
       return 'Ya estamos procesando la compra de otro dominio para tu sitio. Espera a que termine.';
+    case 'TOO_MANY_REQUESTS':
+      return TOO_MANY_REQUESTS;
     default:
       return 'No se pudo iniciar la compra del dominio';
   }
