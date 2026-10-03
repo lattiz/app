@@ -22,6 +22,9 @@ const DEFAULT_TIMEOUT_MS = 15_000;
 const TOKEN_TTL_MS = 24 * 60 * 60 * 1000;
 const RATE_LIMIT_RETRY_MS = 3_000;
 
+// 10005 "Access denied" (IP not whitelisted / account restricted), 10008 "API access is disabled for this contact" — both observed live.
+const ACCOUNT_ERROR_CODES = new Set([10005, 10008]);
+
 /** Openprovider REST v1 client: lazy login, cached bearer token, one re-login on 401. */
 @Injectable()
 export class OpenproviderClient {
@@ -161,13 +164,23 @@ export class OpenproviderClient {
 
     // Openprovider answers errors as `{ code, desc }`; code 0 means success.
     if (!res.ok || !payload || (payload.code ?? 0) !== 0) {
+      const desc = payload?.desc || res.statusText || 'unexpected response';
       throw new RegistrarApiException(
         opts.operation,
-        payload?.desc || res.statusText || 'unexpected response',
+        desc,
         res.status,
         payload?.code,
+        isAccountError(payload?.code, desc),
       );
     }
     return payload.data as T;
   }
+}
+
+// Users never supply handles, so a handle error is always our OPENPROVIDER_CUSTOMER_HANDLE.
+function isAccountError(code: number | undefined, desc: string): boolean {
+  return (
+    (code !== undefined && ACCOUNT_ERROR_CODES.has(code)) ||
+    /\bhandle\b/i.test(desc)
+  );
 }
