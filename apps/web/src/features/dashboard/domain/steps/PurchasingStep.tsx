@@ -67,7 +67,6 @@ export function PurchasingStep() {
     retry.mutate({
       body: {
         domain: selectedDomain,
-        quoteToken: quote.quoteToken,
         agreementTypes: agreementsAccepted,
         agreedAt,
         priceUsdCents: Math.round(quote.priceUsdCents),

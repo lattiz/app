@@ -31,14 +31,62 @@ export class DomainJobNotFoundException extends DomainException {
   }
 }
 
-/** A GoDaddy API call failed (availability, quote, registration or DNS). */
-export class GodaddyApiException extends DomainException {
-  readonly code = 'GODADDY_API_ERROR';
+/** An Openprovider API call failed (availability, price, registration or DNS). */
+export class RegistrarApiException extends DomainException {
+  readonly code = 'REGISTRAR_API_ERROR';
   readonly status = HttpStatus.BAD_GATEWAY;
 
-  constructor(operation: string, httpStatus: number, detail?: string) {
+  constructor(
+    operation: string,
+    detail: string,
+    readonly httpStatus?: number,
+    readonly registrarCode?: number,
+  ) {
     super(
-      `GoDaddy ${operation} failed with status ${httpStatus}${detail ? `: ${detail}` : ''}.`,
+      `Registrar ${operation} failed${httpStatus ? ` with status ${httpStatus}` : ''}: ${detail}.`,
     );
+  }
+}
+
+/** The domain is taken, premium, or already in the registrar account of someone else. */
+export class DomainNotAvailableException extends DomainException {
+  readonly code = 'DOMAIN_NOT_AVAILABLE';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor(domain: string) {
+    super(`The domain ${domain} is not available for registration.`);
+  }
+}
+
+/** The registrar's current price is above the price the user accepted. */
+export class DomainPriceChangedException extends DomainException {
+  readonly code = 'DOMAIN_PRICE_CHANGED';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor(currentPriceUsdCents: number, acceptedPriceUsdCents: number) {
+    super('The domain price changed since it was quoted.', {
+      currentPriceUsdCents,
+      acceptedPriceUsdCents,
+    });
+  }
+}
+
+/** The domain costs more than the plan absorbs (DOMAIN_MAX_COST_USD_CENTS). */
+export class DomainNotCoveredByPlanException extends DomainException {
+  readonly code = 'DOMAIN_NOT_COVERED_BY_PLAN';
+  readonly status = HttpStatus.UNPROCESSABLE_ENTITY;
+
+  constructor() {
+    super('This domain is not covered by your plan.');
+  }
+}
+
+/** The accepted agreements do not match the ones the quote required. */
+export class DomainAgreementsRequiredException extends DomainException {
+  readonly code = 'DOMAIN_AGREEMENTS_REQUIRED';
+  readonly status = HttpStatus.BAD_REQUEST;
+
+  constructor() {
+    super('The required agreements must be accepted to purchase a domain.');
   }
 }

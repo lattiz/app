@@ -182,7 +182,7 @@ AUTH:
 
 DATA:
 [ ] No RLS exists — every Drizzle query scoped to a user includes an explicit sub/id filter (reference: drizzle-user.repository.ts)
-[ ] New tables ship with a drizzle-kit migration (db:generate → db:migrate), never applied via db:push against a shared database
+[ ] Schema changes ship as a Supabase CLI migration in supabase/migrations/ (supabase migration new → supabase db reset --local), never applied from the dashboard or with drizzle-kit
 [ ] Any destructive operation is wrapped in its own use-case, never called bare from a controller
 
 RATE LIMITING:

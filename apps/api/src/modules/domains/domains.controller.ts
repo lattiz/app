@@ -54,10 +54,10 @@ export class DomainsController {
     return this.domains.searchDomains(query.q);
   }
 
-  /** Get a locked price quote for a domain — free, no commitment, 10-min TTL. */
+  /** Get the current price, renewal price and required agreements for a domain — free, no commitment. */
   @Post('quote')
   @UseGuards(SubscriptionActiveGuard)
-  @ApiOperation({ summary: 'Get a locked registration quote (protected)' })
+  @ApiOperation({ summary: 'Get a registration quote (protected)' })
   @ApiOkResponse({ type: DomainQuoteResponseDto })
   async getQuote(
     @Body() dto: GetQuoteDto,
@@ -79,7 +79,7 @@ export class DomainsController {
     return this.domains.initiatePurchase(requireSub(user), dto);
   }
 
-  /** Connect a domain the tenant already owns — returns the CNAME records to create. */
+  /** Connect a domain the tenant already owns — returns the DNS records to create. */
   @Post('connect')
   @UseGuards(SubscriptionActiveGuard)
   @ApiOperation({ summary: 'Connect a tenant-owned domain (protected)' })

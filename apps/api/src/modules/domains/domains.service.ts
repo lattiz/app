@@ -1,10 +1,19 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { sql, type SQL } from 'drizzle-orm';
-import { randomUUID } from 'node:crypto';
 import { type Database, DATABASE } from '../../database/database.module';
 import {
-  CnameInstructionDto,
+  DNS_PROVIDER_PORT,
+  type DnsProviderPort,
+  type DnsRecord,
+} from './domain/dns-provider.port';
+import {
+  REGISTRAR_PORT,
+  type RegisteredDomain,
+  type RegistrarPort,
+  type RegistrationState,
+} from './domain/registrar.port';
+import {
   ConnectDomainResponseDto,
   DomainJobStatusDto,
   DomainQuoteResponseDto,
@@ -12,33 +21,42 @@ import {
   DomainStatusResponseDto,
   type DnsStatus,
   type DomainJobStatus,
+  type DomainSourceValue,
 } from './dto/domains.response.dto';
 import { PurchaseDomainDto } from './dto/purchase-domain.dto';
 import {
+  DomainAgreementsRequiredException,
   DomainJobNotFoundException,
+  DomainNotAvailableException,
+  DomainNotCoveredByPlanException,
+  DomainPriceChangedException,
   DomainsTenantNotFoundException,
   TenantAlreadyHasDomainException,
 } from './domains.exceptions';
-import { GodaddyService } from './godaddy.service';
 import { VercelDomainsService } from './vercel-domains.service';
 
-const VERCEL_CNAME = 'cname.vercel-dns.com';
+const SEARCH_TLDS = ['com', 'com.mx', 'mx', 'net', 'org'];
 
-const CNAME_INSTRUCTIONS: CnameInstructionDto[] = [
-  { type: 'CNAME', name: '@', value: VERCEL_CNAME, ttl: 600 },
-  { type: 'CNAME', name: 'www', value: VERCEL_CNAME, ttl: 600 },
-];
+// Openprovider only stores 900/3600/10800/21600/43200/86400; anything else becomes 86400.
+const DNS_TTL = 900;
 
-type DomainSource = 'godaddy_managed' | 'user_provided';
+// Openprovider has no registration agreements, so Lattiz's own terms are the only one.
+const LATTIZ_TERMS = {
+  agreementType: 'LATTIZ_TERMS',
+  title: 'Términos y condiciones de Lattiz',
+  url: 'https://www.lattiz.app/terms',
+};
+
+const REGISTRATION_POLL_INTERVAL_MS = 3000;
+const REGISTRATION_POLL_MAX_ATTEMPTS = 20;
 
 interface DomainRow {
   id: string;
   tenant_id: string;
   domain: string;
-  source: DomainSource;
+  source: DomainSourceValue;
   tld: string;
-  godaddy_registration_id: string | null;
-  godaddy_idempotency_key: string | null;
+  registrar_domain_id: string | null;
   annual_cost_usd_cents: number;
   period_years: number;
   expires_at: string | Date | null;
@@ -61,15 +79,13 @@ interface JobRow {
 }
 
 interface PipelineParams {
-  idempotencyKey: string;
-  quoteToken: string;
   period: number;
-  agreementTypes: string[];
-  agreedAt: string;
+  /** Set when the domain is already in the registrar account: resume instead of registering again. */
+  registered: RegisteredDomain | null;
 }
 
 /**
- * Orchestrates GoDaddy (purchase + DNS), Vercel (mapping + SSL) and the DB.
+ * Orchestrates the registrar (purchase), the DNS provider, Vercel (mapping + SSL) and the DB.
  * State is persisted BEFORE each external call so a dead process can retry safely.
  */
 @Injectable()
@@ -79,7 +95,8 @@ export class DomainsService {
 
   constructor(
     @Inject(DATABASE) private readonly db: Database,
-    private readonly godaddy: GodaddyService,
+    @Inject(REGISTRAR_PORT) private readonly registrar: RegistrarPort,
+    @Inject(DNS_PROVIDER_PORT) private readonly dns: DnsProviderPort,
     private readonly vercel: VercelDomainsService,
     configService: ConfigService,
   ) {
@@ -95,15 +112,11 @@ export class DomainsService {
       .toLowerCase()
       .replace(/\s+/g, '')
       .replace(/[^a-z0-9-]/g, '');
-    const candidates = [
-      `${base}.com`,
-      `${base}.com.mx`,
-      `${base}.mx`,
-      `${base}.net`,
-    ];
+    const candidates = SEARCH_TLDS.map((tld) => `${base}.${tld}`);
 
+    // One call per candidate so a slow or failing TLD (.mx) never hides the others.
     const results = await Promise.allSettled(
-      candidates.map((d) => this.godaddy.checkAvailability(d)),
+      candidates.map((d) => this.registrar.checkAvailability(d)),
     );
 
     const found: DomainSearchResultDto[] = [];
@@ -112,12 +125,12 @@ export class DomainsService {
         this.logger.warn(`Availability check failed for ${candidates[i]}: ${String(r.reason)}`);
         return;
       }
-      const price = r.value.prices?.[0]?.price?.value ?? 0;
+      const price = r.value.priceUsdCents;
       found.push({
         domain: candidates[i],
         available: r.value.available,
-        priceUsdCents: price,
-        coveredByPlan: price <= this.maxCostCents,
+        priceUsdCents: price ?? 0,
+        coveredByPlan: price !== null && price <= this.maxCostCents,
       });
     });
     return found;
@@ -125,21 +138,21 @@ export class DomainsService {
 
   // ── Quote ─────────────────────────────────────────────────────────────────
   async getQuote(domain: string): Promise<DomainQuoteResponseDto> {
-    const quote = await this.godaddy.getRegistrationQuote(domain, 1);
+    const { available } = await this.registrar.checkAvailability(domain);
+    const [price, renewalPrice] = available
+      ? await Promise.all([
+          this.registrar.getPriceUsdCents(domain, 'create'),
+          this.registrar.getPriceUsdCents(domain, 'renew'),
+        ])
+      : [0, 0];
     return {
-      quoteToken: quote.quoteToken,
-      expiresAt: quote.expiresAt,
-      domain: quote.domain,
-      available: quote.available,
-      priceUsdCents: quote.price?.value ?? 0,
-      renewalPriceUsdCents: quote.renewalPrice?.value ?? 0,
-      coveredByPlan: (quote.price?.value ?? 0) <= this.maxCostCents,
-      requiredAgreements: (quote.requiredAgreements ?? []).map((a) => ({
-        agreementType: a.agreementType,
-        title: a.title,
-        url: a.url ?? null,
-      })),
-      irreversible: quote.irreversible,
+      domain,
+      available,
+      priceUsdCents: price,
+      renewalPriceUsdCents: renewalPrice,
+      coveredByPlan: available && price <= this.maxCostCents,
+      requiredAgreements: [LATTIZ_TERMS],
+      irreversible: true,
     };
   }
 
@@ -149,50 +162,78 @@ export class DomainsService {
     userSub: string,
     params: PurchaseDomainDto,
   ): Promise<{ jobId: string }> {
+    const accepted = new Set(params.agreementTypes);
+    if (accepted.size !== 1 || !accepted.has(LATTIZ_TERMS.agreementType)) {
+      throw new DomainAgreementsRequiredException();
+    }
+
     const tenantId = await this.getTenantIdByUserSub(userSub);
 
     const existing = await this.getDomainByTenant(tenantId);
-    let idempotencyKey: string = randomUUID();
-
-    if (existing) {
-      if (existing.purchase_completed_at) {
-        throw new TenantAlreadyHasDomainException();
-      }
-      if (existing.domain === params.domain && existing.godaddy_idempotency_key) {
-        // Retry of an incomplete purchase — reuse the stored key so GoDaddy dedupes.
-        idempotencyKey = existing.godaddy_idempotency_key;
-      } else {
-        await this.deleteDomainRecord(existing.id);
-      }
+    if (existing?.purchase_completed_at) {
+      throw new TenantAlreadyHasDomainException();
     }
 
-    const tld = '.' + params.domain.split('.').slice(1).join('.');
+    // Find-before-create: a domain already in our account is either this tenant's
+    // interrupted purchase (resume, no new charge) or someone else's (reject).
+    const found = await this.registrar.findDomain(params.domain);
+    const registered = found && found.status !== 'failed' ? found : null;
+    if (registered && existing?.domain !== params.domain) {
+      throw new DomainNotAvailableException(params.domain);
+    }
+
+    const quote = registered
+      ? null
+      : await this.assertPurchasable(params.domain, params.priceUsdCents);
+
+    if (existing && !registered) {
+      await this.deleteDomainRecord(existing.id);
+    }
+
     const jobId = await this.createDomainJob(tenantId, params.domain);
 
-    if (!existing || existing.domain !== params.domain) {
-      // Persist the idempotency key BEFORE calling GoDaddy — enables safe retry.
+    if (quote) {
+      // Persisted BEFORE registering so a dead process leaves a resumable row.
       await this.createDomainRecord({
         tenantId,
         domain: params.domain,
-        tld,
-        idempotencyKey,
-        priceUsdCents: params.priceUsdCents,
+        tld: '.' + params.domain.split('.').slice(1).join('.'),
+        priceUsdCents: quote.priceUsdCents,
+        renewalPriceUsdCents: quote.renewalPriceUsdCents,
         agreementTypes: params.agreementTypes,
         agreedAt: params.agreedAt,
-        isMock: this.godaddy.isMockMode,
-        source: 'godaddy_managed',
+        isMock: this.registrar.isMockMode,
+        source: 'lattiz_managed',
       });
     }
 
     void this.runPurchasePipeline(jobId, tenantId, params.domain, {
-      idempotencyKey,
-      quoteToken: params.quoteToken,
       period: 1,
-      agreementTypes: params.agreementTypes,
-      agreedAt: params.agreedAt,
+      registered,
     });
 
     return { jobId };
+  }
+
+  /** Re-checks availability and price right before spending money. */
+  private async assertPurchasable(
+    domain: string,
+    acceptedPriceUsdCents: number,
+  ): Promise<{ priceUsdCents: number; renewalPriceUsdCents: number }> {
+    const { available } = await this.registrar.checkAvailability(domain);
+    if (!available) throw new DomainNotAvailableException(domain);
+
+    const [priceUsdCents, renewalPriceUsdCents] = await Promise.all([
+      this.registrar.getPriceUsdCents(domain, 'create'),
+      this.registrar.getPriceUsdCents(domain, 'renew'),
+    ]);
+    if (priceUsdCents > acceptedPriceUsdCents) {
+      throw new DomainPriceChangedException(priceUsdCents, acceptedPriceUsdCents);
+    }
+    if (priceUsdCents > this.maxCostCents) {
+      throw new DomainNotCoveredByPlanException();
+    }
+    return { priceUsdCents, renewalPriceUsdCents };
   }
 
   // ── Pipeline (background, no HTTP context) ────────────────────────────────
@@ -220,46 +261,18 @@ export class DomainsService {
 
     try {
       await step('purchasing', async () => {
-        const result = await this.godaddy.registerDomain({
-          domain,
-          quoteToken: params.quoteToken,
-          period: params.period,
-          agreementTypes: params.agreementTypes,
-          agreedAt: params.agreedAt,
-          idempotencyKey: params.idempotencyKey,
-        });
-
-        if (result.status !== 'COMPLETED') {
-          let attempts = 0;
-          while (attempts < 20) {
-            await sleep(3000);
-            const poll = await this.godaddy.pollRegistration(result.registrationId);
-            if (poll.status === 'COMPLETED') break;
-            if (poll.status === 'FAILED') {
-              throw new Error('GoDaddy registration FAILED');
-            }
-            attempts++;
-          }
-        }
-
-        await this.markDomainRegistered(domain, result.registrationId, params.period);
-        await this.godaddy.disableAutoRenew(domain);
+        const registration =
+          params.registered ??
+          (await this.registrar.registerDomain({ domain, periodYears: params.period }));
+        // Persist the registrar id BEFORE polling so a crash can't orphan a paid domain.
+        await this.setRegistrarDomainId(domain, registration.id);
+        const done = await this.waitForRegistration(registration);
+        await this.markDomainActive(domain, done.renewalDate);
       });
 
       await step('configuring_dns', async () => {
         await this.setDnsStatus(domain, 'configuring');
-        await this.godaddy.createDnsRecord(domain, {
-          type: 'CNAME',
-          name: '@',
-          data: VERCEL_CNAME,
-          ttl: 600,
-        });
-        await this.godaddy.createDnsRecord(domain, {
-          type: 'CNAME',
-          name: 'www',
-          data: VERCEL_CNAME,
-          ttl: 600,
-        });
+        await this.dns.upsertZone(domain, await this.buildDnsRecords(domain));
         await this.setDnsStatus(domain, 'propagating');
       });
 
@@ -276,9 +289,35 @@ export class DomainsService {
     }
   }
 
+  private async waitForRegistration(
+    registration: RegisteredDomain,
+  ): Promise<RegistrationState> {
+    let state: RegistrationState = registration;
+    for (let attempt = 0; state.status === 'pending'; attempt++) {
+      if (attempt >= REGISTRATION_POLL_MAX_ATTEMPTS) {
+        throw new Error('Registrar registration still pending after the polling window');
+      }
+      await sleep(REGISTRATION_POLL_INTERVAL_MS);
+      state = await this.registrar.getRegistrationStatus(registration.id);
+    }
+    if (state.status === 'failed') {
+      throw new Error('Registrar registration FAILED');
+    }
+    return state;
+  }
+
+  /** Apex gets an A record and www a CNAME, using Vercel's recommended targets for this project. */
+  private async buildDnsRecords(domain: string): Promise<DnsRecord[]> {
+    const { ipv4, cname } = await this.vercel.getDnsTargets(domain);
+    return [
+      { type: 'A', name: '@', value: ipv4, ttl: DNS_TTL },
+      { type: 'CNAME', name: 'www', value: cname, ttl: DNS_TTL },
+    ];
+  }
+
   // ── Connect a domain the tenant already owns ──────────────────────────────
-  // No GoDaddy involved — Lattiz only maps the domain in Vercel and hands the
-  // tenant the CNAME records to create at their registrar.
+  // No registrar involved — Lattiz only maps the domain in Vercel and hands the
+  // tenant the DNS records to create at their registrar.
   async initiateConnect(
     userSub: string,
     domain: string,
@@ -301,8 +340,8 @@ export class DomainsService {
       tenantId,
       domain,
       tld,
-      idempotencyKey: null,
       priceUsdCents: null,
+      renewalPriceUsdCents: null,
       agreementTypes: [],
       agreedAt: null,
       isMock: false,
@@ -326,7 +365,7 @@ export class DomainsService {
     await this.updateJobStatus(jobId, 'completed');
     this.logger.log(`Domain connected: ${domain} (job: ${jobId})`);
 
-    return { jobId, dnsInstructions: CNAME_INSTRUCTIONS };
+    return { jobId, dnsInstructions: await this.buildDnsRecords(domain) };
   }
 
   // ── Job status (frontend polls this) ──────────────────────────────────────
@@ -374,18 +413,7 @@ export class DomainsService {
 
   private async dnsPropagated(domain: string): Promise<boolean> {
     try {
-      const lookups = await Promise.all(
-        [domain, `www.${domain}`].map(async (name) => {
-          const res = await fetch(
-            `https://dns.google/resolve?name=${name}&type=CNAME`,
-          );
-          const data = (await res.json()) as {
-            Answer?: Array<{ data?: string }>;
-          };
-          return data.Answer?.some((r) => r.data?.includes('vercel-dns.com')) ?? false;
-        }),
-      );
-      return lookups.some(Boolean);
+      return await this.vercel.isDomainConfigured(domain);
     } catch {
       // DNS check failure is not critical — stay in 'propagating'.
       return false;
@@ -412,15 +440,15 @@ export class DomainsService {
       );
     }
 
-    // GoDaddy is deliberately untouched: the CNAMEs must survive for relaunch,
-    // and auto_renew is already false so an abandoned name lapses on its own.
+    // The registrar is deliberately untouched: the DNS records must survive for relaunch,
+    // and autorenew is already off so an abandoned name lapses on its own.
     await this.markDomainSuspended(domain.id, tenantId);
     this.logger.log(`[suspend] Domain ${domain.domain} suspended for tenant ${tenantId}`);
   }
 
   /**
    * Re-registers a suspended domain with Vercel. DNS was never touched, so this
-   * skips GoDaddy entirely. Idempotent — shared by the billing webhooks, the
+   * skips the registrar entirely. Idempotent — shared by the billing webhooks, the
    * reconcile cron and `POST /domains/relaunch`. Throws on Vercel failure so
    * each caller picks its own retry policy.
    */
@@ -459,8 +487,8 @@ export class DomainsService {
 
   private async getDomainByTenant(tenantId: string): Promise<DomainRow | null> {
     const rows = await this.query<DomainRow>(
-      sql`SELECT id, tenant_id, domain, source, tld, godaddy_registration_id,
-                 godaddy_idempotency_key, annual_cost_usd_cents, period_years,
+      sql`SELECT id, tenant_id, domain, source, tld, registrar_domain_id,
+                 annual_cost_usd_cents, period_years,
                  expires_at, dns_status, vercel_domain_id, vercel_mapped,
                  ssl_active, is_mock, purchase_completed_at, suspended_at
           FROM public.domains
@@ -474,21 +502,24 @@ export class DomainsService {
     tenantId: string;
     domain: string;
     tld: string;
-    idempotencyKey: string | null;
     priceUsdCents: number | null;
+    renewalPriceUsdCents: number | null;
     agreementTypes: string[];
     agreedAt: string | null;
     isMock: boolean;
-    source: DomainSource;
+    source: DomainSourceValue;
   }): Promise<void> {
+    const hasRenewalPrice = params.renewalPriceUsdCents !== null;
     await this.query(
       sql`INSERT INTO public.domains (
-            tenant_id, domain, tld, godaddy_idempotency_key,
-            annual_cost_usd_cents, agreement_types_accepted, agreed_at, is_mock,
-            source
+            tenant_id, domain, tld, annual_cost_usd_cents,
+            renewal_price_cents, renewal_price_currency, renewal_price_quoted_at,
+            agreement_types_accepted, agreed_at, is_mock, source
           ) VALUES (
             ${params.tenantId}::uuid, ${params.domain}, ${params.tld},
-            ${params.idempotencyKey}, ${params.priceUsdCents},
+            ${params.priceUsdCents},
+            ${params.renewalPriceUsdCents}, ${hasRenewalPrice ? 'usd' : null},
+            ${hasRenewalPrice ? new Date().toISOString() : null}::timestamptz,
             ${toPgTextArray(params.agreementTypes)}::text[], ${params.agreedAt}::timestamptz,
             ${params.isMock}, ${params.source}
           )`,
@@ -534,15 +565,24 @@ export class DomainsService {
     );
   }
 
-  private async markDomainRegistered(
+  private async setRegistrarDomainId(
     domain: string,
-    registrationId: string,
-    periodYears: number,
+    registrarDomainId: string,
   ): Promise<void> {
     await this.query(
       sql`UPDATE public.domains
-          SET godaddy_registration_id = ${registrationId},
-              expires_at = now() + (${periodYears} * interval '1 year')
+          SET registrar_domain_id = ${registrarDomainId}
+          WHERE domain = ${domain}`,
+    );
+  }
+
+  private async markDomainActive(domain: string, renewalDate: Date | null): Promise<void> {
+    if (!renewalDate) {
+      this.logger.warn(`Registrar returned no renewal date for ${domain}; expires_at left empty.`);
+    }
+    await this.query(
+      sql`UPDATE public.domains
+          SET expires_at = ${renewalDate ? renewalDate.toISOString() : null}::timestamptz
           WHERE domain = ${domain}`,
     );
   }
@@ -610,11 +650,11 @@ export class DomainsService {
 // TODO: post-MVP — monitor expiry of user_provided domains (no renewal handling,
 //       no expiry notifications; if the tenant lets it lapse the site goes dark).
 // TODO: domain transfer to tenant on subscription cancellation (30-day grace).
-// TODO: annual renewal via cron job — v1 POST /domains/{domain}/renew.
+// TODO: annual renewal via cron job — autorenew is off, so Lattiz must renew via the registrar.
 // TODO: multiple domains per tenant — remove domains_tenant_id_idx + update UI.
 // TODO: premium domain pricing above plan limit — extra charge flow.
-// TODO: WHOIS privacy — v1 PATCH /domains/{domain} privacyEnabled.
-// TODO: email forwarding — MX records via v3 DNS.
+// TODO: WHOIS privacy — not offered for .mx/.com.mx (is_private_whois_allowed=false).
+// TODO: email forwarding — MX records via the DNS provider port.
 // TODO: Cloudflare for SaaS once past ~200 tenants.
 
 function toStatusDto(row: DomainRow): DomainStatusResponseDto {

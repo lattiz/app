@@ -10,10 +10,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "echo \"[@lattiz/api] no tests yet\" && exit 0",
     "generate:openapi": "nest build && node dist/generate-openapi.js",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio",
-    "db:push": "drizzle-kit push"
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@google-analytics/admin": "^10.1.1",

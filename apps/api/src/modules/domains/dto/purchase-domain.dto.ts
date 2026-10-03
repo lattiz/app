@@ -6,7 +6,6 @@ import {
   IsISO8601,
   IsString,
   Min,
-  MinLength,
 } from 'class-validator';
 
 export class PurchaseDomainDto {
@@ -14,11 +13,6 @@ export class PurchaseDomainDto {
   @IsFQDN()
   @IsString()
   domain!: string;
-
-  /** Single-use quote token from POST /domains/quote (10-minute TTL). */
-  @IsString()
-  @MinLength(1)
-  quoteToken!: string;
 
   /** Agreement types the user accepted — must match the quote's requiredAgreements. */
   @IsArray()
@@ -30,7 +24,7 @@ export class PurchaseDomainDto {
   @IsISO8601()
   agreedAt!: string;
 
-  /** Locked price from the quote, in USD cents. */
+  /** Price the user saw in the quote, in USD cents; the purchase is rejected if the current price is higher. */
   @IsInt()
   @Min(1)
   priceUsdCents!: number;

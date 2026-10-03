@@ -281,7 +281,7 @@
             "bearer": []
           }
         ],
-        "summary": "Get a locked registration quote (protected)",
+        "summary": "Get a registration quote (protected)",
         "tags": [
           "domains"
         ]
@@ -1474,13 +1474,6 @@
       "DomainQuoteResponseDto": {
         "type": "object",
         "properties": {
-          "quoteToken": {
-            "type": "string",
-            "description": "Single-use token that locks the price for 10 minutes."
-          },
-          "expiresAt": {
-            "type": "string"
-          },
           "domain": {
             "type": "string"
           },
@@ -1507,8 +1500,6 @@
           }
         },
         "required": [
-          "quoteToken",
-          "expiresAt",
           "domain",
           "available",
           "priceUsdCents",
@@ -1525,11 +1516,6 @@
             "type": "string",
             "description": "Fully-qualified domain to purchase."
           },
-          "quoteToken": {
-            "type": "string",
-            "description": "Single-use quote token from POST /domains/quote (10-minute TTL).",
-            "minLength": 1
-          },
           "agreementTypes": {
             "description": "Agreement types the user accepted — must match the quote's requiredAgreements.",
             "minItems": 1,
@@ -1544,13 +1530,12 @@
           },
           "priceUsdCents": {
             "type": "number",
-            "description": "Locked price from the quote, in USD cents.",
+            "description": "Price the user saw in the quote, in USD cents; the purchase is rejected if the current price is higher.",
             "minimum": 1
           }
         },
         "required": [
           "domain",
-          "quoteToken",
           "agreementTypes",
           "agreedAt",
           "priceUsdCents"
@@ -1580,14 +1565,15 @@
           "domain"
         ]
       },
-      "CnameInstructionDto": {
+      "DnsInstructionDto": {
         "type": "object",
         "properties": {
           "type": {
-            "type": "string",
             "enum": [
+              "A",
               "CNAME"
-            ]
+            ],
+            "type": "string"
           },
           "name": {
             "type": "string",
@@ -1617,7 +1603,7 @@
             "description": "DNS records the tenant must create manually at their registrar.",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/CnameInstructionDto"
+              "$ref": "#/components/schemas/DnsInstructionDto"
             }
           }
         },
@@ -1695,7 +1681,7 @@
           },
           "source": {
             "enum": [
-              "godaddy_managed",
+              "lattiz_managed",
               "user_provided"
             ],
             "type": "string"
@@ -2054,7 +2040,7 @@
           },
           "source": {
             "enum": [
-              "godaddy_managed",
+              "lattiz_managed",
               "user_provided"
             ],
             "type": "string"

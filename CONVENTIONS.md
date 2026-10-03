@@ -110,9 +110,9 @@ Analíticas del plan Pro: Lattiz es dueño de una cuenta de GA y crea una propie
 
 ## ORM — Drizzle
 
-- Schema en `apps/api/src/database/schema/`. Migraciones en `apps/api/drizzle/migrations/`.
+- Drizzle es solo el query builder (`apps/api/src/database/schema/`). Las migraciones viven en `supabase/migrations/` (Supabase CLI) — ver `SETUP.md`.
 - `DATABASE_URL` es obligatorio para arrancar la API. Usar **Session Pooler** de Supabase (puerto 5432) — ver `SETUP.md`.
-- Comandos (desde `apps/api/`): `pnpm db:generate` → `pnpm db:migrate` → `pnpm db:studio`.
+- Cambios de schema: `supabase migration new <nombre>` → `supabase db reset --local` → `supabase db push`. Nunca desde el dashboard ni con `drizzle-kit`.
 - `profiles.id` = `sub` del JWT de Supabase. La tabla `auth.users` es de Supabase, no se toca.
 
 ## CORS

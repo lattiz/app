@@ -59,7 +59,12 @@
 - `dev` — `nest start --watch`
 - `build` — `nest build`
 - `generate:openapi` — builds then runs `dist/generate-openapi.js` to write `apps/api/openapi.json` without starting the server
-- `db:generate` / `db:migrate` / `db:studio` / `db:push` — `drizzle-kit` (schema at `src/database/schema/`, migrations at `drizzle/migrations/`)
+- `db:studio` — `drizzle-kit studio` (Drizzle is only the query builder; it owns no migrations)
+
+**Database schema** (Supabase CLI, from the repo root):
+- `supabase migration new <name>` — creates `supabase/migrations/<timestamp>_<name>.sql`; never invent the filename
+- `supabase db reset --local` — rebuilds the local database from every migration (requires `supabase start` + Docker)
+- `supabase db push` — applies pending migrations to the linked project; `supabase db diff --linked` detects drift
 
 **`apps/web`** (`pnpm --filter @lattiz/web <script>`):
 - `dev` — `vite`
@@ -127,10 +132,15 @@ apps/web/src/
 packages/api-client/src/
 ├─ index.ts             (public surface — re-exports generated + client)
 └─ generated/           (committed, hey-api output — do not hand-edit)
+
+supabase/
+├─ config.toml          (Supabase CLI project config)
+└─ migrations/          (the only schema history — applied with `supabase db push`)
 ```
 
 ## What to Never Do
 
+- **Database:** Never change the schema from the Supabase dashboard, `execute_sql`/`apply_migration`, or `drizzle-kit` — every change is a file in `supabase/migrations/` (the only schema history), tested with `supabase db reset --local` before `supabase db push`.
 - **Auth:** Never add signup/login/logout/forgot-password endpoints to `apps/api` — that logic lives only in Supabase, called from `apps/web/src/supabase.ts` / `LoginForm.tsx` via `supabase-js`.
 - **Auth:** Never verify JWTs against the HS256 legacy secret — `apps/api/src/common/auth/supabase-jwt.guard.ts` must keep `ALGORITHMS = ['ES256']` and derive JWKS from `SUPABASE_URL`/`SUPABASE_JWKS_URL`.
 - **Database:** Never query Postgres from `apps/web` — there is no Drizzle/`DATABASE_URL` dependency in the web app; all data reads/writes go through NestJS.

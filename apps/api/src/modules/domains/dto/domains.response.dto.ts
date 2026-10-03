@@ -27,13 +27,6 @@ export class DomainAgreementDto {
 }
 
 export class DomainQuoteResponseDto {
-  /** Single-use token that locks the price for 10 minutes. */
-  @ApiProperty()
-  quoteToken!: string;
-
-  @ApiProperty()
-  expiresAt!: string;
-
   @ApiProperty()
   domain!: string;
 
@@ -71,9 +64,9 @@ export class RelaunchDomainResponseDto {
   domain!: string | null;
 }
 
-export class CnameInstructionDto {
-  @ApiProperty({ enum: ['CNAME'] })
-  type!: 'CNAME';
+export class DnsInstructionDto {
+  @ApiProperty({ enum: ['A', 'CNAME'] })
+  type!: 'A' | 'CNAME';
 
   /** '@' for the apex, 'www' for the subdomain. */
   @ApiProperty()
@@ -91,8 +84,8 @@ export class ConnectDomainResponseDto {
   jobId!: string;
 
   /** DNS records the tenant must create manually at their registrar. */
-  @ApiProperty({ type: [CnameInstructionDto] })
-  dnsInstructions!: CnameInstructionDto[];
+  @ApiProperty({ type: [DnsInstructionDto] })
+  dnsInstructions!: DnsInstructionDto[];
 }
 
 export const DOMAIN_JOB_STATUSES = [
@@ -136,7 +129,7 @@ export const DNS_STATUSES = [
 
 export type DnsStatus = (typeof DNS_STATUSES)[number];
 
-export const DOMAIN_SOURCES = ['godaddy_managed', 'user_provided'] as const;
+export const DOMAIN_SOURCES = ['lattiz_managed', 'user_provided'] as const;
 
 export type DomainSourceValue = (typeof DOMAIN_SOURCES)[number];
 

@@ -18,10 +18,9 @@ export function AgreementCheckbox({ agreement, checked, onToggle }: Props) {
         onCheckedChange={() => onToggle(agreement.agreementType)}
       />
       <Label htmlFor={id} className="text-sm leading-snug font-normal">
-        Acepto {agreement.title}
-        {agreement.url && (
-          <>
-            {' '}
+        <span>
+          Acepto{' '}
+          {agreement.url ? (
             <a
               href={agreement.url}
               target="_blank"
@@ -29,10 +28,12 @@ export function AgreementCheckbox({ agreement, checked, onToggle }: Props) {
               className="text-primary underline underline-offset-2"
               onClick={(e) => e.stopPropagation()}
             >
-              (leer términos)
+              {agreement.title}
             </a>
-          </>
-        )}
+          ) : (
+            agreement.title
+          )}
+        </span>
       </Label>
     </div>
   );

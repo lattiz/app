@@ -53,7 +53,7 @@ export function PropagatingStep() {
             nativeButton={false}
             render={
               <a
-                href={`https://dnschecker.org/#CNAME/${domain.domain}`}
+                href={`https://dnschecker.org/#A/${domain.domain}`}
                 target="_blank"
                 rel="noreferrer"
               />

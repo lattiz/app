@@ -111,13 +111,21 @@ Abre `http://localhost:5173` — deberías ver el JSON de `/health` en pantalla.
 | `pnpm typecheck`    | `tsc --noEmit` en todos los paquetes                             |
 | `pnpm test`         | Tests (pendientes de implementar)                                |
 
-### Base de datos (correr desde `apps/api/`)
+### Base de datos
 
-| Comando            | Qué hace                                                                  |
-| ------------------ | ------------------------------------------------------------------------- |
-| `pnpm db:generate` | Genera un nuevo archivo de migración SQL a partir de cambios en el schema |
-| `pnpm db:migrate`  | Aplica las migraciones pendientes en la base de datos                     |
-| `pnpm db:studio`   | Abre Drizzle Studio (UI para explorar la DB en el navegador)              |
+El schema vive en `supabase/migrations/` (Supabase CLI) y es el único historial: cualquier proyecto de Supabase nuevo se reconstruye con esas migraciones. Requiere `brew install supabase/tap/supabase` y Docker Desktop para la base local.
+
+| Comando (desde la raíz)                  | Qué hace                                                                  |
+| ---------------------------------------- | ------------------------------------------------------------------------- |
+| `supabase link --project-ref <ref>`      | Vincula el repo con un proyecto de Supabase (una vez por máquina)         |
+| `supabase start`                         | Levanta Supabase local con todas las migraciones aplicadas                |
+| `supabase migration new <nombre>`        | Crea un archivo de migración vacío con el timestamp correcto              |
+| `supabase db reset --local`              | Reconstruye la base local desde cero para probar migraciones nuevas       |
+| `supabase db push`                       | Aplica las migraciones pendientes al proyecto vinculado                   |
+| `supabase db diff --linked`              | Detecta cambios hechos en el remoto fuera de migraciones                  |
+| `pnpm --filter @lattiz/api db:studio`    | Abre Drizzle Studio (solo lectura/exploración, no genera migraciones)     |
+
+Nunca cambies el schema desde el dashboard de Supabase: crea una migración, pruébala con `supabase db reset --local` y aplícala con `supabase db push`.
 
 ## Regenerar el cliente tipado
 

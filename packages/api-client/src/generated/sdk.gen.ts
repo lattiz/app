@@ -95,7 +95,7 @@ export const domainsControllerSearch = <ThrowOnError extends boolean = false>(op
 });
 
 /**
- * Get a locked registration quote (protected)
+ * Get a registration quote (protected)
  */
 export const domainsControllerGetQuote = <ThrowOnError extends boolean = false>(options: Options<DomainsControllerGetQuoteData, ThrowOnError>): RequestResult<DomainsControllerGetQuoteResponses, unknown, ThrowOnError> => (options.client ?? client).post<DomainsControllerGetQuoteResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],

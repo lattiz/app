@@ -6,7 +6,7 @@ import {
 import { toast } from 'sonner';
 import { useDomainWizardStore } from '../store/domain-wizard.store';
 
-/** POST /domains/connect — maps the tenant-owned domain in Vercel and returns the CNAMEs to create. */
+/** POST /domains/connect — maps the tenant-owned domain in Vercel and returns the DNS records to create. */
 export function useDomainConnect() {
   const queryClient = useQueryClient();
   return useMutation({

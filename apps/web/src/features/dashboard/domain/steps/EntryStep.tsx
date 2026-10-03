@@ -12,9 +12,9 @@ export function EntryStep() {
   const setStep = useDomainWizardStore((s) => s.setStep);
   const setDomainSource = useDomainWizardStore((s) => s.setDomainSource);
 
-  const choose = (source: 'godaddy_managed' | 'user_provided') => {
+  const choose = (source: 'lattiz_managed' | 'user_provided') => {
     setDomainSource(source);
-    setStep(source === 'godaddy_managed' ? 'search' : 'connect-form');
+    setStep(source === 'lattiz_managed' ? 'search' : 'connect-form');
   };
 
   return (
@@ -46,7 +46,7 @@ export function EntryStep() {
               Incluido en tu plan
             </p>
             <div className="mt-auto">
-              <Button onClick={() => choose('godaddy_managed')}>
+              <Button onClick={() => choose('lattiz_managed')}>
                 Buscar dominio
                 <ArrowRightIcon />
               </Button>
@@ -63,8 +63,8 @@ export function EntryStep() {
           </CardHeader>
           <CardContent className="flex flex-1 flex-col gap-4">
             <p className="text-sm text-muted-foreground">
-              Usa un dominio que ya tienes en GoDaddy, Namecheap u otro
-              servicio.
+              Usa un dominio que ya tienes con cualquier proveedor de
+              dominios.
             </p>
             <p className="text-sm text-muted-foreground">
               Tú eres responsable de la renovación anual.

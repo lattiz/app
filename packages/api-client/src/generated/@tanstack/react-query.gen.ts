@@ -180,7 +180,7 @@ export const domainsControllerSearchOptions = (options: Options<DomainsControlle
 });
 
 /**
- * Get a locked registration quote (protected)
+ * Get a registration quote (protected)
  */
 export const domainsControllerGetQuoteMutation = (options?: Partial<Options<DomainsControllerGetQuoteData>>): UseMutationOptions<DomainsControllerGetQuoteResponse, DefaultError, Options<DomainsControllerGetQuoteData>> => {
     const mutationOptions: UseMutationOptions<DomainsControllerGetQuoteResponse, DefaultError, Options<DomainsControllerGetQuoteData>> = {

@@ -133,11 +133,6 @@ export type DomainAgreementDto = {
 };
 
 export type DomainQuoteResponseDto = {
-    /**
-     * Single-use token that locks the price for 10 minutes.
-     */
-    quoteToken: string;
-    expiresAt: string;
     domain: string;
     available: boolean;
     priceUsdCents: number;
@@ -153,10 +148,6 @@ export type PurchaseDomainDto = {
      */
     domain: string;
     /**
-     * Single-use quote token from POST /domains/quote (10-minute TTL).
-     */
-    quoteToken: string;
-    /**
      * Agreement types the user accepted — must match the quote's requiredAgreements.
      */
     agreementTypes: Array<string>;
@@ -165,7 +156,7 @@ export type PurchaseDomainDto = {
      */
     agreedAt: string;
     /**
-     * Locked price from the quote, in USD cents.
+     * Price the user saw in the quote, in USD cents; the purchase is rejected if the current price is higher.
      */
     priceUsdCents: number;
 };
@@ -184,8 +175,8 @@ export type ConnectDomainDto = {
     domain: string;
 };
 
-export type CnameInstructionDto = {
-    type: 'CNAME';
+export type DnsInstructionDto = {
+    type: 'A' | 'CNAME';
     /**
      * '@' for the apex, 'www' for the subdomain.
      */
@@ -199,7 +190,7 @@ export type ConnectDomainResponseDto = {
     /**
      * DNS records the tenant must create manually at their registrar.
      */
-    dnsInstructions: Array<CnameInstructionDto>;
+    dnsInstructions: Array<DnsInstructionDto>;
 };
 
 export type RelaunchDomainResponseDto = {
@@ -221,7 +212,7 @@ export type DomainJobStatusDto = {
 
 export type DomainStatusResponseDto = {
     domain: string;
-    source: 'godaddy_managed' | 'user_provided';
+    source: 'lattiz_managed' | 'user_provided';
     dnsStatus: 'pending' | 'configuring' | 'propagating' | 'active' | 'error';
     vercelMapped: boolean;
     sslActive: boolean;
@@ -389,7 +380,7 @@ export type TemplateListItemDto = {
 
 export type TenantDomainDto = {
     domain: string;
-    source: 'godaddy_managed' | 'user_provided';
+    source: 'lattiz_managed' | 'user_provided';
     dnsStatus: 'pending' | 'configuring' | 'propagating' | 'active' | 'error';
     vercelMapped: boolean;
     sslActive: boolean;

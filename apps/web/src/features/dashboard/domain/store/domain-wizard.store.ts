@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import type {
-  CnameInstructionDto,
+  DnsInstructionDto,
   DomainQuoteResponseDto,
 } from '@lattiz/api-client';
 
@@ -15,7 +15,7 @@ export type WizardStep =
   | 'active'
   | 'suspended';
 
-export type DomainSource = 'godaddy_managed' | 'user_provided';
+export type DomainSource = 'lattiz_managed' | 'user_provided';
 
 interface DomainWizardState {
   step: WizardStep;
@@ -27,7 +27,9 @@ interface DomainWizardState {
   /** ISO timestamp of the user's real "Acepto" click — sent as legal consent. */
   agreedAt: string | null;
   domainSource: DomainSource | null;
-  dnsInstructions: CnameInstructionDto[] | null;
+  dnsInstructions: DnsInstructionDto[] | null;
+  /** Set when the server rejected a purchase because the price rose since the quote. */
+  changedPriceUsdCents: number | null;
 
   setStep: (step: WizardStep) => void;
   setSearchQuery: (q: string) => void;
@@ -36,7 +38,8 @@ interface DomainWizardState {
   setJobId: (jobId: string) => void;
   toggleAgreement: (agreementType: string) => void;
   setDomainSource: (source: DomainSource) => void;
-  setDnsInstructions: (instructions: CnameInstructionDto[]) => void;
+  setDnsInstructions: (instructions: DnsInstructionDto[]) => void;
+  setChangedPrice: (priceUsdCents: number) => void;
   backToSearch: () => void;
   reset: () => void;
 }
@@ -51,6 +54,7 @@ const initialState = {
   agreedAt: null,
   domainSource: null as DomainSource | null,
   dnsInstructions: null,
+  changedPriceUsdCents: null,
 };
 
 export const useDomainWizardStore = create<DomainWizardState>((set) => ({
@@ -58,10 +62,16 @@ export const useDomainWizardStore = create<DomainWizardState>((set) => ({
   setStep: (step) => set({ step }),
   setSearchQuery: (searchQuery) => set({ searchQuery }),
   selectDomain: (selectedDomain) => set({ selectedDomain }),
-  setQuote: (quote) => set({ quote, agreementsAccepted: [], agreedAt: null }),
+  setQuote: (quote) => set({
+      quote,
+      agreementsAccepted: [],
+      agreedAt: null,
+      changedPriceUsdCents: null,
+    }),
   setJobId: (jobId) => set({ jobId }),
   setDomainSource: (domainSource) => set({ domainSource }),
   setDnsInstructions: (dnsInstructions) => set({ dnsInstructions }),
+  setChangedPrice: (changedPriceUsdCents) => set({ changedPriceUsdCents }),
   toggleAgreement: (agreementType) =>
     set((s) => {
       const accepted = s.agreementsAccepted.includes(agreementType)
@@ -76,6 +86,7 @@ export const useDomainWizardStore = create<DomainWizardState>((set) => ({
       quote: null,
       agreementsAccepted: [],
       agreedAt: null,
+      changedPriceUsdCents: null,
     }),
   reset: () => set(initialState),
 }));

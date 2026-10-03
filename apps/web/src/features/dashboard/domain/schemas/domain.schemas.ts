@@ -23,8 +23,7 @@ export const ConnectDomainSchema = z.object({
 
 export const DomainPurchaseSchema = z.object({
   domain: z.string().includes('.'),
-  quoteToken: z.string().min(1),
-  agreementTypes: z.array(z.string()).min(1),
+  agreementTypes: z.tuple([z.literal('LATTIZ_TERMS')]),
   agreedAt: z.iso.datetime(),
   priceUsdCents: z.number().int().positive(),
 });

@@ -24,8 +24,7 @@ export function DnsInstructionsStep() {
           Configura estos registros DNS en tu proveedor
         </h1>
         <p className="text-sm text-muted-foreground">
-          Agrégalos en el panel DNS de tu registrador (GoDaddy, Namecheap,
-          Cloudflare, Google Domains…).
+          Agrégalos en el panel DNS de tu proveedor de dominio.
         </p>
       </div>
 
@@ -43,7 +42,7 @@ export function DnsInstructionsStep() {
             </thead>
             <tbody>
               {dnsInstructions.map((record) => (
-                <tr key={record.name} className="border-b last:border-0">
+                <tr key={`${record.type}-${record.name}`} className="border-b last:border-0">
                   <td className="py-3 pr-4 font-medium">{record.type}</td>
                   <td className="py-3 pr-4 font-mono">{record.name}</td>
                   <td className="py-3 pr-4 font-mono">{record.value}</td>
@@ -52,7 +51,7 @@ export function DnsInstructionsStep() {
                     <Button
                       variant="outline"
                       size="icon-sm"
-                      aria-label={`Copiar valor del registro ${record.name}`}
+                      aria-label={`Copiar valor del registro ${record.type} ${record.name}`}
                       onClick={() => copyValue(record.value)}
                     >
                       <CopyIcon />
@@ -69,10 +68,10 @@ export function DnsInstructionsStep() {
         <TriangleAlertIcon className="mt-0.5 size-5 shrink-0 text-yellow-700 dark:text-yellow-400" />
         <div className="space-y-1 text-muted-foreground">
           <p>
-            Si tu proveedor no permite CNAME en «@», usa un registro ALIAS o
-            ANAME con el mismo valor.
+            Elimina cualquier otro registro A o CNAME existente para «@» y
+            «www» para que no entre en conflicto con estos.
           </p>
-          <p>En Cloudflare: desactiva el proxy (nube gris).</p>
+          <p>Si usas Cloudflare, desactiva el proxy (nube gris).</p>
         </div>
       </div>
 

@@ -32,11 +32,6 @@ export default tseslint.config(
     files: ['apps/api/**/*.ts', 'packages/**/*.ts'],
     languageOptions: { globals: { ...globals.node } },
   },
-  // Dev-only Node scripts (plain JS, e.g. the GoDaddy mock server).
-  {
-    files: ['apps/api/scripts/**/*.{js,mjs,cjs}'],
-    languageOptions: { globals: { ...globals.node } },
-  },
   // Web app runs in the browser and uses React hooks.
   {
     files: ['apps/web/**/*.{ts,tsx}'],

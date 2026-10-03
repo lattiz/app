@@ -43,8 +43,8 @@ export class TenantDomainDto {
   @ApiProperty()
   domain!: string;
 
-  @ApiProperty({ type: String, enum: ['godaddy_managed', 'user_provided'] })
-  source!: 'godaddy_managed' | 'user_provided';
+  @ApiProperty({ type: String, enum: ['lattiz_managed', 'user_provided'] })
+  source!: 'lattiz_managed' | 'user_provided';
 
   @ApiProperty({
     type: String,
