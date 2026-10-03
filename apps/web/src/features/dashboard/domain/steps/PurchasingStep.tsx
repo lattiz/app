@@ -8,6 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
 import { cn } from '@/lib/utils';
 import { useDomainJob, useDomainPurchase } from '../hooks/useDomainPurchase';
+import { jobFailureView } from '../lib/domain-errors';
 import { useDomainWizardStore } from '../store/domain-wizard.store';
 
 const PIPELINE_STEPS = [
@@ -60,7 +61,7 @@ export function PurchasingStep() {
     return 'pending';
   };
 
-  // The backend reuses the stored idempotency key, so retrying is safe.
+  // Retrying is safe: the backend finds an already-registered domain and resumes instead of buying again.
   const retryPurchase = () => {
     if (!quote || !selectedDomain || !agreedAt) return;
     notified.current = false;
@@ -75,6 +76,7 @@ export function PurchasingStep() {
   };
 
   const failed = status === 'failed';
+  const failure = jobFailureView(job.data?.errorCode);
 
   return (
     <Card className="max-w-2xl">
@@ -114,21 +116,27 @@ export function PurchasingStep() {
             <p className="font-medium text-destructive">
               La compra no se pudo completar
             </p>
-            {job.data?.errorMessage && (
-              <p className="break-words text-muted-foreground">
-                {job.data.errorMessage}
-              </p>
-            )}
+            <p className="text-muted-foreground">{failure.message}</p>
             <div>
-              <Button
-                size="sm"
-                variant="outline"
-                disabled={retry.isPending}
-                onClick={retryPurchase}
-              >
-                {retry.isPending && <Spinner />}
-                Intentar de nuevo
-              </Button>
+              {failure.next === 'search' ? (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => useDomainWizardStore.getState().backToSearch()}
+                >
+                  Elegir otro dominio
+                </Button>
+              ) : (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={retry.isPending}
+                  onClick={retryPurchase}
+                >
+                  {retry.isPending && <Spinner />}
+                  Intentar de nuevo
+                </Button>
+              )}
             </div>
           </div>
         )}

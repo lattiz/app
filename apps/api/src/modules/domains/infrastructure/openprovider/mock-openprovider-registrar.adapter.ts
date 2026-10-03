@@ -16,8 +16,11 @@ export class MockOpenproviderRegistrarAdapter extends OpenproviderRegistrarAdapt
   override registerDomain(params: {
     domain: string;
     periodYears: number;
+    nameservers: string[];
   }): Promise<RegisteredDomain> {
-    this.logger.warn(`[MOCK] Simulating domain registration: ${params.domain}`);
+    this.logger.warn(
+      `[MOCK] Simulating domain registration: ${params.domain} (ns: ${params.nameservers.join(', ')})`,
+    );
     return Promise.resolve({
       id: `${MOCK_ID_PREFIX}${randomUUID()}`,
       status: 'active',
@@ -32,6 +35,19 @@ export class MockOpenproviderRegistrarAdapter extends OpenproviderRegistrarAdapt
       return super.getRegistrationStatus(registrarDomainId);
     }
     return Promise.resolve({ status: 'active', renewalDate: yearsFromNow(1) });
+  }
+
+  override setNameservers(
+    registrarDomainId: string,
+    nameservers: string[],
+  ): Promise<void> {
+    if (!registrarDomainId.startsWith(MOCK_ID_PREFIX)) {
+      return super.setNameservers(registrarDomainId, nameservers);
+    }
+    this.logger.warn(
+      `[MOCK] Simulating nameserver update: ${registrarDomainId} (ns: ${nameservers.join(', ')})`,
+    );
+    return Promise.resolve();
   }
 }
 

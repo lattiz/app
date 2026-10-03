@@ -206,7 +206,10 @@ export type DomainJobStatusDto = {
     domain: string;
     status: 'pending' | 'purchasing' | 'configuring_dns' | 'registering_vercel' | 'completed' | 'failed';
     stepsCompleted: Array<string>;
-    errorMessage: string | null;
+    /**
+     * Set when status is 'failed'.
+     */
+    errorCode: 'DNS_PROVIDER_UNAVAILABLE' | 'DNS_ZONE_REJECTED' | 'SERVICE_CONFIGURATION_ERROR' | 'REGISTRAR_UNAVAILABLE' | 'REGISTRATION_REJECTED' | 'DOMAIN_NO_LONGER_AVAILABLE' | 'REGISTRATION_PENDING' | 'DNS_SETUP_FAILED' | 'VERCEL_SETUP_FAILED' | 'PURCHASE_INTERRUPTED' | 'UNEXPECTED_ERROR';
     errorStep: string | null;
 };
 

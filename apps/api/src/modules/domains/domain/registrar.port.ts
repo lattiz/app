@@ -32,13 +32,17 @@ export interface RegistrarPort {
   /** The domain as registered in Lattiz's registrar account, or null if it is not there. */
   findDomain(domain: string): Promise<RegisteredDomain | null>;
 
-  /** Charges real money (unless in mock mode). */
+  /** Charges real money (unless in mock mode). The domain is delegated to `nameservers`. */
   registerDomain(params: {
     domain: string;
     periodYears: number;
+    nameservers: string[];
   }): Promise<RegisteredDomain>;
 
   getRegistrationStatus(registrarDomainId: string): Promise<RegistrationState>;
+
+  /** Re-delegates an already-registered domain, e.g. when its DNS zone had to be recreated. */
+  setNameservers(registrarDomainId: string, nameservers: string[]): Promise<void>;
 }
 
 export const REGISTRAR_PORT = Symbol('REGISTRAR_PORT');

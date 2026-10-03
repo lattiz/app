@@ -41,7 +41,6 @@ interface ListedDomain extends DomainData {
 const LOOKUP_TIMEOUT_MS = 10_000;
 // Realtime registrations can take a while at the registry before the API answers.
 const REGISTER_TIMEOUT_MS = 60_000;
-const OPENPROVIDER_NS_GROUP = 'dns-openprovider';
 
 export class OpenproviderRegistrarAdapter implements RegistrarPort {
   protected readonly logger = new Logger(OpenproviderRegistrarAdapter.name);
@@ -138,11 +137,21 @@ export class OpenproviderRegistrarAdapter implements RegistrarPort {
   async registerDomain(params: {
     domain: string;
     periodYears: number;
+    nameservers: string[];
   }): Promise<RegisteredDomain> {
     if (!this.customerHandle) {
       throw new RegistrarApiException(
         'registration',
         'OPENPROVIDER_CUSTOMER_HANDLE is not configured',
+        undefined,
+        undefined,
+        true,
+      );
+    }
+    if (params.nameservers.length === 0) {
+      throw new RegistrarApiException(
+        'registration',
+        'at least one nameserver is required',
       );
     }
     const { name, extension } = splitDomain(params.domain);
@@ -158,11 +167,28 @@ export class OpenproviderRegistrarAdapter implements RegistrarPort {
         // Lattiz drives renewals itself; never let the registrar bill on its own.
         autorenew: 'off',
         is_private_whois_enabled: false,
-        ns_group: OPENPROVIDER_NS_GROUP,
+        name_servers: toNameServers(params.nameservers),
       },
       timeoutMs: REGISTER_TIMEOUT_MS,
     });
     return toRegisteredDomain(data);
+  }
+
+  async setNameservers(
+    registrarDomainId: string,
+    nameservers: string[],
+  ): Promise<void> {
+    if (nameservers.length === 0) {
+      throw new RegistrarApiException(
+        'nameserver update',
+        'at least one nameserver is required',
+      );
+    }
+    await this.client.put(`domains/${encodeURIComponent(registrarDomainId)}`, {
+      operation: 'nameserver update',
+      body: { name_servers: toNameServers(nameservers) },
+      timeoutMs: LOOKUP_TIMEOUT_MS,
+    });
   }
 
   async getRegistrationStatus(
@@ -177,6 +203,12 @@ export class OpenproviderRegistrarAdapter implements RegistrarPort {
       renewalDate: parseOpenproviderDate(data.renewal_date),
     };
   }
+}
+
+function toNameServers(
+  nameservers: string[],
+): Array<{ name: string; seq_nr: number }> {
+  return nameservers.map((name, index) => ({ name, seq_nr: index + 1 }));
 }
 
 function toRegisteredDomain(data: DomainData): RegisteredDomain {

@@ -1655,9 +1655,23 @@
               "type": "string"
             }
           },
-          "errorMessage": {
-            "type": "string",
-            "nullable": true
+          "errorCode": {
+            "nullable": true,
+            "description": "Set when status is 'failed'.",
+            "enum": [
+              "DNS_PROVIDER_UNAVAILABLE",
+              "DNS_ZONE_REJECTED",
+              "SERVICE_CONFIGURATION_ERROR",
+              "REGISTRAR_UNAVAILABLE",
+              "REGISTRATION_REJECTED",
+              "DOMAIN_NO_LONGER_AVAILABLE",
+              "REGISTRATION_PENDING",
+              "DNS_SETUP_FAILED",
+              "VERCEL_SETUP_FAILED",
+              "PURCHASE_INTERRUPTED",
+              "UNEXPECTED_ERROR"
+            ],
+            "type": "string"
           },
           "errorStep": {
             "type": "string",
@@ -1669,7 +1683,7 @@
           "domain",
           "status",
           "stepsCompleted",
-          "errorMessage",
+          "errorCode",
           "errorStep"
         ]
       },

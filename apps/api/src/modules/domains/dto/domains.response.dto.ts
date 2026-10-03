@@ -99,6 +99,26 @@ export const DOMAIN_JOB_STATUSES = [
 
 export type DomainJobStatus = (typeof DOMAIN_JOB_STATUSES)[number];
 
+/**
+ * Stable, user-safe reason a job failed; the web maps each code to a message.
+ * Technical detail (provider messages, ids) goes to the API logs only.
+ */
+export const DOMAIN_JOB_ERROR_CODES = [
+  'DNS_PROVIDER_UNAVAILABLE',
+  'DNS_ZONE_REJECTED',
+  'SERVICE_CONFIGURATION_ERROR',
+  'REGISTRAR_UNAVAILABLE',
+  'REGISTRATION_REJECTED',
+  'DOMAIN_NO_LONGER_AVAILABLE',
+  'REGISTRATION_PENDING',
+  'DNS_SETUP_FAILED',
+  'VERCEL_SETUP_FAILED',
+  'PURCHASE_INTERRUPTED',
+  'UNEXPECTED_ERROR',
+] as const;
+
+export type DomainJobErrorCode = (typeof DOMAIN_JOB_ERROR_CODES)[number];
+
 export class DomainJobStatusDto {
   @ApiProperty()
   jobId!: string;
@@ -112,8 +132,9 @@ export class DomainJobStatusDto {
   @ApiProperty({ type: [String] })
   stepsCompleted!: string[];
 
-  @ApiProperty({ type: String, nullable: true })
-  errorMessage!: string | null;
+  /** Set when status is 'failed'. */
+  @ApiProperty({ enum: DOMAIN_JOB_ERROR_CODES, nullable: true })
+  errorCode!: DomainJobErrorCode | null;
 
   @ApiProperty({ type: String, nullable: true })
   errorStep!: string | null;

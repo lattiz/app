@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '../../database/database.module';
+import { DomainsModule } from '../domains/domains.module';
 import { DeleteAccountUseCase } from './application/delete-account.use-case';
 import { GetMeUseCase } from './application/get-me.use-case';
 import { AUTH_ADMIN_PORT } from './domain/auth-admin.port';
@@ -9,7 +10,7 @@ import { SupabaseAuthAdminAdapter } from './infrastructure/supabase-auth-admin.a
 import { MeController } from './interface/me.controller';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, DomainsModule],
   controllers: [MeController],
   providers: [
     GetMeUseCase,

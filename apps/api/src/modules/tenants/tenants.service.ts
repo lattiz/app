@@ -156,7 +156,7 @@ export class TenantsService {
       sql`SELECT domain, source, dns_status, vercel_mapped, ssl_active, is_mock, expires_at,
                  suspended_at
           FROM public.domains
-          WHERE tenant_id = ${tenantId}::uuid
+          WHERE tenant_id = ${tenantId}::uuid AND released_at IS NULL
           LIMIT 1`,
     );
     const row = rows[0];

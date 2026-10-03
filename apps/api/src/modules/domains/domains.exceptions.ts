@@ -1,5 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 import { DomainException } from '../../common/exceptions/domain.exception';
+import type { DomainJobErrorCode } from './dto/domains.response.dto';
 
 /** No tenant row exists yet for the authenticated user. */
 export class DomainsTenantNotFoundException extends DomainException {
@@ -37,14 +38,55 @@ export class RegistrarApiException extends DomainException {
   readonly status = HttpStatus.BAD_GATEWAY;
 
   constructor(
-    operation: string,
+    readonly operation: string,
     detail: string,
     readonly httpStatus?: number,
     readonly registrarCode?: number,
+    /** Our credentials/settings are wrong or missing, not the user's request. */
+    readonly configError = false,
   ) {
     super(
       `Registrar ${operation} failed${httpStatus ? ` with status ${httpStatus}` : ''}: ${detail}.`,
     );
+  }
+}
+
+/** A DNS provider (Cloudflare) API call failed (zone lookup/creation/deletion, records). */
+export class DnsProviderApiException extends DomainException {
+  readonly code = 'DNS_PROVIDER_API_ERROR';
+  readonly status = HttpStatus.BAD_GATEWAY;
+
+  constructor(
+    operation: string,
+    detail: string,
+    readonly httpStatus?: number,
+    readonly providerCode?: number,
+  ) {
+    super(
+      `DNS provider ${operation} failed${httpStatus ? ` with status ${httpStatus}` : ''}: ${detail}.`,
+    );
+  }
+}
+
+/** A purchase pipeline step failed; `code` is the user-safe reason persisted on the job. */
+export class PurchasePipelineException extends DomainException {
+  readonly status = HttpStatus.BAD_GATEWAY;
+
+  constructor(
+    readonly code: DomainJobErrorCode,
+    detail: string,
+  ) {
+    super(detail);
+  }
+}
+
+/** Another purchase for this tenant is already running (for a different domain). */
+export class DomainPurchaseInProgressException extends DomainException {
+  readonly code = 'DOMAIN_PURCHASE_IN_PROGRESS';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor() {
+    super('Another domain purchase is already in progress for this tenant.');
   }
 }
 

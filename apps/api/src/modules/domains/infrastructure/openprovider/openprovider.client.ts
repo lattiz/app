@@ -59,8 +59,12 @@ export class OpenproviderClient {
     return this.request<T>('PUT', path, opts);
   }
 
+  delete<T>(path: string, opts: OpenproviderRequest): Promise<T> {
+    return this.request<T>('DELETE', path, opts);
+  }
+
   private async request<T>(
-    method: 'GET' | 'POST' | 'PUT',
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE',
     path: string,
     opts: OpenproviderRequest,
   ): Promise<T> {
@@ -95,6 +99,9 @@ export class OpenproviderClient {
       throw new RegistrarApiException(
         'login',
         'OPENPROVIDER_USERNAME / OPENPROVIDER_PASSWORD are not configured',
+        undefined,
+        undefined,
+        true,
       );
     }
     const data = await this.send<{ token?: string }>(

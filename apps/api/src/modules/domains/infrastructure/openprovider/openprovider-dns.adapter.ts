@@ -1,6 +1,7 @@
 import type {
   DnsProviderPort,
   DnsRecord,
+  DnsZone,
 } from '../../domain/dns-provider.port';
 import { RegistrarApiException } from '../../domains.exceptions';
 import { OpenproviderClient } from './openprovider.client';
@@ -22,10 +23,38 @@ interface Zone {
 // Only these types can conflict with the web records Lattiz manages.
 const WEB_RECORD_TYPES = new Set(['A', 'AAAA', 'CNAME']);
 
+// Openprovider's default DNS cluster (the `dns-openprovider` ns group the registrar adapter used to send).
+export const OPENPROVIDER_NAMESERVERS = [
+  'ns1.openprovider.nl',
+  'ns2.openprovider.be',
+  'ns3.openprovider.eu',
+];
+
 export class OpenproviderDnsAdapter implements DnsProviderPort {
+  readonly provider = 'openprovider';
+
   constructor(private readonly client: OpenproviderClient) {}
 
-  async upsertZone(domain: string, records: DnsRecord[]): Promise<void> {
+  // Zones are addressed by domain name; the zone itself is created with its records in upsertRecords.
+  ensureZone(domain: string): Promise<DnsZone> {
+    return Promise.resolve({
+      zoneId: domain,
+      nameservers: [...OPENPROVIDER_NAMESERVERS],
+    });
+  }
+
+  async deleteZone(domain: string): Promise<void> {
+    if (!(await this.findZone(domain))) return;
+    await this.client.delete(`dns/zones/${encodeURIComponent(domain)}`, {
+      operation: 'DNS zone deletion',
+    });
+  }
+
+  requestActivationCheck(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  async upsertRecords(domain: string, records: DnsRecord[]): Promise<void> {
     const { name, extension } = splitDomain(domain);
     const zone = await this.findZone(domain);
 
