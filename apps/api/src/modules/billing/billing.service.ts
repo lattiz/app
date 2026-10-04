@@ -5,6 +5,7 @@ import Stripe from 'stripe';
 import { computeIsEntitled } from '../../common/billing/entitlement';
 import { type Database, DATABASE } from '../../database/database.module';
 import { DomainsService } from '../domains/domains.service';
+import { EmailOutboxService } from '../email/application/email-outbox.service';
 import {
   type BillingPeriod,
   type BillingPlan,
@@ -73,6 +74,7 @@ export class BillingService {
     @Inject(STRIPE_CLIENT) private readonly stripe: Stripe,
     @Inject(DATABASE) private readonly db: Database,
     private readonly domains: DomainsService,
+    private readonly emails: EmailOutboxService,
   ) {}
 
   // ── Checkout ──────────────────────────────────────────────────────────────
@@ -244,6 +246,16 @@ export class BillingService {
         : session.subscription.id,
     );
     await this.onSubscriptionUpserted(subscription);
+
+    const tenant = await this.query<{ name: string }>(
+      sql`SELECT name FROM public.tenants WHERE id = ${tenantId}::uuid LIMIT 1`,
+    );
+    await this.emails.enqueueForTenant(
+      'welcome',
+      tenantId,
+      { tenantName: tenant[0]?.name },
+      `welcome:${tenantId}`,
+    );
   }
 
   private async onSubscriptionUpserted(
@@ -322,6 +334,13 @@ export class BillingService {
       const result = await this.domains.relaunchDomain(tenantId);
       if (result.relaunched) {
         this.logger.log(`[billing] Auto-relaunched domain for tenant ${tenantId}`);
+        const day = new Date().toISOString().slice(0, 10);
+        await this.emails.enqueueForTenant(
+          'site_reactivated',
+          tenantId,
+          { domain: result.domain ?? undefined },
+          `site_reactivated:${tenantId}:${day}`,
+        );
       }
     } catch (err) {
       this.logger.warn(
@@ -343,6 +362,12 @@ export class BillingService {
       subscription.customer as string,
     );
     await this.domains.suspendDomainForTenant(tenantId);
+    await this.emails.enqueueForTenant(
+      'site_suspended',
+      tenantId,
+      {},
+      `site_suspended:${subscription.id}`,
+    );
     this.logger.log(`Tenant ${tenantId} subscription canceled + offboarded`);
   }
 
@@ -398,6 +423,22 @@ export class BillingService {
     this.logger.warn(
       `[billing] Payment attempt ${attempts}/${MAX_PAYMENT_ATTEMPTS} failed for subscription ${subscriptionId}`,
     );
+
+    const tenantRows = await this.query<{ tenant_id: string }>(
+      sql`SELECT tenant_id FROM public.subscriptions
+          WHERE stripe_subscription_id = ${subscriptionId}
+          LIMIT 1`,
+    );
+    const tenantId = tenantRows[0]?.tenant_id;
+    if (tenantId && attempts > 0) {
+      await this.emails.enqueueForTenant(
+        'payment_failed',
+        tenantId,
+        { attempt: attempts, maxAttempts: MAX_PAYMENT_ATTEMPTS },
+        `payment_failed:${invoice.id}:${attempts}`,
+      );
+    }
+
     if (attempts < MAX_PAYMENT_ATTEMPTS) return;
 
     // Cancel on our own cap rather than waiting out Stripe's dunning schedule,
@@ -436,6 +477,12 @@ export class BillingService {
 
         if (TERMINAL_STATUSES.includes(fresh.status)) {
           await this.domains.suspendDomainForTenant(row.tenant_id);
+          await this.emails.enqueueForTenant(
+            'site_suspended',
+            row.tenant_id,
+            {},
+            `site_suspended:${row.stripe_subscription_id}`,
+          );
         }
       } catch (err) {
         this.logger.error(
@@ -455,7 +502,16 @@ export class BillingService {
     );
     for (const row of entitled) {
       try {
-        await this.domains.relaunchDomain(row.tenant_id);
+        const result = await this.domains.relaunchDomain(row.tenant_id);
+        if (result.relaunched) {
+          const day = new Date().toISOString().slice(0, 10);
+          await this.emails.enqueueForTenant(
+            'site_reactivated',
+            row.tenant_id,
+            { domain: result.domain ?? undefined },
+            `site_reactivated:${row.tenant_id}:${day}`,
+          );
+        }
       } catch (err) {
         this.logger.warn(
           `[reconcile] Relaunch retry failed for ${row.tenant_id}: ${String(err)}`,

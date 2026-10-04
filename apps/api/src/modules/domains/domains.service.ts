@@ -3,6 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { sql, type SQL } from 'drizzle-orm';
 import { isUnderPreviewBase } from '../../common/preview/preview-url';
 import { type Database, DATABASE } from '../../database/database.module';
+import { EmailOutboxService } from '../email/application/email-outbox.service';
+import { isDefinitiveDomainPurchaseFailure } from '../email/domain/email-kinds';
 import {
   DNS_PROVIDER_PORT,
   type DnsProviderName,
@@ -113,6 +115,7 @@ export class DomainsService {
     @Inject(REGISTRAR_PORT) private readonly registrar: RegistrarPort,
     @Inject(DNS_PROVIDER_PORT) private readonly dns: DnsProviderPort,
     private readonly vercel: VercelDomainsService,
+    private readonly emails: EmailOutboxService,
     configService: ConfigService,
   ) {
     this.maxCostCents = parseInt(
@@ -306,6 +309,14 @@ export class DomainsService {
         // Row state first: a terminal job is the signal that nothing is still being written.
         await this.setDnsStatus(domain, 'error');
         await this.failJob(jobId, name, code);
+        if (isDefinitiveDomainPurchaseFailure(code)) {
+          await this.emails.enqueueForTenant(
+            'domain_purchase_failed',
+            tenantId,
+            { domain },
+            `domain_purchase_failed:${jobId}`,
+          );
+        }
         throw err;
       }
     };
@@ -636,6 +647,12 @@ export class DomainsService {
           sql`UPDATE public.domains
               SET dns_status = 'active', ssl_active = true
               WHERE domain = ${domain.domain}`,
+        );
+        await this.emails.enqueueForTenant(
+          'domain_ready',
+          tenantId,
+          { domain: domain.domain },
+          `domain_ready:${domain.id}`,
         );
         const fresh = await this.getDomainByTenant(tenantId);
         return fresh ? toStatusDto(fresh) : null;

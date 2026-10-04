@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DatabaseModule } from '../../database/database.module';
+import { EmailModule } from '../email/email.module';
 import {
   DNS_PROVIDER_PORT,
   DNS_ZONE_INVENTORY_PORT,
@@ -53,7 +54,7 @@ function createDnsProvider(
 }
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, EmailModule],
   controllers: [DomainsController],
   providers: [
     DomainsService,
