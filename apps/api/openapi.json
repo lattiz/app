@@ -909,6 +909,126 @@
         ]
       }
     },
+    "/tenants/me/slug": {
+      "patch": {
+        "operationId": "TenantsController_updateSlug",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSlugDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantSlugResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "SLUG_INVALID or SLUG_RESERVED."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "409": {
+            "description": "SLUG_TAKEN."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Change the tenant site address (protected)",
+        "tags": [
+          "tenants"
+        ]
+      }
+    },
+    "/tenants/me/slug/availability": {
+      "get": {
+        "operationId": "TenantsController_slugAvailability",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "query",
+            "description": "Address to check; trimmed and lowercased server-side.",
+            "schema": {
+              "example": "panaderia-lopez",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SlugAvailabilityResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Check whether a site address can be claimed (protected)",
+        "tags": [
+          "tenants"
+        ]
+      }
+    },
+    "/tenants/me/slug/suggestion": {
+      "get": {
+        "operationId": "TenantsController_slugSuggestion",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantSlugResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "409": {
+            "description": "SLUG_TAKEN: no free candidate was found."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Suggest an available site address (protected)",
+        "tags": [
+          "tenants"
+        ]
+      }
+    },
     "/tenants/{tenantId}/branding": {
       "post": {
         "operationId": "TenantsController_uploadBranding",
@@ -2230,6 +2350,14 @@
           "slug": {
             "type": "string"
           },
+          "previewUrl": {
+            "type": "string",
+            "description": "`https://{slug}.lattiz.app`; serves the published site until a custom domain is live."
+          },
+          "slugIsCustom": {
+            "type": "boolean",
+            "description": "False while the address is still the one generated at signup."
+          },
           "name": {
             "type": "string"
           },
@@ -2295,6 +2423,8 @@
         "required": [
           "tenantId",
           "slug",
+          "previewUrl",
+          "slugIsCustom",
           "name",
           "plan",
           "status",
@@ -2305,6 +2435,63 @@
           "subscription",
           "isEntitled",
           "branding"
+        ]
+      },
+      "UpdateSlugDto": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string",
+            "description": "Desired address; normalized and validated server-side so every failure carries a stable code.",
+            "example": "panaderia-lopez"
+          }
+        },
+        "required": [
+          "slug"
+        ]
+      },
+      "TenantSlugResponseDto": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "previewUrl": {
+            "type": "string",
+            "description": "Where the site is reachable before (or without) a custom domain."
+          }
+        },
+        "required": [
+          "slug",
+          "previewUrl"
+        ]
+      },
+      "SlugAvailabilityResponseDto": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string",
+            "description": "The normalized address that was checked."
+          },
+          "available": {
+            "type": "boolean",
+            "description": "True when the caller can claim it (including the address they already own)."
+          },
+          "reason": {
+            "nullable": true,
+            "description": "Why it cannot be claimed; null when available.",
+            "enum": [
+              "SLUG_INVALID",
+              "SLUG_RESERVED",
+              "SLUG_TAKEN"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "slug",
+          "available",
+          "reason"
         ]
       },
       "BrandingUploadResponseDto": {

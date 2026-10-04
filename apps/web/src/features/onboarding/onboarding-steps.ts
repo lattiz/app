@@ -53,14 +53,19 @@ export function buildOnboardingSteps(navigate: NavigateFn): Step[] {
         ),
     },
     {
-      target: '[data-tour="editor-gateway-card"]',
-      content: 'Aquí abres el editor para personalizar tu contenido.',
+      target: '[data-tour="site-address-section"]',
+      content: 'Elige la dirección gratuita donde tu sitio estará en línea.',
       before: () =>
         navigateAndWaitForTarget(
           navigate,
           '/dashboard/customization',
-          '[data-tour="editor-gateway-card"]',
+          '[data-tour="site-address-section"]',
         ),
+    },
+    {
+      target: '[data-tour="editor-gateway-card"]',
+      content: 'Aquí abres el editor para personalizar tu contenido.',
+      // Same route as the address step — no `before` navigation needed.
     },
     {
       target: '[data-tour="site-settings-section"]',

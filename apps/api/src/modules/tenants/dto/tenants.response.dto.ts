@@ -77,6 +77,14 @@ export class TenantMeResponseDto {
   @ApiProperty()
   slug!: string;
 
+  /** `https://{slug}.lattiz.app`; serves the published site until a custom domain is live. */
+  @ApiProperty()
+  previewUrl!: string;
+
+  /** False while the address is still the one generated at signup. */
+  @ApiProperty()
+  slugIsCustom!: boolean;
+
   @ApiProperty()
   name!: string;
 

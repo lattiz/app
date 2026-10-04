@@ -1,10 +1,13 @@
 import StudioEditor from '@grapesjs/studio-sdk/react';
 import '@grapesjs/studio-sdk/style';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { tenantsControllerMeOptions } from '@lattiz/api-client';
 import { Loader2Icon, ArrowLeft } from 'lucide-react';
 import { type ComponentProps, useRef, useState } from 'react';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { displayHost, liveSiteUrl } from '@/lib/site-address';
 import {
   getEditorProject,
   publishSite,
@@ -223,6 +226,9 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
     staleTime: Infinity,
   });
 
+  // Already cached by the dashboard; only read here to tell the user where the site lives.
+  const tenantMe = useQuery(tenantsControllerMeOptions());
+
   const saveMutation = useMutation({
     mutationFn: (project: GrapesJSProjectJSON) =>
       saveEditorProject(tenantId, project),
@@ -259,8 +265,20 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
         project,
         exportedHtml: htmlFile.content,
       });
+      const url = tenantMe.data ? liveSiteUrl(tenantMe.data) : null;
+      if (url) {
+        toast.success(`Tu sitio está en vivo en ${displayHost(url)}`, {
+          action: {
+            label: 'Abrir',
+            onClick: () => window.open(url, '_blank', 'noopener,noreferrer'),
+          },
+        });
+      } else {
+        toast.success('Tu sitio se publicó.');
+      }
     } catch (err) {
       console.error('[SiteEditor] Publish failed:', err);
+      toast.error('No se pudo publicar tu sitio. Inténtalo de nuevo.');
     }
   };
 

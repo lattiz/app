@@ -9,6 +9,7 @@ import { TemplateSection } from '@/components/dashboard/customization/TemplateSe
 import { SiteImagesSection } from '@/components/dashboard/customization/SiteImagesSection';
 import { NoSubscriptionGate } from '@/components/dashboard/home/NoSubscriptionGate';
 import { Button } from '@/components/ui/button';
+import { SiteAddressSection } from '@/features/dashboard/site-address/SiteAddressSection';
 import { useDashboardStore } from '@/stores/dashboard.store';
 
 export function CustomizationPage() {
@@ -78,6 +79,7 @@ export function CustomizationPage() {
           </Button>
         </div>
       )}
+      <SiteAddressSection tenant={tenant.data} />
       <EditorGatewayCard tenantId={tenant.data.tenantId} site={site} />
       <SiteImagesSection
         tenantId={tenant.data.tenantId}

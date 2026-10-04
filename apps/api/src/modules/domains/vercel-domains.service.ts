@@ -18,11 +18,14 @@ export class VercelDomainsService {
   private readonly logger = new Logger(VercelDomainsService.name);
   private readonly token: string;
   private readonly projectId: string;
+  // Optional: set when the project lives in a Vercel team rather than a personal account.
+  private readonly teamId: string;
 
   constructor(configService: ConfigService) {
     // Boots without credentials (mirrors StripeProvider); calls fail until configured.
     this.token = configService.get<string>('VERCEL_TOKEN') ?? '';
     this.projectId = configService.get<string>('VERCEL_PROJECT_ID') ?? '';
+    this.teamId = configService.get<string>('VERCEL_TEAM_ID')?.trim() ?? '';
     if (!this.token || !this.projectId) {
       this.logger.warn(
         'VERCEL_TOKEN / VERCEL_PROJECT_ID not set — domain mapping will fail until configured.',
@@ -30,9 +33,11 @@ export class VercelDomainsService {
     }
   }
 
-  async addDomain(domain: string): Promise<{ name: string; verified: boolean }> {
+  async addDomain(
+    domain: string,
+  ): Promise<{ name: string; verified: boolean }> {
     const res = await fetch(
-      `https://api.vercel.com/v10/projects/${this.projectId}/domains`,
+      this.url(`/v10/projects/${this.projectId}/domains`),
       {
         method: 'POST',
         headers: {
@@ -56,7 +61,9 @@ export class VercelDomainsService {
 
   async hasDomain(domain: string): Promise<boolean> {
     const res = await fetch(
-      `https://api.vercel.com/v9/projects/${this.projectId}/domains/${domain}`,
+      this.url(
+        `/v9/projects/${this.projectId}/domains/${encodeURIComponent(domain)}`,
+      ),
       { headers: { Authorization: `Bearer ${this.token}` } },
     );
     if (res.status === 404) return false;
@@ -65,23 +72,35 @@ export class VercelDomainsService {
   }
 
   async removeDomain(domain: string): Promise<void> {
-    await fetch(
-      `https://api.vercel.com/v10/projects/${this.projectId}/domains/${domain}`,
+    // DELETE is documented only on v9 (the add is v10).
+    const res = await fetch(
+      this.url(
+        `/v9/projects/${this.projectId}/domains/${encodeURIComponent(domain)}`,
+      ),
       {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${this.token}` },
       },
     );
+    if (!res.ok && res.status !== 404) {
+      this.logger.warn(
+        `Vercel domain removal for ${domain} returned ${res.status}`,
+      );
+    }
   }
 
   /** Where the domain's apex (A) and www (CNAME) should point, per Vercel's own recommendation. */
-  async getDnsTargets(domain: string): Promise<{ ipv4: string; cname: string }> {
+  async getDnsTargets(
+    domain: string,
+  ): Promise<{ ipv4: string; cname: string }> {
     try {
       const config = await this.getConfig(domain);
       return {
         ipv4: preferred(config.recommendedIPv4)?.value[0] ?? FALLBACK_IPV4,
         // Vercel returns the CNAME with a trailing dot (FQDN form).
-        cname: preferred(config.recommendedCNAME)?.value.replace(/\.$/, '') || FALLBACK_CNAME,
+        cname:
+          preferred(config.recommendedCNAME)?.value.replace(/\.$/, '') ||
+          FALLBACK_CNAME,
       };
     } catch (err) {
       this.logger.warn(
@@ -96,9 +115,19 @@ export class VercelDomainsService {
     return (await this.getConfig(domain)).misconfigured === false;
   }
 
+  /** Every Vercel call goes through here so `teamId` is never forgotten. */
+  private url(path: string, params: Record<string, string> = {}): string {
+    const query = new URLSearchParams(params);
+    if (this.teamId) query.set('teamId', this.teamId);
+    const qs = query.toString();
+    return `https://api.vercel.com${path}${qs ? `?${qs}` : ''}`;
+  }
+
   private async getConfig(domain: string): Promise<VercelDomainConfig> {
     const res = await fetch(
-      `https://api.vercel.com/v6/domains/${encodeURIComponent(domain)}/config?projectIdOrName=${encodeURIComponent(this.projectId)}`,
+      this.url(`/v6/domains/${encodeURIComponent(domain)}/config`, {
+        projectIdOrName: this.projectId,
+      }),
       {
         headers: { Authorization: `Bearer ${this.token}` },
         signal: AbortSignal.timeout(CONFIG_TIMEOUT_MS),
@@ -110,6 +139,8 @@ export class VercelDomainsService {
 }
 
 /** rank=1 is the preferred recommendation. */
-function preferred<T extends { rank: number }>(items: T[] | undefined): T | undefined {
+function preferred<T extends { rank: number }>(
+  items: T[] | undefined,
+): T | undefined {
   return items ? [...items].sort((a, b) => a.rank - b.rank)[0] : undefined;
 }

@@ -1,37 +1,21 @@
 import { useEffect, useState } from 'react';
 import { GlobeIcon } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { displayHost } from '@/lib/site-address';
 import type { SiteStatus } from '@/types/dashboard.types';
 
 interface SitePreviewCardProps {
   site: SiteStatus;
 }
 
-function buildPreviewUrl(domain: string | null): string | null {
-  if (!domain) return null;
-
-  const trimmedDomain = domain.trim();
-  if (!trimmedDomain) return null;
-
-  if (/^https?:\/\//i.test(trimmedDomain)) {
-    return trimmedDomain.replace(/\/+$/, '');
-  }
-
-  const normalizedDomain = trimmedDomain.replace(/\/+$/, '');
-  const isLocalhost = /^(localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/i.test(normalizedDomain);
-  const protocol = isLocalhost ? 'http' : 'https';
-
-  return `${protocol}://${normalizedDomain}`;
-}
-
 export function SitePreviewCard({ site }: SitePreviewCardProps) {
   const [previewError, setPreviewError] = useState(false);
-  const previewUrl = buildPreviewUrl(site.domain);
+  const previewUrl = site.liveUrl;
   const canPreview = site.isOnline && !!previewUrl && !previewError;
 
   useEffect(() => {
     setPreviewError(false);
-  }, [site.domain, site.isOnline]);
+  }, [site.liveUrl, site.isOnline]);
 
   return (
     <Card>
@@ -46,13 +30,13 @@ export function SitePreviewCard({ site }: SitePreviewCardProps) {
               <span className="size-2 rounded-full bg-yellow-400" />
               <span className="size-2 rounded-full bg-green-400" />
               <span className="ml-2 truncate rounded-full bg-background px-2 py-0.5 text-xs text-muted-foreground">
-                {site.domain}
+                {displayHost(previewUrl)}
               </span>
             </div>
 
             <iframe
               src={previewUrl}
-              title={`Vista previa de ${site.domain}`}
+              title={`Vista previa de ${displayHost(previewUrl)}`}
               loading="lazy"
               sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
               onError={() => setPreviewError(true)}
@@ -63,7 +47,7 @@ export function SitePreviewCard({ site }: SitePreviewCardProps) {
           <div className="flex flex-col items-center gap-2 rounded-2xl border border-dashed py-10 text-center">
             <GlobeIcon className="size-8 text-muted-foreground" />
             <p className="text-sm text-muted-foreground">
-              {site.isOnline && site.domain
+              {site.isOnline && site.liveUrl
                 ? 'No se pudo cargar la vista previa en este momento'
                 : 'Publica tu sitio para ver la vista previa'}
             </p>

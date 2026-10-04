@@ -2,6 +2,7 @@ import { ExternalLinkIcon } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { displayHost } from '@/lib/site-address';
 import { cn } from '@/lib/utils';
 import type { SiteStatus } from '@/types/dashboard.types';
 
@@ -41,6 +42,12 @@ export function SiteDomainCard({ site }: SiteDomainCardProps) {
           {site.domain ?? 'Sin dominio configurado'}
         </div>
 
+        {site.previewUrl && (
+          <p className="text-sm text-muted-foreground">
+            Dirección gratuita: {displayHost(site.previewUrl)}
+          </p>
+        )}
+
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant="secondary" className={dnsBadge.className}>
             DNS: {dnsBadge.text}
@@ -57,14 +64,14 @@ export function SiteDomainCard({ site }: SiteDomainCardProps) {
           </Badge>
         </div>
 
-        {site.isOnline && site.domain && (
+        {site.isOnline && site.liveUrl && (
           <Button
             variant="outline"
             size="sm"
             className="w-fit"
             render={
               <a
-                href={`https://${site.domain}`}
+                href={site.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               />

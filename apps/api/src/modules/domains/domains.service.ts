@@ -1,6 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { sql, type SQL } from 'drizzle-orm';
+import { isUnderPreviewBase } from '../../common/preview/preview-url';
 import { type Database, DATABASE } from '../../database/database.module';
 import {
   DNS_PROVIDER_PORT,
@@ -29,6 +30,7 @@ import { PurchaseDomainDto } from './dto/purchase-domain.dto';
 import {
   DomainAgreementsRequiredException,
   DomainJobNotFoundException,
+  DomainNotAllowedException,
   DomainNotAvailableException,
   DomainNotCoveredByPlanException,
   DomainPriceChangedException,
@@ -135,7 +137,9 @@ export class DomainsService {
     const found: DomainSearchResultDto[] = [];
     results.forEach((r, i) => {
       if (r.status === 'rejected') {
-        this.logger.warn(`Availability check failed for ${candidates[i]}: ${String(r.reason)}`);
+        this.logger.warn(
+          `Availability check failed for ${candidates[i]}: ${String(r.reason)}`,
+        );
         return;
       }
       const price = r.value.priceUsdCents;
@@ -267,14 +271,16 @@ export class DomainsService {
       this.registrar.getPriceUsdCents(domain, 'renew'),
     ]);
     if (priceUsdCents > acceptedPriceUsdCents) {
-      throw new DomainPriceChangedException(priceUsdCents, acceptedPriceUsdCents);
+      throw new DomainPriceChangedException(
+        priceUsdCents,
+        acceptedPriceUsdCents,
+      );
     }
     if (priceUsdCents > this.maxCostCents) {
       throw new DomainNotCoveredByPlanException();
     }
     return { priceUsdCents, renewalPriceUsdCents };
   }
-
 
   // ── Pipeline (background, no HTTP context) ────────────────────────────────
   private async runPurchasePipeline(
@@ -327,7 +333,10 @@ export class DomainsService {
 
       await step('configuring_dns', async () => {
         await this.setDnsStatus(domain, 'configuring');
-        await this.dns.upsertRecords(domain, await this.buildDnsRecords(domain));
+        await this.dns.upsertRecords(
+          domain,
+          await this.buildDnsRecords(domain),
+        );
         await this.setDnsStatus(domain, 'propagating');
       });
 
@@ -338,7 +347,9 @@ export class DomainsService {
       });
 
       await this.updateJobStatus(jobId, 'completed');
-      this.logger.log(`Domain provisioning completed: ${domain} (job: ${jobId})`);
+      this.logger.log(
+        `Domain provisioning completed: ${domain} (job: ${jobId})`,
+      );
     } catch {
       // Error already logged and persisted by step().
     }
@@ -388,7 +399,11 @@ export class DomainsService {
     nameservers: string[],
   ): Promise<RegisteredDomain> {
     try {
-      return await this.registrar.registerDomain({ domain, periodYears, nameservers });
+      return await this.registrar.registerDomain({
+        domain,
+        periodYears,
+        nameservers,
+      });
     } catch (err) {
       throw await this.registrationFailure(domain, err);
     }
@@ -399,7 +414,10 @@ export class DomainsService {
    * a refused request AND a lookup that finds nothing. Timeouts, 5xx and failed lookups keep it
    * for the resume path (or the sweeper), because the registration may have gone through.
    */
-  private async registrationFailure(domain: string, err: unknown): Promise<Error> {
+  private async registrationFailure(
+    domain: string,
+    err: unknown,
+  ): Promise<Error> {
     const kind = classifyProviderFailure(err);
     const detail = `Domain registration failed: ${String(err)}`;
     if (kind === 'unknown') return err as Error;
@@ -410,16 +428,21 @@ export class DomainsService {
     const held = await this.registrarHoldsDomain(domain);
     if (held === null) {
       return new PurchasePipelineException(
-        kind === 'config' ? 'SERVICE_CONFIGURATION_ERROR' : 'REGISTRAR_UNAVAILABLE',
+        kind === 'config'
+          ? 'SERVICE_CONFIGURATION_ERROR'
+          : 'REGISTRAR_UNAVAILABLE',
         detail,
       );
     }
     // The registrar errored but the domain is in our account: it is being (or was) registered.
-    if (held) return new PurchasePipelineException('REGISTRATION_PENDING', detail);
+    if (held)
+      return new PurchasePipelineException('REGISTRATION_PENDING', detail);
 
     await this.abandonZone(domain);
     return new PurchasePipelineException(
-      kind === 'config' ? 'SERVICE_CONFIGURATION_ERROR' : await this.rejectionCode(domain),
+      kind === 'config'
+        ? 'SERVICE_CONFIGURATION_ERROR'
+        : await this.rejectionCode(domain),
       detail,
     );
   }
@@ -430,7 +453,9 @@ export class DomainsService {
       const found = await this.registrar.findDomain(domain);
       return found !== null && found.status !== 'failed';
     } catch (err) {
-      this.logger.warn(`[purchase] Could not verify ${domain} at the registrar: ${String(err)}`);
+      this.logger.warn(
+        `[purchase] Could not verify ${domain} at the registrar: ${String(err)}`,
+      );
       return null;
     }
   }
@@ -471,7 +496,10 @@ export class DomainsService {
         : kind === 'rejected'
           ? codes.rejected
           : codes.transient;
-    return new PurchasePipelineException(code, `${what} failed: ${String(err)}`);
+    return new PurchasePipelineException(
+      code,
+      `${what} failed: ${String(err)}`,
+    );
   }
 
   private async waitForRegistration(
@@ -516,6 +544,8 @@ export class DomainsService {
     userSub: string,
     domain: string,
   ): Promise<ConnectDomainResponseDto> {
+    // Wildcard-covered: it would shadow the tenant's own preview address.
+    if (isUnderPreviewBase(domain)) throw new DomainNotAllowedException();
     const tenantId = await this.getTenantIdByUserSub(userSub);
 
     const existing = await this.getDomainByTenant(tenantId);
@@ -547,7 +577,9 @@ export class DomainsService {
       await this.vercel.addDomain(domain);
       await this.addCompletedStep(jobId, 'registering_vercel');
     } catch (err) {
-      this.logger.error(`Connect failed for ${domain} (job ${jobId}): ${String(err)}`);
+      this.logger.error(
+        `Connect failed for ${domain} (job ${jobId}): ${String(err)}`,
+      );
       await this.failJob(jobId, 'registering_vercel', 'VERCEL_SETUP_FAILED');
       await this.setDnsStatus(domain, 'error');
       throw err;
@@ -563,7 +595,10 @@ export class DomainsService {
   }
 
   // ── Job status (frontend polls this) ──────────────────────────────────────
-  async getJobStatus(userSub: string, jobId: string): Promise<DomainJobStatusDto> {
+  async getJobStatus(
+    userSub: string,
+    jobId: string,
+  ): Promise<DomainJobStatusDto> {
     const tenantId = await this.getTenantIdByUserSub(userSub);
     const rows = await this.query<JobRow>(
       sql`SELECT id, domain, status, steps_completed, error_code, error_step
@@ -585,7 +620,9 @@ export class DomainsService {
   }
 
   // ── Domain status (DNS propagation check) ─────────────────────────────────
-  async checkDnsStatus(userSub: string): Promise<DomainStatusResponseDto | null> {
+  async checkDnsStatus(
+    userSub: string,
+  ): Promise<DomainStatusResponseDto | null> {
     const tenantId = await this.getTenantIdByUserSub(userSub);
     const domain = await this.getDomainByTenant(tenantId);
     // A released domain no longer belongs to the tenant.
@@ -669,7 +706,9 @@ export class DomainsService {
     // The registrar is deliberately untouched: the DNS records must survive for relaunch,
     // and autorenew is already off so an abandoned name lapses on its own.
     await this.markDomainSuspended(domain.id, tenantId);
-    this.logger.log(`[suspend] Domain ${domain.domain} suspended for tenant ${tenantId}`);
+    this.logger.log(
+      `[suspend] Domain ${domain.domain} suspended for tenant ${tenantId}`,
+    );
   }
 
   /**
@@ -726,7 +765,9 @@ export class DomainsService {
     await this.deleteStoredZone(domain);
     await this.markDomainReleased(domain, tenantId);
 
-    this.logger.log(`[release] Domain ${domain.domain} released for tenant ${tenantId}`);
+    this.logger.log(
+      `[release] Domain ${domain.domain} released for tenant ${tenantId}`,
+    );
     return { released: !domain.released_at, domain: domain.domain };
   }
 
@@ -831,7 +872,9 @@ export class DomainsService {
         );
       }
     }
-    await this.query(sql`DELETE FROM public.domains WHERE id = ${row.id}::uuid`);
+    await this.query(
+      sql`DELETE FROM public.domains WHERE id = ${row.id}::uuid`,
+    );
   }
 
   private async setDnsZone(
@@ -852,7 +895,10 @@ export class DomainsService {
     );
   }
 
-  private async markDomainReleased(row: DomainRow, tenantId: string): Promise<void> {
+  private async markDomainReleased(
+    row: DomainRow,
+    tenantId: string,
+  ): Promise<void> {
     await this.query(
       sql`UPDATE public.domains
           SET released_at = COALESCE(released_at, now()), vercel_mapped = false,
@@ -899,7 +945,8 @@ export class DomainsService {
             LIMIT 1`,
       );
       if (running[0]) {
-        if (running[0].domain !== domain) throw new DomainPurchaseInProgressException();
+        if (running[0].domain !== domain)
+          throw new DomainPurchaseInProgressException();
         return { created: false, jobId: running[0].id };
       }
     }
@@ -907,7 +954,9 @@ export class DomainsService {
   }
 
   private async discardJob(jobId: string): Promise<void> {
-    await this.query(sql`DELETE FROM public.domain_jobs WHERE id = ${jobId}::uuid`);
+    await this.query(
+      sql`DELETE FROM public.domain_jobs WHERE id = ${jobId}::uuid`,
+    );
   }
 
   private async createDomainJob(
@@ -923,7 +972,10 @@ export class DomainsService {
     return rows[0].id;
   }
 
-  private async updateJobStatus(jobId: string, status: DomainJobStatus): Promise<void> {
+  private async updateJobStatus(
+    jobId: string,
+    status: DomainJobStatus,
+  ): Promise<void> {
     await this.query(
       sql`UPDATE public.domain_jobs SET status = ${status} WHERE id = ${jobId}::uuid`,
     );
@@ -960,9 +1012,14 @@ export class DomainsService {
     );
   }
 
-  private async markDomainActive(domain: string, renewalDate: Date | null): Promise<void> {
+  private async markDomainActive(
+    domain: string,
+    renewalDate: Date | null,
+  ): Promise<void> {
     if (!renewalDate) {
-      this.logger.warn(`Registrar returned no renewal date for ${domain}; expires_at left empty.`);
+      this.logger.warn(
+        `Registrar returned no renewal date for ${domain}; expires_at left empty.`,
+      );
     }
     await this.query(
       sql`UPDATE public.domains
@@ -977,7 +1034,10 @@ export class DomainsService {
     );
   }
 
-  private async markVercelMapped(domain: string, vercelDomainId: string): Promise<void> {
+  private async markVercelMapped(
+    domain: string,
+    vercelDomainId: string,
+  ): Promise<void> {
     await this.query(
       sql`UPDATE public.domains
           SET vercel_mapped = true, vercel_domain_id = ${vercelDomainId},
@@ -986,7 +1046,10 @@ export class DomainsService {
     );
   }
 
-  private async markDomainSuspended(domainId: string, tenantId: string): Promise<void> {
+  private async markDomainSuspended(
+    domainId: string,
+    tenantId: string,
+  ): Promise<void> {
     await this.query(
       sql`UPDATE public.domains
           SET suspended_at = now(), vercel_mapped = false, ssl_active = false,
@@ -1017,7 +1080,10 @@ export class DomainsService {
     await this.updateTenantDomain(tenantId, domain);
   }
 
-  private async updateTenantDomain(tenantId: string, domain: string): Promise<void> {
+  private async updateTenantDomain(
+    tenantId: string,
+    domain: string,
+  ): Promise<void> {
     await this.query(
       sql`UPDATE public.tenants
           SET domain = ${domain}, vercel_domain_mapped = true
@@ -1069,7 +1135,9 @@ function toStatusDto(row: DomainRow): DomainStatusResponseDto {
 }
 
 function toIso(value: string | Date): string {
-  return value instanceof Date ? value.toISOString() : new Date(value).toISOString();
+  return value instanceof Date
+    ? value.toISOString()
+    : new Date(value).toISOString();
 }
 
 /** Drizzle's sql template expands JS arrays as row constructors — serialize to a PG array literal instead. */

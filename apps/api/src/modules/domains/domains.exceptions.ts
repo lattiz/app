@@ -132,3 +132,13 @@ export class DomainAgreementsRequiredException extends DomainException {
     super('The required agreements must be accepted to purchase a domain.');
   }
 }
+
+/** The domain is Lattiz's own (the preview base domain or a subdomain of it), never a tenant custom domain. */
+export class DomainNotAllowedException extends DomainException {
+  readonly code = 'DOMAIN_NOT_ALLOWED';
+  readonly status = HttpStatus.BAD_REQUEST;
+
+  constructor() {
+    super('This domain cannot be connected.');
+  }
+}

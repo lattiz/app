@@ -4,6 +4,7 @@ import {
   tenantsControllerMeQueryKey,
 } from '@lattiz/api-client';
 import { toast } from 'sonner';
+import { apiErrorCode } from '../lib/domain-errors';
 import { useDomainWizardStore } from '../store/domain-wizard.store';
 
 /** POST /domains/connect — maps the tenant-owned domain in Vercel and returns the DNS records to create. */
@@ -21,7 +22,11 @@ export function useDomainConnect() {
         queryKey: tenantsControllerMeQueryKey(),
       });
     },
-    onError: () =>
-      toast.error('No se pudo conectar el dominio. Verifica que sea válido.'),
+    onError: (err) =>
+      toast.error(
+        apiErrorCode(err) === 'DOMAIN_NOT_ALLOWED'
+          ? 'Ese dominio pertenece a Lattiz y no se puede conectar. Usa un dominio tuyo.'
+          : 'No se pudo conectar el dominio. Verifica que sea válido.',
+      ),
   });
 }

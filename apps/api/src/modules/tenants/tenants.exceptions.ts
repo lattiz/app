@@ -62,3 +62,35 @@ export class BrandingUploadFailedException extends DomainException {
     super('Could not store the image. Try again.');
   }
 }
+
+/** The chosen site address does not meet the format rules (3-32 chars, a-z, 0-9, single hyphens). */
+export class SlugInvalidException extends DomainException {
+  readonly code = 'SLUG_INVALID';
+  readonly status = HttpStatus.BAD_REQUEST;
+
+  constructor() {
+    super(
+      'The address must be 3-32 characters: lowercase letters, numbers and single hyphens, not starting or ending with one.',
+    );
+  }
+}
+
+/** The chosen site address is on the reserved list. */
+export class SlugReservedException extends DomainException {
+  readonly code = 'SLUG_RESERVED';
+  readonly status = HttpStatus.BAD_REQUEST;
+
+  constructor() {
+    super('This address is reserved.');
+  }
+}
+
+/** Another tenant already owns the chosen site address. */
+export class SlugTakenException extends DomainException {
+  readonly code = 'SLUG_TAKEN';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor() {
+    super('This address is already taken.');
+  }
+}

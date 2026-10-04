@@ -442,6 +442,14 @@ export type TenantMeResponseDto = {
      */
     tenantId: string;
     slug: string;
+    /**
+     * `https://{slug}.lattiz.app`; serves the published site until a custom domain is live.
+     */
+    previewUrl: string;
+    /**
+     * False while the address is still the one generated at signup.
+     */
+    slugIsCustom: boolean;
     name: string;
     plan: string;
     status: 'active' | 'inactive' | 'cancelled';
@@ -464,6 +472,36 @@ export type TenantMeResponseDto = {
      * Favicon / social-preview images injected into the published tenant site.
      */
     branding: TenantBrandingDto;
+};
+
+export type UpdateSlugDto = {
+    /**
+     * Desired address; normalized and validated server-side so every failure carries a stable code.
+     */
+    slug: string;
+};
+
+export type TenantSlugResponseDto = {
+    slug: string;
+    /**
+     * Where the site is reachable before (or without) a custom domain.
+     */
+    previewUrl: string;
+};
+
+export type SlugAvailabilityResponseDto = {
+    /**
+     * The normalized address that was checked.
+     */
+    slug: string;
+    /**
+     * True when the caller can claim it (including the address they already own).
+     */
+    available: boolean;
+    /**
+     * Why it cannot be claimed; null when available.
+     */
+    reason: 'SLUG_INVALID' | 'SLUG_RESERVED' | 'SLUG_TAKEN';
 };
 
 export type BrandingUploadResponseDto = {
@@ -935,6 +973,83 @@ export type TenantsControllerMeResponses = {
 };
 
 export type TenantsControllerMeResponse = TenantsControllerMeResponses[keyof TenantsControllerMeResponses];
+
+export type TenantsControllerUpdateSlugData = {
+    body: UpdateSlugDto;
+    path?: never;
+    query?: never;
+    url: '/tenants/me/slug';
+};
+
+export type TenantsControllerUpdateSlugErrors = {
+    /**
+     * SLUG_INVALID or SLUG_RESERVED.
+     */
+    400: unknown;
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * SLUG_TAKEN.
+     */
+    409: unknown;
+};
+
+export type TenantsControllerUpdateSlugResponses = {
+    200: TenantSlugResponseDto;
+};
+
+export type TenantsControllerUpdateSlugResponse = TenantsControllerUpdateSlugResponses[keyof TenantsControllerUpdateSlugResponses];
+
+export type TenantsControllerSlugAvailabilityData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Address to check; trimmed and lowercased server-side.
+         */
+        slug: string;
+    };
+    url: '/tenants/me/slug/availability';
+};
+
+export type TenantsControllerSlugAvailabilityErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+};
+
+export type TenantsControllerSlugAvailabilityResponses = {
+    200: SlugAvailabilityResponseDto;
+};
+
+export type TenantsControllerSlugAvailabilityResponse = TenantsControllerSlugAvailabilityResponses[keyof TenantsControllerSlugAvailabilityResponses];
+
+export type TenantsControllerSlugSuggestionData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/tenants/me/slug/suggestion';
+};
+
+export type TenantsControllerSlugSuggestionErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * SLUG_TAKEN: no free candidate was found.
+     */
+    409: unknown;
+};
+
+export type TenantsControllerSlugSuggestionResponses = {
+    200: TenantSlugResponseDto;
+};
+
+export type TenantsControllerSlugSuggestionResponse = TenantsControllerSlugSuggestionResponses[keyof TenantsControllerSlugSuggestionResponses];
 
 export type TenantsControllerUploadBrandingData = {
     body: {

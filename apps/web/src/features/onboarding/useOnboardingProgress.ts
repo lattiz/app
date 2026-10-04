@@ -42,6 +42,12 @@ export function useOnboardingProgress(): {
       complete: tenantMe?.site?.templateId != null,
     },
     {
+      id: 'address',
+      label: 'Elige la dirección de tu sitio',
+      route: '/dashboard/customization',
+      complete: tenantMe?.slugIsCustom === true,
+    },
+    {
       id: 'customize',
       label: 'Personaliza tu sitio',
       route: '/dashboard/customization',

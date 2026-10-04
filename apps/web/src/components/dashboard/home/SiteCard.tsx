@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { relativeTime } from '@/lib/format';
+import { displayHost } from '@/lib/site-address';
 import { cn } from '@/lib/utils';
 import type { DashboardState, SiteStatus } from '@/types/dashboard.types';
 
@@ -86,6 +87,24 @@ export function SiteCard({ state, site }: SiteCardProps) {
             {domainBadge.text}
           </Badge>
         </Row>
+        {site.liveUrl && (
+          <Row label="Dirección web">
+            {site.isOnline ? (
+              <a
+                href={site.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="truncate underline-offset-4 hover:underline"
+              >
+                {displayHost(site.liveUrl)}
+              </a>
+            ) : (
+              <span className="truncate text-muted-foreground">
+                {displayHost(site.liveUrl)}
+              </span>
+            )}
+          </Row>
+        )}
         <Row label="Última publicación">
           {relativeTime(site.lastPublished)}
         </Row>

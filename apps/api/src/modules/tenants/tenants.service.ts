@@ -1,6 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { sql, type SQL } from 'drizzle-orm';
 import { computeIsEntitled } from '../../common/billing/entitlement';
+import { previewUrl } from '../../common/preview/preview-url';
 import { type Database, DATABASE } from '../../database/database.module';
 import {
   ASSETS_BUCKET,
@@ -18,6 +19,7 @@ import {
   TenantSiteMetaDto,
   TenantSubscriptionDto,
 } from './dto/tenants.response.dto';
+import { isCustomSlug } from './tenant-slug';
 import {
   BrandingFileTooLargeException,
   BrandingUploadFailedException,
@@ -136,6 +138,8 @@ export class TenantsService {
     return {
       tenantId: row.id,
       slug: row.slug,
+      previewUrl: previewUrl(row.slug),
+      slugIsCustom: isCustomSlug(row.slug),
       name: row.name,
       plan: row.plan,
       status: row.status as TenantMeResponseDto['status'],
@@ -198,7 +202,9 @@ export class TenantsService {
     };
   }
 
-  private async getSiteMeta(tenantId: string): Promise<TenantSiteMetaDto | null> {
+  private async getSiteMeta(
+    tenantId: string,
+  ): Promise<TenantSiteMetaDto | null> {
     const rows = await this.query<SiteMetaRow>(
       sql`SELECT s.template_id, s.status, s.published_at, s.updated_at, s.created_at, t.name AS template_name
           FROM public.site_schemas s
@@ -239,7 +245,8 @@ export class TenantsService {
 
     // Path is derived from the validated mime type, never the client filename.
     const storagePath = `tenant-branding/${tenantId}/${type}.${BRANDING_EXTENSIONS[file.mimetype]}`;
-    const previousUrl = (await this.getBrandingColumn(tenantId, rule.column)) ?? null;
+    const previousUrl =
+      (await this.getBrandingColumn(tenantId, rule.column)) ?? null;
 
     let publicUrl: string;
     try {
@@ -332,8 +339,7 @@ export class TenantsService {
     const assignments = fields
       .filter(([, value]) => value !== undefined)
       .map(
-        ([column, value]) =>
-          sql`${sql.raw(column)} = ${value?.trim() || null}`,
+        ([column, value]) => sql`${sql.raw(column)} = ${value?.trim() || null}`,
       );
 
     if (assignments.length > 0) {
@@ -387,7 +393,9 @@ export class TenantsService {
 }
 
 function toIso(value: string | Date): string {
-  return value instanceof Date ? value.toISOString() : new Date(value).toISOString();
+  return value instanceof Date
+    ? value.toISOString()
+    : new Date(value).toISOString();
 }
 
 /** Maps a stored public URL back to its object path so replacements can be cleaned up. */

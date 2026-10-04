@@ -7,6 +7,7 @@ import {
   SIMULATE_ENABLED,
   SIMULATE_STATE,
 } from '@/lib/simulate-dashboard-state';
+import { liveSiteUrl } from '@/lib/site-address';
 import { useDashboardStore } from '@/stores/dashboard.store';
 import type {
   DashboardState,
@@ -48,6 +49,8 @@ function mapToSiteStatus(tenantMe: TenantMeResponseDto): SiteStatus {
     isOnline: tenantMe.site?.siteStatus === 'published',
     lastPublished: tenantMe.site?.lastPublishedAt ?? null,
     domain: tenantMe.domain,
+    previewUrl: tenantMe.previewUrl,
+    liveUrl: liveSiteUrl(tenantMe),
     domainConnected: tenantMe.vercelDomainMapped,
     dnsError: tenantMe.domainStatus?.dnsStatus === 'error',
     dnsPropagating: tenantMe.domainStatus?.dnsStatus === 'propagating',

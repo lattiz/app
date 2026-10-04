@@ -3,8 +3,8 @@
 import { type DefaultError, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { analyticsControllerOverview, analyticsControllerRetry, billingControllerCreateCheckoutSession, billingControllerCreatePortalSession, billingControllerGetInvoices, billingControllerGetSubscription, billingControllerTriggerReconciliation, domainsControllerConnect, domainsControllerGetDomain, domainsControllerGetJobStatus, domainsControllerGetQuote, domainsControllerPurchase, domainsControllerRelaunch, domainsControllerSearch, healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options, sitesControllerChangeTemplate, sitesControllerGetSchema, sitesControllerPublish, sitesControllerSaveSchema, sitesControllerSelectTemplate, sitesControllerUploadAssets, templatesControllerFindAll, tenantsControllerMe, tenantsControllerRemoveBranding, tenantsControllerUpdateSiteSettings, tenantsControllerUploadBranding } from '../sdk.gen';
-import type { AnalyticsControllerOverviewData, AnalyticsControllerOverviewResponse, AnalyticsControllerRetryData, AnalyticsControllerRetryResponse, BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponse, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponse, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponse, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionResponse, BillingControllerTriggerReconciliationData, BillingControllerTriggerReconciliationResponse, DomainsControllerConnectData, DomainsControllerConnectResponse, DomainsControllerGetDomainData, DomainsControllerGetDomainResponse, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponse, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponse, DomainsControllerPurchaseData, DomainsControllerPurchaseResponse, DomainsControllerRelaunchData, DomainsControllerRelaunchResponse, DomainsControllerSearchData, DomainsControllerSearchResponse, HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse, SitesControllerChangeTemplateData, SitesControllerChangeTemplateResponse, SitesControllerGetSchemaData, SitesControllerGetSchemaResponse, SitesControllerPublishData, SitesControllerPublishResponse, SitesControllerSaveSchemaData, SitesControllerSaveSchemaResponse, SitesControllerSelectTemplateData, SitesControllerSelectTemplateResponse, SitesControllerUploadAssetsData, SitesControllerUploadAssetsResponse, TemplatesControllerFindAllData, TemplatesControllerFindAllResponse, TenantsControllerMeData, TenantsControllerMeResponse, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingResponse, TenantsControllerUpdateSiteSettingsData, TenantsControllerUpdateSiteSettingsResponse, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingResponse } from '../types.gen';
+import { analyticsControllerOverview, analyticsControllerRetry, billingControllerCreateCheckoutSession, billingControllerCreatePortalSession, billingControllerGetInvoices, billingControllerGetSubscription, billingControllerTriggerReconciliation, domainsControllerConnect, domainsControllerGetDomain, domainsControllerGetJobStatus, domainsControllerGetQuote, domainsControllerPurchase, domainsControllerRelaunch, domainsControllerSearch, healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options, sitesControllerChangeTemplate, sitesControllerGetSchema, sitesControllerPublish, sitesControllerSaveSchema, sitesControllerSelectTemplate, sitesControllerUploadAssets, templatesControllerFindAll, tenantsControllerMe, tenantsControllerRemoveBranding, tenantsControllerSlugAvailability, tenantsControllerSlugSuggestion, tenantsControllerUpdateSiteSettings, tenantsControllerUpdateSlug, tenantsControllerUploadBranding } from '../sdk.gen';
+import type { AnalyticsControllerOverviewData, AnalyticsControllerOverviewResponse, AnalyticsControllerRetryData, AnalyticsControllerRetryResponse, BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponse, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponse, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponse, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionResponse, BillingControllerTriggerReconciliationData, BillingControllerTriggerReconciliationResponse, DomainsControllerConnectData, DomainsControllerConnectResponse, DomainsControllerGetDomainData, DomainsControllerGetDomainResponse, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponse, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponse, DomainsControllerPurchaseData, DomainsControllerPurchaseResponse, DomainsControllerRelaunchData, DomainsControllerRelaunchResponse, DomainsControllerSearchData, DomainsControllerSearchResponse, HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse, SitesControllerChangeTemplateData, SitesControllerChangeTemplateResponse, SitesControllerGetSchemaData, SitesControllerGetSchemaResponse, SitesControllerPublishData, SitesControllerPublishResponse, SitesControllerSaveSchemaData, SitesControllerSaveSchemaResponse, SitesControllerSelectTemplateData, SitesControllerSelectTemplateResponse, SitesControllerUploadAssetsData, SitesControllerUploadAssetsResponse, TemplatesControllerFindAllData, TemplatesControllerFindAllResponse, TenantsControllerMeData, TenantsControllerMeResponse, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingResponse, TenantsControllerSlugAvailabilityData, TenantsControllerSlugAvailabilityResponse, TenantsControllerSlugSuggestionData, TenantsControllerSlugSuggestionResponse, TenantsControllerUpdateSiteSettingsData, TenantsControllerUpdateSiteSettingsResponse, TenantsControllerUpdateSlugData, TenantsControllerUpdateSlugResponse, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingResponse } from '../types.gen';
 
 export type QueryKey<TOptions extends Options> = [
     Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
@@ -473,6 +473,59 @@ export const tenantsControllerMeOptions = (options?: Options<TenantsControllerMe
         return data;
     },
     queryKey: tenantsControllerMeQueryKey(options)
+});
+
+/**
+ * Change the tenant site address (protected)
+ */
+export const tenantsControllerUpdateSlugMutation = (options?: Partial<Options<TenantsControllerUpdateSlugData>>): UseMutationOptions<TenantsControllerUpdateSlugResponse, DefaultError, Options<TenantsControllerUpdateSlugData>> => {
+    const mutationOptions: UseMutationOptions<TenantsControllerUpdateSlugResponse, DefaultError, Options<TenantsControllerUpdateSlugData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await tenantsControllerUpdateSlug({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const tenantsControllerSlugAvailabilityQueryKey = (options: Options<TenantsControllerSlugAvailabilityData>) => createQueryKey('tenantsControllerSlugAvailability', options);
+
+/**
+ * Check whether a site address can be claimed (protected)
+ */
+export const tenantsControllerSlugAvailabilityOptions = (options: Options<TenantsControllerSlugAvailabilityData>) => queryOptions<TenantsControllerSlugAvailabilityResponse, DefaultError, TenantsControllerSlugAvailabilityResponse, ReturnType<typeof tenantsControllerSlugAvailabilityQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await tenantsControllerSlugAvailability({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: tenantsControllerSlugAvailabilityQueryKey(options)
+});
+
+export const tenantsControllerSlugSuggestionQueryKey = (options?: Options<TenantsControllerSlugSuggestionData>) => createQueryKey('tenantsControllerSlugSuggestion', options);
+
+/**
+ * Suggest an available site address (protected)
+ */
+export const tenantsControllerSlugSuggestionOptions = (options?: Options<TenantsControllerSlugSuggestionData>) => queryOptions<TenantsControllerSlugSuggestionResponse, DefaultError, TenantsControllerSlugSuggestionResponse, ReturnType<typeof tenantsControllerSlugSuggestionQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await tenantsControllerSlugSuggestion({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: tenantsControllerSlugSuggestionQueryKey(options)
 });
 
 /**

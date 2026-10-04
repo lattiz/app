@@ -27,7 +27,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   const { tenantHostname } = body;
-  if (!tenantHostname) {
+  // The API sends one call per host: the preview address and, when set, the custom domain.
+  if (typeof tenantHostname !== 'string' || !tenantHostname) {
     return NextResponse.json(
       { error: 'tenantHostname is required' },
       { status: 400 },

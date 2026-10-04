@@ -2,6 +2,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { sql, type SQL } from 'drizzle-orm';
 import { randomUUID } from 'node:crypto';
 import { extname } from 'node:path';
+import { previewHost } from '../../common/preview/preview-url';
 import { type Database, DATABASE } from '../../database/database.module';
 import {
   ChangeTemplateResponseDto,
@@ -64,10 +65,13 @@ export class SitesService {
   constructor(
     @Inject(DATABASE) private readonly db: Database,
     private readonly storage: SupabaseStorageService,
-  ) { }
+  ) {}
 
   /** Returns the editor project for a tenant, seeding it from a template on first load. */
-  async getEditorProject(tenantId: string, userSub: string): Promise<SiteSchemaResponseDto> {
+  async getEditorProject(
+    tenantId: string,
+    userSub: string,
+  ): Promise<SiteSchemaResponseDto> {
     await this.assertTenantOwnership(tenantId, userSub);
 
     const existing = await this.query<ProjectRow>(
@@ -140,7 +144,10 @@ export class SitesService {
   }
 
   /** First-time explicit template selection; creates the site_schemas row. */
-  async selectTemplate(userSub: string, templateId: string): Promise<SelectTemplateResponseDto> {
+  async selectTemplate(
+    userSub: string,
+    templateId: string,
+  ): Promise<SelectTemplateResponseDto> {
     const tenantId = await this.resolveTenantId(userSub);
     const template = await this.requireActiveTemplate(templateId);
 
@@ -155,7 +162,11 @@ export class SitesService {
     const row = rows[0];
     if (!row) throw new SiteSchemaAlreadyExistsException();
 
-    return { tenantId, templateId: template.id, createdAt: toIso(row.created_at) };
+    return {
+      tenantId,
+      templateId: template.id,
+      createdAt: toIso(row.created_at),
+    };
   }
 
   /** Switches an existing site to a different template, resetting publish state. */
@@ -180,7 +191,8 @@ export class SitesService {
       current.status === 'published' ||
       current.published_at !== null ||
       toIso(current.updated_at) !== toIso(current.created_at);
-    if (hasContent && !confirm) throw new TemplateChangeRequiresConfirmationException();
+    if (hasContent && !confirm)
+      throw new TemplateChangeRequiresConfirmationException();
 
     const template = await this.requireActiveTemplate(templateId);
 
@@ -197,7 +209,11 @@ export class SitesService {
     const row = rows[0];
     if (!row) throw new SiteNotFoundException();
 
-    return { tenantId, templateId: template.id, updatedAt: toIso(row.updated_at) };
+    return {
+      tenantId,
+      templateId: template.id,
+      updatedAt: toIso(row.updated_at),
+    };
   }
 
   /**
@@ -238,7 +254,8 @@ export class SitesService {
         });
       } catch (error) {
         this.logger.error(
-          `[assets] Upload failed for ${file.originalname}: ${error instanceof Error ? error.message : String(error)
+          `[assets] Upload failed for ${file.originalname}: ${
+            error instanceof Error ? error.message : String(error)
           }`,
         );
         throw new AssetUploadFailedException(file.originalname);
@@ -249,22 +266,35 @@ export class SitesService {
   }
 
   /**
-   * Pings tenant-sites after publish. tenant-sites now reads from Supabase on
-   * every request, so /api/revalidate is a no-op kept for backward
-   * compatibility — the publish is live within seconds either way. Skipped when
-   * the tenant has no domain, or the tenant-sites app isn't configured.
+   * Pings tenant-sites after publish, once per host the site answers on (preview
+   * address and custom domain). tenant-sites now reads from Supabase on every
+   * request, so /api/revalidate is a no-op kept for backward compatibility —
+   * the publish is live within seconds either way. Skipped when the
+   * tenant-sites app isn't configured.
    */
   private async triggerRevalidation(tenantId: string): Promise<void> {
-    const rows = await this.query<{ domain: string | null }>(
-      sql`SELECT domain FROM public.tenants WHERE id = ${tenantId}::uuid LIMIT 1`,
+    const rows = await this.query<{ slug: string; domain: string | null }>(
+      sql`SELECT slug, domain FROM public.tenants WHERE id = ${tenantId}::uuid LIMIT 1`,
     );
-    const domain = rows[0]?.domain;
-    if (!domain) return;
+    const tenant = rows[0];
+    if (!tenant) return;
 
     const baseUrl = process.env.TENANT_SITES_URL;
     const secret = process.env.REVALIDATION_SECRET;
     if (!baseUrl || !secret) return;
 
+    const hosts = [previewHost(tenant.slug)];
+    if (tenant.domain) hosts.push(tenant.domain);
+    for (const host of hosts) {
+      await this.revalidateHost(baseUrl, secret, host);
+    }
+  }
+
+  private async revalidateHost(
+    baseUrl: string,
+    secret: string,
+    host: string,
+  ): Promise<void> {
     try {
       const response = await fetch(`${baseUrl}/api/revalidate`, {
         method: 'POST',
@@ -272,24 +302,25 @@ export class SitesService {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${secret}`,
         },
-        body: JSON.stringify({ tenantHostname: domain }),
+        body: JSON.stringify({ tenantHostname: host }),
         signal: AbortSignal.timeout(10_000),
         redirect: 'error',
       });
-      console.log(`Revalidation response for ${domain}: ${response.status}`);
+      console.log(`Revalidation response for ${host}: ${response.status}`);
       if (!response.ok) {
         const body = await response.text().catch(() => '');
         this.logger.warn(
-          `[revalidate] ${response.status} for ${domain}. ` +
-          `Check TENANT_SITES_URL (no trailing slash) and ` +
-          `REVALIDATION_SECRET in Vercel env vars. Body: ${body}`,
+          `[revalidate] ${response.status} for ${host}. ` +
+            `Check TENANT_SITES_URL (no trailing slash) and ` +
+            `REVALIDATION_SECRET in Vercel env vars. Body: ${body}`,
         );
         return;
       }
-      this.logger.log(`[revalidate] Success for ${domain}`);
+      this.logger.log(`[revalidate] Success for ${host}`);
     } catch (error) {
       this.logger.warn(
-        `[revalidate] Failed for ${domain}: ${error instanceof Error ? error.message : String(error)
+        `[revalidate] Failed for ${host}: ${
+          error instanceof Error ? error.message : String(error)
         }`,
       );
     }
@@ -304,7 +335,9 @@ export class SitesService {
     return row.id;
   }
 
-  private async requireActiveTemplate(templateId: string): Promise<TemplateRow> {
+  private async requireActiveTemplate(
+    templateId: string,
+  ): Promise<TemplateRow> {
     const rows = await this.query<TemplateRow>(
       sql`SELECT id, grapesjs_json FROM public.templates
           WHERE id = ${templateId} AND is_active = true
@@ -315,7 +348,10 @@ export class SitesService {
     return template;
   }
 
-  private async assertTenantOwnership(tenantId: string, userSub: string): Promise<void> {
+  private async assertTenantOwnership(
+    tenantId: string,
+    userSub: string,
+  ): Promise<void> {
     const rows = await this.query<{ ok: number }>(
       sql`SELECT 1 AS ok FROM public.tenants
           WHERE id = ${tenantId}::uuid AND user_id = ${userSub}::uuid
@@ -337,5 +373,7 @@ function safeExtension(filename: string): string {
 }
 
 function toIso(value: string | Date): string {
-  return value instanceof Date ? value.toISOString() : new Date(value).toISOString();
+  return value instanceof Date
+    ? value.toISOString()
+    : new Date(value).toISOString();
 }

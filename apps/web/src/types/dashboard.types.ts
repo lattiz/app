@@ -9,6 +9,10 @@ export interface SiteStatus {
   isOnline: boolean;
   lastPublished: string | null;
   domain: string | null;
+  /** Free `{slug}.lattiz.app` address. */
+  previewUrl: string | null;
+  /** Where visitors reach the site now: the custom domain once live, else the preview address. */
+  liveUrl: string | null;
   domainConnected: boolean;
   dnsError: boolean;
   dnsPropagating: boolean;
