@@ -192,12 +192,23 @@ function buildOptions(
     // ── Assets ─────────────────────────────────────────────────────────────
     // Sin onUpload el SDK deja URLs `blob:`/`data:` de la sesión del editor en
     // el HTML exportado, que dan 404 en el sitio publicado. Se suben al API y
-    // se devuelve la URL pública de Supabase Storage.
+    // se devuelve la URL pública del almacenamiento.
     // Sin `onLoad` las referencias siguen guardándose en el project JSON, así
     // que las imágenes ya subidas reaparecen en sesiones posteriores.
     assets: {
       storageType: 'self',
-      onUpload: async ({ files }) => uploadAssets(tenantId, files),
+      onUpload: async ({ files }) => {
+        try {
+          return await uploadAssets(tenantId, files);
+        } catch (err) {
+          toast.error(
+            err instanceof Error
+              ? err.message
+              : 'No se pudo subir la imagen. Intenta de nuevo.',
+          );
+          throw err;
+        }
+      },
     },
 
     // ── Core ───────────────────────────────────────────────────────────────

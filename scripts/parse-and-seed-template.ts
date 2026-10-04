@@ -1,11 +1,13 @@
 /**
  * Parse a GrapesJS `.grapesjs` export, re-host its cdn.grapesjs.com assets into
- * the Supabase Storage `template-assets` bucket, rewrite the URLs in the project
- * JSON, and upsert the result into `public.templates`.
+ * the active object storage (STORAGE_PROVIDER=r2|supabase, same env as the API),
+ * rewrite the URLs in the project JSON, and upsert the result into `public.templates`.
  *
  * Usage:
  *   SUPABASE_URL=https://xxxx.supabase.co \
  *   SUPABASE_SERVICE_ROLE_KEY=eyJh... \
+ *   STORAGE_PROVIDER=r2 R2_ACCOUNT_ID=... R2_ACCESS_KEY_ID=... R2_SECRET_ACCESS_KEY=... \
+ *   R2_BUCKET=lattiz-assets R2_PUBLIC_URL=https://assets.lattiz.app \
  *   npx tsx scripts/parse-and-seed-template.ts \
  *     --file ./apps/web/lattiz-test.grapesjs \
  *     --id neuraltech-v1 \
@@ -15,7 +17,12 @@
  */
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js';
+import type { ObjectStoragePort } from '../apps/api/src/modules/storage/domain/object-storage.port';
+import {
+  createObjectStorage,
+  resolveStorageProvider,
+} from '../apps/api/src/modules/storage/infrastructure/storage-provider.factory';
 
 const BUCKET = 'template-assets';
 const CDN_HOST = 'cdn.grapesjs.com';
@@ -63,6 +70,9 @@ function printHelp(): void {
 Required env:
   SUPABASE_URL                Supabase project URL
   SUPABASE_SERVICE_ROLE_KEY   Service role key (server-only)
+  STORAGE_PROVIDER            r2 | supabase (default supabase); with r2 also
+                              R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY,
+                              R2_BUCKET, R2_PUBLIC_URL (same as apps/api/.env)
 
 Flags:
   --file <path>          Path to the .grapesjs export file        (required)
@@ -155,7 +165,7 @@ function idFromUrl(url: string): string {
 }
 
 async function rehostAsset(
-  supabase: SupabaseClient,
+  storage: ObjectStoragePort,
   templateId: string,
   url: string,
   meta: GrapesAsset | undefined,
@@ -169,14 +179,13 @@ async function rehostAsset(
   const ext = extFromUrl(url) || extFromMime(contentType);
   const path = `${templateId}/${assetId}${ext}`;
 
-  const { error } = await supabase.storage.from(BUCKET).upload(path, bytes, {
-    contentType,
-    upsert: true,
-  });
-  if (error) throw new Error(error.message);
-
-  const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
-  return data.publicUrl;
+  // Keys are deterministic (re-runs overwrite), hence upsert: it keeps the cache lifetime short.
+  return storage.uploadPublic(
+    path,
+    Buffer.from(bytes),
+    contentType ?? 'application/octet-stream',
+    { upsert: true },
+  );
 }
 
 async function main(): Promise<void> {
@@ -186,7 +195,8 @@ async function main(): Promise<void> {
     return;
   }
 
-  console.log(MANUAL_STORAGE_STEP);
+  const provider = resolveStorageProvider((key) => process.env[key]);
+  if (provider === 'supabase') console.log(MANUAL_STORAGE_STEP);
 
   const args = parseArgs(argv);
   const supabaseUrl = requireEnv('SUPABASE_URL');
@@ -194,6 +204,7 @@ async function main(): Promise<void> {
   const supabase = createClient(supabaseUrl, serviceKey, {
     auth: { persistSession: false },
   });
+  const storage = createObjectStorage((key) => process.env[key]);
 
   const filePath = resolve(process.cwd(), args.file);
   console.log(`\n▶ Reading ${filePath}`);
@@ -217,7 +228,7 @@ async function main(): Promise<void> {
   let failed = 0;
   for (const url of uniqueUrls) {
     try {
-      const newUrl = await rehostAsset(supabase, args.id, url, metaBySrc.get(url));
+      const newUrl = await rehostAsset(storage, args.id, url, metaBySrc.get(url));
       replacements.set(url, newUrl);
       ok += 1;
       console.log(`  ✓ ${url}\n      → ${newUrl}`);
@@ -229,7 +240,7 @@ async function main(): Promise<void> {
 
   if (failed > 0) {
     console.error(
-      `\n✗ ${failed} asset(s) failed. Ensure the public "${BUCKET}" bucket exists (see manual step above) and retry.`,
+      `\n✗ ${failed} asset(s) failed. Check the storage credentials and that the public bucket exists, then retry.`,
     );
     process.exitCode = 1;
     return;
@@ -259,10 +270,10 @@ async function main(): Promise<void> {
   console.log(`
 ✅ Template seeded. Next steps:
    1. Take a screenshot of ${args.previewUrl ?? 'the template preview'}
-      and upload it to Supabase Storage as:
-      ${BUCKET}/${args.id}/thumbnail.jpg
+      and upload it to the assets bucket as:
+      ${args.id}/thumbnail.jpg
    2. Run: UPDATE public.templates
-            SET thumbnail_url = '${supabaseUrl}/storage/v1/object/public/${BUCKET}/${args.id}/thumbnail.jpg'
+            SET thumbnail_url = '${storage.publicUrl(`${args.id}/thumbnail.jpg`)}'
             WHERE id = '${args.id}';
    3. Create a test tenant row (replace the uid with your Supabase auth user id):
       INSERT INTO public.tenants (user_id, slug, name)

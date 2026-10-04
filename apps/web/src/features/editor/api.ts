@@ -1,4 +1,5 @@
 import { client } from '@lattiz/api-client';
+import { uploadErrorMessage } from '@/lib/upload-errors';
 import type {
   EditorProjectResponse,
   GrapesJSAsset,
@@ -56,7 +57,8 @@ export async function uploadAssets(
     headers: { 'Content-Type': null },
   });
   if (error || !data) {
-    throw new Error(`No se pudieron subir las imágenes (${response?.status ?? 'error'}).`);
+    console.error('[editor] Asset upload failed:', response?.status, error);
+    throw new Error(uploadErrorMessage(error));
   }
   return data as GrapesJSAsset[];
 }

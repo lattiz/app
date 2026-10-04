@@ -1,12 +1,14 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { sql, type SQL } from 'drizzle-orm';
+import { randomUUID } from 'node:crypto';
 import { computeIsEntitled } from '../../common/billing/entitlement';
 import { previewUrl } from '../../common/preview/preview-url';
 import { type Database, DATABASE } from '../../database/database.module';
+import { describeStorageError } from '../storage/domain/object-storage.exceptions';
 import {
-  ASSETS_BUCKET,
-  SupabaseStorageService,
-} from '../sites/supabase-storage.service';
+  OBJECT_STORAGE_PORT,
+  type ObjectStoragePort,
+} from '../storage/domain/object-storage.port';
 import {
   BrandingUploadResponseDto,
   TenantBrandingDto,
@@ -119,7 +121,7 @@ export class TenantsService {
 
   constructor(
     @Inject(DATABASE) private readonly db: Database,
-    private readonly storage: SupabaseStorageService,
+    @Inject(OBJECT_STORAGE_PORT) private readonly storage: ObjectStoragePort,
   ) {}
 
   /** Resolves the authenticated user's tenant (single-tenant-per-user model). */
@@ -243,39 +245,38 @@ export class TenantsService {
       throw new BrandingFileTooLargeException(rule.maxBytes);
     }
 
-    // Path is derived from the validated mime type, never the client filename.
-    const storagePath = `tenant-branding/${tenantId}/${type}.${BRANDING_EXTENSIONS[file.mimetype]}`;
+    // Unique key per upload (immutable at the CDN, so no cache-busting); the old object is deleted below.
+    const storagePath = `${brandingPrefix(tenantId)}${type}-${randomUUID()}.${BRANDING_EXTENSIONS[file.mimetype]}`;
     const previousUrl =
       (await this.getBrandingColumn(tenantId, rule.column)) ?? null;
 
-    let publicUrl: string;
+    let url: string;
     try {
-      publicUrl = await this.storage.uploadPublic(
+      url = await this.storage.uploadPublic(
         storagePath,
         file.buffer,
         file.mimetype,
-        { upsert: true },
       );
     } catch (error) {
       this.logger.error(
-        `[branding] Upload failed for ${tenantId}/${type}: ${error instanceof Error ? error.message : String(error)}`,
+        `[branding] Upload failed for ${tenantId}/${type}: ${describeStorageError(error)}`,
       );
       throw new BrandingUploadFailedException();
     }
 
-    // upsert reuses the path, so the CDN would keep serving the old bytes.
-    const url = `${publicUrl}?v=${Date.now()}`;
-
-    await this.db.execute(
-      sql`UPDATE public.tenants
-          SET ${sql.raw(rule.column)} = ${url}
-          WHERE id = ${tenantId}::uuid`,
-    );
-
-    const previousPath = storagePathFromUrl(previousUrl);
-    if (previousPath && previousPath !== storagePath) {
-      await this.removeQuietly(previousPath);
+    try {
+      await this.db.execute(
+        sql`UPDATE public.tenants
+            SET ${sql.raw(rule.column)} = ${url}
+            WHERE id = ${tenantId}::uuid`,
+      );
+    } catch (error) {
+      await this.removeQuietly(storagePath);
+      throw error;
     }
+
+    const previousPath = this.ownedPath(tenantId, previousUrl);
+    if (previousPath) await this.removeQuietly(previousPath);
 
     return { url };
   }
@@ -297,7 +298,7 @@ export class TenantsService {
           WHERE id = ${tenantId}::uuid`,
     );
 
-    const previousPath = storagePathFromUrl(previousUrl);
+    const previousPath = this.ownedPath(tenantId, previousUrl);
     if (previousPath) await this.removeQuietly(previousPath);
 
     return this.getBranding(tenantId);
@@ -363,13 +364,19 @@ export class TenantsService {
     return rows[0]?.[column] ?? null;
   }
 
+  /** Only objects under this tenant's own branding prefix are ever deleted, whatever the stored URL says. */
+  private ownedPath(tenantId: string, url: string | null): string | null {
+    const path = this.storage.pathFromPublicUrl(url);
+    return path?.startsWith(brandingPrefix(tenantId)) ? path : null;
+  }
+
   /** A stale object left behind must not fail an otherwise successful request. */
   private async removeQuietly(path: string): Promise<void> {
     try {
       await this.storage.removePublic(path);
     } catch (error) {
       this.logger.warn(
-        `[branding] Could not delete ${path}: ${error instanceof Error ? error.message : String(error)}`,
+        `[branding] Could not delete ${path}: ${describeStorageError(error)}`,
       );
     }
   }
@@ -398,11 +405,6 @@ function toIso(value: string | Date): string {
     : new Date(value).toISOString();
 }
 
-/** Maps a stored public URL back to its object path so replacements can be cleaned up. */
-function storagePathFromUrl(url: string | null): string | null {
-  if (!url) return null;
-  const marker = `/storage/v1/object/public/${ASSETS_BUCKET}/`;
-  const index = url.indexOf(marker);
-  if (index === -1) return null;
-  return url.slice(index + marker.length).split('?')[0];
+function brandingPrefix(tenantId: string): string {
+  return `tenant-branding/${tenantId}/`;
 }

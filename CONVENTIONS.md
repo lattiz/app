@@ -77,26 +77,24 @@ apps/api → openapi.json → packages/api-client (hey-api) → apps/web
 
 ### Excepción service_role — borrado de cuenta y subida de imágenes
 
-Tres operaciones requieren la `service_role key` y no pueden correr en el navegador. Son **las únicas** privilegiadas del API:
+Tres operaciones requieren credenciales privilegiadas y no pueden correr en el navegador. Son **las únicas** privilegiadas del API (la subida de imágenes solo usa la `service_role key` mientras `STORAGE_PROVIDER=supabase`):
 
-- `SUPABASE_SERVICE_ROLE_KEY` vive **solo** en `apps/api/.env` — nunca en el front ni en ningún `VITE_*`.
-- En los tres casos el cliente admin se crea de forma perezosa: el API arranca sin la key; solo falla la ruta que la necesita.
+- `SUPABASE_SERVICE_ROLE_KEY` y las `R2_*` viven **solo** en `apps/api/.env` — nunca en el front ni en ningún `VITE_*` / `NEXT_PUBLIC_*`.
+- El cliente admin de Supabase se crea de forma perezosa: el API arranca sin la key; solo falla la ruta que la necesita.
 
 **1. Borrado de cuenta** — `supabase.auth.admin.deleteUser`:
 
 - Se usa exclusivamente en `SupabaseAuthAdminAdapter` (`modules/me/infrastructure/`), detrás del puerto `AuthAdminPort`, alcanzable solo vía `DELETE /me` (protegido por `SupabaseJwtGuard`).
 - `DELETE /me` borra el `profile` (Drizzle) y luego el auth user, en ese orden.
 
-**2. Subida de assets del editor** — `storage.from('template-assets').upload`:
+**2. Subida de assets del editor** y **3. Branding del tenant** — `ObjectStoragePort` (`modules/storage/`):
 
-- `SupabaseStorageService` (`modules/sites/`), alcanzable solo vía `POST /sites/:tenantId/assets`, tras verificar que el tenant pertenece al usuario.
-- Bypassa las RLS de Storage a propósito: la ruta de destino (`tenant-assets/{tenantId}/{uuid}.{ext}`) se construye en el servidor, nunca desde el cliente, y solo se aceptan mime types `image/*` porque el bucket es público.
-
-**3. Branding del tenant (favicon / vista previa social)** — mismo `SupabaseStorageService`, reexportado por `SitesModule` y consumido por `TenantsModule`:
-
-- Alcanzable solo vía `POST /tenants/:tenantId/branding` y `DELETE /tenants/:tenantId/branding/:type`, tras verificar que el tenant pertenece al usuario.
-- Ruta `tenant-branding/{tenantId}/{type}.{ext}` con `upsert: true` — la extensión sale del mime type validado, nunca del nombre de archivo del cliente. Whitelist por slot: PNG/ICO ≤ 1MB para favicons, PNG/JPEG ≤ 4MB para la vista previa.
-- La URL pública se guarda con `?v={timestamp}` en `tenants.favicon_light_url` / `favicon_dark_url` / `social_preview_url`: como `upsert` reusa la ruta, sin versionar el CDN seguiría sirviendo los bytes viejos.
+- `StorageModule` expone el puerto `OBJECT_STORAGE_PORT`; `SitesModule` y `TenantsModule` lo importan. `STORAGE_PROVIDER=r2|supabase` elige el adaptador al arrancar (`r2` falla al bootear si falta cualquier `R2_*`). Con `supabase` se usa la `service_role key` (este es el caso privilegiado); con `r2`, un token S3 de Cloudflare R2 que vive **solo** en `apps/api/.env`.
+- Bucket público (`lattiz-assets` en R2, servido desde `https://assets.lattiz.app`; `template-assets` en Supabase hasta retirarlo). Las rutas se construyen en el servidor, nunca desde el cliente; el adaptador rechaza rutas con `..`, `/` inicial o caracteres de control.
+- Errores del proveedor → `ObjectStorageException` (con el detalle solo en logs); los servicios lo traducen a `ASSET_UPLOAD_FAILED` / `BRANDING_UPLOAD_FAILED`, y el front muestra el mensaje en español de `apps/web/src/lib/upload-errors.ts`.
+- **Editor:** solo vía `POST /sites/:tenantId/assets`, tras verificar que el tenant pertenece al usuario. Ruta `tenant-assets/{tenantId}/{uuid}.{ext}`, solo `image/*`.
+- **Branding:** solo vía `POST /tenants/:tenantId/branding` y `DELETE /tenants/:tenantId/branding/:type`, tras verificar el tenant. Ruta única por subida `tenant-branding/{tenantId}/{type}-{uuid}.{ext}` (la extensión sale del mime type validado). Whitelist por slot: PNG/ICO ≤ 1MB para favicons, PNG/JPEG ≤ 4MB para la vista previa. Al reemplazar o borrar se elimina el objeto anterior, y solo si está bajo el prefijo de ese tenant.
+- Cache: claves únicas → `public, max-age=31536000, immutable`; claves reescribibles (`upsert`, p. ej. assets de plantillas re-sembrados) → `max-age=300`. No se versiona con `?v=`.
 
 ### Google Analytics 4 — credenciales solo en NestJS
 

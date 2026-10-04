@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '../../database/database.module';
+import { StorageModule } from '../storage/storage.module';
 import { SitesController } from './sites.controller';
 import { SitesService } from './sites.service';
-import { SupabaseStorageService } from './supabase-storage.service';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, StorageModule],
   controllers: [SitesController],
-  providers: [SitesService, SupabaseStorageService],
-  exports: [SitesService, SupabaseStorageService],
+  providers: [SitesService],
+  exports: [SitesService],
 })
 export class SitesModule {}

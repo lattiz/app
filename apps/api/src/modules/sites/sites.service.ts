@@ -4,6 +4,11 @@ import { randomUUID } from 'node:crypto';
 import { extname } from 'node:path';
 import { previewHost } from '../../common/preview/preview-url';
 import { type Database, DATABASE } from '../../database/database.module';
+import { describeStorageError } from '../storage/domain/object-storage.exceptions';
+import {
+  OBJECT_STORAGE_PORT,
+  type ObjectStoragePort,
+} from '../storage/domain/object-storage.port';
 import {
   ChangeTemplateResponseDto,
   PublishSiteResponseDto,
@@ -24,7 +29,6 @@ import {
   TenantNotFoundException,
   UnsupportedAssetTypeException,
 } from './sites.exceptions';
-import { SupabaseStorageService } from './supabase-storage.service';
 
 type Json = Record<string, unknown>;
 
@@ -64,7 +68,7 @@ export class SitesService {
 
   constructor(
     @Inject(DATABASE) private readonly db: Database,
-    private readonly storage: SupabaseStorageService,
+    @Inject(OBJECT_STORAGE_PORT) private readonly storage: ObjectStoragePort,
   ) {}
 
   /** Returns the editor project for a tenant, seeding it from a template on first load. */
@@ -217,7 +221,7 @@ export class SitesService {
   }
 
   /**
-   * Stores editor assets in the public bucket and returns their CDN URLs, which
+   * Stores editor assets in the public bucket and returns their public URLs, which
    * is what GrapesJS writes into the exported HTML — blob:/data: sources from
    * the editor session would 404 on the published site.
    */
@@ -254,9 +258,7 @@ export class SitesService {
         });
       } catch (error) {
         this.logger.error(
-          `[assets] Upload failed for ${file.originalname}: ${
-            error instanceof Error ? error.message : String(error)
-          }`,
+          `[assets] Upload failed for ${file.originalname}: ${describeStorageError(error)}`,
         );
         throw new AssetUploadFailedException(file.originalname);
       }

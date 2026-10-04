@@ -7,6 +7,7 @@ import {
   tenantsControllerUploadBrandingMutation,
 } from '@lattiz/api-client';
 import { toast } from 'sonner';
+import { uploadErrorMessage } from '@/lib/upload-errors';
 
 export type BrandingType =
   TenantsControllerUploadBrandingData['body']['type'];
@@ -44,8 +45,8 @@ export function useUploadBranding() {
       });
       toast.success('Imagen actualizada.');
     },
-    onError: () => {
-      toast.error('No se pudo subir la imagen. Intenta de nuevo.');
+    onError: (error) => {
+      toast.error(uploadErrorMessage(error));
     },
   });
 }
