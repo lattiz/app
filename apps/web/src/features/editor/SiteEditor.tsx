@@ -1,5 +1,5 @@
 import StudioEditor from '@grapesjs/studio-sdk/react';
-import '@grapesjs/studio-sdk/style';
+import './grapesjs-sdk.css';
 import './editor-i18n.css';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { tenantsControllerMeOptions } from '@lattiz/api-client';

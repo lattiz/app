@@ -1,3 +1,6 @@
+/* Orden de capas: el CSS del Studio SDK (Tailwind v3) va en `grapesjs`, por
+   debajo de nuestras utilidades, para que no pise las variables --tw-*. */
+@layer theme, base, grapesjs, components, utilities;
 @import 'tailwindcss';
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";

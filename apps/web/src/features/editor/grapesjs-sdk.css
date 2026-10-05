@@ -1,0 +1,3 @@
+/* Capa `grapesjs` (orden declarado en index.css): sin capa, su reset global
+   de variables --tw-* ganaría a nuestras utilidades en toda la app. */
+@import '@grapesjs/studio-sdk/style' layer(grapesjs);
