@@ -153,6 +153,9 @@ export class DomainsService {
         coveredByPlan: price !== null && price <= this.maxCostCents,
       });
     });
+    // Every check failed: that is a provider outage, not "no results", so surface it to the user.
+    const firstFailure = results.find((r) => r.status === 'rejected');
+    if (found.length === 0 && firstFailure) throw firstFailure.reason;
     return found;
   }
 

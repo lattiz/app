@@ -25,9 +25,14 @@ const TOO_MANY_REQUESTS =
   'Hiciste demasiadas solicitudes en poco tiempo. Espera un minuto e inténtalo de nuevo.';
 
 export function searchErrorMessage(err: unknown): string {
-  return apiErrorCode(err) === 'TOO_MANY_REQUESTS'
-    ? TOO_MANY_REQUESTS
-    : 'No se pudo buscar dominios. Intenta de nuevo en unos segundos.';
+  switch (apiErrorCode(err)) {
+    case 'TOO_MANY_REQUESTS':
+      return TOO_MANY_REQUESTS;
+    case 'REGISTRAR_API_ERROR':
+      return PROVIDER_UNAVAILABLE;
+    default:
+      return 'No se pudo buscar dominios. Intenta de nuevo en unos segundos.';
+  }
 }
 
 export function quoteErrorMessage(err: unknown): string {
