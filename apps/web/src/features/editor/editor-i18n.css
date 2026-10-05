@@ -1,0 +1,5 @@
+/* El SDK (Qi) aplica gs-utl-capitalize a etiquetas del Style Manager.
+   Desactiva Title Case para respetar el sentence case del diccionario ES. */
+.gs-style-manager .gs-utl-capitalize {
+  text-transform: none;
+}
