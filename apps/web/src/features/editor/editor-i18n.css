@@ -3,3 +3,9 @@
 .gs-style-manager .gs-utl-capitalize {
   text-transform: none;
 }
+
+/* Modo simple: oculta la caja de clases / estado / "Selección".
+   Clase estable del SDK (gs-cmp-selectors-provider). */
+.lattiz-editor--simple-styles .gs-cmp-selectors-provider {
+  display: none;
+}

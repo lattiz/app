@@ -201,6 +201,8 @@ export const grapesjsCoreLocaleEs = {
       'gs-background': 'Fondo',
       'gs-borders': 'Bordes',
       'gs-effects': 'Efectos',
+      // Sector del modo simple (Lattiz)
+      'lattiz-basic': 'Básico',
     },
     properties: {
       float: 'Flotación',

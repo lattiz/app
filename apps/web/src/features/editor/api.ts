@@ -21,7 +21,9 @@ export async function getEditorProject(
     url: `/sites/${tenantId}/schema`,
   });
   if (error || !data) {
-    throw new Error(`No se pudo cargar el proyecto (${response?.status ?? 'error'}).`);
+    throw new Error(
+      `No se pudo cargar el proyecto (${response?.status ?? 'error'}).`,
+    );
   }
   return data as EditorProjectResponse;
 }

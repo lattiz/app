@@ -7,8 +7,17 @@ import { Loader2Icon, ArrowLeft } from 'lucide-react';
 import { type ComponentProps, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Switch } from '@/components/ui/switch';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { displayHost, liveSiteUrl } from '@/lib/site-address';
+import { cn } from '@/lib/utils';
 import {
   getEditorProject,
   publishSite,
@@ -17,6 +26,14 @@ import {
 } from './api';
 import { grapesjsCoreLocaleEs, studioSdkLocaleEs } from './i18n';
 import { SaveStatusBadge } from './SaveStatusBadge';
+import {
+  applyStyleMode,
+  initStyleMode,
+  readAdvancedStylesPreference,
+  SIMPLE_STYLES_ROOT_CLASS,
+  type StyleModeEditor,
+  writeAdvancedStylesPreference,
+} from './style-mode';
 import type {
   EditorInstance,
   GrapesJSProjectJSON,
@@ -200,8 +217,19 @@ function buildOptions(
 
 export function SiteEditor({ tenantId }: SiteEditorProps) {
   const editorRef = useRef<EditorInstance | null>(null);
+  const grapesEditorRef = useRef<StyleModeEditor | null>(null);
   const [savedAt, setSavedAt] = useState<string | null>(null);
+  const [advancedStyles, setAdvancedStyles] = useState(
+    readAdvancedStylesPreference,
+  );
   const lastProjectRef = useRef<GrapesJSProjectJSON | null>(null);
+
+  const handleAdvancedStylesChange = (checked: boolean) => {
+    setAdvancedStyles(checked);
+    writeAdvancedStylesPreference(checked);
+    const editor = grapesEditorRef.current;
+    if (editor) applyStyleMode(editor, checked);
+  };
 
   const query = useQuery({
     queryKey: ['editor-project', tenantId],
@@ -299,14 +327,18 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
   const isPublishing = publishMutation.isPending;
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden">
-      <header className="flex items-center justify-between gap-4 border-b border-border bg-primary px-4 py-2 w-full">
-        <div className="flex items-center gap-2 ">
+    <div
+      className={cn(
+        'flex h-screen flex-col overflow-hidden',
+        !advancedStyles && SIMPLE_STYLES_ROOT_CLASS,
+      )}
+    >
+      <header className="flex w-full items-center justify-between gap-4 border-b border-border bg-primary px-4 py-2">
+        <div className="flex items-center gap-2">
           <Button
             variant="linkSecondary"
             size="default"
             onClick={() => window.history.back()}
-            className=""
           >
             <ArrowLeft className="size-4" color="#FFF" />
             Regresar
@@ -318,7 +350,34 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
           />
         </div>
 
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex shrink-0 items-center gap-3">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <div className="flex items-center gap-2 text-primary-foreground">
+                    <Switch
+                      id="lattiz-advanced-styles"
+                      size="sm"
+                      checked={advancedStyles}
+                      onCheckedChange={handleAdvancedStylesChange}
+                      className="border-primary-foreground/40 data-checked:border-white data-checked:bg-white data-unchecked:bg-primary-foreground/30"
+                      thumbClassName="data-checked:bg-primary dark:data-checked:bg-primary"
+                    />
+                    <Label
+                      htmlFor="lattiz-advanced-styles"
+                      className="cursor-pointer text-xs font-normal text-primary-foreground"
+                    >
+                      Mostrar opciones avanzadas
+                    </Label>
+                  </div>
+                }
+              />
+              <TooltipContent side="bottom">
+                Espaciado, posición, bordes y efectos
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <Button
             variant="secondary"
             size="sm"
@@ -342,11 +401,16 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
           options={options}
           onEditor={(editor) => {
             editorRef.current = editor as unknown as EditorInstance;
+            grapesEditorRef.current = editor as unknown as StyleModeEditor;
 
             // Core GrapesJS i18n only responds to editor.I18n; SDK forces locale `en`.
             editor.on('load', () => {
               editor.I18n.addMessages({ en: grapesjsCoreLocaleEs });
               editor.I18n.setLocale('en');
+              const advanced = initStyleMode(
+                editor as unknown as StyleModeEditor,
+              );
+              setAdvancedStyles(advanced);
             });
           }}
         />
