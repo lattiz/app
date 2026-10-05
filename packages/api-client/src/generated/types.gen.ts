@@ -79,6 +79,10 @@ export type SubscriptionResponseDto = {
     billingPeriod: 'monthly' | 'annual';
     status: 'active' | 'trialing' | 'past_due' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'unpaid' | 'paused';
     currentPeriodEnd: string | null;
+    /**
+     * ISO date when the subscription ends, if a cancellation is scheduled; null otherwise.
+     */
+    cancelAt: string | null;
     cancelAtPeriodEnd: boolean;
 };
 
@@ -412,6 +416,10 @@ export type TenantSubscriptionDto = {
     status: string | null;
     billingPeriod: 'monthly' | 'annual';
     currentPeriodEnd: string | null;
+    /**
+     * ISO date when the subscription ends, if a cancellation is scheduled; null otherwise.
+     */
+    cancelAt: string | null;
     cancelAtPeriodEnd: boolean;
 };
 

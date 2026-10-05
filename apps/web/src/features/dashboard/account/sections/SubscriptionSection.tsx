@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { formatDate } from '@/lib/format';
+import { getSubscriptionPeriodDisplay } from '@/lib/subscription-status';
 import { BillingPortalButton } from '../../subscription/BillingPortalButton';
 import { formatMXN, planById } from '../../subscription/plans';
 
@@ -71,6 +71,7 @@ export function SubscriptionSection() {
 
   const plan = planById(subscription.plan ?? '');
   const badge = statusBadge(subscription.status);
+  const period = getSubscriptionPeriodDisplay(subscription);
   const isAnnual = subscription.billingPeriod === 'annual';
   const isPastDue = subscription.status === 'past_due';
 
@@ -87,9 +88,13 @@ export function SubscriptionSection() {
           </Badge>
         </Row>
         <Row label="Período">{isAnnual ? 'Anual' : 'Mensual'}</Row>
-        <Row label={subscription.cancelAtPeriodEnd ? 'Termina el' : 'Próximo cobro'}>
-          {formatDate(subscription.currentPeriodEnd)}
-        </Row>
+        <Row label={period.periodLabel}>{period.dateShort}</Row>
+        {period.isCanceling && (
+          <p className="py-3 text-sm text-yellow-800 dark:text-yellow-300">
+            Se cancelará el {period.dateShort}. Seguirás con acceso hasta
+            entonces.
+          </p>
+        )}
         {data?.domain && <Row label="Dominio">{data.domain}</Row>}
         {plan && (
           <Row label="Precio">

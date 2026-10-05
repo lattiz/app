@@ -28,6 +28,8 @@ export interface SubscriptionStatus {
   plan: 'starter' | 'basico' | 'pro' | null;
   status: 'active' | 'trialing' | 'past_due' | 'canceled' | null;
   currentPeriodEnd: string | null;
+  cancelAt: string | null;
+  cancelAtPeriodEnd: boolean;
   paymentFailed: boolean;
   paymentAttempts: number;
 }

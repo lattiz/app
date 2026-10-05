@@ -2,6 +2,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { sql, type SQL } from 'drizzle-orm';
 import { randomUUID } from 'node:crypto';
 import { computeIsEntitled } from '../../common/billing/entitlement';
+import { scheduledCancellation } from '../../common/billing/scheduled-cancellation';
 import { previewUrl } from '../../common/preview/preview-url';
 import { type Database, DATABASE } from '../../database/database.module';
 import { describeStorageError } from '../storage/domain/object-storage.exceptions';
@@ -113,6 +114,7 @@ interface SubscriptionRow {
   status: string;
   current_period_end: string | Date | null;
   cancel_at_period_end: boolean;
+  cancel_at: string | Date | null;
 }
 
 @Injectable()
@@ -184,7 +186,7 @@ export class TenantsService {
     tenantId: string,
   ): Promise<TenantSubscriptionDto | null> {
     const rows = await this.query<SubscriptionRow>(
-      sql`SELECT plan, billing_period, status, current_period_end, cancel_at_period_end
+      sql`SELECT plan, billing_period, status, current_period_end, cancel_at_period_end, cancel_at
           FROM public.subscriptions
           WHERE tenant_id = ${tenantId}::uuid
           ORDER BY created_at DESC
@@ -193,6 +195,7 @@ export class TenantsService {
     const row = rows[0];
     if (!row) return null;
 
+    const scheduled = scheduledCancellation(row);
     return {
       plan: row.plan,
       status: row.status,
@@ -200,7 +203,8 @@ export class TenantsService {
       currentPeriodEnd: row.current_period_end
         ? toIso(row.current_period_end)
         : null,
-      cancelAtPeriodEnd: row.cancel_at_period_end,
+      cancelAt: scheduled.cancelAt,
+      cancelAtPeriodEnd: scheduled.cancelAtPeriodEnd,
     };
   }
 

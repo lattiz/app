@@ -3,6 +3,7 @@ import { Cron } from '@nestjs/schedule';
 import { sql, type SQL } from 'drizzle-orm';
 import Stripe from 'stripe';
 import { computeIsEntitled } from '../../common/billing/entitlement';
+import { scheduledCancellation } from '../../common/billing/scheduled-cancellation';
 import { type Database, DATABASE } from '../../database/database.module';
 import { DomainsService } from '../domains/domains.service';
 import { EmailOutboxService } from '../email/application/email-outbox.service';
@@ -64,6 +65,7 @@ interface SubscriptionRow {
   status: string;
   current_period_end: string | Date | null;
   cancel_at_period_end: boolean;
+  cancel_at: string | Date | null;
 }
 
 @Injectable()
@@ -144,7 +146,7 @@ export class BillingService {
     tenantId: string,
   ): Promise<SubscriptionResponseDto | null> {
     const rows = await this.query<SubscriptionRow>(
-      sql`SELECT plan, billing_period, status, current_period_end, cancel_at_period_end
+      sql`SELECT plan, billing_period, status, current_period_end, cancel_at_period_end, cancel_at
           FROM public.subscriptions
           WHERE tenant_id = ${tenantId}::uuid
           ORDER BY created_at DESC
@@ -153,6 +155,7 @@ export class BillingService {
     const row = rows[0];
     if (!row) return null;
 
+    const scheduled = scheduledCancellation(row);
     return {
       plan: row.plan,
       billingPeriod: row.billing_period,
@@ -160,7 +163,8 @@ export class BillingService {
       currentPeriodEnd: row.current_period_end
         ? toIso(row.current_period_end)
         : null,
-      cancelAtPeriodEnd: row.cancel_at_period_end,
+      cancelAt: scheduled.cancelAt,
+      cancelAtPeriodEnd: scheduled.cancelAtPeriodEnd,
     };
   }
 
@@ -587,18 +591,21 @@ export class BillingService {
     const canceledAt = subscription.canceled_at
       ? new Date(subscription.canceled_at * 1000).toISOString()
       : null;
+    const cancelAt = subscription.cancel_at
+      ? new Date(subscription.cancel_at * 1000).toISOString()
+      : null;
 
     await this.query(
       sql`INSERT INTO public.subscriptions (
             tenant_id, stripe_subscription_id, stripe_customer_id,
             plan, billing_period, status,
             current_period_start, current_period_end,
-            cancel_at_period_end, canceled_at
+            cancel_at_period_end, cancel_at, canceled_at
           ) VALUES (
             ${tenantId}::uuid, ${subscription.id}, ${subscription.customer as string},
             ${resolved.plan}, ${resolved.period}, ${subscription.status},
             ${period.start}, ${period.end},
-            ${subscription.cancel_at_period_end}, ${canceledAt}
+            ${subscription.cancel_at_period_end}, ${cancelAt}, ${canceledAt}
           )
           ON CONFLICT (stripe_subscription_id) DO UPDATE SET
             stripe_customer_id = EXCLUDED.stripe_customer_id,
@@ -608,6 +615,7 @@ export class BillingService {
             current_period_start = EXCLUDED.current_period_start,
             current_period_end = EXCLUDED.current_period_end,
             cancel_at_period_end = EXCLUDED.cancel_at_period_end,
+            cancel_at = EXCLUDED.cancel_at,
             canceled_at = EXCLUDED.canceled_at`,
     );
   }
@@ -618,8 +626,8 @@ export class BillingService {
     await this.query(
       sql`UPDATE public.subscriptions
           SET status = 'canceled', canceled_at = now(),
-              cancel_at_period_end = false, payment_attempts = 0,
-              updated_at = now()
+              cancel_at_period_end = false, cancel_at = null,
+              payment_attempts = 0, updated_at = now()
           WHERE stripe_subscription_id = ${stripeSubscriptionId}`,
     );
   }
@@ -695,3 +703,5 @@ function isActiveStatus(status: Stripe.Subscription.Status): boolean {
 function toIso(value: string | Date): string {
   return value instanceof Date ? value.toISOString() : new Date(value).toISOString();
 }
+
+export { scheduledCancellation };

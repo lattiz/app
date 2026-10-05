@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { formatDate } from '@/lib/format';
+import { getSubscriptionPeriodDisplay } from '@/lib/subscription-status';
 import { cn } from '@/lib/utils';
 import type { SubscriptionStatus } from '@/types/dashboard.types';
 
@@ -53,8 +53,9 @@ export function SubscriptionCard({ subscription }: SubscriptionCardProps) {
   if (!subscription) return null;
 
   const badge = statusBadge(subscription.status);
+  const period = getSubscriptionPeriodDisplay(subscription);
   const includesDomain = subscription.plan === 'pro';
-  const showUpgrade = subscription.plan !== 'pro';
+  const showUpgrade = subscription.plan !== 'pro' && !period.isCanceling;
 
   return (
     <Card>
@@ -64,9 +65,18 @@ export function SubscriptionCard({ subscription }: SubscriptionCardProps) {
             {badge.text}
           </Badge>
         </Row>
-        <Row label="Próximo cobro">
-          {formatDate(subscription.currentPeriodEnd)}
-        </Row>
+        <Row label={period.periodLabel}>{period.dateShort}</Row>
+        {period.isCanceling && (
+          <p className="py-2 text-sm text-yellow-800 dark:text-yellow-300">
+            Se cancelará el {period.dateShort}.{' '}
+            <Link
+              to="/dashboard/subscription"
+              className="font-medium underline underline-offset-4"
+            >
+              Ver detalles
+            </Link>
+          </p>
+        )}
         <Row label="Dominio propio">
           <Badge
             variant="secondary"

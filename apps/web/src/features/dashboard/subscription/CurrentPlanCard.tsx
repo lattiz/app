@@ -1,4 +1,6 @@
 import type { TenantSubscriptionDto } from '@lattiz/api-client';
+import { TriangleAlertIcon } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import {
   Card,
@@ -6,14 +8,30 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { formatDate } from '@/lib/format';
+import {
+  cancelingStatusBadgeText,
+  getSubscriptionPeriodDisplay,
+} from '@/lib/subscription-status';
+import { BillingPortalButton } from './BillingPortalButton';
 import { formatMXN, planById } from './plans';
 
 interface Props {
   subscription: TenantSubscriptionDto;
 }
 
-function statusBadge(status: string | null): { text: string; className: string } {
+function statusBadge(
+  status: string | null,
+  isCanceling: boolean,
+  dateShort: string,
+): { text: string; className: string } {
+  if (isCanceling) {
+    return {
+      text: cancelingStatusBadgeText(dateShort),
+      className:
+        'bg-yellow-500/10 text-yellow-700 dark:text-yellow-400',
+    };
+  }
+
   switch (status) {
     case 'active':
       return {
@@ -54,7 +72,12 @@ function Row({
 
 export function CurrentPlanCard({ subscription }: Props) {
   const plan = planById(subscription.plan);
-  const badge = statusBadge(subscription.status);
+  const period = getSubscriptionPeriodDisplay(subscription);
+  const badge = statusBadge(
+    subscription.status,
+    period.isCanceling,
+    period.dateShort,
+  );
   const isAnnual = subscription.billingPeriod === 'annual';
   const price = plan
     ? isAnnual
@@ -83,14 +106,23 @@ export function CurrentPlanCard({ subscription }: Props) {
             </span>
           )}
         </Row>
-        <Row label={subscription.cancelAtPeriodEnd ? 'Termina el' : 'Próximo cobro'}>
-          {formatDate(subscription.currentPeriodEnd)}
-        </Row>
-        {subscription.cancelAtPeriodEnd && (
-          <p className="py-3 text-sm text-destructive">
-            Tu suscripción se cancelará al final del periodo actual y no se
-            renovará.
-          </p>
+        <Row label={period.periodLabel}>{period.dateShort}</Row>
+        {period.isCanceling && (
+          <div className="flex flex-col gap-3 py-3">
+            <Alert
+              className="border-yellow-500/30 bg-yellow-500/5 text-yellow-800 dark:text-yellow-300 *:data-[slot=alert-description]:text-yellow-700/90 dark:*:data-[slot=alert-description]:text-yellow-300/80"
+            >
+              <TriangleAlertIcon />
+              <AlertTitle>Tu suscripción se cancelará</AlertTitle>
+              <AlertDescription>
+                Seguirás teniendo acceso y tu sitio seguirá en línea hasta el{' '}
+                {period.dateLong}. Después se suspenderá.
+              </AlertDescription>
+            </Alert>
+            <BillingPortalButton variant="default">
+              Reactivar suscripción
+            </BillingPortalButton>
+          </div>
         )}
       </CardContent>
     </Card>

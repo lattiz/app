@@ -35,6 +35,10 @@ export class TenantSubscriptionDto {
   @ApiProperty({ type: String, nullable: true })
   currentPeriodEnd!: string | null;
 
+  /** ISO date when the subscription ends, if a cancellation is scheduled; null otherwise. */
+  @ApiProperty({ type: String, nullable: true })
+  cancelAt!: string | null;
+
   @ApiProperty()
   cancelAtPeriodEnd!: boolean;
 }

@@ -1446,6 +1446,11 @@
             "type": "string",
             "nullable": true
           },
+          "cancelAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "ISO date when the subscription ends, if a cancellation is scheduled; null otherwise."
+          },
           "cancelAtPeriodEnd": {
             "type": "boolean"
           }
@@ -1455,6 +1460,7 @@
           "billingPeriod",
           "status",
           "currentPeriodEnd",
+          "cancelAt",
           "cancelAtPeriodEnd"
         ]
       },
@@ -2287,6 +2293,11 @@
             "type": "string",
             "nullable": true
           },
+          "cancelAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "ISO date when the subscription ends, if a cancellation is scheduled; null otherwise."
+          },
           "cancelAtPeriodEnd": {
             "type": "boolean"
           }
@@ -2296,6 +2307,7 @@
           "status",
           "billingPeriod",
           "currentPeriodEnd",
+          "cancelAt",
           "cancelAtPeriodEnd"
         ]
       },

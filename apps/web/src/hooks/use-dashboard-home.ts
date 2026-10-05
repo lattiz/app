@@ -69,6 +69,8 @@ function mapToSubscriptionStatus(tenantMe: TenantMeResponseDto): SubscriptionSta
     plan: sub?.plan ?? null,
     status: (sub?.status ?? null) as SubscriptionStatus['status'],
     currentPeriodEnd: sub?.currentPeriodEnd ?? null,
+    cancelAt: sub?.cancelAt ?? null,
+    cancelAtPeriodEnd: sub?.cancelAtPeriodEnd ?? false,
     paymentFailed: sub?.status === 'past_due',
     paymentAttempts: 0,
   };
