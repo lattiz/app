@@ -3,8 +3,8 @@
 import { type DefaultError, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { analyticsControllerOverview, analyticsControllerRetry, billingControllerCreateCheckoutSession, billingControllerCreatePortalSession, billingControllerGetInvoices, billingControllerGetSubscription, billingControllerTriggerReconciliation, domainsControllerConnect, domainsControllerGetDomain, domainsControllerGetJobStatus, domainsControllerGetQuote, domainsControllerPurchase, domainsControllerRelaunch, domainsControllerSearch, healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options, sitesControllerChangeTemplate, sitesControllerGetSchema, sitesControllerPublish, sitesControllerSaveSchema, sitesControllerSelectTemplate, sitesControllerUploadAssets, templatesControllerFindAll, tenantsControllerMe, tenantsControllerRemoveBranding, tenantsControllerSlugAvailability, tenantsControllerSlugSuggestion, tenantsControllerUpdateSiteSettings, tenantsControllerUpdateSlug, tenantsControllerUploadBranding } from '../sdk.gen';
-import type { AnalyticsControllerOverviewData, AnalyticsControllerOverviewResponse, AnalyticsControllerRetryData, AnalyticsControllerRetryResponse, BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponse, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponse, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponse, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionResponse, BillingControllerTriggerReconciliationData, BillingControllerTriggerReconciliationResponse, DomainsControllerConnectData, DomainsControllerConnectResponse, DomainsControllerGetDomainData, DomainsControllerGetDomainResponse, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponse, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponse, DomainsControllerPurchaseData, DomainsControllerPurchaseResponse, DomainsControllerRelaunchData, DomainsControllerRelaunchResponse, DomainsControllerSearchData, DomainsControllerSearchResponse, HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse, SitesControllerChangeTemplateData, SitesControllerChangeTemplateResponse, SitesControllerGetSchemaData, SitesControllerGetSchemaResponse, SitesControllerPublishData, SitesControllerPublishResponse, SitesControllerSaveSchemaData, SitesControllerSaveSchemaResponse, SitesControllerSelectTemplateData, SitesControllerSelectTemplateResponse, SitesControllerUploadAssetsData, SitesControllerUploadAssetsResponse, TemplatesControllerFindAllData, TemplatesControllerFindAllResponse, TenantsControllerMeData, TenantsControllerMeResponse, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingResponse, TenantsControllerSlugAvailabilityData, TenantsControllerSlugAvailabilityResponse, TenantsControllerSlugSuggestionData, TenantsControllerSlugSuggestionResponse, TenantsControllerUpdateSiteSettingsData, TenantsControllerUpdateSiteSettingsResponse, TenantsControllerUpdateSlugData, TenantsControllerUpdateSlugResponse, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingResponse } from '../types.gen';
+import { analyticsControllerOverview, analyticsControllerRealtime, analyticsControllerRetry, billingControllerCreateCheckoutSession, billingControllerCreatePortalSession, billingControllerGetInvoices, billingControllerGetPlans, billingControllerGetSubscription, billingControllerGetSubscriptionPrice, billingControllerTriggerReconciliation, domainsControllerConnect, domainsControllerGetDomain, domainsControllerGetJobStatus, domainsControllerGetQuote, domainsControllerPurchase, domainsControllerRelaunch, domainsControllerSearch, healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options, publicTemplatesControllerFindPublished, sitesControllerChangeTemplate, sitesControllerGetSchema, sitesControllerPublish, sitesControllerSaveSchema, sitesControllerSelectTemplate, sitesControllerUploadAssets, templatesControllerFindAll, tenantsControllerMe, tenantsControllerRemoveBranding, tenantsControllerSlugAvailability, tenantsControllerSlugSuggestion, tenantsControllerUpdateSiteSettings, tenantsControllerUpdateSlug, tenantsControllerUploadBranding } from '../sdk.gen';
+import type { AnalyticsControllerOverviewData, AnalyticsControllerOverviewResponse, AnalyticsControllerRealtimeData, AnalyticsControllerRealtimeResponse, AnalyticsControllerRetryData, AnalyticsControllerRetryResponse, BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponse, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponse, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponse, BillingControllerGetPlansData, BillingControllerGetPlansResponse, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionPriceData, BillingControllerGetSubscriptionPriceResponse, BillingControllerGetSubscriptionResponse, BillingControllerTriggerReconciliationData, BillingControllerTriggerReconciliationResponse, DomainsControllerConnectData, DomainsControllerConnectResponse, DomainsControllerGetDomainData, DomainsControllerGetDomainResponse, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponse, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponse, DomainsControllerPurchaseData, DomainsControllerPurchaseResponse, DomainsControllerRelaunchData, DomainsControllerRelaunchResponse, DomainsControllerSearchData, DomainsControllerSearchResponse, HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse, PublicTemplatesControllerFindPublishedData, PublicTemplatesControllerFindPublishedResponse, SitesControllerChangeTemplateData, SitesControllerChangeTemplateResponse, SitesControllerGetSchemaData, SitesControllerGetSchemaResponse, SitesControllerPublishData, SitesControllerPublishResponse, SitesControllerSaveSchemaData, SitesControllerSaveSchemaResponse, SitesControllerSelectTemplateData, SitesControllerSelectTemplateResponse, SitesControllerUploadAssetsData, SitesControllerUploadAssetsResponse, TemplatesControllerFindAllData, TemplatesControllerFindAllResponse, TenantsControllerMeData, TenantsControllerMeResponse, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingResponse, TenantsControllerSlugAvailabilityData, TenantsControllerSlugAvailabilityResponse, TenantsControllerSlugSuggestionData, TenantsControllerSlugSuggestionResponse, TenantsControllerUpdateSiteSettingsData, TenantsControllerUpdateSiteSettingsResponse, TenantsControllerUpdateSlugData, TenantsControllerUpdateSlugResponse, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingResponse } from '../types.gen';
 
 export type QueryKey<TOptions extends Options> = [
     Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
@@ -57,6 +57,24 @@ export const analyticsControllerOverviewOptions = (options?: Options<AnalyticsCo
     queryKey: analyticsControllerOverviewQueryKey(options)
 });
 
+export const analyticsControllerRealtimeQueryKey = (options?: Options<AnalyticsControllerRealtimeData>) => createQueryKey('analyticsControllerRealtime', options);
+
+/**
+ * Get realtime active users (protected, Pro)
+ */
+export const analyticsControllerRealtimeOptions = (options?: Options<AnalyticsControllerRealtimeData>) => queryOptions<AnalyticsControllerRealtimeResponse, DefaultError, AnalyticsControllerRealtimeResponse, ReturnType<typeof analyticsControllerRealtimeQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await analyticsControllerRealtime({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: analyticsControllerRealtimeQueryKey(options)
+});
+
 /**
  * Retry failed analytics provisioning (protected, Pro)
  */
@@ -73,6 +91,24 @@ export const analyticsControllerRetryMutation = (options?: Partial<Options<Analy
     };
     return mutationOptions;
 };
+
+export const billingControllerGetPlansQueryKey = (options?: Options<BillingControllerGetPlansData>) => createQueryKey('billingControllerGetPlans', options);
+
+/**
+ * List plan prices from Stripe (protected)
+ */
+export const billingControllerGetPlansOptions = (options?: Options<BillingControllerGetPlansData>) => queryOptions<BillingControllerGetPlansResponse, DefaultError, BillingControllerGetPlansResponse, ReturnType<typeof billingControllerGetPlansQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await billingControllerGetPlans({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: billingControllerGetPlansQueryKey(options)
+});
 
 /**
  * Create a Stripe Checkout session (protected)
@@ -124,6 +160,24 @@ export const billingControllerGetSubscriptionOptions = (options?: Options<Billin
         return data;
     },
     queryKey: billingControllerGetSubscriptionQueryKey(options)
+});
+
+export const billingControllerGetSubscriptionPriceQueryKey = (options?: Options<BillingControllerGetSubscriptionPriceData>) => createQueryKey('billingControllerGetSubscriptionPrice', options);
+
+/**
+ * Get the price the tenant subscription is billed (protected)
+ */
+export const billingControllerGetSubscriptionPriceOptions = (options?: Options<BillingControllerGetSubscriptionPriceData>) => queryOptions<BillingControllerGetSubscriptionPriceResponse, DefaultError, BillingControllerGetSubscriptionPriceResponse, ReturnType<typeof billingControllerGetSubscriptionPriceQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await billingControllerGetSubscriptionPrice({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: billingControllerGetSubscriptionPriceQueryKey(options)
 });
 
 export const billingControllerGetInvoicesQueryKey = (options?: Options<BillingControllerGetInvoicesData>) => createQueryKey('billingControllerGetInvoices', options);
@@ -455,6 +509,24 @@ export const templatesControllerFindAllOptions = (options?: Options<TemplatesCon
         return data;
     },
     queryKey: templatesControllerFindAllQueryKey(options)
+});
+
+export const publicTemplatesControllerFindPublishedQueryKey = (options?: Options<PublicTemplatesControllerFindPublishedData>) => createQueryKey('publicTemplatesControllerFindPublished', options);
+
+/**
+ * List published templates (public)
+ */
+export const publicTemplatesControllerFindPublishedOptions = (options?: Options<PublicTemplatesControllerFindPublishedData>) => queryOptions<PublicTemplatesControllerFindPublishedResponse, DefaultError, PublicTemplatesControllerFindPublishedResponse, ReturnType<typeof publicTemplatesControllerFindPublishedQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await publicTemplatesControllerFindPublished({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: publicTemplatesControllerFindPublishedQueryKey(options)
 });
 
 export const tenantsControllerMeQueryKey = (options?: Options<TenantsControllerMeData>) => createQueryKey('tenantsControllerMe', options);

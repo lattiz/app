@@ -8,11 +8,21 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
-import { formatMXN, type BillingPeriod, type PlanDetails } from './plans';
+import {
+  annualSavingLabel,
+  formatPrice,
+  type BillingPeriod,
+  type PlanDetails,
+  type PlanPricing,
+} from './plans';
 
 interface Props {
   plan: PlanDetails;
+  /** Null while prices load or when Stripe has none for this plan; subscribing is disabled then. */
+  pricing: PlanPricing | null;
+  pricingLoading?: boolean;
   period: BillingPeriod;
   onSubscribe: () => void;
   loading?: boolean;
@@ -22,6 +32,8 @@ interface Props {
 
 export function PricingCard({
   plan,
+  pricing,
+  pricingLoading,
   period,
   onSubscribe,
   loading,
@@ -29,7 +41,7 @@ export function PricingCard({
   ctaLabel,
 }: Props) {
   const isAnnual = period === 'annual';
-  const monthlyPrice = isAnnual ? plan.annualMonthlyEquivalent : plan.monthly;
+  const saving = pricing ? annualSavingLabel(pricing) : null;
 
   return (
     <Card
@@ -48,19 +60,32 @@ export function PricingCard({
         <CardDescription>{plan.subtitle}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-1 flex-col gap-6">
-        <div>
-          <div className="flex items-baseline gap-1">
-            <span className="text-3xl font-semibold">
-              {formatMXN(monthlyPrice)}
-            </span>
-            <span className="text-sm text-muted-foreground">/mes</span>
+        {pricing ? (
+          <div>
+            <div className="flex items-baseline gap-1">
+              <span className="text-3xl font-semibold">
+                {formatPrice(
+                  isAnnual ? pricing.annual / 12 : pricing.monthly,
+                  pricing.currency,
+                )}
+              </span>
+              <span className="text-sm text-muted-foreground">/mes</span>
+            </div>
+            {isAnnual && (
+              <p className="mt-1 text-sm text-muted-foreground">
+                {formatPrice(pricing.annual, pricing.currency)}/año
+                {saving && ` · ${saving}`}
+              </p>
+            )}
           </div>
-          {isAnnual && (
-            <p className="mt-1 text-sm text-muted-foreground">
-              {formatMXN(plan.annual)}/año · 2 meses gratis
-            </p>
-          )}
-        </div>
+        ) : pricingLoading ? (
+          <div className="flex flex-col gap-2">
+            <Skeleton className="h-9 w-32" />
+            {isAnnual && <Skeleton className="h-4 w-40" />}
+          </div>
+        ) : (
+          <p className="text-sm text-muted-foreground">Precio no disponible</p>
+        )}
 
         <ul className="flex flex-col gap-2 text-sm">
           {plan.features.map((feature) => (
@@ -74,7 +99,7 @@ export function PricingCard({
         <Button
           className="mt-auto w-full"
           variant={plan.highlighted ? 'default' : 'outline'}
-          disabled={loading || currentPlan}
+          disabled={loading || currentPlan || !pricing}
           onClick={onSubscribe}
         >
           {currentPlan ? 'Tu plan actual' : (ctaLabel ?? 'Suscribirme')}

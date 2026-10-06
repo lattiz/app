@@ -93,7 +93,12 @@ export class BillingService {
       limit: 1,
     });
     const price = prices.data[0];
-    if (!price) throw new PriceNotConfiguredException(lookupKey);
+    if (!price) {
+      this.logger.error(
+        `Checkout blocked: no active Stripe price for lookup_key "${lookupKey}".`,
+      );
+      throw new PriceNotConfiguredException(lookupKey);
+    }
 
     const tenant = await this.getTenantByUserSub(userSub);
     const customerId = await this.getOrCreateCustomer(tenant, userSub);

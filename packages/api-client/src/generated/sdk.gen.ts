@@ -2,7 +2,7 @@
 
 import { type Client, type ClientMeta, formDataBodySerializer, type Options as Options2, type RequestResult, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { AnalyticsControllerOverviewData, AnalyticsControllerOverviewResponses, AnalyticsControllerRetryData, AnalyticsControllerRetryResponses, BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponses, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponses, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponses, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionResponses, BillingControllerTriggerReconciliationData, BillingControllerTriggerReconciliationResponses, DomainsControllerConnectData, DomainsControllerConnectResponses, DomainsControllerGetDomainData, DomainsControllerGetDomainResponses, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponses, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponses, DomainsControllerPurchaseData, DomainsControllerPurchaseResponses, DomainsControllerRelaunchData, DomainsControllerRelaunchResponses, DomainsControllerSearchData, DomainsControllerSearchResponses, HealthControllerHealthData, HealthControllerHealthResponses, MeControllerDeleteMeData, MeControllerDeleteMeErrors, MeControllerDeleteMeResponses, MeControllerMeData, MeControllerMeErrors, MeControllerMeResponses, SitesControllerChangeTemplateData, SitesControllerChangeTemplateErrors, SitesControllerChangeTemplateResponses, SitesControllerGetSchemaData, SitesControllerGetSchemaErrors, SitesControllerGetSchemaResponses, SitesControllerPublishData, SitesControllerPublishErrors, SitesControllerPublishResponses, SitesControllerSaveSchemaData, SitesControllerSaveSchemaErrors, SitesControllerSaveSchemaResponses, SitesControllerSelectTemplateData, SitesControllerSelectTemplateErrors, SitesControllerSelectTemplateResponses, SitesControllerUploadAssetsData, SitesControllerUploadAssetsErrors, SitesControllerUploadAssetsResponses, TemplatesControllerFindAllData, TemplatesControllerFindAllErrors, TemplatesControllerFindAllResponses, TenantsControllerMeData, TenantsControllerMeErrors, TenantsControllerMeResponses, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingErrors, TenantsControllerRemoveBrandingResponses, TenantsControllerSlugAvailabilityData, TenantsControllerSlugAvailabilityErrors, TenantsControllerSlugAvailabilityResponses, TenantsControllerSlugSuggestionData, TenantsControllerSlugSuggestionErrors, TenantsControllerSlugSuggestionResponses, TenantsControllerUpdateSiteSettingsData, TenantsControllerUpdateSiteSettingsErrors, TenantsControllerUpdateSiteSettingsResponses, TenantsControllerUpdateSlugData, TenantsControllerUpdateSlugErrors, TenantsControllerUpdateSlugResponses, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingErrors, TenantsControllerUploadBrandingResponses } from './types.gen';
+import type { AnalyticsControllerOverviewData, AnalyticsControllerOverviewResponses, AnalyticsControllerRealtimeData, AnalyticsControllerRealtimeResponses, AnalyticsControllerRetryData, AnalyticsControllerRetryResponses, BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponses, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponses, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponses, BillingControllerGetPlansData, BillingControllerGetPlansResponses, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionPriceData, BillingControllerGetSubscriptionPriceResponses, BillingControllerGetSubscriptionResponses, BillingControllerTriggerReconciliationData, BillingControllerTriggerReconciliationResponses, DomainsControllerConnectData, DomainsControllerConnectResponses, DomainsControllerGetDomainData, DomainsControllerGetDomainResponses, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponses, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponses, DomainsControllerPurchaseData, DomainsControllerPurchaseResponses, DomainsControllerRelaunchData, DomainsControllerRelaunchResponses, DomainsControllerSearchData, DomainsControllerSearchResponses, HealthControllerHealthData, HealthControllerHealthResponses, MeControllerDeleteMeData, MeControllerDeleteMeErrors, MeControllerDeleteMeResponses, MeControllerMeData, MeControllerMeErrors, MeControllerMeResponses, PublicTemplatesControllerFindPublishedData, PublicTemplatesControllerFindPublishedResponses, SitesControllerChangeTemplateData, SitesControllerChangeTemplateErrors, SitesControllerChangeTemplateResponses, SitesControllerGetSchemaData, SitesControllerGetSchemaErrors, SitesControllerGetSchemaResponses, SitesControllerPublishData, SitesControllerPublishErrors, SitesControllerPublishResponses, SitesControllerSaveSchemaData, SitesControllerSaveSchemaErrors, SitesControllerSaveSchemaResponses, SitesControllerSelectTemplateData, SitesControllerSelectTemplateErrors, SitesControllerSelectTemplateResponses, SitesControllerUploadAssetsData, SitesControllerUploadAssetsErrors, SitesControllerUploadAssetsResponses, TemplatesControllerFindAllData, TemplatesControllerFindAllErrors, TemplatesControllerFindAllResponses, TenantsControllerMeData, TenantsControllerMeErrors, TenantsControllerMeResponses, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingErrors, TenantsControllerRemoveBrandingResponses, TenantsControllerSlugAvailabilityData, TenantsControllerSlugAvailabilityErrors, TenantsControllerSlugAvailabilityResponses, TenantsControllerSlugSuggestionData, TenantsControllerSlugSuggestionErrors, TenantsControllerSlugSuggestionResponses, TenantsControllerUpdateSiteSettingsData, TenantsControllerUpdateSiteSettingsErrors, TenantsControllerUpdateSiteSettingsResponses, TenantsControllerUpdateSlugData, TenantsControllerUpdateSlugErrors, TenantsControllerUpdateSlugResponses, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingErrors, TenantsControllerUploadBrandingResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -28,11 +28,29 @@ export const analyticsControllerOverview = <ThrowOnError extends boolean = false
 });
 
 /**
+ * Get realtime active users (protected, Pro)
+ */
+export const analyticsControllerRealtime = <ThrowOnError extends boolean = false>(options?: Options<AnalyticsControllerRealtimeData, ThrowOnError>): RequestResult<AnalyticsControllerRealtimeResponses, unknown, ThrowOnError> => (options?.client ?? client).get<AnalyticsControllerRealtimeResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/analytics/realtime',
+    ...options
+});
+
+/**
  * Retry failed analytics provisioning (protected, Pro)
  */
 export const analyticsControllerRetry = <ThrowOnError extends boolean = false>(options?: Options<AnalyticsControllerRetryData, ThrowOnError>): RequestResult<AnalyticsControllerRetryResponses, unknown, ThrowOnError> => (options?.client ?? client).post<AnalyticsControllerRetryResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/analytics/retry',
+    ...options
+});
+
+/**
+ * List plan prices from Stripe (protected)
+ */
+export const billingControllerGetPlans = <ThrowOnError extends boolean = false>(options?: Options<BillingControllerGetPlansData, ThrowOnError>): RequestResult<BillingControllerGetPlansResponses, unknown, ThrowOnError> => (options?.client ?? client).get<BillingControllerGetPlansResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/billing/plans',
     ...options
 });
 
@@ -64,6 +82,15 @@ export const billingControllerCreatePortalSession = <ThrowOnError extends boolea
 export const billingControllerGetSubscription = <ThrowOnError extends boolean = false>(options?: Options<BillingControllerGetSubscriptionData, ThrowOnError>): RequestResult<BillingControllerGetSubscriptionResponses, unknown, ThrowOnError> => (options?.client ?? client).get<BillingControllerGetSubscriptionResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/billing/subscription',
+    ...options
+});
+
+/**
+ * Get the price the tenant subscription is billed (protected)
+ */
+export const billingControllerGetSubscriptionPrice = <ThrowOnError extends boolean = false>(options?: Options<BillingControllerGetSubscriptionPriceData, ThrowOnError>): RequestResult<BillingControllerGetSubscriptionPriceResponses, unknown, ThrowOnError> => (options?.client ?? client).get<BillingControllerGetSubscriptionPriceResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/billing/subscription/price',
     ...options
 });
 
@@ -266,6 +293,11 @@ export const templatesControllerFindAll = <ThrowOnError extends boolean = false>
     url: '/templates',
     ...options
 });
+
+/**
+ * List published templates (public)
+ */
+export const publicTemplatesControllerFindPublished = <ThrowOnError extends boolean = false>(options?: Options<PublicTemplatesControllerFindPublishedData, ThrowOnError>): RequestResult<PublicTemplatesControllerFindPublishedResponses, unknown, ThrowOnError> => (options?.client ?? client).get<PublicTemplatesControllerFindPublishedResponses, unknown, ThrowOnError>({ url: '/public/templates', ...options });
 
 /**
  * Get the authenticated user tenant (protected)

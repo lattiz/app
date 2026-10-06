@@ -85,3 +85,37 @@ export class AnalyticsOverviewDto {
   @ApiProperty({ type: String, nullable: true })
   retryAvailableAt!: string | null;
 }
+
+export class AnalyticsRealtimeMinuteDto {
+  /** 29 (oldest) … 0 (the current minute). */
+  @ApiProperty()
+  minutesAgo!: number;
+
+  @ApiProperty()
+  activeUsers!: number;
+}
+
+export class AnalyticsRealtimeDataDto {
+  /** Distinct users in the last 30 minutes (not the sum of `perMinute`). */
+  @ApiProperty()
+  activeUsers!: number;
+
+  /** Exactly 30 points oldest → newest, or empty when the per-minute breakdown failed. */
+  @ApiProperty({ type: [AnalyticsRealtimeMinuteDto] })
+  perMinute!: AnalyticsRealtimeMinuteDto[];
+}
+
+export class AnalyticsRealtimeDto {
+  @ApiProperty({ enum: ANALYTICS_STATUSES, enumName: 'AnalyticsStatus' })
+  status!: AnalyticsStatus;
+
+  @ApiProperty({ type: AnalyticsRealtimeDataDto, nullable: true })
+  realtime!: AnalyticsRealtimeDataDto | null;
+
+  /** True when the Realtime API failed; the failure is cached for a minute. */
+  @ApiProperty()
+  unavailable!: boolean;
+
+  @ApiProperty({ type: String, nullable: true })
+  fetchedAt!: string | null;
+}

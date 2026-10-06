@@ -1,95 +1,116 @@
 /**
- * Parse a GrapesJS `.grapesjs` export, re-host its cdn.grapesjs.com assets into
- * the active object storage (STORAGE_PROVIDER=r2|supabase, same env as the API),
- * rewrite the URLs in the project JSON, and upsert the result into `public.templates`.
+ * One command from a designer's GrapesJS export to a live, active template:
+ * validate → collect assets → migrate them to R2 → rewrite URLs → write the static
+ * preview → upsert `public.templates` → deploy previews → thumbnail → activate.
+ * Every stage is idempotent, so re-running the same command resumes cleanly.
  *
- * Usage:
- *   SUPABASE_URL=https://xxxx.supabase.co \
- *   SUPABASE_SERVICE_ROLE_KEY=eyJh... \
- *   STORAGE_PROVIDER=r2 R2_ACCOUNT_ID=... R2_ACCESS_KEY_ID=... R2_SECRET_ACCESS_KEY=... \
- *   R2_BUCKET=lattiz-assets R2_PUBLIC_URL=https://assets.lattiz.app \
- *   npx tsx scripts/parse-and-seed-template.ts \
- *     --file ./apps/web/lattiz-test.grapesjs \
- *     --id neuraltech-v1 \
- *     --name "NeuralTech AI" \
- *     --category tecnologia \
- *     --preview-url https://templates.lattiz.com/neuraltech-v1
+ *   pnpm tsx scripts/parse-and-seed-template.ts \
+ *     --file ./x.grapesjs --html ./x-export/index.html \
+ *     --id restaurante-moderno-v1 --name "Restaurante Moderno" --category restaurantes \
+ *     [--description ".."] [--sort-order 10] \
+ *     [--dry-run] [--no-deploy] [--no-thumbnail] [--no-preview]
+ *
+ * Env: see the root .env.example (read from ./.env, then apps/api/.env for the shared keys).
+ * Workflow: docs/adding-templates.md
  */
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
-import { createClient } from '@supabase/supabase-js';
+import { createHash } from 'node:crypto';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { dirname, join, relative, resolve } from 'node:path';
+import { parseEnv } from 'node:util';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import type { ObjectStoragePort } from '../apps/api/src/modules/storage/domain/object-storage.port';
 import {
   createObjectStorage,
   resolveStorageProvider,
 } from '../apps/api/src/modules/storage/infrastructure/storage-provider.factory';
+import { TEMPLATE_PREVIEWS_DIR, vercel } from './lib/vercel-cli';
 
-const BUCKET = 'template-assets';
-const CDN_HOST = 'cdn.grapesjs.com';
-// Matches any cdn.grapesjs.com URL wherever it appears in the serialized JSON.
-const CDN_URL_RE = /https?:\/\/cdn\.grapesjs\.com\/[^\s"'\\)]+/g;
+const REPO_ROOT = resolve(__dirname, '..');
+const ID_RE = /^[a-z0-9-]{3,60}$/;
+// Stops at whitespace, quotes, escapes, parens, tags and HTML-entity/CSS delimiters.
+const URL_TAIL = String.raw`[^\s"'\\()<>&;]+`;
+const SOURCE_URL_RES = [
+  new RegExp(
+    String.raw`https://cdn\.grapesjs\.com/workspaces/${URL_TAIL}`,
+    'g',
+  ),
+  new RegExp(
+    String.raw`https://[a-z0-9-]+\.supabase\.co/storage/v1/object/public/${URL_TAIL}`,
+    'g',
+  ),
+];
+const MAX_ASSET_BYTES = 15 * 1024 * 1024;
+const DOWNLOAD_TIMEOUT_MS = 30_000;
+const DOWNLOAD_ATTEMPTS = 3;
+const PREVIEW_POLL_MS = 90_000;
+const ALLOWED_TYPE_RE = /^(image|video|font)\//;
 
-interface GrapesAsset {
-  id?: string;
-  src?: string;
-  name?: string;
-  mimeType?: string;
-}
-
-interface GrapesProject {
-  assets?: GrapesAsset[];
-  custom?: { id?: string; plugins?: unknown[] };
-  [key: string]: unknown;
-}
+const EXT_BY_TYPE: Record<string, string> = {
+  'image/webp': 'webp',
+  'image/png': 'png',
+  'image/jpeg': 'jpg',
+  'image/gif': 'gif',
+  'image/svg+xml': 'svg',
+  'image/avif': 'avif',
+  'image/x-icon': 'ico',
+  'image/vnd.microsoft.icon': 'ico',
+  'video/mp4': 'mp4',
+  'video/webm': 'webm',
+  'font/woff': 'woff',
+  'font/woff2': 'woff2',
+  'font/ttf': 'ttf',
+  'font/otf': 'otf',
+};
+const TYPE_BY_EXT: Record<string, string> = {
+  ...Object.fromEntries(Object.entries(EXT_BY_TYPE).map(([t, e]) => [e, t])),
+  jpeg: 'image/jpeg',
+};
 
 interface CliArgs {
   file: string;
+  html?: string;
   id: string;
   name: string;
   category: string;
-  previewUrl?: string;
+  description?: string;
+  sortOrder?: number;
+  dryRun: boolean;
+  deploy: boolean;
+  thumbnail: boolean;
+  preview: boolean;
 }
 
-const MANUAL_STORAGE_STEP = `
-⚠️  MANUAL STEP REQUIRED — Supabase Storage Bucket
-──────────────────────────────────────────────────
-1. Open your Supabase project dashboard
-2. Navigate to Storage → New bucket
-3. Bucket name: ${BUCKET}
-4. Public bucket: ✓ (toggle ON)
-5. Click Save
-6. Then re-run this seed script
-──────────────────────────────────────────────────`;
-
-// TODO: MANUAL STEP — the Supabase Storage bucket `template-assets` cannot be
-// created via SQL/API here. Create it once (public) before running this script.
-
-function printHelp(): void {
-  console.log(`parse-and-seed-template — seed a GrapesJS template into public.templates
-
-Required env:
-  SUPABASE_URL                Supabase project URL
-  SUPABASE_SERVICE_ROLE_KEY   Service role key (server-only)
-  STORAGE_PROVIDER            r2 | supabase (default supabase); with r2 also
-                              R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY,
-                              R2_BUCKET, R2_PUBLIC_URL (same as apps/api/.env)
-
-Flags:
-  --file <path>          Path to the .grapesjs export file        (required)
-  --id <id>              Template id (primary key, upsert key)     (required)
-  --name <name>          Human-readable template name             (required)
-  --category <cat>       Template category            (default: general)
-  --preview-url <url>    Public preview URL                       (optional)
-  --help                 Show this help
-
-Example:
-  SUPABASE_URL=https://xxxx.supabase.co \\
-  SUPABASE_SERVICE_ROLE_KEY=eyJh... \\
-  npx tsx scripts/parse-and-seed-template.ts \\
-    --file ./apps/web/lattiz-test.grapesjs \\
-    --id neuraltech-v1 --name "NeuralTech AI" \\
-    --category tecnologia --preview-url https://templates.lattiz.com/neuraltech-v1`);
+interface GrapesProject {
+  pages?: unknown[];
+  styles?: unknown[];
+  assets?: unknown[];
+  custom?: {
+    projectType?: string;
+    plugins?: { id?: string; version?: string }[];
+  };
+  [key: string]: unknown;
 }
+
+interface DownloadedAsset {
+  url: string;
+  body: Buffer;
+  contentType: string;
+  key: string;
+}
+
+type StageStatus = '✓' | '✗' | '–';
+const summary: { stage: string; status: StageStatus; detail: string }[] = [];
+
+function record(stage: string, status: StageStatus, detail: string): void {
+  summary.push({ stage, status, detail });
+  const line = `${status} ${stage}${detail ? ` — ${detail}` : ''}`;
+  if (status === '✗') console.error(line);
+  else console.log(line);
+}
+
+class StageError extends Error {}
+
+// ── CLI & env ────────────────────────────────────────────────────────────────
 
 function parseArgs(argv: string[]): CliArgs {
   const raw = new Map<string, string>();
@@ -99,190 +120,649 @@ function parseArgs(argv: string[]): CliArgs {
     const eq = token.indexOf('=');
     if (eq !== -1) {
       raw.set(token.slice(2, eq), token.slice(eq + 1));
+      continue;
+    }
+    const next = argv[i + 1];
+    if (next !== undefined && !next.startsWith('--')) {
+      raw.set(token.slice(2), next);
+      i += 1;
     } else {
-      const next = argv[i + 1];
-      if (next && !next.startsWith('--')) {
-        raw.set(token.slice(2), next);
-        i += 1;
-      } else {
-        raw.set(token.slice(2), 'true');
-      }
+      raw.set(token.slice(2), 'true');
     }
   }
 
-  const file = raw.get('file');
-  const id = raw.get('id');
-  const name = raw.get('name');
-  const missing = [
-    ['--file', file],
-    ['--id', id],
-    ['--name', name],
-  ].filter(([, v]) => !v).map(([k]) => k);
+  const preview = !raw.has('no-preview');
+  const required = ['file', 'id', 'name', ...(preview ? ['html'] : [])];
+  const missing = required.filter(
+    (key) => !raw.get(key) || raw.get(key) === 'true',
+  );
   if (missing.length > 0) {
-    throw new Error(`Missing required flag(s): ${missing.join(', ')}`);
+    throw new StageError(
+      `Missing required flag(s): ${missing.map((k) => `--${k}`).join(', ')}`,
+    );
+  }
+
+  const sortRaw = raw.get('sort-order');
+  const sortOrder = sortRaw === undefined ? undefined : Number(sortRaw);
+  if (sortOrder !== undefined && !Number.isInteger(sortOrder)) {
+    throw new StageError('--sort-order must be an integer.');
   }
 
   return {
-    file: file as string,
-    id: id as string,
-    name: name as string,
+    file: raw.get('file') as string,
+    html: raw.get('html'),
+    id: raw.get('id') as string,
+    name: raw.get('name') as string,
     category: raw.get('category') ?? 'general',
-    previewUrl: raw.get('preview-url'),
+    description: raw.get('description'),
+    sortOrder,
+    dryRun: raw.has('dry-run'),
+    deploy: !raw.has('no-deploy'),
+    thumbnail: !raw.has('no-thumbnail'),
+    preview,
   };
+}
+
+/** Root .env first; apps/api/.env fills only the keys the script shares with the API (Supabase, R2). */
+function loadEnv(): void {
+  const root = join(REPO_ROOT, '.env');
+  if (existsSync(root)) process.loadEnvFile(root);
+
+  // Never import the API's VERCEL_* (tenant-sites project/token) — the CLI would deploy there.
+  const api = join(REPO_ROOT, 'apps/api/.env');
+  if (!existsSync(api)) return;
+  const shared = parseEnv(readFileSync(api, 'utf8'));
+  for (const [key, value] of Object.entries(shared)) {
+    if (
+      /^(SUPABASE_URL|SUPABASE_SERVICE_ROLE_KEY|STORAGE_PROVIDER|R2_[A-Z_]+)$/.test(
+        key,
+      )
+    ) {
+      process.env[key] ??= value;
+    }
+  }
 }
 
 function requireEnv(key: string): string {
   const value = process.env[key]?.trim();
-  if (!value) throw new Error(`Environment variable ${key} is required.`);
+  if (!value)
+    throw new StageError(
+      `Environment variable ${key} is required (see .env.example).`,
+    );
   return value;
 }
 
-function extFromUrl(url: string): string {
-  const pathname = new URL(url).pathname;
-  const match = /\.([a-zA-Z0-9]+)$/.exec(pathname);
-  return match ? `.${match[1].toLowerCase()}` : '';
+// ── Stage 1–2: validate & collect ───────────────────────────────────────────
+
+function validateProject(path: string, args: CliArgs): GrapesProject {
+  if (!ID_RE.test(args.id)) {
+    throw new StageError(
+      `--id "${args.id}" must match ${ID_RE} (it becomes a URL segment and an object key).`,
+    );
+  }
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(readFileSync(path, 'utf8'));
+  } catch (error) {
+    throw new StageError(
+      `${path} is not valid JSON: ${(error as Error).message}`,
+    );
+  }
+  const project = parsed as GrapesProject;
+  const problems: string[] = [];
+  for (const key of ['pages', 'styles', 'assets'] as const) {
+    if (!Array.isArray(project[key])) problems.push(`missing "${key}" array`);
+  }
+  if (project.custom?.projectType !== 'web') {
+    problems.push(
+      `custom.projectType is "${project.custom?.projectType ?? 'unset'}", expected "web"`,
+    );
+  }
+  if (Array.isArray(project.pages) && project.pages.length !== 1) {
+    problems.push(
+      `has ${project.pages.length} pages; Lattiz templates are single-page`,
+    );
+  }
+  if (problems.length > 0)
+    throw new StageError(`Invalid project: ${problems.join('; ')}.`);
+  return project;
 }
 
-function extFromMime(mime: string | undefined): string {
-  if (!mime) return '';
-  const map: Record<string, string> = {
-    'image/webp': '.webp',
-    'image/png': '.png',
-    'image/jpeg': '.jpg',
-    'image/jpg': '.jpg',
-    'image/gif': '.gif',
-    'image/svg+xml': '.svg',
-    'image/avif': '.avif',
+/** Inlines the export's relative stylesheets/scripts so the preview is one self-contained file. */
+function loadExportHtml(htmlPath: string): string {
+  const baseDir = dirname(htmlPath);
+  const html = readFileSync(htmlPath, 'utf8');
+  const readLocal = (ref: string): string => {
+    const target = resolve(baseDir, ref.split(/[?#]/)[0]);
+    if (relative(baseDir, target).startsWith('..') || !existsSync(target)) {
+      throw new StageError(
+        `The export references "${ref}", which is not next to ${htmlPath}.`,
+      );
+    }
+    return readFileSync(target, 'utf8');
   };
-  return map[mime] ?? '';
+  const isLocal = (ref: string): boolean =>
+    !/^([a-z][a-z0-9+.-]*:|\/\/|\/)/i.test(ref);
+
+  const seen = new Set<string>();
+  return html
+    .replace(/<link\b[^>]*>/gi, (tag) => {
+      const href = /\bhref\s*=\s*["']([^"']+)["']/i.exec(tag)?.[1];
+      if (!/\brel\s*=\s*["']?stylesheet/i.test(tag) || !href || !isLocal(href))
+        return tag;
+      const key = resolve(baseDir, href);
+      if (seen.has(key)) return '';
+      seen.add(key);
+      return `<style>\n${readLocal(href)}\n</style>`;
+    })
+    .replace(
+      /<script\b([^>]*)\bsrc\s*=\s*["']([^"']+)["']([^>]*)>\s*<\/script>/gi,
+      (tag, before: string, src: string, after: string) =>
+        isLocal(src)
+          ? `<script${before}${after}>\n${readLocal(src)}\n</script>`
+          : tag,
+    );
 }
 
-/** Stable, filesystem-safe asset id from a cdn URL when the asset isn't in assets[]. */
-function idFromUrl(url: string): string {
-  const last = new URL(url).pathname.split('/').pop() ?? 'asset';
-  const beforeDoubleUnderscore = last.split('__')[0];
-  return beforeDoubleUnderscore.replace(/[^a-zA-Z0-9._-]/g, '') || 'asset';
+function collectSourceUrls(...texts: string[]): string[] {
+  const urls = new Set<string>();
+  for (const text of texts) {
+    for (const re of SOURCE_URL_RES) {
+      for (const match of text.matchAll(re)) urls.add(match[0]);
+    }
+  }
+  return [...urls].sort();
 }
 
-async function rehostAsset(
-  storage: ObjectStoragePort,
-  templateId: string,
+// ── Stage 3: migrate assets ──────────────────────────────────────────────────
+
+function extensionOf(url: string): string | undefined {
+  return /\.([a-z0-9]{2,5})$/i.exec(new URL(url).pathname)?.[1]?.toLowerCase();
+}
+
+function effectiveType(url: string, header: string | null): string {
+  const type = (header ?? '').split(';')[0].trim().toLowerCase();
+  if (
+    type &&
+    type !== 'application/octet-stream' &&
+    type !== 'binary/octet-stream'
+  )
+    return type;
+  return TYPE_BY_EXT[extensionOf(url) ?? ''] ?? type;
+}
+
+async function download(
   url: string,
-  meta: GrapesAsset | undefined,
-): Promise<string> {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`download ${res.status} ${res.statusText}`);
-  const contentType = meta?.mimeType ?? res.headers.get('content-type') ?? undefined;
-  const bytes = new Uint8Array(await res.arrayBuffer());
-
-  const assetId = meta?.id ?? idFromUrl(url);
-  const ext = extFromUrl(url) || extFromMime(contentType);
-  const path = `${templateId}/${assetId}${ext}`;
-
-  // Keys are deterministic (re-runs overwrite), hence upsert: it keeps the cache lifetime short.
-  return storage.uploadPublic(
-    path,
-    Buffer.from(bytes),
-    contentType ?? 'application/octet-stream',
-    { upsert: true },
+  templateId: string,
+): Promise<DownloadedAsset> {
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= DOWNLOAD_ATTEMPTS; attempt += 1) {
+    try {
+      const res = await fetch(url, {
+        signal: AbortSignal.timeout(DOWNLOAD_TIMEOUT_MS),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const declared = Number(res.headers.get('content-length') ?? 0);
+      if (declared > MAX_ASSET_BYTES)
+        throw new StageError(`${declared} bytes exceeds the 15 MB limit`);
+      const contentType = effectiveType(url, res.headers.get('content-type'));
+      if (!ALLOWED_TYPE_RE.test(contentType)) {
+        throw new StageError(
+          `content type "${contentType || 'unknown'}" is not image/*, video/* or font/*`,
+        );
+      }
+      const body = Buffer.from(await res.arrayBuffer());
+      if (body.length > MAX_ASSET_BYTES)
+        throw new StageError(`${body.length} bytes exceeds the 15 MB limit`);
+      const hash = createHash('sha256').update(body).digest('hex').slice(0, 16);
+      const ext = EXT_BY_TYPE[contentType] ?? extensionOf(url) ?? 'bin';
+      return {
+        url,
+        body,
+        contentType,
+        key: `templates/${templateId}/${hash}.${ext}`,
+      };
+    } catch (error) {
+      lastError = error;
+      // A disallowed type or size won't change on retry.
+      if (error instanceof StageError || attempt === DOWNLOAD_ATTEMPTS) break;
+      await new Promise((r) => setTimeout(r, 500 * 2 ** (attempt - 1)));
+    }
+  }
+  throw new StageError(
+    `${url}: ${lastError instanceof Error ? lastError.message : String(lastError)}`,
   );
 }
 
-async function main(): Promise<void> {
-  const argv = process.argv.slice(2);
-  if (argv.includes('--help') || argv.includes('-h')) {
-    printHelp();
+/** Content-addressed keys never change, so an object that answers 200 is already the right bytes. */
+async function existsPublicly(url: string): Promise<boolean> {
+  try {
+    const res = await fetch(url, {
+      method: 'HEAD',
+      signal: AbortSignal.timeout(DOWNLOAD_TIMEOUT_MS),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+async function migrateAssets(
+  storage: ObjectStoragePort,
+  urls: string[],
+  templateId: string,
+): Promise<Map<string, string>> {
+  // All-or-nothing: every download must succeed before anything is uploaded or written.
+  const settled = await Promise.allSettled(
+    urls.map((url) => download(url, templateId)),
+  );
+  const failures = settled.flatMap((r) =>
+    r.status === 'rejected' ? [String((r.reason as Error).message)] : [],
+  );
+  if (failures.length > 0) {
+    throw new StageError(
+      `${failures.length} asset(s) failed to download:\n    ${failures.join('\n    ')}`,
+    );
+  }
+  const assets = settled.map(
+    (r) => (r as PromiseFulfilledResult<DownloadedAsset>).value,
+  );
+
+  const replacements = new Map<string, string>();
+  let uploaded = 0;
+  for (const asset of assets) {
+    const publicUrl = storage.publicUrl(asset.key);
+    if (!(await existsPublicly(publicUrl))) {
+      await storage.uploadPublic(asset.key, asset.body, asset.contentType);
+      uploaded += 1;
+    }
+    replacements.set(asset.url, publicUrl);
+  }
+  console.log(
+    `    ${uploaded} uploaded, ${assets.length - uploaded} already in R2`,
+  );
+  return replacements;
+}
+
+function rewriteUrls(text: string, replacements: Map<string, string>): string {
+  // Longest first so a URL that prefixes another is never replaced inside it.
+  const ordered = [...replacements.keys()].sort((a, b) => b.length - a.length);
+  return ordered.reduce(
+    (out, from) => out.split(from).join(replacements.get(from) as string),
+    text,
+  );
+}
+
+// ── Stage 5: preview ─────────────────────────────────────────────────────────
+
+function escapeHtml(text: string): string {
+  return text.replace(
+    /[&<>"]/g,
+    (c) =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] as string,
+  );
+}
+
+/** Only ensures a <title> and a noindex robots meta; the export is otherwise untouched. */
+function finalizePreviewHtml(html: string, name: string): string {
+  let out = html;
+  const headOpen = /<head\b[^>]*>/i;
+  if (!headOpen.test(out))
+    throw new StageError('The HTML export has no <head>.');
+  if (!/<title\b[^>]*>[^<]*\S[^<]*<\/title>/i.test(out)) {
+    out = out.replace(/<title\b[^>]*>\s*<\/title>/i, '');
+    out = out.replace(
+      headOpen,
+      (tag) => `${tag}\n    <title>${escapeHtml(name)}</title>`,
+    );
+  }
+  const robots = '<meta name="robots" content="noindex, nofollow"/>';
+  out = /<meta\s+name=["']robots["'][^>]*>/i.test(out)
+    ? out.replace(/<meta\s+name=["']robots["'][^>]*>/i, robots)
+    : out.replace(headOpen, (tag) => `${tag}\n  ${robots}`);
+  return out;
+}
+
+// ── Stage 6: database ────────────────────────────────────────────────────────
+
+interface TemplateRow {
+  id: string;
+  is_active: boolean;
+}
+
+async function upsertTemplate(
+  supabase: SupabaseClient,
+  args: CliArgs,
+  grapesjsJson: unknown,
+  previewUrl: string | null,
+): Promise<{ created: boolean; wasActive: boolean }> {
+  const { data: existing, error: readError } = await supabase
+    .from('templates')
+    .select('id, is_active')
+    .eq('id', args.id)
+    .maybeSingle<TemplateRow>();
+  if (readError) throw new StageError(readError.message);
+
+  const fields = {
+    name: args.name,
+    category: args.category,
+    grapesjs_json: grapesjsJson,
+    ...(previewUrl ? { preview_url: previewUrl } : {}),
+    ...(args.description !== undefined
+      ? { description: args.description }
+      : {}),
+    ...(args.sortOrder !== undefined ? { sort_order: args.sortOrder } : {}),
+  };
+
+  if (existing) {
+    const { error } = await supabase
+      .from('templates')
+      .update(fields)
+      .eq('id', args.id);
+    if (error) throw new StageError(error.message);
+    return { created: false, wasActive: existing.is_active };
+  }
+  // New templates stay hidden until the preview and thumbnail are confirmed.
+  const { error } = await supabase
+    .from('templates')
+    .insert({ id: args.id, ...fields, is_active: false });
+  if (error) throw new StageError(error.message);
+  return { created: true, wasActive: false };
+}
+
+// ── Stage 7–8: deploy, thumbnail ─────────────────────────────────────────────
+
+async function waitForPreview(url: string): Promise<void> {
+  const deadline = Date.now() + PREVIEW_POLL_MS;
+  let last = '';
+  while (Date.now() < deadline) {
+    try {
+      const res = await fetch(url, {
+        signal: AbortSignal.timeout(10_000),
+        cache: 'no-store',
+      });
+      if (res.ok) return;
+      last = `HTTP ${res.status}`;
+    } catch (error) {
+      last = (error as Error).message;
+    }
+    await new Promise((r) => setTimeout(r, 3_000));
+  }
+  throw new StageError(
+    `${url} did not return 200 within ${PREVIEW_POLL_MS / 1000}s (${last}).`,
+  );
+}
+
+interface PlaywrightLike {
+  chromium: {
+    launch(options?: { channel?: string }): Promise<{
+      newPage(options: {
+        viewport: { width: number; height: number };
+      }): Promise<{
+        goto(
+          url: string,
+          options: { waitUntil: 'networkidle'; timeout: number },
+        ): Promise<unknown>;
+        evaluate(fn: () => Promise<unknown>): Promise<unknown>;
+        waitForTimeout(ms: number): Promise<void>;
+        screenshot(options: { type: 'jpeg'; quality: number }): Promise<Buffer>;
+      }>;
+      close(): Promise<void>;
+    }>;
+  };
+}
+
+async function loadPlaywright(): Promise<PlaywrightLike | null> {
+  try {
+    return (await import('playwright')) as unknown as PlaywrightLike;
+  } catch {
+    return null;
+  }
+}
+
+async function screenshot(
+  playwright: PlaywrightLike,
+  url: string,
+): Promise<Buffer> {
+  // Fall back to the installed Google Chrome when `playwright install chromium` hasn't run.
+  const browser = await playwright.chromium
+    .launch()
+    .catch(() => playwright.chromium.launch({ channel: 'chrome' }));
+  try {
+    const page = await browser.newPage({
+      viewport: { width: 1280, height: 800 },
+    });
+    await page.goto(url, { waitUntil: 'networkidle', timeout: 45_000 });
+    await page.evaluate(() => document.fonts.ready);
+    // Let entrance animations (typed text, sliders) settle before capturing.
+    await page.waitForTimeout(1_500);
+    return await page.screenshot({ type: 'jpeg', quality: 82 });
+  } finally {
+    await browser.close();
+  }
+}
+
+// ── main ─────────────────────────────────────────────────────────────────────
+
+function resumeCommand(argv: string[]): string {
+  const quoted = argv
+    .filter((a) => a !== '--dry-run' && a !== '--no-deploy')
+    .map((a) => (/^[\w./=:-]+$/.test(a) ? a : `"${a.replace(/"/g, '\\"')}"`));
+  return `pnpm tsx scripts/parse-and-seed-template.ts ${quoted.join(' ')}`;
+}
+
+function printSummary(): void {
+  console.log('\nSummary');
+  console.table(
+    summary.map(({ stage, status, detail }) => ({ stage, status, detail })),
+  );
+}
+
+async function run(argv: string[]): Promise<void> {
+  loadEnv();
+  const args = parseArgs(argv);
+  const filePath = resolve(process.cwd(), args.file);
+  const htmlPath = args.html ? resolve(process.cwd(), args.html) : undefined;
+
+  // 1. Validate
+  const project = validateProject(filePath, args);
+  const exportHtml = htmlPath ? loadExportHtml(htmlPath) : undefined;
+  const plugins = (project.custom?.plugins ?? []).map(
+    (p) => `${p.id}@${p.version ?? '?'}`,
+  );
+  record('1 validate', '✓', `1 page; plugins: ${plugins.join(', ') || 'none'}`);
+
+  // 2. Collect
+  const json = JSON.stringify(project);
+  const urls = collectSourceUrls(json, exportHtml ?? '');
+  record('2 collect', '✓', `${urls.length} asset URL(s) to migrate`);
+
+  if (args.dryRun) {
+    let total = 0;
+    for (const url of urls) {
+      const res = await fetch(url, {
+        method: 'HEAD',
+        signal: AbortSignal.timeout(DOWNLOAD_TIMEOUT_MS),
+      }).catch(() => null);
+      const size = Number(res?.headers.get('content-length') ?? 0);
+      total += size;
+      console.log(
+        `    ${res?.ok ? '✓' : '✗'} ${(size / 1024).toFixed(0).padStart(6)} KB  ${url}`,
+      );
+    }
+    console.log(
+      `\nDry run: ${urls.length} asset(s), ~${(total / 1024 / 1024).toFixed(2)} MB. Nothing was written.`,
+    );
+    printSummary();
     return;
   }
 
-  const provider = resolveStorageProvider((key) => process.env[key]);
-  if (provider === 'supabase') console.log(MANUAL_STORAGE_STEP);
-
-  const args = parseArgs(argv);
-  const supabaseUrl = requireEnv('SUPABASE_URL');
-  const serviceKey = requireEnv('SUPABASE_SERVICE_ROLE_KEY');
-  const supabase = createClient(supabaseUrl, serviceKey, {
-    auth: { persistSession: false },
-  });
+  if (resolveStorageProvider((key) => process.env[key]) !== 'r2') {
+    throw new StageError(
+      'Templates live in R2: set STORAGE_PROVIDER=r2 and the R2_* variables.',
+    );
+  }
   const storage = createObjectStorage((key) => process.env[key]);
+  const supabase = createClient(
+    requireEnv('SUPABASE_URL'),
+    requireEnv('SUPABASE_SERVICE_ROLE_KEY'),
+    {
+      auth: { persistSession: false, autoRefreshToken: false },
+    },
+  );
+  const baseUrl = args.preview
+    ? requireEnv('TEMPLATE_PREVIEWS_BASE_URL').replace(/\/+$/, '')
+    : null;
+  const previewUrl = baseUrl ? `${baseUrl}/${args.id}` : null;
 
-  const filePath = resolve(process.cwd(), args.file);
-  console.log(`\n▶ Reading ${filePath}`);
-  const parsed: unknown = JSON.parse(readFileSync(filePath, 'utf8'));
-  if (typeof parsed !== 'object' || parsed === null) {
-    throw new Error('Template file is not a valid JSON object.');
+  // 3. Migrate
+  const replacements = await migrateAssets(storage, urls, args.id);
+  record(
+    '3 migrate to R2',
+    '✓',
+    `${replacements.size} asset(s) under templates/${args.id}/`,
+  );
+
+  // 4. Rewrite
+  const rewrittenJson = rewriteUrls(json, replacements);
+  const rewrittenHtml = exportHtml
+    ? rewriteUrls(exportHtml, replacements)
+    : undefined;
+  const leftovers = collectSourceUrls(rewrittenJson, rewrittenHtml ?? '');
+  if (leftovers.length > 0)
+    throw new StageError(
+      `URLs left un-migrated:\n    ${leftovers.join('\n    ')}`,
+    );
+  record(
+    '4 rewrite URLs',
+    '✓',
+    'no cdn.grapesjs.com or Supabase Storage URL remains',
+  );
+
+  // 5. Preview file
+  if (args.preview && rewrittenHtml) {
+    const dir = join(TEMPLATE_PREVIEWS_DIR, 'public', args.id);
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(
+      join(dir, 'index.html'),
+      finalizePreviewHtml(rewrittenHtml, args.name),
+    );
+    record(
+      '5 write preview',
+      '✓',
+      relative(REPO_ROOT, join(dir, 'index.html')),
+    );
+  } else {
+    record('5 write preview', '–', 'skipped (--no-preview)');
   }
-  const project = parsed as GrapesProject;
 
-  const serialized = JSON.stringify(project);
-  const uniqueUrls = [...new Set(serialized.match(CDN_URL_RE) ?? [])];
-  console.log(`▶ Found ${uniqueUrls.length} unique ${CDN_HOST} asset URL(s)\n`);
+  // 6. Database
+  const { created, wasActive } = await upsertTemplate(
+    supabase,
+    args,
+    JSON.parse(rewrittenJson),
+    previewUrl,
+  );
+  record(
+    '6 upsert templates',
+    '✓',
+    created ? 'inserted (inactive)' : `updated (is_active=${wasActive} kept)`,
+  );
 
-  const metaBySrc = new Map<string, GrapesAsset>();
-  for (const asset of project.assets ?? []) {
-    if (asset.src) metaBySrc.set(asset.src, asset);
+  // 7. Deploy
+  let previewLive = false;
+  if (!args.preview || !previewUrl) {
+    record('7 deploy previews', '–', 'skipped (--no-preview)');
+  } else if (!args.deploy) {
+    record(
+      '7 deploy previews',
+      '–',
+      'skipped (--no-deploy); run `pnpm --filter @lattiz/template-previews deploy` later',
+    );
+  } else {
+    const deploy = vercel(['deploy', '--prod', '--yes']);
+    if (!deploy.ok)
+      throw new StageError(
+        `vercel deploy failed:\n${deploy.stderr || deploy.stdout}`,
+      );
+    await waitForPreview(previewUrl);
+    previewLive = true;
+    record('7 deploy previews', '✓', `${previewUrl} → 200`);
   }
 
-  const replacements = new Map<string, string>();
-  let ok = 0;
-  let failed = 0;
-  for (const url of uniqueUrls) {
-    try {
-      const newUrl = await rehostAsset(storage, args.id, url, metaBySrc.get(url));
-      replacements.set(url, newUrl);
-      ok += 1;
-      console.log(`  ✓ ${url}\n      → ${newUrl}`);
-    } catch (err) {
-      failed += 1;
-      console.error(`  ✗ ${url}\n      ${err instanceof Error ? err.message : String(err)}`);
+  // 8. Thumbnail
+  let thumbnailDone = false;
+  if (!args.thumbnail) {
+    record('8 thumbnail', '–', 'skipped (--no-thumbnail)');
+  } else if (!previewLive || !previewUrl) {
+    record('8 thumbnail', '–', 'needs a live preview (stage 7)');
+  } else {
+    const playwright = await loadPlaywright();
+    if (!playwright) {
+      record(
+        '8 thumbnail',
+        '✗',
+        'Playwright unavailable — run `pnpm exec playwright install chromium`',
+      );
+    } else {
+      const jpeg = await screenshot(playwright, previewUrl);
+      const hash = createHash('sha256').update(jpeg).digest('hex').slice(0, 16);
+      const thumbnailUrl = await storage.uploadPublic(
+        `templates/${args.id}/thumb-${hash}.jpg`,
+        jpeg,
+        'image/jpeg',
+      );
+      const { error } = await supabase
+        .from('templates')
+        .update({ thumbnail_url: thumbnailUrl })
+        .eq('id', args.id);
+      if (error) throw new StageError(error.message);
+      thumbnailDone = true;
+      record('8 thumbnail', '✓', thumbnailUrl);
     }
   }
 
-  if (failed > 0) {
-    console.error(
-      `\n✗ ${failed} asset(s) failed. Check the storage credentials and that the public bucket exists, then retry.`,
+  // 9. Activate
+  if (previewLive && thumbnailDone) {
+    const { error } = await supabase
+      .from('templates')
+      .update({ is_active: true })
+      .eq('id', args.id);
+    if (error) throw new StageError(error.message);
+    record('9 activate', '✓', 'is_active=true');
+  } else {
+    record(
+      '9 activate',
+      '–',
+      wasActive
+        ? 'left as is (already active)'
+        : 'left inactive until stages 7–8 succeed',
     );
-    process.exitCode = 1;
+    printSummary();
+    console.log(`\nResume with:\n  ${resumeCommand(argv)}`);
     return;
   }
-
-  let rewritten = serialized;
-  for (const [oldUrl, newUrl] of replacements) {
-    rewritten = rewritten.split(oldUrl).join(newUrl);
-  }
-  const processedJson: unknown = JSON.parse(rewritten);
-
-  console.log(`\n▶ Upserting template "${args.id}" into public.templates`);
-  const { error } = await supabase.from('templates').upsert(
-    {
-      id: args.id,
-      name: args.name,
-      category: args.category,
-      preview_url: args.previewUrl ?? null,
-      grapesjs_json: processedJson,
-      is_active: true,
-    },
-    { onConflict: 'id' },
-  );
-  if (error) throw new Error(error.message);
-
-  console.log(`\n✅ Seeded template "${args.id}" (${ok} asset(s) re-hosted).`);
-  console.log(`
-✅ Template seeded. Next steps:
-   1. Take a screenshot of ${args.previewUrl ?? 'the template preview'}
-      and upload it to the assets bucket as:
-      ${args.id}/thumbnail.jpg
-   2. Run: UPDATE public.templates
-            SET thumbnail_url = '${storage.publicUrl(`${args.id}/thumbnail.jpg`)}'
-            WHERE id = '${args.id}';
-   3. Create a test tenant row (replace the uid with your Supabase auth user id):
-      INSERT INTO public.tenants (user_id, slug, name)
-      VALUES ('<your-supabase-auth-uid>', 'test-tenant', 'Test Tenant');
-   4. Start the web app:  pnpm --filter @lattiz/web dev
-   5. Navigate to /editor/<tenantId> and verify the template loads in StudioEditor`);
+  printSummary();
 }
 
-main().catch((err) => {
-  console.error(`\n✗ ${err instanceof Error ? err.message : String(err)}`);
-  process.exit(1);
-});
+const argv = process.argv.slice(2);
+if (argv.includes('--help') || argv.includes('-h')) {
+  console.log(
+    readFileSync(__filename, 'utf8')
+      .split('*/')[0]
+      .replace(/^\/\*\*|^ \* ?/gm, ''),
+  );
+} else {
+  run(argv).catch((error: unknown) => {
+    record(
+      'aborted',
+      '✗',
+      error instanceof Error ? error.message : String(error),
+    );
+    printSummary();
+    console.log(
+      `\nFix the problem above, then resume with:\n  ${resumeCommand(argv)}`,
+    );
+    process.exit(1);
+  });
+}

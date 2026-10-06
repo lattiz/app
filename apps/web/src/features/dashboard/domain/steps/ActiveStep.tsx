@@ -56,7 +56,7 @@ export function ActiveStep() {
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <StatusItem label="DNS" ok={domain.dnsStatus === 'active'} />
           <StatusItem label="SSL" ok={domain.sslActive} />
-          <StatusItem label="Vercel" ok={domain.vercelMapped} />
+          <StatusItem label="Servidor" ok={domain.vercelMapped} />
         </div>
 
         <div className="flex flex-wrap gap-3">

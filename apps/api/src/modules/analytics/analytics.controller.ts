@@ -17,7 +17,10 @@ import { CurrentUser } from '../../common/auth/current-user.decorator';
 import { SubscriptionActiveGuard } from '../../common/auth/subscription-active.guard';
 import { SupabaseJwtGuard } from '../../common/auth/supabase-jwt.guard';
 import { AnalyticsService } from './analytics.service';
-import { AnalyticsOverviewDto } from './dto/analytics.response.dto';
+import {
+  AnalyticsOverviewDto,
+  AnalyticsRealtimeDto,
+} from './dto/analytics.response.dto';
 
 @ApiTags('analytics')
 @ApiBearerAuth()
@@ -34,6 +37,16 @@ export class AnalyticsController {
     @CurrentUser() user?: AuthenticatedUser,
   ): Promise<AnalyticsOverviewDto> {
     return this.analytics.getOverview(requireSub(user));
+  }
+
+  /** Active users in the last 30 minutes. Never provisions; GA failures return 200 with `unavailable`. */
+  @Get('realtime')
+  @ApiOperation({ summary: 'Get realtime active users (protected, Pro)' })
+  @ApiOkResponse({ type: AnalyticsRealtimeDto })
+  async realtime(
+    @CurrentUser() user?: AuthenticatedUser,
+  ): Promise<AnalyticsRealtimeDto> {
+    return this.analytics.getRealtime(requireSub(user));
   }
 
   /** Re-run a failed GA4 provisioning. 60s cooldown between attempts. */

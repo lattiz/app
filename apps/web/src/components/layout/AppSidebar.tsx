@@ -34,6 +34,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from '@/components/ui/sidebar';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
@@ -159,21 +160,7 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarHeader className="border-b border-sidebar-border px-4 py-3">
         <div className="flex items-center gap-2">
-          <div
-            className="flex h-7 w-7 items-center justify-center rounded-md"
-            style={{ backgroundColor: '#1447e6' }}
-            aria-hidden="true"
-          >
-            <span className="font-mono text-[11px] font-bold tracking-wider text-white">
-              L
-            </span>
-          </div>
-          <div>
-            <p className="font-mono text-sm font-semibold tracking-widest text-sidebar-foreground">
-              LATTIZ
-            </p>
-            <p className="text-[10px] text-sidebar-foreground/50">Admin</p>
-          </div>
+          <img src='/favicon-32x32.png' /> <span className='pt-1'>Lattiz | Admin Panel</span>
         </div>
       </SidebarHeader>
 

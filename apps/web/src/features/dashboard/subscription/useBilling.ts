@@ -1,7 +1,9 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   billingControllerCreateCheckoutSessionMutation,
   billingControllerCreatePortalSessionMutation,
+  billingControllerGetPlansOptions,
+  billingControllerGetSubscriptionPriceOptions,
 } from '@lattiz/api-client';
 import { toast } from 'sonner';
 
@@ -24,5 +26,21 @@ export function useCreatePortalSession() {
       window.location.href = data.url;
     },
     onError: () => toast.error('No se pudo abrir el portal de facturación'),
+  });
+}
+
+/** GET /billing/plans — the catalog prices, straight from Stripe. */
+export function useBillingPlans() {
+  return useQuery({
+    ...billingControllerGetPlansOptions(),
+    staleTime: 10 * 60_000,
+  });
+}
+
+/** GET /billing/subscription/price — what the current subscription is really billed. */
+export function useSubscriptionPrice() {
+  return useQuery({
+    ...billingControllerGetSubscriptionPriceOptions(),
+    staleTime: 5 * 60_000,
   });
 }

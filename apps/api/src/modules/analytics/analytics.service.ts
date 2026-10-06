@@ -2,6 +2,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { sql, type SQL } from 'drizzle-orm';
 import { computeIsEntitled } from '../../common/billing/entitlement';
+import { previewHost } from '../../common/preview/preview-url';
 import { type Database, DATABASE } from '../../database/database.module';
 import { AnalyticsConfig } from './analytics.config';
 import {
@@ -13,6 +14,8 @@ import {
 import type {
   AnalyticsChannelDto,
   AnalyticsOverviewDto,
+  AnalyticsRealtimeDataDto,
+  AnalyticsRealtimeDto,
   AnalyticsReportDto,
 } from './dto/analytics.response.dto';
 import {
@@ -20,6 +23,7 @@ import {
   GA4_GATEWAY,
   type Ga4Gateway,
   type RawOverview,
+  type RawRealtime,
   todayInZone,
 } from './ga4.gateway';
 
@@ -32,11 +36,18 @@ const RETRY_COOLDOWN_SECONDS = 60;
 const CRON_BATCH_SIZE = 10;
 const CRON_DELAY_MS = 1500;
 const MAX_ERROR_LENGTH = 300;
+const REALTIME_WINDOW_MINUTES = 30;
+const REALTIME_FAILURE_TTL_SECONDS = 60;
+const REALTIME_CACHE_SWEEP_SIZE = 500;
 
 // gRPC status codes carried on google-gax errors as `err.code`.
 const TRANSIENT_CODES = new Set([4, 8, 10, 13, 14]); // DEADLINE_EXCEEDED, RESOURCE_EXHAUSTED, ABORTED, INTERNAL, UNAVAILABLE
 const PERMANENT_CODES = new Set([3, 5, 7, 9, 16]); // INVALID_ARGUMENT, NOT_FOUND, PERMISSION_DENIED, FAILED_PRECONDITION, UNAUTHENTICATED
+const INVALID_ARGUMENT = 3;
+const NOT_FOUND = 5;
+const PERMISSION_DENIED = 7;
 const RESOURCE_EXHAUSTED = 8;
+const UNAUTHENTICATED = 16;
 const CODE_NAMES: Record<number, string> = {
   3: 'INVALID_ARGUMENT',
   4: 'DEADLINE_EXCEEDED',
@@ -70,6 +81,7 @@ interface TenantRow {
   name: string;
   plan: string;
   domain: string | null;
+  slug: string | null;
 }
 
 interface AnalyticsRow {
@@ -89,6 +101,11 @@ interface CacheRow {
   fetched_at: string | Date;
   is_fresh: boolean;
 }
+
+type RealtimeResult = Pick<
+  AnalyticsRealtimeDto,
+  'realtime' | 'unavailable' | 'fetchedAt'
+>;
 
 interface ReconcileCandidateRow {
   tenant_id: string;
@@ -114,6 +131,12 @@ export class AnalyticsService {
     string,
     Promise<{ report: AnalyticsReportDto; fetchedAt: string }>
   >();
+  // Realtime is per-instance and never served stale: a wrong "now" is worse than none.
+  private readonly realtimeCache = new Map<
+    string,
+    { expiresAt: number; result: RealtimeResult }
+  >();
+  private readonly realtimeInFlight = new Map<string, Promise<RealtimeResult>>();
 
   constructor(
     @Inject(DATABASE) private readonly db: Database,
@@ -153,6 +176,84 @@ export class AnalyticsService {
       case 'ready':
         return this.getReadyOverview(tenant.id, requireValue(row.ga4_property_id));
     }
+  }
+
+  // ── Realtime ──────────────────────────────────────────────────────────────
+  /** Read-only: provisioning is triggered by getOverview, never here. */
+  async getRealtime(userSub: string): Promise<AnalyticsRealtimeDto> {
+    const tenant = await this.getTenantByUserSub(userSub);
+    if (tenant.plan !== 'pro') return realtimeStatus('not_eligible');
+    if (!this.config.isConfigured) return realtimeStatus('unavailable');
+
+    const row = await this.getAnalyticsRow(tenant.id);
+    // A mock row in real mode is about to be discarded by getOverview.
+    if (!row || row.is_mock !== this.gateway.isMock) {
+      return realtimeStatus('provisioning');
+    }
+    if (row.provisioning_status !== 'ready') {
+      return realtimeStatus(
+        row.provisioning_status === 'pending' ? 'provisioning' : row.provisioning_status,
+      );
+    }
+
+    const result = await this.fetchRealtimeCached(
+      tenant.id,
+      requireValue(row.ga4_property_id),
+    );
+    return { status: 'ready', ...result };
+  }
+
+  private fetchRealtimeCached(
+    tenantId: string,
+    propertyId: string,
+  ): Promise<RealtimeResult> {
+    const key = `${tenantId}:${propertyId}`;
+    const cached = this.realtimeCache.get(key);
+    if (cached && cached.expiresAt > Date.now()) {
+      return Promise.resolve(cached.result);
+    }
+    const existing = this.realtimeInFlight.get(key);
+    if (existing) return existing;
+
+    const promise = (async (): Promise<RealtimeResult> => {
+      let result: RealtimeResult;
+      let ttlSeconds: number;
+      try {
+        const raw = await this.gateway.runRealtimeReport(propertyId);
+        result = {
+          realtime: buildRealtime(raw),
+          unavailable: false,
+          fetchedAt: new Date().toISOString(),
+        };
+        ttlSeconds = this.config.realtimeTtlSeconds;
+      } catch (err) {
+        // Negative cache: the Data API has a per-hour server-error quota per property.
+        this.logger.warn(
+          `[analytics] Realtime API failed for tenant ${tenantId}: ${describeError(err)}`,
+        );
+        result = { realtime: null, unavailable: true, fetchedAt: null };
+        ttlSeconds = REALTIME_FAILURE_TTL_SECONDS;
+      }
+      this.cacheRealtime(key, result, ttlSeconds);
+      return result;
+    })().finally(() => this.realtimeInFlight.delete(key));
+
+    this.realtimeInFlight.set(key, promise);
+    return promise;
+  }
+
+  private cacheRealtime(
+    key: string,
+    result: RealtimeResult,
+    ttlSeconds: number,
+  ): void {
+    const now = Date.now();
+    if (this.realtimeCache.size >= REALTIME_CACHE_SWEEP_SIZE) {
+      for (const [k, entry] of this.realtimeCache) {
+        if (entry.expiresAt <= now) this.realtimeCache.delete(k);
+      }
+    }
+    this.realtimeCache.set(key, { expiresAt: now + ttlSeconds * 1000, result });
   }
 
   // ── Manual retry ──────────────────────────────────────────────────────────
@@ -273,9 +374,14 @@ export class AnalyticsService {
   private async runProvisioning(tenantId: string, row: AnalyticsRow): Promise<void> {
     const tenant = await this.getTenantById(tenantId);
     const displayName = `Lattiz · ${tenant.name} · ${tenantId.slice(0, 8)}`.slice(0, 100);
+    const log = (step: string, detail = '') =>
+      this.logger.log(
+        `[analytics] tenant=${tenantId.slice(0, 8)} step=${step}${detail}`,
+      );
 
     let propertyId = row.ga4_property_id;
     if (!propertyId) {
+      log('createProperty');
       const created = await withTransientRetry(() =>
         this.gateway.createProperty({
           displayName,
@@ -293,11 +399,13 @@ export class AnalyticsService {
 
     if (!row.ga4_measurement_id) {
       const pid = propertyId;
+      const defaultUri = webStreamUri(tenant);
+      log('createWebStream', ` property=${pid} uri=${defaultUri}`);
       const stream = await withTransientRetry(() =>
         this.gateway.createWebStream({
           propertyId: pid,
           displayName: tenant.domain ?? displayName,
-          defaultUri: tenant.domain ? `https://${tenant.domain}` : undefined,
+          defaultUri,
         }),
       );
       await this.query(
@@ -325,9 +433,7 @@ export class AnalyticsService {
     await this.query(
       sql`DELETE FROM public.analytics_report_cache WHERE tenant_id = ${tenantId}::uuid`,
     );
-    this.logger.log(
-      `[analytics] Tenant ${tenantId} provisioned (property ${propertyId}${this.gateway.isMock ? ', mock' : ''})`,
-    );
+    log('ready', ` property=${propertyId}${this.gateway.isMock ? ' mock' : ''}`);
   }
 
   private async recordFailure(tenantId: string, err: unknown): Promise<void> {
@@ -338,7 +444,7 @@ export class AnalyticsService {
     if (permanent || code === RESOURCE_EXHAUSTED) {
       this.logger.error(
         `[analytics] ACTION REQUIRED — GA4 provisioning failed for tenant ${tenantId}: ${message}. ` +
-          'Check the service account role, GA4_ACCOUNT_ID and the per-account property quota.',
+          failureHint(code, message),
       );
     } else {
       this.logger.warn(`[analytics] Provisioning failed for tenant ${tenantId}: ${message}`);
@@ -468,7 +574,7 @@ export class AnalyticsService {
   // ── DB helpers ────────────────────────────────────────────────────────────
   private async getTenantByUserSub(userSub: string): Promise<TenantRow> {
     const rows = await this.query<TenantRow>(
-      sql`SELECT id, name, plan, domain FROM public.tenants
+      sql`SELECT id, name, plan, domain, slug FROM public.tenants
           WHERE user_id = ${userSub}::uuid LIMIT 1`,
     );
     const row = rows[0];
@@ -478,7 +584,7 @@ export class AnalyticsService {
 
   private async getTenantById(tenantId: string): Promise<TenantRow> {
     const rows = await this.query<TenantRow>(
-      sql`SELECT id, name, plan, domain FROM public.tenants
+      sql`SELECT id, name, plan, domain, slug FROM public.tenants
           WHERE id = ${tenantId}::uuid LIMIT 1`,
     );
     const row = rows[0];
@@ -507,6 +613,27 @@ export class AnalyticsService {
 // ── Pure helpers ────────────────────────────────────────────────────────────
 function overview(status: AnalyticsOverviewDto['status']): AnalyticsOverviewDto {
   return { status, report: null, fetchedAt: null, stale: false, retryAvailableAt: null };
+}
+
+function realtimeStatus(
+  status: AnalyticsRealtimeDto['status'],
+): AnalyticsRealtimeDto {
+  return { status, realtime: null, unavailable: false, fetchedAt: null };
+}
+
+/** Gap-fills the per-minute series to 30 points, oldest (29 min ago) → newest (now). */
+export function buildRealtime(raw: RawRealtime): AnalyticsRealtimeDataDto {
+  if (!raw.perMinute) return { activeUsers: raw.activeUsers, perMinute: [] };
+  const byMinute = new Map(
+    raw.perMinute
+      .filter((p) => Number.isInteger(p.minutesAgo))
+      .map((p) => [p.minutesAgo, p.activeUsers]),
+  );
+  const perMinute = Array.from({ length: REALTIME_WINDOW_MINUTES }, (_, i) => {
+    const minutesAgo = REALTIME_WINDOW_MINUTES - 1 - i;
+    return { minutesAgo, activeUsers: byMinute.get(minutesAgo) ?? 0 };
+  });
+  return { activeUsers: raw.activeUsers, perMinute };
 }
 
 /** Gap-fills to exactly RANGE_DAYS days ending today in the property zone and localizes channels. */
@@ -560,6 +687,43 @@ function mergeChannels(
   return [...merged.values()]
     .filter((c) => c.sessions > 0)
     .sort((a, b) => b.sessions - a.sessions);
+}
+
+/** GA requires a stream URI: the custom domain once set, else the preview subdomain. */
+function webStreamUri(tenant: TenantRow): string {
+  const slug = tenant.slug?.trim();
+  const raw = tenant.domain?.trim() || (slug ? previewHost(slug) : '');
+  const host = raw
+    .toLowerCase()
+    .replace(/^[a-z][a-z0-9+.-]*:\/\//, '')
+    .replace(/[/?#].*$/, '')
+    .replace(/\.$/, '');
+  if (!host) {
+    throw new Error(
+      `Cannot build the web stream default_uri: tenant ${tenant.id} has no domain or slug`,
+    );
+  }
+  return `https://${host}`;
+}
+
+/** The "ACTION REQUIRED" hint depends on what Google rejected. */
+function failureHint(code: number | null, message: string): string {
+  switch (code) {
+    case PERMISSION_DENIED:
+      return 'Check the service account is Editor on the GA account, GA4_ACCOUNT_ID, and the per-account property cap.';
+    case UNAUTHENTICATED:
+      return 'Check GOOGLE_SERVICE_ACCOUNT_JSON_BASE64 (key revoked or malformed).';
+    case INVALID_ARGUMENT: {
+      const field = /'([\w.]+)'/.exec(message)?.[1];
+      return `Google rejected the request payload${field ? ` (field: ${field})` : ''}; fix the request, not the configuration.`;
+    }
+    case NOT_FOUND:
+      return 'Check GA4_ACCOUNT_ID and that the stored property still exists.';
+    case RESOURCE_EXHAUSTED:
+      return 'GA Admin API quota exhausted; wait for it to reset or request more quota.';
+    default:
+      return 'See the error above.';
+  }
 }
 
 function deltaPct(current: number, previous: number): number | null {

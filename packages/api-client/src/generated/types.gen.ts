@@ -65,6 +65,49 @@ export type AnalyticsOverviewDto = {
     retryAvailableAt: string | null;
 };
 
+export type AnalyticsRealtimeMinuteDto = {
+    /**
+     * 29 (oldest) … 0 (the current minute).
+     */
+    minutesAgo: number;
+    activeUsers: number;
+};
+
+export type AnalyticsRealtimeDataDto = {
+    /**
+     * Distinct users in the last 30 minutes (not the sum of `perMinute`).
+     */
+    activeUsers: number;
+    /**
+     * Exactly 30 points oldest → newest, or empty when the per-minute breakdown failed.
+     */
+    perMinute: Array<AnalyticsRealtimeMinuteDto>;
+};
+
+export type AnalyticsRealtimeDto = {
+    status: AnalyticsStatus;
+    realtime: AnalyticsRealtimeDataDto | null;
+    /**
+     * True when the Realtime API failed; the failure is cached for a minute.
+     */
+    unavailable: boolean;
+    fetchedAt: string | null;
+};
+
+export type PlanPriceDto = {
+    plan: 'basico' | 'pro';
+    period: 'monthly' | 'annual';
+    /**
+     * Price per billing period, in cents (minor currency unit).
+     */
+    amount: number;
+    /**
+     * ISO 4217, lowercase (e.g. `mxn`).
+     */
+    currency: string;
+    lookupKey: string;
+};
+
 export type CreateCheckoutSessionDto = {
     plan: 'basico' | 'pro';
     period: 'monthly' | 'annual';
@@ -84,6 +127,25 @@ export type SubscriptionResponseDto = {
      */
     cancelAt: string | null;
     cancelAtPeriodEnd: boolean;
+};
+
+export type SubscriptionPriceDto = {
+    /**
+     * Price per billing period, in cents (minor currency unit).
+     */
+    amount: number;
+    /**
+     * ISO 4217, lowercase (e.g. `mxn`).
+     */
+    currency: string;
+    period: 'monthly' | 'annual';
+};
+
+export type SubscriptionPriceResponseDto = {
+    /**
+     * Null when the tenant has never subscribed.
+     */
+    price: SubscriptionPriceDto | null;
 };
 
 export type InvoiceDto = {
@@ -538,6 +600,19 @@ export type AnalyticsControllerOverviewResponses = {
 
 export type AnalyticsControllerOverviewResponse = AnalyticsControllerOverviewResponses[keyof AnalyticsControllerOverviewResponses];
 
+export type AnalyticsControllerRealtimeData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/analytics/realtime';
+};
+
+export type AnalyticsControllerRealtimeResponses = {
+    200: AnalyticsRealtimeDto;
+};
+
+export type AnalyticsControllerRealtimeResponse = AnalyticsControllerRealtimeResponses[keyof AnalyticsControllerRealtimeResponses];
+
 export type AnalyticsControllerRetryData = {
     body?: never;
     path?: never;
@@ -550,6 +625,19 @@ export type AnalyticsControllerRetryResponses = {
 };
 
 export type AnalyticsControllerRetryResponse = AnalyticsControllerRetryResponses[keyof AnalyticsControllerRetryResponses];
+
+export type BillingControllerGetPlansData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/billing/plans';
+};
+
+export type BillingControllerGetPlansResponses = {
+    200: Array<PlanPriceDto>;
+};
+
+export type BillingControllerGetPlansResponse = BillingControllerGetPlansResponses[keyof BillingControllerGetPlansResponses];
 
 export type BillingControllerCreateCheckoutSessionData = {
     body: CreateCheckoutSessionDto;
@@ -589,6 +677,19 @@ export type BillingControllerGetSubscriptionResponses = {
 };
 
 export type BillingControllerGetSubscriptionResponse = BillingControllerGetSubscriptionResponses[keyof BillingControllerGetSubscriptionResponses];
+
+export type BillingControllerGetSubscriptionPriceData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/billing/subscription/price';
+};
+
+export type BillingControllerGetSubscriptionPriceResponses = {
+    200: SubscriptionPriceResponseDto;
+};
+
+export type BillingControllerGetSubscriptionPriceResponse = BillingControllerGetSubscriptionPriceResponses[keyof BillingControllerGetSubscriptionPriceResponses];
 
 export type BillingControllerGetInvoicesData = {
     body?: never;
@@ -957,6 +1058,19 @@ export type TemplatesControllerFindAllResponses = {
 };
 
 export type TemplatesControllerFindAllResponse = TemplatesControllerFindAllResponses[keyof TemplatesControllerFindAllResponses];
+
+export type PublicTemplatesControllerFindPublishedData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/public/templates';
+};
+
+export type PublicTemplatesControllerFindPublishedResponses = {
+    200: Array<TemplateListItemDto>;
+};
+
+export type PublicTemplatesControllerFindPublishedResponse = PublicTemplatesControllerFindPublishedResponses[keyof PublicTemplatesControllerFindPublishedResponses];
 
 export type TenantsControllerMeData = {
     body?: never;

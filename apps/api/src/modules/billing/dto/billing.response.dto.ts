@@ -82,3 +82,43 @@ export class ReconcileResponseDto {
   @ApiProperty()
   triggered!: boolean;
 }
+
+/** One sellable plan/period as Stripe currently prices it. */
+export class PlanPriceDto {
+  @ApiProperty({ enum: ['basico', 'pro'] })
+  plan!: 'basico' | 'pro';
+
+  @ApiProperty({ enum: ['monthly', 'annual'] })
+  period!: 'monthly' | 'annual';
+
+  /** Price per billing period, in cents (minor currency unit). */
+  @ApiProperty()
+  amount!: number;
+
+  /** ISO 4217, lowercase (e.g. `mxn`). */
+  @ApiProperty()
+  currency!: string;
+
+  @ApiProperty()
+  lookupKey!: string;
+}
+
+/** What the tenant's current subscription is actually billed, which may differ from today's catalog. */
+export class SubscriptionPriceDto {
+  /** Price per billing period, in cents (minor currency unit). */
+  @ApiProperty()
+  amount!: number;
+
+  /** ISO 4217, lowercase (e.g. `mxn`). */
+  @ApiProperty()
+  currency!: string;
+
+  @ApiProperty({ enum: ['monthly', 'annual'] })
+  period!: 'monthly' | 'annual';
+}
+
+export class SubscriptionPriceResponseDto {
+  /** Null when the tenant has never subscribed. */
+  @ApiProperty({ type: SubscriptionPriceDto, nullable: true })
+  price!: SubscriptionPriceDto | null;
+}

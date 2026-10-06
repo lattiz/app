@@ -6,16 +6,23 @@ import {
   tenantsControllerMeQueryKey,
   type TenantMeResponseDto,
 } from '@lattiz/api-client';
-import { TriangleAlertIcon } from 'lucide-react';
+import { RefreshCwIcon, TriangleAlertIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { DashboardSkeleton } from '@/components/dashboard/DashboardSkeleton';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { BillingPeriodToggle } from './BillingPeriodToggle';
 import { BillingPortalButton } from './BillingPortalButton';
 import { CurrentPlanCard } from './CurrentPlanCard';
 import { PricingCard } from './PricingCard';
-import { PLANS, type BillingPeriod, type PlanId } from './plans';
-import { useCreateCheckoutSession } from './useBilling';
+import {
+  annualSavingLabel,
+  PLANS,
+  pricingFor,
+  type BillingPeriod,
+  type PlanId,
+} from './plans';
+import { useBillingPlans, useCreateCheckoutSession } from './useBilling';
 
 const ACTIVE_STATUSES = new Set(['active', 'trialing']);
 const routeApi = getRouteApi('/_authenticated/dashboard/subscription');
@@ -27,6 +34,7 @@ export function SubscriptionPage() {
   const { data, isLoading } = useQuery(tenantsControllerMeOptions());
   const [period, setPeriod] = useState<BillingPeriod>('monthly');
   const checkout = useCreateCheckoutSession();
+  const prices = useBillingPlans();
   const handledReturn = useRef(false);
 
   // Handle the Stripe Checkout return once, then strip the params from the URL.
@@ -114,6 +122,17 @@ export function SubscriptionPage() {
     );
   }
 
+  const pricing = PLANS.map((plan) => ({
+    plan,
+    pricing: pricingFor(prices.data, plan.id),
+  }));
+  const savings = pricing.map((p) =>
+    p.pricing ? annualSavingLabel(p.pricing) : null,
+  );
+  const sharedSaving = savings.every((label) => label === savings[0])
+    ? savings[0]
+    : null;
+
   return (
     <div className="flex flex-col gap-6" data-tour="subscription-cta">
       <div className="flex flex-col items-start gap-3">
@@ -124,14 +143,39 @@ export function SubscriptionPage() {
             con SSL.
           </p>
         </div>
-        <BillingPeriodToggle value={period} onChange={setPeriod} />
+        <BillingPeriodToggle
+          value={period}
+          onChange={setPeriod}
+          annualBadge={sharedSaving}
+        />
       </div>
 
+      {prices.isError && (
+        <Alert variant="destructive">
+          <TriangleAlertIcon />
+          <AlertTitle>No pudimos cargar los precios</AlertTitle>
+          <AlertDescription className="flex flex-col items-start gap-3">
+            <p>Intenta de nuevo en un momento para poder suscribirte.</p>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={prices.isFetching}
+              onClick={() => void prices.refetch()}
+            >
+              <RefreshCwIcon />
+              Reintentar
+            </Button>
+          </AlertDescription>
+        </Alert>
+      )}
+
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        {PLANS.map((plan) => (
+        {pricing.map(({ plan, pricing: planPricing }) => (
           <PricingCard
             key={plan.id}
             plan={plan}
+            pricing={planPricing}
+            pricingLoading={prices.isPending}
             period={period}
             loading={checkout.isPending}
             onSubscribe={() => subscribe(plan.id)}

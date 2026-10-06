@@ -15,6 +15,7 @@ export class AnalyticsConfig {
   readonly timeZone: string;
   readonly currencyCode = 'MXN';
   readonly reportTtlSeconds: number;
+  readonly realtimeTtlSeconds: number;
 
   constructor(config: ConfigService) {
     this.isMock = config.get<string>('GA4_MOCK') === 'true';
@@ -26,6 +27,12 @@ export class AnalyticsConfig {
       config.get<string>('GA4_TIMEZONE')?.trim() || 'America/Mexico_City';
     const ttl = parseInt(config.get<string>('GA4_REPORT_TTL_SECONDS') ?? '', 10);
     this.reportTtlSeconds = Number.isFinite(ttl) && ttl > 0 ? ttl : 3600;
+    const realtimeTtl = parseInt(
+      config.get<string>('GA4_REALTIME_TTL_SECONDS') ?? '',
+      10,
+    );
+    this.realtimeTtlSeconds =
+      Number.isFinite(realtimeTtl) && realtimeTtl > 0 ? realtimeTtl : 30;
   }
 
   get isConfigured(): boolean {

@@ -13,7 +13,8 @@ import {
   getSubscriptionPeriodDisplay,
 } from '@/lib/subscription-status';
 import { BillingPortalButton } from './BillingPortalButton';
-import { formatMXN, planById } from './plans';
+import { formatPrice, planById } from './plans';
+import { useSubscriptionPrice } from './useBilling';
 
 interface Props {
   subscription: TenantSubscriptionDto;
@@ -79,11 +80,8 @@ export function CurrentPlanCard({ subscription }: Props) {
     period.dateShort,
   );
   const isAnnual = subscription.billingPeriod === 'annual';
-  const price = plan
-    ? isAnnual
-      ? plan.annual
-      : plan.monthly
-    : null;
+  // The subscription's own Stripe price, not today's catalog: grandfathered subscribers keep theirs.
+  const price = useSubscriptionPrice().data?.price;
 
   return (
     <Card>
@@ -100,9 +98,10 @@ export function CurrentPlanCard({ subscription }: Props) {
         </Row>
         <Row label="Facturación">
           {isAnnual ? 'Anual' : 'Mensual'}
-          {price != null && (
+          {price && (
             <span className="text-muted-foreground">
-              · {formatMXN(price)}/{isAnnual ? 'año' : 'mes'}
+              · {formatPrice(price.amount, price.currency)}/
+              {price.period === 'annual' ? 'año' : 'mes'}
             </span>
           )}
         </Row>

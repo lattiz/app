@@ -59,56 +59,15 @@ export function QuoteStep() {
           </CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
-          <dl className="grid grid-cols-2 gap-4">
-            <div>
-              <dt className="text-sm text-muted-foreground">Primer año</dt>
-              <dd className="text-2xl font-semibold">
-                {formatUSD(quote.priceUsdCents)}
-                <span className="text-sm font-normal text-muted-foreground">
-                  {' '}
-                  / año
-                </span>
-              </dd>
-            </div>
-            <div>
-              <dt className="text-sm text-muted-foreground">Renovación anual</dt>
-              <dd className="text-2xl font-semibold">
-                {formatUSD(quote.renewalPriceUsdCents)}
-                <span className="text-sm font-normal text-muted-foreground">
-                  {' '}
-                  / año
-                </span>
-              </dd>
-            </div>
-          </dl>
           {quote.renewalPriceUsdCents > quote.priceUsdCents && (
             <p className="text-sm text-muted-foreground">
-              A partir del segundo año el dominio se renueva a un precio mayor
-              que el del primer año.
+              A partir del segundo año se cobra una couta de mantenimiento a un precio $599 MXN.
             </p>
           )}
           {quote.irreversible && (
             <p className="text-sm text-muted-foreground">
               La compra de un dominio es definitiva y no se puede reembolsar.
             </p>
-          )}
-          {changedPriceUsdCents !== null && (
-            <div className="mt-2 flex flex-wrap items-center gap-3 rounded-xl border border-destructive/30 bg-destructive/10 p-3 text-sm">
-              <span className="text-destructive">
-                El precio cambió: ahora es {formatUSD(changedPriceUsdCents)} /
-                año (antes {formatUSD(quote.priceUsdCents)}). Obtén el nuevo
-                precio para continuar.
-              </span>
-              <Button
-                size="sm"
-                variant="outline"
-                disabled={requote.isPending}
-                onClick={refreshQuote}
-              >
-                {requote.isPending ? <Spinner /> : <RefreshCwIcon />}
-                Obtener nuevo precio
-              </Button>
-            </div>
           )}
         </CardContent>
       </Card>
@@ -137,7 +96,7 @@ export function QuoteStep() {
           onClick={confirm}
         >
           {purchase.isPending && <Spinner />}
-          Confirmar compra
+          Confirmar dominio
         </Button>
       </div>
     </div>

@@ -7,7 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { getSubscriptionPeriodDisplay } from '@/lib/subscription-status';
 import { BillingPortalButton } from '../../subscription/BillingPortalButton';
-import { formatMXN, planById } from '../../subscription/plans';
+import { formatPrice, planById } from '../../subscription/plans';
+import { useSubscriptionPrice } from '../../subscription/useBilling';
 
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -44,6 +45,8 @@ function statusBadge(status: string | null): { text: string; className: string }
 
 export function SubscriptionSection() {
   const { data, isLoading } = useQuery(tenantsControllerMeOptions());
+  // The subscription's own Stripe price, not today's catalog: grandfathered subscribers keep theirs.
+  const price = useSubscriptionPrice().data?.price;
 
   if (isLoading) {
     return <Skeleton className="h-48 rounded-4xl" />;
@@ -96,10 +99,10 @@ export function SubscriptionSection() {
           </p>
         )}
         {data?.domain && <Row label="Dominio">{data.domain}</Row>}
-        {plan && (
+        {price && (
           <Row label="Precio">
-            {formatMXN(isAnnual ? plan.annual : plan.monthly)}/
-            {isAnnual ? 'año' : 'mes'}
+            {formatPrice(price.amount, price.currency)}/
+            {price.period === 'annual' ? 'año' : 'mes'}
           </Row>
         )}
         <div className="flex justify-end pt-3">

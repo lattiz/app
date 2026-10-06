@@ -12,3 +12,7 @@ export const ProviderLookupRateLimit = (): MethodDecorator & ClassDecorator =>
 /** Routes that start a purchase, a checkout or another expensive side effect. */
 export const SensitiveActionRateLimit = (): MethodDecorator & ClassDecorator =>
   Throttle({ default: { ttl: MINUTE_MS, limit: 5 } });
+
+/** Unauthenticated reads (landing page); CDNs absorb most traffic via Cache-Control. */
+export const PublicReadRateLimit = (): MethodDecorator & ClassDecorator =>
+  Throttle({ default: { ttl: MINUTE_MS, limit: 60 } });

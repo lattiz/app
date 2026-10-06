@@ -11,10 +11,10 @@ export class BillingTenantNotFoundException extends DomainException {
   }
 }
 
-/** The requested plan/period has no matching Stripe price (Dashboard setup missing). */
+/** The requested plan/period has no active Stripe price (Dashboard setup missing). */
 export class PriceNotConfiguredException extends DomainException {
   readonly code = 'PRICE_NOT_CONFIGURED';
-  readonly status = HttpStatus.INTERNAL_SERVER_ERROR;
+  readonly status = HttpStatus.SERVICE_UNAVAILABLE;
 
   constructor(lookupKey: string) {
     super(
@@ -50,5 +50,15 @@ export class InvalidWebhookSignatureException extends DomainException {
 
   constructor() {
     super('Invalid Stripe webhook signature.');
+  }
+}
+
+/** Stripe could not be reached and there is no cached copy to fall back on. */
+export class BillingProviderUnavailableException extends DomainException {
+  readonly code = 'BILLING_PROVIDER_UNAVAILABLE';
+  readonly status = HttpStatus.SERVICE_UNAVAILABLE;
+
+  constructor() {
+    super('Prices are temporarily unavailable. Try again in a moment.');
   }
 }

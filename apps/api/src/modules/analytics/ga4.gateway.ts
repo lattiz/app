@@ -5,6 +5,10 @@ import { createHash, randomInt } from 'node:crypto';
 import { AnalyticsConfig } from './analytics.config';
 
 type RunReportResponse = protos.google.analytics.data.v1beta.IRunReportResponse;
+type ReportRows = Pick<
+  RunReportResponse,
+  'rows' | 'dimensionHeaders' | 'metricHeaders'
+>;
 
 export interface PeriodTotals {
   sessions: number;
@@ -21,6 +25,14 @@ export interface RawOverview {
   channels: { name: string; sessions: number }[];
 }
 
+/** Realtime data as GA returns it: only minutes with activity have a row. */
+export interface RawRealtime {
+  /** Distinct users over the whole window; never the sum of `perMinute`. */
+  activeUsers: number;
+  /** Null when only the per-minute call failed. */
+  perMinute: { minutesAgo: number; activeUsers: number }[] | null;
+}
+
 export interface Ga4Gateway {
   readonly isMock: boolean;
   createProperty(a: {
@@ -28,20 +40,24 @@ export interface Ga4Gateway {
     timeZone: string;
     currencyCode: string;
   }): Promise<{ propertyId: string }>;
+  /** Google rejects an empty `defaultUri` with INVALID_ARGUMENT. */
   createWebStream(a: {
     propertyId: string;
     displayName: string;
-    defaultUri?: string;
+    defaultUri: string;
   }): Promise<{ streamId: string; measurementId: string }>;
   /** Event data retention → 14 months. Best-effort; callers must not fail on it. */
   setRetention(propertyId: string): Promise<void>;
   runOverviewReport(propertyId: string): Promise<RawOverview>;
+  /** Last 30 minutes (the Realtime API default window). Rejects only if the total fails. */
+  runRealtimeReport(propertyId: string): Promise<RawRealtime>;
 }
 
 export const GA4_GATEWAY = Symbol('GA4_GATEWAY');
 
 const CURRENT_RANGE = { startDate: '27daysAgo', endDate: 'today' };
 const PREVIOUS_RANGE = { startDate: '55daysAgo', endDate: '28daysAgo' };
+const REALTIME_TIMEOUT_MS = 5000;
 
 /** Google Analytics Admin API (v1beta) + Data API (v1beta) with Lattiz's service account. */
 export class RealGa4Gateway implements Ga4Gateway {
@@ -74,15 +90,17 @@ export class RealGa4Gateway implements Ga4Gateway {
   async createWebStream(a: {
     propertyId: string;
     displayName: string;
-    defaultUri?: string;
+    defaultUri: string;
   }): Promise<{ streamId: string; measurementId: string }> {
+    if (!a.defaultUri.trim()) {
+      throw new Error('createWebStream: defaultUri is empty');
+    }
     const [stream] = await this.adminClient().createDataStream({
       parent: `properties/${a.propertyId}`,
       dataStream: {
         type: 'WEB_DATA_STREAM',
         displayName: a.displayName,
-        // Optional in the API: provisioning must not depend on the tenant having a domain.
-        ...(a.defaultUri ? { webStreamData: { defaultUri: a.defaultUri } } : {}),
+        webStreamData: { defaultUri: a.defaultUri },
       },
     });
     const streamId = lastSegment(stream.name);
@@ -151,6 +169,38 @@ export class RealGa4Gateway implements Ga4Gateway {
     };
   }
 
+  async runRealtimeReport(propertyId: string): Promise<RawRealtime> {
+    const property = `properties/${propertyId}`;
+    const metrics = [{ name: 'activeUsers' }];
+    const options = { timeout: REALTIME_TIMEOUT_MS };
+    const [total, series] = await Promise.allSettled([
+      this.dataClient().runRealtimeReport({ property, metrics }, options),
+      this.dataClient().runRealtimeReport(
+        { property, dimensions: [{ name: 'minutesAgo' }], metrics },
+        options,
+      ),
+    ]);
+    if (total.status === 'rejected') throw total.reason;
+    if (series.status === 'rejected') {
+      this.logger.warn(
+        `[analytics] Realtime per-minute report failed for property ${propertyId}: ${String(series.reason)}`,
+      );
+    }
+
+    return {
+      activeUsers: toNumber(total.value[0].rows?.[0]?.metricValues?.[0]?.value),
+      perMinute:
+        series.status === 'fulfilled'
+          ? parseDimensionRows(series.value[0], 'minutesAgo', 'activeUsers').map(
+              ([minutesAgo, activeUsers]) => ({
+                minutesAgo: parseInt(minutesAgo, 10),
+                activeUsers,
+              }),
+            )
+          : null,
+    };
+  }
+
   private adminClient(): adminV1beta.AnalyticsAdminServiceClient {
     this.admin ??= new adminV1beta.AnalyticsAdminServiceClient({
       credentials: this.requireCredentials(),
@@ -211,8 +261,9 @@ function parseTotals(report: RunReportResponse | undefined): {
 }
 
 function parseDimensionRows(
-  report: RunReportResponse | undefined,
+  report: ReportRows | undefined,
   dimension: string,
+  metric = 'sessions',
 ): [string, number][] {
   if (!report?.rows?.length) return [];
   const dimIdx = Math.max(
@@ -221,7 +272,7 @@ function parseDimensionRows(
   );
   const metricIdx = Math.max(
     0,
-    (report.metricHeaders ?? []).findIndex((h) => h.name === 'sessions'),
+    (report.metricHeaders ?? []).findIndex((h) => h.name === metric),
   );
   return report.rows
     .map((row): [string, number] => [
@@ -249,17 +300,50 @@ const MOCK_CHANNELS: [string, number][] = [
   ['Unassigned', 0.05],
 ];
 
-/** Instant, credential-free stand-in. Report data is deterministic per property. */
+const MAX_PROPERTY_NAME_LENGTH = 100;
+const INVALID_ARGUMENT = 3;
+
+/**
+ * Instant, credential-free stand-in. Report data is deterministic per property.
+ * Validates payloads like Google does, so request bugs surface in mock mode too.
+ */
 export class MockGa4Gateway implements Ga4Gateway {
   readonly isMock = true;
 
   constructor(private readonly config: AnalyticsConfig) {}
 
-  createProperty(): Promise<{ propertyId: string }> {
+  createProperty(a: {
+    displayName: string;
+    timeZone: string;
+    currencyCode: string;
+  }): Promise<{ propertyId: string }> {
+    const name = a.displayName.trim();
+    if (!name || a.displayName.length > MAX_PROPERTY_NAME_LENGTH) {
+      return rejectInvalid(
+        'display_name',
+        `must be 1-${MAX_PROPERTY_NAME_LENGTH} characters`,
+      );
+    }
+    if (!isValidTimeZone(a.timeZone)) {
+      return rejectInvalid('time_zone', 'is not a valid IANA time zone');
+    }
+    if (!Intl.supportedValuesOf('currency').includes(a.currencyCode)) {
+      return rejectInvalid('currency_code', 'is not a valid ISO 4217 code');
+    }
     return Promise.resolve({ propertyId: `mock-${uniqueDigits()}` });
   }
 
-  createWebStream(): Promise<{ streamId: string; measurementId: string }> {
+  createWebStream(a: {
+    propertyId: string;
+    displayName: string;
+    defaultUri: string;
+  }): Promise<{ streamId: string; measurementId: string }> {
+    if (!a.defaultUri.trim()) {
+      return rejectInvalid('default_uri', 'was empty, but must be provided');
+    }
+    if (!URL.canParse(a.defaultUri)) {
+      return rejectInvalid('default_uri', 'is not a valid URI');
+    }
     const digits = uniqueDigits();
     return Promise.resolve({
       streamId: `mock-${digits}`,
@@ -309,6 +393,26 @@ export class MockGa4Gateway implements Ga4Gateway {
       channels,
     });
   }
+
+  /** Seeded per property + absolute minute, so the series slides like real data. */
+  runRealtimeReport(propertyId: string): Promise<RawRealtime> {
+    const nowMinute = Math.floor(Date.now() / 60_000);
+    const perMinute = Array.from({ length: 30 }, (_, minutesAgo) => {
+      const minute = nowMinute - minutesAgo;
+      // Roughly one 30-minute block in four is quiet, so the zero state shows up too.
+      const quiet = seededRandom(`${propertyId}:${Math.floor(minute / 30)}`)() < 0.25;
+      const rand = seededRandom(`${propertyId}:${minute}`);
+      const activeUsers = !quiet && rand() < 0.3 ? 1 + Math.floor(rand() * 2) : 0;
+      return { minutesAgo, activeUsers };
+    }).filter((p) => p.activeUsers > 0);
+
+    const peak = Math.max(0, ...perMinute.map((p) => p.activeUsers));
+    const extra = Math.floor(seededRandom(`${propertyId}:${nowMinute}`)() * 3);
+    return Promise.resolve({
+      activeUsers: peak === 0 ? 0 : Math.min(5, peak + extra),
+      perMinute,
+    });
+  }
 }
 
 /** Today's calendar date (`YYYY-MM-DD`) in an IANA zone. */
@@ -326,6 +430,23 @@ export function addDays(isoDate: string, days: number): string {
   const d = new Date(`${isoDate}T00:00:00Z`);
   d.setUTCDate(d.getUTCDate() + days);
   return d.toISOString().slice(0, 10);
+}
+
+/** Shaped like a google-gax error so the service classifies it identically. */
+function rejectInvalid(field: string, problem: string): Promise<never> {
+  const message = `${INVALID_ARGUMENT} INVALID_ARGUMENT: The value for the '${field}' field ${problem}.`;
+  return Promise.reject(
+    Object.assign(new Error(message), { code: INVALID_ARGUMENT }),
+  );
+}
+
+function isValidTimeZone(timeZone: string): boolean {
+  try {
+    new Intl.DateTimeFormat('en-US', { timeZone });
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function uniqueDigits(): string {

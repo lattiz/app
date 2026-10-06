@@ -23,11 +23,14 @@ import { type AuthenticatedUser } from '../../common/auth/authenticated-user';
 import { CurrentUser } from '../../common/auth/current-user.decorator';
 import { SupabaseJwtGuard } from '../../common/auth/supabase-jwt.guard';
 import { SensitiveActionRateLimit } from '../../common/throttling/rate-limits';
+import { BillingPricesService } from './billing-prices.service';
 import { BillingService } from './billing.service';
 import {
   BillingRedirectResponseDto,
   InvoiceListResponseDto,
+  PlanPriceDto,
   ReconcileResponseDto,
+  SubscriptionPriceResponseDto,
   SubscriptionResponseDto,
 } from './dto/billing.response.dto';
 import { CreateCheckoutSessionDto } from './dto/create-checkout-session.dto';
@@ -40,7 +43,20 @@ function appUrl(): string {
 @ApiTags('billing')
 @Controller('billing')
 export class BillingController {
-  constructor(private readonly billing: BillingService) {}
+  constructor(
+    private readonly billing: BillingService,
+    private readonly prices: BillingPricesService,
+  ) {}
+
+  /** Current price of every plan/period, straight from Stripe (cached ~10 min). */
+  @Get('plans')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'List plan prices from Stripe (protected)' })
+  @ApiOkResponse({ type: PlanPriceDto, isArray: true })
+  @UseGuards(SupabaseJwtGuard)
+  async getPlans(): Promise<PlanPriceDto[]> {
+    return this.prices.listPlans();
+  }
 
   @Post('checkout-session')
   @SensitiveActionRateLimit()
@@ -79,6 +95,20 @@ export class BillingController {
     @CurrentUser() user?: AuthenticatedUser,
   ): Promise<SubscriptionResponseDto | null> {
     return this.billing.getSubscriptionForUser(requireSub(user));
+  }
+
+  /** What the current subscription is billed — grandfathered subscribers keep their old price. */
+  @Get('subscription/price')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get the price the tenant subscription is billed (protected)' })
+  @ApiOkResponse({ type: SubscriptionPriceResponseDto })
+  @UseGuards(SupabaseJwtGuard)
+  async getSubscriptionPrice(
+    @CurrentUser() user?: AuthenticatedUser,
+  ): Promise<SubscriptionPriceResponseDto> {
+    return {
+      price: await this.prices.getSubscriptionPriceForUser(requireSub(user)),
+    };
   }
 
   @Get('invoices')

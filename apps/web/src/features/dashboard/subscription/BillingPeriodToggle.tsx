@@ -4,6 +4,8 @@ import type { BillingPeriod } from './plans';
 interface Props {
   value: BillingPeriod;
   onChange: (period: BillingPeriod) => void;
+  /** Shown on the annual option only when every plan saves the same (e.g. "Ahorra 2 meses"). */
+  annualBadge?: string | null;
 }
 
 const OPTIONS: { id: BillingPeriod; label: string }[] = [
@@ -11,7 +13,7 @@ const OPTIONS: { id: BillingPeriod; label: string }[] = [
   { id: 'annual', label: 'Anual' },
 ];
 
-export function BillingPeriodToggle({ value, onChange }: Props) {
+export function BillingPeriodToggle({ value, onChange, annualBadge }: Props) {
   return (
     <div className="inline-flex items-center gap-1 rounded-full bg-muted p-1 text-sm">
       {OPTIONS.map((opt) => (
@@ -27,9 +29,9 @@ export function BillingPeriodToggle({ value, onChange }: Props) {
           )}
         >
           {opt.label}
-          {opt.id === 'annual' && (
+          {opt.id === 'annual' && annualBadge && (
             <span className="rounded-full bg-green-500/15 px-2 py-0.5 text-xs font-semibold text-green-700 dark:text-green-400">
-              Ahorra 2 meses
+              {annualBadge}
             </span>
           )}
         </button>

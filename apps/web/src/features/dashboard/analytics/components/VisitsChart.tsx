@@ -13,12 +13,20 @@ const chartConfig = {
   sessions: { label: 'Visitas', color: 'var(--chart-3)' },
 } satisfies ChartConfig;
 
-export function VisitsChart({ daily }: { daily: AnalyticsDailyPointDto[] }) {
+export function VisitsChart({
+  daily,
+  note,
+}: {
+  daily: AnalyticsDailyPointDto[];
+  /** Rendered under the "Últimos 28 días" subtitle. */
+  note?: React.ReactNode;
+}) {
   return (
     <Card>
       <CardHeader>
         <CardTitle>Visitas por día</CardTitle>
         <CardDescription>Últimos 28 días</CardDescription>
+        {note}
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="aspect-auto h-56 w-full sm:h-64">

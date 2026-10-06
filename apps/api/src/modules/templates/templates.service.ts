@@ -19,10 +19,21 @@ export class TemplatesService {
 
   /** Lists active templates for the gallery, lightest fields only (no grapesjs_json). */
   async findAll(): Promise<TemplateListItemDto[]> {
+    return this.list(sql`is_active = true`);
+  }
+
+  /** Public catalog: only templates whose preview and thumbnail are ready to show. */
+  async findPublished(): Promise<TemplateListItemDto[]> {
+    return this.list(
+      sql`is_active = true AND preview_url IS NOT NULL AND thumbnail_url IS NOT NULL`,
+    );
+  }
+
+  private async list(where: SQL): Promise<TemplateListItemDto[]> {
     const rows = await this.query<TemplateRow>(
       sql`SELECT id, name, description, category, preview_url, thumbnail_url, sort_order
           FROM public.templates
-          WHERE is_active = true
+          WHERE ${where}
           ORDER BY sort_order ASC, created_at ASC`,
     );
 

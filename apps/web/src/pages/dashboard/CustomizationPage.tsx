@@ -79,7 +79,6 @@ export function CustomizationPage() {
           </Button>
         </div>
       )}
-      <SiteAddressSection tenant={tenant.data} />
       <EditorGatewayCard tenantId={tenant.data.tenantId} site={site} />
       <SiteImagesSection
         tenantId={tenant.data.tenantId}

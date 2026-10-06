@@ -17,9 +17,10 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json --watch --preserveWatchOutput",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "echo \"[@lattiz/api-client] no tests yet\" && exit 0",
-    "generate:client": "openapi-ts"
+    "generate:client": "openapi-ts && tsc -p tsconfig.json"
   },
   "dependencies": {
     "@hey-api/client-fetch": "^0.13.1"

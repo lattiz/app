@@ -1,0 +1,9 @@
+{
+  "name": "@lattiz/template-previews",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Static, non-indexed preview pages for Lattiz templates (one folder per template, written by scripts/parse-and-seed-template.ts)",
+  "scripts": {
+    "deploy": "vercel deploy --prod --yes"
+  }
+}

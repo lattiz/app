@@ -28,6 +28,33 @@
         ]
       }
     },
+    "/analytics/realtime": {
+      "get": {
+        "operationId": "AnalyticsController_realtime",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalyticsRealtimeDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get realtime active users (protected, Pro)",
+        "tags": [
+          "analytics"
+        ]
+      }
+    },
     "/analytics/retry": {
       "post": {
         "operationId": "AnalyticsController_retry",
@@ -52,6 +79,36 @@
         "summary": "Retry failed analytics provisioning (protected, Pro)",
         "tags": [
           "analytics"
+        ]
+      }
+    },
+    "/billing/plans": {
+      "get": {
+        "operationId": "BillingController_getPlans",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlanPriceDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List plan prices from Stripe (protected)",
+        "tags": [
+          "billing"
         ]
       }
     },
@@ -148,6 +205,33 @@
           }
         ],
         "summary": "Get the tenant current subscription (protected)",
+        "tags": [
+          "billing"
+        ]
+      }
+    },
+    "/billing/subscription/price": {
+      "get": {
+        "operationId": "BillingController_getSubscriptionPrice",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionPriceResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get the price the tenant subscription is billed (protected)",
         "tags": [
           "billing"
         ]
@@ -876,6 +960,31 @@
         ]
       }
     },
+    "/public/templates": {
+      "get": {
+        "operationId": "PublicTemplatesController_findPublished",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TemplateListItemDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "List published templates (public)",
+        "tags": [
+          "templates"
+        ]
+      }
+    },
     "/tenants/me": {
       "get": {
         "operationId": "TenantsController_me",
@@ -1378,6 +1487,114 @@
           "retryAvailableAt"
         ]
       },
+      "AnalyticsRealtimeMinuteDto": {
+        "type": "object",
+        "properties": {
+          "minutesAgo": {
+            "type": "number",
+            "description": "29 (oldest) … 0 (the current minute)."
+          },
+          "activeUsers": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "minutesAgo",
+          "activeUsers"
+        ]
+      },
+      "AnalyticsRealtimeDataDto": {
+        "type": "object",
+        "properties": {
+          "activeUsers": {
+            "type": "number",
+            "description": "Distinct users in the last 30 minutes (not the sum of `perMinute`)."
+          },
+          "perMinute": {
+            "description": "Exactly 30 points oldest → newest, or empty when the per-minute breakdown failed.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AnalyticsRealtimeMinuteDto"
+            }
+          }
+        },
+        "required": [
+          "activeUsers",
+          "perMinute"
+        ]
+      },
+      "AnalyticsRealtimeDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AnalyticsStatus"
+              }
+            ]
+          },
+          "realtime": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AnalyticsRealtimeDataDto"
+              }
+            ]
+          },
+          "unavailable": {
+            "type": "boolean",
+            "description": "True when the Realtime API failed; the failure is cached for a minute."
+          },
+          "fetchedAt": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "status",
+          "realtime",
+          "unavailable",
+          "fetchedAt"
+        ]
+      },
+      "PlanPriceDto": {
+        "type": "object",
+        "properties": {
+          "plan": {
+            "enum": [
+              "basico",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "period": {
+            "enum": [
+              "monthly",
+              "annual"
+            ],
+            "type": "string"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Price per billing period, in cents (minor currency unit)."
+          },
+          "currency": {
+            "type": "string",
+            "description": "ISO 4217, lowercase (e.g. `mxn`)."
+          },
+          "lookupKey": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "plan",
+          "period",
+          "amount",
+          "currency",
+          "lookupKey"
+        ]
+      },
       "CreateCheckoutSessionDto": {
         "type": "object",
         "properties": {
@@ -1462,6 +1679,49 @@
           "currentPeriodEnd",
           "cancelAt",
           "cancelAtPeriodEnd"
+        ]
+      },
+      "SubscriptionPriceDto": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "description": "Price per billing period, in cents (minor currency unit)."
+          },
+          "currency": {
+            "type": "string",
+            "description": "ISO 4217, lowercase (e.g. `mxn`)."
+          },
+          "period": {
+            "enum": [
+              "monthly",
+              "annual"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "amount",
+          "currency",
+          "period"
+        ]
+      },
+      "SubscriptionPriceResponseDto": {
+        "type": "object",
+        "properties": {
+          "price": {
+            "nullable": true,
+            "description": "Null when the tenant has never subscribed.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SubscriptionPriceDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "price"
         ]
       },
       "InvoiceDto": {

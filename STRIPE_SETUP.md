@@ -10,18 +10,42 @@ same code works across test and live as long as the lookup keys exist.
 ## 1. Products & prices (already created in TEST mode)
 
 These were created via the Stripe API in the connected **test** account
-(`Lattiz`). Recreate them the same way in **live** mode before going to prod.
+(`Lattiz`). **Before launch, recreate the same products, prices and lookup keys
+in live mode** — nothing in test mode carries over.
 
-| Product        | Lookup key       | Price           |
-| -------------- | ---------------- | --------------- |
-| Lattiz Básico  | `basico_monthly` | $399 MXN / mes  |
-| Lattiz Básico  | `basico_annual`  | $3,990 MXN / año |
-| Lattiz Pro     | `pro_monthly`    | $699 MXN / mes  |
-| Lattiz Pro     | `pro_annual`     | $6,990 MXN / año |
+| Product        | Lookup key       | Price             | Amount (centavos) | Test price ID                    |
+| -------------- | ---------------- | ----------------- | ----------------- | -------------------------------- |
+| Lattiz Básico  | `basico_monthly` | $449 MXN / mes    | `44900`           | `price_1ULqno5lxAq0Fx1a5hQPADjg` |
+| Lattiz Básico  | `basico_annual`  | $4,490 MXN / año  | `449000`          | `price_1ULqnp5lxAq0Fx1azaKzdyAV` |
+| Lattiz Pro     | `pro_monthly`    | $699 MXN / mes    | `69900`           | `price_1Tstyk5lxAq0Fx1agzuadOpj` |
+| Lattiz Pro     | `pro_annual`     | $6,990 MXN / año  | `699000`          | `price_1Tstyk5lxAq0Fx1aY3kbihVM` |
 
 To create manually (Dashboard → Products): add each price, then set its lookup
 key under **Price → Advanced → Lookup key**. Ensure **MXN** is enabled under
 Settings → Business → Bank accounts and currencies.
+
+The dashboard renders amounts from `GET /billing/plans` (Stripe, cached ~10 min),
+never from hard-coded numbers, so a price change needs no deploy.
+
+### Changing a price
+
+Stripe prices are immutable and cannot be deleted, only archived. To change one:
+
+```bash
+stripe prices create --product <prod_id> --currency mxn --unit-amount <centavos> \
+  -d "recurring[interval]=month" --nickname "Básico Mensual"
+stripe prices update <new_price_id> -d lookup_key=basico_monthly -d transfer_lookup_key=true
+stripe prices update <old_price_id> -d active=false
+```
+
+Without `transfer_lookup_key=true` the key stays on the old price and checkout
+keeps charging it. Archived prices keep billing existing subscribers
+(grandfathering); their subscription metadata still carries the same
+`lookup_key`, which is how webhooks resolve the plan — never rewrite it.
+At boot the API logs a warning if any of the four keys lacks an active price.
+
+Archived test prices (grandfathered Básico subscribers): `price_1Tstyh5lxAq0Fx1aqLjOJY4g`
+($399/mes) and `price_1Tstyi5lxAq0Fx1aiJtsiJdp` ($3,990/año).
 
 ## 2. API keys → `apps/api/.env`
 

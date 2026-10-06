@@ -1,3 +1,5 @@
+import type { PlanPriceDto } from '@lattiz/api-client';
+
 export type PlanId = 'basico' | 'pro';
 export type BillingPeriod = 'monthly' | 'annual';
 
@@ -5,10 +7,6 @@ export interface PlanDetails {
   id: PlanId;
   name: string;
   subtitle: string;
-  monthly: number;
-  annual: number;
-  /** Annual price expressed per month, for the "equivale a" line. */
-  annualMonthlyEquivalent: number;
   features: string[];
   highlighted?: boolean;
 }
@@ -18,9 +16,6 @@ export const PLANS: PlanDetails[] = [
     id: 'basico',
     name: 'Plan Básico',
     subtitle: 'Para tu negocio local',
-    monthly: 399,
-    annual: 3990,
-    annualMonthlyEquivalent: 332,
     features: [
       '1 sitio web profesional',
       'Panel de edición CMS sin código',
@@ -35,9 +30,6 @@ export const PLANS: PlanDetails[] = [
     id: 'pro',
     name: 'Plan Pro',
     subtitle: 'Para crecer con tu marca',
-    monthly: 699,
-    annual: 6990,
-    annualMonthlyEquivalent: 582,
     highlighted: true,
     features: [
       'Todo lo del plan Básico',
@@ -55,10 +47,42 @@ export function planById(id: string): PlanDetails | undefined {
   return PLANS.find((p) => p.id === id);
 }
 
-export function formatMXN(amount: number): string {
+/** Amounts in cents, as Stripe bills them (GET /billing/plans). */
+export interface PlanPricing {
+  monthly: number;
+  annual: number;
+  currency: string;
+}
+
+/** Null until both periods of the plan have an active Stripe price. */
+export function pricingFor(
+  prices: PlanPriceDto[] | undefined,
+  plan: PlanId,
+): PlanPricing | null {
+  const monthly = prices?.find(
+    (p) => p.plan === plan && p.period === 'monthly',
+  );
+  const annual = prices?.find((p) => p.plan === plan && p.period === 'annual');
+  if (!monthly || !annual || monthly.currency !== annual.currency) return null;
+  return {
+    monthly: monthly.amount,
+    annual: annual.amount,
+    currency: monthly.currency,
+  };
+}
+
+/** Null when paying annually saves nothing. */
+export function annualSavingLabel(pricing: PlanPricing): string | null {
+  const saving = pricing.monthly * 12 - pricing.annual;
+  if (saving <= 0) return null;
+  if (saving === pricing.monthly * 2) return 'Ahorra 2 meses';
+  return `Ahorra ${formatPrice(saving, pricing.currency)}`;
+}
+
+export function formatPrice(cents: number, currency: string): string {
   return new Intl.NumberFormat('es-MX', {
     style: 'currency',
-    currency: 'MXN',
+    currency: currency.toUpperCase(),
     maximumFractionDigits: 0,
-  }).format(amount);
+  }).format(cents / 100);
 }
