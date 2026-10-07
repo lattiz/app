@@ -1,6 +1,12 @@
 packages:
   - 'apps/*'
   - 'packages/*'
+# Exact pin (not a range): apps/web floats ^19.2.0 while apps/tenant-sites pinned 19.2.4,
+# so a range override let both patches coexist — a second React copy crashes GrapesJS
+# ("reading 'useMemo'"). Pinning collapses every importer onto one react/react-dom.
+overrides:
+  react: 19.2.4
+  react-dom: 19.2.4
 allowBuilds:
   '@nestjs/core': false
   '@scarf/scarf': false

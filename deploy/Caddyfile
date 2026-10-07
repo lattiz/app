@@ -1,0 +1,13 @@
+# Installed on the VM as /opt/lattiz/Caddyfile. Caddy obtains/renews TLS automatically.
+api.lattiz.app {
+	# Compress responses only; request bodies pass through untouched so Stripe's
+	# raw-body webhook signature stays valid.
+	encode zstd gzip
+
+	reverse_proxy api:3000
+
+	log {
+		output stdout
+		format json
+	}
+}
