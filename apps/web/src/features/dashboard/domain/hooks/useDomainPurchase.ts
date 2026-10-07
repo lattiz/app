@@ -4,11 +4,7 @@ import {
   domainsControllerPurchaseMutation,
 } from '@lattiz/api-client';
 import { toast } from 'sonner';
-import {
-  apiErrorCode,
-  currentPriceFromError,
-  purchaseErrorMessage,
-} from '../lib/domain-errors';
+import { apiErrorCode, purchaseErrorMessage } from '../lib/domain-errors';
 import { useDomainWizardStore } from '../store/domain-wizard.store';
 
 /** POST /domains/purchase — returns { jobId } immediately, pipeline runs server-side. */
@@ -23,13 +19,6 @@ export function useDomainPurchase() {
     onError: (error) => {
       const store = useDomainWizardStore.getState();
       const code = apiErrorCode(error);
-      const currentPrice = currentPriceFromError(error);
-      if (code === 'DOMAIN_PRICE_CHANGED' && currentPrice !== undefined) {
-        store.setChangedPrice(currentPrice);
-        store.setStep('quote');
-        toast.error('El precio del dominio cambió. Revisa el nuevo precio.');
-        return;
-      }
       if (code === 'DOMAIN_NOT_AVAILABLE' || code === 'DOMAIN_NOT_COVERED_BY_PLAN') {
         store.backToSearch();
       }

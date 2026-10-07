@@ -1810,9 +1810,6 @@
           "available": {
             "type": "boolean"
           },
-          "priceUsdCents": {
-            "type": "number"
-          },
           "coveredByPlan": {
             "type": "boolean",
             "description": "Whether the Lattiz plan absorbs the cost (price <= DOMAIN_MAX_COST_USD_CENTS)."
@@ -1821,7 +1818,6 @@
         "required": [
           "domain",
           "available",
-          "priceUsdCents",
           "coveredByPlan"
         ]
       },
@@ -1835,6 +1831,22 @@
         },
         "required": [
           "domain"
+        ]
+      },
+      "DomainMaintenanceFeeDto": {
+        "type": "object",
+        "properties": {
+          "amountCents": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Lowercase ISO 4217 code, as Stripe uses it."
+          }
+        },
+        "required": [
+          "amountCents",
+          "currency"
         ]
       },
       "DomainAgreementDto": {
@@ -1866,14 +1878,16 @@
           "available": {
             "type": "boolean"
           },
-          "priceUsdCents": {
-            "type": "number"
-          },
-          "renewalPriceUsdCents": {
-            "type": "number"
-          },
           "coveredByPlan": {
             "type": "boolean"
+          },
+          "maintenanceFee": {
+            "description": "Charged every year starting with the second one; the registration itself is covered by the plan.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DomainMaintenanceFeeDto"
+              }
+            ]
           },
           "requiredAgreements": {
             "type": "array",
@@ -1888,9 +1902,8 @@
         "required": [
           "domain",
           "available",
-          "priceUsdCents",
-          "renewalPriceUsdCents",
           "coveredByPlan",
+          "maintenanceFee",
           "requiredAgreements",
           "irreversible"
         ]
@@ -1913,18 +1926,12 @@
           "agreedAt": {
             "type": "string",
             "description": "ISO timestamp of when the user actually clicked \"Acepto\" — never fabricated."
-          },
-          "priceUsdCents": {
-            "type": "number",
-            "description": "Price the user saw in the quote, in USD cents; the purchase is rejected if the current price is higher.",
-            "minimum": 1
           }
         },
         "required": [
           "domain",
           "agreementTypes",
-          "agreedAt",
-          "priceUsdCents"
+          "agreedAt"
         ]
       },
       "DomainPurchaseResponseDto": {

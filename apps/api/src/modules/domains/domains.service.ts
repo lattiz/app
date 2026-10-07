@@ -35,7 +35,6 @@ import {
   DomainNotAllowedException,
   DomainNotAvailableException,
   DomainNotCoveredByPlanException,
-  DomainPriceChangedException,
   DomainPurchaseInProgressException,
   DomainsTenantNotFoundException,
   PurchasePipelineException,
@@ -43,18 +42,26 @@ import {
 } from './domains.exceptions';
 import { classifyProviderFailure } from './provider-failure';
 import { VercelDomainsService } from './vercel-domains.service';
+import { DOMAIN_MAINTENANCE_FEE } from './domains.constants';
 
 const SEARCH_TLDS = ['com', 'com.mx', 'mx', 'net', 'org'];
 
 // Openprovider only stores 900/3600/10800/21600/43200/86400; anything else becomes 86400.
 const DNS_TTL = 900;
 
-// Openprovider has no registration agreements, so Lattiz's own terms are the only one.
-const LATTIZ_TERMS = {
-  agreementType: 'LATTIZ_TERMS',
-  title: 'Términos y condiciones de Lattiz',
-  url: 'https://www.lattiz.app/terms',
-};
+// Openprovider has no registration agreements, so Lattiz's own documents are the only ones.
+const REQUIRED_AGREEMENTS = [
+  {
+    agreementType: 'LATTIZ_PRIVACY',
+    title: 'la Política de Privacidad',
+    url: 'https://www.lattiz.app/privacy',
+  },
+  {
+    agreementType: 'LATTIZ_TERMS',
+    title: 'los Términos y Condiciones',
+    url: 'https://www.lattiz.app/terms',
+  },
+];
 
 const REGISTRATION_POLL_INTERVAL_MS = 3000;
 const REGISTRATION_POLL_MAX_ATTEMPTS = 20;
@@ -149,7 +156,6 @@ export class DomainsService {
       found.push({
         domain: candidates[i],
         available: r.value.available,
-        priceUsdCents: price ?? 0,
         coveredByPlan: price !== null && price <= this.maxCostCents,
       });
     });
@@ -162,19 +168,15 @@ export class DomainsService {
   // ── Quote ─────────────────────────────────────────────────────────────────
   async getQuote(domain: string): Promise<DomainQuoteResponseDto> {
     const { available } = await this.registrar.checkAvailability(domain);
-    const [price, renewalPrice] = available
-      ? await Promise.all([
-          this.registrar.getPriceUsdCents(domain, 'create'),
-          this.registrar.getPriceUsdCents(domain, 'renew'),
-        ])
-      : [0, 0];
+    const price = available
+      ? await this.registrar.getPriceUsdCents(domain, 'create')
+      : 0;
     return {
       domain,
       available,
-      priceUsdCents: price,
-      renewalPriceUsdCents: renewalPrice,
       coveredByPlan: available && price <= this.maxCostCents,
-      requiredAgreements: [LATTIZ_TERMS],
+      maintenanceFee: DOMAIN_MAINTENANCE_FEE,
+      requiredAgreements: REQUIRED_AGREEMENTS,
       irreversible: true,
     };
   }
@@ -186,7 +188,10 @@ export class DomainsService {
     params: PurchaseDomainDto,
   ): Promise<{ jobId: string }> {
     const accepted = new Set(params.agreementTypes);
-    if (accepted.size !== 1 || !accepted.has(LATTIZ_TERMS.agreementType)) {
+    if (
+      accepted.size !== REQUIRED_AGREEMENTS.length ||
+      !REQUIRED_AGREEMENTS.every((a) => accepted.has(a.agreementType))
+    ) {
       throw new DomainAgreementsRequiredException();
     }
 
@@ -239,7 +244,7 @@ export class DomainsService {
 
     const quote = registered
       ? null
-      : await this.assertPurchasable(params.domain, params.priceUsdCents);
+      : await this.assertPurchasable(params.domain);
 
     if (existing && !registered) {
       await this.deleteDomainRecord(existing, {
@@ -264,10 +269,9 @@ export class DomainsService {
     return registered;
   }
 
-  /** Re-checks availability and price right before spending money. */
+  /** Re-checks availability and the plan's cost cap right before spending money. */
   private async assertPurchasable(
     domain: string,
-    acceptedPriceUsdCents: number,
   ): Promise<{ priceUsdCents: number; renewalPriceUsdCents: number }> {
     const { available } = await this.registrar.checkAvailability(domain);
     if (!available) throw new DomainNotAvailableException(domain);
@@ -276,12 +280,6 @@ export class DomainsService {
       this.registrar.getPriceUsdCents(domain, 'create'),
       this.registrar.getPriceUsdCents(domain, 'renew'),
     ]);
-    if (priceUsdCents > acceptedPriceUsdCents) {
-      throw new DomainPriceChangedException(
-        priceUsdCents,
-        acceptedPriceUsdCents,
-      );
-    }
     if (priceUsdCents > this.maxCostCents) {
       throw new DomainNotCoveredByPlanException();
     }

@@ -100,19 +100,6 @@ export class DomainNotAvailableException extends DomainException {
   }
 }
 
-/** The registrar's current price is above the price the user accepted. */
-export class DomainPriceChangedException extends DomainException {
-  readonly code = 'DOMAIN_PRICE_CHANGED';
-  readonly status = HttpStatus.CONFLICT;
-
-  constructor(currentPriceUsdCents: number, acceptedPriceUsdCents: number) {
-    super('The domain price changed since it was quoted.', {
-      currentPriceUsdCents,
-      acceptedPriceUsdCents,
-    });
-  }
-}
-
 /** The domain costs more than the plan absorbs (DOMAIN_MAX_COST_USD_CENTS). */
 export class DomainNotCoveredByPlanException extends DomainException {
   readonly code = 'DOMAIN_NOT_COVERED_BY_PLAN';

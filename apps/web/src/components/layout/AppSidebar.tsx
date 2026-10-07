@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useNavigate, useRouterState } from '@tanstack/react-router';
 import { tenantsControllerMeOptions } from '@lattiz/api-client';
@@ -87,7 +88,15 @@ function NavBadge({ badge }: { badge: NavItem['badge'] }) {
   return null;
 }
 
-function NavMenuItem({ item, isActive }: { item: NavItem; isActive: boolean }) {
+function NavMenuItem({
+  item,
+  isActive,
+  onNavigate,
+}: {
+  item: NavItem;
+  isActive: boolean;
+  onNavigate: () => void;
+}) {
   const Icon = ICONS[item.icon];
 
   if (item.disabled) {
@@ -119,7 +128,13 @@ function NavMenuItem({ item, isActive }: { item: NavItem; isActive: boolean }) {
       <SidebarMenuButton
         isActive={isActive}
         className="transition-colors duration-150"
-        render={<Link to={item.to} data-tour={item.id === 'domain' ? 'domain-nav-link' : undefined} />}
+        render={
+          <Link
+            to={item.to}
+            onClick={onNavigate}
+            data-tour={item.id === 'domain' ? 'domain-nav-link' : undefined}
+          />
+        }
       >
         {Icon ? <Icon /> : null}
         <span>{item.label}</span>
@@ -135,6 +150,7 @@ export function AppSidebar() {
   const state = useDashboardStore((s) => s.state);
   const subscriptionPlan = useDashboardStore((s) => s.subscription?.plan ?? null);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { isMobile, setOpenMobile } = useSidebar();
   // Same cached query the dashboard layout already runs; `tenants.plan` is what the API gates on.
   const { data: tenantMe } = useQuery(tenantsControllerMeOptions());
 
@@ -142,6 +158,16 @@ export function AppSidebar() {
   const email = user?.email ?? null;
   const name = email?.split('@')[0] ?? '—';
   const initials = (email?.slice(0, 2) ?? '—').toUpperCase();
+
+  // Any navigation (sidebar links, onboarding panel, browser back) dismisses the mobile sheet.
+  useEffect(() => {
+    if (isMobile) setOpenMobile(false);
+  }, [pathname, isMobile, setOpenMobile]);
+
+  // Tapping the current route doesn't change pathname, so close explicitly too.
+  const closeMobileSidebar = () => {
+    if (isMobile) setOpenMobile(false);
+  };
 
   const isActive = (to: string) =>
     to === '/dashboard' ? pathname === to : pathname.startsWith(to);
@@ -173,6 +199,7 @@ export function AppSidebar() {
                 key={item.id}
                 item={item}
                 isActive={isActive(item.to)}
+                onNavigate={closeMobileSidebar}
               />
             ))}
           </SidebarMenu>

@@ -9,7 +9,6 @@ import { TemplateSection } from '@/components/dashboard/customization/TemplateSe
 import { SiteImagesSection } from '@/components/dashboard/customization/SiteImagesSection';
 import { NoSubscriptionGate } from '@/components/dashboard/home/NoSubscriptionGate';
 import { Button } from '@/components/ui/button';
-import { SiteAddressSection } from '@/features/dashboard/site-address/SiteAddressSection';
 import { useDashboardStore } from '@/stores/dashboard.store';
 
 export function CustomizationPage() {

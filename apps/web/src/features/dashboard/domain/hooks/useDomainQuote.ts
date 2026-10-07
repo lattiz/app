@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import { quoteErrorMessage } from '../lib/domain-errors';
 import { useDomainWizardStore } from '../store/domain-wizard.store';
 
-/** POST /domains/quote — returns the current price and moves the wizard to the quote step. */
+/** POST /domains/quote — confirms availability and moves the wizard to the quote step. */
 export function useDomainQuote() {
   return useMutation({
     ...domainsControllerGetQuoteMutation(),

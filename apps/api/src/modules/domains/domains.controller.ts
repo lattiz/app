@@ -59,7 +59,7 @@ export class DomainsController {
     return this.domains.searchDomains(query.q);
   }
 
-  /** Get the current price, renewal price and required agreements for a domain — free, no commitment. */
+  /** Check availability, plan coverage, the maintenance fee and required agreements for a domain — free, no commitment. */
   @Post('quote')
   @ProviderLookupRateLimit()
   @UseGuards(SubscriptionActiveGuard)

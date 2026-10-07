@@ -2,10 +2,8 @@ import {
   ArrayMinSize,
   IsArray,
   IsFQDN,
-  IsInt,
   IsISO8601,
   IsString,
-  Min,
 } from 'class-validator';
 
 export class PurchaseDomainDto {
@@ -23,9 +21,4 @@ export class PurchaseDomainDto {
   /** ISO timestamp of when the user actually clicked "Acepto" — never fabricated. */
   @IsISO8601()
   agreedAt!: string;
-
-  /** Price the user saw in the quote, in USD cents; the purchase is rejected if the current price is higher. */
-  @IsInt()
-  @Min(1)
-  priceUsdCents!: number;
 }

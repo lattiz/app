@@ -28,8 +28,6 @@ interface DomainWizardState {
   agreedAt: string | null;
   domainSource: DomainSource | null;
   dnsInstructions: DnsInstructionDto[] | null;
-  /** Set when the server rejected a purchase because the price rose since the quote. */
-  changedPriceUsdCents: number | null;
 
   setStep: (step: WizardStep) => void;
   setSearchQuery: (q: string) => void;
@@ -39,7 +37,6 @@ interface DomainWizardState {
   toggleAgreement: (agreementType: string) => void;
   setDomainSource: (source: DomainSource) => void;
   setDnsInstructions: (instructions: DnsInstructionDto[]) => void;
-  setChangedPrice: (priceUsdCents: number) => void;
   backToSearch: () => void;
   reset: () => void;
 }
@@ -54,7 +51,6 @@ const initialState = {
   agreedAt: null,
   domainSource: null as DomainSource | null,
   dnsInstructions: null,
-  changedPriceUsdCents: null,
 };
 
 export const useDomainWizardStore = create<DomainWizardState>((set) => ({
@@ -66,12 +62,10 @@ export const useDomainWizardStore = create<DomainWizardState>((set) => ({
       quote,
       agreementsAccepted: [],
       agreedAt: null,
-      changedPriceUsdCents: null,
     }),
   setJobId: (jobId) => set({ jobId }),
   setDomainSource: (domainSource) => set({ domainSource }),
   setDnsInstructions: (dnsInstructions) => set({ dnsInstructions }),
-  setChangedPrice: (changedPriceUsdCents) => set({ changedPriceUsdCents }),
   toggleAgreement: (agreementType) =>
     set((s) => {
       const accepted = s.agreementsAccepted.includes(agreementType)
@@ -86,7 +80,6 @@ export const useDomainWizardStore = create<DomainWizardState>((set) => ({
       quote: null,
       agreementsAccepted: [],
       agreedAt: null,
-      changedPriceUsdCents: null,
     }),
   reset: () => set(initialState),
 }));

@@ -178,7 +178,6 @@ export type ReconcileResponseDto = {
 export type DomainSearchResultDto = {
     domain: string;
     available: boolean;
-    priceUsdCents: number;
     /**
      * Whether the Lattiz plan absorbs the cost (price <= DOMAIN_MAX_COST_USD_CENTS).
      */
@@ -192,6 +191,14 @@ export type GetQuoteDto = {
     domain: string;
 };
 
+export type DomainMaintenanceFeeDto = {
+    amountCents: number;
+    /**
+     * Lowercase ISO 4217 code, as Stripe uses it.
+     */
+    currency: string;
+};
+
 export type DomainAgreementDto = {
     agreementType: string;
     title: string;
@@ -201,9 +208,11 @@ export type DomainAgreementDto = {
 export type DomainQuoteResponseDto = {
     domain: string;
     available: boolean;
-    priceUsdCents: number;
-    renewalPriceUsdCents: number;
     coveredByPlan: boolean;
+    /**
+     * Charged every year starting with the second one; the registration itself is covered by the plan.
+     */
+    maintenanceFee: DomainMaintenanceFeeDto;
     requiredAgreements: Array<DomainAgreementDto>;
     irreversible: boolean;
 };
@@ -221,10 +230,6 @@ export type PurchaseDomainDto = {
      * ISO timestamp of when the user actually clicked "Acepto" — never fabricated.
      */
     agreedAt: string;
-    /**
-     * Price the user saw in the quote, in USD cents; the purchase is rejected if the current price is higher.
-     */
-    priceUsdCents: number;
 };
 
 export type DomainPurchaseResponseDto = {

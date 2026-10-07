@@ -3,7 +3,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
-import { formatUSD } from '@/lib/format';
 
 interface Props {
   result: DomainSearchResultDto;
@@ -19,7 +18,7 @@ export function DomainResultCard({ result, loading, onSelect }: Props) {
           <span className="truncate font-medium">{result.domain}</span>
           {result.available ? (
             <span className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-              {formatUSD(result.priceUsdCents)} / año
+              Disponible
               {result.coveredByPlan ? (
                 <Badge
                   variant="secondary"

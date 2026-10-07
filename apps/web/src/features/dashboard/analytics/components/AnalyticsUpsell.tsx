@@ -5,9 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
 const BENEFITS = [
-  'Visitas y usuarios de los últimos 28 días',
-  'De dónde llegan tus visitantes',
-  'Sin configuración: lo activamos por ti',
+  'Visitas y gráficas en tiempo real',
+  'Usuarios de los últimos 28 días',
+  'Mira de dónde llegan tus visitantes',
+  'Sin configuración, lo activamos por ti',
 ];
 
 export function AnalyticsUpsell() {

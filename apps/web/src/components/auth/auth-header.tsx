@@ -1,8 +1,8 @@
 /** Brand logo mark — a rounded tile with a soft purple blob, matching the reference. */
 function AuthLogo() {
   return (
-    <div className="bg-card relative size-8 overflow-hidden rounded-2xl">
-      <img src='/favicon-32x32.png' alt='logo' className='size-full object-cover' />
+    <div className="bg-card relative size-12 overflow-hidden rounded-2xl">
+      <img src='https://www.lattiz.app/lattiz_logo_white.svg' alt='logo' className='size-full object-contain' />
     </div>
   );
 }

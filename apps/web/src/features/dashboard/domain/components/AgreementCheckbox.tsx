@@ -19,7 +19,7 @@ export function AgreementCheckbox({ agreement, checked, onToggle }: Props) {
       />
       <Label htmlFor={id} className="text-sm leading-snug font-normal">
         <span>
-          Acepto{' '}
+          He leído y acepto{' '}
           {agreement.url ? (
             <a
               href={agreement.url}

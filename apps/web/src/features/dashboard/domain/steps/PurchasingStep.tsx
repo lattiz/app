@@ -14,7 +14,7 @@ import { useDomainWizardStore } from '../store/domain-wizard.store';
 const PIPELINE_STEPS = [
   { key: 'purchasing', label: 'Registrando dominio' },
   { key: 'configuring_dns', label: 'Configurando DNS' },
-  { key: 'registering_vercel', label: 'Conectando a Vercel' },
+  { key: 'registering_vercel', label: 'Conectando a tu sitio' },
 ] as const;
 
 type StepState = 'pending' | 'active' | 'done' | 'error';
@@ -70,7 +70,6 @@ export function PurchasingStep() {
         domain: selectedDomain,
         agreementTypes: agreementsAccepted,
         agreedAt,
-        priceUsdCents: Math.round(quote.priceUsdCents),
       },
     });
   };

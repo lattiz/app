@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, GlobeIcon, RefreshCwIcon } from 'lucide-react';
+import { ArrowLeftIcon, CheckCircle2Icon, GlobeIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -7,10 +7,9 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
-import { formatUSD } from '@/lib/format';
+import { formatMoney } from '@/lib/format';
 import { AgreementCheckbox } from '../components/AgreementCheckbox';
 import { useDomainPurchase } from '../hooks/useDomainPurchase';
-import { useDomainQuote } from '../hooks/useDomainQuote';
 import { useDomainWizardStore } from '../store/domain-wizard.store';
 
 export function QuoteStep() {
@@ -18,11 +17,9 @@ export function QuoteStep() {
   const selectedDomain = useDomainWizardStore((s) => s.selectedDomain);
   const agreementsAccepted = useDomainWizardStore((s) => s.agreementsAccepted);
   const agreedAt = useDomainWizardStore((s) => s.agreedAt);
-  const changedPriceUsdCents = useDomainWizardStore((s) => s.changedPriceUsdCents);
   const toggleAgreement = useDomainWizardStore((s) => s.toggleAgreement);
   const backToSearch = useDomainWizardStore((s) => s.backToSearch);
 
-  const requote = useDomainQuote();
   const purchase = useDomainPurchase();
 
   if (!quote || !selectedDomain) return null;
@@ -40,13 +37,8 @@ export function QuoteStep() {
         domain: selectedDomain,
         agreementTypes: agreementsAccepted,
         agreedAt,
-        priceUsdCents: Math.round(quote.priceUsdCents),
       },
     });
-  };
-
-  const refreshQuote = () => {
-    requote.mutate({ body: { domain: selectedDomain } });
   };
 
   return (
@@ -59,21 +51,27 @@ export function QuoteStep() {
           </CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
-          {quote.renewalPriceUsdCents > quote.priceUsdCents && (
-            <p className="text-sm text-muted-foreground">
-              A partir del segundo año se cobra una couta de mantenimiento a un precio $599 MXN.
-            </p>
-          )}
-          {quote.irreversible && (
-            <p className="text-sm text-muted-foreground">
-              La compra de un dominio es definitiva y no se puede reembolsar.
-            </p>
-          )}
+          <p className="flex items-center gap-2 text-sm font-medium text-green-700 dark:text-green-400">
+            <CheckCircle2Icon className="size-4" />
+            Disponible e incluido en tu plan
+          </p>
+          <p className="text-sm text-muted-foreground">
+            A partir del segundo año se cobra una cuota anual de mantenimiento de{' '}
+            {formatMoney(
+              quote.maintenanceFee.amountCents,
+              quote.maintenanceFee.currency,
+            )}{' '}
+            {quote.maintenanceFee.currency.toUpperCase()}.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Una vez confirmado, el dominio no se puede cancelar, modificar ni
+            reembolsar.
+          </p>
         </CardContent>
       </Card>
 
       <div className="flex flex-col gap-3">
-        <h2 className="text-sm font-medium">Términos de registro</h2>
+        <h2 className="text-sm font-medium">Antes de confirmar</h2>
         {quote.requiredAgreements.map((agreement) => (
           <AgreementCheckbox
             key={agreement.agreementType}
@@ -90,9 +88,7 @@ export function QuoteStep() {
           Volver a buscar
         </Button>
         <Button
-          disabled={
-            !allAccepted || changedPriceUsdCents !== null || purchase.isPending
-          }
+          disabled={!allAccepted || purchase.isPending}
           onClick={confirm}
         >
           {purchase.isPending && <Spinner />}

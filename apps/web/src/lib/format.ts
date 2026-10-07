@@ -17,10 +17,10 @@ export function formatDate(iso: string | null): string {
   });
 }
 
-export function formatUSD(cents: number): string {
+export function formatMoney(cents: number, currency: string): string {
   return new Intl.NumberFormat('es-MX', {
     style: 'currency',
-    currency: 'USD',
+    currency: currency.toUpperCase(),
   }).format(cents / 100);
 }
 

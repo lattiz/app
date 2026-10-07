@@ -3,7 +3,6 @@ import type { DomainJobStatusDto } from '@lattiz/api-client';
 interface ApiErrorBody {
   error?: {
     code?: string;
-    details?: { currentPriceUsdCents?: number };
   };
 }
 
@@ -12,14 +11,8 @@ export function apiErrorCode(err: unknown): string | undefined {
   return (err as ApiErrorBody | null | undefined)?.error?.code;
 }
 
-export function currentPriceFromError(err: unknown): number | undefined {
-  const price = (err as ApiErrorBody | null | undefined)?.error?.details
-    ?.currentPriceUsdCents;
-  return typeof price === 'number' ? price : undefined;
-}
-
 const PROVIDER_UNAVAILABLE =
-  'Nuestro proveedor de dominios no está disponible en este momento. Inténtalo de nuevo en unos minutos.';
+  'El servicio de dominios no está disponible en este momento. Inténtalo de nuevo en unos minutos.';
 
 const TOO_MANY_REQUESTS =
   'Hiciste demasiadas solicitudes en poco tiempo. Espera un minuto e inténtalo de nuevo.';
@@ -42,7 +35,7 @@ export function quoteErrorMessage(err: unknown): string {
     case 'TOO_MANY_REQUESTS':
       return TOO_MANY_REQUESTS;
     default:
-      return 'No se pudo obtener el precio';
+      return 'No se pudo verificar el dominio. Intenta de nuevo en unos segundos.';
   }
 }
 
@@ -53,7 +46,7 @@ export function purchaseErrorMessage(err: unknown): string {
     case 'DOMAIN_NOT_COVERED_BY_PLAN':
       return 'Tu plan no cubre este dominio. Elige otro.';
     case 'DOMAIN_AGREEMENTS_REQUIRED':
-      return 'Debes aceptar los términos y condiciones de Lattiz para continuar.';
+      return 'Debes aceptar la Política de Privacidad y los Términos y Condiciones para continuar.';
     case 'TENANT_ALREADY_HAS_DOMAIN':
       return 'Tu sitio ya tiene un dominio asociado.';
     case 'REGISTRAR_API_ERROR':
@@ -81,7 +74,7 @@ const CONTACT_SUPPORT = 'Si el problema continúa, contacta a soporte.';
 const JOB_FAILURES: Record<JobErrorCode, JobFailureView> = {
   DNS_PROVIDER_UNAVAILABLE: {
     message:
-      'No pudimos preparar el DNS de tu dominio porque nuestro proveedor no respondió. Todavía no se registró nada ni se te cobró. Inténtalo de nuevo en unos minutos.',
+      'No pudimos preparar el DNS de tu dominio porque el servicio de dominios no respondió. Todavía no se registró nada ni se te cobró. Inténtalo de nuevo en unos minutos.',
     next: 'retry',
   },
   DNS_ZONE_REJECTED: {
@@ -95,7 +88,7 @@ const JOB_FAILURES: Record<JobErrorCode, JobFailureView> = {
   },
   REGISTRAR_UNAVAILABLE: {
     message:
-      'Nuestro proveedor de dominios no respondió a tiempo y es posible que el registro siga en proceso. Espera unos minutos y pulsa «Intentar de nuevo»: continuaremos donde se quedó, sin comprarlo dos veces.',
+      'El servicio de dominios no respondió a tiempo y es posible que el registro siga en proceso. Espera unos minutos y pulsa «Intentar de nuevo»: continuaremos donde se quedó, sin comprarlo dos veces.',
     next: 'retry',
   },
   REGISTRATION_REJECTED: {

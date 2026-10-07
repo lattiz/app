@@ -7,9 +7,6 @@ export class DomainSearchResultDto {
   @ApiProperty()
   available!: boolean;
 
-  @ApiProperty()
-  priceUsdCents!: number;
-
   /** Whether the Lattiz plan absorbs the cost (price <= DOMAIN_MAX_COST_USD_CENTS). */
   @ApiProperty()
   coveredByPlan!: boolean;
@@ -26,6 +23,15 @@ export class DomainAgreementDto {
   url!: string | null;
 }
 
+export class DomainMaintenanceFeeDto {
+  @ApiProperty()
+  amountCents!: number;
+
+  /** Lowercase ISO 4217 code, as Stripe uses it. */
+  @ApiProperty()
+  currency!: string;
+}
+
 export class DomainQuoteResponseDto {
   @ApiProperty()
   domain!: string;
@@ -34,13 +40,11 @@ export class DomainQuoteResponseDto {
   available!: boolean;
 
   @ApiProperty()
-  priceUsdCents!: number;
-
-  @ApiProperty()
-  renewalPriceUsdCents!: number;
-
-  @ApiProperty()
   coveredByPlan!: boolean;
+
+  /** Charged every year starting with the second one; the registration itself is covered by the plan. */
+  @ApiProperty({ type: DomainMaintenanceFeeDto })
+  maintenanceFee!: DomainMaintenanceFeeDto;
 
   @ApiProperty({ type: [DomainAgreementDto] })
   requiredAgreements!: DomainAgreementDto[];
