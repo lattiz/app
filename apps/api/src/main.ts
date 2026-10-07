@@ -28,6 +28,9 @@ async function bootstrap(): Promise<void> {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }));
   app.useGlobalFilters(new DomainExceptionFilter());
 
+  // SIGTERM during a deploy drains in-flight requests and closes the DB pool cleanly.
+  app.enableShutdownHooks();
+
   const document = SwaggerModule.createDocument(app, buildSwaggerConfig());
   SwaggerModule.setup('docs', app, document);
 

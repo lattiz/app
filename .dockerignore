@@ -1,0 +1,16 @@
+# turbo prune needs the whole workspace, so apps/* and packages/* are NOT excluded.
+**/node_modules
+**/dist
+**/.next
+**/.turbo
+.git
+**/.env
+**/.env.*
+!**/.env.example
+.vercel
+**/coverage
+*.log
+.codegraph
+.claude
+.cursor
+.agents

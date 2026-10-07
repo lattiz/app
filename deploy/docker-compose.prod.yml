@@ -1,0 +1,61 @@
+# Installed on the VM as /opt/lattiz/docker-compose.yml.
+# Always invoke with an explicit env file so /opt/lattiz/.env is NOT also used
+# for ${...} interpolation (it holds app secrets, not compose vars):
+#   docker compose --env-file /opt/lattiz/compose.env -f /opt/lattiz/docker-compose.yml up -d
+name: lattiz
+
+services:
+  api:
+    image: ${API_IMAGE}
+    # App secrets/config. NODE_ENV is intentionally absent here so the image's
+    # NODE_ENV=production wins (required for the CORS allowlist to activate).
+    env_file:
+      - /opt/lattiz/.env
+    init: true
+    restart: unless-stopped
+    mem_limit: 900m
+    # Heap ceiling below mem_limit leaves headroom for non-heap + the runtime.
+    environment:
+      NODE_OPTIONS: "--max-old-space-size=768"
+    stop_grace_period: 20s
+    expose:
+      - "3000"
+    healthcheck:
+      test:
+        - "CMD"
+        - "node"
+        - "-e"
+        - "fetch('http://127.0.0.1:'+(process.env.PORT||3000)+'/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    mem_limit: 128m
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /opt/lattiz/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  caddy_data:
+  caddy_config:
