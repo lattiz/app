@@ -1,8 +1,27 @@
 # Installed on the VM as /opt/lattiz/Caddyfile. Caddy obtains/renews TLS automatically.
+{
+	servers {
+		# UDP 443 is not published (nor open in the GCP firewall), so don't advertise HTTP/3.
+		protocols h1 h2
+	}
+}
+
 api.lattiz.app {
 	# Compress responses only; request bodies pass through untouched so Stripe's
 	# raw-body webhook signature stays valid.
 	encode zstd gzip
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "no-referrer"
+		# JSON-only API: nothing here should ever load sub-resources or be framed.
+		Content-Security-Policy "default-src 'none'; frame-ancestors 'none'"
+		-Server
+		-Via
+		-X-Powered-By
+	}
 
 	reverse_proxy api:3000
 

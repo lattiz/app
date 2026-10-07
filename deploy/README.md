@@ -63,6 +63,18 @@ docker compose --env-file /opt/lattiz/compose.env -f /opt/lattiz/docker-compose.
 #    command="/opt/lattiz/deploy.sh",no-port-forwarding,no-agent-forwarding,no-X11-forwarding,no-pty ssh-ed25519 AAAA...
 ```
 
+## Host hardening
+
+- SSH: key-only, plus `/etc/ssh/sshd_config.d/10-lattiz-hardening.conf` (`PermitRootLogin no`,
+  no X11/agent forwarding, `AllowTcpForwarding local`, `MaxAuthTries 3`). The `10-` prefix
+  matters: sshd keeps the first value it reads, so it must sort before the cloud-image drop-ins.
+  Port 22 stays open to the world because GitHub-hosted runners have no fixed IPs.
+- `fail2ban` with the `sshd` jail (systemd backend): 5 failures in 10 min → 1 h ban.
+- No project-wide SSH keys in GCP metadata: every key there becomes a passwordless-sudo user.
+- Containers: `read_only`, `cap_drop: ALL` (Caddy keeps only `NET_BIND_SERVICE`),
+  `no-new-privileges`, `pids_limit`; the API runs as the image's non-root `node` user.
+- Caddy sets HSTS and the security headers; `/docs` (Swagger) is not mounted in production.
+
 ## How a deploy works
 
 `deploy.sh` receives the image ref in `$SSH_ORIGINAL_COMMAND`, validates it (strict regex +
