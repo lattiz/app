@@ -17,6 +17,7 @@
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@fontsource-variable/manrope": "^5.2.8",
     "@grapesjs/studio-sdk": "^1.1.1",
+    "@grapesjs/studio-sdk-plugins": "^1.0.39",
     "@lattiz/api-client": "workspace:*",
     "@supabase/supabase-js": "^2.108.0",
     "@tailwindcss/vite": "^4.3.2",

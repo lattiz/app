@@ -17,6 +17,10 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  optimizeDeps: {
+    // Vite 8 prebundles React as a default-only CJS interop; optimizing this entry keeps `import { Children } from "react"` and the editor crashes.
+    exclude: ['@grapesjs/studio-sdk/react'],
+  },
   server: {
     port: 5173,
   },

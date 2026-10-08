@@ -1,4 +1,5 @@
 import StudioEditor from '@grapesjs/studio-sdk/react';
+import { layoutSidebarButtons } from '@grapesjs/studio-sdk-plugins';
 import './grapesjs-sdk.css';
 import './editor-i18n.css';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -91,13 +92,16 @@ function buildOptions(
   projectJSON: GrapesJSProjectJSON,
   onSave: (project: GrapesJSProjectJSON) => void,
 ): StudioOptions {
-  const plugins: StudioPlugins = (projectJSON.custom?.plugins ?? []).map(
-    (p) => ({
+  const plugins = [
+    // Sidebar de botones con layouts propios para tablet y móvil (el layout por defecto no es usable < 1000px).
+    // Cast: los tipos del plugin y del SDK instalado divergen aunque el runtime lo acepta.
+    layoutSidebarButtons,
+    ...(projectJSON.custom?.plugins ?? []).map((p) => ({
       id: p.id,
       src: p.src,
       options: p.options,
-    }),
-  );
+    })),
+  ] as unknown as StudioPlugins;
 
   return {
     theme: 'light',
@@ -219,6 +223,7 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
   const editorRef = useRef<EditorInstance | null>(null);
   const grapesEditorRef = useRef<StyleModeEditor | null>(null);
   const [savedAt, setSavedAt] = useState<string | null>(null);
+  const [headerHidden, setHeaderHidden] = useState(false);
   const [advancedStyles, setAdvancedStyles] = useState(
     readAdvancedStylesPreference,
   );
@@ -329,72 +334,102 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
   return (
     <div
       className={cn(
-        'flex h-screen flex-col overflow-hidden',
+        'flex h-dvh flex-col overflow-hidden',
         !advancedStyles && SIMPLE_STYLES_ROOT_CLASS,
       )}
     >
-      <header className="flex w-full items-center justify-between gap-4 border-b border-border bg-primary px-4 py-2">
-        <div className="flex items-center gap-2">
-          <Button
-            variant="linkSecondary"
-            size="default"
-            onClick={() => window.history.back()}
-          >
-            <ArrowLeft className="size-4" color="#FFF" />
-            Regresar
-          </Button>
-          <SaveStatusBadge
-            status={saveStatus}
-            lastSavedAt={savedAt}
-            onRetry={retrySave}
-          />
-        </div>
-
-        <div className="flex shrink-0 items-center gap-3">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger
-                render={
-                  <div className="flex items-center gap-2 text-primary-foreground">
-                    <Switch
-                      id="lattiz-advanced-styles"
-                      size="sm"
-                      checked={advancedStyles}
-                      onCheckedChange={handleAdvancedStylesChange}
-                      className="border-primary-foreground/40 data-checked:border-white data-checked:bg-white data-unchecked:bg-primary-foreground/30"
-                      thumbClassName="data-checked:bg-primary dark:data-checked:bg-primary"
-                    />
-                    <Label
-                      htmlFor="lattiz-advanced-styles"
-                      className="cursor-pointer text-xs font-normal text-primary-foreground"
-                    >
-                      Mostrar opciones avanzadas
-                    </Label>
-                  </div>
-                }
+      {/* En móvil el header se colapsa al hacer scroll hacia abajo y reaparece al subir. */}
+      <div
+        className={cn(
+          'grid transition-[grid-template-rows] duration-200 sm:grid-rows-[1fr]',
+          headerHidden ? 'grid-rows-[0fr]' : 'grid-rows-[1fr]',
+        )}
+        // El canvas de GrapesJS no se entera del cambio de alto del contenedor sin un resize.
+        onTransitionEnd={() => window.dispatchEvent(new Event('resize'))}
+      >
+        <header
+          className={cn(
+            'flex min-h-0 w-full flex-wrap items-center justify-between gap-x-3 gap-y-0 overflow-hidden border-b border-border bg-primary px-3 py-1 sm:gap-y-1 sm:px-4 sm:py-2',
+            headerHidden && 'max-sm:border-b-0 max-sm:py-0',
+          )}
+        >
+          <div className="flex items-center gap-2">
+            <Button
+              variant="linkSecondary"
+              size="default"
+              onClick={() => window.history.back()}
+            >
+              <ArrowLeft className="size-4" color="#FFF" />
+              Regresar
+            </Button>
+            <div className="hidden sm:block">
+              <SaveStatusBadge
+                status={saveStatus}
+                lastSavedAt={savedAt}
+                onRetry={retrySave}
               />
-              <TooltipContent side="bottom">
-                Espaciado, posición, bordes y efectos
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => void handlePublish()}
-            disabled={isPublishing || saveMutation.isPending}
-          >
-            {isPublishing ? (
-              <>
-                <Loader2Icon className="mr-2 size-3 animate-spin" />
-                Publicando…
-              </>
-            ) : (
-              'Publicar sitio 🚀'
-            )}
-          </Button>
-        </div>
-      </header>
+            </div>
+          </div>
+
+          <div className="contents">
+            <div className="order-3 flex w-full items-center justify-between gap-2 sm:contents">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger
+                    render={
+                      <div className="flex items-center gap-2 text-primary-foreground sm:ml-auto">
+                        <Switch
+                          id="lattiz-advanced-styles"
+                          size="sm"
+                          checked={advancedStyles}
+                          onCheckedChange={handleAdvancedStylesChange}
+                          className="border-primary-foreground/40 data-checked:border-white data-checked:bg-white data-unchecked:bg-primary-foreground/30"
+                          thumbClassName="data-checked:bg-primary dark:data-checked:bg-primary"
+                        />
+                        <Label
+                          htmlFor="lattiz-advanced-styles"
+                          className="cursor-pointer text-xs font-normal text-primary-foreground"
+                        >
+                          <span className="sm:hidden">Opciones avanzadas</span>
+                          <span className="hidden sm:inline">
+                            Mostrar opciones avanzadas
+                          </span>
+                        </Label>
+                      </div>
+                    }
+                  />
+                  <TooltipContent side="bottom">
+                    Espaciado, posición, bordes y efectos
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              <div className="sm:hidden">
+                <SaveStatusBadge
+                  status={saveStatus}
+                  lastSavedAt={savedAt}
+                  onRetry={retrySave}
+                />
+              </div>
+            </div>
+            <Button
+              variant="secondary"
+              size="sm"
+              className="order-2 sm:order-none"
+              onClick={() => void handlePublish()}
+              disabled={isPublishing || saveMutation.isPending}
+            >
+              {isPublishing ? (
+                <>
+                  <Loader2Icon className="mr-2 size-3 animate-spin" />
+                  Publicando…
+                </>
+              ) : (
+                'Publicar sitio 🚀'
+              )}
+            </Button>
+          </div>
+        </header>
+      </div>
 
       <main className="min-h-0 flex-1">
         <StudioEditor
@@ -412,6 +447,37 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
               );
               setAdvancedStyles(advanced);
             });
+
+            // Scroll (canvas iframe o paneles del editor) → mostrar/ocultar header solo en móvil.
+            const mobile = window.matchMedia('(max-width: 639px)');
+            const lastY = new WeakMap<object, number>();
+            const onScroll = (e: Event, win?: Window) => {
+              if (!mobile.matches) return;
+              const t = e.target as Document | HTMLElement;
+              const y =
+                t.nodeType === 9
+                  ? (win?.scrollY ?? window.scrollY)
+                  : (t as HTMLElement).scrollTop;
+              const prev = lastY.get(t) ?? 0;
+              if (y <= 0 || y < prev - 4) setHeaderHidden(false);
+              else if (y > 16 && y > prev + 4) setHeaderHidden(true);
+              else return;
+              lastY.set(t, y);
+            };
+            document.addEventListener('scroll', (e) => onScroll(e), true);
+            const bound = new WeakSet<object>();
+            const bindCanvasScroll = () => {
+              const win = editor.Canvas.getWindow();
+              if (!win || bound.has(win.document)) return;
+              bound.add(win.document);
+              win.document.addEventListener(
+                'scroll',
+                (e) => onScroll(e, win),
+                true,
+              );
+            };
+            editor.on('load', bindCanvasScroll);
+            editor.on('canvas:frame:load', bindCanvasScroll);
           }}
         />
       </main>
