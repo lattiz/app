@@ -442,6 +442,9 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
             editor.on('load', () => {
               editor.I18n.addMessages({ en: grapesjsCoreLocaleEs });
               editor.I18n.setLocale('en');
+              // Sin 'link' ni 'wrap' (el último botón): el RTE queda solo con formato básico.
+              editor.RichTextEditor.remove('link');
+              editor.RichTextEditor.remove('wrap');
               const advanced = initStyleMode(
                 editor as unknown as StyleModeEditor,
               );
