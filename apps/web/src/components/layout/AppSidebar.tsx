@@ -186,7 +186,8 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarHeader className="border-b border-sidebar-border px-4 py-3">
         <div className="flex items-center gap-2">
-          <img src='/favicon-32x32.png' /> <span className='pt-1'>Lattiz | Admin Panel</span>
+          <img src="/favicon-32x32.png" alt="Lattiz" className="size-8 shrink-0" />
+          <span className="pt-1">Lattiz | Admin Panel</span>
         </div>
       </SidebarHeader>
 
