@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
-import { domainCoverageCopy, offersProUpgrade, searchNotCoveredLabel } from '../lib/domain-copy';
+import { domainCoverageCopy, offersProUpgrade } from '../lib/domain-copy';
 
 interface Props {
   result: DomainSearchResultDto;
@@ -33,7 +33,9 @@ export function DomainResultCard({ result, loading, onSelect }: Props) {
               ) : upgrade ? (
                 <Badge>{domainCoverageCopy.availableWithPro}</Badge>
               ) : (
-                <span>{searchNotCoveredLabel(result.notCoveredReason)}</span>
+                <Badge variant="secondary" className="bg-muted text-muted-foreground">
+                  {domainCoverageCopy.notIncluded}
+                </Badge>
               )}
             </span>
           ) : (

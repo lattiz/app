@@ -8,6 +8,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { DomainResultCard } from '../components/DomainResultCard';
 import { useDomainQuote } from '../hooks/useDomainQuote';
 import { searchErrorMessage } from '../lib/domain-errors';
+import { sortDomainSearchResults } from '../lib/sort-domain-search-results';
 import { useDomainSearch } from '../hooks/useDomainSearch';
 import { DomainSearchSchema } from '../schemas/domain.schemas';
 import { useDomainWizardStore } from '../store/domain-wizard.store';
@@ -103,7 +104,7 @@ export function SearchStep() {
 
       {!search.isFetching && search.data && search.data.length > 0 && (
         <div className="flex flex-col gap-3">
-          {search.data.map((result) => (
+          {sortDomainSearchResults(search.data).map((result) => (
             <DomainResultCard
               key={result.domain}
               result={result}

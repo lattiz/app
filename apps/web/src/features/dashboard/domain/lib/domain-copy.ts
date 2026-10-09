@@ -18,7 +18,7 @@ export const domainCoverageCopy = {
   noLongerAvailable: 'Este dominio ya no está disponible. Elige otro.',
 } as const;
 
-/** Label next to "Disponible" when the current plan does not include the name. */
+/** Quote toast when an available name is outside the current plan. */
 export function searchNotCoveredLabel(reason: NotCoveredReason): string {
   switch (reason) {
     case 'renewal_over_cap':
