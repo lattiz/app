@@ -1,3 +1,35 @@
 /* Capa `grapesjs` (orden declarado en index.css): sin capa, su reset global
    de variables --tw-* ganaría a nuestras utilidades en toda la app. */
 @import '@grapesjs/studio-sdk/style' layer(grapesjs);
+
+/* Barra de formato de texto (RTE): mismo azul que la toolbar del componente, controles más grandes para táctil. */
+.gjs-rte-toolbar {
+  background-color: hsl(210 75% 50%);
+}
+.gjs-rte-toolbar .gjs-rte-actionbar {
+  align-items: center;
+}
+.gjs-rte-toolbar .gjs-rte-action {
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 0;
+  color: #fff;
+  font-size: 16px;
+}
+.gjs-rte-toolbar .gjs-rte-action svg,
+.gjs-rte-toolbar .gjs-rte-action i {
+  width: 18px;
+  height: 18px;
+  font-size: 16px;
+}
+.gjs-rte-toolbar .gjs-rte-action:hover {
+  background-color: hsl(210 75% 60%);
+}
+.gjs-rte-toolbar .gjs-rte-action.gjs-rte-active {
+  background-color: hsl(210 75% 38%);
+  color: #fff;
+}
