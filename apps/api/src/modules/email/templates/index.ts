@@ -4,6 +4,7 @@ import { renderDomainPurchaseFailed } from './domain-purchase-failed';
 import { renderDomainReady } from './domain-ready';
 import type { RenderedEmail } from './layout';
 import { renderPaymentFailed } from './payment-failed';
+import { renderPreviewEnding } from './preview-ending';
 import {
   renderDomainExpired,
   renderDomainRenewed,
@@ -73,6 +74,11 @@ export function renderEmail(
     case 'domain_expired':
       return renderDomainExpired({
         domain: asString(payload.domain, 'tu-dominio'),
+      });
+    case 'preview_ending':
+      return renderPreviewEnding({
+        endsAt: asString(payload.endsAt, ''),
+        siteName: asString(payload.siteName, ''),
       });
     default: {
       const _exhaustive: never = kind;

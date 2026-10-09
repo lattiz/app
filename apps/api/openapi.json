@@ -2688,7 +2688,27 @@
           },
           "isEntitled": {
             "type": "boolean",
-            "description": "Whether the tenant may use the service right now. Top-level rather than\ninside `subscription`, which is null exactly when a tenant has none —\nthe case that most needs the flag. The only value the guard and the\nfrontend trust; never recompute the date math anywhere else."
+            "description": "Whether the tenant has a live paid subscription. Top-level rather than\ninside `subscription`, which is null exactly when a tenant has none —\nthe case that most needs the flag. Derived only from `computeIsEntitled`."
+          },
+          "previewState": {
+            "description": "`paid` when entitled; trial states are plan `none`; every other non-entitled tenant is `lapsed`.",
+            "enum": [
+              "paid",
+              "trial_unstarted",
+              "trial_active",
+              "trial_expired",
+              "lapsed"
+            ],
+            "type": "string"
+          },
+          "canPublish": {
+            "type": "boolean",
+            "description": "Publish, asset upload, and template changes. Saving a draft does not depend on this."
+          },
+          "previewExpiresAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "When the free preview ends. Null for paid, lapsed, and not-yet-published tenants."
           },
           "branding": {
             "description": "Favicon / social-preview images injected into the published tenant site.",
@@ -2713,6 +2733,9 @@
           "site",
           "subscription",
           "isEntitled",
+          "previewState",
+          "canPublish",
+          "previewExpiresAt",
           "branding"
         ]
       },

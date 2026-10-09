@@ -2,6 +2,8 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { sql, type SQL } from 'drizzle-orm';
 import { randomUUID } from 'node:crypto';
 import { extname } from 'node:path';
+import { computeIsEntitled } from '../../common/billing/entitlement';
+import { PreviewCapabilityService } from '../../common/billing/preview-capability.service';
 import { previewHost } from '../../common/preview/preview-url';
 import { type Database, DATABASE } from '../../database/database.module';
 import { describeStorageError } from '../storage/domain/object-storage.exceptions';
@@ -9,6 +11,9 @@ import {
   OBJECT_STORAGE_PORT,
   type ObjectStoragePort,
 } from '../storage/domain/object-storage.port';
+import { tenantAssetsPrefix } from '../storage/domain/storage-path';
+import { assetMagic } from './asset-magic';
+import { HTML_SANITIZER, type HtmlSanitizerPort } from './html-sanitizer.port';
 import {
   ChangeTemplateResponseDto,
   PublishSiteResponseDto,
@@ -18,6 +23,7 @@ import {
   UploadedAssetResponseDto,
 } from './dto/sites.response.dto';
 import {
+  AssetQuotaExceededException,
   AssetUploadFailedException,
   NoAssetsProvidedException,
   NoTemplateAvailableException,
@@ -61,6 +67,16 @@ interface CurrentSiteSchemaRow {
   updated_at: string | Date;
   created_at: string | Date;
 }
+interface TenantPreviewRow {
+  plan: string;
+  preview_started_at: string | Date | null;
+  status: string | null;
+  current_period_end: string | Date | null;
+}
+
+interface SqlExecutor {
+  execute(query: SQL): Promise<unknown>;
+}
 
 @Injectable()
 export class SitesService {
@@ -69,6 +85,8 @@ export class SitesService {
   constructor(
     @Inject(DATABASE) private readonly db: Database,
     @Inject(OBJECT_STORAGE_PORT) private readonly storage: ObjectStoragePort,
+    private readonly preview: PreviewCapabilityService,
+    @Inject(HTML_SANITIZER) private readonly htmlSanitizer: HtmlSanitizerPort,
   ) {}
 
   /** Returns the editor project for a tenant, seeding it from a template on first load. */
@@ -130,17 +148,24 @@ export class SitesService {
   ): Promise<PublishSiteResponseDto> {
     await this.assertTenantOwnership(tenantId, userSub);
 
-    const rows = await this.query<PublishedAtRow>(
-      sql`UPDATE public.site_schemas
-          SET grapesjs_json = ${JSON.stringify(project)}::jsonb,
-              exported_html = ${exportedHtml},
-              status = 'published',
-              published_at = now()
-          WHERE tenant_id = ${tenantId}::uuid
-          RETURNING published_at`,
-    );
-    const row = rows[0];
-    if (!row) throw new SiteNotFoundException();
+    const row = await this.db.transaction(async (tx) => {
+      const tenant = await this.loadTenantPreview(tx, tenantId);
+      const html = this.htmlToStore(tenant, exportedHtml);
+      const rows = await this.queryWith<PublishedAtRow>(
+        tx,
+        sql`UPDATE public.site_schemas
+            SET grapesjs_json = ${JSON.stringify(project)}::jsonb,
+                exported_html = ${html},
+                status = 'published',
+                published_at = now()
+            WHERE tenant_id = ${tenantId}::uuid
+            RETURNING published_at`,
+      );
+      const published = rows[0];
+      if (!published) throw new SiteNotFoundException();
+      await this.sealPreviewWindow(tx, tenantId, tenant);
+      return published;
+    });
 
     await this.triggerRevalidation(tenantId);
 
@@ -233,16 +258,21 @@ export class SitesService {
     await this.assertTenantOwnership(tenantId, userSub);
     if (!files?.length) throw new NoAssetsProvidedException();
 
+    const tenant = await this.loadTenantPreview(this.db, tenantId);
+    const isEntitled = tenant ? this.tenantIsEntitled(tenant) : false;
+    const verifyBytes = this.preview.shouldVerifyAssetBytes(isEntitled);
+    this.assertAssetTypes(files, verifyBytes);
+    await this.assertAssetQuota(tenantId, files, isEntitled);
+
     const assets: UploadedAssetResponseDto[] = [];
 
     for (const file of files) {
-      if (!file.mimetype.startsWith('image/')) {
-        throw new UnsupportedAssetTypeException(file.mimetype);
-      }
-
       const assetId = randomUUID();
+      const extension = verifyBytes
+        ? (assetMagic.extensionFor(declaredMime(file.mimetype)) ?? '.bin')
+        : safeExtension(file.originalname);
       // Path is derived server-side: a tenant can never write outside its prefix.
-      const storagePath = `tenant-assets/${tenantId}/${assetId}${safeExtension(file.originalname)}`;
+      const storagePath = `${tenantAssetsPrefix(tenantId)}${assetId}${extension}`;
 
       try {
         const src = await this.storage.uploadPublic(
@@ -265,6 +295,37 @@ export class SitesService {
     }
 
     return assets;
+  }
+
+  private assertAssetTypes(files: UploadedFile[], verifyBytes: boolean): void {
+    if (!verifyBytes) {
+      for (const file of files) {
+        if (!file.mimetype.startsWith('image/')) {
+          throw new UnsupportedAssetTypeException(file.mimetype);
+        }
+      }
+      return;
+    }
+
+    const allowed = new Set(this.preview.allowedAssetMime());
+    for (const file of files) {
+      const mime = declaredMime(file.mimetype);
+      if (!allowed.has(mime) || !assetMagic.matches(mime, file.buffer)) {
+        throw new UnsupportedAssetTypeException(file.mimetype);
+      }
+    }
+  }
+
+  private async assertAssetQuota(
+    tenantId: string,
+    files: UploadedFile[],
+    isEntitled: boolean,
+  ): Promise<void> {
+    const limit = this.preview.unpaidAssetByteLimit(isEntitled);
+    if (limit === null) return;
+    const incoming = files.reduce((sum, file) => sum + file.buffer.length, 0);
+    const used = await this.storage.usageBytes(tenantAssetsPrefix(tenantId));
+    if (used + incoming > limit) throw new AssetQuotaExceededException(limit);
   }
 
   /**
@@ -362,10 +423,90 @@ export class SitesService {
     if (!rows[0]) throw new TenantAccessDeniedException();
   }
 
+  private htmlToStore(
+    tenant: TenantPreviewRow | undefined,
+    exportedHtml: string,
+  ): string {
+    const isEntitled = tenant ? this.tenantIsEntitled(tenant) : false;
+    if (!this.preview.shouldSanitizePublishedHtml(isEntitled))
+      return exportedHtml;
+    return this.htmlSanitizer.sanitizeUnpaidSiteHtml(exportedHtml);
+  }
+
+  private tenantIsEntitled(tenant: TenantPreviewRow): boolean {
+    return computeIsEntitled(
+      tenant.status
+        ? {
+            status: tenant.status,
+            currentPeriodEnd: tenant.current_period_end,
+          }
+        : null,
+    );
+  }
+
+  private async loadTenantPreview(
+    tx: SqlExecutor,
+    tenantId: string,
+  ): Promise<TenantPreviewRow | undefined> {
+    const rows = await this.queryWith<TenantPreviewRow>(
+      tx,
+      sql`SELECT t.plan, t.preview_started_at, s.status, s.current_period_end
+          FROM public.tenants t
+          LEFT JOIN public.subscriptions s ON s.tenant_id = t.id
+          WHERE t.id = ${tenantId}::uuid
+          ORDER BY s.created_at DESC NULLS LAST
+          LIMIT 1`,
+    );
+    return rows[0];
+  }
+
+  /**
+   * Stamps the free-preview clock once, in the same transaction as the publish.
+   * The `IS NULL` predicate is the race backstop: a concurrent publish cannot
+   * move a stamp that is already set.
+   */
+  private async sealPreviewWindow(
+    tx: SqlExecutor,
+    tenantId: string,
+    tenant: TenantPreviewRow | undefined,
+  ): Promise<void> {
+    if (!tenant) return;
+
+    const isEntitled = this.tenantIsEntitled(tenant);
+    if (
+      !this.preview.shouldSeal({
+        isEntitled,
+        plan: tenant.plan,
+        previewStartedAt: tenant.preview_started_at,
+      })
+    ) {
+      return;
+    }
+
+    await tx.execute(
+      sql`UPDATE public.tenants
+          SET preview_started_at = now()
+          WHERE id = ${tenantId}::uuid
+            AND plan = 'none'
+            AND preview_started_at IS NULL`,
+    );
+  }
+
   private async query<T>(statement: SQL): Promise<T[]> {
-    const rows = await this.db.execute(statement);
+    return this.queryWith<T>(this.db, statement);
+  }
+
+  private async queryWith<T>(
+    executor: SqlExecutor,
+    statement: SQL,
+  ): Promise<T[]> {
+    const rows = await executor.execute(statement);
     return rows as unknown as T[];
   }
+}
+
+function declaredMime(mimetype: string): string {
+  return mimetype.split(';', 1)[0].trim().toLowerCase();
 }
 
 /** Keeps only a plain alphanumeric extension so the filename can't shape the storage path. */

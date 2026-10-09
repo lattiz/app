@@ -28,8 +28,13 @@ import {
 } from '@nestjs/swagger';
 import { type AuthenticatedUser } from '../../common/auth/authenticated-user';
 import { CurrentUser } from '../../common/auth/current-user.decorator';
-import { SubscriptionActiveGuard } from '../../common/auth/subscription-active.guard';
+import { PublishAllowedGuard } from '../../common/auth/publish-allowed.guard';
 import { SupabaseJwtGuard } from '../../common/auth/supabase-jwt.guard';
+import { PreviewRateLimitGuard } from '../../common/throttling/preview-rate-limit.guard';
+import {
+  PreviewAssetRateLimit,
+  PreviewPublishRateLimit,
+} from '../../common/throttling/rate-limits';
 import { ChangeTemplateDto } from './dto/change-template.dto';
 import { PublishSiteDto } from './dto/publish-site.dto';
 import { SaveSchemaDto } from './dto/save-schema.dto';
@@ -59,7 +64,9 @@ export class SitesController {
   @ApiOperation({ summary: 'Load the tenant site editor project (protected)' })
   @ApiOkResponse({ type: SiteSchemaResponseDto })
   @ApiUnauthorizedResponse({ description: 'Missing or invalid bearer token.' })
-  @ApiForbiddenResponse({ description: 'Tenant does not belong to the caller.' })
+  @ApiForbiddenResponse({
+    description: 'Tenant does not belong to the caller.',
+  })
   async getSchema(
     @Param('tenantId', ParseUUIDPipe) tenantId: string,
     @CurrentUser() user?: AuthenticatedUser,
@@ -67,28 +74,38 @@ export class SitesController {
     return this.sites.getEditorProject(tenantId, requireSub(user));
   }
 
-  /** Persists an autosave of the editor project. */
+  /** Persists an autosave of the editor project. Allowed after the free preview ends. */
   @Patch(':tenantId/schema')
-  @UseGuards(SubscriptionActiveGuard)
-  @ApiOperation({ summary: 'Autosave the tenant site editor project (protected)' })
+  @ApiOperation({
+    summary: 'Autosave the tenant site editor project (protected)',
+  })
   @ApiOkResponse({ type: SaveSchemaResponseDto })
   @ApiUnauthorizedResponse({ description: 'Missing or invalid bearer token.' })
-  @ApiForbiddenResponse({ description: 'Tenant does not belong to the caller.' })
+  @ApiForbiddenResponse({
+    description: 'Tenant does not belong to the caller.',
+  })
   async saveSchema(
     @Param('tenantId', ParseUUIDPipe) tenantId: string,
     @Body() dto: SaveSchemaDto,
     @CurrentUser() user?: AuthenticatedUser,
   ): Promise<SaveSchemaResponseDto> {
-    return this.sites.saveEditorProject(tenantId, requireSub(user), dto.project);
+    return this.sites.saveEditorProject(
+      tenantId,
+      requireSub(user),
+      dto.project,
+    );
   }
 
   /** Publishes the tenant site (stores exported HTML). */
   @Post(':tenantId/publish')
-  @UseGuards(SubscriptionActiveGuard)
+  @UseGuards(PublishAllowedGuard, PreviewRateLimitGuard)
+  @PreviewPublishRateLimit()
   @ApiOperation({ summary: 'Publish the tenant site (protected)' })
   @ApiOkResponse({ type: PublishSiteResponseDto })
   @ApiUnauthorizedResponse({ description: 'Missing or invalid bearer token.' })
-  @ApiForbiddenResponse({ description: 'Tenant does not belong to the caller.' })
+  @ApiForbiddenResponse({
+    description: 'Tenant does not belong to the caller.',
+  })
   async publish(
     @Param('tenantId', ParseUUIDPipe) tenantId: string,
     @Body() dto: PublishSiteDto,
@@ -104,7 +121,8 @@ export class SitesController {
 
   /** Uploads editor assets (images) and returns their public Supabase Storage URLs. */
   @Post(':tenantId/assets')
-  @UseGuards(SubscriptionActiveGuard)
+  @UseGuards(PublishAllowedGuard, PreviewRateLimitGuard)
+  @PreviewAssetRateLimit()
   @UseInterceptors(
     FilesInterceptor('files', MAX_ASSET_FILES, {
       limits: { fileSize: MAX_ASSET_BYTES, files: MAX_ASSET_FILES },
@@ -119,10 +137,14 @@ export class SitesController {
       },
     },
   })
-  @ApiOperation({ summary: 'Upload assets for the tenant site editor (protected)' })
+  @ApiOperation({
+    summary: 'Upload assets for the tenant site editor (protected)',
+  })
   @ApiOkResponse({ type: UploadedAssetResponseDto, isArray: true })
   @ApiUnauthorizedResponse({ description: 'Missing or invalid bearer token.' })
-  @ApiForbiddenResponse({ description: 'Tenant does not belong to the caller.' })
+  @ApiForbiddenResponse({
+    description: 'Tenant does not belong to the caller.',
+  })
   async uploadAssets(
     @Param('tenantId', ParseUUIDPipe) tenantId: string,
     @UploadedFiles() files: UploadedFile[],
@@ -133,13 +155,19 @@ export class SitesController {
 
   /** First-time explicit template selection (creates the site schema). */
   @Post('select-template')
-  @UseGuards(SubscriptionActiveGuard)
+  @UseGuards(PublishAllowedGuard)
   @HttpCode(HttpStatus.CREATED)
-  @ApiOperation({ summary: 'Select a template for the caller tenant (protected)' })
+  @ApiOperation({
+    summary: 'Select a template for the caller tenant (protected)',
+  })
   @ApiOkResponse({ type: SelectTemplateResponseDto })
   @ApiUnauthorizedResponse({ description: 'Missing or invalid bearer token.' })
-  @ApiNotFoundResponse({ description: 'No tenant for this user, or template not found.' })
-  @ApiConflictResponse({ description: 'Site schema already exists for this tenant.' })
+  @ApiNotFoundResponse({
+    description: 'No tenant for this user, or template not found.',
+  })
+  @ApiConflictResponse({
+    description: 'Site schema already exists for this tenant.',
+  })
   async selectTemplate(
     @Body() dto: SelectTemplateDto,
     @CurrentUser() user?: AuthenticatedUser,
@@ -149,13 +177,21 @@ export class SitesController {
 
   /** Switches an existing site to a different template. */
   @Patch(':tenantId/template')
-  @UseGuards(SubscriptionActiveGuard)
-  @ApiOperation({ summary: 'Change the template for the tenant site (protected)' })
+  @UseGuards(PublishAllowedGuard)
+  @ApiOperation({
+    summary: 'Change the template for the tenant site (protected)',
+  })
   @ApiOkResponse({ type: ChangeTemplateResponseDto })
   @ApiUnauthorizedResponse({ description: 'Missing or invalid bearer token.' })
-  @ApiForbiddenResponse({ description: 'Tenant does not belong to the caller.' })
-  @ApiNotFoundResponse({ description: 'No site schema found, or template not found.' })
-  @ApiConflictResponse({ description: 'Confirmation required to reset existing site content.' })
+  @ApiForbiddenResponse({
+    description: 'Tenant does not belong to the caller.',
+  })
+  @ApiNotFoundResponse({
+    description: 'No site schema found, or template not found.',
+  })
+  @ApiConflictResponse({
+    description: 'Confirmation required to reset existing site content.',
+  })
   async changeTemplate(
     @Param('tenantId', ParseUUIDPipe) tenantId: string,
     @Body() dto: ChangeTemplateDto,

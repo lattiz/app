@@ -11,6 +11,7 @@ export const EMAIL_KINDS = [
   'renewal_last_notice',
   'domain_renewed',
   'domain_expired',
+  'preview_ending',
 ] as const;
 
 export type EmailKind = (typeof EMAIL_KINDS)[number];

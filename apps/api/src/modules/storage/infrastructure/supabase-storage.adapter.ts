@@ -9,6 +9,7 @@ import {
 } from '../domain/object-storage.exceptions';
 import {
   assertSafePath,
+  assertSafePrefix,
   encodePath,
   pathFromPublicUrl,
 } from '../domain/storage-path';
@@ -64,6 +65,29 @@ export class SupabaseStorageAdapter implements ObjectStoragePort {
       url,
       this.config.url ? this.publicBase() : undefined,
     );
+  }
+
+  async usageBytes(prefix: string): Promise<number> {
+    assertSafePrefix('usage', prefix);
+    const folder = prefix.endsWith('/') ? prefix.slice(0, -1) : prefix;
+    const limit = 1000;
+    let total = 0;
+    let offset = 0;
+    for (;;) {
+      const { data, error } = await this.admin()
+        .storage.from(SUPABASE_ASSETS_BUCKET)
+        .list(folder, { limit, offset });
+      if (error) throw toException('usage', error);
+      const entries = data ?? [];
+      for (const entry of entries) {
+        const size = entry.metadata?.size;
+        if (typeof size === 'number' && Number.isFinite(size) && size > 0) {
+          total += size;
+        }
+      }
+      if (entries.length < limit) return total;
+      offset += entries.length;
+    }
   }
 
   private publicBase(): string {

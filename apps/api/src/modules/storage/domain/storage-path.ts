@@ -22,6 +22,17 @@ export function assertSafePath(operation: string, path: string): void {
   }
 }
 
+/** Editor assets for one tenant. The trailing slash stops a prefix listing from matching a sibling id. */
+export function tenantAssetsPrefix(tenantId: string): string {
+  return `tenant-assets/${tenantId}/`;
+}
+
+/** Same rules as {@link assertSafePath}, but a listing prefix may end with `/`. */
+export function assertSafePrefix(operation: string, prefix: string): void {
+  const normalized = prefix.endsWith('/') ? prefix.slice(0, -1) : prefix;
+  assertSafePath(operation, normalized);
+}
+
 export function encodePath(path: string): string {
   return path.split('/').map(encodeURIComponent).join('/');
 }

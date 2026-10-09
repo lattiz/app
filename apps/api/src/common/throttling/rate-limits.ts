@@ -1,6 +1,21 @@
+import { SetMetadata } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 
-const MINUTE_MS = 60_000;
+export const MINUTE_MS = 60_000;
+
+export const PREVIEW_RATE_LIMIT_KIND = 'previewRateLimitKind';
+export type PreviewRateLimitKind = 'publish' | 'asset';
+
+/** Unpaid publish calls. The limit itself is read from PreviewConfig at request time. */
+export const PreviewPublishRateLimit = (): MethodDecorator =>
+  SetMetadata(
+    PREVIEW_RATE_LIMIT_KIND,
+    'publish' satisfies PreviewRateLimitKind,
+  );
+
+/** Unpaid asset uploads. The limit itself is read from PreviewConfig at request time. */
+export const PreviewAssetRateLimit = (): MethodDecorator =>
+  SetMetadata(PREVIEW_RATE_LIMIT_KIND, 'asset' satisfies PreviewRateLimitKind);
 
 // Default for every route, per client IP: generous enough for dashboard polling (job every 2s, DNS every 10s).
 export const DEFAULT_RATE_LIMIT = { ttl: MINUTE_MS, limit: 120 };

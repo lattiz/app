@@ -20,6 +20,9 @@ export interface ObjectStoragePort {
 
   /** Inverse of publicUrl, also for URLs written before the move to R2; null when the URL is not ours. */
   pathFromPublicUrl(url: string | null | undefined): string | null;
+
+  /** Sum of object sizes whose key starts with `prefix`. Throws ObjectStorageException on provider failure. */
+  usageBytes(prefix: string): Promise<number>;
 }
 
 export const OBJECT_STORAGE_PORT = Symbol('OBJECT_STORAGE_PORT');

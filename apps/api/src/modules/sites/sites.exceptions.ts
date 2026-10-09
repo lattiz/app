@@ -84,6 +84,21 @@ export class UnsupportedAssetTypeException extends DomainException {
   }
 }
 
+/** Unpaid tenant editor assets are over PREVIEW_MAX_ASSET_BYTES. */
+export class AssetQuotaExceededException extends DomainException {
+  readonly code = 'ASSET_QUOTA_EXCEEDED';
+  readonly status = HttpStatus.PAYLOAD_TOO_LARGE;
+
+  constructor(limitBytes: number) {
+    super(
+      'El almacenamiento de archivos de tu prueba gratuita llegó al límite.',
+      {
+        limitBytes,
+      },
+    );
+  }
+}
+
 /** The upload request carried no files. */
 export class NoAssetsProvidedException extends DomainException {
   readonly code = 'NO_ASSETS_PROVIDED';

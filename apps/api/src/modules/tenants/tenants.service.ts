@@ -2,6 +2,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { sql, type SQL } from 'drizzle-orm';
 import { randomUUID } from 'node:crypto';
 import { computeIsEntitled } from '../../common/billing/entitlement';
+import { PreviewCapabilityService } from '../../common/billing/preview-capability.service';
 import { scheduledCancellation } from '../../common/billing/scheduled-cancellation';
 import { previewUrl } from '../../common/preview/preview-url';
 import { type Database, DATABASE } from '../../database/database.module';
@@ -77,6 +78,7 @@ interface TenantRow {
   status: string;
   domain: string | null;
   vercel_domain_mapped: boolean;
+  preview_started_at: string | Date | null;
 }
 
 interface SiteMetaRow {
@@ -124,12 +126,14 @@ export class TenantsService {
   constructor(
     @Inject(DATABASE) private readonly db: Database,
     @Inject(OBJECT_STORAGE_PORT) private readonly storage: ObjectStoragePort,
+    private readonly preview: PreviewCapabilityService,
   ) {}
 
   /** Resolves the authenticated user's tenant (single-tenant-per-user model). */
   async getMyTenant(userSub: string): Promise<TenantMeResponseDto> {
     const rows = await this.query<TenantRow>(
-      sql`SELECT id, slug, name, plan, status, domain, vercel_domain_mapped
+      sql`SELECT id, slug, name, plan, status, domain, vercel_domain_mapped,
+                 preview_started_at
           FROM public.tenants
           WHERE user_id = ${userSub}::uuid
           LIMIT 1`,
@@ -138,6 +142,12 @@ export class TenantsService {
     if (!row) throw new TenantNotFoundException();
 
     const subscription = await this.getSubscription(row.id);
+    const isEntitled = computeIsEntitled(subscription);
+    const capability = this.preview.evaluate({
+      isEntitled,
+      plan: row.plan,
+      previewStartedAt: row.preview_started_at,
+    });
 
     return {
       tenantId: row.id,
@@ -152,7 +162,12 @@ export class TenantsService {
       domainStatus: await this.getDomainStatus(row.id),
       site: await this.getSiteMeta(row.id),
       subscription,
-      isEntitled: computeIsEntitled(subscription),
+      isEntitled,
+      previewState: capability.state,
+      canPublish: capability.canPublish,
+      previewExpiresAt: capability.previewExpiresAt
+        ? toIso(capability.previewExpiresAt)
+        : null,
       branding: await this.getBranding(row.id),
     };
   }

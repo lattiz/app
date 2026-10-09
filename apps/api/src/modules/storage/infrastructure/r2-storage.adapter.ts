@@ -1,5 +1,7 @@
 import {
   DeleteObjectCommand,
+  ListObjectsV2Command,
+  type ListObjectsV2CommandOutput,
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
@@ -13,6 +15,7 @@ import {
 } from '../domain/object-storage.exceptions';
 import {
   assertSafePath,
+  assertSafePrefix,
   encodePath,
   pathFromPublicUrl,
 } from '../domain/storage-path';
@@ -28,7 +31,9 @@ export interface R2Config {
 
 /** The only part of S3Client the adapter uses — lets tests stub the wire. */
 export interface S3Sender {
-  send(command: PutObjectCommand | DeleteObjectCommand): Promise<unknown>;
+  send(
+    command: PutObjectCommand | DeleteObjectCommand | ListObjectsV2Command,
+  ): Promise<unknown>;
 }
 
 // Unique keys never change, so browsers and Cloudflare may keep them for good.
@@ -81,6 +86,51 @@ export class R2StorageAdapter implements ObjectStoragePort {
 
   pathFromPublicUrl(url: string | null | undefined): string | null {
     return pathFromPublicUrl(url, this.config.publicUrl);
+  }
+
+  async usageBytes(prefix: string): Promise<number> {
+    assertSafePrefix('usage', prefix);
+    let total = 0;
+    let token: string | undefined;
+    for (;;) {
+      const page = await this.listPage(prefix, token);
+      for (const object of page.Contents ?? []) {
+        total += object.Size ?? 0;
+      }
+      if (!page.IsTruncated) return total;
+      const next = page.NextContinuationToken;
+      if (!next || next === token) {
+        throw new ObjectStorageException(
+          'usage',
+          'rejected',
+          'ListObjectsV2 was truncated without a new continuation token.',
+        );
+      }
+      token = next;
+    }
+  }
+
+  private async listPage(
+    prefix: string,
+    token: string | undefined,
+  ): Promise<ListObjectsV2CommandOutput> {
+    try {
+      return (await this.client.send(
+        new ListObjectsV2Command({
+          Bucket: this.config.bucket,
+          Prefix: prefix,
+          ContinuationToken: token,
+        }),
+      )) as ListObjectsV2CommandOutput;
+    } catch (error) {
+      const failure = describeS3Error(error);
+      throw new ObjectStorageException(
+        'usage',
+        classifyHttpStatus(failure.httpStatus),
+        failure.detail,
+        failure.httpStatus,
+      );
+    }
   }
 
   private async send(

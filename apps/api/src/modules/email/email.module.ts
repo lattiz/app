@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { PreviewModule } from '../../common/billing/preview.module';
 import { DatabaseModule } from '../../database/database.module';
 import { EmailOutboxService } from './application/email-outbox.service';
+import { PreviewNotifierService } from './application/preview-notifier.service';
 import { EMAIL_OUTBOX_REPOSITORY_PORT } from './domain/email-outbox.port';
 import { EMAIL_PROVIDER_PORT } from './domain/email-provider.port';
 import { DrizzleEmailOutboxRepository } from './infrastructure/drizzle-email-outbox.repository';
@@ -35,10 +37,11 @@ function resolveEmailProvider(config: ConfigService) {
 }
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, PreviewModule],
   providers: [
     EmailOutboxService,
     EmailSenderCron,
+    PreviewNotifierService,
     {
       provide: EMAIL_OUTBOX_REPOSITORY_PORT,
       useClass: DrizzleEmailOutboxRepository,

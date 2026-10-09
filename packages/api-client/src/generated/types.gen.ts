@@ -537,12 +537,23 @@ export type TenantMeResponseDto = {
     site: TenantSiteMetaDto | null;
     subscription: TenantSubscriptionDto | null;
     /**
-     * Whether the tenant may use the service right now. Top-level rather than
+     * Whether the tenant has a live paid subscription. Top-level rather than
      * inside `subscription`, which is null exactly when a tenant has none —
-     * the case that most needs the flag. The only value the guard and the
-     * frontend trust; never recompute the date math anywhere else.
+     * the case that most needs the flag. Derived only from `computeIsEntitled`.
      */
     isEntitled: boolean;
+    /**
+     * `paid` when entitled; trial states are plan `none`; every other non-entitled tenant is `lapsed`.
+     */
+    previewState: 'paid' | 'trial_unstarted' | 'trial_active' | 'trial_expired' | 'lapsed';
+    /**
+     * Publish, asset upload, and template changes. Saving a draft does not depend on this.
+     */
+    canPublish: boolean;
+    /**
+     * When the free preview ends. Null for paid, lapsed, and not-yet-published tenants.
+     */
+    previewExpiresAt: string | null;
     /**
      * Favicon / social-preview images injected into the published tenant site.
      */

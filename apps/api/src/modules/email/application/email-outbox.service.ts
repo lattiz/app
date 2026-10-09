@@ -27,7 +27,7 @@ export class EmailOutboxService {
     data: Record<string, unknown>,
     idempotencyKey: string,
     tenantId: string | null = null,
-  ): Promise<void> {
+  ): Promise<boolean> {
     try {
       const inserted = await this.outbox.insertIgnore({
         kind,
@@ -38,15 +38,17 @@ export class EmailOutboxService {
       });
       if (inserted) {
         this.logger.log(`Enqueued ${kind} → ${to} (key=${idempotencyKey})`);
-      } else {
-        this.logger.debug(
-          `Skipped duplicate enqueue ${kind} (key=${idempotencyKey})`,
-        );
+        return true;
       }
+      this.logger.debug(
+        `Skipped duplicate enqueue ${kind} (key=${idempotencyKey})`,
+      );
+      return false;
     } catch (err) {
       this.logger.error(
         `Failed to enqueue ${kind} (key=${idempotencyKey}): ${String(err)}`,
       );
+      return false;
     }
   }
 

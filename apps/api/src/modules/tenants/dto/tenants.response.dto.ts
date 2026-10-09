@@ -1,4 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
+import {
+  PREVIEW_STATES,
+  type PreviewState,
+} from '../../../common/billing/preview-capability';
 import { TenantBrandingDto } from './branding.response.dto';
 
 export class TenantSiteMetaDto {
@@ -115,13 +119,24 @@ export class TenantMeResponseDto {
   subscription!: TenantSubscriptionDto | null;
 
   /**
-   * Whether the tenant may use the service right now. Top-level rather than
+   * Whether the tenant has a live paid subscription. Top-level rather than
    * inside `subscription`, which is null exactly when a tenant has none —
-   * the case that most needs the flag. The only value the guard and the
-   * frontend trust; never recompute the date math anywhere else.
+   * the case that most needs the flag. Derived only from `computeIsEntitled`.
    */
   @ApiProperty()
   isEntitled!: boolean;
+
+  /** `paid` when entitled; trial states are plan `none`; every other non-entitled tenant is `lapsed`. */
+  @ApiProperty({ enum: PREVIEW_STATES })
+  previewState!: PreviewState;
+
+  /** Publish, asset upload, and template changes. Saving a draft does not depend on this. */
+  @ApiProperty()
+  canPublish!: boolean;
+
+  /** When the free preview ends. Null for paid, lapsed, and not-yet-published tenants. */
+  @ApiProperty({ type: String, nullable: true })
+  previewExpiresAt!: string | null;
 
   /** Favicon / social-preview images injected into the published tenant site. */
   @ApiProperty({ type: TenantBrandingDto })
