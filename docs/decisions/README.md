@@ -36,3 +36,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [app-settings-config](app-settings-config.md) — config de negocio en BD (BD > env > default); qué va y qué no
 - [domain-renewal-cap-enforced](domain-renewal-cap-enforced.md) — dominio incluido solo si compra y renovación caben en el plan; "Disponible con Pro"
 - [plan-change-flow](plan-change-flow.md) — upgrade por portal, downgrade con schedule propio; plan derivado del precio
+- [postgres-js-date-params](postgres-js-date-params.md) — no enlazar Date en sql`` crudo con postgres.js; usar ISO
