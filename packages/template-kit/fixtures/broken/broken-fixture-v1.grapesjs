@@ -1,0 +1,1 @@
+{"dataSources":[{"id":"globalStyles","records":[]}],"assets":[],"styles":[{"selectors":["gjs-t-body"],"style":{"color":{"type":"data-variable","path":"globalStyles.body-color.value"}}}],"pages":[],"symbols":[],"custom":{"projectType":"email","id":"broken"}}

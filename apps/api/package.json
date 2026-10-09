@@ -8,7 +8,9 @@
     "dev": "nest start --watch",
     "start": "node dist/main.js",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "node --import tsx --test \"src/**/*.test.ts\"",
+    "test": "pnpm run test:jest && pnpm run test:node",
+    "test:jest": "jest",
+    "test:node": "node --import tsx --test \"src/**/*.test.ts\"",
     "generate:openapi": "nest build && node dist/generate-openapi.js",
     "db:studio": "drizzle-kit studio"
   },
@@ -38,11 +40,21 @@
     "@nestjs/cli": "^11.0.5",
     "@nestjs/schematics": "^11.0.2",
     "@types/express": "^5.0.0",
+    "@types/jest": "^30.0.0",
     "@types/multer": "^2.2.0",
     "@types/node": "^24.0.0",
     "@types/sanitize-html": "^2.16.2",
     "drizzle-kit": "^0.31.10",
+    "jest": "^30.5.2",
+    "ts-jest": "^29.4.14",
     "tsx": "^4.23.0",
     "typescript": "^5.8.3"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "clearMocks": true
   }
 }

@@ -7,7 +7,9 @@ import {
   DNS_ZONE_INVENTORY_PORT,
   type DnsProviderPort,
 } from './domain/dns-provider.port';
+import { DOMAIN_PRICE_CAPS } from './domain/domain-pricing.policy';
 import { REGISTRAR_PORT } from './domain/registrar.port';
+import { parseDomainPriceCaps } from './domain-pricing.config';
 import { DnsReconcileService } from './dns-reconcile.service';
 import { DomainsController } from './domains.controller';
 import { DomainsService } from './domains.service';
@@ -60,6 +62,12 @@ function createDnsProvider(
     DomainsService,
     OpenproviderClient,
     VercelDomainsService,
+    {
+      provide: DOMAIN_PRICE_CAPS,
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) =>
+        parseDomainPriceCaps((key) => config.get<string>(key)),
+    },
     {
       provide: REGISTRAR_PORT,
       inject: [OpenproviderClient, ConfigService],

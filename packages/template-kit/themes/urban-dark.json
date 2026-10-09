@@ -1,0 +1,32 @@
+{
+  "name": "urban-dark",
+  "label": "Urbano oscuro",
+  "colors": {
+    "bg": "#0B0B0C",
+    "surface": "#141416",
+    "surface-2": "#1C1C1F",
+    "text": "#F4F1EA",
+    "muted": "#9A978F",
+    "accent": "#FF4F1F",
+    "on-accent": "#0B0B0C",
+    "line": "color-mix(in srgb, var(--lz-color-text) 14%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 24%, transparent)",
+    "overlay": "#0B0B0C",
+    "on-overlay": "#F4F1EA",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 58%, transparent)",
+    "ink": "#000000"
+  },
+  "fonts": {
+    "display": "'Anton', sans-serif",
+    "serif": "'Instrument Serif', serif",
+    "body": "'Space Grotesk', sans-serif",
+    "googleFonts": "family=Anton&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;700"
+  },
+  "radius": { "pill": "2px", "card": "2px" },
+  "sectionPad": "clamp(72px, 10vw, 140px)",
+  "container": "1200px",
+  "effects": {
+    "mapFilter": "grayscale(1) invert(.9) contrast(.9) brightness(.8)",
+    "heroImageFilter": "grayscale(.2) brightness(.42) contrast(1.05)"
+  }
+}

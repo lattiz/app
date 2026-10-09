@@ -171,10 +171,6 @@ export type InvoiceListResponseDto = {
     invoices: Array<InvoiceDto>;
 };
 
-export type ReconcileResponseDto = {
-    triggered: boolean;
-};
-
 export type DomainSearchResultDto = {
     domain: string;
     available: boolean;
@@ -719,19 +715,6 @@ export type BillingControllerGetInvoicesResponses = {
 };
 
 export type BillingControllerGetInvoicesResponse = BillingControllerGetInvoicesResponses[keyof BillingControllerGetInvoicesResponses];
-
-export type BillingControllerTriggerReconciliationData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/billing/reconcile';
-};
-
-export type BillingControllerTriggerReconciliationResponses = {
-    200: ReconcileResponseDto;
-};
-
-export type BillingControllerTriggerReconciliationResponse = BillingControllerTriggerReconciliationResponses[keyof BillingControllerTriggerReconciliationResponses];
 
 export type DomainsControllerSearchData = {
     body?: never;

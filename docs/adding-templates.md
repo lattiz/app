@@ -1,7 +1,10 @@
 # Adding a template
 
-From a designer's GrapesJS Studio project to a template that tenants can pick in
-`/dashboard/templates`, in one command.
+Templates are authored in `packages/template-kit` (see
+`docs/lattiz-template-guidelines.md`); `kit:build` prints the exact seed command,
+which uses `--dir packages/template-kit/dist/<id>` instead of `--file`/`--html`
+and uploads the local `assets/…` images to R2 like the Studio CDN assets below.
+The Studio flow still works for legacy exports:
 
 ## 1. Designer hands over two exports
 

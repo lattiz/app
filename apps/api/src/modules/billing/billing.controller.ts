@@ -20,6 +20,7 @@ import {
 import { SkipThrottle } from '@nestjs/throttler';
 import type { Request } from 'express';
 import { type AuthenticatedUser } from '../../common/auth/authenticated-user';
+import { CronSecretGuard } from '../../common/auth/cron-secret.guard';
 import { CurrentUser } from '../../common/auth/current-user.decorator';
 import { SupabaseJwtGuard } from '../../common/auth/supabase-jwt.guard';
 import { SensitiveActionRateLimit } from '../../common/throttling/rate-limits';
@@ -122,13 +123,15 @@ export class BillingController {
     return this.billing.getInvoicesForUser(requireSub(user));
   }
 
-  /** Dev/ops escape hatch so the 15-minute cron need not be waited out. */
+  /**
+   * Dev/ops escape hatch so the 15-minute cron need not be waited out. It
+   * sweeps every tenant, so it takes the ops secret, never a user JWT.
+   */
   @Post('reconcile')
   @SensitiveActionRateLimit()
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Force a stale-subscription reconciliation (protected)' })
-  @ApiOkResponse({ type: ReconcileResponseDto })
-  @UseGuards(SupabaseJwtGuard)
+  @HttpCode(200)
+  @ApiExcludeEndpoint()
+  @UseGuards(CronSecretGuard)
   async triggerReconciliation(): Promise<ReconcileResponseDto> {
     await this.billing.reconcileStaleSubscriptions();
     return { triggered: true };
