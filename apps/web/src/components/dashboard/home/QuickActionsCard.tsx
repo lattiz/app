@@ -1,20 +1,11 @@
 import { useNavigate } from '@tanstack/react-router';
-import {
-  BarChart2Icon,
-  type LucideIcon,
-  PaintbrushIcon,
-  PencilIcon,
-  RefreshCwIcon,
-} from 'lucide-react';
+import { type LucideIcon, PaintbrushIcon, PencilIcon } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import type { DashboardState, SiteStatus } from '@/types/dashboard.types';
+import type { DashboardState } from '@/types/dashboard.types';
 
 interface QuickActionsCardProps {
   state: DashboardState;
-  site: SiteStatus | null;
-  canPublish?: boolean;
-  onRepublish?: () => void;
 }
 
 interface QuickAction {
@@ -25,12 +16,7 @@ interface QuickAction {
   onClick: () => void;
 }
 
-export function QuickActionsCard({
-  state,
-  site,
-  canPublish = true,
-  onRepublish,
-}: QuickActionsCardProps) {
+export function QuickActionsCard({ state }: QuickActionsCardProps) {
   const navigate = useNavigate();
   const canEdit = state === 'active' || state === 'trial-expired';
 
@@ -41,20 +27,6 @@ export function QuickActionsCard({
       subtitle: 'Abrir editor',
       enabled: canEdit,
       onClick: () => void navigate({ to: '/dashboard/customization' }),
-    },
-    {
-      Icon: RefreshCwIcon,
-      title: 'Republicar',
-      subtitle: 'Forzar deploy',
-      enabled: state === 'active' && canPublish && !site?.deployInProgress,
-      onClick: () => onRepublish?.(),
-    },
-    {
-      Icon: BarChart2Icon,
-      title: 'Analytics',
-      subtitle: 'Ver métricas',
-      enabled: state === 'active',
-      onClick: () => void navigate({ to: '/dashboard/site' }),
     },
     {
       Icon: PaintbrushIcon,
@@ -76,7 +48,8 @@ export function QuickActionsCard({
             onClick={action.onClick}
             className={cn(
               'flex items-start gap-3 rounded-2xl border p-3 text-left transition-colors hover:bg-muted hover:cursor-pointer',
-              !action.enabled && 'opacity-40 cursor-not-allowed pointer-events-none',
+              !action.enabled &&
+                'opacity-40 cursor-not-allowed pointer-events-none',
             )}
           >
             <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-accent text-accent-foreground">

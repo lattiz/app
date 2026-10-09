@@ -1,8 +1,13 @@
 import { Link } from '@tanstack/react-router';
 import { useMutation } from '@tanstack/react-query';
-import { Loader2Icon, PencilIcon } from 'lucide-react';
+import { ExternalLinkIcon, Loader2Icon, PencilIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import type { SiteStatus } from '@/types/dashboard.types';
 
 interface EditorGatewayCardProps {
@@ -28,6 +33,8 @@ export function EditorGatewayCard({
 }: EditorGatewayCardProps) {
   const republish = useMutation({ mutationFn: mockRepublish });
   const isFirstPublish = site.lastPublished === null;
+  const siteUrl = site.liveUrl ?? site.previewUrl;
+  const canViewSite = site.isOnline && Boolean(siteUrl);
 
   return (
     <Card data-tour="editor-gateway-card">
@@ -46,12 +53,16 @@ export function EditorGatewayCard({
         </div>
 
         <div className="flex flex-col gap-2 sm:w-48">
-          <Button render={<Link to="/editor/$tenantId" params={{ tenantId }} />}>
+          <Button
+            render={<Link to="/editor/$tenantId" params={{ tenantId }} />}
+          >
             Abrir editor
           </Button>
           <Button
             variant="outline"
-            disabled={!canPublish || republish.isPending || site.deployInProgress}
+            disabled={
+              !canPublish || republish.isPending || site.deployInProgress
+            }
             onClick={() => {
               if (canPublish) republish.mutate();
             }}
@@ -67,6 +78,32 @@ export function EditorGatewayCard({
               'Actualizar sitio web'
             )}
           </Button>
+          {canViewSite && siteUrl ? (
+            <Button
+              variant="outline"
+              nativeButton={false}
+              render={
+                <a href={siteUrl} target="_blank" rel="noopener noreferrer" />
+              }
+            >
+              Ver sitio
+              <ExternalLinkIcon />
+            </Button>
+          ) : (
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <span className="inline-flex">
+                    <Button variant="outline" disabled>
+                      Ver sitio
+                      <ExternalLinkIcon />
+                    </Button>
+                  </span>
+                }
+              />
+              <TooltipContent>Publica tu sitio para verlo</TooltipContent>
+            </Tooltip>
+          )}
           {!canPublish && (
             <Button
               variant="link"

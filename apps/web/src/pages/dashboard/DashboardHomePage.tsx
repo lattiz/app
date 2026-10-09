@@ -14,7 +14,6 @@ export function DashboardHomePage() {
   const site = useDashboardStore((s) => s.site);
   const subscription = useDashboardStore((s) => s.subscription);
   const access = useDashboardStore((s) => s.access);
-  const canPublish = access?.canPublish ?? true;
   const previewState = access?.previewState ?? null;
   const previewExpiresAt = access?.previewExpiresAt ?? null;
 
@@ -41,7 +40,7 @@ export function DashboardHomePage() {
 
       <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
         <SiteCard state={state} site={site} previewState={previewState} />
-        <QuickActionsCard state={state} site={site} canPublish={canPublish} />
+        <QuickActionsCard state={state} />
       </div>
 
       {state === 'no-template' && <LaunchStepper site={site} />}
