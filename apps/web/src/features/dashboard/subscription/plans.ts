@@ -17,9 +17,9 @@ export const PLANS: PlanDetails[] = [
     name: 'Plan Básico',
     subtitle: 'Para tu negocio local',
     features: [
-      '1 sitio web profesional',
-      'Panel de edición CMS sin código',
-      'Dominio .com.mx incluido',
+      '1 sitio publicado de forma continua',
+      'Edición ilimitada de tu sitio',
+      'Dominio propio .com.mx incluido',
       'Botón de WhatsApp',
       'Reporte mensual de visitas (GA4)',
       'SSL · 99.9% uptime',

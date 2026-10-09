@@ -2,8 +2,12 @@ import StudioEditor from '@grapesjs/studio-sdk/react';
 import { layoutSidebarButtons } from '@grapesjs/studio-sdk-plugins';
 import './grapesjs-sdk.css';
 import './editor-i18n.css';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { tenantsControllerMeOptions } from '@lattiz/api-client';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { Link, useNavigate } from '@tanstack/react-router';
+import {
+  tenantsControllerMeOptions,
+  tenantsControllerMeQueryKey,
+} from '@lattiz/api-client';
 import { Loader2Icon, ArrowLeft } from 'lucide-react';
 import { type ComponentProps, useRef, useState } from 'react';
 import { toast } from 'sonner';
@@ -18,6 +22,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { displayHost, liveSiteUrl } from '@/lib/site-address';
+import { reportSiteActionError } from '@/lib/upload-errors';
 import { cn } from '@/lib/utils';
 import {
   getEditorProject,
@@ -91,6 +96,7 @@ function buildOptions(
   tenantId: string,
   projectJSON: GrapesJSProjectJSON,
   onSave: (project: GrapesJSProjectJSON) => void,
+  onUploadError: (err: unknown) => void,
 ): StudioOptions {
   const plugins = [
     // Sidebar de botones con layouts propios para tablet y móvil (el layout por defecto no es usable < 1000px).
@@ -194,11 +200,7 @@ function buildOptions(
         try {
           return await uploadAssets(tenantId, files);
         } catch (err) {
-          toast.error(
-            err instanceof Error
-              ? err.message
-              : 'No se pudo subir la imagen. Intenta de nuevo.',
-          );
+          onUploadError(err);
           throw err;
         }
       },
@@ -220,6 +222,8 @@ function buildOptions(
 }
 
 export function SiteEditor({ tenantId }: SiteEditorProps) {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const editorRef = useRef<EditorInstance | null>(null);
   const grapesEditorRef = useRef<StyleModeEditor | null>(null);
   const [savedAt, setSavedAt] = useState<string | null>(null);
@@ -244,6 +248,23 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
 
   // Already cached by the dashboard; only read here to tell the user where the site lives.
   const tenantMe = useQuery(tenantsControllerMeOptions());
+  const canPublish = tenantMe.data?.canPublish !== false;
+  const isEntitled = tenantMe.data?.isEntitled !== false;
+  const publishBlockedHint =
+    tenantMe.data?.previewState === 'trial_expired'
+      ? 'Tu prueba gratuita terminó. Elige un plan para seguir publicando'
+      : 'Elige un plan para publicar tu sitio.';
+
+  const reportActionError = (err: unknown, context: 'publish' | 'upload') => {
+    reportSiteActionError(err, context, {
+      onPlans: () => void navigate({ to: '/dashboard/subscription' }),
+      onPreviewExpired: () => {
+        void queryClient.invalidateQueries({
+          queryKey: tenantsControllerMeQueryKey(),
+        });
+      },
+    });
+  };
 
   const saveMutation = useMutation({
     mutationFn: (project: GrapesJSProjectJSON) =>
@@ -265,6 +286,7 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
   };
 
   const handlePublish = async () => {
+    if (!canPublish) return;
     const editor = editorRef.current;
     if (!editor) return;
     try {
@@ -281,7 +303,11 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
         project,
         exportedHtml: htmlFile.content,
       });
-      const url = tenantMe.data ? liveSiteUrl(tenantMe.data) : null;
+      void queryClient.invalidateQueries({
+        queryKey: tenantsControllerMeQueryKey(),
+      });
+      const me = tenantMe.data;
+      const url = me ? (me.isEntitled ? liveSiteUrl(me) : me.previewUrl) : null;
       if (url) {
         toast.success(`Tu sitio está en vivo en ${displayHost(url)}`, {
           action: {
@@ -294,7 +320,7 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
       }
     } catch (err) {
       console.error('[SiteEditor] Publish failed:', err);
-      toast.error('No se pudo publicar tu sitio. Inténtalo de nuevo.');
+      reportActionError(err, 'publish');
     }
   };
 
@@ -328,7 +354,9 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
         ? 'saved'
         : 'idle';
 
-  const options = buildOptions(tenantId, query.data.project, handleSave);
+  const options = buildOptions(tenantId, query.data.project, handleSave, (err) =>
+    reportActionError(err, 'upload'),
+  );
   const isPublishing = publishMutation.isPending;
 
   return (
@@ -411,22 +439,50 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
                 />
               </div>
             </div>
-            <Button
-              variant="secondary"
-              size="sm"
-              className="order-2 sm:order-none"
-              onClick={() => void handlePublish()}
-              disabled={isPublishing || saveMutation.isPending}
-            >
-              {isPublishing ? (
-                <>
-                  <Loader2Icon className="mr-2 size-3 animate-spin" />
-                  Publicando…
-                </>
-              ) : (
-                'Publicar sitio 🚀'
-              )}
-            </Button>
+            {canPublish ? (
+              <Button
+                variant="secondary"
+                size="sm"
+                className="order-2 sm:order-none"
+                onClick={() => void handlePublish()}
+                disabled={isPublishing || saveMutation.isPending}
+              >
+                {isPublishing ? (
+                  <>
+                    <Loader2Icon className="mr-2 size-3 animate-spin" />
+                    Publicando…
+                  </>
+                ) : isEntitled ? (
+                  'Publicar sitio 🚀'
+                ) : (
+                  'Publicar prueba'
+                )}
+              </Button>
+            ) : (
+              <span className="order-2 flex items-center gap-1 sm:order-none">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger
+                      render={
+                        <span className="inline-flex">
+                          <Button variant="secondary" size="sm" disabled>
+                            {isEntitled ? 'Publicar sitio 🚀' : 'Publicar prueba'}
+                          </Button>
+                        </span>
+                      }
+                    />
+                    <TooltipContent side="bottom">{publishBlockedHint}</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                <Button
+                  variant="linkSecondary"
+                  size="sm"
+                  render={<Link to="/dashboard/subscription" />}
+                >
+                  Elige un plan
+                </Button>
+              </span>
+            )}
           </div>
         </header>
       </div>

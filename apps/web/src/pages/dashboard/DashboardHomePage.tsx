@@ -6,12 +6,17 @@ import { NoSubscriptionGate } from '@/components/dashboard/home/NoSubscriptionGa
 import { QuickActionsCard } from '@/components/dashboard/home/QuickActionsCard';
 import { SiteCard } from '@/components/dashboard/home/SiteCard';
 import { SubscriptionCard } from '@/components/dashboard/home/SubscriptionCard';
+import { TrialBanner } from '@/components/dashboard/home/TrialBanner';
 import { useDashboardStore } from '@/stores/dashboard.store';
 
 export function DashboardHomePage() {
   const state = useDashboardStore((s) => s.state);
   const site = useDashboardStore((s) => s.site);
   const subscription = useDashboardStore((s) => s.subscription);
+  const access = useDashboardStore((s) => s.access);
+  const canPublish = access?.canPublish ?? true;
+  const previewState = access?.previewState ?? null;
+  const previewExpiresAt = access?.previewExpiresAt ?? null;
 
   if (state === 'loading') return <DashboardSkeleton />;
 
@@ -27,12 +32,16 @@ export function DashboardHomePage() {
   return (
     <div className="flex flex-col gap-4">
       <HomeBanners state={state} site={site} subscription={subscription} />
+      <TrialBanner
+        previewState={previewState}
+        previewExpiresAt={previewExpiresAt}
+      />
 
       <HomeMetrics state={state} site={site} subscription={subscription} />
 
       <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-        <SiteCard state={state} site={site} />
-        <QuickActionsCard state={state} site={site} />
+        <SiteCard state={state} site={site} previewState={previewState} />
+        <QuickActionsCard state={state} site={site} canPublish={canPublish} />
       </div>
 
       {state === 'no-template' && <LaunchStepper site={site} />}

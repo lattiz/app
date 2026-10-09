@@ -4,6 +4,7 @@ import { tenantsControllerMeOptions, type TenantMeResponseDto } from '@lattiz/ap
 import {
   getMockSite,
   getMockSubscription,
+  SIMULATE_ACCESS,
   SIMULATE_ENABLED,
   SIMULATE_STATE,
 } from '@/lib/simulate-dashboard-state';
@@ -11,6 +12,7 @@ import { liveSiteUrl } from '@/lib/site-address';
 import { useDashboardStore } from '@/stores/dashboard.store';
 import type {
   DashboardState,
+  SiteAccess,
   SiteStatus,
   SubscriptionStatus,
 } from '@/types/dashboard.types';
@@ -37,11 +39,25 @@ function deriveDashboardState(
 ): DashboardState {
   if (isLoading) return 'loading';
   if (isSettledError || !tenantMe) return 'no-tenant';
-  // `isEntitled` is the backend's single source of truth: status alone still
+  // Preview gates come from the API. Dates and day counts are never recomputed here.
+  if (tenantMe.previewState === 'trial_expired') return 'trial-expired';
+  const inPreview =
+    tenantMe.previewState === 'trial_unstarted' ||
+    tenantMe.previewState === 'trial_active';
+  // `isEntitled` stays the source of truth for lapsed tenants: status alone still
   // reads 'active' whenever a Stripe webhook was missed past current_period_end.
-  if (!tenantMe.isEntitled) return 'no-subscription';
+  if (!tenantMe.isEntitled && !inPreview) return 'no-subscription';
   if (!tenantMe.site?.templateId) return 'no-template';
   return 'active';
+}
+
+function mapToAccess(tenantMe: TenantMeResponseDto): SiteAccess {
+  return {
+    isEntitled: tenantMe.isEntitled,
+    previewState: tenantMe.previewState,
+    canPublish: tenantMe.canPublish,
+    previewExpiresAt: tenantMe.previewExpiresAt,
+  };
 }
 
 function mapToSiteStatus(tenantMe: TenantMeResponseDto): SiteStatus {
@@ -83,6 +99,7 @@ export function useDashboardHome() {
   const setState = useDashboardStore((s) => s.setState);
   const setSite = useDashboardStore((s) => s.setSite);
   const setSubscription = useDashboardStore((s) => s.setSubscription);
+  const setAccess = useDashboardStore((s) => s.setAccess);
 
   const tenant = useQuery({
     ...tenantsControllerMeOptions(),
@@ -109,6 +126,7 @@ export function useDashboardHome() {
     if (SIMULATE) {
       const s = SIMULATE_STATE;
       setState(s);
+      setAccess(SIMULATE_ACCESS);
       const mockSite = getMockSite(s);
       const mockSub = getMockSubscription(s);
       if (mockSite) setSite(mockSite);
@@ -120,8 +138,17 @@ export function useDashboardHome() {
     if (tenant.data) {
       setSite(mapToSiteStatus(tenant.data));
       setSubscription(mapToSubscriptionStatus(tenant.data));
+      setAccess(mapToAccess(tenant.data));
     }
-  }, [tenant.data, tenant.isLoading, isSettledError, setState, setSite, setSubscription]);
+  }, [
+    tenant.data,
+    tenant.isLoading,
+    isSettledError,
+    setState,
+    setSite,
+    setSubscription,
+    setAccess,
+  ]);
 
   return { state, site, subscription };
 }

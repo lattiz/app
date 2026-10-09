@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import { DashboardSkeleton } from '@/components/dashboard/DashboardSkeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
+import { trialSubscriptionNote } from '@/lib/trial-copy';
 import { BillingPeriodToggle } from './BillingPeriodToggle';
 import { BillingPortalButton } from './BillingPortalButton';
 import { CurrentPlanCard } from './CurrentPlanCard';
@@ -133,8 +134,18 @@ export function SubscriptionPage() {
     ? savings[0]
     : null;
 
+  const trialNote = trialSubscriptionNote(
+    data?.previewState,
+    data?.previewExpiresAt,
+  );
+
   return (
     <div className="flex flex-col gap-6" data-tour="subscription-cta">
+      {trialNote && (
+        <Alert className="border-primary/30 bg-primary/5">
+          <AlertDescription>{trialNote}</AlertDescription>
+        </Alert>
+      )}
       <div className="flex flex-col items-start gap-3">
         <div className="space-y-1">
           <h1 className="font-heading text-xl font-semibold">Elige tu plan</h1>

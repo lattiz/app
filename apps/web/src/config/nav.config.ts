@@ -13,21 +13,28 @@ export interface NavItem {
 export function buildNavItems(
   state: DashboardState,
   plan: string | null = null,
+  isEntitled: boolean | null = null,
 ): NavItem[] {
+  // Paid pages stay reachable during the preview so they can show the upgrade gate.
+  // Entitled tenants without a template keep domain/customization disabled.
+  const siteReady = state === 'active' || state === 'trial-expired';
+  const previewWithoutPlan = isEntitled === false && state !== 'no-subscription';
   const items: NavItem[] = [
     {
       id: 'home',
       label: 'Inicio',
       icon: 'Home',
       to: '/dashboard',
-      visibleIn: ['active', 'no-template', 'no-subscription'],
+      visibleIn: ['active', 'no-template', 'trial-expired', 'no-subscription'],
     },
     {
       id: 'my-site',
       label: 'Mi sitio',
       icon: 'Globe',
       to: '/dashboard/site',
-      visibleIn: ['active'], // only visible when site is active
+      visibleIn: previewWithoutPlan
+        ? ['active', 'no-template', 'trial-expired']
+        : ['active', 'trial-expired'],
     },
     {
       id: 'analytics',
@@ -35,15 +42,15 @@ export function buildNavItems(
       icon: 'ChartArea',
       to: '/dashboard/analytics',
       badge: plan === 'pro' ? null : 'pro',
-      visibleIn: ['active', 'no-template'],
+      visibleIn: ['active', 'no-template', 'trial-expired'],
     },
     {
       id: 'customization',
       label: 'Personalización',
       icon: 'Paintbrush',
       to: '/dashboard/customization',
-      disabled: state !== 'active',
-      visibleIn: ['active', 'no-template'],
+      disabled: !siteReady,
+      visibleIn: ['active', 'no-template', 'trial-expired'],
     },
     {
       id: 'templates',
@@ -51,15 +58,15 @@ export function buildNavItems(
       icon: 'LayoutGrid',
       to: '/dashboard/templates',
       badge: state === 'no-template' ? 'new' : null,
-      visibleIn: ['active', 'no-template'],
+      visibleIn: ['active', 'no-template', 'trial-expired'],
     },
     {
       id: 'domain',
       label: 'Dominio y DNS',
       icon: 'Network',
       to: '/dashboard/domain',
-      disabled: state !== 'active',
-      visibleIn: ['active', 'no-template'],
+      disabled: !siteReady && !previewWithoutPlan,
+      visibleIn: ['active', 'no-template', 'trial-expired'],
     },
     {
       id: 'subscription',
@@ -67,14 +74,14 @@ export function buildNavItems(
       icon: 'CreditCard',
       to: '/dashboard/subscription',
       badge: state === 'no-subscription' ? 'error' : null,
-      visibleIn: ['active', 'no-template', 'no-subscription'],
+      visibleIn: ['active', 'no-template', 'trial-expired', 'no-subscription'],
     },
     {
       id: 'account',
       label: 'Cuenta',
       icon: 'User',
       to: '/dashboard/account',
-      visibleIn: ['active', 'no-template', 'no-subscription'],
+      visibleIn: ['active', 'no-template', 'trial-expired', 'no-subscription'],
     },
   ];
 

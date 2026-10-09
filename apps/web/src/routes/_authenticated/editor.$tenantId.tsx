@@ -14,7 +14,8 @@ export const Route = createFileRoute('/_authenticated/editor/$tenantId')({
     const tenant = await context.queryClient
       .ensureQueryData(tenantsControllerMeOptions())
       .catch(() => null);
-    if (tenant && !tenant.isEntitled) throw redirect({ to: '/dashboard' });
+    // Lapsed tenants have no preview. Trial and expired-trial tenants edit here.
+    if (tenant?.previewState === 'lapsed') throw redirect({ to: '/dashboard' });
   },
   component: EditorPage,
 });

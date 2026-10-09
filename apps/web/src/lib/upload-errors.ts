@@ -1,10 +1,86 @@
+import { toast } from 'sonner';
+
 interface ApiErrorBody {
   error?: { code?: string };
+  status?: number;
+  response?: { status?: number };
 }
 
 /** The generated client throws the raw `{ error: { code, message } }` body. */
 function apiErrorCode(err: unknown): string | undefined {
-  return (err as ApiErrorBody | null | undefined)?.error?.code;
+  const code = (err as ApiErrorBody | null | undefined)?.error?.code;
+  if (code) return code;
+  const status =
+    (err as ApiErrorBody | null | undefined)?.status ??
+    (err as ApiErrorBody | null | undefined)?.response?.status;
+  if (status === 429) return 'TOO_MANY_REQUESTS';
+  return undefined;
+}
+
+const EMAIL_NOT_VERIFIED = 'Verifica tu correo para publicar';
+const PREVIEW_EXPIRED =
+  'Tu prueba gratuita terminó. Elige un plan para seguir publicando';
+const SUBSCRIPTION_INACTIVE =
+  'Tu suscripción no está activa. Elige un plan para continuar.';
+const ASSET_QUOTA = 'Alcanzaste el límite de imágenes de la prueba';
+const UNSUPPORTED_FILE =
+  'Ese archivo no es una imagen. Sube un archivo de imagen (PNG, JPG, WebP, GIF).';
+const RATE_LIMIT = 'Demasiados intentos, espera un momento';
+
+export interface SiteActionError {
+  code: string | undefined;
+  message: string;
+  /** PREVIEW_EXPIRED and SUBSCRIPTION_INACTIVE recover by choosing a plan. */
+  plansAction: boolean;
+}
+
+/** Spanish message for publish, editor asset upload, and template select/change. */
+export function siteActionError(
+  err: unknown,
+  context: 'publish' | 'upload' | 'template',
+): SiteActionError {
+  const code = apiErrorCode(err);
+  switch (code) {
+    case 'EMAIL_NOT_VERIFIED':
+      return { code, message: EMAIL_NOT_VERIFIED, plansAction: false };
+    case 'PREVIEW_EXPIRED':
+      return { code, message: PREVIEW_EXPIRED, plansAction: true };
+    case 'SUBSCRIPTION_INACTIVE':
+      return { code, message: SUBSCRIPTION_INACTIVE, plansAction: true };
+    case 'ASSET_QUOTA_EXCEEDED':
+      return { code, message: ASSET_QUOTA, plansAction: false };
+    case 'UNSUPPORTED_ASSET_TYPE':
+      return { code, message: UNSUPPORTED_FILE, plansAction: false };
+    case 'TOO_MANY_REQUESTS':
+      return { code, message: RATE_LIMIT, plansAction: false };
+    default:
+      return {
+        code,
+        message:
+          context === 'upload'
+            ? uploadErrorMessage(err)
+            : context === 'template'
+              ? 'No se pudo cambiar la plantilla. Intenta de nuevo.'
+              : 'No se pudo publicar tu sitio. Inténtalo de nuevo.',
+        plansAction: false,
+      };
+  }
+}
+
+/** Toast the mapped message. `PREVIEW_EXPIRED` refreshes GET /tenants/me. */
+export function reportSiteActionError(
+  err: unknown,
+  context: 'publish' | 'upload' | 'template',
+  options?: { onPlans?: () => void; onPreviewExpired?: () => void },
+): void {
+  const mapped = siteActionError(err, context);
+  toast.error(
+    mapped.message,
+    mapped.plansAction && options?.onPlans
+      ? { action: { label: 'Elige un plan', onClick: options.onPlans } }
+      : undefined,
+  );
+  if (mapped.code === 'PREVIEW_EXPIRED') options?.onPreviewExpired?.();
 }
 
 const TOO_MANY_REQUESTS =
@@ -23,7 +99,15 @@ export function uploadErrorMessage(err: unknown): string {
     case 'BRANDING_UPLOAD_FAILED':
       return STORAGE_UNAVAILABLE;
     case 'UNSUPPORTED_ASSET_TYPE':
-      return 'Ese archivo no es una imagen. Sube un archivo de imagen (PNG, JPG, WebP, GIF).';
+      return UNSUPPORTED_FILE;
+    case 'ASSET_QUOTA_EXCEEDED':
+      return ASSET_QUOTA;
+    case 'EMAIL_NOT_VERIFIED':
+      return EMAIL_NOT_VERIFIED;
+    case 'PREVIEW_EXPIRED':
+      return PREVIEW_EXPIRED;
+    case 'SUBSCRIPTION_INACTIVE':
+      return SUBSCRIPTION_INACTIVE;
     case 'UNSUPPORTED_BRANDING_TYPE':
       return 'Formato no admitido para esta imagen.';
     case 'BRANDING_FILE_TOO_LARGE':

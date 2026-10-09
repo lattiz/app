@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { tenantsControllerMeOptions } from '@lattiz/api-client';
 import { DashboardSkeleton } from '@/components/dashboard/DashboardSkeleton';
+import { UpgradeGate } from '@/components/dashboard/home/UpgradeGate';
 import { DomainWizardProgress } from './components/DomainWizardProgress';
 import { ActiveStep } from './steps/ActiveStep';
 import { ConnectFormStep } from './steps/ConnectFormStep';
@@ -55,6 +56,7 @@ export function DomainPage() {
   }, [domainStatus]);
 
   if (isLoading) return <DashboardSkeleton />;
+  if (tenantMe && !tenantMe.isEntitled) return <UpgradeGate reason="domain" />;
 
   return (
     <div className="flex flex-col gap-6">

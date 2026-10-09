@@ -1,5 +1,6 @@
 import type {
   DashboardState,
+  SiteAccess,
   SiteStatus,
   SubscriptionStatus,
 } from '@/types/dashboard.types';
@@ -7,8 +8,9 @@ import type {
 // VITE_SIMULATE_DASHBOARD selects a mocked dashboard state for local dev.
 // The special value 'live' turns simulation OFF: the dashboard renders from the
 // real /tenants/me response with no mock overrides. Any recognized state
-// ('active' | 'no-template' | 'no-subscription' | 'no-tenant' | 'loading')
-// forces that mock.
+// ('active' | 'no-template' | 'trial-expired' | 'no-subscription' | 'no-tenant' | 'loading')
+// forces that mock. 'trial_active' renders the active dashboard with a live
+// preview; 'trial_unstarted' renders no-template with publish still allowed.
 const RAW_SIMULATE = import.meta.env.VITE_SIMULATE_DASHBOARD as
   | string
   | undefined;
@@ -17,8 +19,14 @@ const RAW_SIMULATE = import.meta.env.VITE_SIMULATE_DASHBOARD as
 export const SIMULATE_ENABLED =
   RAW_SIMULATE != null && RAW_SIMULATE !== '' && RAW_SIMULATE !== 'live';
 
+function resolveSimulatedState(raw: string): DashboardState {
+  if (raw === 'trial_active' || raw === 'trial-active') return 'active';
+  if (raw === 'trial_unstarted' || raw === 'trial-unstarted') return 'no-template';
+  return raw as DashboardState;
+}
+
 export const SIMULATE_STATE: DashboardState = SIMULATE_ENABLED
-  ? (RAW_SIMULATE as DashboardState)
+  ? resolveSimulatedState(RAW_SIMULATE as string)
   : 'active';
 
 const MOCK_SITE: Record<DashboardState, SiteStatus | null> = {
@@ -72,6 +80,22 @@ const MOCK_SITE: Record<DashboardState, SiteStatus | null> = {
     visits: null,
     visitsDelta: null,
   },
+  'trial-expired': {
+    isOnline: true,
+    lastPublished: '2026-06-01T10:00:00Z',
+    domain: null,
+    previewUrl: 'https://minegocio.lattiz.app',
+    liveUrl: 'https://minegocio.lattiz.app',
+    domainConnected: false,
+    dnsError: false,
+    dnsPropagating: false,
+    deployInProgress: false,
+    sslActive: false,
+    templateName: 'Modern Pro',
+    templateId: 'modern-pro-v1',
+    visits: null,
+    visitsDelta: null,
+  },
 };
 
 const MOCK_SUB: Record<DashboardState, SubscriptionStatus | null> = {
@@ -104,7 +128,73 @@ const MOCK_SUB: Record<DashboardState, SubscriptionStatus | null> = {
     paymentFailed: false,
     paymentAttempts: 0,
   },
+  'trial-expired': {
+    plan: null,
+    status: null,
+    currentPeriodEnd: null,
+    cancelAt: null,
+    cancelAtPeriodEnd: false,
+    paymentFailed: false,
+    paymentAttempts: 0,
+  },
 };
+
+const PAID_ACCESS: SiteAccess = {
+  isEntitled: true,
+  previewState: 'paid',
+  canPublish: true,
+  previewExpiresAt: null,
+};
+
+const LAPSED_ACCESS: SiteAccess = {
+  isEntitled: false,
+  previewState: 'lapsed',
+  canPublish: false,
+  previewExpiresAt: null,
+};
+
+const TRIAL_ACTIVE_ACCESS: SiteAccess = {
+  isEntitled: false,
+  previewState: 'trial_active',
+  canPublish: true,
+  previewExpiresAt: '2026-10-20T00:00:00.000Z',
+};
+
+const TRIAL_UNSTARTED_ACCESS: SiteAccess = {
+  isEntitled: false,
+  previewState: 'trial_unstarted',
+  canPublish: true,
+  previewExpiresAt: null,
+};
+
+const TRIAL_EXPIRED_ACCESS: SiteAccess = {
+  isEntitled: false,
+  previewState: 'trial_expired',
+  canPublish: false,
+  previewExpiresAt: '2026-06-15T00:00:00.000Z',
+};
+
+const MOCK_ACCESS: Record<DashboardState, SiteAccess | null> = {
+  loading: null,
+  'no-tenant': null,
+  active: PAID_ACCESS,
+  'no-template': PAID_ACCESS,
+  'no-subscription': LAPSED_ACCESS,
+  'trial-expired': TRIAL_EXPIRED_ACCESS,
+};
+
+function accessForRaw(raw: string, state: DashboardState): SiteAccess | null {
+  if (raw === 'trial_active' || raw === 'trial-active') return TRIAL_ACTIVE_ACCESS;
+  if (raw === 'trial_unstarted' || raw === 'trial-unstarted') {
+    return TRIAL_UNSTARTED_ACCESS;
+  }
+  return MOCK_ACCESS[state];
+}
+
+/** Access flags paired with the active simulation, or null when simulation is off. */
+export const SIMULATE_ACCESS: SiteAccess | null = SIMULATE_ENABLED
+  ? accessForRaw(RAW_SIMULATE as string, SIMULATE_STATE)
+  : null;
 
 export function getMockSite(state: DashboardState): SiteStatus | null {
   return MOCK_SITE[state];

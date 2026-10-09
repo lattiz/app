@@ -1,4 +1,6 @@
 import { Link } from '@tanstack/react-router';
+import { useQuery } from '@tanstack/react-query';
+import { tenantsControllerMeOptions } from '@lattiz/api-client';
 import { LayoutGridIcon } from 'lucide-react';
 import { DashboardSkeleton } from '@/components/dashboard/DashboardSkeleton';
 import { NoSubscriptionGate } from '@/components/dashboard/home/NoSubscriptionGate';
@@ -7,32 +9,41 @@ import { SiteHistoryCard } from '@/components/dashboard/site/SiteHistoryCard';
 import { SiteMetrics } from '@/components/dashboard/site/SiteMetrics';
 import { SitePreviewCard } from '@/components/dashboard/site/SitePreviewCard';
 import { Button } from '@/components/ui/button';
+import { SiteAddressSection } from '@/features/dashboard/site-address/SiteAddressSection';
 import { useDashboardStore } from '@/stores/dashboard.store';
 
 export function SitePage() {
   const state = useDashboardStore((s) => s.state);
   const site = useDashboardStore((s) => s.site);
+  const tenant = useQuery(tenantsControllerMeOptions());
+  const address =
+    tenant.data && !tenant.data.isEntitled ? (
+      <SiteAddressSection tenant={tenant.data} />
+    ) : null;
 
   if (state === 'loading') return <DashboardSkeleton />;
   if (state === 'no-subscription') return <NoSubscriptionGate />;
 
   if (state === 'no-template') {
     return (
-      <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed px-6 py-16 text-center">
-        <div className="flex size-12 items-center justify-center rounded-full bg-muted">
-          <LayoutGridIcon className="size-6 text-muted-foreground" />
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed px-6 py-16 text-center">
+          <div className="flex size-12 items-center justify-center rounded-full bg-muted">
+            <LayoutGridIcon className="size-6 text-muted-foreground" />
+          </div>
+          <div className="space-y-1">
+            <h2 className="text-lg font-semibold">
+              Aún no has elegido una plantilla
+            </h2>
+            <p className="max-w-md text-sm text-muted-foreground">
+              Elige el diseño base de tu sitio para empezar a personalizarlo.
+            </p>
+          </div>
+          <Button size="sm" render={<Link to="/dashboard/customization" />}>
+            Elegir plantilla
+          </Button>
         </div>
-        <div className="space-y-1">
-          <h2 className="text-lg font-semibold">
-            Aún no has elegido una plantilla
-          </h2>
-          <p className="max-w-md text-sm text-muted-foreground">
-            Elige el diseño base de tu sitio para empezar a personalizarlo.
-          </p>
-        </div>
-        <Button size="sm" render={<Link to="/dashboard/customization" />}>
-          Elegir plantilla
-        </Button>
+        {address}
       </div>
     );
   }
@@ -49,6 +60,7 @@ export function SitePage() {
       </div>
 
       <SitePreviewCard site={site} />
+      {address}
     </div>
   );
 }

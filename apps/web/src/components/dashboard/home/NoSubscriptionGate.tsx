@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { LockKeyholeIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { lapsedGateCopy } from '@/lib/trial-copy';
 
 export function NoSubscriptionGate() {
   return (
@@ -9,14 +10,13 @@ export function NoSubscriptionGate() {
         <LockKeyholeIcon className="size-7 text-destructive" />
       </div>
       <div className="space-y-1">
-        <h2 className="text-lg font-semibold">Acceso restringido</h2>
+        <h2 className="text-lg font-semibold">{lapsedGateCopy.title}</h2>
         <p className="max-w-md text-sm text-muted-foreground">
-          Necesitas una suscripción activa para editar tu sitio, conectar un
-          dominio y acceder a las métricas.
+          {lapsedGateCopy.body}
         </p>
       </div>
-      <Button variant="destructive" render={<Link to="/dashboard/subscription" />}>
-        Ver planes
+      <Button render={<Link to="/dashboard/subscription" />}>
+        {lapsedGateCopy.cta}
       </Button>
       <p className="text-sm text-muted-foreground">
         ¿Ya tienes un pago pendiente?{' '}

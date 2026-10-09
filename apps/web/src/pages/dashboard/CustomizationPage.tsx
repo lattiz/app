@@ -78,7 +78,11 @@ export function CustomizationPage() {
           </Button>
         </div>
       )}
-      <EditorGatewayCard tenantId={tenant.data.tenantId} site={site} />
+      <EditorGatewayCard
+        tenantId={tenant.data.tenantId}
+        site={site}
+        canPublish={tenant.data.canPublish}
+      />
       <SiteImagesSection
         tenantId={tenant.data.tenantId}
         tenantName={tenant.data.name}

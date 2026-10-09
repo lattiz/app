@@ -20,7 +20,7 @@ export function OnboardingTour() {
   const dismissed = useOnboardingStore((s) => s.dismissed);
   const startTour = useOnboardingStore((s) => s.startTour);
   const finishTour = useOnboardingStore((s) => s.finishTour);
-  const { isFullyOnboarded, isLoading } = useOnboardingProgress();
+  const { isFullyOnboarded, isEntitled, isLoading } = useOnboardingProgress();
 
   const autoStarted = useRef(false);
   useEffect(() => {
@@ -30,7 +30,7 @@ export function OnboardingTour() {
     startTour();
   }, [isLoading, dismissed, isFullyOnboarded, startTour]);
 
-  const steps = buildOnboardingSteps((opts) => navigate(opts));
+  const steps = buildOnboardingSteps((opts) => navigate(opts), isEntitled);
 
   const handleEvent = (data: EventData, controls: Controls): void => {
     // Never let a missing target hang the tour — advance past it instead.

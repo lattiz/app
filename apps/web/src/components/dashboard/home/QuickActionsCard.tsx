@@ -13,6 +13,7 @@ import type { DashboardState, SiteStatus } from '@/types/dashboard.types';
 interface QuickActionsCardProps {
   state: DashboardState;
   site: SiteStatus | null;
+  canPublish?: boolean;
   onRepublish?: () => void;
 }
 
@@ -27,23 +28,25 @@ interface QuickAction {
 export function QuickActionsCard({
   state,
   site,
+  canPublish = true,
   onRepublish,
 }: QuickActionsCardProps) {
   const navigate = useNavigate();
+  const canEdit = state === 'active' || state === 'trial-expired';
 
   const actions: QuickAction[] = [
     {
       Icon: PencilIcon,
       title: 'Editar',
       subtitle: 'Abrir editor',
-      enabled: state === 'active',
+      enabled: canEdit,
       onClick: () => void navigate({ to: '/dashboard/customization' }),
     },
     {
       Icon: RefreshCwIcon,
       title: 'Republicar',
       subtitle: 'Forzar deploy',
-      enabled: state === 'active' && !site?.deployInProgress,
+      enabled: state === 'active' && canPublish && !site?.deployInProgress,
       onClick: () => onRepublish?.(),
     },
     {
@@ -57,7 +60,7 @@ export function QuickActionsCard({
       Icon: PaintbrushIcon,
       title: 'Diseño',
       subtitle: 'Cambiar plantilla',
-      enabled: state === 'active' || state === 'no-template',
+      enabled: canEdit || state === 'no-template',
       onClick: () => void navigate({ to: '/dashboard/templates' }),
     },
   ];

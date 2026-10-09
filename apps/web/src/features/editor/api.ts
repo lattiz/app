@@ -60,7 +60,7 @@ export async function uploadAssets(
   });
   if (error || !data) {
     console.error('[editor] Asset upload failed:', response?.status, error);
-    throw new Error(uploadErrorMessage(error));
+    throw error ?? new Error(uploadErrorMessage(error));
   }
   return data as GrapesJSAsset[];
 }
@@ -74,7 +74,7 @@ export async function publishSite(
     body: payload,
   });
   if (error || !data) {
-    throw new Error(`No se pudo publicar (${response?.status ?? 'error'}).`);
+    throw error ?? new Error(`No se pudo publicar (${response?.status ?? 'error'}).`);
   }
   return data as PublishSiteResult;
 }

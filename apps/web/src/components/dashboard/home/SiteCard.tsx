@@ -5,12 +5,18 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { relativeTime } from '@/lib/format';
 import { displayHost } from '@/lib/site-address';
+import { trialBadgeLabel } from '@/lib/trial-copy';
 import { cn } from '@/lib/utils';
-import type { DashboardState, SiteStatus } from '@/types/dashboard.types';
+import type {
+  DashboardState,
+  PreviewState,
+  SiteStatus,
+} from '@/types/dashboard.types';
 
 interface SiteCardProps {
   state: DashboardState;
   site: SiteStatus | null;
+  previewState?: PreviewState | null;
 }
 
 function Row({
@@ -28,7 +34,17 @@ function Row({
   );
 }
 
-export function SiteCard({ state, site }: SiteCardProps) {
+function isPreviewTrial(
+  previewState: PreviewState | null | undefined,
+): boolean {
+  return (
+    previewState === 'trial_unstarted' ||
+    previewState === 'trial_active' ||
+    previewState === 'trial_expired'
+  );
+}
+
+export function SiteCard({ state, site, previewState = null }: SiteCardProps) {
   if (state === 'no-template') {
     return (
       <Card>
@@ -72,6 +88,24 @@ export function SiteCard({ state, site }: SiteCardProps) {
           className: 'bg-green-500/10 text-green-700 dark:text-green-400',
         };
 
+  const inTrial = isPreviewTrial(previewState);
+  const trialAddress = inTrial ? site.previewUrl : null;
+  const statusBadge =
+    previewState === 'trial_expired'
+      ? {
+          text: trialBadgeLabel.ended,
+          className: 'bg-destructive/10 text-destructive',
+        }
+      : inTrial
+        ? {
+            text: trialBadgeLabel.active,
+            className: 'bg-primary/10 text-primary',
+          }
+        : domainBadge;
+  const headline =
+    trialAddress != null ? displayHost(trialAddress) : (site.domain ?? 'Sin dominio');
+  const webUrl = trialAddress ?? site.liveUrl;
+
   return (
     <Card>
       <CardContent className="flex flex-col divide-y divide-border">
@@ -79,28 +113,28 @@ export function SiteCard({ state, site }: SiteCardProps) {
           label={
             <span className="flex items-center gap-2">
               <span className={cn('size-2 rounded-full', dotClass)} />
-              {site.domain ?? 'Sin dominio'}
+              {headline}
             </span>
           }
         >
-          <Badge variant="secondary" className={domainBadge.className}>
-            {domainBadge.text}
+          <Badge variant="secondary" className={statusBadge.className}>
+            {statusBadge.text}
           </Badge>
         </Row>
-        {site.liveUrl && (
+        {webUrl && (
           <Row label="Dirección web">
             {site.isOnline ? (
               <a
-                href={site.liveUrl}
+                href={webUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="truncate underline-offset-4 hover:underline"
               >
-                {displayHost(site.liveUrl)}
+                {displayHost(webUrl)}
               </a>
             ) : (
               <span className="truncate text-muted-foreground">
-                {displayHost(site.liveUrl)}
+                {displayHost(webUrl)}
               </span>
             )}
           </Row>

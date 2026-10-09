@@ -154,7 +154,11 @@ export function AppSidebar() {
   // Same cached query the dashboard layout already runs; `tenants.plan` is what the API gates on.
   const { data: tenantMe } = useQuery(tenantsControllerMeOptions());
 
-  const navItems = buildNavItems(state, tenantMe?.plan ?? subscriptionPlan);
+  const navItems = buildNavItems(
+    state,
+    tenantMe?.plan ?? subscriptionPlan,
+    tenantMe?.isEntitled ?? null,
+  );
   const email = user?.email ?? null;
   const name = email?.split('@')[0] ?? '—';
   const initials = (email?.slice(0, 2) ?? '—').toUpperCase();

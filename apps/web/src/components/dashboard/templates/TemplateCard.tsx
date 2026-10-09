@@ -10,6 +10,8 @@ interface TemplateCardProps {
   template: TemplateListItemDto;
   isCurrentTemplate: boolean;
   isSelecting: boolean;
+  /** Trial ended (or publish is off): keep the current template, block a switch. */
+  changeLocked?: boolean;
   onSelect: (templateId: string) => void;
 }
 
@@ -17,6 +19,7 @@ export function TemplateCard({
   template,
   isCurrentTemplate,
   isSelecting,
+  changeLocked = false,
   onSelect,
 }: TemplateCardProps) {
   return (
@@ -64,7 +67,7 @@ export function TemplateCard({
           <Button
             size="sm"
             className="flex-1"
-            disabled={isSelecting}
+            disabled={isSelecting || changeLocked}
             onClick={() => onSelect(template.id)}
           >
             {isCurrentTemplate ? 'Editar' : 'Usar este'}

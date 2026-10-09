@@ -1,4 +1,5 @@
 import type { Step } from 'react-joyride';
+import { onboardingTourCopy } from '@/lib/trial-copy';
 import type { OnboardingRoute } from './useOnboardingProgress';
 
 type NavigateFn = (opts: { to: OnboardingRoute }) => Promise<void> | void;
@@ -22,29 +23,28 @@ async function navigateAndWaitForTarget(
   }
 }
 
-export function buildOnboardingSteps(navigate: NavigateFn): Step[] {
+export function buildOnboardingSteps(
+  navigate: NavigateFn,
+  isEntitled: boolean,
+): Step[] {
+  const openCustomization = (targetSelector: string) =>
+    navigateAndWaitForTarget(
+      navigate,
+      '/dashboard/customization',
+      targetSelector,
+    );
+
   return [
     {
       target: 'body',
       placement: 'center',
       // v3 renamed the old `disableBeacon` step option to `skipBeacon`.
       skipBeacon: true,
-      content:
-        'Bienvenido a Lattiz. Te mostramos en unos pasos cómo lanzar tu sitio.',
-    },
-    {
-      target: '[data-tour="subscription-cta"]',
-      content: 'Primero, activa tu plan para desbloquear el editor.',
-      before: () =>
-        navigateAndWaitForTarget(
-          navigate,
-          '/dashboard/subscription',
-          '[data-tour="subscription-cta"]',
-        ),
+      content: onboardingTourCopy.welcome,
     },
     {
       target: '[data-tour="template-gallery"]',
-      content: 'Elige la plantilla base para tu negocio.',
+      content: onboardingTourCopy.template,
       before: () =>
         navigateAndWaitForTarget(
           navigate,
@@ -52,29 +52,34 @@ export function buildOnboardingSteps(navigate: NavigateFn): Step[] {
           '[data-tour="template-gallery"]',
         ),
     },
-    {
-      target: '[data-tour="site-address-section"]',
-      content: 'Elige la dirección gratuita donde tu sitio estará en línea.',
-      before: () =>
-        navigateAndWaitForTarget(
-          navigate,
-          '/dashboard/customization',
-          '[data-tour="site-address-section"]',
-        ),
-    },
+    ...(isEntitled
+      ? [
+          {
+            target: '[data-tour="site-address-section"]',
+            content: onboardingTourCopy.address,
+            before: () =>
+              openCustomization('[data-tour="site-address-section"]'),
+          },
+        ]
+      : []),
     {
       target: '[data-tour="editor-gateway-card"]',
-      content: 'Aquí abres el editor para personalizar tu contenido.',
-      // Same route as the address step — no `before` navigation needed.
+      content: onboardingTourCopy.edit,
+      // The address step already opened this route when the tenant has a plan.
+      ...(isEntitled
+        ? {}
+        : {
+            before: () =>
+              openCustomization('[data-tour="editor-gateway-card"]'),
+          }),
     },
     {
       target: '[data-tour="site-settings-section"]',
-      content: 'Configura el título, descripción y favicon de tu sitio.',
-      // Same route as the previous step — no `before` navigation needed.
+      content: onboardingTourCopy.seo,
     },
     {
       target: '[data-tour="domain-nav-link"]',
-      content: 'Conecta o compra tu dominio aquí.',
+      content: onboardingTourCopy.domain,
       before: () =>
         navigateAndWaitForTarget(
           navigate,

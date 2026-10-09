@@ -14,6 +14,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { useDebouncedValue } from '@/hooks/use-debounced-value';
 import { displayHost } from '@/lib/site-address';
 import { cn } from '@/lib/utils';
+import { UpgradeGate } from '@/components/dashboard/home/UpgradeGate';
 import { useUpdateSlug } from './hooks/useUpdateSlug';
 import { slugCheckErrorMessage, slugReasonMessage } from './lib/slug-errors';
 
@@ -34,6 +35,7 @@ interface SiteAddressSectionProps {
 
 /** Lets the tenant pick the free `{slug}.lattiz.app` address. Rules live in the API; this only displays its verdict. */
 export function SiteAddressSection({ tenant }: SiteAddressSectionProps) {
+  const locked = !tenant.isEntitled;
   const [value, setValue] = useState(tenant.slug);
   const touched = useRef(false);
   const update = useUpdateSlug();
@@ -43,7 +45,7 @@ export function SiteAddressSection({ tenant }: SiteAddressSectionProps) {
 
   const suggestion = useQuery({
     ...tenantsControllerSlugSuggestionOptions(),
-    enabled: !tenant.slugIsCustom,
+    enabled: !locked && !tenant.slugIsCustom,
     staleTime: Infinity,
   });
   useEffect(() => {
@@ -57,7 +59,7 @@ export function SiteAddressSection({ tenant }: SiteAddressSectionProps) {
 
   const availability = useQuery({
     ...tenantsControllerSlugAvailabilityOptions({ query: { slug: debounced } }),
-    enabled: debounced !== '' && debounced !== tenant.slug,
+    enabled: !locked && debounced !== '' && debounced !== tenant.slug,
     retry: false,
   });
 
@@ -90,6 +92,33 @@ export function SiteAddressSection({ tenant }: SiteAddressSectionProps) {
     event.preventDefault();
     if (canSave) update.mutate({ body: { slug: normalized } });
   };
+
+  if (locked) {
+    return (
+      <Card data-tour="site-address-section">
+        <CardHeader>
+          <CardTitle>Dirección de tu sitio</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-fit"
+            render={
+              <a
+                href={tenant.previewUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            }
+          >
+            {displayHost(tenant.previewUrl)} <ExternalLinkIcon />
+          </Button>
+          <UpgradeGate reason="address" className="border-0 py-8" />
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card data-tour="site-address-section">

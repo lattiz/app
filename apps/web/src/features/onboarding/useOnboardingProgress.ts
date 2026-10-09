@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { tenantsControllerMeOptions } from '@lattiz/api-client';
+import { onboardingStepCopy } from '@/lib/trial-copy';
 
 export interface OnboardingStepStatus {
   id: string;
@@ -22,34 +23,32 @@ export function useOnboardingProgress(): {
   steps: OnboardingStepStatus[];
   completedCount: number;
   isFullyOnboarded: boolean;
+  isEntitled: boolean;
   isLoading: boolean;
 } {
   const { data: tenantMe, isLoading } = useQuery(tenantsControllerMeOptions());
+  const isEntitled = tenantMe?.isEntitled === true;
 
   const steps: OnboardingStepStatus[] = [
     {
-      id: 'subscription',
-      label: 'Activa tu suscripción',
-      route: '/dashboard/subscription',
-      // isEntitled is top-level on TenantMe, not nested under subscription —
-      // it's the only value the guard and the rest of the app trust.
-      complete: tenantMe?.isEntitled === true,
-    },
-    {
       id: 'template',
-      label: 'Elige tu plantilla',
+      label: onboardingStepCopy.template,
       route: '/dashboard/templates',
       complete: tenantMe?.site?.templateId != null,
     },
-    {
-      id: 'address',
-      label: 'Elige la dirección de tu sitio',
-      route: '/dashboard/customization',
-      complete: tenantMe?.slugIsCustom === true,
-    },
+    ...(isEntitled
+      ? [
+          {
+            id: 'address',
+            label: onboardingStepCopy.address,
+            route: '/dashboard/customization' as const,
+            complete: tenantMe?.slugIsCustom === true,
+          },
+        ]
+      : []),
     {
       id: 'customize',
-      label: 'Personaliza tu sitio',
+      label: onboardingStepCopy.edit,
       route: '/dashboard/customization',
       complete:
         tenantMe?.site?.updatedAt != null &&
@@ -58,24 +57,23 @@ export function useOnboardingProgress(): {
     },
     {
       id: 'seo',
-      label: 'Configura el SEO y la marca',
+      label: onboardingStepCopy.seo,
       route: '/dashboard/customization',
-      // SEO/branding fields live under `branding`, not on the tenant directly.
       complete:
         tenantMe?.branding?.seoTitle != null ||
         tenantMe?.branding?.faviconLightUrl != null,
     },
     {
-      id: 'domain',
-      label: 'Conecta tu dominio',
-      route: '/dashboard/domain',
-      complete: tenantMe?.domainStatus?.dnsStatus === 'active',
-    },
-    {
       id: 'publish',
-      label: 'Publica tu sitio',
+      label: onboardingStepCopy.publish,
       route: '/dashboard/customization',
       complete: tenantMe?.site?.lastPublishedAt != null,
+    },
+    {
+      id: 'domain',
+      label: onboardingStepCopy.domain,
+      route: isEntitled ? '/dashboard/domain' : '/dashboard/subscription',
+      complete: tenantMe?.domainStatus?.dnsStatus === 'active',
     },
   ];
 
@@ -85,6 +83,7 @@ export function useOnboardingProgress(): {
     steps,
     completedCount,
     isFullyOnboarded: completedCount === steps.length,
+    isEntitled,
     isLoading,
   };
 }

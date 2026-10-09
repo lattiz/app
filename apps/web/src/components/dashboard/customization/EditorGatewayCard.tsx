@@ -8,6 +8,7 @@ import type { SiteStatus } from '@/types/dashboard.types';
 interface EditorGatewayCardProps {
   tenantId: string;
   site: SiteStatus;
+  canPublish?: boolean;
 }
 
 // This gateway has no loaded GrapesJS project/exported HTML to send — that
@@ -20,7 +21,11 @@ function mockRepublish(): Promise<{ publishedAt: string }> {
   );
 }
 
-export function EditorGatewayCard({ tenantId, site }: EditorGatewayCardProps) {
+export function EditorGatewayCard({
+  tenantId,
+  site,
+  canPublish = true,
+}: EditorGatewayCardProps) {
   const republish = useMutation({ mutationFn: mockRepublish });
   const isFirstPublish = site.lastPublished === null;
 
@@ -46,8 +51,10 @@ export function EditorGatewayCard({ tenantId, site }: EditorGatewayCardProps) {
           </Button>
           <Button
             variant="outline"
-            disabled={republish.isPending || site.deployInProgress}
-            onClick={() => republish.mutate()}
+            disabled={!canPublish || republish.isPending || site.deployInProgress}
+            onClick={() => {
+              if (canPublish) republish.mutate();
+            }}
           >
             {republish.isPending ? (
               <>
@@ -60,6 +67,15 @@ export function EditorGatewayCard({ tenantId, site }: EditorGatewayCardProps) {
               'Actualizar sitio web'
             )}
           </Button>
+          {!canPublish && (
+            <Button
+              variant="link"
+              size="sm"
+              render={<Link to="/dashboard/subscription" />}
+            >
+              Elige un plan
+            </Button>
+          )}
         </div>
       </CardContent>
     </Card>

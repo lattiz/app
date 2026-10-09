@@ -60,6 +60,21 @@ export function DashboardHeader() {
 
       {isHome && (
         <div className="ml-auto flex items-center gap-2">
+          {state === 'trial-expired' && site?.previewUrl && (
+            <Button
+              variant="outline"
+              size="sm"
+              render={
+                <a
+                  href={site.previewUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+              }
+            >
+              Ver sitio <ExternalLinkIcon />
+            </Button>
+          )}
           {state === 'active' && site?.isOnline && site.domain && (
             <Button
               variant="outline"

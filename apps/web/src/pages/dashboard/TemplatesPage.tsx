@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { useNavigate } from '@tanstack/react-router';
-import { useQuery } from '@tanstack/react-query';
-import { tenantsControllerMeOptions } from '@lattiz/api-client';
-import { toast } from 'sonner';
+import { Link, useNavigate } from '@tanstack/react-router';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  tenantsControllerMeOptions,
+  tenantsControllerMeQueryKey,
+} from '@lattiz/api-client';
 import { TemplateCard } from '@/components/dashboard/templates/TemplateCard';
 import { TemplateChangeModal } from '@/components/dashboard/templates/TemplateChangeModal';
 import { DashboardSkeleton } from '@/components/dashboard/DashboardSkeleton';
@@ -12,14 +14,17 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { isConflictWithConfirmation, useChangeTemplate } from '@/hooks/use-change-template';
 import { useSelectTemplate } from '@/hooks/use-select-template';
 import { useTemplates } from '@/hooks/use-templates';
+import { reportSiteActionError } from '@/lib/upload-errors';
 import { useDashboardStore } from '@/stores/dashboard.store';
 
 export function TemplatesPage() {
   const dashboardState = useDashboardStore((s) => s.state);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const templates = useTemplates();
   const tenant = useQuery(tenantsControllerMeOptions());
+  const canPublish = tenant.data?.canPublish !== false;
 
   const [pendingTemplateId, setPendingTemplateId] = useState<string | null>(null);
 
@@ -36,6 +41,17 @@ export function TemplatesPage() {
 
   const goToCustomization = () => void navigate({ to: '/dashboard/customization' });
 
+  const reportTemplateError = (err: unknown) => {
+    reportSiteActionError(err, 'template', {
+      onPlans: () => void navigate({ to: '/dashboard/subscription' }),
+      onPreviewExpired: () => {
+        void queryClient.invalidateQueries({
+          queryKey: tenantsControllerMeQueryKey(),
+        });
+      },
+    });
+  };
+
   const applyChange = async (templateId: string, confirm: boolean) => {
     await changeMutation.mutateAsync({
       path: { tenantId },
@@ -44,14 +60,15 @@ export function TemplatesPage() {
   };
 
   const handleSelect = async (templateId: string) => {
+    if (currentTemplateId === templateId) {
+      goToCustomization();
+      return;
+    }
+    if (!canPublish) return;
+
     try {
       if (!currentTemplateId) {
         await selectMutation.mutateAsync({ body: { templateId } });
-        goToCustomization();
-        return;
-      }
-
-      if (currentTemplateId === templateId) {
         goToCustomization();
         return;
       }
@@ -63,30 +80,44 @@ export function TemplatesPage() {
         setPendingTemplateId(templateId);
         return;
       }
-      toast.error('No se pudo cambiar la plantilla. Intenta de nuevo.');
+      reportTemplateError(err);
     }
   };
 
   const handleConfirm = async () => {
-    if (!pendingTemplateId) return;
+    if (!pendingTemplateId || !canPublish) return;
     try {
       await applyChange(pendingTemplateId, true);
       setPendingTemplateId(null);
       goToCustomization();
-    } catch {
+    } catch (err) {
       setPendingTemplateId(null);
-      toast.error('No se pudo cambiar la plantilla. Intenta de nuevo.');
+      reportTemplateError(err);
     }
   };
 
   return (
     <div className="flex flex-col gap-6">
-      <div>
-        <h1 className="text-xl font-semibold">Plantillas</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Elige el diseño base para tu sitio. Podrás personalizarlo
-          completamente después.
-        </p>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h1 className="text-xl font-semibold">Plantillas</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Elige el diseño base para tu sitio. Podrás personalizarlo
+            completamente después.
+          </p>
+          {!canPublish && (
+            <p className="mt-1 text-sm text-muted-foreground">
+              {tenant.data?.previewState === 'trial_expired'
+                ? 'Tu prueba gratuita terminó. Elige un plan para cambiar de plantilla.'
+                : 'Elige un plan para cambiar de plantilla.'}
+            </p>
+          )}
+        </div>
+        {!canPublish && (
+          <Button size="sm" render={<Link to="/dashboard/subscription" />}>
+            Elige un plan
+          </Button>
+        )}
       </div>
 
       {templates.isLoading && (
@@ -129,6 +160,7 @@ export function TemplatesPage() {
               template={template}
               isCurrentTemplate={currentTemplateId === template.id}
               isSelecting={isSelecting}
+              changeLocked={!canPublish && currentTemplateId !== template.id}
               onSelect={(id) => void handleSelect(id)}
             />
           ))}

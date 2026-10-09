@@ -12,6 +12,7 @@ import {
   CloudOffIcon,
   RotateCwIcon,
 } from 'lucide-react';
+import { UpgradeGate } from '@/components/dashboard/home/UpgradeGate';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
@@ -42,7 +43,13 @@ function useNow(intervalMs: number): number {
 }
 
 export function AnalyticsPage() {
-  const { data, isLoading, isError, refetch, isRefetching } = useAnalyticsOverview();
+  const tenant = useQuery(tenantsControllerMeOptions());
+  const { data, isLoading, isError, refetch, isRefetching } = useAnalyticsOverview(
+    tenant.data?.isEntitled === true,
+  );
+
+  if (tenant.isLoading) return <AnalyticsSkeleton />;
+  if (tenant.data && !tenant.data.isEntitled) return <UpgradeGate reason="analytics" />;
 
   if (isLoading) return <AnalyticsSkeleton />;
 

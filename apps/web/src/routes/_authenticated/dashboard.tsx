@@ -31,8 +31,9 @@ function DashboardLayoutRoute() {
     select: (s) => s.location.pathname.replace(/\/+$/, '') || '/dashboard',
   });
 
-  // Centralized here so no individual page can forget the check. `state` is
-  // 'loading' until /tenants/me settles, so this never fires prematurely.
+  // Only a lapsed tenant is sent home. Preview (including an expired one) keeps
+  // templates, site, and customization. `state` stays 'loading' until
+  // /tenants/me settles, so this never fires prematurely.
   const isBlocked = state === 'no-subscription' && !UNGATED_ROUTES.has(pathname);
 
   useEffect(() => {
