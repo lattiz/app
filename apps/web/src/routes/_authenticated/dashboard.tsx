@@ -8,14 +8,7 @@ import {
 import { NoTenantState } from '@/components/dashboard/home/NoTenantState';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { useDashboardHome } from '@/hooks/use-dashboard-home';
-
-// Reachable without an entitlement: home (which renders the "Acceso restringido"
-// gate), and the two pages a lapsed tenant needs to resubscribe or leave.
-const UNGATED_ROUTES = new Set([
-  '/dashboard',
-  '/dashboard/subscription',
-  '/dashboard/account',
-]);
+import { isDashboardRouteBlocked } from '@/lib/dashboard-access';
 
 export const Route = createFileRoute('/_authenticated/dashboard')({
   component: DashboardLayoutRoute,
@@ -33,7 +26,7 @@ function DashboardLayoutRoute() {
 
   // Centralized here so no individual page can forget the check. `state` is
   // 'loading' until /tenants/me settles, so this never fires prematurely.
-  const isBlocked = state === 'no-subscription' && !UNGATED_ROUTES.has(pathname);
+  const isBlocked = isDashboardRouteBlocked(state, pathname);
 
   useEffect(() => {
     if (isBlocked) void navigate({ to: '/dashboard', replace: true });

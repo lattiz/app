@@ -17,6 +17,8 @@ interface OnboardingStore {
   startTour: () => void;
   /** Stops the tour and persists the dismissal so it doesn't auto-start again. */
   finishTour: () => void;
+  /** Stops the tour without persisting dismissal, so it auto-starts again on the next load. */
+  abortTour: () => void;
 }
 
 export const useOnboardingStore = create<OnboardingStore>((set) => ({
@@ -32,4 +34,5 @@ export const useOnboardingStore = create<OnboardingStore>((set) => ({
     }
     set({ run: false, dismissed: true });
   },
+  abortTour: () => set({ run: false }),
 }));
