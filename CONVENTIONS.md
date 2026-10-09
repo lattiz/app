@@ -106,6 +106,23 @@ Analíticas del plan Pro: Lattiz es dueño de una cuenta de GA y crea una propie
 - La elegibilidad (plan `pro` + suscripción vigente) se deriva al leer; no hay un flag que pueda quedar desincronizado. Las propiedades de GA nunca se borran automáticamente.
 - `GA4_MOCK=true` funciona sin credenciales; `tenant-sites` nunca inyecta un ID `G-MOCK…` en producción.
 
+## Plantillas — `packages/template-kit`
+
+- **Las plantillas se escriben como código fuente en `packages/template-kit`; GrapesJS Studio ya no es dependencia.** Secciones + tema + content pack se compilan en el mismo `.grapesjs` + `index.html` que exportaba Studio, sin pagar export/IA y con diffs revisables.
+- **Dos radios: `--lz-radius-pill` (botones, chips) y `--lz-radius-card` (tarjetas, paneles, mapas, marcos; ≤ 32px).** Un solo `--lz-radius` volvía ovaladas las tarjetas al poner botones en píldora.
+- **El compilador genera toda estructura derivada (`:root`, `<head>` con fuentes, `custom`, nombres de capas) desde el tema; nunca copia colores.** Copiarlos dejaba texto invisible al cambiar de tema claro/oscuro.
+- **No se emiten `.gjs-t-*`, el data source `globalStyles` ni valores `data-variable`.** `SiteEditor.tsx` no pasa la opción `globalStyles` del SDK, así que el SDK no muestra esos registros (`_internal`); mantenerlos sería un segundo sistema de tokens que nadie edita.
+- **`kit:validate` es la compuerta:** ninguna plantilla se siembra con hallazgos (colores literales, contraste AA, breakpoints 992/480, reduced-motion, similitud ≤ 0.6, etc.).
+- Desviaciones frente al brief, verificadas en el código:
+  - headless usa `grapesjs@0.22.16`, la versión del Studio SDK 1.1.1 del editor, no 0.23;
+  - el CSS se parsea con postcss (`parserCss`), porque el CSSOM de jsdom reescribe shorthands (`margin:0` → 4 longhands) y pierde `border` + `border-top` con `var()`;
+  - tokens extra: `on-overlay` (texto sobre el velo de la portada, también en temas claros), `ink` (sombras), `--lz-map-filter` y `--lz-hero-image-filter`;
+  - ÓXIDO tiene 7 enlaces `wa.me`, no 8;
+  - la "G" de Google se volvió monocroma (`currentColor`): el único literal permitido es el verde de WhatsApp;
+  - se corrigió `.lz-hero__inner { width: 100% }`, que anulaba `.lz-container` y pegaba el texto de la portada al borde en escritorio;
+  - `html2project.js` no venía en los fixtures: se reimplementó a partir de `compose.js`/`lib.js` y del export de Studio;
+  - la guía vieja vivía fuera del repo; la nueva es `docs/lattiz-template-guidelines.md`.
+
 ## ORM — Drizzle
 
 - Drizzle es solo el query builder (`apps/api/src/database/schema/`). Las migraciones viven en `supabase/migrations/` (Supabase CLI) — ver `SETUP.md`.

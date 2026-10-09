@@ -1,0 +1,25 @@
+.lz-hero {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, .2);
+  color: tomato;
+  transition: opacity .3s ease;
+}
+
+.lz-hero__image {
+  animation: lz-spin 2s linear infinite;
+}
+
+@keyframes lz-spin {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .lz-hero {
+    padding: 0;
+  }
+}

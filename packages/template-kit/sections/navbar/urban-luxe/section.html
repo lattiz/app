@@ -1,0 +1,16 @@
+<header id="inicio" data-lz-slot="navbar" data-lz-variant="urban-luxe" class="lz-section lz-navbar">
+  <div class="lz-container lz-navbar__inner">
+    <a href="#inicio" aria-label="{{name}}, ir al inicio" class="lz-brand">
+      <p class="lz-brand__wordmark">{{shortName}}</p>
+      <p class="lz-brand__sub">{{tagline}}</p>
+    </a>
+    <nav aria-label="Navegación principal" class="lz-nav">
+      <ul class="lz-nav__list">
+        <li data-lz-each="links"><a class="lz-nav__link" data-lz-attr-href="href" data-lz-key="label"></a></li>
+      </ul>
+    </nav>
+    <div class="lz-navbar__cta">
+      <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary" data-lz-key="cta"></a>
+    </div>
+  </div>
+</header>

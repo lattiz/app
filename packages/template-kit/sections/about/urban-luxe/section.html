@@ -1,0 +1,28 @@
+<section id="nosotros" data-lz-slot="about" data-lz-variant="urban-luxe" class="lz-section lz-about">
+  <div class="lz-container">
+    <div class="lz-section__head">
+      <p class="lz-index" data-lz-key="kicker"></p>
+    </div>
+    <div class="lz-about__grid">
+      <div class="lz-media-frame">
+        <div class="lz-media-frame__outline"></div>
+        <img loading="lazy" class="lz-media-frame__image" data-lz-attr-src="image" data-lz-attr-alt="imageAlt">
+        <div class="lz-media-frame__sticker" data-lz-if="sticker">
+          <span class="lz-sticker" data-lz-key="sticker"></span>
+        </div>
+      </div>
+      <div class="lz-about__copy">
+        <h2 class="lz-title lz-title--section" data-lz-key="title"></h2>
+        <div class="lz-about__text">
+          <p class="lz-copy" data-lz-each="paragraphs" data-lz-key="."></p>
+        </div>
+        <div class="lz-stats" data-lz-if="stats">
+          <div class="lz-stat" data-lz-each="stats">
+            <p class="lz-stat__value" data-lz-key="value"></p>
+            <p class="lz-stat__label" data-lz-key="label"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -7,3 +7,8 @@ pnpm-lock.yaml
 packages/api-client/src/generated
 apps/api/drizzle
 apps/api/openapi.json
+
+# template-kit: whitespace-sensitive fragments, reference fixtures and generated output
+packages/template-kit/sections/**/*.html
+packages/template-kit/fixtures
+packages/template-kit/extracted

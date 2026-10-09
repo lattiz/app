@@ -5,17 +5,19 @@
  * Every stage is idempotent, so re-running the same command resumes cleanly.
  *
  *   pnpm tsx scripts/parse-and-seed-template.ts \
- *     --file ./x.grapesjs --html ./x-export/index.html \
+ *     (--file ./x.grapesjs --html ./x-export/index.html | --dir packages/template-kit/dist/<id>) \
  *     --id restaurante-moderno-v1 --name "Restaurante Moderno" --category restaurantes \
  *     [--description ".."] [--sort-order 10] \
  *     [--dry-run] [--no-deploy] [--no-thumbnail] [--no-preview]
  *
+ * --dir reads <dir>/<id>.grapesjs + <dir>/index.html (packages/template-kit output) and uploads the
+ * local `assets/…` files they reference the same way as cdn.grapesjs.com assets.
  * Env: see the root .env.example (read from ./.env, then apps/api/.env for the shared keys).
  * Workflow: docs/adding-templates.md
  */
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { dirname, join, relative, resolve } from 'node:path';
+import { basename, dirname, join, relative, resolve } from 'node:path';
 import { parseEnv } from 'node:util';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import type { ObjectStoragePort } from '../apps/api/src/modules/storage/domain/object-storage.port';
@@ -39,6 +41,9 @@ const SOURCE_URL_RES = [
     'g',
   ),
 ];
+// template-kit output: relative `assets/<file>` refs, never part of a longer URL or path.
+const LOCAL_ASSET_RE =
+  /(?<![\w/.:-])(?:\.\/)?assets\/[A-Za-z0-9._-]+\.(?:jpe?g|png|webp|avif|gif|svg|mp4|webm|woff2?|ttf|otf)\b/g;
 const MAX_ASSET_BYTES = 15 * 1024 * 1024;
 const DOWNLOAD_TIMEOUT_MS = 30_000;
 const DOWNLOAD_ATTEMPTS = 3;
@@ -69,6 +74,8 @@ const TYPE_BY_EXT: Record<string, string> = {
 interface CliArgs {
   file: string;
   html?: string;
+  /** Directory local `assets/…` refs resolve against. */
+  assetsBase: string;
   id: string;
   name: string;
   category: string;
@@ -132,6 +139,15 @@ function parseArgs(argv: string[]): CliArgs {
   }
 
   const preview = !raw.has('no-preview');
+  const dir = raw.get('dir');
+  if (dir && dir !== 'true') {
+    raw.set(
+      'file',
+      raw.get('file') ??
+        join(dir, `${raw.get('id') ?? basename(dir)}.grapesjs`),
+    );
+    if (preview) raw.set('html', raw.get('html') ?? join(dir, 'index.html'));
+  }
   const required = ['file', 'id', 'name', ...(preview ? ['html'] : [])];
   const missing = required.filter(
     (key) => !raw.get(key) || raw.get(key) === 'true',
@@ -148,9 +164,14 @@ function parseArgs(argv: string[]): CliArgs {
     throw new StageError('--sort-order must be an integer.');
   }
 
+  const file = raw.get('file') as string;
   return {
-    file: raw.get('file') as string,
+    file,
     html: raw.get('html'),
+    assetsBase: resolve(
+      process.cwd(),
+      dir && dir !== 'true' ? dir : dirname(file),
+    ),
     id: raw.get('id') as string,
     name: raw.get('name') as string,
     category: raw.get('category') ?? 'general',
@@ -274,6 +295,14 @@ function collectSourceUrls(...texts: string[]): string[] {
   return [...urls].sort();
 }
 
+function collectLocalAssets(...texts: string[]): string[] {
+  const refs = new Set<string>();
+  for (const text of texts) {
+    for (const match of text.matchAll(LOCAL_ASSET_RE)) refs.add(match[0]);
+  }
+  return [...refs].sort();
+}
+
 // ── Stage 3: migrate assets ──────────────────────────────────────────────────
 
 function extensionOf(url: string): string | undefined {
@@ -347,15 +376,45 @@ async function existsPublicly(url: string): Promise<boolean> {
   }
 }
 
+/** Reads a template-kit asset from disk; `url` keeps the ref as written so it can be rewritten. */
+function readLocal(
+  ref: string,
+  baseDir: string,
+  templateId: string,
+): DownloadedAsset {
+  const path = resolve(baseDir, ref);
+  if (relative(baseDir, path).startsWith('..') || !existsSync(path)) {
+    throw new StageError(`${ref}: not found under ${baseDir}`);
+  }
+  const body = readFileSync(path);
+  if (body.length > MAX_ASSET_BYTES)
+    throw new StageError(
+      `${ref}: ${body.length} bytes exceeds the 15 MB limit`,
+    );
+  const ext = (/\.([a-z0-9]+)$/i.exec(ref)?.[1] ?? '').toLowerCase();
+  const contentType = TYPE_BY_EXT[ext];
+  if (!contentType) throw new StageError(`${ref}: unsupported extension`);
+  const hash = createHash('sha256').update(body).digest('hex').slice(0, 16);
+  return {
+    url: ref,
+    body,
+    contentType,
+    key: `templates/${templateId}/${hash}.${EXT_BY_TYPE[contentType] ?? ext}`,
+  };
+}
+
 async function migrateAssets(
   storage: ObjectStoragePort,
   urls: string[],
+  localRefs: string[],
+  baseDir: string,
   templateId: string,
 ): Promise<Map<string, string>> {
   // All-or-nothing: every download must succeed before anything is uploaded or written.
-  const settled = await Promise.allSettled(
-    urls.map((url) => download(url, templateId)),
-  );
+  const settled = await Promise.allSettled([
+    ...urls.map((url) => download(url, templateId)),
+    ...localRefs.map(async (ref) => readLocal(ref, baseDir, templateId)),
+  ]);
   const failures = settled.flatMap((r) =>
     r.status === 'rejected' ? [String((r.reason as Error).message)] : [],
   );
@@ -385,11 +444,18 @@ async function migrateAssets(
 }
 
 function rewriteUrls(text: string, replacements: Map<string, string>): string {
+  // Local refs are swapped only where LOCAL_ASSET_RE matches, never inside a longer URL.
+  const local = text.replace(
+    LOCAL_ASSET_RE,
+    (ref) => replacements.get(ref) ?? ref,
+  );
   // Longest first so a URL that prefixes another is never replaced inside it.
-  const ordered = [...replacements.keys()].sort((a, b) => b.length - a.length);
+  const ordered = [...replacements.keys()]
+    .filter((key) => /^https?:/.test(key))
+    .sort((a, b) => b.length - a.length);
   return ordered.reduce(
     (out, from) => out.split(from).join(replacements.get(from) as string),
-    text,
+    local,
   );
 }
 
@@ -575,7 +641,12 @@ async function run(argv: string[]): Promise<void> {
   // 2. Collect
   const json = JSON.stringify(project);
   const urls = collectSourceUrls(json, exportHtml ?? '');
-  record('2 collect', '✓', `${urls.length} asset URL(s) to migrate`);
+  const localRefs = collectLocalAssets(json, exportHtml ?? '');
+  record(
+    '2 collect',
+    '✓',
+    `${urls.length} asset URL(s) + ${localRefs.length} local file(s) to migrate`,
+  );
 
   if (args.dryRun) {
     let total = 0;
@@ -590,8 +661,16 @@ async function run(argv: string[]): Promise<void> {
         `    ${res?.ok ? '✓' : '✗'} ${(size / 1024).toFixed(0).padStart(6)} KB  ${url}`,
       );
     }
+    for (const ref of localRefs) {
+      const path = resolve(args.assetsBase, ref);
+      const size = existsSync(path) ? readFileSync(path).length : 0;
+      total += size;
+      console.log(
+        `    ${size ? '✓' : '✗'} ${(size / 1024).toFixed(0).padStart(6)} KB  ${ref}`,
+      );
+    }
     console.log(
-      `\nDry run: ${urls.length} asset(s), ~${(total / 1024 / 1024).toFixed(2)} MB. Nothing was written.`,
+      `\nDry run: ${urls.length + localRefs.length} asset(s), ~${(total / 1024 / 1024).toFixed(2)} MB. Nothing was written.`,
     );
     printSummary();
     return;
@@ -616,7 +695,13 @@ async function run(argv: string[]): Promise<void> {
   const previewUrl = baseUrl ? `${baseUrl}/${args.id}` : null;
 
   // 3. Migrate
-  const replacements = await migrateAssets(storage, urls, args.id);
+  const replacements = await migrateAssets(
+    storage,
+    urls,
+    localRefs,
+    args.assetsBase,
+    args.id,
+  );
   record(
     '3 migrate to R2',
     '✓',
@@ -628,7 +713,10 @@ async function run(argv: string[]): Promise<void> {
   const rewrittenHtml = exportHtml
     ? rewriteUrls(exportHtml, replacements)
     : undefined;
-  const leftovers = collectSourceUrls(rewrittenJson, rewrittenHtml ?? '');
+  const leftovers = [
+    ...collectSourceUrls(rewrittenJson, rewrittenHtml ?? ''),
+    ...collectLocalAssets(rewrittenJson, rewrittenHtml ?? ''),
+  ];
   if (leftovers.length > 0)
     throw new StageError(
       `URLs left un-migrated:\n    ${leftovers.join('\n    ')}`,
@@ -636,7 +724,7 @@ async function run(argv: string[]): Promise<void> {
   record(
     '4 rewrite URLs',
     '✓',
-    'no cdn.grapesjs.com or Supabase Storage URL remains',
+    'no cdn.grapesjs.com, Supabase Storage or local asset ref remains',
   );
 
   // 5. Preview file

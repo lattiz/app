@@ -1,0 +1,49 @@
+{
+  "manifest": {
+    "id": "broken-fixture-v1",
+    "name": "Broken fixture",
+    "category": "test",
+    "description": "Every validator rule must fire on this fixture",
+    "family": "service-landing",
+    "vertical": "barberia",
+    "archetype": "street-luxe",
+    "theme": "broken-theme",
+    "content": "barberia.es-MX",
+    "sections": [{ "slot": "hero", "variant": "bad" }]
+  },
+  "manifestFile": null,
+  "theme": {
+    "name": "broken-theme",
+    "label": "Broken",
+    "colors": {
+      "bg": "#FFFFFF",
+      "surface": "#FFFFFF",
+      "surface-2": "#F4F4F4",
+      "text": "#BBBBBB",
+      "muted": "#CCCCCC",
+      "accent": "#FFEE00",
+      "on-accent": "#FFFFFF",
+      "line": "rgba(0,0,0,.1)",
+      "line-strong": "rgba(0,0,0,.2)",
+      "overlay": "#FFFFFF",
+      "on-overlay": "#EEEEEE",
+      "navbar-bg": "rgba(255,255,255,.5)",
+      "ink": "#000000"
+    },
+    "fonts": { "display": "'Anton', sans-serif", "serif": "'Instrument Serif', serif", "body": "'Space Grotesk', sans-serif", "googleFonts": "family=Anton" },
+    "radius": { "pill": "999px", "card": "40px" },
+    "sectionPad": "80px",
+    "container": "1200px",
+    "effects": { "mapFilter": "none", "heroImageFilter": "none" }
+  },
+  "sections": [
+    {
+      "slot": "hero",
+      "variant": "bad",
+      "html": "fixtures/broken/sections/hero/bad/section.html",
+      "css": "fixtures/broken/sections/hero/bad/section.css",
+      "rendered": "<section data-lz-slot=\"hero\" class=\"lz-section lz-hero flex mt-4 heroBox\"><h1 class=\"lz-title\" style=\"color: red\">Uno</h1><h1 class=\"lz-title\" onclick=\"alert(1)\">Dos</h1><img src=\"https://images.unsplash.com/photo-1.jpg\" class=\"lz-hero__image\"><a href=\"javascript:void(0)\" class=\"lz-link\">Ir</a><a href=\"#nowhere\" class=\"lz-link\">Ancla rota</a><svg viewBox=\"0 0 24 24\" class=\"lz-icon\"><path fill=\"#FF0000\" d=\"M0 0h24v24H0z\"></path></svg><script>console.log('x')</script></section>"
+    }
+  ],
+  "core": "fixtures/broken/core.css"
+}

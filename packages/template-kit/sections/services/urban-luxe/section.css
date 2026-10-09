@@ -1,0 +1,124 @@
+.lz-services {
+  padding: var(--lz-section-pad) 0;
+}
+
+.lz-services__grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 36px;
+  align-items: start;
+}
+
+.lz-panel {
+  border: 1px solid var(--lz-color-line);
+  border-radius: var(--lz-radius-card);
+  background: var(--lz-color-surface);
+}
+
+.lz-panel__inner {
+  padding: 28px;
+}
+
+.lz-price-list {
+  display: grid;
+  gap: 0;
+}
+
+.lz-price-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--lz-color-line);
+}
+
+.lz-price-item:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.lz-price-item:first-child {
+  padding-top: 0;
+}
+
+.lz-price-item__name {
+  margin: 0;
+  font-weight: 700;
+  color: var(--lz-color-text);
+}
+
+.lz-price-item__dots {
+  height: 1px;
+  align-self: center;
+  background-image: radial-gradient(
+    circle,
+    var(--lz-color-line) 1px,
+    transparent 1px
+  );
+  background-size: 8px 1px;
+  background-repeat: repeat-x;
+  background-position: center;
+}
+
+.lz-price-item__price {
+  margin: 0;
+  font-family: var(--lz-font-display);
+  font-size: 30px;
+  line-height: 0.9;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.lz-price-item__desc {
+  grid-column: 1 / -1;
+  margin: 2px 0 0;
+  color: var(--lz-color-muted);
+  font-size: 15px;
+}
+
+.lz-promos {
+  display: grid;
+  gap: 16px;
+}
+
+.lz-promo {
+  border: 1px solid var(--lz-color-line);
+  border-top: 3px solid var(--lz-color-accent);
+  border-radius: var(--lz-radius-card);
+  background: var(--lz-color-surface);
+}
+
+.lz-promo__inner {
+  display: grid;
+  gap: 14px;
+  padding: 24px;
+}
+
+.lz-promo__title {
+  margin: 0;
+  font-family: var(--lz-font-display);
+  font-size: 34px;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.lz-promo__text {
+  margin: 0;
+  color: var(--lz-color-muted);
+}
+
+@media (max-width: 992px) {
+  .lz-services__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .lz-price-item {
+    grid-template-columns: 1fr auto;
+  }
+  .lz-price-item__dots {
+    display: none;
+  }
+}

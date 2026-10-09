@@ -6,6 +6,7 @@
 - `apps/api` — NestJS 11 resource server, hexagonal architecture, Supabase JWT verification, Drizzle ORM over Supabase Postgres.
 - `apps/web` — React 19 + Vite 8 SPA, TanStack Query, Tailwind CSS v4 + shadcn/ui (`base-luma` style), Supabase Auth client.
 - `packages/api-client` — typed API client generated from `apps/api/openapi.json` via `@hey-api/openapi-ts`, with TanStack Query bindings.
+- `packages/template-kit` — templates as source (sections + themes + content packs) compiled into GrapesJS projects + previews; see its `CLAUDE.md`.
 
 ## Architecture Invariants
 

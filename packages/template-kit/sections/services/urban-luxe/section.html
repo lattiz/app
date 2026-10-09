@@ -1,0 +1,32 @@
+<section id="servicios" data-lz-slot="services" data-lz-variant="urban-luxe" class="lz-section lz-services">
+  <div class="lz-container">
+    <div class="lz-section__head">
+      <p class="lz-index" data-lz-key="kicker"></p>
+    </div>
+    <div class="lz-services__grid">
+      <div class="lz-panel">
+        <div class="lz-panel__inner">
+          <h2 class="lz-title lz-title--section" data-lz-key="title"></h2>
+          <div class="lz-price-list">
+            <div class="lz-price-item" data-lz-each="prices">
+              <p class="lz-price-item__name" data-lz-key="name"></p>
+              <div class="lz-price-item__dots"></div>
+              <p class="lz-price-item__price" data-lz-key="price"></p>
+              <p class="lz-price-item__desc" data-lz-key="description"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="lz-promos" data-lz-if="promos">
+        <article class="lz-promo" data-lz-each="promos">
+          <div class="lz-promo__inner">
+            <span class="lz-chip" data-lz-key="tag"></span>
+            <h3 class="lz-promo__title" data-lz-key="title"></h3>
+            <p class="lz-promo__text" data-lz-key="text"></p>
+            <a target="_blank" rel="noopener noreferrer" class="lz-link" data-lz-attr-href="href" data-lz-key="cta"></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>

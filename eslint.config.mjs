@@ -23,6 +23,9 @@ export default tseslint.config(
       'apps/api/openapi.json',
       '**/.next/**',
       '**/next-env.d.ts',
+      // Reference material (Studio exports, throwaway spike scripts) and extract scratch output.
+      'packages/template-kit/fixtures/**',
+      'packages/template-kit/extracted/**',
     ],
   },
   js.configs.recommended,
