@@ -32,3 +32,5 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [openprovider-registrar-migration](openprovider-registrar-migration.md) — GoDaddy→Openprovider: endpoints, sandbox vs prod, quirks
 - [supabase-migrations-source-of-truth](supabase-migrations-source-of-truth.md) — esquema solo en supabase/migrations; cómo aplicar cambios
 - [launch-plan-decisions](launch-plan-decisions.md) — decisiones de negocio del lanzamiento (dominios, renovación, R2, correo)
+- [free-preview-trial](free-preview-trial.md) — prueba gratuita con preview temporal; reglas, bloqueos y anti-abuso
+- [app-settings-config](app-settings-config.md) — config de negocio en BD (BD > env > default); qué va y qué no
