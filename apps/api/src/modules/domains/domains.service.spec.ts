@@ -56,6 +56,7 @@ function setup(
     findDomain: jest.fn().mockResolvedValue(null),
     registerDomain: jest.fn(),
     getRegistrationStatus: jest.fn(),
+    getAutoRenew: jest.fn().mockResolvedValue('off'),
     setNameservers: jest.fn(),
   };
   // Only the tenant-plan lookup reaches the DB; every other helper is stubbed below.
@@ -112,7 +113,7 @@ describe('DomainsService pricing caps', () => {
 
   const renewalWarnings = () =>
     warn.mock.calls.filter(([msg]) =>
-      String(msg).startsWith('[DOMAIN_RENEWAL_ABOVE_PLAN_CAP]'),
+      String(msg).startsWith('[DOMAIN_PURCHASE_BLOCKED]'),
     );
 
   describe('quote and search', () => {
@@ -170,6 +171,55 @@ describe('DomainsService pricing caps', () => {
       expect(discardJob).toHaveBeenCalledWith('job-1');
       expect(createDomainRecord).not.toHaveBeenCalled();
       expect(runPipeline).not.toHaveBeenCalled();
+      expect(renewalWarnings()[0][0]).toContain('code=purchase_over_cap');
+    });
+
+    it('uses the effective plan: Pro with a pending downgrade cannot buy a Pro-only domain', async () => {
+      const { service, effective, runPipeline } = setup(
+        { create: 1500, renew: 3500 },
+        'pro',
+        'basico',
+      );
+      await expect(
+        service.initiatePurchase('user-1', PURCHASE),
+      ).rejects.toMatchObject({ details: { reason: 'requires_pro' } });
+      expect(effective.effectivePlanFor).toHaveBeenCalledWith(TENANT_ID, 'pro');
+      expect(runPipeline).not.toHaveBeenCalled();
+    });
+
+    it('re-validates at purchase time even after a covered quote', async () => {
+      const { service, registrar, runPipeline } = setup(
+        { create: 1500, renew: 2000 },
+        'basico',
+      );
+      const quote = await service.getQuote('user-1', DOMAIN);
+      expect(quote.coveredByPlan).toBe(true);
+      expect(quote.renewalPriceUsdCents).toBe(2000);
+
+      // The registrar's renewal price changes between quote and purchase.
+      registrar.getPriceUsdCents.mockImplementation((_d, op) =>
+        Promise.resolve(op === 'create' ? 1500 : 2368),
+      );
+      await expect(
+        service.initiatePurchase('user-1', PURCHASE),
+      ).rejects.toMatchObject({ details: { reason: 'requires_pro' } });
+      expect(runPipeline).not.toHaveBeenCalled();
+    });
+
+    it('fails closed when the renewal price cannot be read at purchase', async () => {
+      const { service, registrar, runPipeline } = setup({
+        create: 1500,
+        renew: 2000,
+      });
+      registrar.getPriceUsdCents.mockImplementation((_d, op) =>
+        op === 'create'
+          ? Promise.resolve(1500)
+          : Promise.reject(new Error('registrar down')),
+      );
+      await expect(
+        service.initiatePurchase('user-1', PURCHASE),
+      ).rejects.toThrow('registrar down');
+      expect(runPipeline).not.toHaveBeenCalled();
     });
   });
 
@@ -196,7 +246,7 @@ describe('DomainsService pricing caps', () => {
       ['none', 2368, 2367, 'requires_pro'],
     ] as const)(
       '%p renewing at %p is blocked at cap %p (%p)',
-      async (plan, renew, cap, reason) => {
+      async (plan, renew, _cap, reason) => {
         const { service, discardJob, createDomainRecord, runPipeline } = setup(
           { create: 1500, renew },
           plan,
@@ -208,7 +258,7 @@ describe('DomainsService pricing caps', () => {
           details: { reason },
         });
         expect(renewalWarnings()[0][0]).toBe(
-          `[DOMAIN_RENEWAL_ABOVE_PLAN_CAP] tenant=${TENANT_ID} domain=${DOMAIN} plan=${plan} renewal_usd_cents=${renew} cap_usd_cents=${cap}`,
+          `[DOMAIN_PURCHASE_BLOCKED] tenant=${TENANT_ID} domain=${DOMAIN} code=${reason} plan=${plan} first_year_usd_cents=1500 renewal_usd_cents=${renew}`,
         );
         expect(discardJob).toHaveBeenCalledWith('job-1');
         expect(createDomainRecord).not.toHaveBeenCalled();
@@ -409,5 +459,35 @@ describe('DomainsService.checkManagedDomainRenewal (downgrade guard)', () => {
     const { PgDialect } = await import('drizzle-orm/pg-core');
     const rendered = new PgDialect().sqlToQuery(db.execute.mock.calls[0][0]);
     expect(rendered.sql).toContain("source = 'lattiz_managed'");
+  });
+});
+
+describe('DomainsService.auditRegistrarAutoRenew', () => {
+  afterEach(() => jest.restoreAllMocks());
+
+  it('alerts for any managed domain whose registrar auto-renew is not off, and changes nothing', async () => {
+    const { service, registrar } = setup({ create: 1500, renew: 2000 });
+    const db = (service as unknown as { db: { execute: jest.Mock } }).db;
+    db.execute.mockResolvedValue([
+      { id: 'd-off', tenant_id: 't-1', registrar_domain_id: '101' },
+      { id: 'd-on', tenant_id: 't-2', registrar_domain_id: '102' },
+      { id: 'd-default', tenant_id: 't-3', registrar_domain_id: '103' },
+    ]);
+    registrar.getAutoRenew.mockImplementation((id) =>
+      Promise.resolve(id === '101' ? 'off' : id === '102' ? 'on' : 'default'),
+    );
+    const error = jest
+      .spyOn(Logger.prototype, 'error')
+      .mockImplementation(() => {});
+
+    await service.auditRegistrarAutoRenew();
+
+    expect(error.mock.calls.map(([msg]) => msg)).toEqual([
+      '[ADMIN_ALERT] registrar auto-renew ON domain_id=d-on tenant=t-2',
+      '[ADMIN_ALERT] registrar auto-renew DEFAULT domain_id=d-default tenant=t-3',
+    ]);
+    expect(db.execute).toHaveBeenCalledTimes(1);
+    expect(registrar.registerDomain).not.toHaveBeenCalled();
+    expect(registrar.setNameservers).not.toHaveBeenCalled();
   });
 });

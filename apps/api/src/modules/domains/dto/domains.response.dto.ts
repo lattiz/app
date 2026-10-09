@@ -1,14 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
+import {
+  DOMAIN_NOT_COVERED_REASONS,
+  type DomainNotCoveredReason,
+} from '../domain/domain-pricing.policy';
 
-export const DOMAIN_NOT_COVERED_REASONS = [
-  'purchase_over_cap',
-  'renewal_over_cap',
-  'requires_pro',
-  'price_unknown',
-] as const;
-
-export type DomainNotCoveredReason =
-  (typeof DOMAIN_NOT_COVERED_REASONS)[number];
+export { DOMAIN_NOT_COVERED_REASONS, type DomainNotCoveredReason };
 
 export class DomainSearchResultDto {
   @ApiProperty()
@@ -39,6 +35,10 @@ export class DomainSearchResultDto {
    */
   @ApiProperty()
   availableWithPro!: boolean;
+
+  /** What one renewal year costs Lattiz, in USD cents; null when it was not (or could not be) priced. */
+  @ApiProperty({ type: Number, nullable: true })
+  renewalPriceUsdCents!: number | null;
 }
 
 export class DomainAgreementDto {
@@ -89,6 +89,10 @@ export class DomainQuoteResponseDto {
    */
   @ApiProperty()
   availableWithPro!: boolean;
+
+  /** The renewal price the coverage was decided with, in USD cents; null when it was not (or could not be) priced. */
+  @ApiProperty({ type: Number, nullable: true })
+  renewalPriceUsdCents!: number | null;
 
   /** Charged every year starting with the second one; the registration itself is covered by the plan. */
   @ApiProperty({ type: DomainMaintenanceFeeDto })

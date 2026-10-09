@@ -3,6 +3,7 @@ import { RegistrarApiException } from '../../domains.exceptions';
 import type {
   DomainAvailability,
   RegisteredDomain,
+  RegistrarAutoRenew,
   RegistrarPort,
   RegistrationState,
 } from '../../domain/registrar.port';
@@ -31,6 +32,7 @@ interface DomainData {
   id: number;
   status?: string;
   renewal_date?: string;
+  autorenew?: string;
 }
 
 interface ListedDomain extends DomainData {
@@ -203,6 +205,19 @@ export class OpenproviderRegistrarAdapter implements RegistrarPort {
       renewalDate: parseOpenproviderDate(data.renewal_date),
     };
   }
+
+  async getAutoRenew(registrarDomainId: string): Promise<RegistrarAutoRenew> {
+    const data = await this.client.get<DomainData>(
+      `domains/${encodeURIComponent(registrarDomainId)}`,
+      { operation: 'auto-renew lookup', timeoutMs: LOOKUP_TIMEOUT_MS },
+    );
+    return mapAutoRenew(data.autorenew);
+  }
+}
+
+/** Unknown or missing values are reported as `default`: not provably off. */
+export function mapAutoRenew(value: string | undefined): RegistrarAutoRenew {
+  return value === 'on' || value === 'off' ? value : 'default';
 }
 
 function toNameServers(

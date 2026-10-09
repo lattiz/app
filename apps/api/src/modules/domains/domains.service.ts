@@ -1,4 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Cron } from '@nestjs/schedule';
 import { sql, type SQL } from 'drizzle-orm';
 import { isUnderPreviewBase } from '../../common/preview/preview-url';
 import { type Database, DATABASE } from '../../database/database.module';
@@ -12,10 +13,11 @@ import {
 } from './domain/dns-provider.port';
 import {
   DOMAIN_PRICE_CAPS,
+  type DomainNotCoveredReason,
   type DomainPriceCaps,
+  evaluateDomainPurchase,
   isPurchaseWithinCap,
   isRenewalWithinCap,
-  resolveRenewalCapUsdCents,
 } from './domain/domain-pricing.policy';
 import {
   EFFECTIVE_PLAN_PORT,
@@ -36,7 +38,6 @@ import {
   type DnsStatus,
   type DomainJobErrorCode,
   type DomainJobStatus,
-  type DomainNotCoveredReason,
   type DomainSourceValue,
 } from './dto/domains.response.dto';
 import { PurchaseDomainDto } from './dto/purchase-domain.dto';
@@ -61,6 +62,9 @@ const SEARCH_TLDS = ['com', 'com.mx', 'mx', 'net', 'org'];
 const RENEWAL_PRICE_CACHE_TTL_MS = 6 * 60 * 60 * 1000;
 /** Openprovider answers 429 when many price calls run at once. */
 const RENEWAL_PRICE_LOOKUP_CONCURRENCY = 2;
+
+/** Spacing between registrar reads in the auto-renew audit; Openprovider answers 429 to bursts. */
+const AUTO_RENEW_AUDIT_DELAY_MS = 500;
 
 // Openprovider only stores 900/3600/10800/21600/43200/86400; anything else becomes 86400.
 const DNS_TTL = 900;
@@ -197,10 +201,11 @@ export class DomainsService {
         continue;
       }
       const renewalPromise = renewalPrices.get(domain);
+      const renewalUsdCents = renewalPromise ? await renewalPromise : null;
       const coverage = this.planCoverage({
         available: r.value.available,
         purchaseUsdCents: r.value.priceUsdCents,
-        renewalUsdCents: renewalPromise ? await renewalPromise : null,
+        renewalUsdCents,
         plan,
       });
       found.push({
@@ -209,6 +214,7 @@ export class DomainsService {
         coveredByPlan: coverage.coveredByPlan,
         notCoveredReason: coverage.notCoveredReason,
         availableWithPro: coverage.availableWithPro,
+        renewalPriceUsdCents: r.value.available ? renewalUsdCents : null,
       });
     }
     // Every check failed: that is a provider outage, not "no results", so surface it to the user.
@@ -247,6 +253,7 @@ export class DomainsService {
       coveredByPlan: coverage.coveredByPlan,
       notCoveredReason: coverage.notCoveredReason,
       availableWithPro: coverage.availableWithPro,
+      renewalPriceUsdCents: renewalUsdCents,
       maintenanceFee: DOMAIN_MAINTENANCE_FEE,
       requiredAgreements: REQUIRED_AGREEMENTS,
       irreversible: true,
@@ -341,7 +348,10 @@ export class DomainsService {
     return registered;
   }
 
-  /** Re-checks availability and both plan caps right before spending money. */
+  /**
+   * Re-checks availability and both caps against a fresh registrar quote and
+   * the effective plan right before spending money; nothing from the client is trusted.
+   */
   private async assertPurchasable(
     tenantId: string,
     domain: string,
@@ -353,23 +363,57 @@ export class DomainsService {
       this.registrar.getPriceUsdCents(domain, 'create'),
       this.registrar.getPriceUsdCents(domain, 'renew'),
     ]);
-    if (!isPurchaseWithinCap(priceUsdCents, this.caps.purchaseUsdCents)) {
-      throw new DomainNotCoveredByPlanException();
-    }
     const plan = await this.getTenantPlan({ tenantId });
-    const reason = this.renewalGap(plan, renewalPriceUsdCents);
-    if (reason) {
-      const { capUsdCents } = isRenewalWithinCap(
-        plan,
-        renewalPriceUsdCents,
-        this.caps,
-      );
+    const evaluation = evaluateDomainPurchase({
+      firstYearUsdCents: priceUsdCents,
+      renewalUsdCents: renewalPriceUsdCents,
+      plan,
+      caps: this.caps,
+    });
+    if (!evaluation.allowed) {
       this.logger.warn(
-        `[DOMAIN_RENEWAL_ABOVE_PLAN_CAP] tenant=${tenantId} domain=${domain} plan=${plan ?? 'null'} renewal_usd_cents=${renewalPriceUsdCents} cap_usd_cents=${capUsdCents}`,
+        `[DOMAIN_PURCHASE_BLOCKED] tenant=${tenantId} domain=${domain} code=${evaluation.reason} plan=${plan ?? 'null'} first_year_usd_cents=${priceUsdCents} renewal_usd_cents=${renewalPriceUsdCents}`,
       );
-      throw new DomainNotCoveredByPlanException({ reason });
+      throw new DomainNotCoveredByPlanException({ reason: evaluation.reason });
     }
     return { priceUsdCents, renewalPriceUsdCents };
+  }
+
+  /**
+   * Daily and read-only: Lattiz pays renewals itself, so a registrar-side
+   * auto-renew would charge outside our cap checks. Alerts only; changes nothing.
+   */
+  @Cron('0 6 * * *')
+  async auditRegistrarAutoRenew(): Promise<void> {
+    const rows = await this.query<{
+      id: string;
+      tenant_id: string;
+      registrar_domain_id: string;
+    }>(
+      sql`SELECT id, tenant_id, registrar_domain_id
+          FROM public.domains
+          WHERE source = 'lattiz_managed'
+            AND is_mock = false
+            AND released_at IS NULL
+            AND registrar_domain_id IS NOT NULL`,
+    );
+    for (const [index, row] of rows.entries()) {
+      if (index > 0) await sleep(AUTO_RENEW_AUDIT_DELAY_MS);
+      try {
+        const autoRenew = await this.registrar.getAutoRenew(
+          row.registrar_domain_id,
+        );
+        if (autoRenew !== 'off') {
+          this.logger.error(
+            `[ADMIN_ALERT] registrar auto-renew ${autoRenew.toUpperCase()} domain_id=${row.id} tenant=${row.tenant_id}`,
+          );
+        }
+      } catch (err) {
+        this.logger.warn(
+          `[auto-renew audit] Could not read domain ${row.id}: ${String(err)}`,
+        );
+      }
+    }
   }
 
   /**
@@ -436,31 +480,20 @@ export class DomainsService {
     notCoveredReason: DomainNotCoveredReason | null;
     availableWithPro: boolean;
   } {
-    const blocked = (
-      notCoveredReason: DomainNotCoveredReason | null,
-    ): {
-      coveredByPlan: false;
-      notCoveredReason: DomainNotCoveredReason | null;
-      availableWithPro: false;
-    } => ({
-      coveredByPlan: false,
-      notCoveredReason,
-      availableWithPro: false,
-    });
-
-    if (!input.available) return blocked(null);
-    if (
-      input.purchaseUsdCents === null ||
-      !isPurchaseWithinCap(input.purchaseUsdCents, this.caps.purchaseUsdCents)
-    ) {
-      return blocked(
-        input.purchaseUsdCents === null ? 'price_unknown' : 'purchase_over_cap',
-      );
+    if (!input.available) {
+      return {
+        coveredByPlan: false,
+        notCoveredReason: null,
+        availableWithPro: false,
+      };
     }
-    if (input.renewalUsdCents === null) return blocked('price_unknown');
-
-    const reason = this.renewalGap(input.plan, input.renewalUsdCents);
-    if (!reason) {
+    const evaluation = evaluateDomainPurchase({
+      firstYearUsdCents: input.purchaseUsdCents,
+      renewalUsdCents: input.renewalUsdCents,
+      plan: input.plan,
+      caps: this.caps,
+    });
+    if (evaluation.allowed) {
       return {
         coveredByPlan: true,
         notCoveredReason: null,
@@ -469,32 +502,9 @@ export class DomainsService {
     }
     return {
       coveredByPlan: false,
-      notCoveredReason: reason,
-      availableWithPro: reason === 'requires_pro',
+      notCoveredReason: evaluation.reason,
+      availableWithPro: evaluation.reason === 'requires_pro',
     };
-  }
-
-  /**
-   * Null when the renewal fits the tenant plan. `requires_pro` when it fits
-   * the Pro cap and the tenant is not already on that cap.
-   */
-  private renewalGap(
-    plan: string | null,
-    renewalUsdCents: number,
-  ): 'requires_pro' | 'renewal_over_cap' | null {
-    if (isRenewalWithinCap(plan, renewalUsdCents, this.caps).allowed) {
-      return null;
-    }
-    const proCapUsdCents = resolveRenewalCapUsdCents('pro', this.caps);
-    const onProCap =
-      resolveRenewalCapUsdCents(plan, this.caps) === proCapUsdCents;
-    if (
-      !onProCap &&
-      isRenewalWithinCap('pro', renewalUsdCents, this.caps).allowed
-    ) {
-      return 'requires_pro';
-    }
-    return 'renewal_over_cap';
   }
 
   /** Cached renewal quote. A failed lookup is not cached and is not treated as covered. */

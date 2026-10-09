@@ -20,14 +20,6 @@ export function planRank(plan: BillingPlan): number {
   return PLAN_RANK[plan];
 }
 
-export function lowerPlan(a: BillingPlan, b: BillingPlan): BillingPlan {
-  return PLAN_RANK[a] <= PLAN_RANK[b] ? a : b;
-}
-
-export function isBillingPlan(value: unknown): value is BillingPlan {
-  return value === 'basico' || value === 'pro';
-}
-
 /**
  * The price is the truth: lookup key first, then its product (an archived price
  * keeps its product after the key moves on). Null when neither maps to a plan.

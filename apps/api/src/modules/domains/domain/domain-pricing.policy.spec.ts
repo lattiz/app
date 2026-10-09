@@ -1,6 +1,8 @@
 import {
   type DomainPriceCaps,
+  evaluateDomainPurchase,
   isPurchaseWithinCap,
+  resolveEffectivePlan,
   isRenewalWithinCap,
   resolveRenewalCapUsdCents,
 } from './domain-pricing.policy';
@@ -49,5 +51,43 @@ describe('domain pricing policy', () => {
       expect(isPurchaseWithinCap(2200, caps.purchaseUsdCents)).toBe(true);
       expect(isPurchaseWithinCap(2201, caps.purchaseUsdCents)).toBe(false);
     });
+  });
+});
+
+describe('evaluateDomainPurchase', () => {
+  const evaluate = (
+    firstYearUsdCents: number | null,
+    renewalUsdCents: number | null,
+    plan: string | null,
+  ) =>
+    evaluateDomainPurchase({ firstYearUsdCents, renewalUsdCents, plan, caps });
+
+  it.each([
+    [2200, 2000, 'basico', { allowed: true }],
+    [2201, 2000, 'pro', { allowed: false, reason: 'purchase_over_cap' }],
+    [1500, 2367, 'basico', { allowed: true }],
+    [1500, 2368, 'basico', { allowed: false, reason: 'requires_pro' }],
+    [1500, 2368, 'pro', { allowed: true }],
+    [1500, 4200, 'pro', { allowed: true }],
+    [1500, 4201, 'pro', { allowed: false, reason: 'renewal_over_cap' }],
+    [1500, 4201, 'basico', { allowed: false, reason: 'renewal_over_cap' }],
+    [1500, null, 'pro', { allowed: false, reason: 'price_unknown' }],
+    [null, 2000, 'pro', { allowed: false, reason: 'price_unknown' }],
+    [1500, 2368, 'none', { allowed: false, reason: 'requires_pro' }],
+  ])('first year %p, renewal %p on %p', (first, renewal, plan, expected) => {
+    expect(evaluate(first, renewal, plan)).toEqual(expected);
+  });
+});
+
+describe('resolveEffectivePlan', () => {
+  it.each([
+    ['pro', 'basico', 'basico'],
+    ['pro', null, 'pro'],
+    ['pro', 'pro', 'pro'],
+    ['basico', 'pro', 'basico'],
+    ['basico', null, 'basico'],
+    [null, null, null],
+  ])('%p with pending %p → %p', (current, pending, expected) => {
+    expect(resolveEffectivePlan(current, pending)).toBe(expected);
   });
 });

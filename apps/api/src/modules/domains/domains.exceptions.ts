@@ -1,5 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 import { DomainException } from '../../common/exceptions/domain.exception';
+import type { DomainNotCoveredReason } from './domain/domain-pricing.policy';
 import type { DomainJobErrorCode } from './dto/domains.response.dto';
 
 /** No tenant row exists yet for the authenticated user. */
@@ -105,7 +106,7 @@ export class DomainNotCoveredByPlanException extends DomainException {
   readonly code = 'DOMAIN_NOT_COVERED_BY_PLAN';
   readonly status = HttpStatus.UNPROCESSABLE_ENTITY;
 
-  constructor(details?: { reason: 'renewal_over_cap' | 'requires_pro' }) {
+  constructor(details: { reason: DomainNotCoveredReason }) {
     super('This domain is not covered by your plan.', details);
   }
 }

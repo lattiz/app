@@ -240,6 +240,10 @@ export type DomainSearchResultDto = {
      * fits the purchase cap, and the renewal fits the Pro cap but not the current plan.
      */
     availableWithPro: boolean;
+    /**
+     * What one renewal year costs Lattiz, in USD cents; null when it was not (or could not be) priced.
+     */
+    renewalPriceUsdCents: number | null;
 };
 
 export type GetQuoteDto = {
@@ -279,6 +283,10 @@ export type DomainQuoteResponseDto = {
      * fits the purchase cap, and the renewal fits the Pro cap but not the current plan.
      */
     availableWithPro: boolean;
+    /**
+     * The renewal price the coverage was decided with, in USD cents; null when it was not (or could not be) priced.
+     */
+    renewalPriceUsdCents: number | null;
     /**
      * Charged every year starting with the second one; the registration itself is covered by the plan.
      */

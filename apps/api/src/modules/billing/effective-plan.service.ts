@@ -2,8 +2,8 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { sql } from 'drizzle-orm';
 import Stripe from 'stripe';
 import { type Database, DATABASE } from '../../database/database.module';
+import { resolveEffectivePlan } from '../domains/domain/domain-pricing.policy';
 import { STRIPE_CLIENT } from './stripe.provider';
-import { lowerPlan } from './subscription-plan';
 import { SubscriptionStateService } from './subscription-state.service';
 
 /**
@@ -45,7 +45,7 @@ export class EffectivePlanService {
           : schedule.kind === 'foreign'
             ? schedule.futurePlan
             : null;
-      return futurePlan ? lowerPlan('pro', futurePlan) : storedPlan;
+      return resolveEffectivePlan(storedPlan, futurePlan);
     } catch (err) {
       this.logger.warn(
         `Effective plan for tenant ${tenantId} falls back to basico (Stripe unreachable): ${err instanceof Error ? err.message : String(err)}`,

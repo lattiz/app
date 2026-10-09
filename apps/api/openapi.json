@@ -2059,6 +2059,11 @@
           "availableWithPro": {
             "type": "boolean",
             "description": "True only when this tenant is not on Pro, the name is free, the first year\nfits the purchase cap, and the renewal fits the Pro cap but not the current plan."
+          },
+          "renewalPriceUsdCents": {
+            "type": "number",
+            "nullable": true,
+            "description": "What one renewal year costs Lattiz, in USD cents; null when it was not (or could not be) priced."
           }
         },
         "required": [
@@ -2066,7 +2071,8 @@
           "available",
           "coveredByPlan",
           "notCoveredReason",
-          "availableWithPro"
+          "availableWithPro",
+          "renewalPriceUsdCents"
         ]
       },
       "GetQuoteDto": {
@@ -2145,6 +2151,11 @@
             "type": "boolean",
             "description": "True only when this tenant is not on Pro, the name is free, the first year\nfits the purchase cap, and the renewal fits the Pro cap but not the current plan."
           },
+          "renewalPriceUsdCents": {
+            "type": "number",
+            "nullable": true,
+            "description": "The renewal price the coverage was decided with, in USD cents; null when it was not (or could not be) priced."
+          },
           "maintenanceFee": {
             "description": "Charged every year starting with the second one; the registration itself is covered by the plan.",
             "allOf": [
@@ -2169,6 +2180,7 @@
           "coveredByPlan",
           "notCoveredReason",
           "availableWithPro",
+          "renewalPriceUsdCents",
           "maintenanceFee",
           "requiredAgreements",
           "irreversible"

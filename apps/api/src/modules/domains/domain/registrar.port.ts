@@ -12,6 +12,9 @@ export interface RegistrationState {
   renewalDate: Date | null;
 }
 
+/** `default` follows the reseller-account setting, which the API cannot read per domain. */
+export type RegistrarAutoRenew = 'on' | 'off' | 'default';
+
 export interface RegisteredDomain extends RegistrationState {
   /** Registrar-side domain id. */
   id: string;
@@ -40,6 +43,9 @@ export interface RegistrarPort {
   }): Promise<RegisteredDomain>;
 
   getRegistrationStatus(registrarDomainId: string): Promise<RegistrationState>;
+
+  /** Read-only: Lattiz renews domains itself, so anything other than `off` is a cost leak. */
+  getAutoRenew(registrarDomainId: string): Promise<RegistrarAutoRenew>;
 
   /** Re-delegates an already-registered domain, e.g. when its DNS zone had to be recreated. */
   setNameservers(registrarDomainId: string, nameservers: string[]): Promise<void>;

@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import type {
   RegisteredDomain,
+  RegistrarAutoRenew,
   RegistrationState,
 } from '../../domain/registrar.port';
 import { OpenproviderRegistrarAdapter } from './openprovider-registrar.adapter';
@@ -35,6 +36,15 @@ export class MockOpenproviderRegistrarAdapter extends OpenproviderRegistrarAdapt
       return super.getRegistrationStatus(registrarDomainId);
     }
     return Promise.resolve({ status: 'active', renewalDate: yearsFromNow(1) });
+  }
+
+  override getAutoRenew(
+    registrarDomainId: string,
+  ): Promise<RegistrarAutoRenew> {
+    if (!registrarDomainId.startsWith(MOCK_ID_PREFIX)) {
+      return super.getAutoRenew(registrarDomainId);
+    }
+    return Promise.resolve('off');
   }
 
   override setNameservers(
