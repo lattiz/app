@@ -148,3 +148,17 @@ supabase/
 - **NestJS:** Never throw `HttpException` (or subclasses) from `domain/` or `application/` code — throw a `DomainException` subclass so `domain-exception.filter.ts` can normalize the response shape.
 - **NestJS:** Never introduce full hexagonal layering (`domain/application/infrastructure/interface`) for logic with no real external dependency — compare `modules/me` (has a real Postgres adapter) against what would be over-engineering for trivial CRUD.
 - **React:** Never hand-write types or fetch calls for API data — consume the generated hooks/types from `@lattiz/api-client` (`packages/api-client/src/generated/**`), and never edit that generated directory directly; run `pnpm generate:api` instead.
+
+## Registro de decisiones
+
+Memoria compartida del equipo, en git: `docs/decisions/` (un archivo por decisión + índice). Índice y formato:
+
+@docs/decisions/README.md
+
+- Antes de decidir algo en un área, mira el índice: abre solo los archivos que apliquen (no los leas todos).
+- CodeGraph (`codegraph_explore`) es solo de lectura; no guarda decisiones ni sirve de memoria.
+- Se registra una decisión solo cuando está **aplicada, probada y commiteada**. Un hook (`.claude/hooks/decision-reminder.sh`, configurado en `.claude/settings.json`) lo recuerda tras cada `git commit`. Si cumple las cuatro condiciones: crear `docs/decisions/<slug>.md`, añadir una línea al índice y commitear como `docs(decisions): <slug>`.
+- Es decisión importante: elegir o descartar una librería, versión o enfoque; un cambio de arquitectura o de despliegue; una causa raíz tras depurar; un hallazgo no obvio. No registrar lo que ya recoge git ni cambios triviales.
+- Si una decisión cambia o queda obsoleta, editar o borrar su archivo en el mismo commit; no acumular versiones viejas.
+- Solo el agente principal escribe en `docs/decisions/`. Los subagentes (Agent tool) no lo hacen: devuelven hallazgos y el principal decide. Al delegar, el prompt del subagente debe incluir esta prohibición.
+- Nada de secretos en las decisiones (tokens, claves, handles de cuentas): el repo se comparte.
