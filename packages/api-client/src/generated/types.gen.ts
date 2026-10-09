@@ -175,9 +175,21 @@ export type DomainSearchResultDto = {
     domain: string;
     available: boolean;
     /**
-     * Whether the Lattiz plan absorbs the cost (price <= DOMAIN_MAX_COST_USD_CENTS).
+     * True only when the name is free and both the first year and the renewal sit inside the tenant plan caps.
      */
     coveredByPlan: boolean;
+    /**
+     * Why an available domain is outside the plan: `purchase_over_cap` (first year),
+     * `requires_pro` (renewal fits Pro but not this plan), `renewal_over_cap`
+     * (renewal above every plan), or `price_unknown` (price could not be read —
+     * fail closed). Null when covered or not available.
+     */
+    notCoveredReason: 'purchase_over_cap' | 'renewal_over_cap' | 'requires_pro' | 'price_unknown' | null;
+    /**
+     * True only when this tenant is not on Pro, the name is free, the first year
+     * fits the purchase cap, and the renewal fits the Pro cap but not the current plan.
+     */
+    availableWithPro: boolean;
 };
 
 export type GetQuoteDto = {
@@ -205,6 +217,18 @@ export type DomainQuoteResponseDto = {
     domain: string;
     available: boolean;
     coveredByPlan: boolean;
+    /**
+     * Why an available domain is outside the plan: `purchase_over_cap` (first year),
+     * `requires_pro` (renewal fits Pro but not this plan), `renewal_over_cap`
+     * (renewal above every plan), or `price_unknown` (price could not be read —
+     * fail closed). Null when covered or not available.
+     */
+    notCoveredReason: 'purchase_over_cap' | 'renewal_over_cap' | 'requires_pro' | 'price_unknown' | null;
+    /**
+     * True only when this tenant is not on Pro, the name is free, the first year
+     * fits the purchase cap, and the renewal fits the Pro cap but not the current plan.
+     */
+    availableWithPro: boolean;
     /**
      * Charged every year starting with the second one; the registration itself is covered by the plan.
      */

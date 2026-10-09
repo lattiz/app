@@ -217,6 +217,32 @@ describe('SettingsService', () => {
     }
   });
 
+  it('clears the refresh timer on destroy', async () => {
+    let loads = 0;
+    const settings = serviceWith(
+      { SETTINGS_REFRESH_SECONDS: '5' },
+      {
+        loadAll: async () => {
+          loads += 1;
+          return new Map<string, unknown>([['preview.trial_days', 3]]);
+        },
+      },
+    );
+    mock.timers.enable({ apis: ['setInterval'] });
+    try {
+      await settings.onModuleInit();
+      const afterInit = loads;
+      assert.ok(afterInit >= 1);
+      settings.onModuleDestroy();
+      mock.timers.tick(60_000);
+      await Promise.resolve();
+      assert.equal(loads, afterInit);
+      assert.equal(settings.getInt('preview.trial_days'), 3);
+    } finally {
+      settings.onModuleDestroy();
+    }
+  });
+
   it('shares one in-flight load across concurrent reload calls', async () => {
     let calls = 0;
     let release: (rows: ReadonlyMap<string, unknown>) => void = () => undefined;

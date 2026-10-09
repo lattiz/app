@@ -55,8 +55,7 @@ export class DomainsController {
     @Query() query: SearchDomainsDto,
     @CurrentUser() user?: AuthenticatedUser,
   ): Promise<DomainSearchResultDto[]> {
-    requireSub(user);
-    return this.domains.searchDomains(query.q);
+    return this.domains.searchDomains(requireSub(user), query.q);
   }
 
   /** Check availability, plan coverage, the maintenance fee and required agreements for a domain — free, no commitment. */
@@ -69,8 +68,7 @@ export class DomainsController {
     @Body() dto: GetQuoteDto,
     @CurrentUser() user?: AuthenticatedUser,
   ): Promise<DomainQuoteResponseDto> {
-    requireSub(user);
-    return this.domains.getQuote(dto.domain);
+    return this.domains.getQuote(requireSub(user), dto.domain);
   }
 
   /** Initiate the async purchase pipeline — returns a jobId immediately. */

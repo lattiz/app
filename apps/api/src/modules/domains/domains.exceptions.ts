@@ -100,13 +100,13 @@ export class DomainNotAvailableException extends DomainException {
   }
 }
 
-/** The domain costs more than the plan absorbs (DOMAIN_MAX_COST_USD_CENTS). */
+/** The domain costs more than the plan absorbs (purchase cap, or the plan's renewal cap). */
 export class DomainNotCoveredByPlanException extends DomainException {
   readonly code = 'DOMAIN_NOT_COVERED_BY_PLAN';
   readonly status = HttpStatus.UNPROCESSABLE_ENTITY;
 
-  constructor() {
-    super('This domain is not covered by your plan.');
+  constructor(details?: { reason: 'renewal_over_cap' | 'requires_pro' }) {
+    super('This domain is not covered by your plan.', details);
   }
 }
 

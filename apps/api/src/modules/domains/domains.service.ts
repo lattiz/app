@@ -15,6 +15,7 @@ import {
   type DomainPriceCaps,
   isPurchaseWithinCap,
   isRenewalWithinCap,
+  resolveRenewalCapUsdCents,
 } from './domain/domain-pricing.policy';
 import {
   REGISTRAR_PORT,
@@ -31,6 +32,7 @@ import {
   type DnsStatus,
   type DomainJobErrorCode,
   type DomainJobStatus,
+  type DomainNotCoveredReason,
   type DomainSourceValue,
 } from './dto/domains.response.dto';
 import { PurchaseDomainDto } from './dto/purchase-domain.dto';
@@ -50,6 +52,11 @@ import { VercelDomainsService } from './vercel-domains.service';
 import { DOMAIN_MAINTENANCE_FEE } from './domains.constants';
 
 const SEARCH_TLDS = ['com', 'com.mx', 'mx', 'net', 'org'];
+
+/** Renewal quotes barely move; reuse them so a search does not hit the registrar again. */
+const RENEWAL_PRICE_CACHE_TTL_MS = 6 * 60 * 60 * 1000;
+/** Openprovider answers 429 when many price calls run at once. */
+const RENEWAL_PRICE_LOOKUP_CONCURRENCY = 2;
 
 // Openprovider only stores 900/3600/10800/21600/43200/86400; anything else becomes 86400.
 const DNS_TTL = 900;
@@ -120,6 +127,12 @@ interface PipelineParams {
 @Injectable()
 export class DomainsService {
   private readonly logger = new Logger(DomainsService.name);
+  private readonly renewalPriceCache = new Map<
+    string,
+    { priceUsdCents: number; expiresAt: number }
+  >();
+  private renewalLookupsInFlight = 0;
+  private readonly renewalLookupWaiters: Array<() => void> = [];
 
   constructor(
     @Inject(DATABASE) private readonly db: Database,
@@ -131,35 +144,67 @@ export class DomainsService {
   ) {}
 
   // ── Search ────────────────────────────────────────────────────────────────
-  async searchDomains(query: string): Promise<DomainSearchResultDto[]> {
+  async searchDomains(
+    userSub: string,
+    query: string,
+  ): Promise<DomainSearchResultDto[]> {
     const base = query
       .toLowerCase()
       .replace(/\s+/g, '')
       .replace(/[^a-z0-9-]/g, '');
     const candidates = SEARCH_TLDS.map((tld) => `${base}.${tld}`);
 
-    // One call per candidate so a slow or failing TLD (.mx) never hides the others.
-    const results = await Promise.allSettled(
-      candidates.map((d) => this.registrar.checkAvailability(d)),
-    );
+    // Plan and availability are independent; one plan read for the whole request.
+    const [plan, results] = await Promise.all([
+      this.getTenantPlan({ userSub }),
+      // One call per candidate so a slow or failing TLD (.mx) never hides the others.
+      Promise.allSettled(
+        candidates.map((d) => this.registrar.checkAvailability(d)),
+      ),
+    ]);
 
-    const found: DomainSearchResultDto[] = [];
+    const renewalPrices = new Map<string, Promise<number | null>>();
     results.forEach((r, i) => {
-      if (r.status === 'rejected') {
-        this.logger.warn(
-          `Availability check failed for ${candidates[i]}: ${String(r.reason)}`,
-        );
+      if (r.status !== 'fulfilled' || !r.value.available) return;
+      const price = r.value.priceUsdCents;
+      // Renewal is only priced when the first year is already inside the purchase cap.
+      if (
+        price === null ||
+        !isPurchaseWithinCap(price, this.caps.purchaseUsdCents)
+      ) {
         return;
       }
-      const price = r.value.priceUsdCents;
-      found.push({
-        domain: candidates[i],
-        available: r.value.available,
-        coveredByPlan:
-          price !== null &&
-          isPurchaseWithinCap(price, this.caps.purchaseUsdCents),
-      });
+      renewalPrices.set(
+        candidates[i],
+        this.getCachedRenewalPriceUsdCents(candidates[i]),
+      );
     });
+
+    const found: DomainSearchResultDto[] = [];
+    for (let i = 0; i < results.length; i++) {
+      const r = results[i];
+      const domain = candidates[i];
+      if (r.status === 'rejected') {
+        this.logger.warn(
+          `Availability check failed for ${domain}: ${String(r.reason)}`,
+        );
+        continue;
+      }
+      const renewalPromise = renewalPrices.get(domain);
+      const coverage = this.planCoverage({
+        available: r.value.available,
+        purchaseUsdCents: r.value.priceUsdCents,
+        renewalUsdCents: renewalPromise ? await renewalPromise : null,
+        plan,
+      });
+      found.push({
+        domain,
+        available: r.value.available,
+        coveredByPlan: coverage.coveredByPlan,
+        notCoveredReason: coverage.notCoveredReason,
+        availableWithPro: coverage.availableWithPro,
+      });
+    }
     // Every check failed: that is a provider outage, not "no results", so surface it to the user.
     const firstFailure = results.find((r) => r.status === 'rejected');
     if (found.length === 0 && firstFailure) throw firstFailure.reason;
@@ -167,16 +212,35 @@ export class DomainsService {
   }
 
   // ── Quote ─────────────────────────────────────────────────────────────────
-  async getQuote(domain: string): Promise<DomainQuoteResponseDto> {
-    const { available } = await this.registrar.checkAvailability(domain);
-    const price = available
-      ? await this.registrar.getPriceUsdCents(domain, 'create')
-      : 0;
+  async getQuote(
+    userSub: string,
+    domain: string,
+  ): Promise<DomainQuoteResponseDto> {
+    const [plan, availability] = await Promise.all([
+      this.getTenantPlan({ userSub }),
+      this.registrar.checkAvailability(domain),
+    ]);
+    let purchaseUsdCents: number | null = null;
+    let renewalUsdCents: number | null = null;
+    if (availability.available) {
+      const purchase = await this.registrar.getPriceUsdCents(domain, 'create');
+      purchaseUsdCents = purchase;
+      if (isPurchaseWithinCap(purchase, this.caps.purchaseUsdCents)) {
+        renewalUsdCents = await this.getCachedRenewalPriceUsdCents(domain);
+      }
+    }
+    const coverage = this.planCoverage({
+      available: availability.available,
+      purchaseUsdCents,
+      renewalUsdCents,
+      plan,
+    });
     return {
       domain,
-      available,
-      coveredByPlan:
-        available && isPurchaseWithinCap(price, this.caps.purchaseUsdCents),
+      available: availability.available,
+      coveredByPlan: coverage.coveredByPlan,
+      notCoveredReason: coverage.notCoveredReason,
+      availableWithPro: coverage.availableWithPro,
       maintenanceFee: DOMAIN_MAINTENANCE_FEE,
       requiredAgreements: REQUIRED_AGREEMENTS,
       irreversible: true,
@@ -246,7 +310,7 @@ export class DomainsService {
 
     const quote = registered
       ? null
-      : await this.assertPurchasable(params.domain);
+      : await this.assertPurchasable(tenantId, params.domain);
 
     if (existing && !registered) {
       await this.deleteDomainRecord(existing, {
@@ -255,11 +319,6 @@ export class DomainsService {
     }
 
     if (quote) {
-      await this.warnIfRenewalAbovePlanCap(
-        tenantId,
-        params.domain,
-        quote.renewalPriceUsdCents,
-      );
       // Persisted BEFORE registering so a dead process leaves a resumable row.
       await this.createDomainRecord({
         tenantId,
@@ -276,8 +335,9 @@ export class DomainsService {
     return registered;
   }
 
-  /** Re-checks availability and the plan's cost cap right before spending money. */
+  /** Re-checks availability and both plan caps right before spending money. */
   private async assertPurchasable(
+    tenantId: string,
     domain: string,
   ): Promise<{ priceUsdCents: number; renewalPriceUsdCents: number }> {
     const { available } = await this.registrar.checkAvailability(domain);
@@ -290,34 +350,173 @@ export class DomainsService {
     if (!isPurchaseWithinCap(priceUsdCents, this.caps.purchaseUsdCents)) {
       throw new DomainNotCoveredByPlanException();
     }
-    return { priceUsdCents, renewalPriceUsdCents };
-  }
-
-  /** Never blocks the purchase: flags a renewal Lattiz will not absorb under the tenant's current plan. */
-  private async warnIfRenewalAbovePlanCap(
-    tenantId: string,
-    domain: string,
-    renewalPriceUsdCents: number,
-  ): Promise<void> {
-    try {
-      const rows = await this.query<{ plan: string | null }>(
-        sql`SELECT plan FROM public.tenants WHERE id = ${tenantId}::uuid LIMIT 1`,
-      );
-      const plan = rows[0]?.plan ?? null;
-      const { allowed, capUsdCents } = isRenewalWithinCap(
+    const plan = await this.getTenantPlan({ tenantId });
+    const reason = this.renewalGap(plan, renewalPriceUsdCents);
+    if (reason) {
+      const { capUsdCents } = isRenewalWithinCap(
         plan,
         renewalPriceUsdCents,
         this.caps,
       );
-      if (allowed) return;
       this.logger.warn(
         `[DOMAIN_RENEWAL_ABOVE_PLAN_CAP] tenant=${tenantId} domain=${domain} plan=${plan ?? 'null'} renewal_usd_cents=${renewalPriceUsdCents} cap_usd_cents=${capUsdCents}`,
       );
-    } catch (err) {
-      this.logger.warn(
-        `Renewal cap check skipped for tenant ${tenantId}: ${String(err)}`,
+      throw new DomainNotCoveredByPlanException({ reason });
+    }
+    return { priceUsdCents, renewalPriceUsdCents };
+  }
+
+  /** `tenants.plan` once per request; a missing row fails closed to the Básico renewal cap. */
+  private async getTenantPlan(
+    scope: { userSub: string } | { tenantId: string },
+  ): Promise<string | null> {
+    const rows =
+      'userSub' in scope
+        ? await this.query<{ plan: string | null }>(
+            sql`SELECT plan FROM public.tenants WHERE user_id = ${scope.userSub}::uuid LIMIT 1`,
+          )
+        : await this.query<{ plan: string | null }>(
+            sql`SELECT plan FROM public.tenants WHERE id = ${scope.tenantId}::uuid LIMIT 1`,
+          );
+    return rows[0]?.plan ?? null;
+  }
+
+  private planCoverage(input: {
+    available: boolean;
+    purchaseUsdCents: number | null;
+    renewalUsdCents: number | null;
+    plan: string | null;
+  }): {
+    coveredByPlan: boolean;
+    notCoveredReason: DomainNotCoveredReason | null;
+    availableWithPro: boolean;
+  } {
+    const blocked = (
+      notCoveredReason: DomainNotCoveredReason | null,
+    ): {
+      coveredByPlan: false;
+      notCoveredReason: DomainNotCoveredReason | null;
+      availableWithPro: false;
+    } => ({
+      coveredByPlan: false,
+      notCoveredReason,
+      availableWithPro: false,
+    });
+
+    if (!input.available) return blocked(null);
+    if (
+      input.purchaseUsdCents === null ||
+      !isPurchaseWithinCap(input.purchaseUsdCents, this.caps.purchaseUsdCents)
+    ) {
+      return blocked(
+        input.purchaseUsdCents === null ? 'price_unknown' : 'purchase_over_cap',
       );
     }
+    if (input.renewalUsdCents === null) return blocked('price_unknown');
+
+    const reason = this.renewalGap(input.plan, input.renewalUsdCents);
+    if (!reason) {
+      return {
+        coveredByPlan: true,
+        notCoveredReason: null,
+        availableWithPro: false,
+      };
+    }
+    return {
+      coveredByPlan: false,
+      notCoveredReason: reason,
+      availableWithPro: reason === 'requires_pro',
+    };
+  }
+
+  /**
+   * Null when the renewal fits the tenant plan. `requires_pro` when it fits
+   * the Pro cap and the tenant is not already on that cap.
+   */
+  private renewalGap(
+    plan: string | null,
+    renewalUsdCents: number,
+  ): 'requires_pro' | 'renewal_over_cap' | null {
+    if (isRenewalWithinCap(plan, renewalUsdCents, this.caps).allowed) {
+      return null;
+    }
+    const proCapUsdCents = resolveRenewalCapUsdCents('pro', this.caps);
+    const onProCap =
+      resolveRenewalCapUsdCents(plan, this.caps) === proCapUsdCents;
+    if (
+      !onProCap &&
+      isRenewalWithinCap('pro', renewalUsdCents, this.caps).allowed
+    ) {
+      return 'requires_pro';
+    }
+    return 'renewal_over_cap';
+  }
+
+  /** Cached renewal quote. A failed lookup is not cached and is not treated as covered. */
+  private async getCachedRenewalPriceUsdCents(
+    domain: string,
+  ): Promise<number | null> {
+    const cached = this.readRenewalPriceCache(domain);
+    if (cached !== null) return cached;
+    return this.limitRenewalLookups(async () => {
+      const again = this.readRenewalPriceCache(domain);
+      if (again !== null) return again;
+      try {
+        const priceUsdCents = await this.registrar.getPriceUsdCents(
+          domain,
+          'renew',
+        );
+        this.renewalPriceCache.set(domain, {
+          priceUsdCents,
+          expiresAt: Date.now() + RENEWAL_PRICE_CACHE_TTL_MS,
+        });
+        return priceUsdCents;
+      } catch (err) {
+        this.logger.warn(
+          `Renewal price lookup failed for ${domain}: ${String(err)}`,
+        );
+        return null;
+      }
+    });
+  }
+
+  private readRenewalPriceCache(domain: string): number | null {
+    const hit = this.renewalPriceCache.get(domain);
+    if (!hit) return null;
+    if (hit.expiresAt <= Date.now()) {
+      this.renewalPriceCache.delete(domain);
+      return null;
+    }
+    return hit.priceUsdCents;
+  }
+
+  private async limitRenewalLookups<T>(fn: () => Promise<T>): Promise<T> {
+    await this.acquireRenewalSlot();
+    try {
+      return await fn();
+    } finally {
+      this.releaseRenewalSlot();
+    }
+  }
+
+  /** Hands the slot to the next waiter so the in-flight count never dips open. */
+  private acquireRenewalSlot(): Promise<void> {
+    if (this.renewalLookupsInFlight < RENEWAL_PRICE_LOOKUP_CONCURRENCY) {
+      this.renewalLookupsInFlight += 1;
+      return Promise.resolve();
+    }
+    return new Promise<void>((resolve) => {
+      this.renewalLookupWaiters.push(resolve);
+    });
+  }
+
+  private releaseRenewalSlot(): void {
+    const next = this.renewalLookupWaiters.shift();
+    if (next) {
+      next();
+      return;
+    }
+    this.renewalLookupsInFlight -= 1;
   }
 
   // ── Pipeline (background, no HTTP context) ────────────────────────────────

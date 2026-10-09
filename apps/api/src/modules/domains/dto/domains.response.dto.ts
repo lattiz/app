@@ -1,5 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 
+export const DOMAIN_NOT_COVERED_REASONS = [
+  'purchase_over_cap',
+  'renewal_over_cap',
+  'requires_pro',
+  'price_unknown',
+] as const;
+
+export type DomainNotCoveredReason =
+  (typeof DOMAIN_NOT_COVERED_REASONS)[number];
+
 export class DomainSearchResultDto {
   @ApiProperty()
   domain!: string;
@@ -7,9 +17,28 @@ export class DomainSearchResultDto {
   @ApiProperty()
   available!: boolean;
 
-  /** Whether the Lattiz plan absorbs the cost (price <= DOMAIN_MAX_COST_USD_CENTS). */
+  /** True only when the name is free and both the first year and the renewal sit inside the tenant plan caps. */
   @ApiProperty()
   coveredByPlan!: boolean;
+
+  /**
+   * Why an available domain is outside the plan: `purchase_over_cap` (first year),
+   * `requires_pro` (renewal fits Pro but not this plan), `renewal_over_cap`
+   * (renewal above every plan), or `price_unknown` (price could not be read —
+   * fail closed). Null when covered or not available.
+   */
+  @ApiProperty({
+    enum: [...DOMAIN_NOT_COVERED_REASONS, null],
+    nullable: true,
+  })
+  notCoveredReason!: DomainNotCoveredReason | null;
+
+  /**
+   * True only when this tenant is not on Pro, the name is free, the first year
+   * fits the purchase cap, and the renewal fits the Pro cap but not the current plan.
+   */
+  @ApiProperty()
+  availableWithPro!: boolean;
 }
 
 export class DomainAgreementDto {
@@ -41,6 +70,25 @@ export class DomainQuoteResponseDto {
 
   @ApiProperty()
   coveredByPlan!: boolean;
+
+  /**
+   * Why an available domain is outside the plan: `purchase_over_cap` (first year),
+   * `requires_pro` (renewal fits Pro but not this plan), `renewal_over_cap`
+   * (renewal above every plan), or `price_unknown` (price could not be read —
+   * fail closed). Null when covered or not available.
+   */
+  @ApiProperty({
+    enum: [...DOMAIN_NOT_COVERED_REASONS, null],
+    nullable: true,
+  })
+  notCoveredReason!: DomainNotCoveredReason | null;
+
+  /**
+   * True only when this tenant is not on Pro, the name is free, the first year
+   * fits the purchase cap, and the renewal fits the Pro cap but not the current plan.
+   */
+  @ApiProperty()
+  availableWithPro!: boolean;
 
   /** Charged every year starting with the second one; the registration itself is covered by the plan. */
   @ApiProperty({ type: DomainMaintenanceFeeDto })

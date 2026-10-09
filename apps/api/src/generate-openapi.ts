@@ -8,13 +8,15 @@ import { buildSwaggerConfig } from './swagger';
 /** Writes openapi.json without starting the HTTP server. Source spec for @lattiz/api-client. */
 async function generate(): Promise<void> {
   const app = await NestFactory.create(AppModule, { logger: false });
-  const document = SwaggerModule.createDocument(app, buildSwaggerConfig());
-  await app.close();
-
-  const outPath = resolve(process.cwd(), 'openapi.json');
-  writeFileSync(outPath, JSON.stringify(document, null, 2) + '\n', 'utf8');
-
-  console.log(`Wrote ${outPath}`);
+  try {
+    const document = SwaggerModule.createDocument(app, buildSwaggerConfig());
+    const outPath = resolve(process.cwd(), 'openapi.json');
+    writeFileSync(outPath, JSON.stringify(document, null, 2) + '\n', 'utf8');
+    console.log(`Wrote ${outPath}`);
+  } finally {
+    // Releases the DB pool, the settings refresh timer and the cron jobs.
+    await app.close();
+  }
 }
 
 generate().catch((error) => {
