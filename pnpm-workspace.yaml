@@ -9,12 +9,15 @@ overrides:
   react-dom: 19.2.4
 allowBuilds:
   '@nestjs/core': false
+  # Jest deps: prebuilt binaries ship as optional deps — no postinstall build needed.
+  '@parcel/watcher': false
   '@scarf/scarf': false
   esbuild: true
   # protobufjs postinstall only warns about version mismatches (GA clients) — not needed.
   protobufjs: false
   # tenant-sites uses raw <img> + next/og (wasm), not next/image — no native build.
   sharp: false
+  unrs-resolver: false
 minimumReleaseAgeExclude:
   - '@hey-api/codegen-core@0.9.0'
   - '@hey-api/openapi-ts@0.98.2'

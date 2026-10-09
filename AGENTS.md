@@ -2,7 +2,7 @@
 
 Multi-agent workflow for building Lattiz features on top of the conventions in `CLAUDE.md`. Read `CLAUDE.md` first — every rule below is downstream of it.
 
-**Ground truth as of this writing:** only `HealthModule` and `MeModule` exist under `apps/api/src/modules/`. There is no `BillingModule`, `TenantsModule`, test runner, rate limiter, or Supabase admin/`service_role` usage anywhere in the codebase. Where the pipeline below references a capability that doesn't exist yet, it says so explicitly instead of assuming it.
+**Ground truth as of this writing:** only `HealthModule` and `MeModule` exist under `apps/api/src/modules/`. There is no `BillingModule`, `TenantsModule`, or Supabase admin/`service_role` usage anywhere in the codebase. (Since then: `apps/api` runs Jest and `@nestjs/throttler` is wired globally — see QA and Security below.) Where the pipeline below references a capability that doesn't exist yet, it says so explicitly instead of assuming it.
 
 ## Team Structure
 
@@ -122,16 +122,16 @@ implementations.
 **Trigger:** Receives Implementer output that has passed the self-check gate.
 
 **Responsibilities:**
-- **No test runner is installed yet** in any package (`apps/api`, `apps/web`, `packages/api-client` all have a stub `test` script). This is setup debt — flag it — but still write the test files described below so they're ready the moment Jest/Vitest are wired in.
+- **`apps/api` runs Jest** (`pnpm --filter @lattiz/api test`; `*.spec.ts` next to the code under `src/`, config in `apps/api/package.json`). `apps/web` and `packages/api-client` still have a stub `test` script — flag that as setup debt, but still write their test files so they're ready the moment Vitest is wired in.
 - **`apps/api`:** unit tests per use-case, mocking the port (e.g. a fake `UserRepositoryPort`) rather than hitting real Postgres — mirrors the existing pattern of `DrizzleUserRepository` implementing `UserRepositoryPort` in isolation. Guard tests for anything using `SupabaseJwtGuard`.
 - **`apps/web`:** component tests for the actual auth flow present — email/password `LoginForm`, not an OTP flow (there is no OTP in this codebase; don't invent one).
 
 **System Prompt:**
 ```
-You are QA for Lattiz. No test runner is configured yet — write the test
-files as if Jest (NestJS side) and Vitest + @testing-library/react (web
-side) were installed, and note that installing them is a prerequisite to
-actually running these files.
+You are QA for Lattiz. Jest is configured for apps/api — run the NestJS
+tests. The web side has no runner yet — write those files as if Vitest +
+@testing-library/react were installed, and note that installing them is a
+prerequisite to actually running them.
 
 NestJS: mock the port interfaces (UserRepositoryPort, HealthCheckPort),
 never a real Postgres connection and never the real Supabase JWKS
@@ -170,7 +170,7 @@ line reference — do not pass forward.
 - ES256/JWKS-only enforcement — reject any change that reintroduces the HS256 legacy secret.
 - No-RLS data check — since there is no RLS, every Drizzle query scoped to a user must carry an explicit id filter in code, as `drizzle-user.repository.ts` does.
 - Destructive operations — none exist yet (`UserRepositoryPort` has no `delete`); if one is added, a soft-delete-vs-hard-delete decision must be documented in the use-case.
-- Rate limiting — `@nestjs/throttler` is **not installed**; flag as a gap on any new public-facing write endpoint rather than pretending it's covered.
+- Rate limiting — `@nestjs/throttler` is wired globally (`ThrottlerGuard` as `APP_GUARD` in `app.module.ts`); check that new public-facing write endpoints don't opt out and whether they need a stricter per-route limit.
 
 **System Prompt:**
 ```
@@ -186,7 +186,7 @@ DATA:
 [ ] Any destructive operation is wrapped in its own use-case, never called bare from a controller
 
 RATE LIMITING:
-[ ] N/A until @nestjs/throttler is added — flag new public write endpoints as unprotected rather than marking this item skipped
+[ ] New public write endpoints stay under the global ThrottlerGuard (no @SkipThrottle) and get a stricter @Throttle when abusable
 
 BILLING:
 [ ] N/A — no BillingModule or Stripe integration exists in this codebase
