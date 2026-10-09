@@ -32,6 +32,10 @@ export function SearchStep() {
       return;
     }
     setValidationError(null);
+    if (parsed.data.query === searchQuery) {
+      void search.refetch();
+      return;
+    }
     setSearchQuery(parsed.data.query);
   };
 

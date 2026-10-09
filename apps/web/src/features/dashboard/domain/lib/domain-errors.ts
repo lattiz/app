@@ -1,9 +1,19 @@
 import type { DomainJobStatusDto } from '@lattiz/api-client';
+import { domainCoverageCopy } from './domain-copy';
 
 interface ApiErrorBody {
   error?: {
     code?: string;
+    details?: {
+      reason?: string;
+    };
   };
+}
+
+export interface PurchaseErrorView {
+  message: string;
+  /** `requires_pro`: the toast offers a link to the plans page. */
+  plansAction: boolean;
 }
 
 /** The generated client throws the raw `{ error: { code, message, details? } }` body. */
@@ -39,25 +49,44 @@ export function quoteErrorMessage(err: unknown): string {
   }
 }
 
-export function purchaseErrorMessage(err: unknown): string {
+function notCoveredByPlanView(err: unknown): PurchaseErrorView {
+  const reason = (err as ApiErrorBody | null | undefined)?.error?.details?.reason;
+  if (reason === 'requires_pro') {
+    return { message: domainCoverageCopy.upgradeMessage, plansAction: true };
+  }
+  if (reason === 'renewal_over_cap') {
+    return { message: domainCoverageCopy.renewalOverAnyPlan, plansAction: false };
+  }
+  return { message: domainCoverageCopy.notCovered, plansAction: false };
+}
+
+export function purchaseErrorView(err: unknown): PurchaseErrorView {
   switch (apiErrorCode(err)) {
     case 'DOMAIN_NOT_AVAILABLE':
-      return 'Este dominio ya no está disponible. Elige otro.';
+      return { message: domainCoverageCopy.noLongerAvailable, plansAction: false };
     case 'DOMAIN_NOT_COVERED_BY_PLAN':
-      return 'Tu plan no cubre este dominio. Elige otro.';
+      return notCoveredByPlanView(err);
     case 'DOMAIN_AGREEMENTS_REQUIRED':
-      return 'Debes aceptar la Política de Privacidad y los Términos y Condiciones para continuar.';
+      return {
+        message:
+          'Debes aceptar la Política de Privacidad y los Términos y Condiciones para continuar.',
+        plansAction: false,
+      };
     case 'TENANT_ALREADY_HAS_DOMAIN':
-      return 'Tu sitio ya tiene un dominio asociado.';
+      return { message: 'Tu sitio ya tiene un dominio asociado.', plansAction: false };
     case 'REGISTRAR_API_ERROR':
     case 'DNS_PROVIDER_API_ERROR':
-      return PROVIDER_UNAVAILABLE;
+      return { message: PROVIDER_UNAVAILABLE, plansAction: false };
     case 'DOMAIN_PURCHASE_IN_PROGRESS':
-      return 'Ya estamos procesando la compra de otro dominio para tu sitio. Espera a que termine.';
+      return {
+        message:
+          'Ya estamos procesando la compra de otro dominio para tu sitio. Espera a que termine.',
+        plansAction: false,
+      };
     case 'TOO_MANY_REQUESTS':
-      return TOO_MANY_REQUESTS;
+      return { message: TOO_MANY_REQUESTS, plansAction: false };
     default:
-      return 'No se pudo iniciar la compra del dominio';
+      return { message: 'No se pudo iniciar la compra del dominio', plansAction: false };
   }
 }
 
