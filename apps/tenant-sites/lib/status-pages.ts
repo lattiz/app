@@ -1,3 +1,5 @@
+import { loadPreviewConfig } from './preview-config';
+
 const PAGE_STYLE = `
     body {
       font-family: system-ui, sans-serif;
@@ -6,9 +8,20 @@ const PAGE_STYLE = `
       min-height: 100vh; margin: 0; padding: 0 1.5rem; text-align: center; color: #374151;
     }
     h1 { font-size: 2.5rem; font-weight: 700; margin: 0; }
-    p  { font-size: 1.125rem; margin: 0.5rem 0 0; color: #6b7280; }`;
+    p  { font-size: 1.125rem; margin: 0.5rem 0 0; color: #6b7280; }
+    a.cta {
+      display: inline-block; margin-top: 1.5rem; padding: 0.75rem 1.25rem;
+      background: #111827; color: #fff; text-decoration: none; border-radius: 0.5rem;
+      font-size: 1rem; font-weight: 600;
+    }
+    a.cta:focus-visible { outline: 3px solid #2563eb; outline-offset: 2px; }`;
 
-function page(title: string, heading: string, message: string): string {
+function page(
+  title: string,
+  heading: string,
+  message: string,
+  extra = '',
+): string {
   return `<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,6 +35,7 @@ function page(title: string, heading: string, message: string): string {
 <body>
   <h1>${heading}</h1>
   <p>${message}</p>
+  ${extra}
 </body>
 </html>`;
 }
@@ -58,4 +72,29 @@ export function notFoundResponse(): Response {
 
 export function unavailableResponse(): Response {
   return statusResponse(UNAVAILABLE_HTML);
+}
+
+export function expiredResponse(
+  tenantName: string,
+  upgradeUrl: string = loadPreviewConfig().upgradeUrl,
+): Response {
+  const name = escapeHtml(tenantName);
+  const href = escapeHtml(upgradeUrl);
+  return statusResponse(
+    page(
+      'Prueba gratuita terminada',
+      'Prueba terminada',
+      `La prueba gratuita de ${name} terminó`,
+      `<a class="cta" href="${href}">Obtén tu dominio</a>`,
+    ),
+  );
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }

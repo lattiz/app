@@ -4,7 +4,13 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
-      "env": ["PREVIEW_BASE_DOMAIN", "REVALIDATION_SECRET"]
+      "env": [
+        "PREVIEW_BASE_DOMAIN",
+        "REVALIDATION_SECRET",
+        "PREVIEW_HARDEN_ENABLED",
+        "PREVIEW_ABUSE_REPORT_URL",
+        "PREVIEW_UPGRADE_URL"
+      ]
     },
     "dev": { "dependsOn": ["^build"], "cache": false, "persistent": true },
     "typecheck": { "dependsOn": ["^build"] },

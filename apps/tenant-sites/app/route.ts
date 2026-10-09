@@ -1,6 +1,11 @@
 import type { NextRequest } from 'next/server';
-import { injectAnalytics } from '@/lib/analytics-snippet';
-import { notFoundResponse, unavailableResponse } from '@/lib/status-pages';
+import { composePublishedHtml, publishedSiteHeaders } from '@/lib/free-site';
+import { loadPreviewConfig } from '@/lib/preview-config';
+import {
+  expiredResponse,
+  notFoundResponse,
+  unavailableResponse,
+} from '@/lib/status-pages';
 import { normalizeHostname, originFor } from '@/lib/tenant-host';
 import { resolveTenantSite } from '@/lib/tenant-data';
 
@@ -95,6 +100,8 @@ export async function GET(request: NextRequest): Promise<Response> {
   const resolution = await resolveTenantSite(hostname);
   if (resolution.status === 'not_found') return notFoundResponse();
   if (resolution.status === 'unavailable') return unavailableResponse();
+  if (resolution.status === 'expired')
+    return expiredResponse(resolution.tenantName);
   const { site } = resolution;
   const isPreview = site.hostKind === 'preview';
 
@@ -125,25 +132,27 @@ export async function GET(request: NextRequest): Promise<Response> {
     description: site.seoDescription || `Sitio web de ${site.tenantName}`,
     ogSiteName: site.ogSiteName,
     canonicalUrl: canonicalOrigin,
-    noindex: isPreview,
+    noindex: isPreview || !site.isPaid,
     ogImageUrl,
     faviconLightUrl: site.faviconLightUrl,
     faviconDarkUrl: site.faviconDarkUrl,
   });
-  // No CSP script-src today; if one is added it must allow googletagmanager.com
-  // and google-analytics.com.
-  const html = site.analyticsMeasurementId
-    ? injectAnalytics(seoHtml, site.analyticsMeasurementId)
-    : seoHtml;
+  const preview = loadPreviewConfig();
+  const html = composePublishedHtml({
+    seoHtml,
+    isPaid: site.isPaid,
+    analyticsMeasurementId: site.analyticsMeasurementId,
+    hardenEnabled: preview.hardenEnabled,
+    upgradeUrl: preview.upgradeUrl,
+    abuseReportUrl: preview.abuseReportUrl,
+  });
 
-  const headers: Record<string, string> = {
-    'Content-Type': 'text/html; charset=utf-8',
-    'Content-Security-Policy': 'frame-ancestors *',
-    // s-maxage=0 keeps the CDN out of the way so a publish is never masked by
-    // an edge cache; the browser holds the page for 5s at most.
-    'Cache-Control': 'public, max-age=5, stale-while-revalidate=10, s-maxage=0',
-  };
-  if (isPreview) headers['X-Robots-Tag'] = 'noindex';
-
-  return new Response(html, { status: 200, headers });
+  return new Response(html, {
+    status: 200,
+    headers: publishedSiteHeaders({
+      isPaid: site.isPaid,
+      isPreview,
+      hardenEnabled: preview.hardenEnabled,
+    }),
+  });
 }

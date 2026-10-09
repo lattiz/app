@@ -24,11 +24,15 @@ export interface TenantSiteData {
   hostKind: TenantLookup['kind'];
   /** Custom domain to 301 to: set only on the preview address and only once that domain is live. */
   redirectDomain: string | null;
+  /** False only when the SQL row says the tenant is not entitled. A missing column stays paid. */
+  isPaid: boolean;
+  previewExpiresAt: string | null;
 }
 
 export type SiteResolution =
   | { status: 'not_found' }
   | { status: 'unavailable' }
+  | { status: 'expired'; tenantName: string; slug: string }
   | { status: 'ok'; site: TenantSiteData };
 
 const MEASUREMENT_ID_RE = /^G-[A-Z0-9]{4,20}$/;
@@ -39,7 +43,7 @@ function isUsableMeasurementId(id: string): boolean {
   return !(process.env.NODE_ENV === 'production' && id.startsWith('G-MOCK'));
 }
 
-// Row of get_public_tenant_site(). Every column but tenant_id/is_serving is NULL unless is_serving.
+// Row of get_public_tenant_site(). Expired rows only fill name, slug and preview_expires_at.
 interface PublicTenantSiteRow {
   tenant_id: string;
   is_serving: boolean;
@@ -56,6 +60,9 @@ interface PublicTenantSiteRow {
   seo_description: string | null;
   og_site_name: string | null;
   ga4_measurement_id: string | null;
+  is_paid: boolean | null;
+  preview_expires_at: string | null;
+  serving_state: string | null;
 }
 
 /**
@@ -90,6 +97,11 @@ export async function resolveTenantSite(
 
   const row = (data as PublicTenantSiteRow[] | null)?.[0];
   if (!row) return { status: 'not_found' };
+  // Check expired before is_serving: a closed window is not serving, but it is not "unavailable".
+  if (row.serving_state === 'expired') {
+    if (!row.tenant_name || !row.slug) return { status: 'not_found' };
+    return { status: 'expired', tenantName: row.tenant_name, slug: row.slug };
+  }
   if (!row.is_serving) return { status: 'unavailable' };
   if (!row.exported_html || !row.tenant_name || !row.slug) {
     return { status: 'not_found' };
@@ -126,6 +138,8 @@ export async function resolveTenantSite(
       analyticsMeasurementId: measurementId,
       hostKind: lookup.kind,
       redirectDomain,
+      isPaid: row.is_paid !== false,
+      previewExpiresAt: row.preview_expires_at ?? null,
     },
   };
 }
