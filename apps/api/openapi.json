@@ -264,33 +264,6 @@
         ]
       }
     },
-    "/billing/reconcile": {
-      "post": {
-        "operationId": "BillingController_triggerReconciliation",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ReconcileResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "summary": "Force a stale-subscription reconciliation (protected)",
-        "tags": [
-          "billing"
-        ]
-      }
-    },
     "/domains/search": {
       "get": {
         "operationId": "DomainsController_search",
@@ -1788,17 +1761,6 @@
         },
         "required": [
           "invoices"
-        ]
-      },
-      "ReconcileResponseDto": {
-        "type": "object",
-        "properties": {
-          "triggered": {
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "triggered"
         ]
       },
       "DomainSearchResultDto": {
