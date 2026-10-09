@@ -34,3 +34,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [launch-plan-decisions](launch-plan-decisions.md) — decisiones de negocio del lanzamiento (dominios, renovación, R2, correo)
 - [free-preview-trial](free-preview-trial.md) — prueba gratuita con preview temporal; reglas, bloqueos y anti-abuso
 - [app-settings-config](app-settings-config.md) — config de negocio en BD (BD > env > default); qué va y qué no
+- [domain-renewal-cap-enforced](domain-renewal-cap-enforced.md) — dominio incluido solo si compra y renovación caben en el plan; "Disponible con Pro"
