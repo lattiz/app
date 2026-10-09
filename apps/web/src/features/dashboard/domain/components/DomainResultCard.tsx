@@ -4,7 +4,11 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
-import { domainCoverageCopy, offersProUpgrade } from '../lib/domain-copy';
+import {
+  domainCoverageCopy,
+  offersProUpgrade,
+  renewalPriceLabel,
+} from '../lib/domain-copy';
 
 interface Props {
   result: DomainSearchResultDto;
@@ -31,7 +35,12 @@ export function DomainResultCard({ result, loading, onSelect }: Props) {
                   {domainCoverageCopy.included}
                 </Badge>
               ) : upgrade ? (
-                <Badge>{domainCoverageCopy.availableWithPro}</Badge>
+                <>
+                  <Badge>{domainCoverageCopy.availableWithPro}</Badge>
+                  {result.renewalPriceUsdCents !== null && (
+                    <span>{renewalPriceLabel(result.renewalPriceUsdCents)}</span>
+                  )}
+                </>
               ) : (
                 <Badge variant="secondary" className="bg-muted text-muted-foreground">
                   {domainCoverageCopy.notIncluded}
@@ -43,7 +52,12 @@ export function DomainResultCard({ result, loading, onSelect }: Props) {
           )}
         </div>
         {upgrade ? (
-          <Button size="sm" render={<Link to="/dashboard/subscription" />}>
+          <Button
+            size="sm"
+            render={
+              <Link to="/dashboard/subscription" search={{ from: 'domain' }} />
+            }
+          >
             {domainCoverageCopy.upgradeCta}
           </Button>
         ) : (

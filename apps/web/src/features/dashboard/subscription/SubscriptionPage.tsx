@@ -15,6 +15,7 @@ import { trialSubscriptionNote } from '@/lib/trial-copy';
 import { BillingPeriodToggle } from './BillingPeriodToggle';
 import { BillingPortalButton } from './BillingPortalButton';
 import { CurrentPlanCard } from './CurrentPlanCard';
+import { PlanChangeSection } from './PlanChangeSection';
 import { PricingCard } from './PricingCard';
 import {
   annualSavingLabel,
@@ -24,6 +25,7 @@ import {
   type PlanId,
 } from './plans';
 import { useBillingPlans, useCreateCheckoutSession } from './useBilling';
+import { usePlanChangeReturn } from './usePlanChange';
 
 const ACTIVE_STATUSES = new Set(['active', 'trialing']);
 const routeApi = getRouteApi('/_authenticated/dashboard/subscription');
@@ -37,6 +39,7 @@ export function SubscriptionPage() {
   const checkout = useCreateCheckoutSession();
   const prices = useBillingPlans();
   const handledReturn = useRef(false);
+  usePlanChangeReturn(search.plan_change);
 
   // Handle the Stripe Checkout return once, then strip the params from the URL.
   useEffect(() => {
@@ -107,17 +110,12 @@ export function SubscriptionPage() {
 
         <CurrentPlanCard subscription={subscription} />
 
+        {isActive && (
+          <PlanChangeSection returnToDomain={search.from === 'domain'} />
+        )}
+
         <div className="flex flex-wrap gap-3">
           <BillingPortalButton variant={isPastDue ? 'default' : 'outline'} />
-          {subscription.plan === 'basico' && (
-            <Button
-              variant="default"
-              disabled={checkout.isPending}
-              onClick={() => subscribe('pro')}
-            >
-              Mejorar a Pro
-            </Button>
-          )}
         </div>
       </div>
     );

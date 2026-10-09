@@ -33,7 +33,11 @@ export function useDomainPurchase() {
           ? {
               action: {
                 label: domainCoverageCopy.upgradeCta,
-                onClick: () => void navigate({ to: '/dashboard/subscription' }),
+                onClick: () =>
+              void navigate({
+                to: '/dashboard/subscription',
+                search: { from: 'domain' },
+              }),
               },
             }
           : undefined,

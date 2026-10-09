@@ -1,4 +1,5 @@
 import type { DomainQuoteResponseDto, DomainSearchResultDto } from '@lattiz/api-client';
+import { formatMoney } from '@/lib/format';
 
 type NotCoveredReason = DomainSearchResultDto['notCoveredReason'];
 
@@ -17,6 +18,11 @@ export const domainCoverageCopy = {
   notCovered: 'Tu plan no cubre este dominio. Elige otro.',
   noLongerAvailable: 'Este dominio ya no está disponible. Elige otro.',
 } as const;
+
+/** The registrar renewal price is billed in USD; Lattiz absorbs it within the plan cap. */
+export function renewalPriceLabel(cents: number): string {
+  return `Renovación: ${formatMoney(cents, 'usd')}/año`;
+}
 
 /** Quote toast when an available name is outside the current plan. */
 export function searchNotCoveredLabel(reason: NotCoveredReason): string {
