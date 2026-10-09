@@ -117,6 +117,56 @@ export type BillingRedirectResponseDto = {
     url: string;
 };
 
+export type PendingPlanChangeDto = {
+    targetPlan: 'basico' | 'pro';
+    /**
+     * ISO date the scheduled change takes effect.
+     */
+    effectiveAt: string;
+};
+
+export type PlanChangeOptionDto = {
+    targetPlan: 'basico' | 'pro';
+    /**
+     * `none` when the target is the current plan or the current plan is unknown.
+     */
+    direction: 'upgrade' | 'downgrade' | 'none';
+    /**
+     * Upgrades apply now (prorated); downgrades at the end of the current billing period.
+     */
+    effective: 'immediate' | 'period_end' | null;
+    /**
+     * ISO date a downgrade would take effect; null for upgrades.
+     */
+    effectiveAt: string | null;
+    allowed: boolean;
+    blockers: Array<'NO_ACTIVE_SUBSCRIPTION' | 'SUBSCRIPTION_NOT_ACTIVE' | 'SUBSCRIPTION_CANCELING' | 'SAME_PLAN' | 'PLAN_CHANGE_PENDING' | 'UNSUPPORTED_SUBSCRIPTION' | 'DOWNGRADE_DOMAIN_ABOVE_BASIC_CAP' | 'DOWNGRADE_PRICE_UNAVAILABLE'>;
+};
+
+export type PlanChangeStatusResponseDto = {
+    /**
+     * Derived from the subscription's price; null without a subscription or for an unknown price.
+     */
+    currentPlan: 'basico' | 'pro' | null;
+    billingPeriod: 'monthly' | 'annual' | null;
+    pending: PendingPlanChangeDto | null;
+    options: Array<PlanChangeOptionDto>;
+};
+
+export type RequestPlanChangeDto = {
+    targetPlan: 'basico' | 'pro';
+};
+
+export type PlanChangeResultDto = {
+    kind: 'redirect' | 'scheduled';
+    url: string | null;
+    effectiveAt: string | null;
+};
+
+export type ReleasePlanChangeResponseDto = {
+    released: boolean;
+};
+
 export type SubscriptionResponseDto = {
     plan: 'basico' | 'pro';
     billingPeriod: 'monthly' | 'annual';
@@ -700,6 +750,45 @@ export type BillingControllerCreatePortalSessionResponses = {
 };
 
 export type BillingControllerCreatePortalSessionResponse = BillingControllerCreatePortalSessionResponses[keyof BillingControllerCreatePortalSessionResponses];
+
+export type BillingControllerGetPlanChangeData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/billing/plan-change';
+};
+
+export type BillingControllerGetPlanChangeResponses = {
+    200: PlanChangeStatusResponseDto;
+};
+
+export type BillingControllerGetPlanChangeResponse = BillingControllerGetPlanChangeResponses[keyof BillingControllerGetPlanChangeResponses];
+
+export type BillingControllerRequestPlanChangeData = {
+    body: RequestPlanChangeDto;
+    path?: never;
+    query?: never;
+    url: '/billing/plan-change';
+};
+
+export type BillingControllerRequestPlanChangeResponses = {
+    200: PlanChangeResultDto;
+};
+
+export type BillingControllerRequestPlanChangeResponse = BillingControllerRequestPlanChangeResponses[keyof BillingControllerRequestPlanChangeResponses];
+
+export type BillingControllerReleasePendingPlanChangeData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/billing/plan-change/pending';
+};
+
+export type BillingControllerReleasePendingPlanChangeResponses = {
+    200: ReleasePlanChangeResponseDto;
+};
+
+export type BillingControllerReleasePendingPlanChangeResponse = BillingControllerReleasePendingPlanChangeResponses[keyof BillingControllerReleasePendingPlanChangeResponses];
 
 export type BillingControllerGetSubscriptionData = {
     body?: never;

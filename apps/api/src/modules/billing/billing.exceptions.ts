@@ -62,3 +62,53 @@ export class BillingProviderUnavailableException extends DomainException {
     super('Prices are temporarily unavailable. Try again in a moment.');
   }
 }
+
+/** The requested plan change is not allowed right now; `details.blockers` lists why. */
+export class PlanChangeNotAllowedException extends DomainException {
+  readonly code = 'PLAN_CHANGE_NOT_ALLOWED';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor(blockers: readonly string[]) {
+    super('This plan change is not allowed right now.', { blockers });
+  }
+}
+
+/** Upgrades need the dedicated portal configuration (`STRIPE_PORTAL_CONFIGURATION_PLAN_CHANGE`). */
+export class PlanChangeNotConfiguredException extends DomainException {
+  readonly code = 'PLAN_CHANGE_NOT_CONFIGURED';
+  readonly status = HttpStatus.SERVICE_UNAVAILABLE;
+
+  constructor() {
+    super('Plan changes are not configured yet.');
+  }
+}
+
+/** There is no scheduled plan change to cancel. */
+export class NoPendingPlanChangeException extends DomainException {
+  readonly code = 'NO_PENDING_PLAN_CHANGE';
+  readonly status = HttpStatus.NOT_FOUND;
+
+  constructor() {
+    super('There is no scheduled plan change.');
+  }
+}
+
+/** The subscription on record belongs to another Stripe customer; nothing is changed. */
+export class SubscriptionOwnershipMismatchException extends DomainException {
+  readonly code = 'SUBSCRIPTION_OWNERSHIP_MISMATCH';
+  readonly status = HttpStatus.FORBIDDEN;
+
+  constructor() {
+    super('The subscription does not belong to this account.');
+  }
+}
+
+/** Stripe failed while scheduling the change; any half-created schedule was released. */
+export class PlanChangeFailedException extends DomainException {
+  readonly code = 'PLAN_CHANGE_FAILED';
+  readonly status = HttpStatus.BAD_GATEWAY;
+
+  constructor() {
+    super('The plan change could not be scheduled. Try again in a moment.');
+  }
+}

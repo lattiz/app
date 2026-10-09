@@ -3,6 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { SettingsModule } from '../../common/settings/settings.module';
 import { SettingsService } from '../../common/settings/settings.service';
 import { DatabaseModule } from '../../database/database.module';
+import { BillingCoreModule } from '../billing/billing-core.module';
+import { EffectivePlanService } from '../billing/effective-plan.service';
 import { EmailModule } from '../email/email.module';
 import {
   DNS_PROVIDER_PORT,
@@ -10,6 +12,7 @@ import {
   type DnsProviderPort,
 } from './domain/dns-provider.port';
 import { DOMAIN_PRICE_CAPS } from './domain/domain-pricing.policy';
+import { EFFECTIVE_PLAN_PORT } from './domain/effective-plan.port';
 import { REGISTRAR_PORT, type RegistrarPort } from './domain/registrar.port';
 import { loadDomainPriceCaps } from './domain-pricing.config';
 import { DnsReconcileService } from './dns-reconcile.service';
@@ -75,10 +78,11 @@ async function createDnsProvider(
 }
 
 @Module({
-  imports: [DatabaseModule, EmailModule, SettingsModule],
+  imports: [BillingCoreModule, DatabaseModule, EmailModule, SettingsModule],
   controllers: [DomainsController],
   providers: [
     DomainsService,
+    { provide: EFFECTIVE_PLAN_PORT, useExisting: EffectivePlanService },
     OpenproviderClient,
     VercelDomainsService,
     {

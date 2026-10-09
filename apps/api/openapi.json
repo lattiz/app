@@ -176,6 +176,95 @@
         ]
       }
     },
+    "/billing/plan-change": {
+      "get": {
+        "operationId": "BillingController_getPlanChange",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanChangeStatusResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get plan change options (protected)",
+        "tags": [
+          "billing"
+        ]
+      },
+      "post": {
+        "operationId": "BillingController_requestPlanChange",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestPlanChangeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanChangeResultDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Request a plan change (protected)",
+        "tags": [
+          "billing"
+        ]
+      }
+    },
+    "/billing/plan-change/pending": {
+      "delete": {
+        "operationId": "BillingController_releasePendingPlanChange",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReleasePlanChangeResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Cancel the scheduled plan change (protected)",
+        "tags": [
+          "billing"
+        ]
+      }
+    },
     "/billing/subscription": {
       "get": {
         "operationId": "BillingController_getSubscription",
@@ -1600,6 +1689,185 @@
         },
         "required": [
           "url"
+        ]
+      },
+      "PendingPlanChangeDto": {
+        "type": "object",
+        "properties": {
+          "targetPlan": {
+            "enum": [
+              "basico",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "effectiveAt": {
+            "type": "string",
+            "description": "ISO date the scheduled change takes effect."
+          }
+        },
+        "required": [
+          "targetPlan",
+          "effectiveAt"
+        ]
+      },
+      "PlanChangeOptionDto": {
+        "type": "object",
+        "properties": {
+          "targetPlan": {
+            "enum": [
+              "basico",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "direction": {
+            "description": "`none` when the target is the current plan or the current plan is unknown.",
+            "enum": [
+              "upgrade",
+              "downgrade",
+              "none"
+            ],
+            "type": "string"
+          },
+          "effective": {
+            "nullable": true,
+            "description": "Upgrades apply now (prorated); downgrades at the end of the current billing period.",
+            "enum": [
+              "immediate",
+              "period_end",
+              null
+            ],
+            "type": "string"
+          },
+          "effectiveAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "ISO date a downgrade would take effect; null for upgrades."
+          },
+          "allowed": {
+            "type": "boolean"
+          },
+          "blockers": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "NO_ACTIVE_SUBSCRIPTION",
+                "SUBSCRIPTION_NOT_ACTIVE",
+                "SUBSCRIPTION_CANCELING",
+                "SAME_PLAN",
+                "PLAN_CHANGE_PENDING",
+                "UNSUPPORTED_SUBSCRIPTION",
+                "DOWNGRADE_DOMAIN_ABOVE_BASIC_CAP",
+                "DOWNGRADE_PRICE_UNAVAILABLE"
+              ]
+            }
+          }
+        },
+        "required": [
+          "targetPlan",
+          "direction",
+          "effective",
+          "effectiveAt",
+          "allowed",
+          "blockers"
+        ]
+      },
+      "PlanChangeStatusResponseDto": {
+        "type": "object",
+        "properties": {
+          "currentPlan": {
+            "nullable": true,
+            "description": "Derived from the subscription's price; null without a subscription or for an unknown price.",
+            "enum": [
+              "basico",
+              "pro",
+              null
+            ],
+            "type": "string"
+          },
+          "billingPeriod": {
+            "nullable": true,
+            "enum": [
+              "monthly",
+              "annual",
+              null
+            ],
+            "type": "string"
+          },
+          "pending": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PendingPlanChangeDto"
+              }
+            ]
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlanChangeOptionDto"
+            }
+          }
+        },
+        "required": [
+          "currentPlan",
+          "billingPeriod",
+          "pending",
+          "options"
+        ]
+      },
+      "RequestPlanChangeDto": {
+        "type": "object",
+        "properties": {
+          "targetPlan": {
+            "enum": [
+              "basico",
+              "pro"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "targetPlan"
+        ]
+      },
+      "PlanChangeResultDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "enum": [
+              "redirect",
+              "scheduled"
+            ],
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "effectiveAt": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "kind",
+          "url",
+          "effectiveAt"
+        ]
+      },
+      "ReleasePlanChangeResponseDto": {
+        "type": "object",
+        "properties": {
+          "released": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "released"
         ]
       },
       "SubscriptionResponseDto": {

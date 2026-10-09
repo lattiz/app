@@ -11,7 +11,6 @@ import {
   type BillingPeriod,
   type BillingPlan,
   lookupKeyFor,
-  resolvePlanFromLookupKey,
 } from './billing.constants';
 import {
   BillingTenantNotFoundException,
@@ -26,6 +25,7 @@ import type {
   SubscriptionResponseDto,
 } from './dto/billing.response.dto';
 import { STRIPE_CLIENT } from './stripe.provider';
+import { SubscriptionStateService } from './subscription-state.service';
 
 /** Our own retry cap, independent of Stripe's Dashboard-configured dunning. */
 const MAX_PAYMENT_ATTEMPTS = 3;
@@ -77,6 +77,7 @@ export class BillingService {
     @Inject(DATABASE) private readonly db: Database,
     private readonly domains: DomainsService,
     private readonly emails: EmailOutboxService,
+    private readonly subscriptionState: SubscriptionStateService,
   ) {}
 
   // ── Checkout ──────────────────────────────────────────────────────────────
@@ -218,14 +219,38 @@ export class BillingService {
     }
 
     this.logger.log(`Stripe webhook received: ${event.type}`);
+    if (await this.isEventProcessed(event.id)) {
+      this.logger.log(`Stripe webhook ${event.id} already processed; skipping`);
+      return;
+    }
+    await this.dispatchWebhook(event);
+    await this.markEventProcessed(event);
+  }
 
+  private async dispatchWebhook(event: Stripe.Event): Promise<void> {
     switch (event.type) {
       case 'checkout.session.completed':
         await this.onCheckoutCompleted(event.data.object);
         break;
+      case 'customer.subscription.created':
       case 'customer.subscription.updated':
-        await this.onSubscriptionUpserted(event.data.object);
+        await this.syncSubscriptionById(event.data.object.id);
         break;
+      case 'subscription_schedule.aborted':
+      case 'subscription_schedule.canceled':
+      case 'subscription_schedule.completed':
+      case 'subscription_schedule.created':
+      case 'subscription_schedule.expiring':
+      case 'subscription_schedule.released':
+      case 'subscription_schedule.updated': {
+        const subscription = event.data.object.subscription;
+        if (subscription) {
+          await this.syncSubscriptionById(
+            typeof subscription === 'string' ? subscription : subscription.id,
+          );
+        }
+        break;
+      }
       case 'customer.subscription.deleted':
         await this.onSubscriptionDeleted(event.data.object);
         break;
@@ -249,12 +274,11 @@ export class BillingService {
       return;
     }
 
-    const subscription = await this.stripe.subscriptions.retrieve(
+    await this.syncSubscriptionById(
       typeof session.subscription === 'string'
         ? session.subscription
         : session.subscription.id,
     );
-    await this.onSubscriptionUpserted(subscription);
 
     const tenant = await this.query<{ name: string }>(
       sql`SELECT name FROM public.tenants WHERE id = ${tenantId}::uuid LIMIT 1`,
@@ -267,44 +291,50 @@ export class BillingService {
     );
   }
 
-  private async onSubscriptionUpserted(
-    subscription: Stripe.Subscription,
-  ): Promise<void> {
-    const tenantId = subscription.metadata.tenant_id;
+  /**
+   * Event payloads can arrive out of order and in the endpoint's API version,
+   * so the subscription is always re-read with the SDK's pinned version.
+   */
+  private async syncSubscriptionById(subscriptionId: string): Promise<void> {
+    const subscription =
+      await this.stripe.subscriptions.retrieve(subscriptionId);
+    const tenantId = await this.resolveTenantId(subscription);
     if (!tenantId) {
-      this.logger.error('subscription webhook: missing tenant_id in metadata');
-      return;
-    }
-
-    const resolved = resolvePlanFromLookupKey(
-      subscription.metadata.lookup_key ?? '',
-    );
-    if (!resolved) {
       this.logger.error(
-        `Cannot resolve plan from lookup_key: ${subscription.metadata.lookup_key}`,
+        `[ADMIN_ALERT] subscription ${subscription.id} maps to no tenant (no tenant_id metadata, unknown customer)`,
       );
       return;
     }
+    await this.syncSubscriptionFromStripe(tenantId, subscription);
+  }
 
-    await this.syncSubscriptionFromStripe(tenantId, subscription, resolved);
+  private async resolveTenantId(
+    subscription: Stripe.Subscription,
+  ): Promise<string | null> {
+    if (subscription.metadata?.tenant_id) return subscription.metadata.tenant_id;
+    const rows = await this.query<{ id: string }>(
+      sql`SELECT id FROM public.tenants
+          WHERE stripe_customer_id = ${customerIdOf(subscription)}
+          LIMIT 1`,
+    );
+    return rows[0]?.id ?? null;
   }
 
   /**
    * The one place that maps a Stripe subscription onto our rows — shared by the
    * `customer.subscription.*` webhooks and the reconciliation cron, so the two
-   * paths can never drift apart.
+   * paths can never drift apart. The plan comes from the item's price, never
+   * from metadata alone, which keeps the plan it was created with.
    */
   private async syncSubscriptionFromStripe(
     tenantId: string,
     subscription: Stripe.Subscription,
-    resolvedPlan?: { plan: BillingPlan; period: BillingPeriod },
   ): Promise<void> {
-    const resolved =
-      resolvedPlan ??
-      resolvePlanFromLookupKey(subscription.metadata.lookup_key ?? '');
+    const resolved = await this.subscriptionState.resolvePlan(subscription);
     if (!resolved) {
+      const priceIds = subscription.items.data.map((item) => item.price.id);
       this.logger.error(
-        `Cannot resolve plan from lookup_key: ${subscription.metadata.lookup_key}`,
+        `[ADMIN_ALERT] subscription ${subscription.id} (tenant ${tenantId}) has prices [${priceIds.join(', ')}] that map to no plan; plan left unchanged`,
       );
       return;
     }
@@ -331,6 +361,33 @@ export class BillingService {
       })
     ) {
       await this.tryRelaunchDomain(tenantId);
+    }
+    await this.releaseFinishedPlanChange(subscription, resolved.plan);
+  }
+
+  /**
+   * Once a scheduled downgrade has started, our schedule has nothing left to do;
+   * while attached, the portal refuses to update or cancel the subscription.
+   */
+  private async releaseFinishedPlanChange(
+    subscription: Stripe.Subscription,
+    plan: BillingPlan,
+  ): Promise<void> {
+    if (!subscription.schedule) return;
+    try {
+      const schedule = await this.subscriptionState.readSchedule(
+        subscription,
+        plan,
+      );
+      if (schedule.kind !== 'finished') return;
+      await this.subscriptionState.releaseSchedule(schedule.scheduleId);
+      this.logger.log(
+        `[plan-change] Released finished schedule ${schedule.scheduleId} of ${subscription.id}`,
+      );
+    } catch (err) {
+      this.logger.warn(
+        `[plan-change] Could not release the schedule of ${subscription.id} (next sync retries): ${String(err)}`,
+      );
     }
   }
 
@@ -557,6 +614,25 @@ export class BillingService {
   }
 
   // ── DB helpers ────────────────────────────────────────────────────────────
+  /** Stripe redelivers events; one that already went through is a no-op. */
+  private async isEventProcessed(eventId: string): Promise<boolean> {
+    const rows = await this.query<{ processed_at: string | Date | null }>(
+      sql`SELECT processed_at FROM public.stripe_webhook_events
+          WHERE id = ${eventId}
+          LIMIT 1`,
+    );
+    return rows[0]?.processed_at != null;
+  }
+
+  /** Written only after the handler succeeded, so a failed attempt is retried on redelivery. */
+  private async markEventProcessed(event: Stripe.Event): Promise<void> {
+    await this.query(
+      sql`INSERT INTO public.stripe_webhook_events (id, type, processed_at)
+          VALUES (${event.id}, ${event.type}, now())
+          ON CONFLICT (id) DO UPDATE SET processed_at = now()`,
+    );
+  }
+
   private async getTenantByUserSub(userSub: string): Promise<TenantRow> {
     const rows = await this.query<TenantRow>(
       sql`SELECT id, name, stripe_customer_id
@@ -685,6 +761,12 @@ function subscriptionIdFromInvoice(invoice: Stripe.Invoice): string | null {
   const sub = invoice.parent?.subscription_details?.subscription;
   if (!sub) return null;
   return typeof sub === 'string' ? sub : sub.id;
+}
+
+function customerIdOf(subscription: Stripe.Subscription): string {
+  return typeof subscription.customer === 'string'
+    ? subscription.customer
+    : subscription.customer.id;
 }
 
 /** In Stripe's Basil API the billing period lives on subscription items. */

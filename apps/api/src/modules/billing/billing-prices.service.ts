@@ -9,6 +9,7 @@ import Stripe from 'stripe';
 import { type Database, DATABASE } from '../../database/database.module';
 import {
   type BillingPeriod,
+  type BillingPlan,
   PLAN_LOOKUP_KEYS,
   resolvePlanFromLookupKey,
 } from './billing.constants';
@@ -20,6 +21,11 @@ import type {
 import { STRIPE_CLIENT } from './stripe.provider';
 
 const CATALOG_TTL_MS = 10 * 60_000;
+
+interface Catalog {
+  plans: PlanPriceDto[];
+  productPlans: ReadonlyMap<string, BillingPlan>;
+}
 const LOOKUP_KEYS = Object.values(PLAN_LOOKUP_KEYS);
 const EXPECTED_INTERVAL: Record<
   BillingPeriod,
@@ -30,8 +36,8 @@ const EXPECTED_INTERVAL: Record<
 @Injectable()
 export class BillingPricesService implements OnApplicationBootstrap {
   private readonly logger = new Logger(BillingPricesService.name);
-  private catalog: { plans: PlanPriceDto[]; fetchedAt: number } | null = null;
-  private inflight: Promise<PlanPriceDto[]> | null = null;
+  private catalog: (Catalog & { fetchedAt: number }) | null = null;
+  private inflight: Promise<Catalog> | null = null;
 
   constructor(
     @Inject(STRIPE_CLIENT) private readonly stripe: Stripe,
@@ -57,24 +63,33 @@ export class BillingPricesService implements OnApplicationBootstrap {
 
   /** Cached for 10 min; if Stripe fails after that, the last good catalog is served. */
   async listPlans(): Promise<PlanPriceDto[]> {
+    return (await this.loadCatalog()).plans;
+  }
+
+  /** Product id → plan of today's catalog; resolves a subscription whose price lost its lookup key. */
+  async productPlans(): Promise<ReadonlyMap<string, BillingPlan>> {
+    return (await this.loadCatalog()).productPlans;
+  }
+
+  private async loadCatalog(): Promise<Catalog> {
     const cached = this.catalog;
     if (cached && Date.now() - cached.fetchedAt < CATALOG_TTL_MS) {
-      return cached.plans;
+      return cached;
     }
 
     this.inflight ??= this.fetchCatalog().finally(() => {
       this.inflight = null;
     });
     try {
-      const plans = await this.inflight;
-      this.catalog = { plans, fetchedAt: Date.now() };
-      return plans;
+      const catalog = await this.inflight;
+      this.catalog = { ...catalog, fetchedAt: Date.now() };
+      return catalog;
     } catch (error) {
       if (cached) {
         this.logger.warn(
           `Stripe price lookup failed; serving the catalog from ${new Date(cached.fetchedAt).toISOString()}: ${describe(error)}`,
         );
-        return cached.plans;
+        return cached;
       }
       this.logger.error(`Stripe price lookup failed: ${describe(error)}`);
       throw new BillingProviderUnavailableException();
@@ -115,7 +130,7 @@ export class BillingPricesService implements OnApplicationBootstrap {
     };
   }
 
-  private async fetchCatalog(): Promise<PlanPriceDto[]> {
+  private async fetchCatalog(): Promise<Catalog> {
     const prices = await this.stripe.prices.list({
       lookup_keys: LOOKUP_KEYS,
       active: true,
@@ -123,6 +138,7 @@ export class BillingPricesService implements OnApplicationBootstrap {
     });
 
     const plans: PlanPriceDto[] = [];
+    const productPlans = new Map<string, BillingPlan>();
     for (const price of prices.data) {
       const resolved = resolvePlanFromLookupKey(price.lookup_key ?? '');
       if (!resolved || price.unit_amount === null) continue;
@@ -139,8 +155,11 @@ export class BillingPricesService implements OnApplicationBootstrap {
         currency: price.currency,
         lookupKey: price.lookup_key as string,
       });
+      const productId =
+        typeof price.product === 'string' ? price.product : price.product.id;
+      productPlans.set(productId, resolved.plan);
     }
-    return plans;
+    return { plans, productPlans };
   }
 }
 

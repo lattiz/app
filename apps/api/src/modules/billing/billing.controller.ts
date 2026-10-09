@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Headers,
   HttpCode,
@@ -23,9 +24,13 @@ import { type AuthenticatedUser } from '../../common/auth/authenticated-user';
 import { CronSecretGuard } from '../../common/auth/cron-secret.guard';
 import { CurrentUser } from '../../common/auth/current-user.decorator';
 import { SupabaseJwtGuard } from '../../common/auth/supabase-jwt.guard';
-import { SensitiveActionRateLimit } from '../../common/throttling/rate-limits';
+import {
+  ProviderLookupRateLimit,
+  SensitiveActionRateLimit,
+} from '../../common/throttling/rate-limits';
 import { BillingPricesService } from './billing-prices.service';
 import { BillingService } from './billing.service';
+import { PlanChangeService } from './plan-change.service';
 import {
   BillingRedirectResponseDto,
   InvoiceListResponseDto,
@@ -35,6 +40,12 @@ import {
   SubscriptionResponseDto,
 } from './dto/billing.response.dto';
 import { CreateCheckoutSessionDto } from './dto/create-checkout-session.dto';
+import {
+  PlanChangeResultDto,
+  PlanChangeStatusResponseDto,
+  ReleasePlanChangeResponseDto,
+  RequestPlanChangeDto,
+} from './dto/plan-change.dto';
 import { InvalidWebhookSignatureException } from './billing.exceptions';
 
 function appUrl(): string {
@@ -47,6 +58,7 @@ export class BillingController {
   constructor(
     private readonly billing: BillingService,
     private readonly prices: BillingPricesService,
+    private readonly planChange: PlanChangeService,
   ) {}
 
   /** Current price of every plan/period, straight from Stripe (cached ~10 min). */
@@ -85,6 +97,50 @@ export class BillingController {
       requireSub(user),
       `${appUrl()}/dashboard/subscription`,
     );
+  }
+
+  /** Which plan changes the tenant can make now, and any change already scheduled. */
+  @Get('plan-change')
+  @ProviderLookupRateLimit()
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get plan change options (protected)' })
+  @ApiOkResponse({ type: PlanChangeStatusResponseDto })
+  @UseGuards(SupabaseJwtGuard)
+  async getPlanChange(
+    @CurrentUser() user?: AuthenticatedUser,
+  ): Promise<PlanChangeStatusResponseDto> {
+    return this.planChange.getStatus(requireSub(user));
+  }
+
+  /** Upgrade → Stripe portal URL to confirm; downgrade → scheduled for the period end. */
+  @Post('plan-change')
+  @SensitiveActionRateLimit()
+  @HttpCode(200)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Request a plan change (protected)' })
+  @ApiOkResponse({ type: PlanChangeResultDto })
+  @UseGuards(SupabaseJwtGuard)
+  async requestPlanChange(
+    @Body() dto: RequestPlanChangeDto,
+    @CurrentUser() user?: AuthenticatedUser,
+  ): Promise<PlanChangeResultDto> {
+    return this.planChange.requestChange(
+      requireSub(user),
+      dto.targetPlan,
+      appUrl(),
+    );
+  }
+
+  @Delete('plan-change/pending')
+  @SensitiveActionRateLimit()
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Cancel the scheduled plan change (protected)' })
+  @ApiOkResponse({ type: ReleasePlanChangeResponseDto })
+  @UseGuards(SupabaseJwtGuard)
+  async releasePendingPlanChange(
+    @CurrentUser() user?: AuthenticatedUser,
+  ): Promise<ReleasePlanChangeResponseDto> {
+    return this.planChange.releasePending(requireSub(user));
   }
 
   @Get('subscription')

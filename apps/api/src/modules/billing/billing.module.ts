@@ -2,15 +2,15 @@ import { Module } from '@nestjs/common';
 import { DatabaseModule } from '../../database/database.module';
 import { DomainsModule } from '../domains/domains.module';
 import { EmailModule } from '../email/email.module';
-import { BillingPricesService } from './billing-prices.service';
+import { BillingCoreModule } from './billing-core.module';
 import { BillingController } from './billing.controller';
 import { BillingService } from './billing.service';
-import { StripeProvider } from './stripe.provider';
+import { PlanChangeService } from './plan-change.service';
 
 @Module({
-  imports: [DatabaseModule, DomainsModule, EmailModule],
+  imports: [BillingCoreModule, DatabaseModule, DomainsModule, EmailModule],
   controllers: [BillingController],
-  providers: [BillingService, BillingPricesService, StripeProvider],
+  providers: [BillingService, PlanChangeService],
   exports: [BillingService],
 })
 export class BillingModule {}

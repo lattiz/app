@@ -18,6 +18,10 @@ import {
   resolveRenewalCapUsdCents,
 } from './domain/domain-pricing.policy';
 import {
+  EFFECTIVE_PLAN_PORT,
+  type EffectivePlanPort,
+} from './domain/effective-plan.port';
+import {
   REGISTRAR_PORT,
   type RegisteredDomain,
   type RegistrarPort,
@@ -141,6 +145,8 @@ export class DomainsService {
     private readonly vercel: VercelDomainsService,
     private readonly emails: EmailOutboxService,
     @Inject(DOMAIN_PRICE_CAPS) private readonly caps: DomainPriceCaps,
+    @Inject(EFFECTIVE_PLAN_PORT)
+    private readonly effectivePlan: EffectivePlanPort,
   ) {}
 
   // ── Search ────────────────────────────────────────────────────────────────
@@ -366,19 +372,58 @@ export class DomainsService {
     return { priceUsdCents, renewalPriceUsdCents };
   }
 
-  /** `tenants.plan` once per request; a missing row fails closed to the Básico renewal cap. */
+  /**
+   * Whether the tenant's Lattiz-managed domain renews within `plan`'s cap.
+   * Stored renewal price first, a fresh quote when none was stored; user-provided domains never count.
+   */
+  async checkManagedDomainRenewal(
+    tenantId: string,
+    plan: string,
+  ): Promise<'ok' | 'above_cap' | 'price_unavailable'> {
+    const rows = await this.query<{
+      domain: string;
+      renewal_price_cents: number | null;
+      renewal_price_currency: string | null;
+    }>(
+      sql`SELECT domain, renewal_price_cents, renewal_price_currency
+          FROM public.domains
+          WHERE tenant_id = ${tenantId}::uuid
+            AND source = 'lattiz_managed'
+            AND released_at IS NULL`,
+    );
+    for (const row of rows) {
+      const renewalUsdCents =
+        row.renewal_price_cents !== null &&
+        row.renewal_price_currency?.toLowerCase() === 'usd'
+          ? row.renewal_price_cents
+          : await this.getCachedRenewalPriceUsdCents(row.domain);
+      if (renewalUsdCents === null) return 'price_unavailable';
+      if (!isRenewalWithinCap(plan, renewalUsdCents, this.caps).allowed) {
+        return 'above_cap';
+      }
+    }
+    return 'ok';
+  }
+
+  /**
+   * Effective plan once per request: a scheduled downgrade already counts, so a
+   * Pro tenant leaving Pro cannot buy a Pro-only domain first. A missing row
+   * fails closed to the Básico renewal cap.
+   */
   private async getTenantPlan(
     scope: { userSub: string } | { tenantId: string },
   ): Promise<string | null> {
     const rows =
       'userSub' in scope
-        ? await this.query<{ plan: string | null }>(
-            sql`SELECT plan FROM public.tenants WHERE user_id = ${scope.userSub}::uuid LIMIT 1`,
+        ? await this.query<{ id: string; plan: string | null }>(
+            sql`SELECT id, plan FROM public.tenants WHERE user_id = ${scope.userSub}::uuid LIMIT 1`,
           )
-        : await this.query<{ plan: string | null }>(
-            sql`SELECT plan FROM public.tenants WHERE id = ${scope.tenantId}::uuid LIMIT 1`,
+        : await this.query<{ id: string; plan: string | null }>(
+            sql`SELECT id, plan FROM public.tenants WHERE id = ${scope.tenantId}::uuid LIMIT 1`,
           );
-    return rows[0]?.plan ?? null;
+    const row = rows[0];
+    if (!row) return null;
+    return this.effectivePlan.effectivePlanFor(row.id, row.plan ?? null);
   }
 
   private planCoverage(input: {

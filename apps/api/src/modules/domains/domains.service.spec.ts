@@ -3,6 +3,7 @@ import type { Database } from '../../database/database.module';
 import type { EmailOutboxService } from '../email/application/email-outbox.service';
 import type { DnsProviderPort } from './domain/dns-provider.port';
 import type { DomainPriceCaps } from './domain/domain-pricing.policy';
+import type { EffectivePlanPort } from './domain/effective-plan.port';
 import type { RegistrarPort } from './domain/registrar.port';
 import { DomainNotCoveredByPlanException } from './domains.exceptions';
 import { DomainsService } from './domains.service';
@@ -39,7 +40,11 @@ interface PurchaseInternals {
   runPurchasePipeline(...args: unknown[]): Promise<void>;
 }
 
-function setup(prices: { create: number; renew: number }, plan = 'basico') {
+function setup(
+  prices: { create: number; renew: number },
+  plan = 'basico',
+  effectivePlan: string | null = plan,
+) {
   const registrar: jest.Mocked<RegistrarPort> = {
     isMockMode: true,
     checkAvailability: jest
@@ -54,7 +59,12 @@ function setup(prices: { create: number; renew: number }, plan = 'basico') {
     setNameservers: jest.fn(),
   };
   // Only the tenant-plan lookup reaches the DB; every other helper is stubbed below.
-  const db = { execute: jest.fn().mockResolvedValue([{ plan }]) };
+  const db = {
+    execute: jest.fn().mockResolvedValue([{ id: TENANT_ID, plan }]),
+  };
+  const effective: jest.Mocked<EffectivePlanPort> = {
+    effectivePlanFor: jest.fn().mockResolvedValue(effectivePlan),
+  };
 
   const service = new DomainsService(
     db as unknown as Database,
@@ -63,6 +73,7 @@ function setup(prices: { create: number; renew: number }, plan = 'basico') {
     {} as VercelDomainsService,
     {} as EmailOutboxService,
     caps,
+    effective,
   );
   const internals = service as unknown as PurchaseInternals;
   jest.spyOn(internals, 'getTenantIdByUserSub').mockResolvedValue(TENANT_ID);
@@ -80,7 +91,14 @@ function setup(prices: { create: number; renew: number }, plan = 'basico') {
     .spyOn(internals, 'runPurchasePipeline')
     .mockResolvedValue(undefined);
 
-  return { service, registrar, discardJob, createDomainRecord, runPipeline };
+  return {
+    service,
+    registrar,
+    effective,
+    discardJob,
+    createDomainRecord,
+    runPipeline,
+  };
 }
 
 describe('DomainsService pricing caps', () => {
@@ -243,9 +261,9 @@ describe('DomainsService pricing caps', () => {
         expect(results.every((r) => r.available)).toBe(true);
         expect(results.every((r) => r.coveredByPlan === covered)).toBe(true);
         expect(results.every((r) => r.notCoveredReason === reason)).toBe(true);
-        expect(results.every((r) => r.availableWithPro === availableWithPro)).toBe(
-          true,
-        );
+        expect(
+          results.every((r) => r.availableWithPro === availableWithPro),
+        ).toBe(true);
 
         const quote = await service.getQuote('user-1', 'massari.com');
         expect(quote.coveredByPlan).toBe(covered);
@@ -308,8 +326,88 @@ describe('DomainsService pricing caps', () => {
       expect(results).toHaveLength(5);
       expect(maxInFlight).toBe(2);
       expect(
-        registrar.getPriceUsdCents.mock.calls.filter(([, op]) => op === 'renew'),
+        registrar.getPriceUsdCents.mock.calls.filter(
+          ([, op]) => op === 'renew',
+        ),
       ).toHaveLength(5);
     });
+  });
+});
+
+describe('DomainsService.checkManagedDomainRenewal (downgrade guard)', () => {
+  afterEach(() => jest.restoreAllMocks());
+
+  function withDomains(
+    rows: Array<{
+      renewal_price_cents: number | null;
+      renewal_price_currency?: string | null;
+    }>,
+    freshRenewal?: number | Error,
+  ) {
+    const { service, registrar } = setup({ create: 1500, renew: 0 });
+    const db = (service as unknown as { db: { execute: jest.Mock } }).db;
+    db.execute.mockResolvedValue(
+      rows.map((row) => ({
+        domain: DOMAIN,
+        renewal_price_currency: 'usd',
+        ...row,
+      })),
+    );
+    if (freshRenewal instanceof Error) {
+      registrar.getPriceUsdCents.mockRejectedValue(freshRenewal);
+    } else if (freshRenewal !== undefined) {
+      registrar.getPriceUsdCents.mockResolvedValue(freshRenewal);
+    }
+    jest.spyOn(Logger.prototype, 'warn').mockImplementation(() => {});
+    return { service, registrar };
+  }
+
+  it.each([
+    [3598, 'above_cap'],
+    [2368, 'above_cap'],
+    [2367, 'ok'],
+  ])(
+    'stored renewal %p against the Básico cap → %s',
+    async (cents, expected) => {
+      const { service, registrar } = withDomains([
+        { renewal_price_cents: cents },
+      ]);
+      await expect(
+        service.checkManagedDomainRenewal(TENANT_ID, 'basico'),
+      ).resolves.toBe(expected);
+      expect(registrar.getPriceUsdCents).not.toHaveBeenCalled();
+    },
+  );
+
+  it('quotes fresh when no renewal price was stored', async () => {
+    const { service, registrar } = withDomains(
+      [{ renewal_price_cents: null, renewal_price_currency: null }],
+      3000,
+    );
+    await expect(
+      service.checkManagedDomainRenewal(TENANT_ID, 'basico'),
+    ).resolves.toBe('above_cap');
+    expect(registrar.getPriceUsdCents).toHaveBeenCalledWith(DOMAIN, 'renew');
+  });
+
+  it('fails closed when the fresh quote is unavailable', async () => {
+    const { service } = withDomains(
+      [{ renewal_price_cents: null, renewal_price_currency: null }],
+      new Error('registrar down'),
+    );
+    await expect(
+      service.checkManagedDomainRenewal(TENANT_ID, 'basico'),
+    ).resolves.toBe('price_unavailable');
+  });
+
+  it('is ok without a Lattiz-managed domain (user-provided ones are filtered out)', async () => {
+    const { service } = withDomains([]);
+    await expect(
+      service.checkManagedDomainRenewal(TENANT_ID, 'basico'),
+    ).resolves.toBe('ok');
+    const db = (service as unknown as { db: { execute: jest.Mock } }).db;
+    const { PgDialect } = await import('drizzle-orm/pg-core');
+    const rendered = new PgDialect().sqlToQuery(db.execute.mock.calls[0][0]);
+    expect(rendered.sql).toContain("source = 'lattiz_managed'");
   });
 });

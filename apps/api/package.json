@@ -55,6 +55,9 @@
     "testEnvironment": "node",
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
-    "clearMocks": true
+    "clearMocks": true,
+    "moduleNameMapper": {
+      "^@nestjs/schedule$": "<rootDir>/../test/nestjs-schedule.stub.js"
+    }
   }
 }
