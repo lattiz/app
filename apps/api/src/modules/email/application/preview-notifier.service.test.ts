@@ -84,6 +84,11 @@ function harness(
         });
       }
       const query = dialect.sqlToQuery(statement);
+      // postgres.js throws on a Date bound in a raw sql`` template.
+      assert.ok(
+        query.params.every((param) => !(param instanceof Date)),
+        'a Date was bound as a raw SQL parameter',
+      );
       const text = query.sql;
       const now = new Date(String(query.params[0]));
       const warningDay = Number(query.params[1]);

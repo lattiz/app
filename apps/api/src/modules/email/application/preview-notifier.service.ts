@@ -91,6 +91,8 @@ export class PreviewNotifierService {
   }
 
   private async selectDue(now: Date): Promise<PreviewEndingRow[]> {
+    // postgres.js rejects a Date bound inside a raw sql`` template; bind ISO text.
+    const nowIso = now.toISOString();
     return this.query<PreviewEndingRow>(
       sql`SELECT t.id, t.name, u.email, t.preview_started_at
           FROM public.tenants t
@@ -99,13 +101,13 @@ export class PreviewNotifierService {
             AND t.preview_started_at IS NOT NULL
             AND u.email_confirmed_at IS NOT NULL
             AND btrim(u.email) <> ''
-            AND ${now}::timestamptz >= t.preview_started_at + make_interval(days => ${this.preview.warningDay})
-            AND ${now}::timestamptz < t.preview_started_at + make_interval(days => ${this.preview.trialDays})
+            AND ${nowIso}::timestamptz >= t.preview_started_at + make_interval(days => ${this.preview.warningDay})
+            AND ${nowIso}::timestamptz < t.preview_started_at + make_interval(days => ${this.preview.trialDays})
             AND NOT EXISTS (
               SELECT 1 FROM public.subscriptions s
               WHERE s.tenant_id = t.id
                 AND s.status IN ('active', 'trialing')
-                AND s.current_period_end > ${now}::timestamptz
+                AND s.current_period_end > ${nowIso}::timestamptz
             )
             AND NOT EXISTS (
               SELECT 1 FROM public.email_outbox o
