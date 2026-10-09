@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PreviewModule } from '../../common/billing/preview.module';
+import { SettingsModule } from '../../common/settings/settings.module';
 import { DatabaseModule } from '../../database/database.module';
 import { EmailOutboxService } from './application/email-outbox.service';
 import { PreviewNotifierService } from './application/preview-notifier.service';
@@ -37,7 +38,7 @@ function resolveEmailProvider(config: ConfigService) {
 }
 
 @Module({
-  imports: [DatabaseModule, PreviewModule],
+  imports: [DatabaseModule, PreviewModule, SettingsModule],
   providers: [
     EmailOutboxService,
     EmailSenderCron,

@@ -45,7 +45,6 @@ export const EMAIL_BACKOFF_MS = [
 
 export const EMAIL_MAX_ATTEMPTS = 6;
 export const EMAIL_STUCK_SENDING_MS = 15 * 60_000;
-export const EMAIL_DEFAULT_MAX_PER_RUN = 20;
 export const EMAIL_FETCH_TIMEOUT_MS = 15_000;
 
 export const DASHBOARD_BASE = 'https://dashboard.lattiz.app';

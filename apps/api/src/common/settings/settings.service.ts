@@ -50,6 +50,7 @@ export class SettingsService implements OnModuleInit, OnModuleDestroy {
   private snapshot: ReadonlyMap<string, unknown> = new Map();
   private readonly warnedKeys = new Set<string>();
   private inflight: Promise<void> | null = null;
+  private initialLoad: Promise<void> | null = null;
   private timer: ReturnType<typeof setInterval> | null = null;
 
   constructor(
@@ -61,7 +62,7 @@ export class SettingsService implements OnModuleInit, OnModuleDestroy {
     const seconds = refreshIntervalSeconds(
       this.config.get<string>('SETTINGS_REFRESH_SECONDS'),
     );
-    await this.reload();
+    await this.ready();
     if (this.timer) clearInterval(this.timer);
     this.timer = setInterval(() => {
       void this.reload();
@@ -73,6 +74,12 @@ export class SettingsService implements OnModuleInit, OnModuleDestroy {
     if (!this.timer) return;
     clearInterval(this.timer);
     this.timer = null;
+  }
+
+  /** Resolves once the first snapshot load has settled (including a failed load). */
+  ready(): Promise<void> {
+    this.initialLoad ??= this.reload();
+    return this.initialLoad;
   }
 
   /** Replaces the in-memory snapshot. Concurrent callers share one load. */

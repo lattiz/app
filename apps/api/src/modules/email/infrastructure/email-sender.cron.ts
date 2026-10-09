@@ -1,9 +1,9 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { SettingsService } from '../../../common/settings/settings.service';
 import {
   EMAIL_BACKOFF_MS,
-  EMAIL_DEFAULT_MAX_PER_RUN,
   EMAIL_MAX_ATTEMPTS,
   type EmailKind,
 } from '../domain/email-kinds';
@@ -32,11 +32,12 @@ export class EmailSenderCron {
     @Inject(EMAIL_PROVIDER_PORT)
     private readonly provider: EmailProviderPort,
     private readonly config: ConfigService,
+    private readonly settings: SettingsService,
   ) {}
 
   @Cron(CronExpression.EVERY_MINUTE)
   async tick(): Promise<void> {
-    if (this.config.get<string>('EMAIL_SENDING_ENABLED') !== 'true') {
+    if (!this.settings.getBool('email.sending_enabled')) {
       return;
     }
     if (this.running) return;
@@ -52,14 +53,7 @@ export class EmailSenderCron {
 
   /** Exposed for offline tests. */
   async processBatch(): Promise<number> {
-    const maxPerRun = parseInt(
-      this.config.get<string>('EMAIL_MAX_PER_RUN') ??
-        String(EMAIL_DEFAULT_MAX_PER_RUN),
-      10,
-    );
-    const limit = Number.isFinite(maxPerRun)
-      ? maxPerRun
-      : EMAIL_DEFAULT_MAX_PER_RUN;
+    const limit = this.settings.getInt('email.max_per_run');
 
     const from =
       this.config.get<string>('EMAIL_FROM')?.trim() ||

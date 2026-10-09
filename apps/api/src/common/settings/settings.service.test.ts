@@ -307,6 +307,23 @@ describe('SettingsService', () => {
     );
   });
 
+  it('ready() loads the snapshot once and resolves for later callers', async () => {
+    let calls = 0;
+    const settings = serviceWith(
+      {},
+      {
+        loadAll: async () => {
+          calls += 1;
+          return new Map<string, unknown>([['domains.mock_purchases', true]]);
+        },
+      },
+    );
+    await Promise.all([settings.ready(), settings.ready()]);
+    await settings.ready();
+    assert.equal(calls, 1);
+    assert.equal(settings.getBool('domains.mock_purchases'), true);
+  });
+
   it('parses zone lists from the database and from a comma-separated env', async () => {
     const fromDb = serviceWith(
       { DNS_RECONCILE_KEEP_ZONES: 'other.test' },

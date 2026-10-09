@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { SettingsModule } from '../../common/settings/settings.module';
+import { SettingsService } from '../../common/settings/settings.service';
 import { DatabaseModule } from '../../database/database.module';
 import { EmailModule } from '../email/email.module';
 import {
@@ -8,7 +10,7 @@ import {
   type DnsProviderPort,
 } from './domain/dns-provider.port';
 import { DOMAIN_PRICE_CAPS } from './domain/domain-pricing.policy';
-import { REGISTRAR_PORT } from './domain/registrar.port';
+import { REGISTRAR_PORT, type RegistrarPort } from './domain/registrar.port';
 import { parseDomainPriceCaps } from './domain-pricing.config';
 import { DnsReconcileService } from './dns-reconcile.service';
 import { DomainsController } from './domains.controller';
@@ -22,14 +24,31 @@ import { OpenproviderDnsAdapter } from './infrastructure/openprovider/openprovid
 import { OpenproviderRegistrarAdapter } from './infrastructure/openprovider/openprovider-registrar.adapter';
 import { VercelDomainsService } from './vercel-domains.service';
 
-const isMockPurchases = (config: ConfigService): boolean =>
-  config.get<string>('OPENPROVIDER_MOCK_PURCHASES') === 'true';
+// domains.mock_purchases is fixed at startup; changing the row requires an API restart.
+async function mockPurchasesEnabled(
+  settings: SettingsService,
+): Promise<boolean> {
+  await settings.ready();
+  return settings.getBool('domains.mock_purchases');
+}
+
+export async function createRegistrarAdapter(
+  client: OpenproviderClient,
+  config: ConfigService,
+  settings: SettingsService,
+): Promise<RegistrarPort> {
+  const handle = config.get<string>('OPENPROVIDER_CUSTOMER_HANDLE') ?? '';
+  return (await mockPurchasesEnabled(settings))
+    ? new MockOpenproviderRegistrarAdapter(client, handle)
+    : new OpenproviderRegistrarAdapter(client, handle);
+}
 
 // Cloudflare is used for real even with mocked purchases, so real zones can be tested against a fake registrar.
-function createDnsProvider(
+async function createDnsProvider(
+  client: OpenproviderClient,
   config: ConfigService,
-  openproviderClient: OpenproviderClient,
-): DnsProviderPort {
+  settings: SettingsService,
+): Promise<DnsProviderPort> {
   const provider = (config.get<string>('DNS_PROVIDER') ?? '')
     .trim()
     .toLowerCase();
@@ -50,13 +69,13 @@ function createDnsProvider(
       `Unknown DNS_PROVIDER "${provider}"; expected "cloudflare" or "openprovider".`,
     );
   }
-  return isMockPurchases(config)
+  return (await mockPurchasesEnabled(settings))
     ? new MockDnsAdapter()
-    : new OpenproviderDnsAdapter(openproviderClient);
+    : new OpenproviderDnsAdapter(client);
 }
 
 @Module({
-  imports: [DatabaseModule, EmailModule],
+  imports: [DatabaseModule, EmailModule, SettingsModule],
   controllers: [DomainsController],
   providers: [
     DomainsService,
@@ -70,19 +89,21 @@ function createDnsProvider(
     },
     {
       provide: REGISTRAR_PORT,
-      inject: [OpenproviderClient, ConfigService],
-      useFactory: (client: OpenproviderClient, config: ConfigService) => {
-        const handle = config.get<string>('OPENPROVIDER_CUSTOMER_HANDLE') ?? '';
-        return isMockPurchases(config)
-          ? new MockOpenproviderRegistrarAdapter(client, handle)
-          : new OpenproviderRegistrarAdapter(client, handle);
-      },
+      inject: [OpenproviderClient, ConfigService, SettingsService],
+      useFactory: (
+        client: OpenproviderClient,
+        config: ConfigService,
+        settings: SettingsService,
+      ) => createRegistrarAdapter(client, config, settings),
     },
     {
       provide: DNS_PROVIDER_PORT,
-      inject: [OpenproviderClient, ConfigService],
-      useFactory: (client: OpenproviderClient, config: ConfigService) =>
-        createDnsProvider(config, client),
+      inject: [OpenproviderClient, ConfigService, SettingsService],
+      useFactory: (
+        client: OpenproviderClient,
+        config: ConfigService,
+        settings: SettingsService,
+      ) => createDnsProvider(client, config, settings),
     },
     {
       provide: DNS_ZONE_INVENTORY_PORT,

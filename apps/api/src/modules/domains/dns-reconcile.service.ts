@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { Cron } from '@nestjs/schedule';
 import { sql, type SQL } from 'drizzle-orm';
+import { SettingsService } from '../../common/settings/settings.service';
 import { type Database, DATABASE } from '../../database/database.module';
 import {
   DNS_PROVIDER_PORT,
@@ -10,8 +10,6 @@ import {
   type DnsZoneInventoryPort,
 } from './domain/dns-provider.port';
 
-const DEFAULT_GRACE_MINUTES = 120;
-const DEFAULT_MAX_DELETES = 5;
 // A purchase that stalled this long with a zone attached deserves a human look.
 const STALE_INCOMPLETE_HOURS = 24;
 
@@ -36,15 +34,11 @@ export interface ReconcileReport {
 /**
  * Keeps the Cloudflare account and `public.domains` in agreement: a zone with no live row is deleted,
  * a live managed row without a zone is only reported. Assumes the account holds Lattiz tenant zones only
- * (anything else must be listed in DNS_RECONCILE_KEEP_ZONES).
+ * (anything else must be listed in dns.reconcile.keep_zones).
  */
 @Injectable()
 export class DnsReconcileService {
   private readonly logger = new Logger(DnsReconcileService.name);
-  private readonly enabled: boolean;
-  private readonly graceMs: number;
-  private readonly maxDeletes: number;
-  private readonly keepZones: Set<string>;
   private running = false;
 
   constructor(
@@ -52,29 +46,18 @@ export class DnsReconcileService {
     @Inject(DNS_PROVIDER_PORT) private readonly dns: DnsProviderPort,
     @Inject(DNS_ZONE_INVENTORY_PORT)
     private readonly inventory: DnsZoneInventoryPort | null,
-    config: ConfigService,
-  ) {
-    this.enabled = config.get<string>('DNS_RECONCILE_ENABLED') === 'true';
-    this.graceMs =
-      positiveInt(
-        config.get<string>('DNS_RECONCILE_GRACE_MINUTES'),
-        DEFAULT_GRACE_MINUTES,
-      ) * 60_000;
-    this.maxDeletes = positiveInt(
-      config.get<string>('DNS_RECONCILE_MAX_DELETES'),
-      DEFAULT_MAX_DELETES,
-    );
-    this.keepZones = new Set(
-      (config.get<string>('DNS_RECONCILE_KEEP_ZONES') ?? '')
-        .split(',')
-        .map((z) => z.trim().toLowerCase())
-        .filter(Boolean),
-    );
-  }
+    private readonly settings: SettingsService,
+  ) {}
 
   @Cron('*/30 * * * *')
   async runScheduled(): Promise<void> {
-    if (!this.enabled || !this.inventory || this.running) return;
+    if (
+      !this.settings.getBool('dns.reconcile.enabled') ||
+      !this.inventory ||
+      this.running
+    ) {
+      return;
+    }
     this.running = true;
     try {
       await this.reconcile();
@@ -93,10 +76,16 @@ export class DnsReconcileService {
       rowsWithoutZone: [],
       stalePurchaseRows: [],
     };
-    if (!this.inventory) {
+    if (!this.inventory || !this.settings.getBool('dns.reconcile.enabled')) {
       report.skipped = true;
       return report;
     }
+    const graceMs =
+      this.settings.getInt('dns.reconcile.grace_minutes') * 60_000;
+    const maxDeletes = this.settings.getInt('dns.reconcile.max_deletes');
+    const keepZones = new Set(
+      this.settings.getStringList('dns.reconcile.keep_zones'),
+    );
 
     const zones = await this.inventory.listZones();
     const rows = await this.query<DomainRefRow>(
@@ -110,21 +99,21 @@ export class DnsReconcileService {
     );
 
     const orphans = zones.filter((z) => {
-      if (this.keepZones.has(z.name)) return false;
+      if (keepZones.has(z.name)) return false;
       if (liveZoneIds.has(z.zoneId) || liveNames.has(z.name)) return false;
       // A purchase creates its zone before it persists the id; give it time to land.
       // Unknown age is treated as young: never delete what we cannot date.
       return (
         z.createdAt !== null &&
-        now.getTime() - z.createdAt.getTime() >= this.graceMs
+        now.getTime() - z.createdAt.getTime() >= graceMs
       );
     });
 
-    if (orphans.length > this.maxDeletes) {
+    if (orphans.length > maxDeletes) {
       // More orphans than a bug-free system produces points at a wrong query or account, not at garbage.
       report.orphanZonesRefused = orphans.map((z) => z.name);
       this.logger.error(
-        `[dns-reconcile] ${orphans.length} orphan zones exceed DNS_RECONCILE_MAX_DELETES=${this.maxDeletes}; deleting nothing: ${report.orphanZonesRefused.join(', ')}`,
+        `[dns-reconcile] ${orphans.length} orphan zones exceed DNS_RECONCILE_MAX_DELETES=${maxDeletes}; deleting nothing: ${report.orphanZonesRefused.join(', ')}`,
       );
     } else {
       for (const zone of orphans) {
@@ -180,9 +169,4 @@ export class DnsReconcileService {
   private async query<T>(statement: SQL): Promise<T[]> {
     return (await this.db.execute(statement)) as unknown as T[];
   }
-}
-
-function positiveInt(value: string | undefined, fallback: number): number {
-  const n = Number.parseInt(value ?? '', 10);
-  return Number.isFinite(n) && n > 0 ? n : fallback;
 }
