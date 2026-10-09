@@ -10,16 +10,27 @@ export interface BoolSetting {
   readonly validate: (value: boolean, ctx: ResolveContext) => boolean;
 }
 
-export interface IntSetting {
+interface IntSettingBase {
   readonly key: string;
   readonly type: 'int';
   readonly envVar: string;
-  readonly default: number;
   readonly expectation: string;
   readonly validate: (value: number, ctx: ResolveContext) => boolean;
   /** Unset env uses min(default, trialDays - 1), or 0 when the trial is one day. */
   readonly deriveFromTrial?: boolean;
 }
+
+/** No code default: missing from both the database and the env means absent. */
+export type RequiredIntSetting = IntSettingBase & {
+  readonly required: true;
+};
+
+export type DefaultedIntSetting = IntSettingBase & {
+  readonly required?: false;
+  readonly default: number;
+};
+
+export type IntSetting = RequiredIntSetting | DefaultedIntSetting;
 
 export interface StringListSetting {
   readonly key: string;
@@ -54,7 +65,15 @@ function boolSetting(
   };
 }
 
-function intSetting(def: Omit<IntSetting, 'type'>): IntSetting {
+function intSetting(def: Omit<RequiredIntSetting, 'type'>): RequiredIntSetting;
+function intSetting(
+  def: Omit<DefaultedIntSetting, 'type'> & { readonly default: number },
+): DefaultedIntSetting;
+function intSetting(
+  def:
+    | Omit<RequiredIntSetting, 'type'>
+    | (Omit<DefaultedIntSetting, 'type'> & { readonly default: number }),
+): IntSetting {
   return { type: 'int', ...def };
 }
 
@@ -182,12 +201,27 @@ export const SETTINGS = {
     kind: 'zone',
     validate: always,
   }),
+  // Required: no invented default. Absent unless the database or the env var is set.
   'domain.max_cost_usd_cents': intSetting({
     key: 'domain.max_cost_usd_cents',
     envVar: 'DOMAIN_MAX_COST_USD_CENTS',
-    default: 2000,
-    expectation: '0 or greater',
-    validate: (value) => value >= 0,
+    required: true,
+    expectation: 'a positive integer (USD cents)',
+    validate: (value) => value >= 1,
+  }),
+  'domain.basic_renewal_max_cost_usd_cents': intSetting({
+    key: 'domain.basic_renewal_max_cost_usd_cents',
+    envVar: 'BASIC_DOMAIN_MAX_COST_USD_CENTS',
+    required: true,
+    expectation: 'a positive integer (USD cents)',
+    validate: (value) => value >= 1,
+  }),
+  'domain.pro_renewal_max_cost_usd_cents': intSetting({
+    key: 'domain.pro_renewal_max_cost_usd_cents',
+    envVar: 'PRO_DOMAIN_MAX_COST_USD_CENTS',
+    required: true,
+    expectation: 'a positive integer (USD cents)',
+    validate: (value) => value >= 1,
   }),
   'domains.mock_purchases': boolSetting({
     key: 'domains.mock_purchases',
@@ -236,6 +270,11 @@ export function envInt(
 ): number {
   const unset = raw === undefined || raw.trim() === '';
   if (unset) {
+    if (def.required) {
+      throw new Error(
+        `${def.envVar} must be set to an integer (${def.expectation}).`,
+      );
+    }
     if (!def.validate(def.default, ctx)) {
       throw new Error(
         `${def.envVar} must be an integer (${def.expectation}); the default ${def.default} does not satisfy that.`,

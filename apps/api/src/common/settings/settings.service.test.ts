@@ -88,11 +88,12 @@ describe('SettingsService', () => {
     await settings.reload();
     assert.equal(settings.getInt('preview.trial_days'), 9);
 
-    assert.equal(
-      serviceWith({}, { loadAll: async () => new Map() }).getInt(
-        'domain.max_cost_usd_cents',
-      ),
-      2000,
+    assert.throws(
+      () =>
+        serviceWith({}, { loadAll: async () => new Map() }).getInt(
+          'domain.max_cost_usd_cents',
+        ),
+      /DOMAIN_MAX_COST_USD_CENTS must be set to an integer/,
     );
   });
 

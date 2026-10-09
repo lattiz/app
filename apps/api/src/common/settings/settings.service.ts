@@ -18,7 +18,6 @@ import {
   SETTINGS,
   type BoolKey,
   type IntKey,
-  type IntSetting,
   type ResolveContext,
   type StringListKey,
 } from './settings.registry';
@@ -109,24 +108,24 @@ export class SettingsService implements OnModuleInit, OnModuleDestroy {
   getInt(key: IntKey): number {
     const def = SETTINGS[key];
     const ctx = this.contextFor(def);
-    if (this.snapshot.has(key)) {
-      const parsed = dbInt(this.snapshot.get(key));
-      if (parsed.ok && def.validate(parsed.value, ctx)) {
-        this.warnedKeys.delete(key);
-        return parsed.value;
-      }
-      this.warnOnce(
-        key,
-        parsed.ok
-          ? `value ${parsed.value} is outside the allowed range`
-          : parsed.reason,
-      );
-    } else {
-      this.warnedKeys.delete(key);
-    }
+    const fromDb = this.acceptedDbInt(key, ctx);
+    if (fromDb !== undefined) return fromDb;
     const raw = this.readEnv(def.envVar);
     if (def.deriveFromTrial) return envWarningDay(raw, ctx.trialDays);
     return envInt(def, raw, ctx);
+  }
+
+  /**
+   * Decimal text of a valid database integer, otherwise the env string.
+   * Undefined when neither is usable — never a code default.
+   */
+  intRaw(key: IntKey): string | undefined {
+    const def = SETTINGS[key];
+    const fromDb = this.acceptedDbInt(key, this.contextFor(def));
+    if (fromDb !== undefined) return String(fromDb);
+    const raw = this.readEnv(def.envVar);
+    if (raw === undefined || raw.trim() === '') return undefined;
+    return raw;
   }
 
   getStringList(key: StringListKey): readonly string[] {
@@ -144,7 +143,27 @@ export class SettingsService implements OnModuleInit, OnModuleDestroy {
     return envStringList(def, this.readEnv(def.envVar));
   }
 
-  private contextFor(def: IntSetting): ResolveContext {
+  private acceptedDbInt(key: IntKey, ctx: ResolveContext): number | undefined {
+    const def = SETTINGS[key];
+    if (!this.snapshot.has(key)) {
+      this.warnedKeys.delete(key);
+      return undefined;
+    }
+    const parsed = dbInt(this.snapshot.get(key));
+    if (parsed.ok && def.validate(parsed.value, ctx)) {
+      this.warnedKeys.delete(key);
+      return parsed.value;
+    }
+    this.warnOnce(
+      key,
+      parsed.ok
+        ? `value ${parsed.value} is outside the allowed range`
+        : parsed.reason,
+    );
+    return undefined;
+  }
+
+  private contextFor(def: (typeof SETTINGS)[IntKey]): ResolveContext {
     if (!def.deriveFromTrial) return NO_CONTEXT;
     return { trialDays: this.getInt('preview.trial_days') };
   }

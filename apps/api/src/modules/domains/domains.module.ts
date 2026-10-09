@@ -11,7 +11,7 @@ import {
 } from './domain/dns-provider.port';
 import { DOMAIN_PRICE_CAPS } from './domain/domain-pricing.policy';
 import { REGISTRAR_PORT, type RegistrarPort } from './domain/registrar.port';
-import { parseDomainPriceCaps } from './domain-pricing.config';
+import { loadDomainPriceCaps } from './domain-pricing.config';
 import { DnsReconcileService } from './dns-reconcile.service';
 import { DomainsController } from './domains.controller';
 import { DomainsService } from './domains.service';
@@ -83,9 +83,8 @@ async function createDnsProvider(
     VercelDomainsService,
     {
       provide: DOMAIN_PRICE_CAPS,
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) =>
-        parseDomainPriceCaps((key) => config.get<string>(key)),
+      inject: [SettingsService],
+      useFactory: (settings: SettingsService) => loadDomainPriceCaps(settings),
     },
     {
       provide: REGISTRAR_PORT,
