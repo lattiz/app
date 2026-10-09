@@ -1,5 +1,4 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { sql, type SQL } from 'drizzle-orm';
 import { isUnderPreviewBase } from '../../common/preview/preview-url';
 import { type Database, DATABASE } from '../../database/database.module';
@@ -11,6 +10,12 @@ import {
   type DnsProviderPort,
   type DnsRecord,
 } from './domain/dns-provider.port';
+import {
+  DOMAIN_PRICE_CAPS,
+  type DomainPriceCaps,
+  isPurchaseWithinCap,
+  isRenewalWithinCap,
+} from './domain/domain-pricing.policy';
 import {
   REGISTRAR_PORT,
   type RegisteredDomain,
@@ -115,7 +120,6 @@ interface PipelineParams {
 @Injectable()
 export class DomainsService {
   private readonly logger = new Logger(DomainsService.name);
-  private readonly maxCostCents: number;
 
   constructor(
     @Inject(DATABASE) private readonly db: Database,
@@ -123,13 +127,8 @@ export class DomainsService {
     @Inject(DNS_PROVIDER_PORT) private readonly dns: DnsProviderPort,
     private readonly vercel: VercelDomainsService,
     private readonly emails: EmailOutboxService,
-    configService: ConfigService,
-  ) {
-    this.maxCostCents = parseInt(
-      configService.get<string>('DOMAIN_MAX_COST_USD_CENTS') ?? '2000',
-      10,
-    );
-  }
+    @Inject(DOMAIN_PRICE_CAPS) private readonly caps: DomainPriceCaps,
+  ) {}
 
   // ── Search ────────────────────────────────────────────────────────────────
   async searchDomains(query: string): Promise<DomainSearchResultDto[]> {
@@ -156,7 +155,9 @@ export class DomainsService {
       found.push({
         domain: candidates[i],
         available: r.value.available,
-        coveredByPlan: price !== null && price <= this.maxCostCents,
+        coveredByPlan:
+          price !== null &&
+          isPurchaseWithinCap(price, this.caps.purchaseUsdCents),
       });
     });
     // Every check failed: that is a provider outage, not "no results", so surface it to the user.
@@ -174,7 +175,8 @@ export class DomainsService {
     return {
       domain,
       available,
-      coveredByPlan: available && price <= this.maxCostCents,
+      coveredByPlan:
+        available && isPurchaseWithinCap(price, this.caps.purchaseUsdCents),
       maintenanceFee: DOMAIN_MAINTENANCE_FEE,
       requiredAgreements: REQUIRED_AGREEMENTS,
       irreversible: true,
@@ -253,6 +255,11 @@ export class DomainsService {
     }
 
     if (quote) {
+      await this.warnIfRenewalAbovePlanCap(
+        tenantId,
+        params.domain,
+        quote.renewalPriceUsdCents,
+      );
       // Persisted BEFORE registering so a dead process leaves a resumable row.
       await this.createDomainRecord({
         tenantId,
@@ -280,10 +287,37 @@ export class DomainsService {
       this.registrar.getPriceUsdCents(domain, 'create'),
       this.registrar.getPriceUsdCents(domain, 'renew'),
     ]);
-    if (priceUsdCents > this.maxCostCents) {
+    if (!isPurchaseWithinCap(priceUsdCents, this.caps.purchaseUsdCents)) {
       throw new DomainNotCoveredByPlanException();
     }
     return { priceUsdCents, renewalPriceUsdCents };
+  }
+
+  /** Never blocks the purchase: flags a renewal Lattiz will not absorb under the tenant's current plan. */
+  private async warnIfRenewalAbovePlanCap(
+    tenantId: string,
+    domain: string,
+    renewalPriceUsdCents: number,
+  ): Promise<void> {
+    try {
+      const rows = await this.query<{ plan: string | null }>(
+        sql`SELECT plan FROM public.tenants WHERE id = ${tenantId}::uuid LIMIT 1`,
+      );
+      const plan = rows[0]?.plan ?? null;
+      const { allowed, capUsdCents } = isRenewalWithinCap(
+        plan,
+        renewalPriceUsdCents,
+        this.caps,
+      );
+      if (allowed) return;
+      this.logger.warn(
+        `[DOMAIN_RENEWAL_ABOVE_PLAN_CAP] tenant=${tenantId} domain=${domain} plan=${plan ?? 'null'} renewal_usd_cents=${renewalPriceUsdCents} cap_usd_cents=${capUsdCents}`,
+      );
+    } catch (err) {
+      this.logger.warn(
+        `Renewal cap check skipped for tenant ${tenantId}: ${String(err)}`,
+      );
+    }
   }
 
   // ── Pipeline (background, no HTTP context) ────────────────────────────────

@@ -134,11 +134,19 @@ Analíticas del plan Pro: Lattiz es dueño de una cuenta de GA y crea una propie
 
 Dev: cualquier origen. Prod: `CORS_ORIGIN` env (separado por comas), si está vacío se rechazan peticiones cross-origin. **Setear antes de producción.**
 
+## Dominios — topes de precio
+
+- **Compra (primer año): tope global**, igual para todos los planes — `DOMAIN_MAX_COST_USD_CENTS`. Se valida contra una cotización fresca del registrar en búsqueda, cotización y compra; nunca contra un precio enviado por el cliente.
+- **Renovación: tope por plan** — `BASIC_DOMAIN_MAX_COST_USD_CENTS` / `PRO_DOMAIN_MAX_COST_USD_CENTS` (los nombres no dicen "renewal", pero solo aplican a renovación). El registrar cobra barato el primer año y caro la renovación, así que el margen de Lattiz se protege del lado de la renovación.
+- El plan se lee de `tenants.plan` en el servidor; cualquier plan distinto de `pro` (incluido uno desconocido) usa el tope Básico — falla cerrado.
+- Comparación inclusiva (`precio <= tope`), todo en centavos USD. La lógica vive en `modules/domains/domain/domain-pricing.policy.ts` (funciones puras, sin puerto); los tres valores son obligatorios y el API no arranca si faltan o son inválidos.
+
 ## Tooling
 
 - **ESLint** (`pnpm lint` / `pnpm lint:fix`) — flat config en raíz. Ignora `dist/`, `src/generated/`, `drizzle/`.
 - **Prettier** (`pnpm format` / `pnpm format:check`) — excluye código generado y buildeado.
 - **Typecheck** (`pnpm typecheck`) — `tsc --noEmit` por paquete vía Turborepo.
+- **Tests** (`pnpm test`) — Jest en `apps/api` (`*.spec.ts` junto al código en `src/`); `apps/web` aún no tiene runner.
 
 ## Producción (pendiente)
 
