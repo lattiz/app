@@ -40,7 +40,10 @@ export interface TierSpec {
   similarityLimit: number;
   /** What the publisher emits in <head>; see docs/template-tiers.md. */
   seoProfile: SeoProfile;
-  /** Only tenants with this tier's subscription may use the template (enforced outside the kit). */
+  /**
+   * Reserved for single-tenant templates. False for every tier: any Pro tenant may use any Pro
+   * template and several tenants may share one (owner decision, 2026-10-10).
+   */
   exclusive: boolean;
   /** Emitted in template.meta.json for the editor; nothing in the kit reads it. */
   editableTokens: readonly EditableToken[];
@@ -90,7 +93,7 @@ export const TIERS = {
     optionalRoles: ['team', 'marquee'],
     similarityLimit: 0.5,
     seoProfile: 'advanced',
-    exclusive: true,
+    exclusive: false,
     editableTokens: [
       ...COLOR_TOKENS.map((t): EditableToken => `color-${t}`),
       'radius-pill',

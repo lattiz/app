@@ -57,6 +57,7 @@ export async function shootDist(dir: string): Promise<ShotSet> {
     const review: string[] = [];
     const shots = [
       { name: 'desktop-full.png', width: 1280, height: 800 },
+      { name: 'tablet-992-full.png', width: 992, height: 900 },
       { name: 'mobile-390.png', width: 390, height: 844, viewportOnly: true },
       { name: 'mobile-390-full.png', width: 390, height: 844 },
     ];

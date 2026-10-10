@@ -7,11 +7,12 @@
  *   pnpm tsx scripts/parse-and-seed-template.ts \
  *     (--file ./x.grapesjs --html ./x-export/index.html | --dir packages/template-kit/dist/<id>) \
  *     --id restaurante-moderno-v1 --name "Restaurante Moderno" --category restaurantes \
- *     [--description ".."] [--sort-order 10] \
+ *     [--description ".."] [--sort-order 10] [--tier basic|pro] \
  *     [--dry-run] [--no-deploy] [--no-thumbnail] [--no-preview]
  *
  * --dir reads <dir>/<id>.grapesjs + <dir>/index.html (packages/template-kit output) and uploads the
  * local `assets/…` files they reference the same way as cdn.grapesjs.com assets.
+ * --tier defaults to `tier` in <dir>/template.meta.json; one of the two is required.
  * Env: see the root .env.example (read from ./.env, then apps/api/.env for the shared keys).
  * Workflow: docs/adding-templates.md
  */
@@ -81,6 +82,7 @@ interface CliArgs {
   category: string;
   description?: string;
   sortOrder?: number;
+  tier: TemplateTier;
   dryRun: boolean;
   deploy: boolean;
   thumbnail: boolean;
@@ -118,6 +120,30 @@ function record(stage: string, status: StageStatus, detail: string): void {
 class StageError extends Error {}
 
 // ── CLI & env ────────────────────────────────────────────────────────────────
+
+type TemplateTier = 'basic' | 'pro';
+const TIERS: readonly TemplateTier[] = ['basic', 'pro'];
+
+function isTier(value: unknown): value is TemplateTier {
+  return (TIERS as readonly unknown[]).includes(value);
+}
+
+/** --tier wins; otherwise the kit's template.meta.json next to the project. */
+function resolveTier(flag: string | undefined, dir: string | undefined): TemplateTier {
+  if (flag !== undefined) {
+    if (!isTier(flag)) throw new StageError(`--tier must be one of ${TIERS.join(' | ')}.`);
+    return flag;
+  }
+  const meta = dir && dir !== 'true' ? join(dir, 'template.meta.json') : null;
+  if (meta && existsSync(meta)) {
+    const tier: unknown = (JSON.parse(readFileSync(meta, 'utf8')) as { tier?: unknown }).tier;
+    if (isTier(tier)) return tier;
+    throw new StageError(`${meta} has no valid "tier" (${TIERS.join(' | ')}).`);
+  }
+  throw new StageError(
+    'Pass --tier basic|pro (or --dir with a template.meta.json from packages/template-kit).',
+  );
+}
 
 function parseArgs(argv: string[]): CliArgs {
   const raw = new Map<string, string>();
@@ -165,6 +191,7 @@ function parseArgs(argv: string[]): CliArgs {
   }
 
   const file = raw.get('file') as string;
+  const tier = resolveTier(raw.get('tier'), dir);
   return {
     file,
     html: raw.get('html'),
@@ -177,6 +204,7 @@ function parseArgs(argv: string[]): CliArgs {
     category: raw.get('category') ?? 'general',
     description: raw.get('description'),
     sortOrder,
+    tier,
     dryRun: raw.has('dry-run'),
     deploy: !raw.has('no-deploy'),
     thumbnail: !raw.has('no-thumbnail'),
@@ -494,6 +522,20 @@ function finalizePreviewHtml(html: string, name: string): string {
 interface TemplateRow {
   id: string;
   is_active: boolean;
+  tier: string;
+}
+
+/** Read-only: how many tenants' sites use this template today. */
+async function countTenantsUsing(
+  supabase: SupabaseClient,
+  templateId: string,
+): Promise<number> {
+  const { count, error } = await supabase
+    .from('site_schemas')
+    .select('tenant_id', { count: 'exact', head: true })
+    .eq('template_id', templateId);
+  if (error) throw new StageError(error.message);
+  return count ?? 0;
 }
 
 async function upsertTemplate(
@@ -504,14 +546,27 @@ async function upsertTemplate(
 ): Promise<{ created: boolean; wasActive: boolean }> {
   const { data: existing, error: readError } = await supabase
     .from('templates')
-    .select('id, is_active')
+    .select('id, is_active, tier')
     .eq('id', args.id)
     .maybeSingle<TemplateRow>();
   if (readError) throw new StageError(readError.message);
 
+  if (existing && existing.tier !== args.tier) {
+    const inUse = await countTenantsUsing(supabase, args.id);
+    console.warn(
+      `\n  ⚠ Tier change ${existing.tier} → ${args.tier} for ${args.id}: ${inUse} tenant site(s) use it.` +
+        (args.tier === 'pro' && inUse > 0
+          ? ' Básico tenants among them will be locked out of editing until they switch or upgrade —' +
+            ' run supabase/tests/template_access/precheck_pro_templates.sql first and decide (grandfather or move).'
+          : '') +
+        '\n',
+    );
+  }
+
   const fields = {
     name: args.name,
     category: args.category,
+    tier: args.tier,
     grapesjs_json: grapesjsJson,
     ...(previewUrl ? { preview_url: previewUrl } : {}),
     ...(args.description !== undefined
@@ -636,7 +691,11 @@ async function run(argv: string[]): Promise<void> {
   const plugins = (project.custom?.plugins ?? []).map(
     (p) => `${p.id}@${p.version ?? '?'}`,
   );
-  record('1 validate', '✓', `1 page; plugins: ${plugins.join(', ') || 'none'}`);
+  record(
+    '1 validate',
+    '✓',
+    `1 page; tier ${args.tier}; plugins: ${plugins.join(', ') || 'none'}`,
+  );
 
   // 2. Collect
   const json = JSON.stringify(project);

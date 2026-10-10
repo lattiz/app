@@ -12,6 +12,11 @@ import {
   type ObjectStoragePort,
 } from '../storage/domain/object-storage.port';
 import { tenantAssetsPrefix } from '../storage/domain/storage-path';
+import {
+  evaluateTemplateAccess,
+  TEMPLATE_ACCESS_ASSUMPTIONS,
+} from '../templates/template-access.policy';
+import { TemplateAccessService } from '../templates/template-access.service';
 import { assetMagic } from './asset-magic';
 import { HTML_SANITIZER, type HtmlSanitizerPort } from './html-sanitizer.port';
 import {
@@ -50,6 +55,7 @@ interface ProjectRow {
 }
 interface TemplateRow {
   id: string;
+  tier: string;
   grapesjs_json: Json;
 }
 interface UpdatedAtRow {
@@ -87,6 +93,7 @@ export class SitesService {
     @Inject(OBJECT_STORAGE_PORT) private readonly storage: ObjectStoragePort,
     private readonly preview: PreviewCapabilityService,
     @Inject(HTML_SANITIZER) private readonly htmlSanitizer: HtmlSanitizerPort,
+    private readonly templateAccess: TemplateAccessService,
   ) {}
 
   /** Returns the editor project for a tenant, seeding it from a template on first load. */
@@ -95,19 +102,23 @@ export class SitesService {
     userSub: string,
   ): Promise<SiteSchemaResponseDto> {
     await this.assertTenantOwnership(tenantId, userSub);
+    await this.templateAccess.assertNotLocked(tenantId);
 
     const existing = await this.query<ProjectRow>(
       sql`SELECT grapesjs_json FROM public.site_schemas WHERE tenant_id = ${tenantId}::uuid LIMIT 1`,
     );
     if (existing[0]) return { project: existing[0].grapesjs_json };
 
+    // First load seeds the first template the tenant's plan includes.
+    const { templatePlan } = await this.templateAccess.stateForTenant(tenantId);
     const templates = await this.query<TemplateRow>(
-      sql`SELECT id, grapesjs_json FROM public.templates
+      sql`SELECT id, tier, grapesjs_json FROM public.templates
           WHERE is_active = true
-          ORDER BY sort_order ASC, created_at ASC
-          LIMIT 1`,
+          ORDER BY sort_order ASC, created_at ASC`,
     );
-    const template = templates[0];
+    const template = templates.find(
+      (t) => evaluateTemplateAccess(templatePlan, t.tier).allowed,
+    );
     if (!template) throw new NoTemplateAvailableException();
 
     await this.db.execute(
@@ -126,6 +137,7 @@ export class SitesService {
     project: Json,
   ): Promise<SaveSchemaResponseDto> {
     await this.assertTenantOwnership(tenantId, userSub);
+    await this.templateAccess.assertNotLocked(tenantId);
 
     const rows = await this.query<UpdatedAtRow>(
       sql`UPDATE public.site_schemas
@@ -147,6 +159,7 @@ export class SitesService {
     exportedHtml: string,
   ): Promise<PublishSiteResponseDto> {
     await this.assertTenantOwnership(tenantId, userSub);
+    await this.templateAccess.assertNotLocked(tenantId);
 
     const row = await this.db.transaction(async (tx) => {
       const tenant = await this.loadTenantPreview(tx, tenantId);
@@ -179,6 +192,11 @@ export class SitesService {
   ): Promise<SelectTemplateResponseDto> {
     const tenantId = await this.resolveTenantId(userSub);
     const template = await this.requireActiveTemplate(templateId);
+    this.templateAccess.assertCanUse(
+      await this.templateAccess.stateForTenant(tenantId),
+      template.id,
+      template.tier,
+    );
 
     const rows = await this.query<CreatedAtRow>(
       sql`INSERT INTO public.site_schemas (tenant_id, template_id, grapesjs_json, status)
@@ -224,11 +242,54 @@ export class SitesService {
       throw new TemplateChangeRequiresConfirmationException();
 
     const template = await this.requireActiveTemplate(templateId);
+    // A locked tenant may always switch: that is how they leave the lock.
+    this.templateAccess.assertCanUse(
+      await this.templateAccess.stateForTenant(tenantId),
+      template.id,
+      template.tier,
+    );
 
-    const rows = await this.query<UpdatedAtRow>(
+    const row = await this.db.transaction((tx) =>
+      this.archiveAndReplaceProject(tx, tenantId, template, 'template_switch'),
+    );
+
+    return {
+      tenantId,
+      templateId: template.id,
+      updatedAt: toIso(row.updated_at),
+    };
+  }
+
+  /**
+   * Copies the tenant's current project (and published HTML) into
+   * `template_archives`, then replaces it with the template's — both inside the
+   * caller's transaction, so a failed replace rolls the archive back and leaves
+   * the original untouched. Nothing is ever deleted.
+   */
+  async archiveAndReplaceProject(
+    tx: SqlExecutor,
+    tenantId: string,
+    template: TemplateRow,
+    reason: 'template_switch',
+  ): Promise<UpdatedAtRow> {
+    const archived = await this.queryWith<{ id: string }>(
+      tx,
+      sql`INSERT INTO public.template_archives
+            (tenant_id, template_id, project_data, exported_html, reason)
+          SELECT tenant_id, template_id, grapesjs_json, exported_html, ${reason}
+          FROM public.site_schemas
+          WHERE tenant_id = ${tenantId}::uuid
+          FOR UPDATE
+          RETURNING id`,
+    );
+    if (!archived[0]) throw new SiteNotFoundException();
+
+    const project = projectForSwitch(template);
+    const rows = await this.queryWith<UpdatedAtRow>(
+      tx,
       sql`UPDATE public.site_schemas
           SET template_id = ${template.id},
-              grapesjs_json = ${JSON.stringify(template.grapesjs_json)}::jsonb,
+              grapesjs_json = ${JSON.stringify(project)}::jsonb,
               exported_html = NULL,
               status = 'draft',
               published_at = NULL
@@ -237,12 +298,10 @@ export class SitesService {
     );
     const row = rows[0];
     if (!row) throw new SiteNotFoundException();
-
-    return {
-      tenantId,
-      templateId: template.id,
-      updatedAt: toIso(row.updated_at),
-    };
+    this.logger.log(
+      `[template-switch] Tenant ${tenantId} → ${template.id}; previous project archived (${archived[0].id})`,
+    );
+    return row;
   }
 
   /**
@@ -256,6 +315,7 @@ export class SitesService {
     files: UploadedFile[],
   ): Promise<UploadedAssetResponseDto[]> {
     await this.assertTenantOwnership(tenantId, userSub);
+    await this.templateAccess.assertNotLocked(tenantId);
     if (!files?.length) throw new NoAssetsProvidedException();
 
     const tenant = await this.loadTenantPreview(this.db, tenantId);
@@ -402,7 +462,7 @@ export class SitesService {
     templateId: string,
   ): Promise<TemplateRow> {
     const rows = await this.query<TemplateRow>(
-      sql`SELECT id, grapesjs_json FROM public.templates
+      sql`SELECT id, tier, grapesjs_json FROM public.templates
           WHERE id = ${templateId} AND is_active = true
           LIMIT 1`,
     );
@@ -503,6 +563,14 @@ export class SitesService {
     const rows = await executor.execute(statement);
     return rows as unknown as T[];
   }
+}
+
+/** A4: the new template's project as-is; the previous content is archived, not migrated. */
+function projectForSwitch(template: TemplateRow): Json {
+  if (TEMPLATE_ACCESS_ASSUMPTIONS.migrateContentOnSwitch) {
+    throw new Error('Content migration on template switch is not implemented.');
+  }
+  return template.grapesjs_json;
 }
 
 function declaredMime(mimetype: string): string {

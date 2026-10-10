@@ -31,7 +31,8 @@ describe('extract (ÓXIDO Studio export)', () => {
 
   it('moves the :root tokens and font query into a theme draft', () => {
     expect(result.themeDraft.colors.accent).toBe('#FF4F1F');
-    expect(result.themeDraft.radius).toEqual({ pill: '2px', card: '2px' });
+    expect(result.themeDraft.shape.radiusPill).toBe('2px');
+    expect(result.themeDraft.shape.radiusCard).toBe('2px');
     expect(result.themeDraft.fonts.googleFonts).toBe(
       'family=Anton&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;700',
     );

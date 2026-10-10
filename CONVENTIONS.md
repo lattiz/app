@@ -113,10 +113,23 @@ Analíticas del plan Pro: Lattiz es dueño de una cuenta de GA y crea una propie
 - **El compilador genera toda estructura derivada (`:root`, `<head>` con fuentes, `custom`, nombres de capas) desde el tema; nunca copia colores.** Copiarlos dejaba texto invisible al cambiar de tema claro/oscuro.
 - **No se emiten `.gjs-t-*`, el data source `globalStyles` ni valores `data-variable`.** `SiteEditor.tsx` no pasa la opción `globalStyles` del SDK, así que el SDK no muestra esos registros (`_internal`); mantenerlos sería un segundo sistema de tokens que nadie edita.
 - **`kit:validate` es la compuerta:** ninguna plantilla se siembra con hallazgos (colores literales, contraste AA, breakpoints 992/480, reduced-motion, similitud por tier, rango de secciones, roles obligatorios, sin `<form>`, etc.).
-- **Dos tiers, Basic y Pro, definidos solo en `src/tiers.ts`** (rangos, roles, similitud, perfil SEO, exclusividad, `editableTokens`). Los blueprints (`blueprints/<familia>.<tier>.ts`) hablan de roles y cada rubro los resuelve a slots; detalle en `docs/template-tiers.md`.
+- **Dos tiers, Basic y Pro, definidos solo en `src/tiers.ts`** (rangos, roles, similitud, perfil SEO, `editableTokens`; `exclusive` es `false` en ambos: no hay plantillas reservadas). Los blueprints (`blueprints/<familia>.<tier>.ts`) hablan de roles y cada rubro los resuelve a slots; detalle en `docs/template-tiers.md`.
 - **El tier vive en el manifiesto y en `dist/<id>/template.meta.json`, nunca en `custom` del `.grapesjs`:** el editor espera exactamente `{ projectType, id }`.
 - **Contacto sin `<form>` en el MVP:** WhatsApp, `tel:` (`{{phoneUrl}}`), `mailto:` (`{{emailUrl}}`) y mapa.
 - **FAQ con `<details open>`:** verificado en un canvas real de GrapesJS 0.22.16: el clic en `<summary>` solo selecciona el componente y nunca lo despliega, así que una respuesta cerrada no se puede editar. Abiertas se editan normal y el visitante aún puede plegarlas.
+
+### Plantillas distintas entre sí (fase 3)
+
+- **El tema es la identidad de una plantilla y es único por rubro.** Lleva `tier`, `fontPair`, `shape` (radios, borde, sombra none | soft | hard-offset), `density`, `photoTreatment` y la tipografía display (caja, interlineado, peso, escala). Un tema `pro` no se usa en Basic ni al revés.
+- **`accent` es relleno, `accent-text` es el acento como texto.** Un acento lima no pasa AA como texto sobre blanco; con `accentWords: highlight` las palabras de acento van en tinta sobre una banda de acento y el contraste se valida contra esa banda.
+- **Una voz por arquetipo** (`content/barberia.<voz>.es-MX.ts`); las Basic comparten la voz `trazo` y sobrescriben marca, portada y sucursal. Ninguna plantilla repite el titular de otra.
+- **Fotos por tema en `assets/<rubro>/<tema>/`.** Las tres Basic comparten el arquetipo `essential`, así que la carpeta no puede ser por arquetipo; el tema sí es único. Los placeholders se generan con la paleta y el patrón (`placeholder`) del tema.
+- **`kit:compare-visual` es parte de "terminado".** Se gatilla sobre la mitad superior (1280×800 → 160×100): la página completa reducida a tira casi solo mide claro vs oscuro y ordenaba un par de la fase 3 (0.384) por debajo de un clon de la fase 2 (0.431). Umbral 0.33, entre los clones de la fase 2 (0.168, 0.250) y el par más cercano de la fase 3 (0.408).
+- Desviaciones del brief:
+  - ÓXIDO conserva tres familias (Anton, Instrument Serif para el acento, Space Grotesk): es su identidad. Las demás usan dos familias más una mono opcional;
+  - fases 3 y 6 del brief se hicieron juntas: un content pack solo trae las claves de las variantes que usan sus plantillas, así que las voces y los manifiestos finales cambiaron en el mismo commit;
+  - las variantes `urban-luxe` se renombraron por lo que hacen (`inline`, `price-list`, `grid`, `text-image-offset`, `cards`, `big-wordmark`, `ticker`, `bubble`); `about/brief` se conserva como el about de Basic;
+  - `bone-blue` se retiró y `urban-dark` pasó a llamarse `oxido`.
 
 ### Global Styles del SDK (hallazgo, sin cambios en esta fase)
 
@@ -134,10 +147,28 @@ Analíticas del plan Pro: Lattiz es dueño de una cuenta de GA y crea una propie
   - la guía vieja vivía fuera del repo; la nueva es `docs/lattiz-template-guidelines.md`.
 - Desviaciones de la fase 2 (Basic/Pro) frente al brief, verificadas en el código:
   - FAQ: `<details open>` en lugar de cerradas (ver arriba); el validador exige `open`;
-  - roles con variante fija por tier: contacto Basic = `locations/single`, contacto Pro = `locations/with-contact`, about Basic = `brief`, about Pro = `urban-luxe`;
+  - roles con variante fija por tier: contacto Basic = `locations/single`, contacto Pro = `locations/with-contact`, about Basic = `brief`, about Pro = `text-image-offset` | `statement` | `stats-strip`;
   - `kit:compare` identifica cada sección por `data-lz-slot` (no por posición), para comparar una plantilla con secciones añadidas;
   - `googleReviewUrl` por defecto es la búsqueda del negocio en Google Maps; cada tenant pone su enlace `g.page/r/<id>/review`;
   - el saneador de sitios sin pago descarta `<details>`, `<summary>` e `<iframe>`: en vista previa gratuita el FAQ queda como texto y sin mapas (no se tocó).
+
+## Acceso a plantillas por plan
+
+- **Se deriva al leer, sin flag guardado.** `templateAccess = f(plan efectivo, templates.tier)`; plan efectivo = `tenants.plan` + `computeIsEntitled` de la última suscripción (el mismo cálculo que facturación y GA4). Una columna `template_locked` se desincronizaría con un webhook perdido (`stripe listen` no reenvía).
+- **La API es la única autoridad.** `TemplateAccessService` (`modules/templates/`) decide; el dashboard solo muestra `accessible`/`locked`. El cliente no puede escribir `site_schemas.template_id` ni `tenants.plan` (grants revocados) ni leer `template_archives` (RLS sin política + `REVOKE`).
+- **Baja involuntaria ≠ bajar de plan.** Solo se bloquea con suscripción vigente y plan menor que la plantilla. Si no está vigente, el bloqueo por suscripción ya actúa y la plantilla no se toca.
+- **Archivar antes de reemplazar.** Todo reemplazo del proyecto de un tenant copia antes `grapesjs_json` + `exported_html` a `template_archives` en la misma transacción. Nada se borra; los textos dicen "dejarás de tener acceso", nunca "se eliminará".
+- **Supuestos A1–A5** con su único punto de cambio: tabla en `docs/template-tiers.md › Supuestos`. A1 vive en billing (`evaluatePlanChange`, timing `period_end`); A2–A4 en `TEMPLATE_ACCESS_ASSUMPTIONS`; A5 en `PLAN_RANK`.
+- **El plan para plantillas no es el de dominios.** Dominios usan el menor entre el plan actual y un cambio programado (`EffectivePlanService`); plantillas usan el plan actual, porque el tenant conserva Pro hasta el fin del periodo (A1).
+- Desviaciones frente al brief, verificadas en el código:
+  - el vínculo sitio→plantilla es `site_schemas.template_id` (no existe `tenants.template_id`); el contenido es `site_schemas.grapesjs_json` + `exported_html`;
+  - `template_archives` guarda también `exported_html`: cambiar de plantilla despublica, así que el HTML publicado es contenido;
+  - el guard del repo es `SupabaseJwtGuard` (no `JwtAuthGuard`); la propiedad del tenant se comprueba en el servicio (`assertTenantOwnership` / `assertOwnTenant`);
+  - el impacto vive en `BillingModule` (necesita el fin de periodo de Stripe) bajo `GET /tenants/:tenantId/plan-change-impact`;
+  - la baja ya estaba programada al fin del periodo y bloqueada por un dominio sobre el tope Básico: `domain_renewal_cap` queda reservado en el contrato, pero ese caso ya no está sin resolver;
+  - `apps/web` no tiene i18n: el copy va en módulos `*.copy.ts` (`features/templates/template-access.copy.ts`), como el resto de la app;
+  - `apps/web` gana `vitest` solo para lógica pura (sin DOM): estados de la galería, el bloqueo del modal y el aviso viven en `features/templates/template-access.ts`;
+  - `GET /sites/:tenantId/schema` también responde `TEMPLATE_LOCKED_BY_PLAN`: "dejarás de tener acceso a los cambios" incluye leerlos en el editor.
 
 ## ORM — Drizzle
 

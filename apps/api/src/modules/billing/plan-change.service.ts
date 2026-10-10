@@ -3,6 +3,7 @@ import { sql, type SQL } from 'drizzle-orm';
 import Stripe from 'stripe';
 import { type Database, DATABASE } from '../../database/database.module';
 import { DomainsService } from '../domains/domains.service';
+import { TemplateAccessService } from '../templates/template-access.service';
 import {
   type BillingPeriod,
   type BillingPlan,
@@ -10,19 +11,26 @@ import {
 } from './billing.constants';
 import {
   BillingProviderUnavailableException,
+  BillingTenantAccessDeniedException,
   BillingTenantNotFoundException,
   NoPendingPlanChangeException,
   PlanChangeFailedException,
   PlanChangeNotAllowedException,
+  PlanChangeImpactNotAcknowledgedException,
   PlanChangeNotConfiguredException,
   PriceNotConfiguredException,
   SubscriptionOwnershipMismatchException,
 } from './billing.exceptions';
 import type {
+  PlanChangeImpactResponseDto,
   PlanChangeOptionDto,
   PlanChangeResultDto,
   PlanChangeStatusResponseDto,
 } from './dto/plan-change.dto';
+import {
+  type PlanChangeImpactItem,
+  templateLossImpact,
+} from './plan-change-impact';
 import {
   buildDowngradeScheduleUpdate,
   type ScheduleState,
@@ -62,7 +70,19 @@ export class PlanChangeService {
     @Inject(DATABASE) private readonly db: Database,
     private readonly state: SubscriptionStateService,
     private readonly domains: DomainsService,
+    private readonly templateAccess: TemplateAccessService,
   ) {}
+
+  /** What moving to `target` would take away from the tenant; read-only. */
+  async getImpact(
+    userSub: string,
+    tenantId: string,
+    target: BillingPlan,
+  ): Promise<PlanChangeImpactResponseDto> {
+    await this.assertOwnTenant(userSub, tenantId);
+    const ctx = await this.load(userSub);
+    return { target, items: await this.impactItems(ctx, target) };
+  }
 
   async getStatus(userSub: string): Promise<PlanChangeStatusResponseDto> {
     const ctx = await this.load(userSub);
@@ -105,6 +125,7 @@ export class PlanChangeService {
     userSub: string,
     targetPlan: BillingPlan,
     appUrl: string,
+    acknowledgeLosses = false,
   ): Promise<PlanChangeResultDto> {
     let ctx = await this.load(userSub);
     if (ctx.schedule.kind === 'finished') {
@@ -132,6 +153,16 @@ export class PlanChangeService {
 
     if (evaluation.direction === 'upgrade') {
       return this.startUpgrade(subscription, targetPlan, period, appUrl);
+    }
+    // A downgrade that loses something needs an explicit acknowledgement first.
+    const losses = await this.impactItems(ctx, targetPlan);
+    if (losses.length > 0 && !acknowledgeLosses) {
+      throw new PlanChangeImpactNotAcknowledgedException(losses);
+    }
+    if (losses.length > 0) {
+      this.logger.log(
+        `[plan-change] Tenant ${ctx.tenantId} acknowledged: ${losses.map((l) => `${l.kind}:${l.templateId}`).join(', ')}`,
+      );
     }
     return this.scheduleDowngrade(
       userSub,
@@ -278,6 +309,40 @@ export class PlanChangeService {
         `[ADMIN_ALERT] plan-change schedule ${scheduleId} (tenant ${tenantId}) is half-configured and could not be released: ${describe(err)}`,
       );
     }
+  }
+
+  // ── Impact ────────────────────────────────────────────────────────────────
+  /** Only a downgrade loses anything; the date is when it takes effect (A1: period end). */
+  private async impactItems(
+    ctx: PlanChangeContext,
+    target: BillingPlan,
+  ): Promise<PlanChangeImpactItem[]> {
+    const evaluation = evaluatePlanChange(ctx.snapshot, target, 'ok');
+    if (evaluation.direction !== 'downgrade') return [];
+    const periodEnd = currentPeriodEnd(ctx.subscription);
+    const effectiveAt =
+      ctx.schedule.kind === 'pending' && ctx.schedule.targetPlan === target
+        ? toIso(ctx.schedule.effectiveAt)
+        : evaluation.timing === 'period_end'
+          ? periodEnd
+            ? toIso(periodEnd)
+            : null
+          : new Date().toISOString();
+    const state = await this.templateAccess.stateForTenant(ctx.tenantId);
+    const loss = templateLossImpact(state.current, target, effectiveAt);
+    return loss ? [loss] : [];
+  }
+
+  private async assertOwnTenant(
+    userSub: string,
+    tenantId: string,
+  ): Promise<void> {
+    const rows = await this.query<{ ok: number }>(
+      sql`SELECT 1 AS ok FROM public.tenants
+          WHERE id = ${tenantId}::uuid AND user_id = ${userSub}::uuid
+          LIMIT 1`,
+    );
+    if (!rows[0]) throw new BillingTenantAccessDeniedException();
   }
 
   // ── Context ───────────────────────────────────────────────────────────────

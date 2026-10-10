@@ -4,11 +4,11 @@
 
 .lz-faq__list {
   display: grid;
-  border-top: 1px solid var(--lz-color-line);
+  border-top: var(--lz-border-width) solid var(--lz-color-line);
 }
 
 .lz-faq__item {
-  border-bottom: 1px solid var(--lz-color-line);
+  border-bottom: var(--lz-border-width) solid var(--lz-color-line);
 }
 
 .lz-faq__question {
@@ -40,7 +40,7 @@
   flex: 0 0 auto;
   width: 32px;
   height: 32px;
-  border: 1px solid var(--lz-color-line-strong);
+  border: var(--lz-border-width) solid var(--lz-color-line-strong);
   border-radius: var(--lz-radius-pill);
 }
 

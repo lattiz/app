@@ -34,8 +34,16 @@ Use a stable id: lowercase, digits and dashes, 3–60 chars, versioned
 pnpm tsx scripts/parse-and-seed-template.ts \
   --file ./restaurante.grapesjs --html ./restaurante-export/index.html \
   --id restaurante-moderno-v1 --name "Restaurante Moderno" --category restaurantes \
-  --description "Menú, reservas y ubicación" --sort-order 10
+  --description "Menú, reservas y ubicación" --sort-order 10 --tier basic
 ```
+
+`--tier basic|pro` sets `templates.tier` (which plans may use the template; see
+`docs/template-tiers.md › Acceso por plan`). With `--dir`, it defaults to the
+`tier` in `<dir>/template.meta.json`; with neither, the seed stops. When a
+re-seed changes the tier of a template tenants already use, the seed prints how
+many sites use it. Before turning one into `pro`, run
+`supabase/tests/template_access/precheck_pro_templates.sql` (read-only) and
+decide what happens to the Básico tenants it lists.
 
 Stages, each idempotent (re-running the same command resumes):
 

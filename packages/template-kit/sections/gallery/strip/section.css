@@ -26,11 +26,12 @@
   object-fit: cover;
   border-radius: var(--lz-radius-card);
   background: var(--lz-color-surface-2);
+  filter: var(--lz-photo-filter);
 }
 
 .lz-gallery__caption {
   padding-top: 12px;
-  border-top: 1px solid var(--lz-color-line);
+  border-top: var(--lz-border-width) solid var(--lz-color-line);
   color: var(--lz-color-muted);
   font-size: 14px;
 }

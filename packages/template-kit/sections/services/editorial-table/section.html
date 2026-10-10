@@ -1,0 +1,25 @@
+<section id="servicios" data-lz-slot="services" data-lz-variant="editorial-table" class="lz-section lz-services-table">
+  <div class="lz-container lz-services-table__grid">
+    <div class="lz-services-table__aside">
+      <p class="lz-index" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-services-table__title" data-lz-key="title"></h2>
+      <p class="lz-services-table__intro" data-lz-if="intro" data-lz-key="intro"></p>
+    </div>
+    <div class="lz-services-table__body">
+      <ol class="lz-services-table__list">
+        <li class="lz-services-table__row" data-lz-each="prices">
+          <h3 class="lz-services-table__name" data-lz-key="name"></h3>
+          <p class="lz-services-table__price" data-lz-key="price"></p>
+          <p class="lz-services-table__desc" data-lz-key="description"></p>
+        </li>
+      </ol>
+      <ul class="lz-services-table__notes" data-lz-if="promos">
+        <li class="lz-services-table__note" data-lz-each="promos">
+          <p class="lz-services-table__note-title" data-lz-key="title"></p>
+          <p class="lz-services-table__note-text" data-lz-key="text"></p>
+          <a target="_blank" rel="noopener noreferrer" class="lz-link" data-lz-attr-href="href" data-lz-key="cta"></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

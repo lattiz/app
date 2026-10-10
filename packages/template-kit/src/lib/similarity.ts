@@ -1,6 +1,7 @@
 import type { Tier } from '../tiers';
 import type { Manifest, Theme } from '../types';
-import { fontFamilyName } from './theme';
+import { hueOf } from './color';
+import { tokenColor } from './theme';
 
 export interface Fingerprint {
   id: string;
@@ -10,9 +11,38 @@ export interface Fingerprint {
   order: string[];
   theme: string;
   fonts: string;
+  /** radiusCard|radiusPill|border|shadow */
+  shape: string;
+  hero: string;
+  services: string;
+  /** Accent hue in degrees; null for a near-gray accent. */
+  accentHue: number | null;
+  /** Normalized hero headline (see normalizeHeadline). */
+  headline: string;
 }
 
-export function fingerprint(manifest: Manifest, theme: Theme): Fingerprint {
+/** Lowercase letters and digits only: "Corte de <b>lujo</b>.<br>Actitud" → "corte de lujo actitud". */
+export function normalizeHeadline(html: string): string {
+  return html
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&[a-z#0-9]+;/gi, ' ')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+export function fingerprint(
+  manifest: Manifest,
+  theme: Theme,
+  headlineHtml: string,
+): Fingerprint {
+  const variantOf = (slot: string) =>
+    manifest.sections.find((s) => s.slot === slot)?.variant ?? '';
+  const accent = tokenColor(theme, 'accent');
+  const hue = accent ? hueOf(accent) : null;
+  const { radiusCard, radiusPill, border, shadow } = theme.shape;
   return {
     id: manifest.id,
     vertical: manifest.vertical,
@@ -20,7 +50,12 @@ export function fingerprint(manifest: Manifest, theme: Theme): Fingerprint {
     pairs: manifest.sections.map((s) => `${s.slot}:${s.variant}`),
     order: manifest.sections.map((s) => s.slot),
     theme: manifest.theme,
-    fonts: `${fontFamilyName(theme.fonts.display)} + ${fontFamilyName(theme.fonts.body)}`,
+    fonts: theme.fontPair,
+    shape: [radiusCard, radiusPill, border, shadow].join('|'),
+    hero: variantOf('hero'),
+    services: variantOf('services'),
+    accentHue: hue && hue.chroma > 0.08 ? hue.hue : null,
+    headline: normalizeHeadline(headlineHtml),
   };
 }
 
@@ -43,13 +78,27 @@ export interface SimilarityBreakdown {
   score: number;
   sections: number;
   order: number;
+  hero: number;
+  services: number;
   theme: number;
   fonts: number;
+  shape: number;
 }
 
+/** Weights of the structural + visual-identity similarity; they add up to 1. */
+export const SIMILARITY_WEIGHTS = {
+  sections: 0.25,
+  order: 0.05,
+  hero: 0.15,
+  services: 0.1,
+  theme: 0.15,
+  fonts: 0.15,
+  shape: 0.15,
+} as const;
+
 /**
- * 0.50 × Jaccard of slot+variant pairs + 0.10 × order agreement of shared slots (LCS)
- * + 0.25 × same theme + 0.15 × same display/body font pair.
+ * Jaccard of slot+variant pairs, LCS order agreement of shared slots, and equality of hero
+ * variant, services variant, theme, font pair and shape, weighted by SIMILARITY_WEIGHTS.
  */
 export function similarity(
   a: Fingerprint,
@@ -64,14 +113,18 @@ export function similarity(
   const oa = a.order.filter((s) => sharedSlots.has(s));
   const ob = b.order.filter((s) => sharedSlots.has(s));
   const order = sharedSlots.size === 0 ? 0 : lcs(oa, ob) / sharedSlots.size;
-  const theme = a.theme === b.theme ? 1 : 0;
-  const fonts = a.fonts === b.fonts ? 1 : 0;
-  const score = 0.5 * sections + 0.1 * order + 0.25 * theme + 0.15 * fonts;
-  return {
-    score: Math.round(score * 1000) / 1000,
+  const same = (x: string, y: string) => (x !== '' && x === y ? 1 : 0);
+  const parts = {
     sections,
     order,
-    theme,
-    fonts,
+    hero: same(a.hero, b.hero),
+    services: same(a.services, b.services),
+    theme: same(a.theme, b.theme),
+    fonts: same(a.fonts, b.fonts),
+    shape: same(a.shape, b.shape),
   };
+  const score = (
+    Object.keys(SIMILARITY_WEIGHTS) as (keyof typeof SIMILARITY_WEIGHTS)[]
+  ).reduce((sum, k) => sum + SIMILARITY_WEIGHTS[k] * parts[k], 0);
+  return { score: Math.round(score * 1000) / 1000, ...parts };
 }

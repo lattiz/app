@@ -1,4 +1,5 @@
 import { toast } from 'sonner';
+import { templateAccessCopy } from '@/features/templates/template-access.copy';
 
 interface ApiErrorBody {
   error?: { code?: string };
@@ -26,6 +27,8 @@ const ASSET_QUOTA = 'Alcanzaste el límite de imágenes de la prueba';
 const UNSUPPORTED_FILE =
   'Ese archivo no es una imagen. Sube un archivo de imagen (PNG, JPG, WebP, GIF).';
 const RATE_LIMIT = 'Demasiados intentos, espera un momento';
+const TEMPLATE_REQUIRES_PRO = templateAccessCopy.requiresProError;
+const TEMPLATE_LOCKED_BY_PLAN = templateAccessCopy.lockedError;
 
 export interface SiteActionError {
   code: string | undefined;
@@ -53,6 +56,10 @@ export function siteActionError(
       return { code, message: UNSUPPORTED_FILE, plansAction: false };
     case 'TOO_MANY_REQUESTS':
       return { code, message: RATE_LIMIT, plansAction: false };
+    case 'TEMPLATE_REQUIRES_PRO':
+      return { code, message: TEMPLATE_REQUIRES_PRO, plansAction: true };
+    case 'TEMPLATE_LOCKED_BY_PLAN':
+      return { code, message: TEMPLATE_LOCKED_BY_PLAN, plansAction: true };
     default:
       return {
         code,
@@ -67,7 +74,7 @@ export function siteActionError(
   }
 }
 
-/** Toast the mapped message. `PREVIEW_EXPIRED` refreshes GET /tenants/me. */
+/** Toast the mapped message. `PREVIEW_EXPIRED` and template-lock codes refresh GET /tenants/me. */
 export function reportSiteActionError(
   err: unknown,
   context: 'publish' | 'upload' | 'template',
@@ -80,7 +87,12 @@ export function reportSiteActionError(
       ? { action: { label: 'Elige un plan', onClick: options.onPlans } }
       : undefined,
   );
-  if (mapped.code === 'PREVIEW_EXPIRED') options?.onPreviewExpired?.();
+  if (
+    mapped.code === 'PREVIEW_EXPIRED' ||
+    mapped.code === 'TEMPLATE_LOCKED_BY_PLAN' ||
+    mapped.code === 'TEMPLATE_REQUIRES_PRO'
+  )
+    options?.onPreviewExpired?.();
 }
 
 const TOO_MANY_REQUESTS =
@@ -120,6 +132,8 @@ export function uploadErrorMessage(err: unknown): string {
       return TOO_MANY_REQUESTS;
     case 'TENANT_ACCESS_DENIED':
       return 'No tienes acceso a este sitio.';
+    case 'TEMPLATE_LOCKED_BY_PLAN':
+      return TEMPLATE_LOCKED_BY_PLAN;
     default:
       return 'No se pudo subir la imagen. Intenta de nuevo.';
   }

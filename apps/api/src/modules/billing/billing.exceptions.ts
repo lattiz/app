@@ -39,7 +39,9 @@ export class SubscriptionCancellationFailedException extends DomainException {
   readonly status = HttpStatus.BAD_GATEWAY;
 
   constructor() {
-    super('The subscription could not be canceled; the account was not deleted.');
+    super(
+      'The subscription could not be canceled; the account was not deleted.',
+    );
   }
 }
 
@@ -120,5 +122,27 @@ export class PlanChangeFailedException extends DomainException {
 
   constructor() {
     super('The plan change could not be scheduled. Try again in a moment.');
+  }
+}
+
+/** The downgrade loses something (e.g. a Pro template) and the tenant has not acknowledged it yet. */
+export class PlanChangeImpactNotAcknowledgedException extends DomainException {
+  readonly code = 'PLAN_CHANGE_IMPACT_NOT_ACKNOWLEDGED';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor(items: readonly unknown[]) {
+    super('Acknowledge what this plan change removes before confirming it.', {
+      items,
+    });
+  }
+}
+
+/** The tenant in the path is not the caller's. */
+export class BillingTenantAccessDeniedException extends DomainException {
+  readonly code = 'TENANT_ACCESS_DENIED';
+  readonly status = HttpStatus.FORBIDDEN;
+
+  constructor() {
+    super('You do not have access to this tenant.');
   }
 }

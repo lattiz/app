@@ -1,0 +1,119 @@
+.lz-services-cards {
+  padding: var(--lz-section-pad) 0;
+}
+
+.lz-services-cards__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--lz-stack);
+  margin-top: 12px;
+}
+
+.lz-service-card {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 26px;
+  border: var(--lz-border-width) solid var(--lz-color-line);
+  border-radius: var(--lz-radius-card);
+  background: var(--lz-color-surface);
+  box-shadow: var(--lz-shadow);
+}
+
+.lz-service-card__price {
+  margin: 0 0 6px;
+  color: var(--lz-color-accent-text);
+  font-family: var(--lz-font-display);
+  font-size: clamp(36px, 4vw, 52px);
+  line-height: var(--lz-display-leading);
+  text-transform: var(--lz-display-transform);
+}
+
+.lz-service-card__name {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.lz-service-card__desc {
+  margin: 0;
+  color: var(--lz-color-muted);
+  font-size: 15px;
+}
+
+.lz-services-cards__promos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--lz-stack);
+  margin-top: calc(var(--lz-stack) * 2);
+}
+
+.lz-services-cards__promo {
+  display: grid;
+  gap: 10px;
+  padding: 20px 22px;
+  border: var(--lz-border-width) solid var(--lz-color-accent);
+  border-radius: var(--lz-radius-card);
+  background: var(--lz-color-accent);
+  color: var(--lz-color-on-accent);
+  box-shadow: var(--lz-shadow-sm);
+  transition: transform 0.25s ease;
+}
+
+.lz-services-cards__promo:hover {
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.lz-services-cards__promo:focus-visible {
+  transform: translateY(-2px);
+  outline: 2px solid var(--lz-color-text);
+  outline-offset: 3px;
+}
+
+.lz-services-cards__tag {
+  font-family: var(--lz-font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.lz-services-cards__promo-title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.lz-services-cards__promo-cta {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lz-services-cards__promo {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (max-width: 992px) {
+  .lz-services-cards__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .lz-services-cards__promos {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .lz-services-cards__grid {
+    grid-template-columns: 1fr;
+  }
+  .lz-service-card {
+    padding: 20px;
+  }
+}

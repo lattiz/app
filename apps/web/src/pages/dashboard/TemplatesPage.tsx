@@ -14,6 +14,12 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { isConflictWithConfirmation, useChangeTemplate } from '@/hooks/use-change-template';
 import { useSelectTemplate } from '@/hooks/use-select-template';
 import { useTemplates } from '@/hooks/use-templates';
+import {
+  filterByTier,
+  isTemplateLocked,
+  type TierFilter,
+} from '@/features/templates/template-access';
+import { templateAccessCopy } from '@/features/templates/template-access.copy';
 import { reportSiteActionError } from '@/lib/upload-errors';
 import { useDashboardStore } from '@/stores/dashboard.store';
 
@@ -27,6 +33,8 @@ export function TemplatesPage() {
   const canPublish = tenant.data?.canPublish !== false;
 
   const [pendingTemplateId, setPendingTemplateId] = useState<string | null>(null);
+  const [tierFilter, setTierFilter] = useState<TierFilter>('all');
+  const siteLocked = isTemplateLocked(tenant.data);
 
   const tenantId = tenant.data?.tenantId ?? '';
   const currentTemplateId = tenant.data?.site?.templateId ?? null;
@@ -61,7 +69,7 @@ export function TemplatesPage() {
 
   const handleSelect = async (templateId: string) => {
     if (currentTemplateId === templateId) {
-      goToCustomization();
+      if (!siteLocked) goToCustomization();
       return;
     }
     if (!canPublish) return;
@@ -74,6 +82,9 @@ export function TemplatesPage() {
       }
 
       await applyChange(templateId, false);
+      await queryClient.invalidateQueries({
+        queryKey: tenantsControllerMeQueryKey(),
+      });
       goToCustomization();
     } catch (err) {
       if (isConflictWithConfirmation(err)) {
@@ -89,6 +100,9 @@ export function TemplatesPage() {
     try {
       await applyChange(pendingTemplateId, true);
       setPendingTemplateId(null);
+      await queryClient.invalidateQueries({
+        queryKey: tenantsControllerMeQueryKey(),
+      });
       goToCustomization();
     } catch (err) {
       setPendingTemplateId(null);
@@ -151,16 +165,45 @@ export function TemplatesPage() {
 
       {templates.data && templates.data.length > 0 && (
         <div
+          role="group"
+          aria-label={templateAccessCopy.filterLabel}
+          className="flex flex-wrap gap-2"
+        >
+          {(['all', 'basic', 'pro'] as const).map((filter) => (
+            <Button
+              key={filter}
+              size="sm"
+              variant={tierFilter === filter ? 'default' : 'outline'}
+              aria-pressed={tierFilter === filter}
+              onClick={() => setTierFilter(filter)}
+            >
+              {templateAccessCopy.filters[filter]}
+            </Button>
+          ))}
+        </div>
+      )}
+
+      {templates.data &&
+        templates.data.length > 0 &&
+        filterByTier(templates.data, tierFilter).length === 0 && (
+          <div className="rounded-2xl border border-dashed px-6 py-16 text-center text-sm text-muted-foreground">
+            {templateAccessCopy.emptyFilter}
+          </div>
+        )}
+
+      {templates.data && templates.data.length > 0 && (
+        <div
           className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
           data-tour="template-gallery"
         >
-          {templates.data.map((template) => (
+          {filterByTier(templates.data, tierFilter).map((template) => (
             <TemplateCard
               key={template.id}
               template={template}
               isCurrentTemplate={currentTemplateId === template.id}
               isSelecting={isSelecting}
               changeLocked={!canPublish && currentTemplateId !== template.id}
+              siteLocked={siteLocked}
               onSelect={(id) => void handleSelect(id)}
             />
           ))}

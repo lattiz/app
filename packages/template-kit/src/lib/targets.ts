@@ -2,7 +2,15 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { KitError } from './args';
 import type { CompiledTemplate, DistSnapshot } from './compile';
-import { listManifestFiles, loadManifest, loadTheme, parseTheme } from './load';
+import type { Manifest } from '../types';
+import { interpolate } from './content';
+import {
+  listManifestFiles,
+  loadContentPack,
+  loadManifest,
+  loadTheme,
+  parseTheme,
+} from './load';
 import { KIT_ROOT, paths } from './paths';
 import { fingerprint, type Fingerprint } from './similarity';
 import { themeFileFor, type ValidationTarget } from './validate';
@@ -78,12 +86,30 @@ export function targetFromDist(dir: string): ValidationTarget {
   };
 }
 
-/** Fingerprints of every manifest in templates/, for the similarity gate. */
+/** The hero <h1> markup a manifest will render: its hero props, else its content pack. */
+export async function manifestHeadline(manifest: Manifest): Promise<string> {
+  const pack = await loadContentPack(manifest.content);
+  const hero = manifest.sections.find((s) => s.slot === 'hero');
+  const title = hero?.props?.title ?? pack.sections.hero?.title;
+  if (typeof title !== 'string') return '';
+  return interpolate(title, {
+    business: { ...pack.business, ...manifest.business },
+    source: `${manifest.id} (hero title)`,
+  });
+}
+
+/** Fingerprints of every manifest in templates/, for the similarity and uniqueness gates. */
 export async function libraryFingerprints(): Promise<Fingerprint[]> {
   const out: Fingerprint[] = [];
   for (const file of listManifestFiles()) {
     const manifest = await loadManifest(file);
-    out.push(fingerprint(manifest, loadTheme(manifest.theme)));
+    out.push(
+      fingerprint(
+        manifest,
+        loadTheme(manifest.theme),
+        await manifestHeadline(manifest),
+      ),
+    );
   }
   return out;
 }

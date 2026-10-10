@@ -16,6 +16,8 @@ export const Route = createFileRoute('/_authenticated/editor/$tenantId')({
       .catch(() => null);
     // Lapsed tenants have no preview. Trial and expired-trial tenants edit here.
     if (tenant?.previewState === 'lapsed') throw redirect({ to: '/dashboard' });
+    // A template above the plan can't be edited (A2); the gallery shows the banner and the way out.
+    if (tenant?.templateAccess?.locked) throw redirect({ to: '/dashboard/templates' });
   },
   component: EditorPage,
 });

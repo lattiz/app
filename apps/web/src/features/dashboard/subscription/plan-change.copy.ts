@@ -84,6 +84,9 @@ export function planChangeErrorMessage(err: unknown): string {
       error?: { code?: string; details?: { blockers?: Blocker[] } };
     } | null
   )?.error;
+  if (error?.code === 'PLAN_CHANGE_IMPACT_NOT_ACKNOWLEDGED') {
+    return 'Antes de cambiar a Básico, confirma que entiendes lo que dejarás de tener.';
+  }
   if (error?.code === 'PLAN_CHANGE_NOT_ALLOWED') {
     const [first] = blockerMessages(error.details?.blockers ?? []);
     if (first) return first;

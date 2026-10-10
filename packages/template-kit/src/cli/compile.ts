@@ -29,7 +29,7 @@ async function main(): Promise<void> {
     );
     if (generated.length > 0)
       console.log(
-        `    placeholders generated in ${relative(process.cwd(), resolve(KIT_ROOT, 'assets', compiled.manifest.vertical))}: ${generated.join(', ')}`,
+        `    placeholders generated in ${relative(process.cwd(), resolve(KIT_ROOT, 'assets', compiled.manifest.vertical, compiled.theme.name))}: ${generated.join(', ')}`,
       );
   }
 }

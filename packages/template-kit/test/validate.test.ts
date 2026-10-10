@@ -2,7 +2,7 @@ import { resolve } from 'node:path';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { contrastRatio, findColorLiterals, parseColor } from '../src/lib/color';
 import { compileFile } from '../src/lib/compile';
-import { loadTheme } from '../src/lib/load';
+import { listThemes, loadTheme } from '../src/lib/load';
 import { TIERS } from '../src/tiers';
 import { KIT_ROOT, paths } from '../src/lib/paths';
 import {
@@ -24,31 +24,37 @@ describe('validator on the library templates', () => {
     for (const id of [
       'barberia-oxido-v1',
       'barberia-norte-v1',
+      'barberia-concreto-v1',
       'barberia-base-oscuro-v1',
       'barberia-base-claro-v1',
+      'barberia-base-solar-v1',
     ]) {
       const compiled = await compileFile(resolve(paths.templates, `${id}.ts`));
       reports.set(id, validateTarget(targetFromCompiled(compiled), others));
     }
   });
 
-  it('passes the Pro (ÓXIDO, Norte) and Basic (oscuro, claro) templates in both themes', () => {
+  it('passes the three Pro and three Basic templates', () => {
+    expect([...reports.keys()].length).toBe(6);
     for (const [id, report] of reports) expect(report.findings, id).toEqual([]);
   });
 
   it("scores similarity only within the same vertical and tier, with that tier's limit", () => {
     const pro = reports.get('barberia-norte-v1');
     expect(pro?.similarityLimit).toBe(TIERS.pro.similarityLimit);
-    expect(pro?.similarity.map((s) => s.other)).toEqual(['barberia-oxido-v1']);
-    expect(pro?.similarity[0].score).toBeLessThanOrEqual(0.5);
-
+    expect(pro?.similarity.map((s) => s.other).sort()).toEqual([
+      'barberia-concreto-v1',
+      'barberia-oxido-v1',
+    ]);
     const basic = reports.get('barberia-base-claro-v1');
     expect(basic?.similarityLimit).toBe(TIERS.basic.similarityLimit);
-    expect(basic?.similarity.map((s) => s.other)).toEqual([
+    expect(basic?.similarity.map((s) => s.other).sort()).toEqual([
       'barberia-base-oscuro-v1',
+      'barberia-base-solar-v1',
     ]);
-    // Same structure, different theme and fonts: a reskin on purpose.
-    expect(basic?.similarity[0].score).toBe(0.6);
+    for (const report of reports.values())
+      for (const s of report.similarity)
+        expect(s.score).toBeLessThanOrEqual(report.similarityLimit);
   });
 });
 
@@ -167,13 +173,39 @@ describe('color rules', () => {
     expect(white && black && contrastRatio(white, black)).toBeCloseTo(21);
   });
 
-  it('accepts both shipped themes and rejects oval cards', () => {
-    expect(checkTheme(loadTheme('urban-dark'), 'urban-dark')).toEqual([]);
-    expect(checkTheme(loadTheme('bone-blue'), 'bone-blue')).toEqual([]);
+  it('accepts every shipped theme and rejects oval cards', () => {
+    for (const name of listThemes())
+      expect(checkTheme(loadTheme(name), name), name).toEqual([]);
+    const papel = loadTheme('trazo-papel');
     const oval = {
-      ...loadTheme('bone-blue'),
-      radius: { pill: '999px', card: '48px' },
+      ...papel,
+      shape: { ...papel.shape, radiusCard: '48px' },
     };
     expect(checkTheme(oval, 'x').map((f) => f.rule)).toEqual(['radius-card']);
+  });
+});
+
+describe('validator on the deliberately cloned fixture', () => {
+  it('fails every uniqueness rule and the Pro similarity limit', async () => {
+    const compiled = await compileFile(
+      resolve(KIT_ROOT, 'fixtures/clone/barberia-oxido-clone-v1.ts'),
+    );
+    const report = validateTarget(
+      targetFromCompiled(compiled),
+      await libraryFingerprints(),
+    );
+    const rules = new Set(report.findings.map((f) => f.rule));
+    for (const rule of [
+      'unique-theme',
+      'unique-font-pair',
+      'accent-hue',
+      'unique-headline',
+      'unique-hero',
+      'similarity',
+    ] as const)
+      expect(rules.has(rule), rule).toBe(true);
+    expect(
+      report.findings.every((f) => f.message.includes('barberia-oxido-v1')),
+    ).toBe(true);
   });
 });

@@ -9,7 +9,7 @@ este documento la explica y propone lo que aún no está implementado.
 
 |                                     | **Basic**                                                         | **Pro**                                                                            |
 | ----------------------------------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| Quién puede usarla                  | Cualquier tenant                                                  | Solo tenants con suscripción Pro (exclusiva)                                       |
+| Quién puede usarla                  | Cualquier tenant                                                  | Tenants con plan Pro (o superior); varias pueden compartir la misma plantilla      |
 | Identidad                           | Estructura compartida por rubro; cambia solo el tema              | Arquetipo propio por rubro (orden, variantes, tema, tipografías)                   |
 | Secciones contadas                  | 6–7                                                               | 8–10                                                                               |
 | Roles obligatorios                  | header, hero, catalog, contact (compacto), faq, footer + whatsapp | header, hero, about, catalog, proof, testimonials, faq, contact, footer + whatsapp |
@@ -32,20 +32,20 @@ este documento la explica y propone lo que aún no está implementado.
 Los blueprints hablan de **roles**; cada rubro resuelve el rol a un slot
 (`blueprints/service-landing.shared.ts › verticals`). Para barbería:
 
-| Rol          | Slot                | Variantes Basic   | Variantes Pro     |
-| ------------ | ------------------- | ----------------- | ----------------- |
-| header       | `navbar`            | cualquiera        | cualquiera        |
-| hero         | `hero`              | cualquiera        | cualquiera        |
-| about        | `about`             | `brief`           | `urban-luxe`      |
-| catalog      | `services`          | cualquiera        | cualquiera        |
-| proof        | `gallery`           | —                 | `grid`, `strip`   |
-| team         | `team`              | —                 | cualquiera        |
-| testimonials | `testimonials`      | —                 | cualquiera        |
-| faq          | `faq`               | `list`, `two-col` | `list`, `two-col` |
-| contact      | `locations`         | `single`          | `with-contact`    |
-| marquee      | `marquee`           | —                 | cualquiera        |
-| whatsapp     | `floating-whatsapp` | cualquiera        | cualquiera        |
-| footer       | `footer`            | cualquiera        | cualquiera        |
+| Rol          | Slot                | Variantes Basic   | Variantes Pro                                   |
+| ------------ | ------------------- | ----------------- | ----------------------------------------------- |
+| header       | `navbar`            | cualquiera        | cualquiera                                      |
+| hero         | `hero`              | cualquiera        | cualquiera                                      |
+| about        | `about`             | `brief`           | `text-image-offset`, `statement`, `stats-strip` |
+| catalog      | `services`          | cualquiera        | cualquiera                                      |
+| proof        | `gallery`           | —                 | `grid`, `strip`                                 |
+| team         | `team`              | —                 | cualquiera                                      |
+| testimonials | `testimonials`      | —                 | cualquiera                                      |
+| faq          | `faq`               | `list`, `two-col` | `list`, `two-col`                               |
+| contact      | `locations`         | `single`          | `with-contact`                                  |
+| marquee      | `marquee`           | —                 | cualquiera                                      |
+| whatsapp     | `floating-whatsapp` | cualquiera        | cualquiera                                      |
+| footer       | `footer`            | cualquiera        | cualquiera                                      |
 
 `schemaType` del rubro (para el JSON-LD del publicador): `BarberShop`.
 
@@ -54,16 +54,30 @@ Un rubro nuevo agrega su entrada en `verticals` (p. ej. restaurante:
 
 ## Plantillas actuales
 
-| id                               | Tier  | Tema         | Secciones contadas |
-| -------------------------------- | ----- | ------------ | ------------------ |
-| `barberia-base-oscuro-v1` (FILO) | basic | `urban-dark` | 7                  |
-| `barberia-base-claro-v1` (TRAZO) | basic | `bone-blue`  | 7                  |
-| `barberia-oxido-v1` (ÓXIDO)      | pro   | `urban-dark` | 10                 |
-| `barberia-norte-v1` (Norte)      | pro   | `bone-blue`  | 10                 |
+| id                                | Tier  | Tema              | Voz                      | Portada · servicios            | Secciones contadas |
+| --------------------------------- | ----- | ----------------- | ------------------------ | ------------------------------ | ------------------ |
+| `barberia-oxido-v1` (ÓXIDO)       | pro   | `oxido`           | `oxido` (streetwear)     | `image-bg` · `price-list`      | 10                 |
+| `barberia-norte-v1` (Norte)       | pro   | `norte-atelier`   | `norte` (editorial)      | `split` · `editorial-table`    | 10                 |
+| `barberia-concreto-v1` (CONCRETO) | pro   | `concreto-brutal` | `concreto` (irreverente) | `offset-card` · `cards`        | 10                 |
+| `barberia-base-claro-v1` (TRAZO)  | basic | `trazo-papel`     | `trazo` (amable)         | `centered-arch` · `price-list` | 7                  |
+| `barberia-base-oscuro-v1` (FILO)  | basic | `trazo-noche`     | `trazo`                  | `image-bg` · `cards`           | 7                  |
+| `barberia-base-solar-v1` (LUMEN)  | basic | `trazo-solar`     | `trazo`                  | `split` · `price-list`         | 7                  |
 
-ÓXIDO y Norte conservan su id: el seed hace upsert por `--id`. Las imágenes de
-`assets/barberia/` (incluida la galería) siguen siendo placeholders generados;
-hay que reemplazarlas por fotos reales antes de sembrar.
+Los ids existentes se conservan: el seed hace upsert por `--id`. Todas las
+imágenes de `assets/barberia/<tema>/` son placeholders generados con la paleta
+de cada tema; hay que reemplazarlas por fotos con licencia antes de sembrar
+(ver `assets/barberia/README.md`).
+
+## Unicidad dentro de un rubro
+
+Además del límite de similitud por tier, `kit:validate` exige dentro del rubro:
+tema único, `fontPair` único, tono de acento a ≥ 30° de cualquier otra plantilla,
+titular de portada único y, entre las Pro, variante de portada única. Un tema
+`pro` solo sirve a plantillas Pro (y uno `basic` solo a Basic).
+`kit:compare-visual` mide la distancia perceptual (SSIM de luminancia + ΔE
+CIELAB) entre las portadas a 1280×800 reducidas a tamaño miniatura y falla por
+debajo de 0.33; genera `dist/_contact-sheet.png` para la prueba de entrecerrar
+los ojos.
 
 ## `dist/<id>/template.meta.json`
 
@@ -77,14 +91,14 @@ el editor espera exactamente `{ projectType, id }`):
   "family": "service-landing",
   "vertical": "barberia",
   "archetype": "street-luxe",
-  "exclusive": true,
+  "exclusive": false,
   "seoProfile": "advanced",
   "schemaType": "BarberShop",
   "editableTokens": ["color-bg", "…", "radius-pill", "radius-card"],
   "slots": [
     {
       "slot": "navbar",
-      "variant": "urban-luxe",
+      "variant": "inline",
       "role": "header",
       "counted": true
     },
@@ -163,32 +177,76 @@ tema (`CONTRAST_PAIRS` del validador) cuando el tenant cambia un color, y
 derivar `on-accent` si el nuevo acento lo exige. Ver la idea de fase 3 en
 `CONVENTIONS.md` (Global Styles del SDK sobre `:root`).
 
-## Propuesta de base de datos y gating (sin migraciones)
+## Acceso por plan (implementado)
 
-1. `templates.tier text not null default 'basic' check (tier in ('basic','pro'))`,
-   llenado por el seed desde `template.meta.json`.
-2. Exclusividad: `templates.exclusive boolean` (o derivarla de `tier`) y una
-   tabla `template_claims (template_id, tenant_id, claimed_at, released_at)`
-   con índice único parcial `where released_at is null`: una Pro tiene a lo
-   sumo un dueño vigente.
-3. Galería filtrada por plan en el API (`GET /templates`): Basic para todos;
-   Pro solo si `tenants.plan = 'pro'` con suscripción vigente (`isEntitled`) y
-   la plantilla no está reclamada por otro tenant.
-4. `POST /sites/select-template` y `change-template` validan lo mismo en el
-   servidor y crean/liberan el claim en la misma transacción.
-5. El seed guarda `seo_profile`/`schema_type` si el publicador los va a leer
-   de BD en vez de recalcularlos.
+El acceso se **deriva al leer**; no hay columna de bloqueo. La API es la única
+autoridad y el dashboard solo refleja lo que responde.
 
-## Preguntas abiertas (para el dueño del producto)
+- **Regla:** `evaluateTemplateAccess(plan, tier)` en
+  `apps/api/src/modules/templates/template-access.policy.ts`, por **rango**
+  (`none`/`trial`/`basico` = 0, `pro` = 1, `empresarial` = 2; un plan
+  desconocido cuenta como Básico). Básico solo usa `basic`; Pro usa `basic` y
+  `pro`. **No hay plantillas exclusivas** (`exclusive: false` en `tiers.ts`):
+  cualquier tenant Pro puede usar cualquier plantilla Pro, y varias pueden
+  compartirla.
+- **Plan efectivo:** `tenants.plan` (sincronizado desde el precio de Stripe)
+  combinado con `computeIsEntitled` (estado + `current_period_end`) de la última
+  suscripción, el mismo cálculo que usan la facturación y GA4.
+- **Bloqueo (A2):** `locked = vigente && rango(plan) < tier(plantilla actual)`.
+  Mientras dura, la API responde `403 TEMPLATE_LOCKED_BY_PLAN` al cargar,
+  guardar, subir imágenes y publicar. El sitio publicado sigue en línea. Una
+  baja involuntaria (pago vencido, periodo terminado) **no** bloquea: ya la
+  cubre el bloqueo por suscripción. Cancelar y volver a suscribirse como Básico
+  sí bloquea.
+- **Elegir o cambiar plantilla:** `403 TEMPLATE_REQUIRES_PRO` si el plan no la
+  incluye. Un tenant bloqueado siempre puede cambiar a una Básica (es la salida).
+- **Archivar antes de reemplazar:** cambiar de plantilla copia el proyecto
+  (`grapesjs_json`) y el HTML publicado a `template_archives` y luego lo
+  reemplaza, en una sola transacción. Nada se borra ni se le muestra al tenant.
+- **Bajar de plan:** `GET /tenants/:tenantId/plan-change-impact?target=basico`
+  lista lo que se pierde (hoy solo `template_loss`, con su fecha). `POST
+/billing/plan-change` exige `acknowledgeLosses: true` si hay pérdidas; si no,
+  `409 PLAN_CHANGE_IMPACT_NOT_ACKNOWLEDGED`. `analytics` y `domain_renewal_cap`
+  están reservados en el contrato; un dominio con renovación sobre el tope
+  Básico ya impide la baja (`DOWNGRADE_DOMAIN_ABOVE_BASIC_CAP`).
+- **Galería:** `GET /templates` devuelve `tier`, `accessible` y `lockedReason`
+  por plantilla para el plan del tenant; `GET /tenants/me` trae
+  `templateAccess: { current, locked }`.
+- **Seed:** `--tier basic|pro` (por defecto el `tier` de `template.meta.json`).
+  Si un re-seed cambia el tier de una plantilla en uso, avisa cuántos tenants la
+  usan (solo consulta).
 
-- ¿Qué pasa con una plantilla Pro reclamada cuando el tenant cancela o baja a
-  Basic? ¿Conserva su sitio publicado, se libera el claim, hay periodo de
-  gracia antes de liberarla para otro tenant?
-- ¿Los tenants Basic pueden **ver** (vista previa) las plantillas Pro como
-  incentivo de upgrade, aunque no puedan elegirlas?
-- ¿Un tenant puede moverse entre plantillas (Basic↔Basic, Basic→Pro,
-  Pro→otra Pro)? ¿Se pierde su contenido? ¿Cuenta como liberar el claim?
-- ¿"Exclusiva" significa un solo tenant en toda la plataforma, o uno por
-  ciudad / por rubro?
-- ¿Título, descripción e imagen OG editables quedan como función Pro (perfil
-  Advanced) aunque hoy estén disponibles para todos?
+### Supuestos (el dueño puede cambiarlos; cada uno vive en un solo lugar)
+
+|     | Supuesto                                                                                                            | Dónde se cambia                                                                    |
+| --- | ------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| A1  | Una baja voluntaria aplica al **fin del periodo pagado**; hasta entonces sigue con Pro.                             | `evaluatePlanChange` (timing `period_end`) en `plan-change.policy.ts`; ya era así. |
+| A2  | Bloqueado: el sitio publicado **sigue en línea**; editar, guardar, subir y publicar se bloquean; aviso persistente. | `TEMPLATE_ACCESS_ASSUMPTIONS.lockBlocksEditing`                                    |
+| A3  | Los tenants Básico **ven** las Pro bloqueadas, con vista previa y "Mejorar a Pro".                                  | `TEMPLATE_ACCESS_ASSUMPTIONS.showLockedTemplates`                                  |
+| A4  | Cambiar de plantilla **no migra** el contenido (se archiva el anterior).                                            | `TEMPLATE_ACCESS_ASSUMPTIONS.migrateContentOnSwitch` + `projectForSwitch`          |
+| A5  | Tenants sin pago o en prueba (`none`, `trial`) cuentan como Básico.                                                 | `PLAN_RANK` en `template-access.policy.ts`                                         |
+
+Las plantillas Pro existentes (ÓXIDO, Norte, Concreto) siguen en `basic` hasta
+re-sembrarlas con `--tier pro`. Antes, correr
+`supabase/tests/template_access/precheck_pro_templates.sql` (solo lectura) y
+decidir qué hacer con cada tenant que aparezca.
+
+## Decisiones pendientes del dueño
+
+- **Cancelación desde el portal de Stripe:** la configuración por defecto
+  permite cancelar al fin del periodo. Al terminar, el tenant queda sin
+  suscripción vigente (no bloqueado por plantilla; aplica el bloqueo por
+  suscripción). Si después se suscribe como Básico, queda bloqueado sin haber
+  visto el aviso de pérdida. ¿Se acepta, o se desactiva la cancelación en el
+  portal y se hace solo desde Lattiz?
+- **Tenant bloqueado que nunca elige:** hoy queda bloqueado indefinidamente con
+  el sitio publicado en línea. ¿Se le cambia a una Básica tras N días? ¿Se le
+  avisa por correo?
+- **Retención de `template_archives`:** hoy no se purga nada. ¿Cuánto tiempo se
+  guarda? ¿Se ofrece restaurar al volver a Pro?
+- **Dominio con renovación sobre el tope Básico:** la baja está bloqueada por
+  completo. ¿Se permite bajar dejando de cubrir la renovación, o con un cargo?
+- **Tenants en plantillas que pasan a Pro:** decidir por tenant si se les
+  respeta (copia Básica equivalente), se les mueve o se les ofrece Pro.
+- **Preview de plantillas Pro para Básico:** implementado como visible (A3);
+  confirmar.

@@ -40,7 +40,7 @@ describe('tier model', () => {
       countedMax: 10,
       similarityLimit: 0.5,
       seoProfile: 'advanced',
-      exclusive: true,
+      exclusive: false,
     });
   });
 
@@ -165,7 +165,8 @@ describe('compiled Basic template', () => {
     const meta = JSON.parse(
       readFileSync(resolve(dir, 'template.meta.json'), 'utf8'),
     ) as TemplateMeta;
-    expect(meta).toEqual({
+    const { slots, ...rest } = meta;
+    expect(rest).toEqual({
       id: 'barberia-base-oscuro-v1',
       tier: 'basic',
       family: 'service-landing',
@@ -175,42 +176,19 @@ describe('compiled Basic template', () => {
       seoProfile: 'basic',
       schemaType: 'BarberShop',
       editableTokens: ['color-accent'],
-      slots: [
-        {
-          slot: 'navbar',
-          variant: 'urban-luxe',
-          role: 'header',
-          counted: true,
-        },
-        { slot: 'hero', variant: 'image-bg', role: 'hero', counted: true },
-        { slot: 'about', variant: 'brief', role: 'about', counted: true },
-        {
-          slot: 'services',
-          variant: 'urban-luxe',
-          role: 'catalog',
-          counted: true,
-        },
-        { slot: 'faq', variant: 'list', role: 'faq', counted: true },
-        {
-          slot: 'locations',
-          variant: 'single',
-          role: 'contact',
-          counted: true,
-        },
-        {
-          slot: 'floating-whatsapp',
-          variant: 'urban-luxe',
-          role: 'whatsapp',
-          counted: false,
-        },
-        {
-          slot: 'footer',
-          variant: 'urban-luxe',
-          role: 'footer',
-          counted: true,
-        },
-      ],
     });
+    expect(slots.map((s) => `${s.slot}:${s.variant}`)).toEqual(
+      compiled.manifest.sections.map((s) => `${s.slot}:${s.variant}`),
+    );
+    const role = (slot: string) => slots.find((s) => s.slot === slot);
+    expect(role('navbar')?.role).toBe('header');
+    expect(role('services')?.role).toBe('catalog');
+    expect(role('locations')?.role).toBe('contact');
+    expect(role('floating-whatsapp')).toMatchObject({
+      role: 'whatsapp',
+      counted: false,
+    });
+    expect(slots.filter((s) => s.counted).length).toBe(7);
     const project = JSON.parse(
       readFileSync(resolve(dir, 'barberia-base-oscuro-v1.grapesjs'), 'utf8'),
     ) as { custom: unknown };
@@ -248,7 +226,37 @@ describe('compiled Basic template', () => {
       await libraryFingerprints(),
     ).findings;
     expect(findings.map((f) => f.rule)).toEqual(['faq-details']);
-    expect(findings[0].file).toBe('sections/faq/list/section.html');
-    expect(findings[0].line).toBe(8);
+    const faq = target.sections.find((x) => x.slot === 'faq');
+    const source = readFileSync(faq?.htmlFile ?? '', 'utf8').split('\n');
+    expect(findings[0].file).toBe(`sections/faq/${faq?.variant}/section.html`);
+    expect(findings[0].line).toBe(
+      source.findIndex((l) => l.includes('<details open')) + 1,
+    );
+  });
+});
+
+describe('theme ownership', () => {
+  it('rejects a Pro theme on a Basic template and a Basic theme on a Pro one', async () => {
+    const others = await libraryFingerprints();
+    const basic = await loadManifest(manifestFile('barberia-base-claro-v1'));
+    const withPro = targetFromCompiled(
+      await compileManifest(
+        { ...basic, theme: 'oxido' },
+        manifestFile('barberia-base-claro-v1'),
+      ),
+    );
+    const finding = validateTarget(withPro, others).findings.find(
+      (f) => f.rule === 'theme-ownership',
+    );
+    expect(finding?.message).toMatch(/theme "oxido" belongs to pro templates/);
+    expect(finding?.file).toBe('templates/barberia-base-claro-v1.ts');
+
+    const pro = await loadManifest(manifestFile('barberia-norte-v1'));
+    const withBasic = targetFromCompiled(
+      await compileManifest({ ...pro, theme: 'trazo-solar' }),
+    );
+    expect(
+      validateTarget(withBasic, others).findings.map((f) => f.rule),
+    ).toContain('theme-ownership');
   });
 });

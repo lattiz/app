@@ -1,4 +1,5 @@
 import { AppSidebar } from '@/components/layout/AppSidebar';
+import { TemplateLockBanner } from '@/components/dashboard/templates/TemplateLockBanner';
 import { DashboardHeader } from '@/components/layout/DashboardHeader';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -11,7 +12,10 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         <AppSidebar />
         <SidebarInset>
           <DashboardHeader />
-          <main className="flex-1 p-4 sm:p-6">{children}</main>
+          <main className="flex-1 p-4 sm:p-6">
+            <TemplateLockBanner />
+            {children}
+          </main>
         </SidebarInset>
       </SidebarProvider>
       <OnboardingTour />

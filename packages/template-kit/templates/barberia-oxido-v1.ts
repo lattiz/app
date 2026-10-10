@@ -1,6 +1,6 @@
 import type { Manifest } from '../src/types';
 
-/** ÓXIDO, Pro: the Studio original (fixtures/oxido) plus gallery, FAQ and the contact block. */
+/** ÓXIDO, Pro street-luxe: the Studio original (fixtures/oxido) plus gallery, FAQ and the contact block. */
 export default {
   id: 'barberia-oxido-v1',
   name: 'ÓXIDO Barber Club',
@@ -11,20 +11,20 @@ export default {
   tier: 'pro',
   vertical: 'barberia',
   archetype: 'street-luxe',
-  theme: 'urban-dark',
-  content: 'barberia.es-MX',
+  theme: 'oxido',
+  content: 'barberia.oxido.es-MX',
   sections: [
-    { slot: 'navbar', variant: 'urban-luxe' },
+    { slot: 'navbar', variant: 'inline' },
     { slot: 'hero', variant: 'image-bg' },
-    { slot: 'marquee', variant: 'urban-luxe' },
-    { slot: 'about', variant: 'urban-luxe' },
-    { slot: 'services', variant: 'urban-luxe' },
+    { slot: 'marquee', variant: 'ticker' },
+    { slot: 'about', variant: 'text-image-offset' },
+    { slot: 'services', variant: 'price-list' },
     { slot: 'gallery', variant: 'grid' },
     { slot: 'locations', variant: 'with-contact' },
-    { slot: 'team', variant: 'urban-luxe' },
-    { slot: 'testimonials', variant: 'urban-luxe' },
+    { slot: 'team', variant: 'grid' },
+    { slot: 'testimonials', variant: 'cards' },
     { slot: 'faq', variant: 'list' },
-    { slot: 'floating-whatsapp', variant: 'urban-luxe' },
-    { slot: 'footer', variant: 'urban-luxe' },
+    { slot: 'floating-whatsapp', variant: 'bubble' },
+    { slot: 'footer', variant: 'big-wordmark' },
   ],
 } satisfies Manifest;

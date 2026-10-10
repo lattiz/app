@@ -12,6 +12,8 @@ export const COLOR_TOKENS = [
   'muted',
   'accent',
   'on-accent',
+  /** Accent used as text (titles' accent words, link hover); `accent` stays the fill color. */
+  'accent-text',
   'line',
   'line-strong',
   'overlay',
@@ -23,21 +25,61 @@ export type ColorToken = (typeof COLOR_TOKENS)[number];
 
 export interface ThemeFonts {
   display: string;
+  /** Accent face for `.lz-title__serif` words (a serif italic, the display itself or the mono). */
   serif: string;
   body: string;
+  /** Labels and small caps; falls back to body. */
+  mono?: string;
   /** Google Fonts css2 query, e.g. `family=Anton&family=Space+Grotesk:wght@400;700`. */
   googleFonts: string;
+  displayTransform: 'uppercase' | 'none';
+  /** Unitless line-height for display type (condensed caps ≈ 0.9, serifs ≈ 1.05). */
+  displayLeading: string;
+  /** Weight of `.lz-title` headings. */
+  displayWeight: string;
+  /** Multiplier on display title sizes for wide or narrow faces (default 1). */
+  displayScale?: string;
+  accentStyle: 'italic' | 'normal';
+  accentTransform: 'lowercase' | 'none';
+}
+
+export type ShadowStyle = 'none' | 'soft' | 'hard-offset';
+export type Density = 'airy' | 'regular' | 'compact';
+export type PhotoTreatment = 'none' | 'duotone' | 'grayscale' | 'warm';
+export type PlaceholderStyle =
+  | 'grain'
+  | 'rules'
+  | 'stripes'
+  | 'blobs'
+  | 'arches'
+  | 'dots';
+
+export interface ThemeShape {
+  radiusCard: string;
+  radiusPill: string;
+  /** Border width of cards, panels, buttons and chips (e.g. `1px`, `3px`). */
+  border: string;
+  shadow: ShadowStyle;
 }
 
 export interface Theme {
   name: string;
   label: string;
+  /** A `pro` theme is a Pro template's identity; Basic templates may not use it (and vice versa). */
+  tier: Tier;
+  /** Unique per vertical, e.g. `anton+space-grotesk`. */
+  fontPair: string;
   colors: Record<ColorToken, string>;
   fonts: ThemeFonts;
-  radius: { pill: string; card: string };
-  sectionPad: string;
+  shape: ThemeShape;
+  density: Density;
+  photoTreatment: PhotoTreatment;
+  /** Pattern of the generated placeholders in assets/<vertical>/<theme>/ until real photos arrive. */
+  placeholder: PlaceholderStyle;
+  /** `color`: accent words in accent-text; `highlight`: accent-text on an accent marker. */
+  accentWords: 'color' | 'highlight';
   container: string;
-  /** Non-color, theme-dependent filters (maps and photos are tuned per scheme). */
+  /** Non-color, theme-dependent filters (maps and the image-bg hero are tuned per scheme). */
   effects: { mapFilter: string; heroImageFilter: string };
 }
 
@@ -116,7 +158,7 @@ export interface Manifest {
   vertical: string;
   archetype: string;
   theme: string;
-  /** Content pack file name under content/, without extension (e.g. `barberia.es-MX`). */
+  /** Content pack file name under content/, without extension (e.g. `barberia.oxido.es-MX`). */
   content: string;
   business?: Partial<Business>;
   head?: Partial<HeadContent>;

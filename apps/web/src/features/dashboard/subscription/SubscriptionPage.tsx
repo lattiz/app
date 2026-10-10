@@ -5,6 +5,7 @@ import {
   tenantsControllerMeOptions,
   tenantsControllerMeQueryKey,
   type TenantMeResponseDto,
+  templatesControllerFindAllQueryKey,
 } from '@lattiz/api-client';
 import { RefreshCwIcon, TriangleAlertIcon } from 'lucide-react';
 import { toast } from 'sonner';
@@ -65,6 +66,10 @@ export function SubscriptionPage() {
         );
         const status = fresh?.subscription?.status;
         if (status === 'active' || status === 'trialing' || attempts >= 4) {
+          // The gallery's per-plan access follows the new subscription.
+          void queryClient.invalidateQueries({
+            queryKey: templatesControllerFindAllQueryKey(),
+          });
           return;
         }
         window.setTimeout(() => void poll(), 2000);

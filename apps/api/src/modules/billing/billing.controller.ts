@@ -92,7 +92,9 @@ export class BillingController {
   @Post('portal-session')
   @SensitiveActionRateLimit()
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Create a Stripe billing portal session (protected)' })
+  @ApiOperation({
+    summary: 'Create a Stripe billing portal session (protected)',
+  })
   @ApiOkResponse({ type: BillingRedirectResponseDto })
   @UseGuards(SupabaseJwtGuard)
   async createPortalSession(
@@ -124,6 +126,10 @@ export class BillingController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Request a plan change (protected)' })
   @ApiOkResponse({ type: PlanChangeResultDto })
+  @ApiConflictResponse({
+    description:
+      'PLAN_CHANGE_NOT_ALLOWED, or PLAN_CHANGE_IMPACT_NOT_ACKNOWLEDGED with `details.items` when a downgrade loses something and `acknowledgeLosses` is not true.',
+  })
   @UseGuards(SupabaseJwtGuard)
   async requestPlanChange(
     @Body() dto: RequestPlanChangeDto,
@@ -133,6 +139,7 @@ export class BillingController {
       requireSub(user),
       dto.targetPlan,
       appUrl(),
+      dto.acknowledgeLosses ?? false,
     );
   }
 
@@ -162,7 +169,9 @@ export class BillingController {
   /** What the current subscription is billed — grandfathered subscribers keep their old price. */
   @Get('subscription/price')
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Get the price the tenant subscription is billed (protected)' })
+  @ApiOperation({
+    summary: 'Get the price the tenant subscription is billed (protected)',
+  })
   @ApiOkResponse({ type: SubscriptionPriceResponseDto })
   @UseGuards(SupabaseJwtGuard)
   async getSubscriptionPrice(

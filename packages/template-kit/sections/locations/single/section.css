@@ -19,8 +19,8 @@
   margin: 0;
   font-family: var(--lz-font-display);
   font-size: 38px;
-  line-height: 0.9;
-  text-transform: uppercase;
+  line-height: var(--lz-display-leading);
+  text-transform: var(--lz-display-transform);
 }
 
 .lz-location__address {
@@ -33,8 +33,8 @@
   display: grid;
   gap: 6px;
   padding: 18px 0;
-  border-top: 1px solid var(--lz-color-line);
-  border-bottom: 1px solid var(--lz-color-line);
+  border-top: var(--lz-border-width) solid var(--lz-color-line);
+  border-bottom: var(--lz-border-width) solid var(--lz-color-line);
 }
 
 .lz-location__label {
@@ -44,6 +44,7 @@
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  font-family: var(--lz-font-mono);
 }
 
 .lz-location__value {
@@ -63,7 +64,7 @@
   width: 100%;
   min-height: 420px;
   height: 100%;
-  border: 1px solid var(--lz-color-line);
+  border: var(--lz-border-width) solid var(--lz-color-line);
   border-radius: var(--lz-radius-card);
   filter: var(--lz-map-filter);
   background: var(--lz-color-surface-2);

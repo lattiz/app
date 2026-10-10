@@ -18,8 +18,8 @@ Un compilador convierte las piezas en lo mismo que producía Studio:
 ```
 sections/<slot>/<variant>/{section.html, section.css, meta.ts}   piezas reutilizables
 core.css                                                         clases compartidas
-themes/<tema>.json                                               única fuente de tokens
-content/<rubro>.es-MX.ts                                         textos y datos del negocio
+themes/<tema>.json                                               única fuente de tokens (identidad de la plantilla)
+content/<rubro>.<voz>.es-MX.ts                                   textos y datos del negocio, una voz por arquetipo
 blueprints/<familia>.ts                                          qué slots existen y en qué orden
 templates/<id>.ts  ── kit:build ──▶  dist/<id>/{<id>.grapesjs, index.html, thumbnail.jpg, review/}
 ```
@@ -43,8 +43,11 @@ El último paso humano sigue siendo `scripts/parse-and-seed-template.ts`.
 - **Toda animación o transición** tiene su override en
   `@media (prefers-reduced-motion: reduce)`.
 - **Un único `<h1>`** (la portada) y `alt` descriptivo en cada imagen.
-- **Imágenes locales** en `assets/<rubro>/`; si falta un archivo, el compilador
-  genera un placeholder neutro. El seed las sube a R2.
+- **Imágenes locales** en `assets/<rubro>/<tema>/`; si falta un archivo, el
+  compilador genera un placeholder con la paleta del tema. El seed las sube a R2.
+- **Cada plantilla se distingue a tamaño miniatura:** tema, par tipográfico,
+  acento, titular y portada propios; `kit:compare-visual` y
+  `dist/_contact-sheet.png` lo comprueban.
 - **Fuentes de Google Fonts** declaradas en el tema (`fonts.googleFonts`).
 - **Contenido realista** para el rubro, nunca Lorem Ipsum, en el content pack.
 
@@ -78,7 +81,9 @@ El último paso humano sigue siendo `scripts/parse-and-seed-template.ts`.
 5. **Revisa** `dist/<id>/thumbnail.jpg` y `dist/<id>/review/*.png` (escritorio
    completo, móvil 390px). Corrige hasta que `kit:validate` pase: color,
    contraste WCAG AA por tema, rango de secciones y roles del tier, similitud
-   contra plantillas del mismo rubro y tier (Basic ≤ 0.85, Pro ≤ 0.5).
+   contra plantillas del mismo rubro y tier (Basic ≤ 0.85, Pro ≤ 0.5) y
+   unicidad de tema, tipografía, acento y titular. Corre `kit:compare-visual`
+   y revisa `dist/_contact-sheet.png`.
 6. **Siembra** con el comando que imprime `kit:build` (desde la raíz del repo):
 
 ```bash
