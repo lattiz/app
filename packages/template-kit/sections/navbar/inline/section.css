@@ -103,8 +103,8 @@
   }
   .lz-brand__sub {
     display: none;
-  font-family: var(--lz-font-mono);
-}
+    font-family: var(--lz-font-mono);
+  }
   .lz-navbar__cta .lz-button {
     width: auto;
     padding: 14px 16px;

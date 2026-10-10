@@ -1,5 +1,6 @@
 .lz-hero-arch {
-  padding: calc(var(--lz-section-pad) * 0.45) 0 calc(var(--lz-section-pad) * 0.6);
+  padding: calc(var(--lz-section-pad) * 0.45) 0
+    calc(var(--lz-section-pad) * 0.6);
   overflow: clip;
 }
 

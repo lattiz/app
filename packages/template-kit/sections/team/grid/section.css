@@ -79,8 +79,8 @@
   .lz-card {
     animation: none !important;
     transition: none !important;
-  box-shadow: var(--lz-shadow);
-}
+    box-shadow: var(--lz-shadow);
+  }
   .lz-card__image {
     animation: none !important;
     transition: none !important;

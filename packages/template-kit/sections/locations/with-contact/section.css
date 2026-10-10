@@ -145,8 +145,8 @@
   .lz-contact__channel {
     animation: none !important;
     transition: none !important;
-  box-shadow: var(--lz-shadow);
-}
+    box-shadow: var(--lz-shadow);
+  }
 }
 
 @media (max-width: 992px) {
@@ -162,8 +162,8 @@
     align-items: start;
     gap: 8px;
     padding: 16px 18px;
-  box-shadow: var(--lz-shadow);
-}
+    box-shadow: var(--lz-shadow);
+  }
   .lz-contact__value {
     font-size: 26px;
     text-align: left;

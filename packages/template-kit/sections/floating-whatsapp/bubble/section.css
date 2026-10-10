@@ -40,7 +40,8 @@
   position: absolute;
   inset: -8px;
   border-radius: 999px;
-  border: var(--lz-border-width) solid color-mix(in srgb, #25d366 46%, transparent);
+  border: var(--lz-border-width) solid
+    color-mix(in srgb, #25d366 46%, transparent);
   animation: lz-pulse 2.6s ease-out infinite;
 }
 
