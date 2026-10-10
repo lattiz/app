@@ -54,6 +54,7 @@ El último paso humano sigue siendo `scripts/parse-and-seed-template.ts`.
   HTML/CSS plano sin build.
 - `style=""` en línea (GrapesJS lo convierte en reglas `#id` difíciles de editar).
 - JavaScript en las secciones (`<script>`, `on*=`, `javascript:`).
+- Formularios (`<form>`): el contacto son botones de WhatsApp, `tel:`, `mailto:` y mapa.
 - Imágenes hotlinkeadas (Unsplash, CDNs de terceros).
 - Clases `.gjs-t-*` ni el data source `globalStyles` de Studio: el editor de
   Lattiz no activa ese panel; los tokens `--lz-*` son el único sistema.
@@ -63,9 +64,10 @@ El último paso humano sigue siendo `scripts/parse-and-seed-template.ts`.
 
 ## Flujo
 
-1. **Lee el blueprint** (`blueprints/service-landing.ts`): slots obligatorios,
-   posiciones fijas y arquetipos.
-2. **Escribe el manifiesto** `templates/<rubro>-<nombre>-v1.ts`: tema, content
+1. **Elige el tier y lee su blueprint** (`blueprints/service-landing.basic.ts`
+   o `.pro.ts`): roles obligatorios, variantes permitidas, posiciones fijas y
+   arquetipos. Tiers, conteo de secciones y contrato SEO: `docs/template-tiers.md`.
+2. **Escribe el manifiesto** `templates/<rubro>-<nombre>-v1.ts`: `tier`, tema, content
    pack, orden de secciones, overrides de negocio (`business`) y por sección
    (`props`).
 3. Si el rubro es nuevo, **escribe su content pack** `content/<rubro>.es-MX.ts`
@@ -75,7 +77,8 @@ El último paso humano sigue siendo `scripts/parse-and-seed-template.ts`.
    (compila, valida y toma capturas).
 5. **Revisa** `dist/<id>/thumbnail.jpg` y `dist/<id>/review/*.png` (escritorio
    completo, móvil 390px). Corrige hasta que `kit:validate` pase: color,
-   contraste WCAG AA por tema, similitud ≤ 0.6 contra plantillas del mismo rubro.
+   contraste WCAG AA por tema, rango de secciones y roles del tier, similitud
+   contra plantillas del mismo rubro y tier (Basic ≤ 0.85, Pro ≤ 0.5).
 6. **Siembra** con el comando que imprime `kit:build` (desde la raíz del repo):
 
 ```bash
