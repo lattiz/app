@@ -9,6 +9,7 @@ import {
   type SectionMeta,
   type Theme,
 } from '../types';
+import { isTier, TIER_NAMES, type Tier } from '../tiers';
 import { KitError } from './args';
 import { paths, sectionDir } from './paths';
 
@@ -123,12 +124,21 @@ export async function loadContentPack(name: string): Promise<ContentPack> {
   return raw as unknown as ContentPack;
 }
 
-export async function loadBlueprint(family: string): Promise<Blueprint> {
-  const file = resolve(paths.blueprints, `${family}.ts`);
+export async function loadBlueprint(
+  family: string,
+  tier: Tier,
+): Promise<Blueprint> {
+  const file = resolve(paths.blueprints, `${family}.${tier}.ts`);
   const raw = await importDefault(file);
-  if (!isRecord(raw) || raw.family !== family || !isRecord(raw.slots)) {
+  if (
+    !isRecord(raw) ||
+    raw.family !== family ||
+    raw.tier !== tier ||
+    !isRecord(raw.roles) ||
+    !isRecord(raw.verticals)
+  ) {
     throw new KitError(
-      `${file}: default export must be a Blueprint with family "${family}".`,
+      `${file}: default export must be a Blueprint with family "${family}" and tier "${tier}".`,
     );
   }
   return raw as unknown as Blueprint;
@@ -157,6 +167,8 @@ export async function loadManifest(file: string): Promise<Manifest> {
   );
   if (typeof raw.id === 'string' && !ID_RE.test(raw.id))
     problems.push(`manifest.id must match ${ID_RE}`);
+  if (!isTier(raw.tier))
+    problems.push(`manifest.tier must be one of ${TIER_NAMES.join('|')}`);
   if (!Array.isArray(raw.sections) || raw.sections.length === 0) {
     problems.push('manifest.sections must be a non-empty array');
   } else {

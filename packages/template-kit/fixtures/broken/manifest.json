@@ -5,11 +5,25 @@
     "category": "test",
     "description": "Every validator rule must fire on this fixture",
     "family": "service-landing",
+    "tier": "pro",
     "vertical": "barberia",
     "archetype": "street-luxe",
     "theme": "broken-theme",
     "content": "barberia.es-MX",
-    "sections": [{ "slot": "hero", "variant": "bad" }]
+    "sections": [
+      {
+        "slot": "hero",
+        "variant": "bad"
+      },
+      {
+        "slot": "faq",
+        "variant": "bad"
+      },
+      {
+        "slot": "floating-whatsapp",
+        "variant": "bad"
+      }
+    ]
   },
   "manifestFile": null,
   "theme": {
@@ -30,19 +44,47 @@
       "navbar-bg": "rgba(255,255,255,.5)",
       "ink": "#000000"
     },
-    "fonts": { "display": "'Anton', sans-serif", "serif": "'Instrument Serif', serif", "body": "'Space Grotesk', sans-serif", "googleFonts": "family=Anton" },
-    "radius": { "pill": "999px", "card": "40px" },
+    "fonts": {
+      "display": "'Anton', sans-serif",
+      "serif": "'Instrument Serif', serif",
+      "body": "'Space Grotesk', sans-serif",
+      "googleFonts": "family=Anton"
+    },
+    "radius": {
+      "pill": "999px",
+      "card": "40px"
+    },
     "sectionPad": "80px",
     "container": "1200px",
-    "effects": { "mapFilter": "none", "heroImageFilter": "none" }
+    "effects": {
+      "mapFilter": "none",
+      "heroImageFilter": "none"
+    }
   },
   "sections": [
     {
       "slot": "hero",
       "variant": "bad",
+      "role": "hero",
       "html": "fixtures/broken/sections/hero/bad/section.html",
       "css": "fixtures/broken/sections/hero/bad/section.css",
-      "rendered": "<section data-lz-slot=\"hero\" class=\"lz-section lz-hero flex mt-4 heroBox\"><h1 class=\"lz-title\" style=\"color: red\">Uno</h1><h1 class=\"lz-title\" onclick=\"alert(1)\">Dos</h1><img src=\"https://images.unsplash.com/photo-1.jpg\" class=\"lz-hero__image\"><a href=\"javascript:void(0)\" class=\"lz-link\">Ir</a><a href=\"#nowhere\" class=\"lz-link\">Ancla rota</a><svg viewBox=\"0 0 24 24\" class=\"lz-icon\"><path fill=\"#FF0000\" d=\"M0 0h24v24H0z\"></path></svg><script>console.log('x')</script></section>"
+      "rendered": "<section data-lz-slot=\"hero\" class=\"lz-section lz-hero flex mt-4 heroBox\"><h1 class=\"lz-title\" style=\"color: red\">Uno</h1><h1 class=\"lz-title\" onclick=\"alert(1)\">Dos</h1><h4 class=\"lz-hero__kicker\">Salta de h1 a h4</h4><img src=\"https://images.unsplash.com/photo-1.jpg\" class=\"lz-hero__image\"><a href=\"javascript:void(0)\" class=\"lz-link\">Ir</a><a href=\"#nowhere\" class=\"lz-link\">Ancla rota</a><a href=\"\" class=\"lz-hero__empty\"></a><form action=\"https://example.com/contacto\" class=\"lz-hero__form\"><input name=\"correo\" class=\"lz-hero__input\"></form><svg viewBox=\"0 0 24 24\" class=\"lz-icon\"><path fill=\"#FF0000\" d=\"M0 0h24v24H0z\"></path></svg><script>console.log('x')</script></section>"
+    },
+    {
+      "slot": "faq",
+      "variant": "bad",
+      "role": "faq",
+      "html": "fixtures/broken/sections/faq/bad/section.html",
+      "css": "fixtures/broken/sections/faq/bad/section.css",
+      "rendered": "<section data-lz-slot=\"faq\" data-lz-variant=\"bad\" class=\"lz-section lz-faq\"><h2 class=\"lz-title\">Preguntas</h2><div class=\"lz-faq__item\"><p class=\"lz-faq__question\">¿Cuánto cuesta?</p><p class=\"lz-faq__answer\">Desde $270.</p></div></section>"
+    },
+    {
+      "slot": "floating-whatsapp",
+      "variant": "bad",
+      "role": "whatsapp",
+      "html": "fixtures/broken/sections/floating-whatsapp/bad/section.html",
+      "css": "fixtures/broken/sections/floating-whatsapp/bad/section.css",
+      "rendered": "<section data-lz-slot=\"floating-whatsapp\" data-lz-variant=\"bad\" class=\"lz-section lz-floating-whatsapp\"><a href=\"https://example.com/chat\" aria-label=\"Chat\" class=\"lz-whatsapp__link\">Chat</a></section>"
     }
   ],
   "core": "fixtures/broken/core.css"

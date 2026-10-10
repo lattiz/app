@@ -1,11 +1,11 @@
+import type { Tier } from '../tiers';
 import type { Manifest, Theme } from '../types';
 import { fontFamilyName } from './theme';
-
-export const SIMILARITY_LIMIT = 0.6;
 
 export interface Fingerprint {
   id: string;
   vertical: string;
+  tier: Tier;
   pairs: string[];
   order: string[];
   theme: string;
@@ -16,6 +16,7 @@ export function fingerprint(manifest: Manifest, theme: Theme): Fingerprint {
   return {
     id: manifest.id,
     vertical: manifest.vertical,
+    tier: manifest.tier,
     pairs: manifest.sections.map((s) => `${s.slot}:${s.variant}`),
     order: manifest.sections.map((s) => s.slot),
     theme: manifest.theme,

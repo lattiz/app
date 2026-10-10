@@ -1,5 +1,7 @@
 /** Shared shapes for the template-kit source library (sections, themes, content packs, manifests). */
 
+import type { Role, Tier } from './tiers';
+
 export type Region = 'header' | 'main' | 'footer';
 
 export const COLOR_TOKENS = [
@@ -110,6 +112,7 @@ export interface Manifest {
   category: string;
   description: string;
   family: string;
+  tier: Tier;
   vertical: string;
   archetype: string;
   theme: string;
@@ -120,18 +123,29 @@ export interface Manifest {
   sections: ManifestSection[];
 }
 
-export interface BlueprintSlot {
+export interface BlueprintRole {
   region: Region;
-  required: boolean;
-  /** `first` / `last` pin the slot inside its region. */
+  /** `first` / `last` pin the role's slot inside its region. */
   position?: 'first' | 'last';
   purpose: string;
+  /** Variants of the resolved slot this tier allows; any variant when omitted. */
+  variants?: string[];
+}
+
+export interface BlueprintVertical {
+  /** schema.org LocalBusiness subtype the publisher emits as JSON-LD (e.g. `BarberShop`). */
+  schemaType: string;
+  /** Slot that fills each role in this vertical (e.g. catalog → services). */
+  slots: Partial<Record<Role, string>>;
 }
 
 export interface Blueprint {
   family: string;
+  tier: Tier;
   description: string;
-  slots: Record<string, BlueprintSlot>;
+  /** Roles this tier allows; which are required comes from `TIERS` in src/tiers.ts. */
+  roles: Partial<Record<Role, BlueprintRole>>;
+  verticals: Record<string, BlueprintVertical>;
   archetypes: Record<string, string>;
   guidance: string[];
 }

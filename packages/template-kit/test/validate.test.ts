@@ -3,6 +3,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { contrastRatio, findColorLiterals, parseColor } from '../src/lib/color';
 import { compileFile } from '../src/lib/compile';
 import { loadTheme } from '../src/lib/load';
+import { TIERS } from '../src/tiers';
 import { KIT_ROOT, paths } from '../src/lib/paths';
 import {
   libraryFingerprints,
@@ -20,22 +21,34 @@ describe('validator on the library templates', () => {
   const reports = new Map<string, ValidationReport>();
   beforeAll(async () => {
     const others = await libraryFingerprints();
-    for (const id of ['barberia-oxido-v1', 'barberia-norte-v1']) {
+    for (const id of [
+      'barberia-oxido-v1',
+      'barberia-norte-v1',
+      'barberia-base-oscuro-v1',
+      'barberia-base-claro-v1',
+    ]) {
       const compiled = await compileFile(resolve(paths.templates, `${id}.ts`));
       reports.set(id, validateTarget(targetFromCompiled(compiled), others));
     }
   });
 
-  it('passes ÓXIDO (urban-dark) and Norte (bone-blue)', () => {
+  it('passes the Pro (ÓXIDO, Norte) and Basic (oscuro, claro) templates in both themes', () => {
     for (const [id, report] of reports) expect(report.findings, id).toEqual([]);
   });
 
-  it('scores the two barbería templates under the similarity limit', () => {
-    const score = reports
-      .get('barberia-norte-v1')
-      ?.similarity.find((s) => s.other === 'barberia-oxido-v1')?.score;
-    expect(score).toBeGreaterThan(0.4);
-    expect(score).toBeLessThanOrEqual(0.6);
+  it("scores similarity only within the same vertical and tier, with that tier's limit", () => {
+    const pro = reports.get('barberia-norte-v1');
+    expect(pro?.similarityLimit).toBe(TIERS.pro.similarityLimit);
+    expect(pro?.similarity.map((s) => s.other)).toEqual(['barberia-oxido-v1']);
+    expect(pro?.similarity[0].score).toBeLessThanOrEqual(0.5);
+
+    const basic = reports.get('barberia-base-claro-v1');
+    expect(basic?.similarityLimit).toBe(TIERS.basic.similarityLimit);
+    expect(basic?.similarity.map((s) => s.other)).toEqual([
+      'barberia-base-oscuro-v1',
+    ]);
+    // Same structure, different theme and fonts: a reskin on purpose.
+    expect(basic?.similarity[0].score).toBe(0.6);
   });
 });
 
@@ -70,8 +83,37 @@ describe('validator on the deliberately broken fixture', () => {
       'contrast',
       'anchor',
       'project',
+      'tier-count',
+      'required-role',
+      'whatsapp',
+      'form',
+      'heading-order',
+      'img-size',
+      'empty-link',
+      'head',
+      'faq-details',
     ];
     for (const rule of rules) expect(has(rule), rule).toBe(true);
+  });
+
+  it('points the tier-aware markup findings at section.html:line', () => {
+    expect(has('form', /hero\/bad\/section\.html:9 /)).toBe(true);
+    expect(has('heading-order', /hero\/bad\/section\.html:4 .*h1 to h4/)).toBe(
+      true,
+    );
+    expect(has('img-size', /hero\/bad\/section\.html:5 /)).toBe(true);
+    expect(has('empty-link', /hero\/bad\/section\.html:8 .*no href/)).toBe(
+      true,
+    );
+    expect(
+      has('whatsapp', /floating-whatsapp\/bad\/section\.html:2 .*wa\.me/),
+    ).toBe(true);
+    expect(has('faq-details', /faq\/bad\/section\.html:1 /)).toBe(true);
+    expect(has('tier-count', /2 counted sections .*pro needs 8–10/)).toBe(true);
+    expect(has('required-role', /pro requires role "proof"/)).toBe(true);
+    expect(has('head', /needs lang/)).toBe(true);
+    expect(has('head', /<title>/)).toBe(true);
+    expect(has('head', /meta name="description"/)).toBe(true);
   });
 
   it('points CSS findings at file:line', () => {

@@ -8,6 +8,14 @@ import {
 } from 'node:fs';
 import { basename, relative, resolve } from 'node:path';
 import type { ProjectData } from 'grapesjs';
+import {
+  TIERS,
+  UNCOUNTED_SLOTS,
+  type EditableToken,
+  type Role,
+  type SeoProfile,
+  type Tier,
+} from '../tiers';
 import type {
   Blueprint,
   Business,
@@ -30,11 +38,13 @@ import {
 } from './load';
 import { KIT_ROOT, distDir, paths, sectionDir } from './paths';
 import { ensurePlaceholder } from './placeholders';
+import { slotRoles } from './roles';
 import { googleFontsHref, themeRootCss } from './theme';
 
 export interface CompiledSection {
   slot: string;
   variant: string;
+  role: Role;
   meta: SectionMeta;
   htmlFile: string;
   cssFile: string;
@@ -49,8 +59,23 @@ export interface CompiledAsset {
   generated: boolean;
 }
 
+/** dist/<id>/template.meta.json: what gating, the gallery and the publisher need to know about a template. */
+export interface TemplateMeta {
+  id: string;
+  tier: Tier;
+  family: string;
+  vertical: string;
+  archetype: string;
+  exclusive: boolean;
+  seoProfile: SeoProfile;
+  schemaType: string;
+  editableTokens: EditableToken[];
+  slots: { slot: string; variant: string; role: Role; counted: boolean }[];
+}
+
 export interface CompiledTemplate {
   manifest: Manifest;
+  meta: TemplateMeta;
   manifestFile: string | null;
   theme: Theme;
   business: Business;
@@ -72,28 +97,39 @@ export interface CompiledTemplate {
 
 const REGION_ORDER = { header: 0, main: 1, footer: 2 } as const;
 
+/** Structure the blueprint fixes (roles, regions, order, variants); counts and required roles are validator findings. */
 function checkAgainstBlueprint(
   manifest: Manifest,
   metas: SectionMeta[],
   blueprint: Blueprint,
-): void {
+): Role[] {
   const problems: string[] = [];
+  const bySlot = slotRoles(blueprint, manifest.vertical);
+  if (!blueprint.archetypes[manifest.archetype])
+    problems.push(
+      `archetype "${manifest.archetype}" is not one of ${Object.keys(blueprint.archetypes).join(', ')}`,
+    );
   const slots = manifest.sections.map((s) => s.slot);
-  slots.forEach((slot, i) => {
+  const roles = manifest.sections.map((entry, i): Role | undefined => {
+    const { slot, variant } = entry;
     if (slots.indexOf(slot) !== i)
       problems.push(`slot "${slot}" appears twice`);
-    const spec = blueprint.slots[slot];
-    if (!spec)
+    const role = bySlot.get(slot);
+    const spec = role ? blueprint.roles[role] : undefined;
+    if (!role || !spec) {
       problems.push(
-        `slot "${slot}" is not part of the ${blueprint.family} blueprint`,
+        `slot "${slot}" fills no role of the ${blueprint.family}.${blueprint.tier} blueprint for ${manifest.vertical}`,
       );
-    else if (spec.region !== metas[i].region)
+      return undefined;
+    }
+    if (spec.region !== metas[i].region)
       problems.push(`slot "${slot}" must live in <${spec.region}>`);
+    if (spec.variants && !spec.variants.includes(variant))
+      problems.push(
+        `role "${role}" (${slot}) allows variant ${spec.variants.join(' | ')} in ${blueprint.tier}, not "${variant}"`,
+      );
+    return role;
   });
-  for (const [slot, spec] of Object.entries(blueprint.slots)) {
-    if (spec.required && !slots.includes(slot))
-      problems.push(`required slot "${slot}" is missing`);
-  }
   metas.forEach((meta, i) => {
     const prev = metas[i - 1];
     if (prev && REGION_ORDER[prev.region] > REGION_ORDER[meta.region]) {
@@ -104,10 +140,10 @@ function checkAgainstBlueprint(
   });
   for (const region of ['header', 'main', 'footer'] as const) {
     const inRegion = metas
-      .filter((m) => m.region === region)
-      .map((m) => m.slot);
-    inRegion.forEach((slot, i) => {
-      const position = blueprint.slots[slot]?.position;
+      .map((m, i) => ({ slot: m.slot, region: m.region, role: roles[i] }))
+      .filter((m) => m.region === region);
+    inRegion.forEach(({ slot, role }, i) => {
+      const position = role && blueprint.roles[role]?.position;
       if (position === 'first' && i !== 0)
         problems.push(`"${slot}" must be first in <${region}>`);
       if (position === 'last' && i !== inRegion.length - 1)
@@ -118,6 +154,32 @@ function checkAgainstBlueprint(
     throw new KitError(
       `Manifest ${manifest.id} breaks the blueprint:\n  ${problems.join('\n  ')}`,
     );
+  return roles.filter((r): r is Role => r !== undefined);
+}
+
+function templateMeta(
+  manifest: Manifest,
+  blueprint: Blueprint,
+  sections: CompiledSection[],
+): TemplateMeta {
+  const tier = TIERS[manifest.tier];
+  return {
+    id: manifest.id,
+    tier: manifest.tier,
+    family: manifest.family,
+    vertical: manifest.vertical,
+    archetype: manifest.archetype,
+    exclusive: tier.exclusive,
+    seoProfile: tier.seoProfile,
+    schemaType: blueprint.verticals[manifest.vertical].schemaType,
+    editableTokens: [...tier.editableTokens],
+    slots: sections.map((s) => ({
+      slot: s.slot,
+      variant: s.variant,
+      role: s.role,
+      counted: !UNCOUNTED_SLOTS.has(s.slot),
+    })),
+  };
 }
 
 function isRelativeAsset(src: string): boolean {
@@ -171,7 +233,7 @@ export async function compileManifest(
   manifest: Manifest,
   manifestFile: string | null = null,
 ): Promise<CompiledTemplate> {
-  const blueprint = await loadBlueprint(manifest.family);
+  const blueprint = await loadBlueprint(manifest.family, manifest.tier);
   const theme = loadTheme(manifest.theme);
   const pack = await loadContentPack(manifest.content);
   if (pack.vertical !== manifest.vertical) {
@@ -184,7 +246,7 @@ export async function compileManifest(
   const metas = await Promise.all(
     manifest.sections.map((s) => loadSectionMeta(s.slot, s.variant)),
   );
-  checkAgainstBlueprint(manifest, metas, blueprint);
+  const roles = checkAgainstBlueprint(manifest, metas, blueprint);
 
   const assets = new Map<string, CompiledAsset>();
   const sections: CompiledSection[] = [];
@@ -218,6 +280,7 @@ export async function compileManifest(
     sections.push({
       slot: entry.slot,
       variant: entry.variant,
+      role: roles[i],
       meta,
       htmlFile,
       cssFile,
@@ -262,6 +325,7 @@ export async function compileManifest(
 
   return {
     manifest,
+    meta: templateMeta(manifest, blueprint, sections),
     manifestFile,
     theme,
     business,
@@ -292,6 +356,7 @@ export interface DistSnapshot {
   sections: {
     slot: string;
     variant: string;
+    role?: Role;
     html: string;
     css: string;
     rendered: string;
@@ -317,6 +382,7 @@ export function writeCompiled(t: CompiledTemplate): string[] {
     sections: t.sections.map((s) => ({
       slot: s.slot,
       variant: s.variant,
+      role: s.role,
       html: relative(KIT_ROOT, s.htmlFile),
       css: relative(KIT_ROOT, s.cssFile),
       rendered: s.rendered,
@@ -324,6 +390,7 @@ export function writeCompiled(t: CompiledTemplate): string[] {
     core: relative(KIT_ROOT, paths.core),
   };
   out('manifest.json', `${JSON.stringify(snapshot, null, 2)}\n`);
+  out('template.meta.json', `${JSON.stringify(t.meta, null, 2)}\n`);
   for (const asset of t.assets) {
     const target = resolve(t.outDir, 'assets', asset.name);
     copyFileSync(asset.source, target);

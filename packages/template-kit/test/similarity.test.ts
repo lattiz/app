@@ -4,6 +4,7 @@ import { similarity, type Fingerprint } from '../src/lib/similarity';
 const base: Fingerprint = {
   id: 'a',
   vertical: 'barberia',
+  tier: 'pro',
   theme: 'urban-dark',
   fonts: 'Anton + Space Grotesk',
   pairs: ['navbar:x', 'hero:x', 'marquee:x', 'about:x', 'footer:x'],
@@ -30,7 +31,7 @@ describe('similarity', () => {
     expect(s.score).toBeCloseTo(0.5 * 0.8 + 0.1 * 0.75, 3);
   });
 
-  it('reskinning alone (same sections and order) stays at the 0.6 limit', () => {
+  it('reskinning alone (same sections and order) scores 0.6: fine for Basic, too close for Pro', () => {
     expect(
       similarity(base, { ...base, id: 'd', theme: 't', fonts: 'f' }).score,
     ).toBe(0.6);

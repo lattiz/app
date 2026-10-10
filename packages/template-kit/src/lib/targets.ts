@@ -10,12 +10,14 @@ import { themeFileFor, type ValidationTarget } from './validate';
 export function targetFromCompiled(c: CompiledTemplate): ValidationTarget {
   return {
     manifest: c.manifest,
+    manifestFile: c.manifestFile,
     theme: c.theme,
     themeFile: themeFileFor(c.theme),
     coreFile: paths.core,
     sections: c.sections.map((s) => ({
       slot: s.slot,
       variant: s.variant,
+      role: s.role,
       htmlFile: s.htmlFile,
       cssFile: s.cssFile,
       rendered: s.rendered,
@@ -56,12 +58,14 @@ export function targetFromDist(dir: string): ValidationTarget {
   const libraryTheme = themeFileFor(theme);
   return {
     manifest: raw.manifest,
+    manifestFile: raw.manifestFile ? resolve(KIT_ROOT, raw.manifestFile) : null,
     theme,
     themeFile: existsSync(libraryTheme) ? libraryTheme : snapshotFile,
     coreFile: resolve(KIT_ROOT, raw.core),
     sections: raw.sections.map((s) => ({
       slot: s.slot,
       variant: s.variant,
+      role: s.role,
       htmlFile: resolve(KIT_ROOT, s.html),
       cssFile: resolve(KIT_ROOT, s.css),
       rendered: s.rendered,

@@ -12,6 +12,8 @@ export function printReport(id: string, report: ValidationReport): boolean {
     );
   }
   for (const s of report.similarity)
-    console.log(`    similarity vs ${s.other}: ${s.score}`);
+    console.log(
+      `    similarity vs ${s.other}: ${s.score} (limit ${report.similarityLimit})`,
+    );
   return ok;
 }
