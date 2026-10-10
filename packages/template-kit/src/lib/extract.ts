@@ -119,6 +119,7 @@ function themeDraft(
     },
     density: 'regular',
     photoTreatment: 'none',
+    placeholder: 'grain',
     accentWords: 'color',
     container: v('--lz-container'),
     effects: { mapFilter: 'none', heroImageFilter: 'none' },

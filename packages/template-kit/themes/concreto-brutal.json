@@ -31,9 +31,15 @@
     "accentStyle": "normal",
     "accentTransform": "none"
   },
-  "shape": { "radiusCard": "0px", "radiusPill": "0px", "border": "3px", "shadow": "hard-offset" },
+  "shape": {
+    "radiusCard": "0px",
+    "radiusPill": "0px",
+    "border": "3px",
+    "shadow": "hard-offset"
+  },
   "density": "compact",
   "photoTreatment": "duotone",
+  "placeholder": "stripes",
   "accentWords": "highlight",
   "container": "1280px",
   "effects": {

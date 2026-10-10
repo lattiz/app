@@ -186,10 +186,11 @@ function isRelativeAsset(src: string): boolean {
   return src !== '' && !/^([a-z][a-z0-9+.-]*:|\/\/|\/|#)/i.test(src);
 }
 
-/** Points relative image refs at assets/<vertical>/, generating placeholders for missing files. */
+/** Points relative image refs at assets/<vertical>/<theme>/, generating art-directed placeholders for missing files. */
 async function resolveImages(
   root: Element,
   vertical: string,
+  theme: Theme,
   meta: SectionMeta,
   assets: Map<string, CompiledAsset>,
 ): Promise<void> {
@@ -203,13 +204,14 @@ async function resolveImages(
     const src = el.getAttribute(attr) ?? '';
     if (!isRelativeAsset(src)) continue;
     const name = basename(src);
-    const source = resolve(paths.assets, vertical, name);
+    const source = resolve(paths.assets, vertical, theme.name, name);
     if (!assets.has(name)) {
       const size = meta.placeholder ?? { width: 1200, height: 800 };
       const generated = await ensurePlaceholder(
         source,
         size.width,
         size.height,
+        theme,
       );
       assets.set(name, { source, name, generated });
     }
@@ -276,7 +278,7 @@ export async function compileManifest(
         `${relative(KIT_ROOT, htmlFile)}: root must carry data-lz-slot="${entry.slot}" data-lz-variant="${entry.variant}".`,
       );
     }
-    await resolveImages(root, manifest.vertical, meta, assets);
+    await resolveImages(root, manifest.vertical, theme, meta, assets);
     sections.push({
       slot: entry.slot,
       variant: entry.variant,

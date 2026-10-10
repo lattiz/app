@@ -71,7 +71,8 @@
     },
     "density": "regular",
     "photoTreatment": "none",
-    "accentWords": "color"
+    "accentWords": "color",
+    "placeholder": "grain"
   },
   "sections": [
     {

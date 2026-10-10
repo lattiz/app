@@ -44,6 +44,13 @@ export interface ThemeFonts {
 export type ShadowStyle = 'none' | 'soft' | 'hard-offset';
 export type Density = 'airy' | 'regular' | 'compact';
 export type PhotoTreatment = 'none' | 'duotone' | 'grayscale' | 'warm';
+export type PlaceholderStyle =
+  | 'grain'
+  | 'rules'
+  | 'stripes'
+  | 'blobs'
+  | 'arches'
+  | 'dots';
 
 export interface ThemeShape {
   radiusCard: string;
@@ -65,6 +72,8 @@ export interface Theme {
   shape: ThemeShape;
   density: Density;
   photoTreatment: PhotoTreatment;
+  /** Pattern of the generated placeholders in assets/<vertical>/<theme>/ until real photos arrive. */
+  placeholder: PlaceholderStyle;
   /** `color`: accent words in accent-text; `highlight`: accent-text on an accent marker. */
   accentWords: 'color' | 'highlight';
   container: string;

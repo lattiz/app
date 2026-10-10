@@ -70,6 +70,12 @@ export function parseTheme(raw: unknown, file: string): Theme {
   );
   problems.push(
     ...requireOneOf(raw, 'accentWords', ['color', 'highlight'], 'theme'),
+    ...requireOneOf(
+      raw,
+      'placeholder',
+      ['grain', 'rules', 'stripes', 'blobs', 'arches', 'dots'],
+      'theme',
+    ),
   );
   const colors = isRecord(raw.colors) ? raw.colors : {};
   problems.push(...requireStrings(colors, COLOR_TOKENS, 'colors'));

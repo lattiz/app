@@ -30,9 +30,15 @@
     "accentStyle": "italic",
     "accentTransform": "none"
   },
-  "shape": { "radiusCard": "0px", "radiusPill": "0px", "border": "1px", "shadow": "none" },
+  "shape": {
+    "radiusCard": "0px",
+    "radiusPill": "0px",
+    "border": "1px",
+    "shadow": "none"
+  },
   "density": "airy",
   "photoTreatment": "warm",
+  "placeholder": "rules",
   "accentWords": "color",
   "container": "1240px",
   "effects": {
