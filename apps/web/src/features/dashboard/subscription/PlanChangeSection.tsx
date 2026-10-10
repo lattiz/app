@@ -1,6 +1,11 @@
 import { useState } from 'react';
-import type { PlanChangeOptionDto } from '@lattiz/api-client';
-import { CalendarClockIcon } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import {
+  planChangeImpactControllerGetImpactOptions,
+  tenantsControllerMeOptions,
+  type PlanChangeOptionDto,
+} from '@lattiz/api-client';
+import { CalendarClockIcon, LockIcon } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import {
   AlertDialog,
@@ -13,6 +18,12 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+  canConfirmDowngrade,
+  templateLoss,
+} from '@/features/templates/template-access';
+import { templateAccessCopy } from '@/features/templates/template-access.copy';
 import { formatDateLong } from '@/lib/subscription-status';
 import {
   blockerMessages,
@@ -40,7 +51,34 @@ export function PlanChangeSection({ returnToDomain }: Props) {
   const request = useRequestPlanChange();
   const release = useReleasePlanChange();
   const prices = useBillingPlans();
+  const tenant = useQuery(tenantsControllerMeOptions());
   const [selected, setSelected] = useState<PlanChangeOptionDto | null>(null);
+  const [acknowledged, setAcknowledged] = useState(false);
+  const tenantId = tenant.data?.tenantId ?? '';
+  const isDowngrade = selected?.direction === 'downgrade';
+  // Ask the API what the downgrade takes away before showing the confirm button.
+  const impact = useQuery({
+    ...planChangeImpactControllerGetImpactOptions({
+      path: { tenantId },
+      query: { target: selected?.targetPlan ?? 'basico' },
+    }),
+    enabled: isDowngrade && tenantId !== '',
+    staleTime: 0,
+  });
+  const loss = isDowngrade ? templateLoss(impact.data?.items) : null;
+  const confirmEnabled = isDowngrade
+    ? canConfirmDowngrade({
+        impactReady: impact.isSuccess,
+        hasLoss: loss !== null,
+        acknowledged,
+        isPending: request.isPending,
+      })
+    : !request.isPending;
+
+  const close = () => {
+    setSelected(null);
+    setAcknowledged(false);
+  };
 
   if (!status.data) return null;
   const { pending, options, billingPeriod } = status.data;
@@ -80,8 +118,17 @@ export function PlanChangeSection({ returnToDomain }: Props) {
       rememberPlanChangeReturn('/dashboard/domain');
     }
     request.mutate(
-      { body: { targetPlan: selected.targetPlan } },
-      { onSettled: () => setSelected(null) },
+      {
+        body: {
+          targetPlan: selected.targetPlan,
+          ...(loss ? { acknowledgeLosses: acknowledged } : {}),
+        },
+      },
+      {
+        onSettled: close,
+        // The loss may have appeared after the impact was read; show it next time.
+        onError: () => void impact.refetch(),
+      },
     );
   };
 
@@ -132,7 +179,7 @@ export function PlanChangeSection({ returnToDomain }: Props) {
       <AlertDialog
         open={selected !== null}
         onOpenChange={(open) => {
-          if (!open && !request.isPending) setSelected(null);
+          if (!open && !request.isPending) close();
         }}
       >
         <AlertDialogContent>
@@ -171,13 +218,55 @@ export function PlanChangeSection({ returnToDomain }: Props) {
                   <p className="mt-2">Plan Básico: {targetPrice}</p>
                 )}
               </div>
+              {impact.isPending && tenantId !== '' && (
+                <p className="text-sm text-muted-foreground">
+                  {templateAccessCopy.downgradeLoss.loading}
+                </p>
+              )}
+              {impact.isError && (
+                <p className="text-sm text-destructive">
+                  {templateAccessCopy.downgradeLoss.impactError}
+                </p>
+              )}
+              {loss && (
+                <Alert
+                  className="border-amber-500/40 bg-amber-500/5"
+                  data-testid="template-loss-warning"
+                >
+                  <LockIcon />
+                  <AlertTitle>
+                    {templateAccessCopy.downgradeLoss.title}
+                  </AlertTitle>
+                  <AlertDescription className="flex flex-col gap-3">
+                    <p>
+                      {templateAccessCopy.downgradeLoss.body(
+                        loss.templateName,
+                        formatDateLong(
+                          loss.effectiveAt ?? selected?.effectiveAt ?? null,
+                        ),
+                      )}
+                    </p>
+                    <label className="flex items-start gap-2 text-sm font-medium text-foreground">
+                      <Checkbox
+                        checked={acknowledged}
+                        onCheckedChange={(checked) =>
+                          setAcknowledged(checked === true)
+                        }
+                        disabled={request.isPending}
+                        className="mt-0.5"
+                      />
+                      {templateAccessCopy.downgradeLoss.acknowledge}
+                    </label>
+                  </AlertDescription>
+                </Alert>
+              )}
             </AlertDialogHeader>
           )}
           <AlertDialogFooter>
             <AlertDialogCancel disabled={request.isPending}>
               {planChangeCopy.cancel}
             </AlertDialogCancel>
-            <AlertDialogAction disabled={request.isPending} onClick={confirm}>
+            <AlertDialogAction disabled={!confirmEnabled} onClick={confirm}>
               {selected?.direction === 'upgrade'
                 ? planChangeCopy.upgradeConfirm
                 : planChangeCopy.downgradeConfirm}

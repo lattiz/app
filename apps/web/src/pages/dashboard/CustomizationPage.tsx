@@ -82,6 +82,7 @@ export function CustomizationPage() {
         tenantId={tenant.data.tenantId}
         site={site}
         canPublish={tenant.data.canPublish}
+        templateLocked={tenant.data.templateAccess.locked}
       />
       <SiteImagesSection
         tenantId={tenant.data.tenantId}

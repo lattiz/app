@@ -13,6 +13,7 @@ import {
   billingControllerGetSubscriptionPriceQueryKey,
   billingControllerReleasePendingPlanChangeMutation,
   billingControllerRequestPlanChangeMutation,
+  templatesControllerFindAllQueryKey,
   tenantsControllerMeQueryKey,
   type TenantMeResponseDto,
 } from '@lattiz/api-client';
@@ -48,6 +49,10 @@ function invalidatePlanQueries(queryClient: QueryClient): Promise<unknown> {
     }),
     queryClient.invalidateQueries({
       queryKey: billingControllerGetPlansQueryKey(),
+    }),
+    // Template access is derived from the plan: Pro templates unlock (or lock) with it.
+    queryClient.invalidateQueries({
+      queryKey: templatesControllerFindAllQueryKey(),
     }),
   ]);
 }

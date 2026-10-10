@@ -14,6 +14,8 @@ interface EditorGatewayCardProps {
   tenantId: string;
   site: SiteStatus;
   canPublish?: boolean;
+  /** The template is above the plan: the editor stays closed until they switch or upgrade. */
+  templateLocked?: boolean;
 }
 
 // This gateway has no loaded GrapesJS project/exported HTML to send — that
@@ -30,6 +32,7 @@ export function EditorGatewayCard({
   tenantId,
   site,
   canPublish = true,
+  templateLocked = false,
 }: EditorGatewayCardProps) {
   const republish = useMutation({ mutationFn: mockRepublish });
   const isFirstPublish = site.lastPublished === null;
@@ -53,15 +56,22 @@ export function EditorGatewayCard({
         </div>
 
         <div className="flex flex-col gap-2 sm:w-48">
-          <Button
-            render={<Link to="/editor/$tenantId" params={{ tenantId }} />}
-          >
-            Abrir editor
-          </Button>
+          {templateLocked ? (
+            <Button disabled>Abrir editor</Button>
+          ) : (
+            <Button
+              render={<Link to="/editor/$tenantId" params={{ tenantId }} />}
+            >
+              Abrir editor
+            </Button>
+          )}
           <Button
             variant="outline"
             disabled={
-              !canPublish || republish.isPending || site.deployInProgress
+              templateLocked ||
+              !canPublish ||
+              republish.isPending ||
+              site.deployInProgress
             }
             onClick={() => {
               if (canPublish) republish.mutate();
