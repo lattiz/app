@@ -3,7 +3,7 @@
  *
  *   pnpm --filter @lattiz/template-kit kit:shoot [dist/<id> | templates/<id>.ts …]   (no args = every dist folder)
  */
-import { existsSync, readdirSync } from 'node:fs';
+import { existsSync, readdirSync, statSync } from 'node:fs';
 import { basename, relative, resolve } from 'node:path';
 import { parseArgs, runCli } from '../lib/args';
 import { distDir, paths } from '../lib/paths';
@@ -21,7 +21,9 @@ async function main(): Promise<void> {
     positional.length > 0
       ? positional.map(toDistDir)
       : existsSync(paths.dist)
-        ? readdirSync(paths.dist).map((d) => resolve(paths.dist, d))
+        ? readdirSync(paths.dist)
+            .map((d) => resolve(paths.dist, d))
+            .filter((d) => statSync(d).isDirectory())
         : [];
   for (const dir of dirs) {
     const shots = await shootDist(dir);

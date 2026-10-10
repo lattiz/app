@@ -184,3 +184,28 @@ describe('color rules', () => {
     expect(checkTheme(oval, 'x').map((f) => f.rule)).toEqual(['radius-card']);
   });
 });
+
+describe('validator on the deliberately cloned fixture', () => {
+  it('fails every uniqueness rule and the Pro similarity limit', async () => {
+    const compiled = await compileFile(
+      resolve(KIT_ROOT, 'fixtures/clone/barberia-oxido-clone-v1.ts'),
+    );
+    const report = validateTarget(
+      targetFromCompiled(compiled),
+      await libraryFingerprints(),
+    );
+    const rules = new Set(report.findings.map((f) => f.rule));
+    for (const rule of [
+      'unique-theme',
+      'unique-font-pair',
+      'accent-hue',
+      'unique-headline',
+      'unique-hero',
+      'similarity',
+    ] as const)
+      expect(rules.has(rule), rule).toBe(true);
+    expect(
+      report.findings.every((f) => f.message.includes('barberia-oxido-v1')),
+    ).toBe(true);
+  });
+});

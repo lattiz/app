@@ -12,7 +12,8 @@
     "kit:validate": "tsx src/cli/validate.ts",
     "kit:shoot": "tsx src/cli/shoot.ts",
     "kit:build": "tsx src/cli/build.ts",
-    "kit:compare": "tsx src/cli/compare.ts"
+    "kit:compare": "tsx src/cli/compare.ts",
+    "kit:compare-visual": "tsx src/cli/compare-visual.ts"
   },
   "dependencies": {
     "grapesjs": "0.22.16",

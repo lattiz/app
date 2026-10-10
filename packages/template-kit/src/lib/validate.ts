@@ -12,6 +12,7 @@ import { atRuleChain, isReducedMotionMedia, parseCss } from './css';
 import { countedSlots, isTier, TIERS, type Role } from '../tiers';
 import { parseDocument, parseFragment } from './dom';
 import { KIT_ROOT } from './paths';
+import { hueDistance } from './color';
 import { fingerprint, similarity, type Fingerprint } from './similarity';
 import { tokenColor } from './theme';
 
@@ -40,7 +41,12 @@ export type RuleId =
   | 'empty-link'
   | 'head'
   | 'faq-details'
-  | 'theme-ownership';
+  | 'theme-ownership'
+  | 'unique-theme'
+  | 'unique-font-pair'
+  | 'accent-hue'
+  | 'unique-headline'
+  | 'unique-hero';
 
 export interface Finding {
   rule: RuleId;
@@ -741,6 +747,67 @@ function checkFaq(t: ValidationTarget, out: Finding[]): void {
   }
 }
 
+// ── Uniqueness within a vertical ────────────────────────────────────────────
+
+export const MIN_ACCENT_HUE_DISTANCE = 30;
+
+/** The hero's <h1> markup as rendered, for the unique-headline rule. */
+export function renderedHeadline(t: ValidationTarget): string {
+  const hero = t.sections.find((s) => s.slot === 'hero');
+  return hero
+    ? (parseFragment(hero.rendered).querySelector('h1')?.innerHTML ?? '')
+    : '';
+}
+
+/** Hard rules that keep two templates of one vertical from looking or reading the same. */
+function checkUniqueness(
+  t: ValidationTarget,
+  mine: Fingerprint,
+  others: Fingerprint[],
+  out: Finding[],
+): void {
+  const peers = others.filter(
+    (o) => o.id !== mine.id && o.vertical === mine.vertical,
+  );
+  const at = (pattern: RegExp) => manifestRef(t, pattern);
+  for (const o of peers) {
+    if (o.theme === mine.theme)
+      out.push({
+        rule: 'unique-theme',
+        ...at(/^\s*theme:/),
+        message: `theme "${mine.theme}" is already ${o.id}'s; every ${mine.vertical} template needs its own theme`,
+      });
+    if (o.fonts === mine.fonts)
+      out.push({
+        rule: 'unique-font-pair',
+        ...at(/^\s*theme:/),
+        message: `font pair "${mine.fonts}" is already ${o.id}'s; pick another display/body pair in the theme`,
+      });
+    if (
+      mine.accentHue !== null &&
+      o.accentHue !== null &&
+      hueDistance(mine.accentHue, o.accentHue) < MIN_ACCENT_HUE_DISTANCE
+    )
+      out.push({
+        rule: 'accent-hue',
+        ...at(/^\s*theme:/),
+        message: `accent hue ${Math.round(mine.accentHue)}° is ${Math.round(hueDistance(mine.accentHue, o.accentHue))}° from ${o.id} (${Math.round(o.accentHue)}°); keep ≥ ${MIN_ACCENT_HUE_DISTANCE}°`,
+      });
+    if (mine.headline !== '' && o.headline === mine.headline)
+      out.push({
+        rule: 'unique-headline',
+        ...at(/slot: 'hero'/),
+        message: `hero headline "${mine.headline}" is ${o.id}'s too; write this template's own`,
+      });
+    if (mine.tier === 'pro' && o.tier === 'pro' && o.hero === mine.hero)
+      out.push({
+        rule: 'unique-hero',
+        ...at(/slot: 'hero'/),
+        message: `hero/${mine.hero} is already ${o.id}'s; each Pro template needs its own hero variant`,
+      });
+  }
+}
+
 // ── Entry point ──────────────────────────────────────────────────────────────
 
 export function validateTarget(
@@ -776,7 +843,8 @@ export function validateTarget(
   checkProject(t, findings);
   findings.push(...checkTheme(t.theme, rel(t.themeFile)));
 
-  const mine = fingerprint(t.manifest, t.theme);
+  const mine = fingerprint(t.manifest, t.theme, renderedHeadline(t));
+  checkUniqueness(t, mine, others, findings);
   const limit = TIERS[mine.tier].similarityLimit;
   const scores = others
     .filter(
@@ -791,7 +859,7 @@ export function validateTarget(
       findings.push({
         rule: 'similarity',
         file: t.manifest.id,
-        message: `similarity with ${s.other} is ${s.score} (> ${limit} for ${mine.tier}): change sections/variants, theme or font pair`,
+        message: `similarity with ${s.other} is ${s.score} (> ${limit} for ${mine.tier}): change hero/services variants, other sections, theme, font pair or shape`,
       });
     }
   }
