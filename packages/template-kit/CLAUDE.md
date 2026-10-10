@@ -27,7 +27,7 @@ fixtures/                   oxido/ (Studio export), broken/ (must fail every rul
 
 - **Counted sections** = every slot except `floating-whatsapp` and `marquee`. Basic 6–7, Pro 8–10.
 - **Basic** (any tenant): header, hero, catalog, contact (`locations/single`), faq, footer + whatsapp; optional about (`about/brief`). Basic templates of a vertical share the roles; theme, hero/services variants and copy make them distinct (similarity ≤ 0.85).
-- **Pro** (Pro subscribers only, exclusive): header, hero, about (`text-image-offset` | `statement` | `stats-strip`), catalog, proof, testimonials, faq, contact (`locations/with-contact`), footer + whatsapp; optional team, marquee. Each Pro must feel distinct (similarity ≤ 0.5 vs other Pro of the vertical).
+- **Pro** (Pro and higher plans; not exclusive, tenants can share one): header, hero, about (`text-image-offset` | `statement` | `stats-strip`), catalog, proof, testimonials, faq, contact (`locations/with-contact`), footer + whatsapp; optional team, marquee. Each Pro must feel distinct (similarity ≤ 0.5 vs other Pro of the vertical).
 - Roles resolve to slots per vertical (`blueprints/service-landing.shared.ts › verticals`). Barbería: catalog → `services`, proof → `gallery`, contact → `locations`.
 - No `<form>` anywhere; contact = WhatsApp / `{{phoneUrl}}` / `{{emailUrl}}` / map buttons. `floating-whatsapp` is mandatory and links to `{{whatsappUrl…}}`.
 

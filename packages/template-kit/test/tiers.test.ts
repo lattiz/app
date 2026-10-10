@@ -40,7 +40,7 @@ describe('tier model', () => {
       countedMax: 10,
       similarityLimit: 0.5,
       seoProfile: 'advanced',
-      exclusive: true,
+      exclusive: false,
     });
   });
 
