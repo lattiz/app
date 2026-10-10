@@ -9,13 +9,14 @@
 }
 
 .lz-card {
-  border: 1px solid var(--lz-color-line);
+  border: var(--lz-border-width) solid var(--lz-color-line);
   border-radius: var(--lz-radius-card);
   background: var(--lz-color-surface);
   overflow: hidden;
   transition:
     border-color 0.25s ease,
     transform 0.25s ease;
+  box-shadow: var(--lz-shadow);
 }
 
 .lz-card:hover {
@@ -37,7 +38,7 @@
   width: 100%;
   aspect-ratio: 4 / 5;
   object-fit: cover;
-  filter: grayscale(1);
+  filter: var(--lz-photo-filter);
   transition:
     transform 0.35s ease,
     filter 0.35s ease;
@@ -45,7 +46,7 @@
 
 .lz-card:hover .lz-card__image,
 .lz-card:focus-within .lz-card__image {
-  filter: grayscale(0);
+  filter: none;
   transform: scale(1.03);
 }
 
@@ -59,8 +60,8 @@
   margin: 0;
   font-family: var(--lz-font-display);
   font-size: 34px;
-  line-height: 0.9;
-  text-transform: uppercase;
+  line-height: var(--lz-display-leading);
+  text-transform: var(--lz-display-transform);
 }
 
 .lz-card__subtitle {
@@ -78,7 +79,8 @@
   .lz-card {
     animation: none !important;
     transition: none !important;
-  }
+  box-shadow: var(--lz-shadow);
+}
   .lz-card__image {
     animation: none !important;
     transition: none !important;

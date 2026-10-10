@@ -1,6 +1,8 @@
 {
-  "name": "urban-dark",
-  "label": "Urbano oscuro",
+  "name": "oxido",
+  "label": "Óxido",
+  "tier": "pro",
+  "fontPair": "anton+space-grotesk",
   "colors": {
     "bg": "#0B0B0C",
     "surface": "#141416",
@@ -9,6 +11,7 @@
     "muted": "#9A978F",
     "accent": "#FF4F1F",
     "on-accent": "#0B0B0C",
+    "accent-text": "#FF4F1F",
     "line": "color-mix(in srgb, var(--lz-color-text) 14%, transparent)",
     "line-strong": "color-mix(in srgb, var(--lz-color-text) 24%, transparent)",
     "overlay": "#0B0B0C",
@@ -20,10 +23,17 @@
     "display": "'Anton', sans-serif",
     "serif": "'Instrument Serif', serif",
     "body": "'Space Grotesk', sans-serif",
-    "googleFonts": "family=Anton&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;700"
+    "googleFonts": "family=Anton&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;700",
+    "displayTransform": "uppercase",
+    "displayLeading": "0.9",
+    "displayWeight": "700",
+    "accentStyle": "italic",
+    "accentTransform": "lowercase"
   },
-  "radius": { "pill": "2px", "card": "2px" },
-  "sectionPad": "clamp(72px, 10vw, 140px)",
+  "shape": { "radiusCard": "2px", "radiusPill": "2px", "border": "1px", "shadow": "none" },
+  "density": "regular",
+  "photoTreatment": "grayscale",
+  "accentWords": "color",
   "container": "1200px",
   "effects": {
     "mapFilter": "grayscale(1) invert(.9) contrast(.9) brightness(.8)",

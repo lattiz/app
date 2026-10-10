@@ -17,7 +17,7 @@
 .lz-media-frame__outline {
   position: absolute;
   inset: 0 0 18px 18px;
-  border: 1px solid var(--lz-color-line);
+  border: var(--lz-border-width) solid var(--lz-color-line);
   pointer-events: none;
 }
 
@@ -28,6 +28,7 @@
   object-fit: cover;
   border-radius: var(--lz-radius-card);
   background: var(--lz-color-surface);
+  filter: var(--lz-photo-filter);
 }
 
 .lz-media-frame__sticker {
@@ -52,7 +53,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   padding-top: 26px;
-  border-top: 1px solid var(--lz-color-line);
+  border-top: var(--lz-border-width) solid var(--lz-color-line);
 }
 
 .lz-stat {
@@ -63,8 +64,8 @@
 .lz-stat__value {
   margin: 0;
   font-family: var(--lz-font-display);
-  text-transform: uppercase;
-  line-height: 0.9;
+  text-transform: var(--lz-display-transform);
+  line-height: var(--lz-display-leading);
   font-size: clamp(30px, 4vw, 56px);
 }
 
@@ -74,6 +75,7 @@
   font-size: 12px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  font-family: var(--lz-font-mono);
 }
 
 @media (max-width: 992px) {

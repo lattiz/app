@@ -28,7 +28,7 @@
   gap: 20px;
   min-height: 72px;
   padding: 16px 22px;
-  border: 1px solid var(--lz-color-line);
+  border: var(--lz-border-width) solid var(--lz-color-line);
   border-radius: var(--lz-radius-card);
   background: var(--lz-color-surface);
   color: var(--lz-color-text);
@@ -36,21 +36,22 @@
     border-color 0.25s ease,
     background-color 0.25s ease,
     color 0.25s ease;
+  box-shadow: var(--lz-shadow);
 }
 
 .lz-contact__channel:hover {
-  border-color: var(--lz-color-accent);
+  border-color: var(--lz-color-accent-text);
   outline: none;
 }
 
 .lz-contact__channel:focus-visible {
-  border-color: var(--lz-color-accent);
+  border-color: var(--lz-color-accent-text);
   outline: 2px solid var(--lz-color-accent);
   outline-offset: 2px;
 }
 
 .lz-contact__channel--primary {
-  border-color: var(--lz-color-accent);
+  border-color: var(--lz-color-accent-text);
   background: var(--lz-color-accent);
   color: var(--lz-color-on-accent);
 }
@@ -67,6 +68,7 @@
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  font-family: var(--lz-font-mono);
 }
 
 .lz-contact__value {
@@ -75,7 +77,7 @@
   font-size: 30px;
   line-height: 1;
   text-align: right;
-  text-transform: uppercase;
+  text-transform: var(--lz-display-transform);
   overflow-wrap: anywhere;
 }
 
@@ -94,10 +96,11 @@
 }
 
 .lz-branch {
-  border: 1px solid var(--lz-color-line);
+  border: var(--lz-border-width) solid var(--lz-color-line);
   border-radius: var(--lz-radius-card);
   background: var(--lz-color-surface);
   overflow: hidden;
+  box-shadow: var(--lz-shadow);
 }
 
 .lz-branch__body {
@@ -110,8 +113,8 @@
   margin: 0;
   font-family: var(--lz-font-display);
   font-size: 38px;
-  line-height: 0.9;
-  text-transform: uppercase;
+  line-height: var(--lz-display-leading);
+  text-transform: var(--lz-display-transform);
 }
 
 .lz-branch__meta {
@@ -142,7 +145,8 @@
   .lz-contact__channel {
     animation: none !important;
     transition: none !important;
-  }
+  box-shadow: var(--lz-shadow);
+}
 }
 
 @media (max-width: 992px) {
@@ -158,7 +162,8 @@
     align-items: start;
     gap: 8px;
     padding: 16px 18px;
-  }
+  box-shadow: var(--lz-shadow);
+}
   .lz-contact__value {
     font-size: 26px;
     text-align: left;

@@ -22,7 +22,7 @@ function rootRule(c: CompiledTemplate): Rule | undefined {
 
 describe('theme → tokens', () => {
   it('emits every required token as a --lz-* custom property', () => {
-    const css = themeRootCss(loadTheme('urban-dark'));
+    const css = themeRootCss(loadTheme('oxido'));
     for (const t of COLOR_TOKENS) expect(css).toContain(`--lz-color-${t}:`);
     for (const t of [
       '--lz-radius-pill',
@@ -32,15 +32,36 @@ describe('theme → tokens', () => {
       '--lz-font-display',
       '--lz-font-serif',
       '--lz-font-body',
+      '--lz-font-mono',
+      '--lz-display-transform',
+      '--lz-border-width',
+      '--lz-shadow',
+      '--lz-photo-filter',
+      '--lz-stack',
     ]) {
       expect(css).toContain(`${t}:`);
     }
   });
 
   it('builds the Google Fonts link from the theme query', () => {
-    expect(googleFontsHref(loadTheme('bone-blue'))).toBe(
-      'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;700&display=swap',
+    expect(googleFontsHref(loadTheme('trazo-noche'))).toBe(
+      'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;700&display=swap',
     );
+  });
+
+  it('derives shape, density and photo treatment tokens', () => {
+    const vars = new Map(themeVariables(loadTheme('concreto-brutal')));
+    expect(vars.get('--lz-border-width')).toBe('3px');
+    expect(vars.get('--lz-shadow')).toBe('6px 6px 0 var(--lz-color-ink)');
+    expect(vars.get('--lz-accent-word-bg')).toBe('var(--lz-color-accent)');
+    expect(vars.get('--lz-photo-filter')).toMatch(
+      /^grayscale\(1\) .* hue-rotate\(36deg\)/,
+    );
+    const oxido = new Map(themeVariables(loadTheme('oxido')));
+    expect(oxido.get('--lz-shadow')).toBe('none');
+    expect(oxido.get('--lz-section-pad')).toBe('clamp(72px, 10vw, 140px)');
+    expect(oxido.get('--lz-photo-filter')).toBe('grayscale(1)');
+    expect(oxido.get('--lz-font-mono')).toBe("'Space Grotesk', sans-serif");
   });
 });
 
@@ -60,7 +81,7 @@ describe('compiled project tokens', () => {
         expect(style[prop], `${c.manifest.id} ${prop}`).toBe(value);
       }
     }
-    expect(rootRule(norte)?.style?.['--lz-color-bg']).toBe('#F3EFE6');
+    expect(rootRule(norte)?.style?.['--lz-color-bg']).toBe('#EFE9DD');
     expect(rootRule(oxido)?.style?.['--lz-color-bg']).toBe('#0B0B0C');
   });
 

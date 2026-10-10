@@ -12,7 +12,7 @@ export default {
   tier: 'basic',
   vertical: 'barberia',
   archetype: 'essential',
-  theme: 'urban-dark',
+  theme: 'trazo-noche',
   content: 'barberia.es-MX',
   business: {
     name: 'FILO Barbería',

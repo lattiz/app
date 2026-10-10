@@ -10,7 +10,7 @@ export default {
   tier: 'pro',
   vertical: 'barberia',
   archetype: 'clean-editorial',
-  theme: 'bone-blue',
+  theme: 'norte-atelier',
   content: 'barberia.es-MX',
   business: {
     name: 'Norte Barber Studio',

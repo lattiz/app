@@ -1,0 +1,42 @@
+{
+  "name": "trazo-noche",
+  "label": "Trazo noche",
+  "tier": "basic",
+  "fontPair": "dm-serif-display+dm-sans",
+  "colors": {
+    "bg": "#1A1220",
+    "surface": "#241A2B",
+    "surface-2": "#2F2338",
+    "text": "#F6EEF3",
+    "muted": "#B9A9BA",
+    "accent": "#F2558E",
+    "on-accent": "#1A1220",
+    "accent-text": "#F2558E",
+    "line": "color-mix(in srgb, var(--lz-color-text) 16%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 30%, transparent)",
+    "overlay": "#120C16",
+    "on-overlay": "#F6EEF3",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 80%, transparent)",
+    "ink": "#000000"
+  },
+  "fonts": {
+    "display": "'DM Serif Display', serif",
+    "serif": "'DM Serif Display', serif",
+    "body": "'DM Sans', sans-serif",
+    "googleFonts": "family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;700",
+    "displayTransform": "none",
+    "displayLeading": "1",
+    "displayWeight": "400",
+    "accentStyle": "italic",
+    "accentTransform": "none"
+  },
+  "shape": { "radiusCard": "4px", "radiusPill": "4px", "border": "1px", "shadow": "none" },
+  "density": "regular",
+  "photoTreatment": "none",
+  "accentWords": "color",
+  "container": "1180px",
+  "effects": {
+    "mapFilter": "grayscale(1) invert(.88) sepia(.3) hue-rotate(250deg) brightness(.8)",
+    "heroImageFilter": "brightness(.45) saturate(.9)"
+  }
+}

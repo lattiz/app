@@ -11,7 +11,7 @@ export default {
   tier: 'pro',
   vertical: 'barberia',
   archetype: 'street-luxe',
-  theme: 'urban-dark',
+  theme: 'oxido',
   content: 'barberia.es-MX',
   sections: [
     { slot: 'navbar', variant: 'urban-luxe' },

@@ -37,13 +37,39 @@ async function importDefault(file: string): Promise<unknown> {
   return isRecord(mod) ? mod.default : undefined;
 }
 
+function requireOneOf(
+  obj: Rec,
+  key: string,
+  allowed: readonly string[],
+  where: string,
+): string[] {
+  return allowed.includes(String(obj[key]))
+    ? []
+    : [`${where}.${key} must be one of ${allowed.join(' | ')}`];
+}
+
 export function parseTheme(raw: unknown, file: string): Theme {
   if (!isRecord(raw))
     throw new KitError(`${file}: theme must be a JSON object.`);
   const problems = requireStrings(
     raw,
-    ['name', 'label', 'sectionPad', 'container'],
+    ['name', 'label', 'fontPair', 'container'],
     'theme',
+  );
+  problems.push(...requireOneOf(raw, 'tier', TIER_NAMES, 'theme'));
+  problems.push(
+    ...requireOneOf(raw, 'density', ['airy', 'regular', 'compact'], 'theme'),
+  );
+  problems.push(
+    ...requireOneOf(
+      raw,
+      'photoTreatment',
+      ['none', 'duotone', 'grayscale', 'warm'],
+      'theme',
+    ),
+  );
+  problems.push(
+    ...requireOneOf(raw, 'accentWords', ['color', 'highlight'], 'theme'),
   );
   const colors = isRecord(raw.colors) ? raw.colors : {};
   problems.push(...requireStrings(colors, COLOR_TOKENS, 'colors'));
@@ -51,12 +77,27 @@ export function parseTheme(raw: unknown, file: string): Theme {
   problems.push(
     ...requireStrings(
       fonts,
-      ['display', 'serif', 'body', 'googleFonts'],
+      [
+        'display',
+        'serif',
+        'body',
+        'googleFonts',
+        'displayLeading',
+        'displayWeight',
+      ],
       'fonts',
     ),
+    ...requireOneOf(fonts, 'displayTransform', ['uppercase', 'none'], 'fonts'),
+    ...requireOneOf(fonts, 'accentStyle', ['italic', 'normal'], 'fonts'),
+    ...requireOneOf(fonts, 'accentTransform', ['lowercase', 'none'], 'fonts'),
   );
-  const radius = isRecord(raw.radius) ? raw.radius : {};
-  problems.push(...requireStrings(radius, ['pill', 'card'], 'radius'));
+  if (fonts.mono !== undefined && typeof fonts.mono !== 'string')
+    problems.push('fonts.mono must be a string when present');
+  const shape = isRecord(raw.shape) ? raw.shape : {};
+  problems.push(
+    ...requireStrings(shape, ['radiusCard', 'radiusPill', 'border'], 'shape'),
+    ...requireOneOf(shape, 'shadow', ['none', 'soft', 'hard-offset'], 'shape'),
+  );
   const effects = isRecord(raw.effects) ? raw.effects : {};
   problems.push(
     ...requireStrings(effects, ['mapFilter', 'heroImageFilter'], 'effects'),

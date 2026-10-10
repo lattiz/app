@@ -29,7 +29,7 @@
 }
 
 .lz-faq__item {
-  border: 1px solid var(--lz-color-line);
+  border: var(--lz-border-width) solid var(--lz-color-line);
   border-radius: var(--lz-radius-card);
   background: var(--lz-color-surface);
 }

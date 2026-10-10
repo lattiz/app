@@ -252,3 +252,29 @@ describe('compiled Basic template', () => {
     expect(findings[0].line).toBe(8);
   });
 });
+
+describe('theme ownership', () => {
+  it('rejects a Pro theme on a Basic template and a Basic theme on a Pro one', async () => {
+    const others = await libraryFingerprints();
+    const basic = await loadManifest(manifestFile('barberia-base-claro-v1'));
+    const withPro = targetFromCompiled(
+      await compileManifest(
+        { ...basic, theme: 'oxido' },
+        manifestFile('barberia-base-claro-v1'),
+      ),
+    );
+    const finding = validateTarget(withPro, others).findings.find(
+      (f) => f.rule === 'theme-ownership',
+    );
+    expect(finding?.message).toMatch(/theme "oxido" belongs to pro templates/);
+    expect(finding?.file).toBe('templates/barberia-base-claro-v1.ts');
+
+    const pro = await loadManifest(manifestFile('barberia-norte-v1'));
+    const withBasic = targetFromCompiled(
+      await compileManifest({ ...pro, theme: 'trazo-solar' }),
+    );
+    expect(
+      validateTarget(withBasic, others).findings.map((f) => f.rule),
+    ).toContain('theme-ownership');
+  });
+});

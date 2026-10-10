@@ -348,3 +348,23 @@ export function findColorLiterals(value: string): string[] {
   for (const m of cleaned.matchAll(NAMED_RE)) found.push(m[0]);
   return found;
 }
+
+/** HSL hue in degrees (0–360) and chroma (0–1); hue is meaningless when chroma is ~0. */
+export function hueOf({ r, g, b }: Rgba): { hue: number; chroma: number } {
+  const [rn, gn, bn] = [r / 255, g / 255, b / 255];
+  const max = Math.max(rn, gn, bn);
+  const min = Math.min(rn, gn, bn);
+  const chroma = max - min;
+  if (chroma === 0) return { hue: 0, chroma };
+  let hue: number;
+  if (max === rn) hue = ((gn - bn) / chroma) % 6;
+  else if (max === gn) hue = (bn - rn) / chroma + 2;
+  else hue = (rn - gn) / chroma + 4;
+  return { hue: (hue * 60 + 360) % 360, chroma };
+}
+
+/** Shortest distance between two hues on the color wheel (0–180). */
+export function hueDistance(a: number, b: number): number {
+  const d = Math.abs(a - b) % 360;
+  return d > 180 ? 360 - d : d;
+}

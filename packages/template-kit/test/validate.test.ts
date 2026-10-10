@@ -2,7 +2,7 @@ import { resolve } from 'node:path';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { contrastRatio, findColorLiterals, parseColor } from '../src/lib/color';
 import { compileFile } from '../src/lib/compile';
-import { loadTheme } from '../src/lib/load';
+import { listThemes, loadTheme } from '../src/lib/load';
 import { TIERS } from '../src/tiers';
 import { KIT_ROOT, paths } from '../src/lib/paths';
 import {
@@ -167,12 +167,13 @@ describe('color rules', () => {
     expect(white && black && contrastRatio(white, black)).toBeCloseTo(21);
   });
 
-  it('accepts both shipped themes and rejects oval cards', () => {
-    expect(checkTheme(loadTheme('urban-dark'), 'urban-dark')).toEqual([]);
-    expect(checkTheme(loadTheme('bone-blue'), 'bone-blue')).toEqual([]);
+  it('accepts every shipped theme and rejects oval cards', () => {
+    for (const name of listThemes())
+      expect(checkTheme(loadTheme(name), name), name).toEqual([]);
+    const papel = loadTheme('trazo-papel');
     const oval = {
-      ...loadTheme('bone-blue'),
-      radius: { pill: '999px', card: '48px' },
+      ...papel,
+      shape: { ...papel.shape, radiusCard: '48px' },
     };
     expect(checkTheme(oval, 'x').map((f) => f.rule)).toEqual(['radius-card']);
   });

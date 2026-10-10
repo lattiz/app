@@ -58,7 +58,7 @@ a {
   gap: 20px;
   margin-bottom: 28px;
   padding-bottom: 20px;
-  border-bottom: 1px solid var(--lz-color-line);
+  border-bottom: var(--lz-border-width) solid var(--lz-color-line);
 }
 
 .lz-index {
@@ -68,13 +68,15 @@ a {
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  font-family: var(--lz-font-mono);
 }
 
 .lz-title {
   margin: 0 0 18px;
   font-family: var(--lz-font-display);
-  text-transform: uppercase;
-  line-height: 0.9;
+  text-transform: var(--lz-display-transform);
+  line-height: var(--lz-display-leading);
+  font-weight: var(--lz-display-weight);
   letter-spacing: 0.01em;
 }
 
@@ -84,11 +86,15 @@ a {
 }
 
 .lz-title__serif {
+  padding: var(--lz-accent-word-pad);
+  background: var(--lz-accent-word-bg);
+  color: var(--lz-color-accent-text);
   font-family: var(--lz-font-serif);
-  font-style: italic;
-  text-transform: lowercase;
-  color: var(--lz-color-accent);
+  font-style: var(--lz-accent-style);
   font-weight: 400;
+  text-transform: var(--lz-accent-transform);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 .lz-copy {
@@ -101,7 +107,7 @@ a {
   align-items: center;
   min-height: 32px;
   padding: 7px 10px;
-  border: 1px solid var(--lz-color-line);
+  border: var(--lz-border-width) solid var(--lz-color-line);
   background: transparent;
   color: var(--lz-color-muted);
   font-size: 12px;
@@ -109,6 +115,7 @@ a {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   border-radius: var(--lz-radius-pill);
+  font-family: var(--lz-font-mono);
 }
 
 .lz-sticker {
@@ -127,6 +134,7 @@ a {
   transform: rotate(-6deg);
   box-shadow: 0 12px 30px
     color-mix(in srgb, var(--lz-color-ink) 28%, transparent);
+  font-family: var(--lz-font-mono);
 }
 
 .lz-button {
@@ -135,8 +143,9 @@ a {
   justify-content: center;
   min-height: 52px;
   padding: 16px 28px;
-  border: 1px solid transparent;
+  border: var(--lz-border-width) solid transparent;
   border-radius: var(--lz-radius-pill);
+  box-shadow: var(--lz-shadow-sm);
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -203,12 +212,12 @@ a {
 }
 
 .lz-link:hover {
-  color: var(--lz-color-accent);
+  color: var(--lz-color-accent-text);
   outline: none;
 }
 
 .lz-link:focus-visible {
-  color: var(--lz-color-accent);
+  color: var(--lz-color-accent-text);
   outline: none;
 }
 

@@ -1,0 +1,42 @@
+{
+  "name": "trazo-papel",
+  "label": "Trazo papel",
+  "tier": "basic",
+  "fontPair": "fraunces+nunito-sans",
+  "colors": {
+    "bg": "#F7F1E6",
+    "surface": "#FFFDF8",
+    "surface-2": "#EDE4D2",
+    "text": "#1C1A16",
+    "muted": "#5D574B",
+    "accent": "#1F4BD8",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#1F4BD8",
+    "line": "color-mix(in srgb, var(--lz-color-text) 15%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 32%, transparent)",
+    "overlay": "#F7F1E6",
+    "on-overlay": "#1C1A16",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#2A2214"
+  },
+  "fonts": {
+    "display": "'Fraunces', serif",
+    "serif": "'Fraunces', serif",
+    "body": "'Nunito Sans', sans-serif",
+    "googleFonts": "family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500&family=Nunito+Sans:wght@400;600;700",
+    "displayTransform": "none",
+    "displayLeading": "1.02",
+    "displayWeight": "600",
+    "accentStyle": "italic",
+    "accentTransform": "none"
+  },
+  "shape": { "radiusCard": "14px", "radiusPill": "999px", "border": "1px", "shadow": "soft" },
+  "density": "regular",
+  "photoTreatment": "warm",
+  "accentWords": "color",
+  "container": "1160px",
+  "effects": {
+    "mapFilter": "sepia(.15) saturate(.9)",
+    "heroImageFilter": "sepia(.15) brightness(.97)"
+  }
+}

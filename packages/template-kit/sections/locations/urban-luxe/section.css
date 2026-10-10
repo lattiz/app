@@ -9,10 +9,11 @@
 }
 
 .lz-branch {
-  border: 1px solid var(--lz-color-line);
+  border: var(--lz-border-width) solid var(--lz-color-line);
   border-radius: var(--lz-radius-card);
   background: var(--lz-color-surface);
   overflow: hidden;
+  box-shadow: var(--lz-shadow);
 }
 
 .lz-branch__body {
@@ -25,8 +26,8 @@
   margin: 0;
   font-family: var(--lz-font-display);
   font-size: 38px;
-  line-height: 0.9;
-  text-transform: uppercase;
+  line-height: var(--lz-display-leading);
+  text-transform: var(--lz-display-transform);
 }
 
 .lz-branch__meta {

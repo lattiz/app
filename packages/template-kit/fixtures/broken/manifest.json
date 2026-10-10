@@ -42,24 +42,36 @@
       "overlay": "#FFFFFF",
       "on-overlay": "#EEEEEE",
       "navbar-bg": "rgba(255,255,255,.5)",
-      "ink": "#000000"
+      "ink": "#000000",
+      "accent-text": "#FFEE00"
     },
     "fonts": {
       "display": "'Anton', sans-serif",
       "serif": "'Instrument Serif', serif",
       "body": "'Space Grotesk', sans-serif",
-      "googleFonts": "family=Anton"
+      "googleFonts": "family=Anton",
+      "displayTransform": "uppercase",
+      "displayLeading": "0.9",
+      "displayWeight": "700",
+      "accentStyle": "italic",
+      "accentTransform": "lowercase"
     },
-    "radius": {
-      "pill": "999px",
-      "card": "40px"
-    },
-    "sectionPad": "80px",
     "container": "1200px",
     "effects": {
       "mapFilter": "none",
       "heroImageFilter": "none"
-    }
+    },
+    "tier": "pro",
+    "fontPair": "broken+broken",
+    "shape": {
+      "radiusCard": "40px",
+      "radiusPill": "999px",
+      "border": "1px",
+      "shadow": "none"
+    },
+    "density": "regular",
+    "photoTreatment": "none",
+    "accentWords": "color"
   },
   "sections": [
     {

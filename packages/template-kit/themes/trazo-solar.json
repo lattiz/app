@@ -1,0 +1,42 @@
+{
+  "name": "trazo-solar",
+  "label": "Trazo solar",
+  "tier": "basic",
+  "fontPair": "unbounded+manrope",
+  "colors": {
+    "bg": "#E8EAEE",
+    "surface": "#F7F8FA",
+    "surface-2": "#D9DCE3",
+    "text": "#14151B",
+    "muted": "#4C505B",
+    "accent": "#7438DD",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#6A2FD3",
+    "line": "color-mix(in srgb, var(--lz-color-text) 14%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 30%, transparent)",
+    "overlay": "#E8EAEE",
+    "on-overlay": "#14151B",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 92%, transparent)",
+    "ink": "#1B1530"
+  },
+  "fonts": {
+    "display": "'Unbounded', sans-serif",
+    "serif": "'Unbounded', sans-serif",
+    "body": "'Manrope', sans-serif",
+    "googleFonts": "family=Unbounded:wght@500;700&family=Manrope:wght@400;500;700",
+    "displayTransform": "none",
+    "displayLeading": "1.02",
+    "displayWeight": "700",
+    "accentStyle": "normal",
+    "accentTransform": "none"
+  },
+  "shape": { "radiusCard": "12px", "radiusPill": "12px", "border": "2px", "shadow": "soft" },
+  "density": "regular",
+  "photoTreatment": "none",
+  "accentWords": "color",
+  "container": "1200px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(.96)"
+  }
+}

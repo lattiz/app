@@ -1,0 +1,42 @@
+{
+  "name": "norte-atelier",
+  "label": "Atelier editorial",
+  "tier": "pro",
+  "fontPair": "playfair-display+inter",
+  "colors": {
+    "bg": "#EFE9DD",
+    "surface": "#F7F3EA",
+    "surface-2": "#E3DBCA",
+    "text": "#17160F",
+    "muted": "#57524A",
+    "accent": "#1F5B3D",
+    "on-accent": "#F7F3EA",
+    "accent-text": "#1F5B3D",
+    "line": "color-mix(in srgb, var(--lz-color-text) 30%, transparent)",
+    "line-strong": "var(--lz-color-text)",
+    "overlay": "#EFE9DD",
+    "on-overlay": "#17160F",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 96%, transparent)",
+    "ink": "#17160F"
+  },
+  "fonts": {
+    "display": "'Playfair Display', serif",
+    "serif": "'Playfair Display', serif",
+    "body": "'Inter', sans-serif",
+    "googleFonts": "family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600",
+    "displayTransform": "none",
+    "displayLeading": "1.04",
+    "displayWeight": "500",
+    "accentStyle": "italic",
+    "accentTransform": "none"
+  },
+  "shape": { "radiusCard": "0px", "radiusPill": "0px", "border": "1px", "shadow": "none" },
+  "density": "airy",
+  "photoTreatment": "warm",
+  "accentWords": "color",
+  "container": "1240px",
+  "effects": {
+    "mapFilter": "grayscale(1) sepia(.2) contrast(1.05)",
+    "heroImageFilter": "sepia(.2) brightness(.95)"
+  }
+}

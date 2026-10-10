@@ -1,7 +1,7 @@
 .lz-marquee {
   overflow: hidden;
-  border-top: 1px solid var(--lz-color-line);
-  border-bottom: 1px solid var(--lz-color-line);
+  border-top: var(--lz-border-width) solid var(--lz-color-line);
+  border-bottom: var(--lz-border-width) solid var(--lz-color-line);
   background: var(--lz-color-accent);
 }
 
@@ -23,7 +23,7 @@
   font-size: 38px;
   line-height: 1;
   letter-spacing: 0.04em;
-  text-transform: uppercase;
+  text-transform: var(--lz-display-transform);
 }
 
 .lz-marquee__sep {

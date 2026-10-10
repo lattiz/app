@@ -12,7 +12,7 @@ export default {
   tier: 'basic',
   vertical: 'barberia',
   archetype: 'essential',
-  theme: 'bone-blue',
+  theme: 'trazo-papel',
   content: 'barberia.es-MX',
   business: {
     name: 'TRAZO Barbería',

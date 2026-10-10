@@ -39,7 +39,8 @@ export type RuleId =
   | 'img-size'
   | 'empty-link'
   | 'head'
-  | 'faq-details';
+  | 'faq-details'
+  | 'theme-ownership';
 
 export interface Finding {
   rule: RuleId;
@@ -556,12 +557,22 @@ const CONTRAST_PAIRS: [ColorToken, ColorToken, number, string][] = [
   ['muted', 'bg', 4.5, 'muted text'],
   ['muted', 'surface', 4.5, 'muted text on cards'],
   ['on-accent', 'accent', 4.5, 'button labels'],
-  ['accent', 'bg', 3, 'accent display words / hover links'],
-  ['accent', 'surface', 3, 'accent on cards'],
   ['on-overlay', 'overlay', 4.5, 'hero text on the image overlay'],
-  ['accent', 'overlay', 3, 'accent words in the hero'],
   ['text', 'navbar-bg', 4.5, 'navbar links'],
 ];
+
+/** Accent words are either colored text or accent-text on an accent marker. */
+const ACCENT_PAIRS: Record<
+  Theme['accentWords'],
+  [ColorToken, ColorToken, number, string][]
+> = {
+  color: [
+    ['accent-text', 'bg', 3, 'accent display words / hover links'],
+    ['accent-text', 'surface', 3, 'accent on cards'],
+    ['accent-text', 'overlay', 3, 'accent words in the image hero'],
+  ],
+  highlight: [['accent-text', 'accent', 4.5, 'highlighted accent words']],
+};
 
 function cardRadiusPx(value: string): number | null {
   const m = /^([\d.]+)(px|rem|em)?$/.exec(value.trim());
@@ -571,16 +582,19 @@ function cardRadiusPx(value: string): number | null {
 
 export function checkTheme(theme: Theme, file: string): Finding[] {
   const out: Finding[] = [];
-  const radius = cardRadiusPx(theme.radius.card);
+  const radius = cardRadiusPx(theme.shape.radiusCard);
   if (radius === null || radius > MAX_CARD_RADIUS_PX) {
     out.push({
       rule: 'radius-card',
       file,
-      message: `radius.card "${theme.radius.card}" must be a length ≤ ${MAX_CARD_RADIUS_PX}px (cards stay near-square; pills use radius.pill)`,
+      message: `shape.radiusCard "${theme.shape.radiusCard}" must be a length ≤ ${MAX_CARD_RADIUS_PX}px (cards stay near-square; pills use radiusPill)`,
     });
   }
   const bg = tokenColor(theme, 'bg');
-  for (const [fgToken, bgToken, min, use] of CONTRAST_PAIRS) {
+  for (const [fgToken, bgToken, min, use] of [
+    ...CONTRAST_PAIRS,
+    ...ACCENT_PAIRS[theme.accentWords],
+  ]) {
     const fg = tokenColor(theme, fgToken);
     let back: Rgba | null = tokenColor(theme, bgToken);
     if (!fg || !back || !bg) {
@@ -621,6 +635,12 @@ function checkTier(t: ValidationTarget, out: Finding[]): void {
     });
     return;
   }
+  if (t.theme.tier !== tierName)
+    out.push({
+      rule: 'theme-ownership',
+      ...manifestRef(t, /^\s*theme:/),
+      message: `theme "${t.theme.name}" belongs to ${t.theme.tier} templates; a ${tierName} template must use a ${tierName} theme (Pro themes are the Pro templates' identity)`,
+    });
   const tier = TIERS[tierName];
   const counted = countedSlots(t.sections.map((s) => s.slot));
   if (counted.length < tier.countedMin || counted.length > tier.countedMax)
