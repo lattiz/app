@@ -18,6 +18,11 @@ import {
 } from './billing.fixtures-spec';
 import { PlanChangeService } from './plan-change.service';
 import { SubscriptionStateService } from './subscription-state.service';
+import type { TemplateAccessService } from '../templates/template-access.service';
+import {
+  BillingTenantAccessDeniedException,
+  PlanChangeImpactNotAcknowledgedException,
+} from './billing.exceptions';
 
 const APP_URL = 'https://app.example';
 const PRICES: Record<string, Stripe.Price> = {
@@ -83,6 +88,7 @@ function setup(options: {
   schedule?: Stripe.SubscriptionSchedule;
   domainCheck?: 'ok' | 'above_cap' | 'price_unavailable';
   noSubscription?: boolean;
+  currentTemplate?: { id: string; name: string | null; tier: string } | null;
 }) {
   const stripe = {
     subscriptions: { retrieve: jest.fn().mockResolvedValue(options.sub) },
@@ -111,6 +117,9 @@ function setup(options: {
     },
   };
   const { db } = fakeDb((q) => {
+    if (q.sql.includes('AND user_id =')) {
+      return q.params.includes('tenant-1') ? [{ ok: 1 }] : [];
+    }
     if (q.sql.includes('FROM public.tenants')) {
       return [{ id: 'tenant-1', stripe_customer_id: 'cus_1' }];
     }
@@ -133,13 +142,19 @@ function setup(options: {
       .fn()
       .mockResolvedValue(options.domainCheck ?? 'ok'),
   };
+  const templateAccess = {
+    stateForTenant: jest.fn().mockResolvedValue({
+      current: options.currentTemplate ?? null,
+    }),
+  };
   const service = new PlanChangeService(
     stripe as unknown as Stripe,
     db,
     state,
     domains as unknown as DomainsService,
+    templateAccess as unknown as TemplateAccessService,
   );
-  return { service, stripe, domains };
+  return { service, stripe, domains, templateAccess };
 }
 
 const proMonthly = () =>
@@ -417,5 +432,122 @@ describe('PlanChangeService', () => {
       service.requestChange('user-1', 'pro', APP_URL),
     ).rejects.toBeInstanceOf(PlanChangeNotAllowedException);
     expect(stripe.subscriptions.retrieve).not.toHaveBeenCalled();
+  });
+
+  describe('template impact', () => {
+    const proTemplate = {
+      id: 'barberia-oxido-v1',
+      name: 'ÓXIDO Barber Club',
+      tier: 'pro',
+    };
+    const periodEndIso = new Date(PERIOD_END_S * 1000).toISOString();
+
+    it('lists the Pro template as a loss for a downgrade, dated at the period end', async () => {
+      const { service } = setup({
+        sub: proMonthly(),
+        currentTemplate: proTemplate,
+      });
+      await expect(
+        service.getImpact('user-1', 'tenant-1', 'basico'),
+      ).resolves.toEqual({
+        target: 'basico',
+        items: [
+          {
+            kind: 'template_loss',
+            templateId: 'barberia-oxido-v1',
+            templateName: 'ÓXIDO Barber Club',
+            effectiveAt: periodEndIso,
+          },
+        ],
+      });
+    });
+
+    it('reports nothing for an upgrade or a Básico template', async () => {
+      const { service } = setup({
+        sub: subscription(),
+        currentTemplate: {
+          id: 'barberia-base-claro-v1',
+          name: 'TRAZO',
+          tier: 'basic',
+        },
+      });
+      await expect(
+        service.getImpact('user-1', 'tenant-1', 'pro'),
+      ).resolves.toEqual({
+        target: 'pro',
+        items: [],
+      });
+      const pro = setup({
+        sub: proMonthly(),
+        currentTemplate: {
+          id: 'barberia-base-claro-v1',
+          name: 'TRAZO',
+          tier: 'basic',
+        },
+      });
+      await expect(
+        pro.service.getImpact('user-1', 'tenant-1', 'basico'),
+      ).resolves.toEqual({ target: 'basico', items: [] });
+    });
+
+    it('refuses another tenant id', async () => {
+      const { service, stripe } = setup({ sub: proMonthly() });
+      await expect(
+        service.getImpact('user-1', 'tenant-2', 'basico'),
+      ).rejects.toBeInstanceOf(BillingTenantAccessDeniedException);
+      expect(stripe.subscriptions.retrieve).not.toHaveBeenCalled();
+    });
+
+    it('answers 409 with the impact until the loss is acknowledged, scheduling nothing', async () => {
+      const { service, stripe } = setup({
+        sub: proMonthly(),
+        currentTemplate: proTemplate,
+      });
+      const attempt = service.requestChange('user-1', 'basico', APP_URL);
+      await expect(attempt).rejects.toBeInstanceOf(
+        PlanChangeImpactNotAcknowledgedException,
+      );
+      await expect(attempt).rejects.toMatchObject({
+        status: 409,
+        code: 'PLAN_CHANGE_IMPACT_NOT_ACKNOWLEDGED',
+        details: {
+          items: [
+            expect.objectContaining({
+              kind: 'template_loss',
+              effectiveAt: periodEndIso,
+            }),
+          ],
+        },
+      });
+      expect(stripe.subscriptionSchedules.create).not.toHaveBeenCalled();
+    });
+
+    it('schedules the downgrade once acknowledged', async () => {
+      const { service, stripe } = setup({
+        sub: proMonthly(),
+        currentTemplate: proTemplate,
+      });
+      await expect(
+        service.requestChange('user-1', 'basico', APP_URL, true),
+      ).resolves.toEqual({
+        kind: 'scheduled',
+        url: null,
+        effectiveAt: periodEndIso,
+      });
+      expect(stripe.subscriptionSchedules.create).toHaveBeenCalledTimes(1);
+    });
+
+    it('needs no acknowledgement when nothing is lost', async () => {
+      const { service, stripe } = setup({
+        sub: proMonthly(),
+        currentTemplate: {
+          id: 'barberia-base-claro-v1',
+          name: 'TRAZO',
+          tier: 'basic',
+        },
+      });
+      await service.requestChange('user-1', 'basico', APP_URL);
+      expect(stripe.subscriptionSchedules.create).toHaveBeenCalledTimes(1);
+    });
   });
 });

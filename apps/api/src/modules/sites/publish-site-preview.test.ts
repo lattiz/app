@@ -11,6 +11,12 @@ import { PreviewConfig } from '../../common/billing/preview.config';
 import { SettingsService } from '../../common/settings/settings.service';
 import { SanitizeHtmlSanitizer } from './sanitize-html.sanitizer';
 import { SitesService } from './sites.service';
+import type { TemplateAccessService } from '../templates/template-access.service';
+
+/** These tests are about the free preview; the template lock never applies. */
+const unlockedTemplates = {
+  assertNotLocked: () => Promise.resolve(),
+} as unknown as TemplateAccessService;
 
 const dialect = new PgDialect();
 const DAY_MS = 86_400_000;
@@ -100,6 +106,7 @@ function serviceFor(fixture: TenantFixture, env: Record<string, string> = {}) {
       storage,
       preview(env),
       new SanitizeHtmlSanitizer(),
+      unlockedTemplates,
     ),
     sealCount: () => seals,
     stored: () => stored,

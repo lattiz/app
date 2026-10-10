@@ -15,6 +15,12 @@ import {
   UnsupportedAssetTypeException,
 } from './sites.exceptions';
 import { SitesService, type UploadedFile } from './sites.service';
+import type { TemplateAccessService } from '../templates/template-access.service';
+
+/** These tests are about the free preview; the template lock never applies. */
+const unlockedTemplates = {
+  assertNotLocked: () => Promise.resolve(),
+} as unknown as TemplateAccessService;
 
 const dialect = new PgDialect();
 const DAY_MS = 86_400_000;
@@ -85,7 +91,13 @@ function serviceFor(
   );
 
   return {
-    sites: new SitesService(db, storage, preview, new SanitizeHtmlSanitizer()),
+    sites: new SitesService(
+      db,
+      storage,
+      preview,
+      new SanitizeHtmlSanitizer(),
+      unlockedTemplates,
+    ),
     uploads: () => uploads,
     usageCalls: () => usageCalls,
   };

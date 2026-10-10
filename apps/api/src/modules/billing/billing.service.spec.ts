@@ -51,6 +51,7 @@ function setup(options: {
   } as unknown as BillingPricesService;
   const domains = {
     relaunchDomain: jest.fn().mockResolvedValue({ relaunched: false }),
+    suspendDomainForTenant: jest.fn().mockResolvedValue(undefined),
   };
   const emails = { enqueueForTenant: jest.fn() };
   const service = new BillingService(
@@ -233,6 +234,52 @@ describe('BillingService subscription sync', () => {
     const { queries, deliver } = setup({ fresh });
     await deliver(subscriptionUpdated({ id: 'sub_1' }));
     expect(tenantPlanWrites(queries)).toEqual(['basico']);
+  });
+
+  describe('a plan lowered outside our confirmed flow (e.g. Customer Portal)', () => {
+    const touchesSiteContent = (queries: RenderedQuery[]) =>
+      queries.filter((q) =>
+        /site_schemas|template_archives|public\.templates/.test(q.sql),
+      );
+
+    it('syncs tenants.plan to basico and never touches the site, its template or archives', async () => {
+      const fresh = subscription({
+        itemPrice: price('price_basico_m', 'basico_monthly'),
+        metadata: {
+          tenant_id: 'tenant-1',
+          plan: 'pro',
+          lookup_key: 'pro_monthly',
+        },
+      });
+      const { queries, deliver } = setup({ fresh });
+      await deliver(subscriptionUpdated({ id: 'sub_1' }));
+      expect(tenantPlanWrites(queries)).toEqual(['basico']);
+      expect(touchesSiteContent(queries)).toEqual([]);
+    });
+
+    it('is idempotent: a redelivered event changes nothing', async () => {
+      const fresh = subscription({
+        itemPrice: price('price_basico_m', 'basico_monthly'),
+      });
+      const { stripe, queries, deliver } = setup({ fresh, processed: true });
+      await deliver(subscriptionUpdated({ id: 'sub_1' }));
+      expect(stripe.subscriptions.retrieve).not.toHaveBeenCalled();
+      expect(tenantPlanWrites(queries)).toEqual([]);
+      expect(touchesSiteContent(queries)).toEqual([]);
+    });
+
+    it('a deletion does not touch site content either', async () => {
+      const fresh = subscription({
+        status: 'canceled',
+        itemPrice: PRO_MONTHLY,
+      });
+      const { queries, deliver } = setup({ fresh });
+      await deliver({
+        type: 'customer.subscription.deleted',
+        data: { object: fresh },
+      } as never);
+      expect(touchesSiteContent(queries)).toEqual([]);
+    });
   });
 });
 

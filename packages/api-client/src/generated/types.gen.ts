@@ -155,6 +155,11 @@ export type PlanChangeStatusResponseDto = {
 
 export type RequestPlanChangeDto = {
     targetPlan: 'basico' | 'pro';
+    /**
+     * Required (true) when GET /tenants/:tenantId/plan-change-impact lists any loss;
+     * otherwise the API answers 409 PLAN_CHANGE_IMPACT_NOT_ACKNOWLEDGED with the impact.
+     */
+    acknowledgeLosses?: boolean;
 };
 
 export type PlanChangeResultDto = {
@@ -219,6 +224,24 @@ export type InvoiceDto = {
 
 export type InvoiceListResponseDto = {
     invoices: Array<InvoiceDto>;
+};
+
+export type PlanChangeImpactItemDto = {
+    kind: 'template_loss' | 'analytics' | 'domain_renewal_cap';
+    templateId: string | null;
+    templateName: string | null;
+    /**
+     * ISO date the loss takes effect (period end for a downgrade).
+     */
+    effectiveAt: string | null;
+};
+
+export type PlanChangeImpactResponseDto = {
+    target: 'basico' | 'pro';
+    /**
+     * Empty when nothing is lost. A non-empty list must be acknowledged to schedule the change.
+     */
+    items: Array<PlanChangeImpactItemDto>;
 };
 
 export type DomainSearchResultDto = {
@@ -373,6 +396,39 @@ export type DomainStatusResponseDto = {
     purchaseCompletedAt: string | null;
 };
 
+export type TemplateGalleryItemDto = {
+    id: string;
+    name: string;
+    description: string | null;
+    category: string | null;
+    previewUrl: string | null;
+    thumbnailUrl: string | null;
+    sortOrder: number;
+    /**
+     * `basic`: every plan. `pro`: Pro (and higher) plans only.
+     */
+    tier: 'basic' | 'pro';
+    /**
+     * Whether the caller's plan lets it pick this template. Derived on every read.
+     */
+    accessible: boolean;
+    lockedReason: 'REQUIRES_PRO' | null;
+};
+
+export type TemplateListItemDto = {
+    id: string;
+    name: string;
+    description: string | null;
+    category: string | null;
+    previewUrl: string | null;
+    thumbnailUrl: string | null;
+    sortOrder: number;
+    /**
+     * `basic`: every plan. `pro`: Pro (and higher) plans only.
+     */
+    tier: 'basic' | 'pro';
+};
+
 export type DependencyStatusDto = {
     /**
      * Dependency name.
@@ -520,16 +576,6 @@ export type ChangeTemplateResponseDto = {
     updatedAt: string;
 };
 
-export type TemplateListItemDto = {
-    id: string;
-    name: string;
-    description: string | null;
-    category: string | null;
-    previewUrl: string | null;
-    thumbnailUrl: string | null;
-    sortOrder: number;
-};
-
 export type TenantDomainDto = {
     domain: string;
     source: 'lattiz_managed' | 'user_provided';
@@ -589,6 +635,22 @@ export type TenantBrandingDto = {
     ogSiteName: string | null;
 };
 
+export type TenantCurrentTemplateDto = {
+    id: string;
+    name: string | null;
+    tier: 'basic' | 'pro';
+};
+
+export type TenantTemplateAccessDto = {
+    current: TenantCurrentTemplateDto | null;
+    /**
+     * True when an active plan is below the current template's tier (after a
+     * downgrade): editing, saving and publishing are blocked until the tenant
+     * picks an included template or upgrades. The published site stays online.
+     */
+    locked: boolean;
+};
+
 export type TenantMeResponseDto = {
     /**
      * `tenants.id` — the id expected by the editor route (`/editor/:tenantId`).
@@ -636,6 +698,7 @@ export type TenantMeResponseDto = {
      * Favicon / social-preview images injected into the published tenant site.
      */
     branding: TenantBrandingDto;
+    templateAccess: TenantTemplateAccessDto;
 };
 
 export type UpdateSlugDto = {
@@ -786,6 +849,13 @@ export type BillingControllerRequestPlanChangeData = {
     url: '/billing/plan-change';
 };
 
+export type BillingControllerRequestPlanChangeErrors = {
+    /**
+     * PLAN_CHANGE_NOT_ALLOWED, or PLAN_CHANGE_IMPACT_NOT_ACKNOWLEDGED with `details.items` when a downgrade loses something and `acknowledgeLosses` is not true.
+     */
+    409: unknown;
+};
+
 export type BillingControllerRequestPlanChangeResponses = {
     200: PlanChangeResultDto;
 };
@@ -843,6 +913,34 @@ export type BillingControllerGetInvoicesResponses = {
 };
 
 export type BillingControllerGetInvoicesResponse = BillingControllerGetInvoicesResponses[keyof BillingControllerGetInvoicesResponses];
+
+export type PlanChangeImpactControllerGetImpactData = {
+    body?: never;
+    path: {
+        tenantId: string;
+    };
+    query: {
+        target: 'basico' | 'pro';
+    };
+    url: '/tenants/{tenantId}/plan-change-impact';
+};
+
+export type PlanChangeImpactControllerGetImpactErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Tenant does not belong to the caller.
+     */
+    403: unknown;
+};
+
+export type PlanChangeImpactControllerGetImpactResponses = {
+    200: PlanChangeImpactResponseDto;
+};
+
+export type PlanChangeImpactControllerGetImpactResponse = PlanChangeImpactControllerGetImpactResponses[keyof PlanChangeImpactControllerGetImpactResponses];
 
 export type DomainsControllerSearchData = {
     body?: never;
@@ -941,6 +1039,39 @@ export type DomainsControllerGetDomainResponses = {
 };
 
 export type DomainsControllerGetDomainResponse = DomainsControllerGetDomainResponses[keyof DomainsControllerGetDomainResponses];
+
+export type TemplatesControllerFindAllData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/templates';
+};
+
+export type TemplatesControllerFindAllErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+};
+
+export type TemplatesControllerFindAllResponses = {
+    200: Array<TemplateGalleryItemDto>;
+};
+
+export type TemplatesControllerFindAllResponse = TemplatesControllerFindAllResponses[keyof TemplatesControllerFindAllResponses];
+
+export type PublicTemplatesControllerFindPublishedData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/public/templates';
+};
+
+export type PublicTemplatesControllerFindPublishedResponses = {
+    200: Array<TemplateListItemDto>;
+};
+
+export type PublicTemplatesControllerFindPublishedResponse = PublicTemplatesControllerFindPublishedResponses[keyof PublicTemplatesControllerFindPublishedResponses];
 
 export type HealthControllerHealthData = {
     body?: never;
@@ -1165,39 +1296,6 @@ export type SitesControllerChangeTemplateResponses = {
 };
 
 export type SitesControllerChangeTemplateResponse = SitesControllerChangeTemplateResponses[keyof SitesControllerChangeTemplateResponses];
-
-export type TemplatesControllerFindAllData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/templates';
-};
-
-export type TemplatesControllerFindAllErrors = {
-    /**
-     * Missing or invalid bearer token.
-     */
-    401: unknown;
-};
-
-export type TemplatesControllerFindAllResponses = {
-    200: Array<TemplateListItemDto>;
-};
-
-export type TemplatesControllerFindAllResponse = TemplatesControllerFindAllResponses[keyof TemplatesControllerFindAllResponses];
-
-export type PublicTemplatesControllerFindPublishedData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/public/templates';
-};
-
-export type PublicTemplatesControllerFindPublishedResponses = {
-    200: Array<TemplateListItemDto>;
-};
-
-export type PublicTemplatesControllerFindPublishedResponse = PublicTemplatesControllerFindPublishedResponses[keyof PublicTemplatesControllerFindPublishedResponses];
 
 export type TenantsControllerMeData = {
     body?: never;

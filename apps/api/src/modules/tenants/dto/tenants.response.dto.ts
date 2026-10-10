@@ -1,3 +1,4 @@
+import { TEMPLATE_TIERS } from '../../templates/template-access.policy';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   PREVIEW_STATES,
@@ -77,6 +78,31 @@ export class TenantDomainDto {
   suspended!: boolean;
 }
 
+export class TenantCurrentTemplateDto {
+  @ApiProperty()
+  id!: string;
+
+  @ApiProperty({ type: String, nullable: true })
+  name!: string | null;
+
+  @ApiProperty({ enum: TEMPLATE_TIERS })
+  tier!: string;
+}
+
+/** The site's template against the tenant's plan, derived on every read (no stored flag). */
+export class TenantTemplateAccessDto {
+  @ApiProperty({ type: TenantCurrentTemplateDto, nullable: true })
+  current!: TenantCurrentTemplateDto | null;
+
+  /**
+   * True when an active plan is below the current template's tier (after a
+   * downgrade): editing, saving and publishing are blocked until the tenant
+   * picks an included template or upgrades. The published site stays online.
+   */
+  @ApiProperty()
+  locked!: boolean;
+}
+
 export class TenantMeResponseDto {
   /** `tenants.id` — the id expected by the editor route (`/editor/:tenantId`). */
   @ApiProperty()
@@ -141,4 +167,7 @@ export class TenantMeResponseDto {
   /** Favicon / social-preview images injected into the published tenant site. */
   @ApiProperty({ type: TenantBrandingDto })
   branding!: TenantBrandingDto;
+
+  @ApiProperty({ type: TenantTemplateAccessDto })
+  templateAccess!: TenantTemplateAccessDto;
 }

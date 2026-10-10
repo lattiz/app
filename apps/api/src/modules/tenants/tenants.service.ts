@@ -1,3 +1,4 @@
+import { TemplateAccessService } from '../templates/template-access.service';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { sql, type SQL } from 'drizzle-orm';
 import { randomUUID } from 'node:crypto';
@@ -20,6 +21,7 @@ import type { UpdateSiteSettingsDto } from './dto/update-site-settings.dto';
 import {
   TenantDomainDto,
   TenantMeResponseDto,
+  TenantTemplateAccessDto,
   TenantSiteMetaDto,
   TenantSubscriptionDto,
 } from './dto/tenants.response.dto';
@@ -127,6 +129,7 @@ export class TenantsService {
     @Inject(DATABASE) private readonly db: Database,
     @Inject(OBJECT_STORAGE_PORT) private readonly storage: ObjectStoragePort,
     private readonly preview: PreviewCapabilityService,
+    private readonly templateAccess: TemplateAccessService,
   ) {}
 
   /** Resolves the authenticated user's tenant (single-tenant-per-user model). */
@@ -169,7 +172,15 @@ export class TenantsService {
         ? toIso(capability.previewExpiresAt)
         : null,
       branding: await this.getBranding(row.id),
+      templateAccess: await this.getTemplateAccess(row.id),
     };
+  }
+
+  private async getTemplateAccess(
+    tenantId: string,
+  ): Promise<TenantTemplateAccessDto> {
+    const state = await this.templateAccess.stateForTenant(tenantId);
+    return { current: state.current, locked: state.locked };
   }
 
   private async getDomainStatus(
