@@ -147,7 +147,7 @@ export interface Manifest {
   vertical: string;
   archetype: string;
   theme: string;
-  /** Content pack file name under content/, without extension (e.g. `barberia.es-MX`). */
+  /** Content pack file name under content/, without extension (e.g. `barberia.oxido.es-MX`). */
   content: string;
   business?: Partial<Business>;
   head?: Partial<HeadContent>;

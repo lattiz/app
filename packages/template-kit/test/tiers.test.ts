@@ -226,8 +226,12 @@ describe('compiled Basic template', () => {
       await libraryFingerprints(),
     ).findings;
     expect(findings.map((f) => f.rule)).toEqual(['faq-details']);
-    expect(findings[0].file).toBe('sections/faq/list/section.html');
-    expect(findings[0].line).toBe(8);
+    const faq = target.sections.find((x) => x.slot === 'faq');
+    const source = readFileSync(faq?.htmlFile ?? '', 'utf8').split('\n');
+    expect(findings[0].file).toBe(`sections/faq/${faq?.variant}/section.html`);
+    expect(findings[0].line).toBe(
+      source.findIndex((l) => l.includes('<details open')) + 1,
+    );
   });
 });
 

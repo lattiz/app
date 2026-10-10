@@ -24,31 +24,37 @@ describe('validator on the library templates', () => {
     for (const id of [
       'barberia-oxido-v1',
       'barberia-norte-v1',
+      'barberia-concreto-v1',
       'barberia-base-oscuro-v1',
       'barberia-base-claro-v1',
+      'barberia-base-solar-v1',
     ]) {
       const compiled = await compileFile(resolve(paths.templates, `${id}.ts`));
       reports.set(id, validateTarget(targetFromCompiled(compiled), others));
     }
   });
 
-  it('passes the Pro (ÓXIDO, Norte) and Basic (oscuro, claro) templates in both themes', () => {
+  it('passes the three Pro and three Basic templates', () => {
+    expect([...reports.keys()].length).toBe(6);
     for (const [id, report] of reports) expect(report.findings, id).toEqual([]);
   });
 
   it("scores similarity only within the same vertical and tier, with that tier's limit", () => {
     const pro = reports.get('barberia-norte-v1');
     expect(pro?.similarityLimit).toBe(TIERS.pro.similarityLimit);
-    expect(pro?.similarity.map((s) => s.other)).toEqual(['barberia-oxido-v1']);
-    expect(pro?.similarity[0].score).toBeLessThanOrEqual(0.5);
-
+    expect(pro?.similarity.map((s) => s.other).sort()).toEqual([
+      'barberia-concreto-v1',
+      'barberia-oxido-v1',
+    ]);
     const basic = reports.get('barberia-base-claro-v1');
     expect(basic?.similarityLimit).toBe(TIERS.basic.similarityLimit);
-    expect(basic?.similarity.map((s) => s.other)).toEqual([
+    expect(basic?.similarity.map((s) => s.other).sort()).toEqual([
       'barberia-base-oscuro-v1',
+      'barberia-base-solar-v1',
     ]);
-    // Same structure, different theme and fonts: a reskin on purpose.
-    expect(basic?.similarity[0].score).toBe(0.6);
+    for (const report of reports.values())
+      for (const s of report.similarity)
+        expect(s.score).toBeLessThanOrEqual(report.similarityLimit);
   });
 });
 

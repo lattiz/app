@@ -1,9 +1,16 @@
-import { mapsEmbedUrl, mapsLinkUrl } from '../src/lib/content';
 import type { ContentPack } from '../src/types';
+import {
+  branchCards,
+  footerBranches,
+  galleryItems,
+  type Branch,
+} from './barberia.shared';
+
+/** ÓXIDO voice: streetwear, short and bold. */
 
 const HOURS = 'Lun–Sáb 11:00–21:00 · Dom 12:00–18:00';
 
-const branches = [
+const branches: Branch[] = [
   {
     name: 'Condesa',
     address: '{{address}}',
@@ -20,21 +27,6 @@ const branches = [
   },
 ];
 
-const branchCards = branches.map((b) => ({
-  name: b.name,
-  address: b.address,
-  hours: b.hours,
-  directionsUrl: mapsLinkUrl(b.query),
-  mapUrl: mapsEmbedUrl(b.query),
-  mapTitle: `Mapa de la sucursal ${b.name}`,
-}));
-
-const footerBranches = branches.map((b) => ({
-  name: b.name,
-  address: b.shortAddress,
-  hours: b.hours,
-}));
-
 const links = [
   { label: 'Servicios', href: '#servicios' },
   { label: 'Equipo', href: '#equipo' },
@@ -42,53 +34,7 @@ const links = [
   { label: 'Reseñas', href: '#resenas' },
 ];
 
-/** Basic templates: one branch and no team/reviews, so menu and footer point at their own sections. */
-export const basicLinks = [
-  { label: 'Servicios', href: '#servicios' },
-  { label: 'Nosotros', href: '#nosotros' },
-  { label: 'Preguntas', href: '#preguntas' },
-  { label: 'Ubicación', href: '#ubicacion' },
-];
-
-export const singleBranchFooter = footerBranches.slice(0, 1);
-
-const galleryItems = [
-  {
-    caption: 'Skin fade con línea marcada',
-    alt: 'Corte skin fade recién terminado con la línea frontal marcada a navaja',
-  },
-  {
-    caption: 'Barba a navaja y toalla caliente',
-    alt: 'Barbero perfilando una barba con navaja después de la toalla caliente',
-  },
-  {
-    caption: 'Diseño freestyle',
-    alt: 'Diseño freestyle de líneas rapadas en la nuca de un cliente',
-  },
-  {
-    caption: 'Crop texturizado',
-    alt: 'Corte crop con textura arriba y fade bajo a los lados',
-  },
-  {
-    caption: 'Platinado',
-    alt: 'Cliente con el cabello platinado y corte corto texturizado',
-  },
-  {
-    caption: 'La estación de trabajo',
-    alt: 'Estación de barbería con máquinas, navajas y espejo iluminado',
-  },
-  {
-    caption: 'Corte infantil',
-    alt: 'Niño sonriendo en la silla de barbería durante su corte',
-  },
-  {
-    caption: 'Clásico a tijera',
-    alt: 'Corte clásico a tijera peinado de lado con raya marcada',
-  },
-].map((item, i) => ({
-  image: `gallery-${String(i + 1).padStart(2, '0')}.jpg`,
-  ...item,
-}));
+const cards = branchCards(branches);
 
 export default {
   vertical: 'barberia',
@@ -121,7 +67,7 @@ export default {
   sections: {
     navbar: { cta: 'Reservar', links },
     hero: {
-      image: 'hero-barber.jpg',
+      image: 'hero.jpg',
       imageAlt:
         'Barbero tatuado trabajando en una barbería oscura con iluminación dramática',
       eyebrow: 'Barbería urbana · {{city}}',
@@ -145,7 +91,7 @@ export default {
     },
     about: {
       kicker: '{{index}} — Nosotros',
-      image: 'about-detail.jpg',
+      image: 'about.jpg',
       imageAlt:
         'Detalle de manos tatuadas sosteniendo máquina de barbería en una estación de trabajo',
       sticker: 'Est. 2018',
@@ -246,13 +192,46 @@ export default {
       hoursLabel: 'Horario',
       whatsappCta: 'Reservar por WhatsApp',
       callCta: 'Llamar',
-      branches: branchCards,
-      branch: branchCards[0],
+      branches: cards,
+      branch: cards[0],
     },
     gallery: {
       kicker: '{{index}} — Galería',
       title: 'El trabajo <span class="lz-title__serif">habla</span>',
-      items: galleryItems,
+      items: galleryItems([
+        {
+          caption: 'Skin fade con línea marcada',
+          alt: 'Corte skin fade recién terminado con la línea frontal marcada a navaja',
+        },
+        {
+          caption: 'Barba a navaja y toalla caliente',
+          alt: 'Barbero perfilando una barba con navaja después de la toalla caliente',
+        },
+        {
+          caption: 'Diseño freestyle',
+          alt: 'Diseño freestyle de líneas rapadas en la nuca de un cliente',
+        },
+        {
+          caption: 'Crop texturizado',
+          alt: 'Corte crop con textura arriba y fade bajo a los lados',
+        },
+        {
+          caption: 'Platinado',
+          alt: 'Cliente con el cabello platinado y corte corto texturizado',
+        },
+        {
+          caption: 'La estación de trabajo',
+          alt: 'Estación de barbería con máquinas, navajas y espejo iluminado',
+        },
+        {
+          caption: 'Corte infantil',
+          alt: 'Niño sonriendo en la silla de barbería durante su corte',
+        },
+        {
+          caption: 'Clásico a tijera',
+          alt: 'Corte clásico a tijera peinado de lado con raya marcada',
+        },
+      ]),
     },
     faq: {
       kicker: '{{index}} — Preguntas',
@@ -306,21 +285,21 @@ export default {
           name: 'Rolo',
           role: 'Fades y diseño',
           tags: ['Skin fade', 'Freestyle'],
-          image: 'team-rolo.jpg',
+          image: 'team-1.jpg',
           imageAlt: 'Retrato del barbero Rolo en interior de barbería urbana',
         },
         {
           name: 'Dante',
           role: 'Barba y navaja',
           tags: ['Shave', 'Toalla caliente'],
-          image: 'team-dante.jpg',
+          image: 'team-2.jpg',
           imageAlt: 'Retrato del barbero Dante con navaja y delantal negro',
         },
         {
           name: 'Kenji',
           role: 'Texturas y color',
           tags: ['Crop', 'Platinado'],
-          image: 'team-kenji.jpg',
+          image: 'team-3.jpg',
           imageAlt:
             'Retrato del barbero Kenji especializado en color y textura',
         },
@@ -328,7 +307,7 @@ export default {
           name: 'Mara',
           role: 'Estilista, cortes unisex',
           tags: ['Textura', 'Scissor work'],
-          image: 'team-mara.jpg',
+          image: 'team-4.jpg',
           imageAlt:
             'Retrato de Mara realizando un corte unisex en barbería contemporánea',
         },
@@ -360,7 +339,7 @@ export default {
       about:
         'Barbería urbana de lujo en Ciudad de México. Técnica precisa, cultura street y citas por WhatsApp para que llegues, te sientes y salgas con presencia.',
       branchesTitle: 'Sucursales',
-      branches: footerBranches,
+      branches: footerBranches(branches),
       linksTitle: 'Explorar',
       contactTitle: 'Contacto',
       links,

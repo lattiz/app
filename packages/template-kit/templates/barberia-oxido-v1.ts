@@ -1,6 +1,6 @@
 import type { Manifest } from '../src/types';
 
-/** ÓXIDO, Pro: the Studio original (fixtures/oxido) plus gallery, FAQ and the contact block. */
+/** ÓXIDO, Pro street-luxe: the Studio original (fixtures/oxido) plus gallery, FAQ and the contact block. */
 export default {
   id: 'barberia-oxido-v1',
   name: 'ÓXIDO Barber Club',
@@ -12,7 +12,7 @@ export default {
   vertical: 'barberia',
   archetype: 'street-luxe',
   theme: 'oxido',
-  content: 'barberia.es-MX',
+  content: 'barberia.oxido.es-MX',
   sections: [
     { slot: 'navbar', variant: 'inline' },
     { slot: 'hero', variant: 'image-bg' },

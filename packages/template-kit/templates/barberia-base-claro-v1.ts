@@ -1,73 +1,26 @@
-import { basicLinks, singleBranchFooter } from '../content/barberia.es-MX';
 import type { Manifest } from '../src/types';
 
-/** Basic: the shared barbería structure in bone-blue; barberia-base-oscuro-v1 is the same page in urban-dark. */
+/** Basic on trazo-papel: warm paper, cobalt, Fraunces, arch hero. Same blueprint as the other Basic templates. */
 export default {
   id: 'barberia-base-claro-v1',
   name: 'TRAZO Barbería',
   category: 'barberias',
   description:
-    'Barbería esencial en tono claro: servicios con precios, preguntas frecuentes y ubicación',
+    'Barbería de barrio en tono papel: precios claros, preguntas frecuentes y ubicación',
   family: 'service-landing',
   tier: 'basic',
   vertical: 'barberia',
   archetype: 'essential',
   theme: 'trazo-papel',
-  content: 'barberia.es-MX',
-  business: {
-    name: 'TRAZO Barbería',
-    shortName: 'TRAZO',
-    tagline: 'Barbería',
-    email: 'hola@trazobarberia.mx',
-    googleReviewsUrl: 'https://www.google.com/search?q=trazo+barberia+cdmx',
-    googleReviewUrl:
-      'https://www.google.com/maps/search/?api=1&query=trazo+barberia+cdmx',
-  },
-  head: {
-    description:
-      '{{name}}, barbería en {{city}}. Cortes clásicos y modernos, barba y citas por WhatsApp desde $270 MXN.',
-  },
+  content: 'barberia.trazo.es-MX',
   sections: [
-    { slot: 'navbar', variant: 'inline', props: { links: basicLinks } },
-    {
-      slot: 'hero',
-      variant: 'image-bg',
-      props: {
-        eyebrow: 'Barbería · {{city}}',
-        title: 'Tu corte, <span class="lz-title__serif">a tiempo</span>.',
-        text: 'Cortes clásicos y modernos, barba y diseños con cita por WhatsApp. Sin filas y sin prisas. Desde $270 MXN.',
-        sticker: 'Agenda abierta',
-      },
-    },
-    {
-      slot: 'about',
-      variant: 'brief',
-      props: {
-        title:
-          'Atención con <span class="lz-title__serif">calma</span>, corte con precisión.',
-      },
-    },
+    { slot: 'navbar', variant: 'inline' },
+    { slot: 'hero', variant: 'centered-arch' },
+    { slot: 'about', variant: 'brief' },
     { slot: 'services', variant: 'price-list' },
     { slot: 'faq', variant: 'list' },
-    {
-      slot: 'locations',
-      variant: 'single',
-      props: {
-        kicker: '{{index}} — Ubicación',
-        title: 'Ven a <span class="lz-title__serif">vernos</span>',
-      },
-    },
+    { slot: 'locations', variant: 'single' },
     { slot: 'floating-whatsapp', variant: 'bubble' },
-    {
-      slot: 'footer',
-      variant: 'big-wordmark',
-      props: {
-        about:
-          'Barbería de colonia con atención sin prisa en Ciudad de México. Reserva por WhatsApp y te esperamos con la silla lista.',
-        branchesTitle: 'Ubicación',
-        branches: singleBranchFooter,
-        links: basicLinks,
-      },
-    },
+    { slot: 'footer', variant: 'columns' },
   ],
 } satisfies Manifest;

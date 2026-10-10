@@ -1,43 +1,46 @@
-import { basicLinks, singleBranchFooter } from '../content/barberia.es-MX';
+import { singleBranch, trazoBranches } from '../content/barberia.trazo.es-MX';
 import type { Manifest } from '../src/types';
 
-/** Basic: the shared barbería structure in urban-dark; barberia-base-claro-v1 is the same page in bone-blue. */
+const branch = singleBranch(trazoBranches.escandon);
+
+/** Basic on trazo-noche: plum-black, rose accent, DM Serif, photo hero. */
 export default {
   id: 'barberia-base-oscuro-v1',
   name: 'FILO Barbería',
   category: 'barberias',
   description:
-    'Barbería esencial en tono oscuro: servicios con precios, preguntas frecuentes y ubicación',
+    'Barbería nocturna en tono ciruela: servicios en tarjetas, preguntas frecuentes y ubicación',
   family: 'service-landing',
   tier: 'basic',
   vertical: 'barberia',
   archetype: 'essential',
   theme: 'trazo-noche',
-  content: 'barberia.es-MX',
+  content: 'barberia.trazo.es-MX',
   business: {
     name: 'FILO Barbería',
-    shortName: 'FILO',
-    tagline: 'Barbería',
+    shortName: 'Filo',
+    tagline: 'Barbería nocturna',
+    address: 'Agrarismo 214, Escandón, Miguel Hidalgo, CDMX',
     email: 'citas@filobarberia.mx',
-    googleReviewsUrl: 'https://www.google.com/search?q=filo+barberia+cdmx',
+    googleReviewsUrl: 'https://www.google.com/search?q=filo+barberia+escandon',
     googleReviewUrl:
-      'https://www.google.com/maps/search/?api=1&query=filo+barberia+cdmx',
+      'https://www.google.com/maps/search/?api=1&query=filo+barberia+escandon',
   },
   head: {
     description:
-      '{{name}}, barbería en {{city}}. Fades, barba a navaja y cortes infantiles con cita por WhatsApp desde $270 MXN.',
+      '{{name}} en Escandón: cortes y barba hasta las 9 de la noche, con cita por WhatsApp desde $230 MXN.',
   },
   sections: [
-    { slot: 'navbar', variant: 'inline', props: { links: basicLinks } },
+    { slot: 'navbar', variant: 'centered-logo' },
     {
       slot: 'hero',
       variant: 'image-bg',
       props: {
-        eyebrow: 'Barbería · {{city}}',
+        eyebrow: 'Abierto hasta las 21:00 · Escandón',
         title:
-          'Corte <span class="lz-title__serif">limpio</span>.<br>Cero filas.',
-        text: 'Fades, barba a navaja y cortes infantiles con cita por WhatsApp. Llegas, te sientas y sales fresco. Desde $270 MXN.',
-        sticker: 'Citas hoy',
+          'Sal de la oficina, <span class="lz-title__serif">entra al corte</span>.',
+        text: 'Cortes y barba de martes a domingo hasta las nueve de la noche. Agenda por WhatsApp de camino y te esperamos con la silla lista.',
+        sticker: 'Hasta las 21:00',
       },
     },
     {
@@ -45,29 +48,20 @@ export default {
       variant: 'brief',
       props: {
         title:
-          'Oficio de barbero, <span class="lz-title__serif">sin rodeos</span>.',
+          'Cortes de noche, <span class="lz-title__serif">sin prisa</span>.',
       },
     },
-    { slot: 'services', variant: 'price-list' },
-    { slot: 'faq', variant: 'list' },
-    {
-      slot: 'locations',
-      variant: 'single',
-      props: {
-        kicker: '{{index}} — Ubicación',
-        title: 'Ven a <span class="lz-title__serif">vernos</span>',
-      },
-    },
+    { slot: 'services', variant: 'cards' },
+    { slot: 'faq', variant: 'two-col' },
+    { slot: 'locations', variant: 'single', props: branch.locations },
     { slot: 'floating-whatsapp', variant: 'bubble' },
     {
       slot: 'footer',
-      variant: 'big-wordmark',
+      variant: 'minimal-centered',
       props: {
+        ...branch.footer,
         about:
-          'Barbería de barrio con técnica de estudio en Ciudad de México. Agenda por WhatsApp y llega directo a la silla.',
-        branchesTitle: 'Ubicación',
-        branches: singleBranchFooter,
-        links: basicLinks,
+          'Barbería nocturna en Escandón. Cortes y barba hasta las 21:00, con cita por WhatsApp.',
       },
     },
   ],

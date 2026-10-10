@@ -8,7 +8,7 @@ import type { ContentObject, ContentPack } from '../src/types';
 
 let pack: ContentPack;
 beforeAll(async () => {
-  pack = await loadContentPack('barberia.es-MX');
+  pack = await loadContentPack('barberia.oxido.es-MX');
 });
 
 function render(

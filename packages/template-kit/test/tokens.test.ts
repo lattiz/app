@@ -136,7 +136,7 @@ describe('compiled project tokens', () => {
   });
 
   it('builds every wa.me link from the business variables', () => {
-    const links = [...norte.html.matchAll(/https:\/\/wa\.me\/[^"]+/g)].map(
+    const links = [...oxido.html.matchAll(/https:\/\/wa\.me\/[^"]+/g)].map(
       (m) => m[0],
     );
     expect(links.length).toBeGreaterThanOrEqual(7);

@@ -11,7 +11,10 @@ export default {
     header: roles.header,
     hero: roles.hero,
     marquee: roles.marquee,
-    about: { ...roles.about, variants: ['text-image-offset', 'statement', 'stats-strip'] },
+    about: {
+      ...roles.about,
+      variants: ['text-image-offset', 'statement', 'stats-strip'],
+    },
     catalog: roles.catalog,
     proof: roles.proof,
     team: roles.team,
@@ -25,8 +28,10 @@ export default {
   archetypes: {
     'street-luxe':
       'Oscuro, tipografía condensada en mayúsculas, acento saturado, fotos en escala de grises. Energía urbana.',
-    'clean-editorial':
-      'Claro, mucho aire, acento frío, botones en píldora y tarjetas casi cuadradas. Calma y confianza.',
+    'editorial-atelier':
+      'Papel y tinta, serif en caja baja, filetes de 1px en lugar de tarjetas, mucho aire y retícula asimétrica. Oficio y calma.',
+    'neo-brutal':
+      'Blanco roto y tinta, acento lima como relleno, bordes de 3px, sombras desplazadas duras, etiquetas mono. Directo e irreverente.',
   },
   guidance: [
     ...guidance,
