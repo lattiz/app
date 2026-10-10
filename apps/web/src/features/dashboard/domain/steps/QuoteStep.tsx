@@ -1,11 +1,6 @@
 import { ArrowLeftIcon, CheckCircle2Icon, GlobeIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
 import { formatMoney } from '@/lib/format';
 import { AgreementCheckbox } from '../components/AgreementCheckbox';
@@ -56,12 +51,14 @@ export function QuoteStep() {
             Disponible e incluido en tu plan
           </p>
           <p className="text-sm text-muted-foreground">
-            A partir del segundo año se cobra una cuota anual de mantenimiento de{' '}
+            A partir del segundo año se cobra una cuota anual de mantenimiento
+            de{' '}
             {formatMoney(
               quote.maintenanceFee.amountCents,
               quote.maintenanceFee.currency,
             )}{' '}
-            {quote.maintenanceFee.currency.toUpperCase()}.
+            {quote.maintenanceFee.currency.toUpperCase()}
+            {quote.maintenanceFee.taxRateBps > 0 ? ' más IVA' : ''}.
           </p>
           <p className="text-sm text-muted-foreground">
             Una vez confirmado, el dominio no se puede cancelar, modificar ni
@@ -83,14 +80,15 @@ export function QuoteStep() {
       </div>
 
       <div className="flex flex-wrap gap-3">
-        <Button variant="outline" onClick={backToSearch} disabled={purchase.isPending}>
+        <Button
+          variant="outline"
+          onClick={backToSearch}
+          disabled={purchase.isPending}
+        >
           <ArrowLeftIcon />
           Volver a buscar
         </Button>
-        <Button
-          disabled={!allAccepted || purchase.isPending}
-          onClick={confirm}
-        >
+        <Button disabled={!allAccepted || purchase.isPending} onClick={confirm}>
           {purchase.isPending && <Spinner />}
           Confirmar dominio
         </Button>

@@ -1,10 +1,8 @@
 import { Link } from '@tanstack/react-router';
 import {
-  CircleAlertIcon,
-  InfoIcon,
-  type LucideIcon,
-  TriangleAlertIcon,
-} from 'lucide-react';
+  bannerToneStyles,
+  type BannerTone,
+} from '@/components/dashboard/banner-tone';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { cn } from '@/lib/utils';
 import type {
@@ -19,8 +17,6 @@ interface HomeBannersProps {
   subscription: SubscriptionStatus | null;
 }
 
-type BannerTone = 'destructive' | 'warning' | 'info';
-
 // Only routes a banner CTA can point to — keeps TanStack Link type-safe.
 type BannerLinkTo = '/dashboard/subscription' | '/dashboard/domain';
 
@@ -30,24 +26,6 @@ interface Banner {
   description: string;
   link?: { to: BannerLinkTo; label: string };
 }
-
-const toneStyles: Record<
-  BannerTone,
-  { variant: 'default' | 'destructive'; className: string; Icon: LucideIcon }
-> = {
-  destructive: { variant: 'destructive', className: '', Icon: CircleAlertIcon },
-  warning: {
-    variant: 'default',
-    className:
-      'border-yellow-500/30 bg-yellow-500/5 text-yellow-800 dark:text-yellow-300 *:data-[slot=alert-description]:text-yellow-700/90 dark:*:data-[slot=alert-description]:text-yellow-300/80',
-    Icon: TriangleAlertIcon,
-  },
-  info: {
-    variant: 'default',
-    className: 'border-primary/30 bg-primary/5',
-    Icon: InfoIcon,
-  },
-};
 
 // Highest-priority condition wins — at most one banner is shown.
 function resolveBanner(
@@ -103,7 +81,7 @@ export function HomeBanners({ state, site, subscription }: HomeBannersProps) {
   const banner = resolveBanner(state, site, subscription);
   if (!banner) return null;
 
-  const tone = toneStyles[banner.tone];
+  const tone = bannerToneStyles[banner.tone];
 
   return (
     <Alert variant={tone.variant} className={cn('text-sm', tone.className)}>
