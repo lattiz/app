@@ -1,16 +1,28 @@
 import type { DomainSearchResultDto } from '@lattiz/api-client';
 import { offersProUpgrade } from './domain-copy';
 
-/** Included, then Pro, then not included, then unavailable. Stable inside each group. */
-export function sortDomainSearchResults(
+/**
+ * What the wizard lists: included and Pro-upsell names first, then unavailable
+ * ones. Available names no plan can buy (over a price cap, or unpriced) are
+ * dropped: the API keeps deciding them, the user never sees them.
+ */
+export function visibleDomainSearchResults(
   results: readonly DomainSearchResultDto[],
 ): DomainSearchResultDto[] {
-  return [...results].sort((a, b) => coverageRank(a) - coverageRank(b));
+  return results
+    .filter((result) => !isOutOfReach(result))
+    .sort((a, b) => coverageRank(a) - coverageRank(b));
 }
 
+function isOutOfReach(result: DomainSearchResultDto): boolean {
+  return (
+    result.available && !result.coveredByPlan && !offersProUpgrade(result)
+  );
+}
+
+/** Included, then Pro, then unavailable. Stable inside each group. */
 function coverageRank(result: DomainSearchResultDto): number {
-  if (!result.available) return 3;
+  if (!result.available) return 2;
   if (result.coveredByPlan) return 0;
-  if (offersProUpgrade(result)) return 1;
-  return 2;
+  return 1;
 }

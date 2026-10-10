@@ -9,7 +9,6 @@ import {
 import { Spinner } from '@/components/ui/spinner';
 import { formatMoney } from '@/lib/format';
 import { AgreementCheckbox } from '../components/AgreementCheckbox';
-import { renewalPriceLabel } from '../lib/domain-copy';
 import { useDomainPurchase } from '../hooks/useDomainPurchase';
 import { useDomainWizardStore } from '../store/domain-wizard.store';
 
@@ -56,12 +55,6 @@ export function QuoteStep() {
             <CheckCircle2Icon className="size-4" />
             Disponible e incluido en tu plan
           </p>
-          {quote.renewalPriceUsdCents !== null && (
-            <p className="text-sm text-muted-foreground">
-              {renewalPriceLabel(quote.renewalPriceUsdCents)}, incluida en tu
-              plan mientras tu suscripción esté activa.
-            </p>
-          )}
           <p className="text-sm text-muted-foreground">
             A partir del segundo año se cobra una cuota anual de mantenimiento de{' '}
             {formatMoney(

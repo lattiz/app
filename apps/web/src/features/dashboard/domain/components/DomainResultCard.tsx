@@ -4,11 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
-import {
-  domainCoverageCopy,
-  offersProUpgrade,
-  renewalPriceLabel,
-} from '../lib/domain-copy';
+import { domainCoverageCopy, offersProUpgrade } from '../lib/domain-copy';
 
 interface Props {
   result: DomainSearchResultDto;
@@ -20,7 +16,7 @@ export function DomainResultCard({ result, loading, onSelect }: Props) {
   const upgrade = result.available && offersProUpgrade(result);
 
   return (
-    <Card className={result.available ? '' : 'opacity-60'}>
+    <Card className={result.available ? ' ' : 'opacity-60'}>
       <CardContent className="flex flex-wrap items-center justify-between gap-3 py-4">
         <div className="flex min-w-0 flex-col gap-1">
           <span className="truncate font-medium">{result.domain}</span>
@@ -34,17 +30,12 @@ export function DomainResultCard({ result, loading, onSelect }: Props) {
                 >
                   {domainCoverageCopy.included}
                 </Badge>
-              ) : upgrade ? (
-                <>
-                  <Badge>{domainCoverageCopy.availableWithPro}</Badge>
-                  {result.renewalPriceUsdCents !== null && (
-                    <span>{renewalPriceLabel(result.renewalPriceUsdCents)}</span>
-                  )}
-                </>
               ) : (
-                <Badge variant="secondary" className="bg-muted text-muted-foreground">
-                  {domainCoverageCopy.notIncluded}
-                </Badge>
+                upgrade && (
+                  <Badge className="bg-[#dfdfff] text-black">
+                    {domainCoverageCopy.availableWithPro}
+                  </Badge>
+                )
               )}
             </span>
           ) : (
@@ -54,6 +45,7 @@ export function DomainResultCard({ result, loading, onSelect }: Props) {
         {upgrade ? (
           <Button
             size="sm"
+            variant="secondary_color"
             render={
               <Link to="/dashboard/subscription" search={{ from: 'domain' }} />
             }

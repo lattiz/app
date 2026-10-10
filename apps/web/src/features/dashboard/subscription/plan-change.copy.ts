@@ -6,8 +6,12 @@ export const SUPPORT_EMAIL = 'soporte@lattiz.mx';
 
 /** What a tenant actually loses on Básico, as the API gates it today. */
 export const PRO_ONLY_FEATURES = [
-  'Analíticas de tu sitio (Google Analytics): dejaremos de medir visitas, pero tus datos se conservan',
-  'Dominios cuya renovación solo cubre Pro',
+  'Analíticas y métricas.',
+  'Dominios Pro.',
+  'Acceso a plantillas premium.',
+  '(SEO Avanzado) Optimización en motores de búsqueda.',
+  'Soporte prioritario por WhatsApp.',
+  'Acceso anticipado a nuevas funciones.'
 ];
 
 export const planChangeCopy = {
@@ -16,13 +20,13 @@ export const planChangeCopy = {
   downgradeCta: 'Cambiar a Básico',
   upgradeTitle: 'Mejorar a Pro',
   upgradeBody:
-    'Se aplica de inmediato. Stripe te mostrará el cargo prorrateado antes de confirmar.',
-  upgradeConfirm: 'Continuar a Stripe',
+    'Se aplica de inmediato. Solo pagas el costo de la diferencia entre los planes, antes de confirmar.',
+  upgradeConfirm: 'Continuar a Pagar',
   downgradeTitle: 'Cambiar a Básico',
   downgradeBody: (date: string) =>
     `Seguirás con Pro hasta el ${date}. Después pasarás a Básico.`,
   downgradeLosesTitle: 'Con Básico dejarás de tener:',
-  downgradeConfirm: 'Programar cambio',
+  downgradeConfirm: 'Cambiar a Básico',
   cancel: 'Cancelar',
   pendingTitle: (plan: string, date: string) =>
     `Cambio programado: pasarás a ${plan} el ${date}`,

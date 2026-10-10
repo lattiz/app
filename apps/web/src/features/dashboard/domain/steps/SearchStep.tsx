@@ -8,7 +8,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { DomainResultCard } from '../components/DomainResultCard';
 import { useDomainQuote } from '../hooks/useDomainQuote';
 import { searchErrorMessage } from '../lib/domain-errors';
-import { sortDomainSearchResults } from '../lib/sort-domain-search-results';
+import { visibleDomainSearchResults } from '../lib/sort-domain-search-results';
 import { useDomainSearch } from '../hooks/useDomainSearch';
 import { DomainSearchSchema } from '../schemas/domain.schemas';
 import { useDomainWizardStore } from '../store/domain-wizard.store';
@@ -39,6 +39,8 @@ export function SearchStep() {
     }
     setSearchQuery(parsed.data.query);
   };
+
+  const results = search.data ? visibleDomainSearchResults(search.data) : [];
 
   const onSelect = (domain: string) => {
     selectDomain(domain);
@@ -96,15 +98,15 @@ export function SearchStep() {
         <p className="text-sm text-destructive">{searchErrorMessage(search.error)}</p>
       )}
 
-      {!search.isFetching && search.data && search.data.length === 0 && (
+      {!search.isFetching && search.data && results.length === 0 && (
         <p className="text-sm text-muted-foreground">
           No encontramos resultados para «{searchQuery}». Intenta con otro nombre.
         </p>
       )}
 
-      {!search.isFetching && search.data && search.data.length > 0 && (
+      {!search.isFetching && results.length > 0 && (
         <div className="flex flex-col gap-3">
-          {sortDomainSearchResults(search.data).map((result) => (
+          {results.map((result) => (
             <DomainResultCard
               key={result.domain}
               result={result}
