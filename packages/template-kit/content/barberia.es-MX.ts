@@ -20,12 +20,75 @@ const branches = [
   },
 ];
 
+const branchCards = branches.map((b) => ({
+  name: b.name,
+  address: b.address,
+  hours: b.hours,
+  directionsUrl: mapsLinkUrl(b.query),
+  mapUrl: mapsEmbedUrl(b.query),
+  mapTitle: `Mapa de la sucursal ${b.name}`,
+}));
+
+const footerBranches = branches.map((b) => ({
+  name: b.name,
+  address: b.shortAddress,
+  hours: b.hours,
+}));
+
 const links = [
   { label: 'Servicios', href: '#servicios' },
   { label: 'Equipo', href: '#equipo' },
   { label: 'Sucursales', href: '#sucursales' },
   { label: 'Reseñas', href: '#resenas' },
 ];
+
+/** Basic templates: one branch and no team/reviews, so menu and footer point at their own sections. */
+export const basicLinks = [
+  { label: 'Servicios', href: '#servicios' },
+  { label: 'Nosotros', href: '#nosotros' },
+  { label: 'Preguntas', href: '#preguntas' },
+  { label: 'Ubicación', href: '#ubicacion' },
+];
+
+export const singleBranchFooter = footerBranches.slice(0, 1);
+
+const galleryItems = [
+  {
+    caption: 'Skin fade con línea marcada',
+    alt: 'Corte skin fade recién terminado con la línea frontal marcada a navaja',
+  },
+  {
+    caption: 'Barba a navaja y toalla caliente',
+    alt: 'Barbero perfilando una barba con navaja después de la toalla caliente',
+  },
+  {
+    caption: 'Diseño freestyle',
+    alt: 'Diseño freestyle de líneas rapadas en la nuca de un cliente',
+  },
+  {
+    caption: 'Crop texturizado',
+    alt: 'Corte crop con textura arriba y fade bajo a los lados',
+  },
+  {
+    caption: 'Platinado',
+    alt: 'Cliente con el cabello platinado y corte corto texturizado',
+  },
+  {
+    caption: 'La estación de trabajo',
+    alt: 'Estación de barbería con máquinas, navajas y espejo iluminado',
+  },
+  {
+    caption: 'Corte infantil',
+    alt: 'Niño sonriendo en la silla de barbería durante su corte',
+  },
+  {
+    caption: 'Clásico a tijera',
+    alt: 'Corte clásico a tijera peinado de lado con raya marcada',
+  },
+].map((item, i) => ({
+  image: `gallery-${String(i + 1).padStart(2, '0')}.jpg`,
+  ...item,
+}));
 
 export default {
   vertical: 'barberia',
@@ -43,8 +106,12 @@ export default {
     instagramUrl: 'https://instagram.com',
     tiktokUrl: 'https://tiktok.com',
     facebookUrl: 'https://facebook.com',
+    email: 'citas@oxidobarberclub.mx',
     googleReviewsUrl:
       'https://www.google.com/search?q=barberia+oxidobarberclub',
+    // Tenants replace it with their own g.page/r/<id>/review link.
+    googleReviewUrl:
+      'https://www.google.com/maps/search/?api=1&query=oxido+barber+club+cdmx',
   },
   head: {
     title: '{{name}}',
@@ -84,6 +151,8 @@ export default {
       sticker: 'Est. 2018',
       title:
         'No es una barbería. Es un <span class="lz-title__serif">club</span>.',
+      summary:
+        'En {{shortName}} cortamos con técnica y sin prisa: te preguntamos qué buscas, te decimos qué te va y no te levantas de la silla hasta que el fade quede limpio. Más de ocho años en {{city}} y miles de cortes nos respaldan.',
       paragraphs: [
         'En {{shortName}} mezclamos técnica precisa, cultura callejera y una experiencia sin prisa. Aquí el corte importa tanto como la vibra: beats pesados, luz baja y atención al detalle desde el fade hasta el acabado.',
         'Nuestros barberos trabajan con mano firme, consulta real y tiempo en silla para que salgas limpio, fresco y con estilo propio. Nada genérico, nada improvisado.',
@@ -162,15 +231,68 @@ export default {
     },
     locations: {
       kicker: '{{index}} — Sucursales',
+      title: 'Agenda o <span class="lz-title__serif">pregunta</span>',
+      contactText:
+        'Contestamos por WhatsApp todos los días en horario de la barbería. Si prefieres, llámanos o mándanos un correo y te respondemos el mismo día.',
+      whatsappLabel: 'WhatsApp',
+      whatsappValue: 'Reserva tu cita',
+      callLabel: 'Teléfono',
+      emailLabel: 'Correo',
       directionsLabel: 'Cómo llegar',
-      branches: branches.map((b) => ({
-        name: b.name,
-        address: b.address,
-        hours: b.hours,
-        directionsUrl: mapsLinkUrl(b.query),
-        mapUrl: mapsEmbedUrl(b.query),
-        mapTitle: `Mapa de la sucursal ${b.name}`,
-      })),
+      hoursLabel: 'Horario',
+      whatsappCta: 'Reservar por WhatsApp',
+      callCta: 'Llamar',
+      branches: branchCards,
+      branch: branchCards[0],
+    },
+    gallery: {
+      kicker: '{{index}} — Galería',
+      title: 'El trabajo <span class="lz-title__serif">habla</span>',
+      items: galleryItems,
+    },
+    faq: {
+      kicker: '{{index}} — Preguntas',
+      title: 'Preguntas <span class="lz-title__serif">frecuentes</span>',
+      intro:
+        'Lo que más nos preguntan antes de la primera visita. Si tu duda no está aquí, escríbenos y te contestamos en minutos.',
+      cta: 'Pregunta por WhatsApp',
+      items: [
+        {
+          question: '¿Cuánto cuesta un corte?',
+          answer:
+            'El corte de cabello cuesta $270 MXN y el combo corte + barba, $380. Los diseños y el freestyle van desde +$60. Todos los precios incluyen lavado y peinado, y pagas al terminar.',
+        },
+        {
+          question: '¿Necesito cita o puedo llegar sin reservar?',
+          answer:
+            'Trabajamos con cita para que no hagas fila: escríbenos por WhatsApp y te confirmamos horario en minutos. Si hay una silla libre, también te atendemos sin cita.',
+        },
+        {
+          question: '¿Qué formas de pago aceptan?',
+          answer:
+            'Efectivo, tarjeta de débito y crédito (Visa, Mastercard y American Express) y transferencia SPEI. No cobramos comisión por pagar con tarjeta.',
+        },
+        {
+          question: '¿Puedo cancelar o cambiar mi cita?',
+          answer:
+            'Sí. Avísanos por WhatsApp con al menos 2 horas de anticipación y la movemos sin costo. Si llegas más de 15 minutos tarde, puede que tengamos que reprogramarte para no retrasar a los demás.',
+        },
+        {
+          question: '¿Atienden a niños?',
+          answer:
+            'Sí. El corte infantil (hasta 12 años) cuesta $220 MXN. Te recomendamos agendar entre semana por la tarde, cuando hay menos movimiento y los peques están más tranquilos.',
+        },
+        {
+          question: '¿Cuánto dura cada servicio?',
+          answer:
+            'Un corte toma de 40 a 45 minutos; corte + barba, alrededor de una hora; barba a navaja con toalla caliente, 30 minutos. Platinado o color, de 2 a 3 horas según el largo.',
+        },
+        {
+          question: '¿Hay dónde estacionarse?',
+          answer:
+            'No tenemos estacionamiento propio, pero hay parquímetros sobre la avenida y estacionamientos públicos a una cuadra. Si llegas en bici, adentro hay dónde dejarla.',
+        },
+      ],
     },
     team: {
       kicker: '{{index}} — Equipo',
@@ -213,6 +335,7 @@ export default {
       score: '4.9',
       summary: '+320 reseñas en Google',
       allReviewsCta: 'Ver todas en Google',
+      writeReviewCta: 'Dejar reseña en Google',
       reviews: [
         {
           text: 'Me dejaron el fade exactamente como lo pedí, limpio y bien conectado. La música, la atención y el ambiente se sienten premium sin volverse mamones. Ya es mi spot fijo.',
@@ -233,11 +356,7 @@ export default {
       about:
         'Barbería urbana de lujo en Ciudad de México. Técnica precisa, cultura street y citas por WhatsApp para que llegues, te sientes y salgas con presencia.',
       branchesTitle: 'Sucursales',
-      branches: branches.map((b) => ({
-        name: b.name,
-        address: b.shortAddress,
-        hours: b.hours,
-      })),
+      branches: footerBranches,
       linksTitle: 'Explorar',
       links,
     },

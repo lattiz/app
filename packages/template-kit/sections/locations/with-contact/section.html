@@ -1,0 +1,42 @@
+<section id="sucursales" data-lz-slot="locations" data-lz-variant="with-contact" class="lz-section lz-locations">
+  <div class="lz-container">
+    <div class="lz-section__head">
+      <p class="lz-index" data-lz-key="kicker"></p>
+    </div>
+    <div class="lz-contact">
+      <div class="lz-contact__copy">
+        <h2 class="lz-title lz-title--section" data-lz-key="title"></h2>
+        <p class="lz-contact__text" data-lz-key="contactText"></p>
+      </div>
+      <div class="lz-contact__channels">
+        <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-contact__channel lz-contact__channel--primary">
+          <span class="lz-contact__label" data-lz-key="whatsappLabel"></span>
+          <span class="lz-contact__value" data-lz-key="whatsappValue"></span>
+        </a>
+        <a href="{{phoneUrl}}" class="lz-contact__channel">
+          <span class="lz-contact__label" data-lz-key="callLabel"></span>
+          <span class="lz-contact__value">{{phone}}</span>
+        </a>
+        <a href="{{emailUrl}}" class="lz-contact__channel">
+          <span class="lz-contact__label" data-lz-key="emailLabel"></span>
+          <span class="lz-contact__value lz-contact__value--small">{{email}}</span>
+        </a>
+      </div>
+    </div>
+    <div class="lz-locations__grid">
+      <article class="lz-branch" data-lz-each="branches">
+        <div class="lz-branch__body">
+          <h3 class="lz-branch__name" data-lz-key="name"></h3>
+          <div class="lz-branch__meta">
+            <p class="lz-branch__line" data-lz-key="address"></p>
+            <p class="lz-branch__line" data-lz-key="hours"></p>
+          </div>
+          <div class="lz-branch__actions">
+            <a target="_blank" rel="noopener noreferrer" class="lz-button lz-button--secondary" data-lz-attr-href="directionsUrl" data-lz-key="directionsLabel"></a>
+          </div>
+        </div>
+        <iframe loading="lazy" class="lz-branch__map" data-lz-attr-src="mapUrl" data-lz-attr-title="mapTitle"></iframe>
+      </article>
+    </div>
+  </div>
+</section>

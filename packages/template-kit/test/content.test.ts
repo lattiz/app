@@ -20,7 +20,9 @@ const business: Business = {
   instagramUrl: 'https://instagram.com/uno',
   tiktokUrl: 'https://tiktok.com',
   facebookUrl: 'https://facebook.com',
+  email: 'hola@uno.mx',
   googleReviewsUrl: 'https://g.co/uno',
+  googleReviewUrl: 'https://g.page/r/uno/review',
 };
 const ctx = { business, source: 'test.html' };
 
@@ -34,6 +36,14 @@ describe('interpolate', () => {
     );
     expect(interpolate('{{whatsappUrl:Promo martes}}', ctx)).toBe(
       'https://wa.me/5215512345678?text=Promo%20martes',
+    );
+  });
+
+  it('builds tel: and mailto: links from the business data', () => {
+    expect(interpolate('{{phoneUrl}}', ctx)).toBe('tel:+525512345678');
+    expect(interpolate('{{emailUrl}}', ctx)).toBe('mailto:hola@uno.mx');
+    expect(interpolate('{{googleReviewUrl}}', ctx)).toBe(
+      'https://g.page/r/uno/review',
     );
   });
 

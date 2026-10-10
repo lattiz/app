@@ -19,6 +19,11 @@ export function whatsappUrl(
   return `https://wa.me/${business.whatsapp}?text=${encodeURIComponent(message)}`;
 }
 
+/** `tel:` link from a display number (`+52 55 1234 5678` → `tel:+525512345678`). */
+export function phoneUrl(phone: string): string {
+  return `tel:${phone.replace(/[^\d+]/g, '')}`;
+}
+
 export interface RenderContext {
   business: Business;
   /** Two-digit position among numbered sections, e.g. "02". */
@@ -29,11 +34,16 @@ export interface RenderContext {
 
 const VAR_RE = /\{\{\s*([\w]+)(?::([^}]*))?\s*\}\}/g;
 
-/** Replaces `{{var}}` business variables; `{{whatsappUrl:mensaje}}` builds a link with a custom message. */
+/**
+ * Replaces `{{var}}` business variables; `{{whatsappUrl:mensaje}}` builds a link with a custom message,
+ * `{{phoneUrl}}` / `{{emailUrl}}` the tel: / mailto: links.
+ */
 export function interpolate(text: string, ctx: RenderContext): string {
   return text.replace(VAR_RE, (_all, name: string, arg: string | undefined) => {
     if (name === 'whatsappUrl')
       return whatsappUrl(ctx.business, arg?.trim() || undefined);
+    if (name === 'phoneUrl') return phoneUrl(ctx.business.phone);
+    if (name === 'emailUrl') return `mailto:${ctx.business.email}`;
     if (name === 'index') {
       if (!ctx.index)
         throw new KitError(

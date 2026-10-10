@@ -10,7 +10,10 @@
         <span aria-label="5 estrellas" class="lz-rating__stars">★★★★★</span>
         <span class="lz-rating__text" data-lz-key="summary"></span>
       </div>
-      <a href="{{googleReviewsUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--secondary" data-lz-key="allReviewsCta"></a>
+      <div class="lz-reviews__actions">
+        <a href="{{googleReviewsUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--secondary" data-lz-key="allReviewsCta"></a>
+        <a href="{{googleReviewUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary" data-lz-if="writeReviewCta" data-lz-key="writeReviewCta"></a>
+      </div>
     </div>
     <div class="lz-reviews__grid">
       <article class="lz-review" data-lz-each="reviews">

@@ -1,0 +1,24 @@
+<section id="ubicacion" data-lz-slot="locations" data-lz-variant="single" class="lz-section lz-location">
+  <div class="lz-container">
+    <div class="lz-section__head">
+      <p class="lz-index" data-lz-key="kicker"></p>
+    </div>
+    <div class="lz-location__grid">
+      <div class="lz-location__info">
+        <h2 class="lz-title lz-title--section" data-lz-key="title"></h2>
+        <h3 class="lz-location__name" data-lz-key="branch.name"></h3>
+        <p class="lz-location__address" data-lz-key="branch.address"></p>
+        <div class="lz-location__hours">
+          <p class="lz-location__label" data-lz-key="hoursLabel"></p>
+          <p class="lz-location__value" data-lz-key="branch.hours"></p>
+        </div>
+        <div class="lz-location__actions">
+          <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary" data-lz-key="whatsappCta"></a>
+          <a href="{{phoneUrl}}" class="lz-button lz-button--secondary" data-lz-key="callCta"></a>
+          <a target="_blank" rel="noopener noreferrer" class="lz-link" data-lz-attr-href="branch.directionsUrl" data-lz-key="directionsLabel"></a>
+        </div>
+      </div>
+      <iframe loading="lazy" class="lz-location__map" data-lz-attr-src="branch.mapUrl" data-lz-attr-title="branch.mapTitle"></iframe>
+    </div>
+  </div>
+</section>

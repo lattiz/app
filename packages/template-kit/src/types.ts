@@ -77,7 +77,11 @@ export interface Business {
   instagramUrl: string;
   tiktokUrl: string;
   facebookUrl: string;
+  email: string;
+  /** Google profile with every review ("Ver todas en Google"). */
   googleReviewsUrl: string;
+  /** Google "write a review" link (g.page/r/<id>/review) behind "Dejar reseña en Google". */
+  googleReviewUrl: string;
 }
 
 export interface HeadContent {
