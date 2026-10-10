@@ -18,7 +18,7 @@
 
 .lz-services-table__title {
   margin: 0;
-  font-size: clamp(40px, 5vw, 72px);
+  font-size: calc(clamp(40px, 5vw, 72px) * var(--lz-display-scale));
 }
 
 .lz-services-table__intro {

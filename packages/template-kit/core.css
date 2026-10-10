@@ -81,7 +81,7 @@ a {
 }
 
 .lz-title--section {
-  font-size: clamp(40px, 6vw, 88px);
+  font-size: calc(clamp(40px, 6vw, 88px) * var(--lz-display-scale));
   max-width: 900px;
 }
 
@@ -249,6 +249,6 @@ a {
     width: 100%;
   }
   .lz-title--section {
-    font-size: clamp(40px, 12vw, 58px);
+    font-size: calc(clamp(40px, 12vw, 58px) * var(--lz-display-scale));
   }
 }

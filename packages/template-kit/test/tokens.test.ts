@@ -53,7 +53,9 @@ describe('theme → tokens', () => {
     const vars = new Map(themeVariables(loadTheme('concreto-brutal')));
     expect(vars.get('--lz-border-width')).toBe('3px');
     expect(vars.get('--lz-shadow')).toBe('6px 6px 0 var(--lz-color-ink)');
-    expect(vars.get('--lz-accent-word-bg')).toBe('var(--lz-color-accent)');
+    expect(vars.get('--lz-accent-word-bg')).toMatch(
+      /^linear-gradient\(.*var\(--lz-color-accent\) 16%/,
+    );
     expect(vars.get('--lz-photo-filter')).toMatch(
       /^grayscale\(1\) .* hue-rotate\(36deg\)/,
     );

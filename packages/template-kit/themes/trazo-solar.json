@@ -28,7 +28,8 @@
     "displayLeading": "1.02",
     "displayWeight": "700",
     "accentStyle": "normal",
-    "accentTransform": "none"
+    "accentTransform": "none",
+    "displayScale": "0.82"
   },
   "shape": {
     "radiusCard": "12px",

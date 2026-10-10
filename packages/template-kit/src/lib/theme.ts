@@ -62,11 +62,14 @@ export function themeVariables(theme: Theme): [string, string][] {
     ['--lz-display-transform', theme.fonts.displayTransform],
     ['--lz-display-leading', theme.fonts.displayLeading],
     ['--lz-display-weight', theme.fonts.displayWeight],
+    ['--lz-display-scale', theme.fonts.displayScale ?? '1'],
     ['--lz-accent-style', theme.fonts.accentStyle],
     ['--lz-accent-transform', theme.fonts.accentTransform],
     [
       '--lz-accent-word-bg',
-      highlight ? 'var(--lz-color-accent)' : 'transparent',
+      highlight
+        ? 'linear-gradient(180deg, transparent 16%, var(--lz-color-accent) 16%, var(--lz-color-accent) 88%, transparent 88%)'
+        : 'transparent',
     ],
     ['--lz-accent-word-pad', highlight ? '0 0.12em' : '0'],
     ['--lz-radius-pill', theme.shape.radiusPill],

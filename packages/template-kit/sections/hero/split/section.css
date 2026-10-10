@@ -24,7 +24,7 @@
 
 .lz-hero-split__title {
   margin-bottom: 26px;
-  font-size: clamp(48px, 6.8vw, 104px);
+  font-size: calc(clamp(48px, 6.8vw, 104px) * var(--lz-display-scale));
 }
 
 .lz-hero-split__text {
@@ -75,7 +75,7 @@
 
 @media (max-width: 480px) {
   .lz-hero-split__title {
-    font-size: clamp(40px, 12vw, 56px);
+    font-size: calc(clamp(40px, 12vw, 56px) * var(--lz-display-scale));
   }
   .lz-hero-split__text {
     font-size: 16px;

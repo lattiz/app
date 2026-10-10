@@ -21,12 +21,12 @@
   },
   "fonts": {
     "display": "'Archivo Black', sans-serif",
-    "serif": "'Space Mono', monospace",
+    "serif": "'Archivo Black', sans-serif",
     "body": "'Space Grotesk', sans-serif",
     "mono": "'Space Mono', monospace",
     "googleFonts": "family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700",
     "displayTransform": "uppercase",
-    "displayLeading": "0.92",
+    "displayLeading": "0.96",
     "displayWeight": "400",
     "accentStyle": "normal",
     "accentTransform": "none"

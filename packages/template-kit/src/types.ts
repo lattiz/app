@@ -37,6 +37,8 @@ export interface ThemeFonts {
   displayLeading: string;
   /** Weight of `.lz-title` headings. */
   displayWeight: string;
+  /** Multiplier on display title sizes for wide or narrow faces (default 1). */
+  displayScale?: string;
   accentStyle: 'italic' | 'normal';
   accentTransform: 'lowercase' | 'none';
 }

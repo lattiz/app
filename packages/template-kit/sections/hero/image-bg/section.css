@@ -1,5 +1,5 @@
 .lz-title--hero {
-  font-size: clamp(56px, 11vw, 168px);
+  font-size: calc(clamp(56px, 11vw, 168px) * var(--lz-display-scale));
   max-width: 900px;
 }
 
@@ -96,7 +96,7 @@
 
 @media (max-width: 480px) {
   .lz-title--hero {
-    font-size: clamp(56px, 18vw, 84px);
+    font-size: calc(clamp(56px, 18vw, 84px) * var(--lz-display-scale));
   }
   .lz-hero__text {
     font-size: 16px;

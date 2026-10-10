@@ -34,13 +34,13 @@
   position: relative;
   z-index: 1;
   margin: 0;
-  font-size: clamp(60px, 11.5vw, 184px);
+  font-size: calc(clamp(60px, 11.5vw, 184px) * var(--lz-display-scale));
 }
 
 .lz-hero-offset__copy {
   grid-area: copy;
-  align-self: end;
-  padding-top: 32px;
+  align-self: start;
+  padding-top: 40px;
 }
 
 .lz-hero-offset__text {
@@ -100,7 +100,7 @@
 
 @media (max-width: 480px) {
   .lz-hero-offset__title {
-    font-size: clamp(44px, 13vw, 60px);
+    font-size: calc(clamp(44px, 13vw, 60px) * var(--lz-display-scale));
   }
   .lz-hero-offset__text {
     font-size: 16px;

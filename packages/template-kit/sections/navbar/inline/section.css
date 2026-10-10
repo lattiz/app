@@ -107,7 +107,12 @@
 }
   .lz-navbar__cta .lz-button {
     width: auto;
-    padding: 14px 18px;
+    padding: 14px 16px;
     min-height: 44px;
+    white-space: nowrap;
+    letter-spacing: 0.08em;
+  }
+  .lz-navbar__inner {
+    gap: 12px;
   }
 }
