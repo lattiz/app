@@ -5,6 +5,10 @@ import type { EmailOutboxService } from '../email/application/email-outbox.servi
 import type { BillingPricesService } from './billing-prices.service';
 import { BillingService } from './billing.service';
 import {
+  BillingProviderUnavailableException,
+  SubscriptionAlreadyActiveException,
+} from './billing.exceptions';
+import {
   fakeDb,
   NOW_S,
   PERIOD_END_S,
@@ -229,5 +233,132 @@ describe('BillingService subscription sync', () => {
     const { queries, deliver } = setup({ fresh });
     await deliver(subscriptionUpdated({ id: 'sub_1' }));
     expect(tenantPlanWrites(queries)).toEqual(['basico']);
+  });
+});
+
+const CHECKOUT_USER = '11111111-1111-4111-8111-111111111111';
+const CHECKOUT_DTO = { plan: 'pro' as const, period: 'monthly' as const };
+const APP_URL = 'http://localhost:5173';
+
+function checkoutSetup(options: {
+  stripeCustomerId?: string | null;
+  subscriptions?: Array<Partial<Stripe.Subscription>>;
+  listError?: Error;
+}) {
+  const stripe = {
+    prices: {
+      list: jest
+        .fn()
+        .mockResolvedValue({ data: [price('price_pro_m', 'pro_monthly')] }),
+    },
+    customers: {
+      create: jest.fn().mockResolvedValue({ id: 'cus_new' }),
+    },
+    subscriptions: {
+      list: options.listError
+        ? jest.fn().mockRejectedValue(options.listError)
+        : jest.fn().mockResolvedValue({
+            data: (options.subscriptions ?? []).map((overrides) =>
+              subscription(overrides),
+            ),
+          }),
+    },
+    checkout: {
+      sessions: {
+        create: jest
+          .fn()
+          .mockResolvedValue({ url: 'https://checkout.stripe.test/cs_1' }),
+      },
+    },
+  };
+  const stripeCustomerId =
+    options.stripeCustomerId === undefined ? 'cus_1' : options.stripeCustomerId;
+  const { db } = fakeDb((q) => {
+    if (q.sql.includes('FROM public.tenants')) {
+      return [
+        {
+          id: 'tenant-1',
+          name: 'Cafe',
+          stripe_customer_id: stripeCustomerId,
+        },
+      ];
+    }
+    return [];
+  });
+  const service = new BillingService(
+    stripe as unknown as Stripe,
+    db,
+    { relaunchDomain: jest.fn() } as unknown as DomainsService,
+    { enqueueForTenant: jest.fn() } as unknown as EmailOutboxService,
+    {} as SubscriptionStateService,
+  );
+  return { service, stripe };
+}
+
+describe('BillingService createCheckoutSession', () => {
+  beforeEach(() => {
+    jest.spyOn(Logger.prototype, 'error').mockImplementation(() => {});
+    jest.spyOn(Logger.prototype, 'log').mockImplementation(() => {});
+  });
+  afterEach(() => jest.restoreAllMocks());
+
+  it.each(['active', 'past_due', 'trialing'] as const)(
+    'rejects a %s subscription without opening checkout',
+    async (status) => {
+      const { service, stripe } = checkoutSetup({
+        subscriptions: [{ status }],
+      });
+
+      await expect(
+        service.createCheckoutSession(CHECKOUT_USER, CHECKOUT_DTO, APP_URL),
+      ).rejects.toBeInstanceOf(SubscriptionAlreadyActiveException);
+      expect(stripe.subscriptions.list).toHaveBeenCalledWith({
+        customer: 'cus_1',
+        status: 'all',
+        limit: 100,
+      });
+      expect(stripe.checkout.sessions.create).not.toHaveBeenCalled();
+    },
+  );
+
+  it('opens checkout when the tenant has no Stripe customer yet', async () => {
+    const { service, stripe } = checkoutSetup({ stripeCustomerId: null });
+
+    await expect(
+      service.createCheckoutSession(CHECKOUT_USER, CHECKOUT_DTO, APP_URL),
+    ).resolves.toEqual({ url: 'https://checkout.stripe.test/cs_1' });
+    expect(stripe.subscriptions.list).not.toHaveBeenCalled();
+    expect(stripe.checkout.sessions.create).toHaveBeenCalled();
+  });
+
+  it('opens checkout when the customer has no subscriptions', async () => {
+    const { service, stripe } = checkoutSetup({ subscriptions: [] });
+
+    await expect(
+      service.createCheckoutSession(CHECKOUT_USER, CHECKOUT_DTO, APP_URL),
+    ).resolves.toEqual({ url: 'https://checkout.stripe.test/cs_1' });
+    expect(stripe.checkout.sessions.create).toHaveBeenCalled();
+  });
+
+  it('opens checkout when every subscription is canceled', async () => {
+    const { service, stripe } = checkoutSetup({
+      subscriptions: [{ status: 'canceled' }],
+    });
+
+    await expect(
+      service.createCheckoutSession(CHECKOUT_USER, CHECKOUT_DTO, APP_URL),
+    ).resolves.toEqual({ url: 'https://checkout.stripe.test/cs_1' });
+    expect(stripe.checkout.sessions.create).toHaveBeenCalled();
+  });
+
+  it('fails closed when listing subscriptions throws', async () => {
+    const { service, stripe } = checkoutSetup({
+      listError: new Error('stripe down'),
+    });
+
+    await expect(
+      service.createCheckoutSession(CHECKOUT_USER, CHECKOUT_DTO, APP_URL),
+    ).rejects.toBeInstanceOf(BillingProviderUnavailableException);
+    expect(stripe.checkout.sessions.create).not.toHaveBeenCalled();
   });
 });

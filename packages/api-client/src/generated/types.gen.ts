@@ -740,6 +740,13 @@ export type BillingControllerCreateCheckoutSessionData = {
     url: '/billing/checkout-session';
 };
 
+export type BillingControllerCreateCheckoutSessionErrors = {
+    /**
+     * SUBSCRIPTION_ALREADY_ACTIVE: the tenant already has a live subscription.
+     */
+    409: unknown;
+};
+
 export type BillingControllerCreateCheckoutSessionResponses = {
     200: BillingRedirectResponseDto;
 };

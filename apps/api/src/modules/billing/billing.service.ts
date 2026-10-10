@@ -13,10 +13,12 @@ import {
   lookupKeyFor,
 } from './billing.constants';
 import {
+  BillingProviderUnavailableException,
   BillingTenantNotFoundException,
   InvalidWebhookSignatureException,
   NoStripeCustomerException,
   PriceNotConfiguredException,
+  SubscriptionAlreadyActiveException,
   SubscriptionCancellationFailedException,
 } from './billing.exceptions';
 import type { CreateCheckoutSessionDto } from './dto/create-checkout-session.dto';
@@ -41,6 +43,9 @@ const ENDED_STATUSES: Stripe.Subscription.Status[] = [
   'canceled',
   'incomplete_expired',
 ];
+
+/** Newest first. One page covers a live subscription among recent history. */
+const SUBSCRIPTION_LIST_LIMIT = 100;
 
 interface TenantRow {
   id: string;
@@ -102,6 +107,7 @@ export class BillingService {
     }
 
     const tenant = await this.getTenantByUserSub(userSub);
+    await this.assertNoLiveSubscription(tenant);
     const customerId = await this.getOrCreateCustomer(tenant, userSub);
 
     const session = await this.stripe.checkout.sessions.create({
@@ -631,6 +637,31 @@ export class BillingService {
           VALUES (${event.id}, ${event.type}, now())
           ON CONFLICT (id) DO UPDATE SET processed_at = now()`,
     );
+  }
+
+  /** Stripe is the source of truth; a tenant with no customer cannot already be billing. */
+  private async assertNoLiveSubscription(tenant: TenantRow): Promise<void> {
+    if (!tenant.stripe_customer_id) return;
+
+    let subscriptions: Stripe.Subscription[];
+    try {
+      const listed = await this.stripe.subscriptions.list({
+        customer: tenant.stripe_customer_id,
+        status: 'all',
+        limit: SUBSCRIPTION_LIST_LIMIT,
+      });
+      subscriptions = listed.data;
+    } catch (err) {
+      this.logger.error(
+        `[billing] Could not list subscriptions before checkout for tenant ${tenant.id}: ${String(err)}`,
+      );
+      throw new BillingProviderUnavailableException();
+    }
+
+    // Same statuses account deletion still cancels: anything that can bill again.
+    if (subscriptions.some((sub) => !ENDED_STATUSES.includes(sub.status))) {
+      throw new SubscriptionAlreadyActiveException();
+    }
   }
 
   private async getTenantByUserSub(userSub: string): Promise<TenantRow> {

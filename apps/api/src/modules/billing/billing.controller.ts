@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
+  ApiConflictResponse,
   ApiExcludeEndpoint,
   ApiOkResponse,
   ApiOperation,
@@ -76,6 +77,10 @@ export class BillingController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create a Stripe Checkout session (protected)' })
   @ApiOkResponse({ type: BillingRedirectResponseDto })
+  @ApiConflictResponse({
+    description:
+      'SUBSCRIPTION_ALREADY_ACTIVE: the tenant already has a live subscription.',
+  })
   @UseGuards(SupabaseJwtGuard)
   async createCheckoutSession(
     @Body() dto: CreateCheckoutSessionDto,

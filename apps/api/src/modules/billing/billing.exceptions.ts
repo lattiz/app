@@ -93,6 +93,16 @@ export class NoPendingPlanChangeException extends DomainException {
   }
 }
 
+/** The tenant already has a live Stripe subscription, so a second checkout must not start. */
+export class SubscriptionAlreadyActiveException extends DomainException {
+  readonly code = 'SUBSCRIPTION_ALREADY_ACTIVE';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor() {
+    super('Ya tienes una suscripción vigente.');
+  }
+}
+
 /** The subscription on record belongs to another Stripe customer; nothing is changed. */
 export class SubscriptionOwnershipMismatchException extends DomainException {
   readonly code = 'SUBSCRIPTION_OWNERSHIP_MISMATCH';

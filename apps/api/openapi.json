@@ -136,6 +136,9 @@
                 }
               }
             }
+          },
+          "409": {
+            "description": "SUBSCRIPTION_ALREADY_ACTIVE: the tenant already has a live subscription."
           }
         },
         "security": [
