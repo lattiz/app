@@ -37,6 +37,7 @@ const PROPS = [
 ] as const;
 
 // Plain JS string: tsx would inject helpers (__name) into a serialized TS function.
+// Section roots are keyed by data-lz-slot so an added section doesn't shift every later path.
 const SNAPSHOT_SCRIPT = `(props) => {
   const out = [];
   const visit = (el, path) => {
@@ -48,7 +49,7 @@ const SNAPSHOT_SCRIPT = `(props) => {
     for (const a of Array.from(el.attributes)) if (a.name !== 'class') attrs[a.name] = a.value;
     const own = Array.from(el.childNodes).filter((n) => n.nodeType === 3).map((n) => n.nodeValue || '').join('').trim();
     out.push({ path, tag: el.localName, text: own, attrs, style });
-    Array.from(el.children).forEach((c, i) => visit(c, path + '>' + c.localName + '[' + i + ']'));
+    Array.from(el.children).forEach((c, i) => visit(c, path + '>' + c.localName + '[' + (c.getAttribute('data-lz-slot') || i) + ']'));
   };
   visit(document.body, 'body');
   return out;
