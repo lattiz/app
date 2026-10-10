@@ -32,20 +32,20 @@ este documento la explica y propone lo que aún no está implementado.
 Los blueprints hablan de **roles**; cada rubro resuelve el rol a un slot
 (`blueprints/service-landing.shared.ts › verticals`). Para barbería:
 
-| Rol          | Slot                | Variantes Basic   | Variantes Pro     |
-| ------------ | ------------------- | ----------------- | ----------------- |
-| header       | `navbar`            | cualquiera        | cualquiera        |
-| hero         | `hero`              | cualquiera        | cualquiera        |
-| about        | `about`             | `brief`           | `urban-luxe`      |
-| catalog      | `services`          | cualquiera        | cualquiera        |
-| proof        | `gallery`           | —                 | `grid`, `strip`   |
-| team         | `team`              | —                 | cualquiera        |
-| testimonials | `testimonials`      | —                 | cualquiera        |
-| faq          | `faq`               | `list`, `two-col` | `list`, `two-col` |
-| contact      | `locations`         | `single`          | `with-contact`    |
-| marquee      | `marquee`           | —                 | cualquiera        |
-| whatsapp     | `floating-whatsapp` | cualquiera        | cualquiera        |
-| footer       | `footer`            | cualquiera        | cualquiera        |
+| Rol          | Slot                | Variantes Basic   | Variantes Pro                                   |
+| ------------ | ------------------- | ----------------- | ----------------------------------------------- |
+| header       | `navbar`            | cualquiera        | cualquiera                                      |
+| hero         | `hero`              | cualquiera        | cualquiera                                      |
+| about        | `about`             | `brief`           | `text-image-offset`, `statement`, `stats-strip` |
+| catalog      | `services`          | cualquiera        | cualquiera                                      |
+| proof        | `gallery`           | —                 | `grid`, `strip`                                 |
+| team         | `team`              | —                 | cualquiera                                      |
+| testimonials | `testimonials`      | —                 | cualquiera                                      |
+| faq          | `faq`               | `list`, `two-col` | `list`, `two-col`                               |
+| contact      | `locations`         | `single`          | `with-contact`                                  |
+| marquee      | `marquee`           | —                 | cualquiera                                      |
+| whatsapp     | `floating-whatsapp` | cualquiera        | cualquiera                                      |
+| footer       | `footer`            | cualquiera        | cualquiera                                      |
 
 `schemaType` del rubro (para el JSON-LD del publicador): `BarberShop`.
 
@@ -54,16 +54,30 @@ Un rubro nuevo agrega su entrada en `verticals` (p. ej. restaurante:
 
 ## Plantillas actuales
 
-| id                               | Tier  | Tema         | Secciones contadas |
-| -------------------------------- | ----- | ------------ | ------------------ |
-| `barberia-base-oscuro-v1` (FILO) | basic | `urban-dark` | 7                  |
-| `barberia-base-claro-v1` (TRAZO) | basic | `bone-blue`  | 7                  |
-| `barberia-oxido-v1` (ÓXIDO)      | pro   | `urban-dark` | 10                 |
-| `barberia-norte-v1` (Norte)      | pro   | `bone-blue`  | 10                 |
+| id                                | Tier  | Tema              | Voz                      | Portada · servicios            | Secciones contadas |
+| --------------------------------- | ----- | ----------------- | ------------------------ | ------------------------------ | ------------------ |
+| `barberia-oxido-v1` (ÓXIDO)       | pro   | `oxido`           | `oxido` (streetwear)     | `image-bg` · `price-list`      | 10                 |
+| `barberia-norte-v1` (Norte)       | pro   | `norte-atelier`   | `norte` (editorial)      | `split` · `editorial-table`    | 10                 |
+| `barberia-concreto-v1` (CONCRETO) | pro   | `concreto-brutal` | `concreto` (irreverente) | `offset-card` · `cards`        | 10                 |
+| `barberia-base-claro-v1` (TRAZO)  | basic | `trazo-papel`     | `trazo` (amable)         | `centered-arch` · `price-list` | 7                  |
+| `barberia-base-oscuro-v1` (FILO)  | basic | `trazo-noche`     | `trazo`                  | `image-bg` · `cards`           | 7                  |
+| `barberia-base-solar-v1` (LUMEN)  | basic | `trazo-solar`     | `trazo`                  | `split` · `price-list`         | 7                  |
 
-ÓXIDO y Norte conservan su id: el seed hace upsert por `--id`. Las imágenes de
-`assets/barberia/` (incluida la galería) siguen siendo placeholders generados;
-hay que reemplazarlas por fotos reales antes de sembrar.
+Los ids existentes se conservan: el seed hace upsert por `--id`. Todas las
+imágenes de `assets/barberia/<tema>/` son placeholders generados con la paleta
+de cada tema; hay que reemplazarlas por fotos con licencia antes de sembrar
+(ver `assets/barberia/README.md`).
+
+## Unicidad dentro de un rubro
+
+Además del límite de similitud por tier, `kit:validate` exige dentro del rubro:
+tema único, `fontPair` único, tono de acento a ≥ 30° de cualquier otra plantilla,
+titular de portada único y, entre las Pro, variante de portada única. Un tema
+`pro` solo sirve a plantillas Pro (y uno `basic` solo a Basic).
+`kit:compare-visual` mide la distancia perceptual (SSIM de luminancia + ΔE
+CIELAB) entre las portadas a 1280×800 reducidas a tamaño miniatura y falla por
+debajo de 0.33; genera `dist/_contact-sheet.png` para la prueba de entrecerrar
+los ojos.
 
 ## `dist/<id>/template.meta.json`
 
@@ -84,7 +98,7 @@ el editor espera exactamente `{ projectType, id }`):
   "slots": [
     {
       "slot": "navbar",
-      "variant": "urban-luxe",
+      "variant": "inline",
       "role": "header",
       "counted": true
     },

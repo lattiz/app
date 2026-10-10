@@ -118,6 +118,19 @@ Analíticas del plan Pro: Lattiz es dueño de una cuenta de GA y crea una propie
 - **Contacto sin `<form>` en el MVP:** WhatsApp, `tel:` (`{{phoneUrl}}`), `mailto:` (`{{emailUrl}}`) y mapa.
 - **FAQ con `<details open>`:** verificado en un canvas real de GrapesJS 0.22.16: el clic en `<summary>` solo selecciona el componente y nunca lo despliega, así que una respuesta cerrada no se puede editar. Abiertas se editan normal y el visitante aún puede plegarlas.
 
+### Plantillas distintas entre sí (fase 3)
+
+- **El tema es la identidad de una plantilla y es único por rubro.** Lleva `tier`, `fontPair`, `shape` (radios, borde, sombra none | soft | hard-offset), `density`, `photoTreatment` y la tipografía display (caja, interlineado, peso, escala). Un tema `pro` no se usa en Basic ni al revés.
+- **`accent` es relleno, `accent-text` es el acento como texto.** Un acento lima no pasa AA como texto sobre blanco; con `accentWords: highlight` las palabras de acento van en tinta sobre una banda de acento y el contraste se valida contra esa banda.
+- **Una voz por arquetipo** (`content/barberia.<voz>.es-MX.ts`); las Basic comparten la voz `trazo` y sobrescriben marca, portada y sucursal. Ninguna plantilla repite el titular de otra.
+- **Fotos por tema en `assets/<rubro>/<tema>/`.** Las tres Basic comparten el arquetipo `essential`, así que la carpeta no puede ser por arquetipo; el tema sí es único. Los placeholders se generan con la paleta y el patrón (`placeholder`) del tema.
+- **`kit:compare-visual` es parte de "terminado".** Se gatilla sobre la mitad superior (1280×800 → 160×100): la página completa reducida a tira casi solo mide claro vs oscuro y ordenaba un par de la fase 3 (0.384) por debajo de un clon de la fase 2 (0.431). Umbral 0.33, entre los clones de la fase 2 (0.168, 0.250) y el par más cercano de la fase 3 (0.408).
+- Desviaciones del brief:
+  - ÓXIDO conserva tres familias (Anton, Instrument Serif para el acento, Space Grotesk): es su identidad. Las demás usan dos familias más una mono opcional;
+  - fases 3 y 6 del brief se hicieron juntas: un content pack solo trae las claves de las variantes que usan sus plantillas, así que las voces y los manifiestos finales cambiaron en el mismo commit;
+  - las variantes `urban-luxe` se renombraron por lo que hacen (`inline`, `price-list`, `grid`, `text-image-offset`, `cards`, `big-wordmark`, `ticker`, `bubble`); `about/brief` se conserva como el about de Basic;
+  - `bone-blue` se retiró y `urban-dark` pasó a llamarse `oxido`.
+
 ### Global Styles del SDK (hallazgo, sin cambios en esta fase)
 
 - `SiteEditor.tsx` no pasa `globalStyles.default` al Studio SDK, así que el panel "Estilos globales" muestra "No hay estilos globales" en **todas** las plantillas. Es lo esperado, no un bug de plantilla.
@@ -134,7 +147,7 @@ Analíticas del plan Pro: Lattiz es dueño de una cuenta de GA y crea una propie
   - la guía vieja vivía fuera del repo; la nueva es `docs/lattiz-template-guidelines.md`.
 - Desviaciones de la fase 2 (Basic/Pro) frente al brief, verificadas en el código:
   - FAQ: `<details open>` en lugar de cerradas (ver arriba); el validador exige `open`;
-  - roles con variante fija por tier: contacto Basic = `locations/single`, contacto Pro = `locations/with-contact`, about Basic = `brief`, about Pro = `urban-luxe`;
+  - roles con variante fija por tier: contacto Basic = `locations/single`, contacto Pro = `locations/with-contact`, about Basic = `brief`, about Pro = `text-image-offset` | `statement` | `stats-strip`;
   - `kit:compare` identifica cada sección por `data-lz-slot` (no por posición), para comparar una plantilla con secciones añadidas;
   - `googleReviewUrl` por defecto es la búsqueda del negocio en Google Maps; cada tenant pone su enlace `g.page/r/<id>/review`;
   - el saneador de sitios sin pago descarta `<details>`, `<summary>` e `<iframe>`: en vista previa gratuita el FAQ queda como texto y sin mapas (no se tocó).
