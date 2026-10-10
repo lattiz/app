@@ -42,3 +42,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [template-distinctness-gate](template-distinctness-gate.md) — tema único por rubro, reglas de unicidad y compare-visual a 0.33
 - [accent-text-token](accent-text-token.md) — accent es relleno, accent-text es texto; highlight para acentos claros
 - [template-access-by-plan](template-access-by-plan.md) — acceso por plan derivado al leer; bloqueo tras bajar; archivar antes de reemplazar
+- [domain-renewal-fee](domain-renewal-fee.md) — cuota anual desde el año 2, pago por enlace, mora de 15 días, un dominio incluido por cuenta
