@@ -38,6 +38,7 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { ContactSupport } from '@/components/layout/ContactSupport';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { buildNavItems, type NavItem } from '@/config/nav.config';
 import { OnboardingProgressPanel } from '@/features/onboarding/OnboardingProgressPanel';
@@ -215,6 +216,7 @@ export function AppSidebar() {
 
       <SidebarFooter className="border-t border-sidebar-border p-2">
         <SidebarMenu>
+          <ContactSupport />
           <ThemeToggle />
 
           <SidebarMenuItem>
