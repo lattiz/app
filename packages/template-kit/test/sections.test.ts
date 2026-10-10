@@ -110,14 +110,91 @@ describe('about brief and testimonials', () => {
   });
 
   it('testimonials links "Dejar reseña en Google" to googleReviewUrl, and drops it without copy', () => {
-    const withCta = render('testimonials', 'urban-luxe');
+    const withCta = render('testimonials', 'cards');
     const review = [...withCta.querySelectorAll('a')].find(
       (a) => a.textContent === 'Dejar reseña en Google',
     );
     expect(review?.getAttribute('href')).toBe(pack.business.googleReviewUrl);
-    const without = render('testimonials', 'urban-luxe', {
+    const without = render('testimonials', 'cards', {
       writeReviewCta: '',
     });
     expect(without.querySelectorAll('.lz-reviews__actions a').length).toBe(1);
+  });
+});
+
+describe('phase 3 variants', () => {
+  it.each(['split', 'centered-arch', 'offset-card', 'image-bg'])(
+    'hero/%s has the only <h1>, a sized image and the WhatsApp CTA',
+    (variant) => {
+      const root = render('hero', variant);
+      expect(root.querySelectorAll('h1').length).toBe(1);
+      const img = root.querySelector('img');
+      expect(img?.getAttribute('width')).toMatch(/^\d+$/);
+      expect(img?.getAttribute('height')).toMatch(/^\d+$/);
+      expect(hrefs(root)[0]).toMatch(/^https:\/\/wa\.me\//);
+    },
+  );
+
+  it.each(['price-list', 'cards', 'editorial-table'])(
+    'services/%s lists every price',
+    (variant) => {
+      const root = render('services', variant);
+      const prices = (pack.sections.services.prices as unknown[]).length;
+      expect(root.textContent).toContain('$270');
+      expect(
+        root.querySelectorAll('h3, .lz-price-item__name').length,
+      ).toBeGreaterThanOrEqual(prices);
+    },
+  );
+
+  it('services/editorial-table drops the intro when the pack has none', () => {
+    const root = render('services', 'editorial-table', { intro: '' });
+    expect(root.querySelector('.lz-services-table__intro')).toBeNull();
+  });
+
+  it('team/list, about/statement, about/stats-strip and quote-feature render their keys', () => {
+    expect(
+      render('team', 'list').querySelectorAll('li.lz-team-list__item').length,
+    ).toBe(4);
+    expect(
+      render('about', 'statement').querySelector('h2')?.textContent,
+    ).toMatch(/semana después/);
+    expect(
+      render('about', 'stats-strip').querySelectorAll('.lz-about-stats__stat')
+        .length,
+    ).toBe(3);
+    const quotes = render('testimonials', 'quote-feature');
+    expect(quotes.querySelectorAll('blockquote').length).toBe(3);
+    expect(hrefs(quotes)).toContain(pack.business.googleReviewUrl);
+  });
+
+  it.each(['big-wordmark', 'columns', 'minimal-centered'])(
+    'footer/%s links every anchor and social',
+    (variant) => {
+      const links = hrefs(render('footer', variant));
+      expect(links).toContain('#servicios');
+      expect(links).toContain(pack.business.instagramUrl);
+    },
+  );
+
+  it('footer/columns adds WhatsApp, tel and mailto', () => {
+    const links = hrefs(render('footer', 'columns'));
+    expect(links.some((l) => l.startsWith('tel:'))).toBe(true);
+    expect(links.some((l) => l.startsWith('mailto:'))).toBe(true);
+  });
+
+  it.each(['inline', 'centered-logo'])(
+    'navbar/%s keeps anchors and CTA',
+    (variant) => {
+      const links = hrefs(render('navbar', variant));
+      expect(links).toContain('#servicios');
+      expect(links.some((l) => l.startsWith('https://wa.me/'))).toBe(true);
+    },
+  );
+
+  it('gallery/mosaic renders 8 sized lazy photos', () => {
+    const imgs = [...render('gallery', 'mosaic').querySelectorAll('img')];
+    expect(imgs.length).toBe(8);
+    expect(imgs.every((i) => i.getAttribute('loading') === 'lazy')).toBe(true);
   });
 });

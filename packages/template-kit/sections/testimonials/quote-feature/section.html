@@ -1,0 +1,24 @@
+<section id="resenas" data-lz-slot="testimonials" data-lz-variant="quote-feature" class="lz-section lz-quotes">
+  <div class="lz-container">
+    <div class="lz-section__head">
+      <p class="lz-index" data-lz-key="kicker"></p>
+    </div>
+    <div class="lz-quotes__grid">
+      <figure class="lz-quotes__item" data-lz-each="reviews">
+        <blockquote class="lz-quotes__text" data-lz-key="text"></blockquote>
+        <figcaption class="lz-quotes__author" data-lz-key="author"></figcaption>
+      </figure>
+    </div>
+    <div class="lz-quotes__footer">
+      <p class="lz-quotes__rating">
+        <span class="lz-quotes__score" data-lz-key="score"></span>
+        <span aria-label="5 estrellas" class="lz-quotes__stars">★★★★★</span>
+        <span class="lz-quotes__summary" data-lz-key="summary"></span>
+      </p>
+      <div class="lz-quotes__actions">
+        <a href="{{googleReviewsUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--secondary" data-lz-key="allReviewsCta"></a>
+        <a href="{{googleReviewUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary" data-lz-if="writeReviewCta" data-lz-key="writeReviewCta"></a>
+      </div>
+    </div>
+  </div>
+</section>

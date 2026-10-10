@@ -1,0 +1,22 @@
+<section id="equipo" data-lz-slot="team" data-lz-variant="grid" class="lz-section lz-team">
+  <div class="lz-container">
+    <div class="lz-section__head">
+      <p class="lz-index" data-lz-key="kicker"></p>
+    </div>
+    <h2 class="lz-title lz-title--section" data-lz-key="title"></h2>
+    <div class="lz-team__grid">
+      <article class="lz-card" data-lz-each="members">
+        <div class="lz-card__image-wrap">
+          <img loading="lazy" width="800" height="1000" class="lz-card__image" data-lz-attr-src="image" data-lz-attr-alt="imageAlt">
+        </div>
+        <div class="lz-card__body">
+          <h3 class="lz-card__title" data-lz-key="name"></h3>
+          <p class="lz-card__subtitle" data-lz-key="role"></p>
+          <div class="lz-card__chips">
+            <span class="lz-chip" data-lz-each="tags" data-lz-key="."></span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

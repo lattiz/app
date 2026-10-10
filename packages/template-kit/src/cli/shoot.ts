@@ -1,5 +1,5 @@
 /**
- * Screenshots dist/<id>/index.html: thumbnail.jpg (1280×800) + review/{desktop-full,mobile-390,mobile-390-full}.png.
+ * Screenshots dist/<id>/index.html: thumbnail.jpg (1280×800) + review/{desktop-full,tablet-992-full,mobile-390,mobile-390-full}.png.
  *
  *   pnpm --filter @lattiz/template-kit kit:shoot [dist/<id> | templates/<id>.ts …]   (no args = every dist folder)
  */

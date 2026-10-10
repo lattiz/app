@@ -1,0 +1,112 @@
+.lz-hero-offset {
+  padding: calc(var(--lz-section-pad) * 0.4) 0 calc(var(--lz-section-pad) * 0.7);
+  overflow: clip;
+}
+
+.lz-hero-offset__grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-areas:
+    'eyebrow eyebrow'
+    'title title'
+    'copy card';
+  column-gap: clamp(28px, 5vw, 72px);
+}
+
+.lz-hero-offset__eyebrow {
+  grid-area: eyebrow;
+  justify-self: start;
+  margin: 0 0 18px;
+  padding: 6px 12px;
+  border: var(--lz-border-width) solid var(--lz-color-line-strong);
+  background: var(--lz-color-accent);
+  color: var(--lz-color-on-accent);
+  font-family: var(--lz-font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: var(--lz-shadow-sm);
+}
+
+.lz-hero-offset__title {
+  grid-area: title;
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-size: clamp(60px, 11.5vw, 184px);
+}
+
+.lz-hero-offset__copy {
+  grid-area: copy;
+  align-self: end;
+  padding-top: 32px;
+}
+
+.lz-hero-offset__text {
+  max-width: 520px;
+  margin: 0 0 30px;
+  font-size: 19px;
+}
+
+.lz-hero-offset__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.lz-hero-offset__card {
+  grid-area: card;
+  position: relative;
+  margin-top: -64px;
+  border: var(--lz-border-width) solid var(--lz-color-line-strong);
+  border-radius: var(--lz-radius-card);
+  background: var(--lz-color-surface);
+  box-shadow: var(--lz-shadow);
+  transform: rotate(2deg);
+}
+
+.lz-hero-offset__image {
+  width: 100%;
+  aspect-ratio: 5 / 4;
+  object-fit: cover;
+  border-radius: var(--lz-radius-card);
+  filter: var(--lz-photo-filter);
+}
+
+.lz-hero-offset__sticker {
+  position: absolute;
+  left: -24px;
+  bottom: 24px;
+}
+
+@media (max-width: 992px) {
+  .lz-hero-offset__grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'eyebrow'
+      'title'
+      'copy'
+      'card';
+  }
+  .lz-hero-offset__card {
+    margin-top: 40px;
+    transform: none;
+  }
+  .lz-hero-offset__sticker {
+    left: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .lz-hero-offset__title {
+    font-size: clamp(44px, 13vw, 60px);
+  }
+  .lz-hero-offset__text {
+    font-size: 16px;
+  }
+  .lz-hero-offset__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

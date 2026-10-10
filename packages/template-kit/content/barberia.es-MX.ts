@@ -151,6 +151,8 @@ export default {
       sticker: 'Est. 2018',
       title:
         'No es una barbería. Es un <span class="lz-title__serif">club</span>.',
+      statement:
+        'Un buen corte se nota una semana después, no solo al levantarte de la silla. Para eso trabajamos.',
       summary:
         'En {{shortName}} cortamos con técnica y sin prisa: te preguntamos qué buscas, te decimos qué te va y no te levantas de la silla hasta que el fade quede limpio. Más de ocho años en {{city}} y miles de cortes nos respaldan.',
       paragraphs: [
@@ -167,6 +169,8 @@ export default {
     services: {
       kicker: '{{index}} — Servicios',
       title: 'Cortes con <span class="lz-title__serif">carácter</span>',
+      intro:
+        'Precios en pesos, con lavado y peinado incluidos. Pagas al terminar, en efectivo o con tarjeta.',
       prices: [
         {
           name: 'Corte de cabello',
@@ -358,6 +362,7 @@ export default {
       branchesTitle: 'Sucursales',
       branches: footerBranches,
       linksTitle: 'Explorar',
+      contactTitle: 'Contacto',
       links,
     },
   },

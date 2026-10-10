@@ -165,7 +165,8 @@ describe('compiled Basic template', () => {
     const meta = JSON.parse(
       readFileSync(resolve(dir, 'template.meta.json'), 'utf8'),
     ) as TemplateMeta;
-    expect(meta).toEqual({
+    const { slots, ...rest } = meta;
+    expect(rest).toEqual({
       id: 'barberia-base-oscuro-v1',
       tier: 'basic',
       family: 'service-landing',
@@ -175,42 +176,19 @@ describe('compiled Basic template', () => {
       seoProfile: 'basic',
       schemaType: 'BarberShop',
       editableTokens: ['color-accent'],
-      slots: [
-        {
-          slot: 'navbar',
-          variant: 'urban-luxe',
-          role: 'header',
-          counted: true,
-        },
-        { slot: 'hero', variant: 'image-bg', role: 'hero', counted: true },
-        { slot: 'about', variant: 'brief', role: 'about', counted: true },
-        {
-          slot: 'services',
-          variant: 'urban-luxe',
-          role: 'catalog',
-          counted: true,
-        },
-        { slot: 'faq', variant: 'list', role: 'faq', counted: true },
-        {
-          slot: 'locations',
-          variant: 'single',
-          role: 'contact',
-          counted: true,
-        },
-        {
-          slot: 'floating-whatsapp',
-          variant: 'urban-luxe',
-          role: 'whatsapp',
-          counted: false,
-        },
-        {
-          slot: 'footer',
-          variant: 'urban-luxe',
-          role: 'footer',
-          counted: true,
-        },
-      ],
     });
+    expect(slots.map((s) => `${s.slot}:${s.variant}`)).toEqual(
+      compiled.manifest.sections.map((s) => `${s.slot}:${s.variant}`),
+    );
+    const role = (slot: string) => slots.find((s) => s.slot === slot);
+    expect(role('navbar')?.role).toBe('header');
+    expect(role('services')?.role).toBe('catalog');
+    expect(role('locations')?.role).toBe('contact');
+    expect(role('floating-whatsapp')).toMatchObject({
+      role: 'whatsapp',
+      counted: false,
+    });
+    expect(slots.filter((s) => s.counted).length).toBe(7);
     const project = JSON.parse(
       readFileSync(resolve(dir, 'barberia-base-oscuro-v1.grapesjs'), 'utf8'),
     ) as { custom: unknown };

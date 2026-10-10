@@ -28,7 +28,7 @@ export default {
       '{{name}}, barbería en {{city}}. Cortes clásicos y modernos, barba y citas por WhatsApp desde $270 MXN.',
   },
   sections: [
-    { slot: 'navbar', variant: 'urban-luxe', props: { links: basicLinks } },
+    { slot: 'navbar', variant: 'inline', props: { links: basicLinks } },
     {
       slot: 'hero',
       variant: 'image-bg',
@@ -47,7 +47,7 @@ export default {
           'Atención con <span class="lz-title__serif">calma</span>, corte con precisión.',
       },
     },
-    { slot: 'services', variant: 'urban-luxe' },
+    { slot: 'services', variant: 'price-list' },
     { slot: 'faq', variant: 'list' },
     {
       slot: 'locations',
@@ -57,10 +57,10 @@ export default {
         title: 'Ven a <span class="lz-title__serif">vernos</span>',
       },
     },
-    { slot: 'floating-whatsapp', variant: 'urban-luxe' },
+    { slot: 'floating-whatsapp', variant: 'bubble' },
     {
       slot: 'footer',
-      variant: 'urban-luxe',
+      variant: 'big-wordmark',
       props: {
         about:
           'Barbería de colonia con atención sin prisa en Ciudad de México. Reserva por WhatsApp y te esperamos con la silla lista.',

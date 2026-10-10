@@ -28,7 +28,7 @@ export default {
       '{{name}}, barbería en {{city}}. Fades, barba a navaja y cortes infantiles con cita por WhatsApp desde $270 MXN.',
   },
   sections: [
-    { slot: 'navbar', variant: 'urban-luxe', props: { links: basicLinks } },
+    { slot: 'navbar', variant: 'inline', props: { links: basicLinks } },
     {
       slot: 'hero',
       variant: 'image-bg',
@@ -48,7 +48,7 @@ export default {
           'Oficio de barbero, <span class="lz-title__serif">sin rodeos</span>.',
       },
     },
-    { slot: 'services', variant: 'urban-luxe' },
+    { slot: 'services', variant: 'price-list' },
     { slot: 'faq', variant: 'list' },
     {
       slot: 'locations',
@@ -58,10 +58,10 @@ export default {
         title: 'Ven a <span class="lz-title__serif">vernos</span>',
       },
     },
-    { slot: 'floating-whatsapp', variant: 'urban-luxe' },
+    { slot: 'floating-whatsapp', variant: 'bubble' },
     {
       slot: 'footer',
-      variant: 'urban-luxe',
+      variant: 'big-wordmark',
       props: {
         about:
           'Barbería de barrio con técnica de estudio en Ciudad de México. Agenda por WhatsApp y llega directo a la silla.',

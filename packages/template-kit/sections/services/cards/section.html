@@ -1,0 +1,22 @@
+<section id="servicios" data-lz-slot="services" data-lz-variant="cards" class="lz-section lz-services-cards">
+  <div class="lz-container">
+    <div class="lz-section__head">
+      <p class="lz-index" data-lz-key="kicker"></p>
+    </div>
+    <h2 class="lz-title lz-title--section" data-lz-key="title"></h2>
+    <div class="lz-services-cards__grid">
+      <article class="lz-service-card" data-lz-each="prices">
+        <p class="lz-service-card__price" data-lz-key="price"></p>
+        <h3 class="lz-service-card__name" data-lz-key="name"></h3>
+        <p class="lz-service-card__desc" data-lz-key="description"></p>
+      </article>
+    </div>
+    <div class="lz-services-cards__promos" data-lz-if="promos">
+      <a target="_blank" rel="noopener noreferrer" class="lz-services-cards__promo" data-lz-each="promos" data-lz-attr-href="href">
+        <span class="lz-services-cards__tag" data-lz-key="tag"></span>
+        <span class="lz-services-cards__promo-title" data-lz-key="title"></span>
+        <span class="lz-services-cards__promo-cta" data-lz-key="cta"></span>
+      </a>
+    </div>
+  </div>
+</section>

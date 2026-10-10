@@ -11,7 +11,7 @@ export default {
     header: roles.header,
     hero: roles.hero,
     marquee: roles.marquee,
-    about: { ...roles.about, variants: ['urban-luxe'] },
+    about: { ...roles.about, variants: ['text-image-offset', 'statement', 'stats-strip'] },
     catalog: roles.catalog,
     proof: roles.proof,
     team: roles.team,
