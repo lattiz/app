@@ -10,15 +10,21 @@ import { SETTINGS_STORE, type SettingsStorePort } from './settings-store.port';
 import {
   dbBool,
   dbInt,
+  dbIntList,
+  dbString,
   dbStringList,
   envBool,
   envInt,
+  envIntList,
+  envString,
   envStringList,
   envWarningDay,
   SETTINGS,
   type BoolKey,
   type IntKey,
+  type IntListKey,
   type ResolveContext,
+  type StringKey,
   type StringListKey,
 } from './settings.registry';
 
@@ -141,6 +147,36 @@ export class SettingsService implements OnModuleInit, OnModuleDestroy {
       this.warnedKeys.delete(key);
     }
     return envStringList(def, this.readEnv(def.envVar));
+  }
+
+  getIntList(key: IntListKey): readonly number[] {
+    const def = SETTINGS[key];
+    if (this.snapshot.has(key)) {
+      const parsed = dbIntList(this.snapshot.get(key));
+      if (parsed.ok && def.validate(parsed.value, NO_CONTEXT)) {
+        this.warnedKeys.delete(key);
+        return parsed.value;
+      }
+      this.warnOnce(key, parsed.ok ? 'failed validation' : parsed.reason);
+    } else {
+      this.warnedKeys.delete(key);
+    }
+    return envIntList(def, this.readEnv(def.envVar));
+  }
+
+  getString(key: StringKey): string {
+    const def = SETTINGS[key];
+    if (this.snapshot.has(key)) {
+      const parsed = dbString(this.snapshot.get(key));
+      if (parsed.ok && def.validate(parsed.value, NO_CONTEXT)) {
+        this.warnedKeys.delete(key);
+        return parsed.value;
+      }
+      this.warnOnce(key, parsed.ok ? 'failed validation' : parsed.reason);
+    } else {
+      this.warnedKeys.delete(key);
+    }
+    return envString(def, this.readEnv(def.envVar));
   }
 
   private acceptedDbInt(key: IntKey, ctx: ResolveContext): number | undefined {

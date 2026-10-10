@@ -79,7 +79,7 @@ BEGIN
     'service_role select');
 
   PERFORM pg_temp.expect(
-    (SELECT count(*) = 11 FROM public.app_settings),
+    (SELECT count(*) = 11 FROM public.app_settings WHERE key LIKE 'preview.%'),
     'seed count');
   PERFORM pg_temp.expect(
     (SELECT value = 'true'::jsonb FROM public.app_settings WHERE key = 'preview.enabled'),
@@ -122,10 +122,9 @@ BEGIN
     NOT EXISTS (
       SELECT 1
       FROM public.app_settings
-      WHERE split_part(key, '.', 1) IN ('domains', 'email', 'dns')
-         OR key = 'preview.warning_day'
+      WHERE key = 'preview.warning_day'
     ),
-    'seed excludes env keys');
+    'seed excludes derived warning day');
   PERFORM pg_temp.expect(
     NOT EXISTS (
       SELECT 1 FROM public.app_settings WHERE key LIKE 'preview.%' AND description IS NULL
@@ -376,7 +375,7 @@ RESET ROLE;
 SET ROLE service_role;
 DO $sr$
 BEGIN
-  IF (SELECT count(*) FROM public.app_settings) <> 11 THEN
+  IF (SELECT count(*) FROM public.app_settings WHERE key LIKE 'preview.%') <> 11 THEN
     RAISE EXCEPTION 'service_role cannot read app_settings';
   END IF;
   BEGIN

@@ -14,6 +14,7 @@ import {
 import { DOMAIN_PRICE_CAPS } from './domain/domain-pricing.policy';
 import { EFFECTIVE_PLAN_PORT } from './domain/effective-plan.port';
 import { REGISTRAR_PORT, type RegistrarPort } from './domain/registrar.port';
+import { DomainRenewalConfig } from './domain-renewal.config';
 import { loadDomainPriceCaps } from './domain-pricing.config';
 import { DnsReconcileService } from './dns-reconcile.service';
 import { DomainsController } from './domains.controller';
@@ -82,6 +83,7 @@ async function createDnsProvider(
   controllers: [DomainsController],
   providers: [
     DomainsService,
+    DomainRenewalConfig,
     { provide: EFFECTIVE_PLAN_PORT, useExisting: EffectivePlanService },
     OpenproviderClient,
     VercelDomainsService,
@@ -117,6 +119,6 @@ async function createDnsProvider(
     },
     DnsReconcileService,
   ],
-  exports: [DomainsService],
+  exports: [DomainsService, DomainRenewalConfig],
 })
 export class DomainsModule {}
