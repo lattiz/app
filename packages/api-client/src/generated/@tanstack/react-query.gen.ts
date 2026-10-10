@@ -3,8 +3,8 @@
 import { type DefaultError, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { analyticsControllerOverview, analyticsControllerRealtime, analyticsControllerRetry, billingControllerCreateCheckoutSession, billingControllerCreatePortalSession, billingControllerGetInvoices, billingControllerGetPlanChange, billingControllerGetPlans, billingControllerGetSubscription, billingControllerGetSubscriptionPrice, billingControllerReleasePendingPlanChange, billingControllerRequestPlanChange, domainsControllerConnect, domainsControllerGetDomain, domainsControllerGetJobStatus, domainsControllerGetQuote, domainsControllerPurchase, domainsControllerRelaunch, domainsControllerSearch, healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options, publicTemplatesControllerFindPublished, sitesControllerChangeTemplate, sitesControllerGetSchema, sitesControllerPublish, sitesControllerSaveSchema, sitesControllerSelectTemplate, sitesControllerUploadAssets, templatesControllerFindAll, tenantsControllerMe, tenantsControllerRemoveBranding, tenantsControllerSlugAvailability, tenantsControllerSlugSuggestion, tenantsControllerUpdateSiteSettings, tenantsControllerUpdateSlug, tenantsControllerUploadBranding } from '../sdk.gen';
-import type { AnalyticsControllerOverviewData, AnalyticsControllerOverviewResponse, AnalyticsControllerRealtimeData, AnalyticsControllerRealtimeResponse, AnalyticsControllerRetryData, AnalyticsControllerRetryResponse, BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponse, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponse, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponse, BillingControllerGetPlanChangeData, BillingControllerGetPlanChangeResponse, BillingControllerGetPlansData, BillingControllerGetPlansResponse, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionPriceData, BillingControllerGetSubscriptionPriceResponse, BillingControllerGetSubscriptionResponse, BillingControllerReleasePendingPlanChangeData, BillingControllerReleasePendingPlanChangeResponse, BillingControllerRequestPlanChangeData, BillingControllerRequestPlanChangeResponse, DomainsControllerConnectData, DomainsControllerConnectResponse, DomainsControllerGetDomainData, DomainsControllerGetDomainResponse, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponse, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponse, DomainsControllerPurchaseData, DomainsControllerPurchaseResponse, DomainsControllerRelaunchData, DomainsControllerRelaunchResponse, DomainsControllerSearchData, DomainsControllerSearchResponse, HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse, PublicTemplatesControllerFindPublishedData, PublicTemplatesControllerFindPublishedResponse, SitesControllerChangeTemplateData, SitesControllerChangeTemplateResponse, SitesControllerGetSchemaData, SitesControllerGetSchemaResponse, SitesControllerPublishData, SitesControllerPublishResponse, SitesControllerSaveSchemaData, SitesControllerSaveSchemaResponse, SitesControllerSelectTemplateData, SitesControllerSelectTemplateResponse, SitesControllerUploadAssetsData, SitesControllerUploadAssetsResponse, TemplatesControllerFindAllData, TemplatesControllerFindAllResponse, TenantsControllerMeData, TenantsControllerMeResponse, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingResponse, TenantsControllerSlugAvailabilityData, TenantsControllerSlugAvailabilityResponse, TenantsControllerSlugSuggestionData, TenantsControllerSlugSuggestionResponse, TenantsControllerUpdateSiteSettingsData, TenantsControllerUpdateSiteSettingsResponse, TenantsControllerUpdateSlugData, TenantsControllerUpdateSlugResponse, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingResponse } from '../types.gen';
+import { analyticsControllerOverview, analyticsControllerRealtime, analyticsControllerRetry, billingControllerCreateCheckoutSession, billingControllerCreatePortalSession, billingControllerGetInvoices, billingControllerGetPlanChange, billingControllerGetPlans, billingControllerGetSubscription, billingControllerGetSubscriptionPrice, billingControllerReleasePendingPlanChange, billingControllerRequestPlanChange, domainsControllerConnect, domainsControllerCreateRenewalCheckout, domainsControllerGetDomain, domainsControllerGetJobStatus, domainsControllerGetQuote, domainsControllerGetRenewal, domainsControllerPurchase, domainsControllerRelaunch, domainsControllerSearch, healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options, publicTemplatesControllerFindPublished, sitesControllerChangeTemplate, sitesControllerGetSchema, sitesControllerPublish, sitesControllerSaveSchema, sitesControllerSelectTemplate, sitesControllerUploadAssets, templatesControllerFindAll, tenantsControllerMe, tenantsControllerRemoveBranding, tenantsControllerSlugAvailability, tenantsControllerSlugSuggestion, tenantsControllerUpdateSiteSettings, tenantsControllerUpdateSlug, tenantsControllerUploadBranding } from '../sdk.gen';
+import type { AnalyticsControllerOverviewData, AnalyticsControllerOverviewResponse, AnalyticsControllerRealtimeData, AnalyticsControllerRealtimeResponse, AnalyticsControllerRetryData, AnalyticsControllerRetryResponse, BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponse, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponse, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponse, BillingControllerGetPlanChangeData, BillingControllerGetPlanChangeResponse, BillingControllerGetPlansData, BillingControllerGetPlansResponse, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionPriceData, BillingControllerGetSubscriptionPriceResponse, BillingControllerGetSubscriptionResponse, BillingControllerReleasePendingPlanChangeData, BillingControllerReleasePendingPlanChangeResponse, BillingControllerRequestPlanChangeData, BillingControllerRequestPlanChangeResponse, DomainsControllerConnectData, DomainsControllerConnectResponse, DomainsControllerCreateRenewalCheckoutData, DomainsControllerCreateRenewalCheckoutResponse, DomainsControllerGetDomainData, DomainsControllerGetDomainResponse, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponse, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponse, DomainsControllerGetRenewalData, DomainsControllerGetRenewalResponse, DomainsControllerPurchaseData, DomainsControllerPurchaseResponse, DomainsControllerRelaunchData, DomainsControllerRelaunchResponse, DomainsControllerSearchData, DomainsControllerSearchResponse, HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse, PublicTemplatesControllerFindPublishedData, PublicTemplatesControllerFindPublishedResponse, SitesControllerChangeTemplateData, SitesControllerChangeTemplateResponse, SitesControllerGetSchemaData, SitesControllerGetSchemaResponse, SitesControllerPublishData, SitesControllerPublishResponse, SitesControllerSaveSchemaData, SitesControllerSaveSchemaResponse, SitesControllerSelectTemplateData, SitesControllerSelectTemplateResponse, SitesControllerUploadAssetsData, SitesControllerUploadAssetsResponse, TemplatesControllerFindAllData, TemplatesControllerFindAllResponse, TenantsControllerMeData, TenantsControllerMeResponse, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingResponse, TenantsControllerSlugAvailabilityData, TenantsControllerSlugAvailabilityResponse, TenantsControllerSlugSuggestionData, TenantsControllerSlugSuggestionResponse, TenantsControllerUpdateSiteSettingsData, TenantsControllerUpdateSiteSettingsResponse, TenantsControllerUpdateSlugData, TenantsControllerUpdateSlugResponse, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingResponse } from '../types.gen';
 
 export type QueryKey<TOptions extends Options> = [
     Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
@@ -326,6 +326,41 @@ export const domainsControllerRelaunchMutation = (options?: Partial<Options<Doma
     const mutationOptions: UseMutationOptions<DomainsControllerRelaunchResponse, DefaultError, Options<DomainsControllerRelaunchData>> = {
         mutationFn: async (fnOptions) => {
             const { data } = await domainsControllerRelaunch({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const domainsControllerGetRenewalQueryKey = (options?: Options<DomainsControllerGetRenewalData>) => createQueryKey('domainsControllerGetRenewal', options);
+
+/**
+ * Get the domain renewal cycle (protected)
+ */
+export const domainsControllerGetRenewalOptions = (options?: Options<DomainsControllerGetRenewalData>) => queryOptions<DomainsControllerGetRenewalResponse, DefaultError, DomainsControllerGetRenewalResponse, ReturnType<typeof domainsControllerGetRenewalQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await domainsControllerGetRenewal({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: domainsControllerGetRenewalQueryKey(options)
+});
+
+/**
+ * Start domain renewal checkout (protected)
+ */
+export const domainsControllerCreateRenewalCheckoutMutation = (options?: Partial<Options<DomainsControllerCreateRenewalCheckoutData>>): UseMutationOptions<DomainsControllerCreateRenewalCheckoutResponse, DefaultError, Options<DomainsControllerCreateRenewalCheckoutData>> => {
+    const mutationOptions: UseMutationOptions<DomainsControllerCreateRenewalCheckoutResponse, DefaultError, Options<DomainsControllerCreateRenewalCheckoutData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await domainsControllerCreateRenewalCheckout({
                 ...options,
                 ...fnOptions,
                 throwOnError: true

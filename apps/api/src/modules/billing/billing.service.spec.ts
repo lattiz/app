@@ -1,6 +1,7 @@
 import { Logger } from '@nestjs/common';
 import type Stripe from 'stripe';
 import type { DomainsService } from '../domains/domains.service';
+import type { DomainRenewalPaymentService } from '../domains/domain-renewal-payment.service';
 import type { EmailOutboxService } from '../email/application/email-outbox.service';
 import type { BillingPricesService } from './billing-prices.service';
 import { BillingService } from './billing.service';
@@ -53,12 +54,14 @@ function setup(options: {
     relaunchDomain: jest.fn().mockResolvedValue({ relaunched: false }),
   };
   const emails = { enqueueForTenant: jest.fn() };
+  const renewals = { handleCheckoutCompleted: jest.fn() };
   const service = new BillingService(
     stripe as unknown as Stripe,
     db,
     domains as unknown as DomainsService,
     emails as unknown as EmailOutboxService,
     new SubscriptionStateService(stripe as unknown as Stripe, prices),
+    renewals as unknown as DomainRenewalPaymentService,
   );
 
   const deliver = (event: Partial<Stripe.Event>) => {
@@ -68,7 +71,7 @@ function setup(options: {
     });
     return service.handleWebhook(Buffer.from('{}'), 'sig');
   };
-  return { service, stripe, queries, deliver };
+  return { service, stripe, queries, deliver, renewals };
 }
 
 const tenantPlanWrites = (queries: RenderedQuery[]) =>
@@ -234,6 +237,54 @@ describe('BillingService subscription sync', () => {
     await deliver(subscriptionUpdated({ id: 'sub_1' }));
     expect(tenantPlanWrites(queries)).toEqual(['basico']);
   });
+
+  it('delegates a domain renewal checkout before the subscription path', async () => {
+    const fresh = subscription({ itemPrice: PRO_MONTHLY });
+    const { stripe, renewals, deliver } = setup({ fresh });
+
+    await deliver({
+      type: 'checkout.session.completed',
+      data: {
+        object: {
+          id: 'cs_renew',
+          payment_status: 'paid',
+          metadata: {
+            kind: 'domain_renewal',
+            cycle_id: 'dddddddd-dddd-4ddd-8ddd-dddddddddddd',
+            tenant_id: 'tenant-1',
+            domain_id: 'domain-1',
+          },
+        } as unknown as Stripe.Checkout.Session,
+      },
+    });
+
+    expect(renewals.handleCheckoutCompleted).toHaveBeenCalledTimes(1);
+    expect(stripe.subscriptions.retrieve).not.toHaveBeenCalled();
+    expect(errors).not.toHaveBeenCalledWith(
+      'checkout.session.completed: missing tenant/subscription',
+    );
+  });
+
+  it('still rejects a subscription checkout that has no subscription id', async () => {
+    const fresh = subscription({ itemPrice: PRO_MONTHLY });
+    const { stripe, renewals, deliver } = setup({ fresh });
+
+    await deliver({
+      type: 'checkout.session.completed',
+      data: {
+        object: {
+          id: 'cs_sub',
+          metadata: { tenant_id: 'tenant-1' },
+        } as unknown as Stripe.Checkout.Session,
+      },
+    });
+
+    expect(renewals.handleCheckoutCompleted).not.toHaveBeenCalled();
+    expect(stripe.subscriptions.retrieve).not.toHaveBeenCalled();
+    expect(errors).toHaveBeenCalledWith(
+      'checkout.session.completed: missing tenant/subscription',
+    );
+  });
 });
 
 const CHECKOUT_USER = '11111111-1111-4111-8111-111111111111';
@@ -291,6 +342,9 @@ function checkoutSetup(options: {
     { relaunchDomain: jest.fn() } as unknown as DomainsService,
     { enqueueForTenant: jest.fn() } as unknown as EmailOutboxService,
     {} as SubscriptionStateService,
+    {
+      handleCheckoutCompleted: jest.fn(),
+    } as unknown as DomainRenewalPaymentService,
   );
   return { service, stripe };
 }

@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { PreviewModule } from '../../common/billing/preview.module';
 import { SettingsModule } from '../../common/settings/settings.module';
 import { DatabaseModule } from '../../database/database.module';
+import { AdminAlertService } from './application/admin-alert.service';
 import { EmailOutboxService } from './application/email-outbox.service';
 import { PreviewNotifierService } from './application/preview-notifier.service';
 import { EMAIL_OUTBOX_REPOSITORY_PORT } from './domain/email-outbox.port';
@@ -41,6 +42,7 @@ function resolveEmailProvider(config: ConfigService) {
   imports: [DatabaseModule, PreviewModule, SettingsModule],
   providers: [
     EmailOutboxService,
+    AdminAlertService,
     EmailSenderCron,
     PreviewNotifierService,
     {
@@ -53,6 +55,6 @@ function resolveEmailProvider(config: ConfigService) {
       useFactory: resolveEmailProvider,
     },
   ],
-  exports: [EmailOutboxService],
+  exports: [EmailOutboxService, AdminAlertService],
 })
 export class EmailModule {}

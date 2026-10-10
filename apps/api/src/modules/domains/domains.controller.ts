@@ -23,6 +23,7 @@ import {
   SensitiveActionRateLimit,
 } from '../../common/throttling/rate-limits';
 import { SupabaseJwtGuard } from '../../common/auth/supabase-jwt.guard';
+import { DomainRenewalPaymentService } from './domain-renewal-payment.service';
 import { DomainsService } from './domains.service';
 import { ConnectDomainDto } from './dto/connect-domain.dto';
 import {
@@ -30,6 +31,8 @@ import {
   DomainJobStatusDto,
   DomainPurchaseResponseDto,
   DomainQuoteResponseDto,
+  DomainRenewalCheckoutResponseDto,
+  DomainRenewalStatusDto,
   DomainSearchResultDto,
   DomainStatusResponseDto,
   RelaunchDomainResponseDto,
@@ -43,7 +46,10 @@ import { SearchDomainsDto } from './dto/search-domains.dto';
 @Controller('domains')
 @UseGuards(SupabaseJwtGuard)
 export class DomainsController {
-  constructor(private readonly domains: DomainsService) {}
+  constructor(
+    private readonly domains: DomainsService,
+    private readonly renewalPayments: DomainRenewalPaymentService,
+  ) {}
 
   /** Search available domains for a keyword (TLD variants generated server-side). */
   @Get('search')
@@ -109,6 +115,27 @@ export class DomainsController {
     return this.domains.relaunchDomainForUser(requireSub(user));
   }
 
+  /** Live renewal cycle for this account, or null when renewal is off or nothing is due. */
+  @Get('renewal')
+  @ApiOperation({ summary: 'Get the domain renewal cycle (protected)' })
+  @ApiOkResponse({ type: DomainRenewalStatusDto, nullable: true })
+  async getRenewal(
+    @CurrentUser() user?: AuthenticatedUser,
+  ): Promise<DomainRenewalStatusDto | null> {
+    return this.renewalPayments.getStatusForUser(requireSub(user));
+  }
+
+  /** Stripe Checkout for the live renewal cycle. The service rejects a closed window or an inactive subscription. */
+  @Post('renewal/checkout')
+  @SensitiveActionRateLimit()
+  @ApiOperation({ summary: 'Start domain renewal checkout (protected)' })
+  @ApiOkResponse({ type: DomainRenewalCheckoutResponseDto })
+  async createRenewalCheckout(
+    @CurrentUser() user?: AuthenticatedUser,
+  ): Promise<DomainRenewalCheckoutResponseDto> {
+    return this.renewalPayments.createCheckout(requireSub(user), appUrl());
+  }
+
   /** Poll the purchase job status. */
   @Get('jobs/:jobId')
   @ApiOperation({ summary: 'Get domain purchase job status (protected)' })
@@ -122,13 +149,19 @@ export class DomainsController {
 
   /** Get the tenant's current domain — re-checks DNS propagation on each call. */
   @Get()
-  @ApiOperation({ summary: 'Get the tenant current domain + DNS/SSL status (protected)' })
+  @ApiOperation({
+    summary: 'Get the tenant current domain + DNS/SSL status (protected)',
+  })
   @ApiOkResponse({ type: DomainStatusResponseDto, nullable: true })
   async getDomain(
     @CurrentUser() user?: AuthenticatedUser,
   ): Promise<DomainStatusResponseDto | null> {
     return this.domains.checkDnsStatus(requireSub(user));
   }
+}
+
+function appUrl(): string {
+  return process.env.APP_URL ?? 'http://localhost:5173';
 }
 
 /** The guard guarantees a user; this narrows the type defensively. */

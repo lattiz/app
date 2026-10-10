@@ -5,6 +5,7 @@ import Stripe from 'stripe';
 import { computeIsEntitled } from '../../common/billing/entitlement';
 import { scheduledCancellation } from '../../common/billing/scheduled-cancellation';
 import { type Database, DATABASE } from '../../database/database.module';
+import { DomainRenewalPaymentService } from '../domains/domain-renewal-payment.service';
 import { DomainsService } from '../domains/domains.service';
 import { EmailOutboxService } from '../email/application/email-outbox.service';
 import {
@@ -83,6 +84,7 @@ export class BillingService {
     private readonly domains: DomainsService,
     private readonly emails: EmailOutboxService,
     private readonly subscriptionState: SubscriptionStateService,
+    private readonly renewals: DomainRenewalPaymentService,
   ) {}
 
   // ── Checkout ──────────────────────────────────────────────────────────────
@@ -274,9 +276,16 @@ export class BillingService {
   private async onCheckoutCompleted(
     session: Stripe.Checkout.Session,
   ): Promise<void> {
+    if (session.metadata?.kind === 'domain_renewal') {
+      await this.renewals.handleCheckoutCompleted(session);
+      return;
+    }
+
     const tenantId = session.metadata?.tenant_id;
     if (!tenantId || !session.subscription) {
-      this.logger.error('checkout.session.completed: missing tenant/subscription');
+      this.logger.error(
+        'checkout.session.completed: missing tenant/subscription',
+      );
       return;
     }
 
@@ -317,7 +326,8 @@ export class BillingService {
   private async resolveTenantId(
     subscription: Stripe.Subscription,
   ): Promise<string | null> {
-    if (subscription.metadata?.tenant_id) return subscription.metadata.tenant_id;
+    if (subscription.metadata?.tenant_id)
+      return subscription.metadata.tenant_id;
     const rows = await this.query<{ id: string }>(
       sql`SELECT id FROM public.tenants
           WHERE stripe_customer_id = ${customerIdOf(subscription)}
@@ -405,7 +415,9 @@ export class BillingService {
     try {
       const result = await this.domains.relaunchDomain(tenantId);
       if (result.relaunched) {
-        this.logger.log(`[billing] Auto-relaunched domain for tenant ${tenantId}`);
+        this.logger.log(
+          `[billing] Auto-relaunched domain for tenant ${tenantId}`,
+        );
         const day = new Date().toISOString().slice(0, 10);
         await this.emails.enqueueForTenant(
           'site_reactivated',
@@ -819,7 +831,9 @@ function isActiveStatus(status: Stripe.Subscription.Status): boolean {
 }
 
 function toIso(value: string | Date): string {
-  return value instanceof Date ? value.toISOString() : new Date(value).toISOString();
+  return value instanceof Date
+    ? value.toISOString()
+    : new Date(value).toISOString();
 }
 
 export { scheduledCancellation };

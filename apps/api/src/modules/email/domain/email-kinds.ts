@@ -11,6 +11,8 @@ export const EMAIL_KINDS = [
   'renewal_last_notice',
   'domain_renewed',
   'domain_expired',
+  'domain_lost',
+  'admin_alert',
   'preview_ending',
 ] as const;
 

@@ -41,6 +41,7 @@ import {
   type DomainSourceValue,
 } from './dto/domains.response.dto';
 import { PurchaseDomainDto } from './dto/purchase-domain.dto';
+import { DomainRenewalConfig } from './domain-renewal.config';
 import {
   DomainAgreementsRequiredException,
   DomainJobNotFoundException,
@@ -49,12 +50,12 @@ import {
   DomainNotCoveredByPlanException,
   DomainPurchaseInProgressException,
   DomainsTenantNotFoundException,
+  IncludedDomainAlreadyUsedException,
   PurchasePipelineException,
   TenantAlreadyHasDomainException,
 } from './domains.exceptions';
 import { classifyProviderFailure } from './provider-failure';
 import { VercelDomainsService } from './vercel-domains.service';
-import { DOMAIN_MAINTENANCE_FEE } from './domains.constants';
 
 const SEARCH_TLDS = ['com', 'com.mx', 'mx', 'net', 'org'];
 
@@ -151,6 +152,7 @@ export class DomainsService {
     @Inject(DOMAIN_PRICE_CAPS) private readonly caps: DomainPriceCaps,
     @Inject(EFFECTIVE_PLAN_PORT)
     private readonly effectivePlan: EffectivePlanPort,
+    private readonly renewalConfig: DomainRenewalConfig,
   ) {}
 
   // ── Search ────────────────────────────────────────────────────────────────
@@ -228,6 +230,7 @@ export class DomainsService {
     userSub: string,
     domain: string,
   ): Promise<DomainQuoteResponseDto> {
+    await this.assertQuoteIncludedDomain(userSub, domain);
     const [plan, availability] = await Promise.all([
       this.getTenantPlan({ userSub }),
       this.registrar.checkAvailability(domain),
@@ -254,7 +257,11 @@ export class DomainsService {
       notCoveredReason: coverage.notCoveredReason,
       availableWithPro: coverage.availableWithPro,
       renewalPriceUsdCents: renewalUsdCents,
-      maintenanceFee: DOMAIN_MAINTENANCE_FEE,
+      maintenanceFee: {
+        amountCents: this.renewalConfig.feeMxnCents(plan ?? ''),
+        currency: 'mxn',
+        taxRateBps: this.renewalConfig.taxRateBps,
+      },
       requiredAgreements: REQUIRED_AGREEMENTS,
       irreversible: true,
     };
@@ -312,6 +319,7 @@ export class DomainsService {
     if (existing?.purchase_completed_at) {
       throw new TenantAlreadyHasDomainException();
     }
+    await this.assertPurchaseIncludedDomain(tenantId, params.domain, existing);
 
     // Find-before-create: a domain already in our account is either this tenant's
     // interrupted purchase (resume, no new charge) or someone else's (reject).
@@ -1048,6 +1056,23 @@ export class DomainsService {
     return this.relaunchDomain(await this.getTenantIdByUserSub(userSub));
   }
 
+  /** Points a restored domain back at the Lattiz DNS zone. */
+  async redelegateAfterRestore(tenantId: string): Promise<void> {
+    const row = await this.getDomainByTenant(tenantId);
+    if (!row?.registrar_domain_id) {
+      throw new Error(
+        `Tenant ${tenantId} has no registrar domain to re-delegate.`,
+      );
+    }
+    const nameservers = await this.prepareZone(row.domain, {
+      id: row.registrar_domain_id,
+      status: 'active',
+      renewalDate: null,
+    });
+    // Expiry resets nameservers even when the stored zone id is unchanged.
+    await this.registrar.setNameservers(row.registrar_domain_id, nameservers);
+  }
+
   // ── Release (the domain definitively leaves Lattiz) ──────────────────────
   /**
    * For a domain that is no longer ours to serve: lapse or non-renewal, definitive cancellation,
@@ -1110,6 +1135,66 @@ export class DomainsService {
     }
     await this.dns.deleteZone(row.domain);
     await this.clearDnsZone(row.domain);
+  }
+
+  /**
+   * A half-finished purchase of this same name can continue. A live domain is
+   * rejected earlier as TENANT_ALREADY_HAS_DOMAIN; a released row is already gone.
+   */
+  private isResumableIncludedPurchase(
+    existing: Pick<
+      DomainRow,
+      'domain' | 'released_at' | 'purchase_completed_at'
+    > | null,
+    domain: string,
+  ): boolean {
+    return (
+      existing !== null &&
+      existing.domain === domain &&
+      !existing.released_at &&
+      !existing.purchase_completed_at
+    );
+  }
+
+  /** Blocks a second included domain before any registrar price call. */
+  private async assertQuoteIncludedDomain(
+    userSub: string,
+    domain: string,
+  ): Promise<void> {
+    const rows = await this.query<{
+      id: string;
+      included_domain_used_at: string | Date | null;
+    }>(
+      sql`SELECT id, included_domain_used_at
+          FROM public.tenants
+          WHERE user_id = ${userSub}::uuid
+          LIMIT 1`,
+    );
+    const tenant = rows[0];
+    if (!tenant?.included_domain_used_at) return;
+    const existing = await this.getDomainByTenant(tenant.id);
+    if (this.isResumableIncludedPurchase(existing, domain)) return;
+    throw new IncludedDomainAlreadyUsedException();
+  }
+
+  /** Same rule as the quote, after the live-domain check and before the registrar. */
+  private async assertPurchaseIncludedDomain(
+    tenantId: string,
+    domain: string,
+    existing: DomainRow | null,
+  ): Promise<void> {
+    if (this.isResumableIncludedPurchase(existing, domain)) return;
+    const rows = await this.query<{
+      included_domain_used_at: string | Date | null;
+    }>(
+      sql`SELECT included_domain_used_at
+          FROM public.tenants
+          WHERE id = ${tenantId}::uuid
+          LIMIT 1`,
+    );
+    if (rows[0]?.included_domain_used_at) {
+      throw new IncludedDomainAlreadyUsedException();
+    }
   }
 
   // ── Private DB helpers ────────────────────────────────────────────────────
@@ -1349,6 +1434,16 @@ export class DomainsService {
           SET vercel_mapped = true, vercel_domain_id = ${vercelDomainId},
               purchase_completed_at = now()
           WHERE domain = ${domain}`,
+    );
+    // Connect writes user_provided and mock purchases stay false, so neither consumes the included domain.
+    await this.query(
+      sql`UPDATE public.tenants AS t
+          SET included_domain_used_at = COALESCE(t.included_domain_used_at, now())
+          FROM public.domains AS d
+          WHERE d.domain = ${domain}
+            AND d.tenant_id = t.id
+            AND d.source = 'lattiz_managed'
+            AND d.is_mock = false`,
     );
   }
 

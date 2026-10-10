@@ -537,6 +537,67 @@
         ]
       }
     },
+    "/domains/renewal": {
+      "get": {
+        "operationId": "DomainsController_getRenewal",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/DomainRenewalStatusDto"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get the domain renewal cycle (protected)",
+        "tags": [
+          "domains"
+        ]
+      }
+    },
+    "/domains/renewal/checkout": {
+      "post": {
+        "operationId": "DomainsController_createRenewalCheckout",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainRenewalCheckoutResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Start domain renewal checkout (protected)",
+        "tags": [
+          "domains"
+        ]
+      }
+    },
     "/domains/jobs/{jobId}": {
       "get": {
         "operationId": "DomainsController_getJobStatus",
@@ -2099,11 +2160,16 @@
           "currency": {
             "type": "string",
             "description": "Lowercase ISO 4217 code, as Stripe uses it."
+          },
+          "taxRateBps": {
+            "type": "number",
+            "description": "IVA en puntos base; el monto no lo incluye."
           }
         },
         "required": [
           "amountCents",
-          "currency"
+          "currency",
+          "taxRateBps"
         ]
       },
       "DomainAgreementDto": {
@@ -2301,6 +2367,88 @@
         "required": [
           "relaunched",
           "domain"
+        ]
+      },
+      "DomainRenewalStatusDto": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Domain name this cycle renews."
+          },
+          "status": {
+            "description": "open: pago abierto; overdue: venció y aún puede pagar; paid: pago recibido, renovando; renewal_failed: pago recibido, Lattiz lo está resolviendo.",
+            "enum": [
+              "open",
+              "overdue",
+              "paid",
+              "renewal_failed"
+            ],
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "description": "End of the current registration period, as an ISO timestamp."
+          },
+          "lateDeadlineAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "Last moment a late payment is still accepted, as an ISO timestamp; null before the domain expires."
+          },
+          "baseCents": {
+            "type": "number",
+            "description": "Renewal price before IVA, in cents."
+          },
+          "taxCents": {
+            "type": "number",
+            "description": "IVA in cents."
+          },
+          "totalCents": {
+            "type": "number",
+            "description": "baseCents plus taxCents."
+          },
+          "currency": {
+            "type": "string",
+            "description": "Lowercase ISO 4217 code."
+          },
+          "canPay": {
+            "type": "boolean",
+            "description": "True when the tenant can start checkout for this cycle right now."
+          },
+          "payBlockedReason": {
+            "nullable": true,
+            "description": "Por qué no puede pagar; null si puede o si ya pagó.",
+            "enum": [
+              "subscription_inactive",
+              "window_closed",
+              null
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "domain",
+          "status",
+          "expiresAt",
+          "lateDeadlineAt",
+          "baseCents",
+          "taxCents",
+          "totalCents",
+          "currency",
+          "canPay",
+          "payBlockedReason"
+        ]
+      },
+      "DomainRenewalCheckoutResponseDto": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Stripe Checkout URL for the live renewal cycle."
+          }
+        },
+        "required": [
+          "url"
         ]
       },
       "DomainJobStatusDto": {

@@ -23,6 +23,18 @@ export class TenantAlreadyHasDomainException extends DomainException {
   }
 }
 
+/** The account already received its one included domain, even if that domain was later released. */
+export class IncludedDomainAlreadyUsedException extends DomainException {
+  readonly code = 'INCLUDED_DOMAIN_ALREADY_USED';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor() {
+    super(
+      'This account has already used its included domain. Contact Lattiz to add another.',
+    );
+  }
+}
+
 /** The requested provisioning job does not exist or belongs to another tenant. */
 export class DomainJobNotFoundException extends DomainException {
   readonly code = 'DOMAIN_JOB_NOT_FOUND';
@@ -48,6 +60,18 @@ export class RegistrarApiException extends DomainException {
   ) {
     super(
       `Registrar ${operation} failed${httpStatus ? ` with status ${httpStatus}` : ''}: ${detail}.`,
+    );
+  }
+}
+
+/** Renewal refused: the domain is not active at the registrar (code 327). */
+export class RegistrarDomainNotActiveException extends DomainException {
+  readonly code = 'REGISTRAR_DOMAIN_NOT_ACTIVE';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor(readonly registrarDomainId: string) {
+    super(
+      `Registrar renewal failed: domain ${registrarDomainId} is not active.`,
     );
   }
 }
@@ -128,5 +152,45 @@ export class DomainNotAllowedException extends DomainException {
 
   constructor() {
     super('This domain cannot be connected.');
+  }
+}
+
+/** Renewal checkout is off, or this tenant has no open or overdue cycle. */
+export class RenewalNotDueException extends DomainException {
+  readonly code = 'RENEWAL_NOT_DUE';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor() {
+    super('There is no domain renewal due for this tenant.');
+  }
+}
+
+/** The live cycle is already paid (including a renewal that still needs an operator). */
+export class RenewalAlreadyPaidException extends DomainException {
+  readonly code = 'RENEWAL_ALREADY_PAID';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor() {
+    super('This domain renewal has already been paid.');
+  }
+}
+
+/** The overdue cycle is past `late_deadline_at`; the domain is about to lapse. */
+export class RenewalWindowClosedException extends DomainException {
+  readonly code = 'RENEWAL_WINDOW_CLOSED';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor() {
+    super('The domain renewal payment window has closed.');
+  }
+}
+
+/** Domain renewal is only sold to a tenant with a live subscription and a Stripe customer. */
+export class RenewalRequiresActiveSubscriptionException extends DomainException {
+  readonly code = 'RENEWAL_REQUIRES_ACTIVE_SUBSCRIPTION';
+  readonly status = HttpStatus.FORBIDDEN;
+
+  constructor() {
+    super('An active subscription is required to renew a domain.');
   }
 }

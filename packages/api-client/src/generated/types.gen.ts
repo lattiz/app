@@ -259,6 +259,10 @@ export type DomainMaintenanceFeeDto = {
      * Lowercase ISO 4217 code, as Stripe uses it.
      */
     currency: string;
+    /**
+     * IVA en puntos base; el monto no lo incluye.
+     */
+    taxRateBps: number;
 };
 
 export type DomainAgreementDto = {
@@ -348,6 +352,56 @@ export type RelaunchDomainResponseDto = {
      */
     relaunched: boolean;
     domain: string | null;
+};
+
+export type DomainRenewalStatusDto = {
+    /**
+     * Domain name this cycle renews.
+     */
+    domain: string;
+    /**
+     * open: pago abierto; overdue: venció y aún puede pagar; paid: pago recibido, renovando; renewal_failed: pago recibido, Lattiz lo está resolviendo.
+     */
+    status: 'open' | 'overdue' | 'paid' | 'renewal_failed';
+    /**
+     * End of the current registration period, as an ISO timestamp.
+     */
+    expiresAt: string;
+    /**
+     * Last moment a late payment is still accepted, as an ISO timestamp; null before the domain expires.
+     */
+    lateDeadlineAt: string | null;
+    /**
+     * Renewal price before IVA, in cents.
+     */
+    baseCents: number;
+    /**
+     * IVA in cents.
+     */
+    taxCents: number;
+    /**
+     * baseCents plus taxCents.
+     */
+    totalCents: number;
+    /**
+     * Lowercase ISO 4217 code.
+     */
+    currency: string;
+    /**
+     * True when the tenant can start checkout for this cycle right now.
+     */
+    canPay: boolean;
+    /**
+     * Por qué no puede pagar; null si puede o si ya pagó.
+     */
+    payBlockedReason: 'subscription_inactive' | 'window_closed' | null;
+};
+
+export type DomainRenewalCheckoutResponseDto = {
+    /**
+     * Stripe Checkout URL for the live renewal cycle.
+     */
+    url: string;
 };
 
 export type DomainJobStatusDto = {
@@ -913,6 +967,32 @@ export type DomainsControllerRelaunchResponses = {
 };
 
 export type DomainsControllerRelaunchResponse = DomainsControllerRelaunchResponses[keyof DomainsControllerRelaunchResponses];
+
+export type DomainsControllerGetRenewalData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/domains/renewal';
+};
+
+export type DomainsControllerGetRenewalResponses = {
+    200: DomainRenewalStatusDto | unknown;
+};
+
+export type DomainsControllerGetRenewalResponse = DomainsControllerGetRenewalResponses[keyof DomainsControllerGetRenewalResponses];
+
+export type DomainsControllerCreateRenewalCheckoutData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/domains/renewal/checkout';
+};
+
+export type DomainsControllerCreateRenewalCheckoutResponses = {
+    200: DomainRenewalCheckoutResponseDto;
+};
+
+export type DomainsControllerCreateRenewalCheckoutResponse = DomainsControllerCreateRenewalCheckoutResponses[keyof DomainsControllerCreateRenewalCheckoutResponses];
 
 export type DomainsControllerGetJobStatusData = {
     body?: never;

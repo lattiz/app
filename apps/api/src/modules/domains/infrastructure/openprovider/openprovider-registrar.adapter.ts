@@ -1,12 +1,18 @@
 import { Logger } from '@nestjs/common';
-import { RegistrarApiException } from '../../domains.exceptions';
 import type {
   DomainAvailability,
   RegisteredDomain,
   RegistrarAutoRenew,
+  RegistrarBalance,
+  RegistrarLifecycle,
+  RegistrarLifecycleStatus,
   RegistrarPort,
   RegistrationState,
 } from '../../domain/registrar.port';
+import {
+  RegistrarApiException,
+  RegistrarDomainNotActiveException,
+} from '../../domains.exceptions';
 import { OpenproviderClient } from './openprovider.client';
 import {
   mapDomainStatus,
@@ -33,6 +39,19 @@ interface DomainData {
   status?: string;
   renewal_date?: string;
   autorenew?: string;
+}
+
+interface LifecycleData {
+  status?: string;
+  renewal_date?: string;
+  can_renew?: boolean;
+  is_deleted?: boolean;
+  restorable_until?: string;
+}
+
+interface ResellerData {
+  balance?: unknown;
+  reserved_balance?: unknown;
 }
 
 interface ListedDomain extends DomainData {
@@ -213,6 +232,91 @@ export class OpenproviderRegistrarAdapter implements RegistrarPort {
     );
     return mapAutoRenew(data.autorenew);
   }
+
+  async getLifecycle(registrarDomainId: string): Promise<RegistrarLifecycle> {
+    const data = await this.client.get<LifecycleData>(
+      `domains/${encodeURIComponent(registrarDomainId)}`,
+      { operation: 'lifecycle lookup', timeoutMs: LOOKUP_TIMEOUT_MS },
+    );
+    return {
+      status: mapLifecycleStatus(data.status, data.is_deleted),
+      renewalDate: parseOpenproviderDate(data.renewal_date),
+      canRenew: data.can_renew === true,
+      restorableUntil: parseOpenproviderDate(data.restorable_until),
+    };
+  }
+
+  async renewDomain(params: {
+    registrarDomainId: string;
+    domain: string;
+    periodYears: number;
+  }): Promise<void> {
+    const { name, extension } = splitDomain(params.domain);
+    try {
+      await this.client.post(
+        `domains/${encodeURIComponent(params.registrarDomainId)}/renew`,
+        {
+          operation: 'renewal',
+          body: {
+            domain: { name, extension },
+            period: params.periodYears,
+          },
+          timeoutMs: REGISTER_TIMEOUT_MS,
+        },
+      );
+    } catch (err) {
+      if (err instanceof RegistrarApiException && err.registrarCode === 327) {
+        throw new RegistrarDomainNotActiveException(params.registrarDomainId);
+      }
+      throw err;
+    }
+  }
+
+  async restoreDomain(params: {
+    registrarDomainId: string;
+    domain: string;
+  }): Promise<void> {
+    const { name, extension } = splitDomain(params.domain);
+    await this.client.post(
+      `domains/${encodeURIComponent(params.registrarDomainId)}/restore`,
+      {
+        operation: 'restore',
+        body: { domain: { name, extension } },
+        timeoutMs: REGISTER_TIMEOUT_MS,
+      },
+    );
+  }
+
+  async getBalance(): Promise<RegistrarBalance> {
+    const data = await this.client.get<ResellerData>('resellers', {
+      operation: 'balance lookup',
+      timeoutMs: LOOKUP_TIMEOUT_MS,
+    });
+    const balance = finiteAmount(data.balance, 'balance');
+    const reserved = finiteAmount(data.reserved_balance, 'reserved balance');
+    return { availableCents: Math.round((balance - reserved) * 100) };
+  }
+}
+
+/** ACT = active, DEL or a deleted flag = expired, in-flight registration = pending. */
+function mapLifecycleStatus(
+  status: string | undefined,
+  isDeleted: boolean | undefined,
+): RegistrarLifecycleStatus {
+  if (isDeleted === true || status === 'DEL') return 'expired';
+  if (status === 'ACT') return 'active';
+  if (mapDomainStatus(status) === 'pending') return 'pending';
+  return 'unknown';
+}
+
+function finiteAmount(value: unknown, label: string): number {
+  if (typeof value !== 'number' || !Number.isFinite(value)) {
+    throw new RegistrarApiException(
+      'balance lookup',
+      `${label} is not a finite number`,
+    );
+  }
+  return value;
 }
 
 /** Unknown or missing values are reported as `default`: not provably off. */
