@@ -7,12 +7,14 @@
  *   pnpm tsx scripts/parse-and-seed-template.ts \
  *     (--file ./x.grapesjs --html ./x-export/index.html | --dir packages/template-kit/dist/<id>) \
  *     --id restaurante-moderno-v1 --name "Restaurante Moderno" --category restaurantes \
- *     [--description ".."] [--sort-order 10] [--tier basic|pro] \
+ *     [--description ".."] [--sort-order 10] [--tier basic|pro] [--motion calm|editorial|none] \
  *     [--dry-run] [--no-deploy] [--no-thumbnail] [--no-preview]
  *
  * --dir reads <dir>/<id>.grapesjs + <dir>/index.html (packages/template-kit output) and uploads the
  * local `assets/…` files they reference the same way as cdn.grapesjs.com assets.
  * --tier defaults to `tier` in <dir>/template.meta.json; one of the two is required.
+ * --motion (default none) adds Lattiz Motion attributes to the .grapesjs sections (Pro sites
+ * only run them; see docs/lattiz-motion.md). Idempotent: already-animated components are skipped.
  * Env: see the root .env.example (read from ./.env, then apps/api/.env for the shared keys).
  * Workflow: docs/adding-templates.md
  */
@@ -30,6 +32,11 @@ import {
   createObjectStorage,
   resolveStorageProvider,
 } from '../apps/api/src/modules/storage/infrastructure/storage-provider.factory';
+import {
+  decorateMotion,
+  MOTION_PRESETS,
+  type MotionPreset,
+} from './lib/motion-decorate';
 import { TEMPLATE_PREVIEWS_DIR, vercel } from './lib/vercel-cli';
 
 const REPO_ROOT = resolve(__dirname, '..');
@@ -87,6 +94,7 @@ interface CliArgs {
   description?: string;
   sortOrder?: number;
   tier: TemplateTier;
+  motion: MotionPreset;
   dryRun: boolean;
   deploy: boolean;
   thumbnail: boolean;
@@ -203,6 +211,10 @@ function parseArgs(argv: string[]): CliArgs {
 
   const file = raw.get('file') as string;
   const tier = resolveTier(raw.get('tier'), dir);
+  const motion = (raw.get('motion') ?? 'none') as MotionPreset;
+  if (!MOTION_PRESETS.includes(motion)) {
+    throw new StageError(`--motion must be one of ${MOTION_PRESETS.join(' | ')}.`);
+  }
   return {
     file,
     html: raw.get('html'),
@@ -216,6 +228,7 @@ function parseArgs(argv: string[]): CliArgs {
     description: raw.get('description'),
     sortOrder,
     tier,
+    motion,
     dryRun: raw.has('dry-run'),
     deploy: !raw.has('no-deploy'),
     thumbnail: !raw.has('no-thumbnail'),
@@ -761,6 +774,17 @@ async function run(argv: string[]): Promise<void> {
     '1 validate',
     '✓',
     `1 page; tier ${args.tier}; plugins: ${plugins.join(', ') || 'none'}`,
+  );
+
+  // 1b. Motion
+  const decorated = decorateMotion(project, args.motion);
+  record(
+    '1b motion',
+    args.motion === 'none' ? '–' : '✓',
+    args.motion === 'none'
+      ? 'none'
+      : `${args.motion}: ${decorated.sections} section(s) + ${decorated.inner} inner element(s) decorated` +
+          (args.tier === 'basic' ? ' (runs only for Pro tenants)' : ''),
   );
 
   // 2. Collect

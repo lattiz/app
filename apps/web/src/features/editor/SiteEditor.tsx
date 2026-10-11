@@ -10,7 +10,7 @@ import {
   tenantsControllerMeQueryKey,
   type UploadedAssetResponseDto,
 } from '@lattiz/api-client';
-import { Loader2Icon, ArrowLeft, ImagesIcon } from 'lucide-react';
+import { Loader2Icon, ArrowLeft, ImagesIcon, PaletteIcon } from 'lucide-react';
 import { type ComponentProps, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
@@ -35,7 +35,11 @@ import {
 } from './api';
 import { grapesjsCoreLocaleEs, studioSdkLocaleEs } from './i18n';
 import { SaveStatusBadge } from './SaveStatusBadge';
+import { sectionBlocks } from './blocks';
 import { StockPhotosDialog } from './StockPhotosDialog';
+import { applyFontLink, applyRootTokens } from './theme-apply';
+import { type ThemeChoice, ThemeDialog } from './ThemeDialog';
+import { fontTokens, googleFontsHref, paletteTokens } from './theme-presets';
 import {
   applyStyleMode,
   initStyleMode,
@@ -102,6 +106,7 @@ function buildOptions(
   projectJSON: GrapesJSProjectJSON,
   onSave: (project: GrapesJSProjectJSON) => void,
   onUploadError: (err: unknown) => void,
+  proIncluded: boolean,
 ): StudioOptions {
   const plugins = [
     // Sidebar de botones con layouts propios para tablet y móvil (el layout por defecto no es usable < 1000px).
@@ -193,6 +198,13 @@ function buildOptions(
           a.id !== 'clearCanvas',
       ),
 
+    // ── Bloques: kit de secciones Lattiz, filtrado por plan (templateAccess.proIncluded) ──
+    blocks: {
+      default: sectionBlocks(proIncluded) as unknown as NonNullable<
+        StudioOptions['blocks']
+      >['default'],
+    },
+
     // ── Assets ─────────────────────────────────────────────────────────────
     // Sin onUpload el SDK deja URLs `blob:`/`data:` de la sesión del editor en
     // el HTML exportado, que dan 404 en el sitio publicado. Se suben al API y
@@ -243,6 +255,7 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
   const [savedAt, setSavedAt] = useState<string | null>(null);
   const [headerHidden, setHeaderHidden] = useState(false);
   const [stockOpen, setStockOpen] = useState(false);
+  const [themeOpen, setThemeOpen] = useState(false);
   const stockStatus = useQuery({
     ...stockControllerStatusOptions(),
     staleTime: Infinity,
@@ -343,7 +356,8 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
     }
   };
 
-  if (query.isLoading) {
+  // The block kit depends on the plan, and Studio reads `blocks` only at mount.
+  if (query.isLoading || tenantMe.isLoading) {
     return (
       <div className="flex h-screen flex-col gap-3 p-4">
         <Skeleton className="h-10 w-full rounded-lg" />
@@ -373,8 +387,13 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
         ? 'saved'
         : 'idle';
 
-  const options = buildOptions(tenantId, query.data.project, handleSave, (err) =>
-    reportActionError(err, 'upload'),
+  const proIncluded = tenantMe.data?.templateAccess.proIncluded === true;
+  const options = buildOptions(
+    tenantId,
+    query.data.project,
+    handleSave,
+    (err) => reportActionError(err, 'upload'),
+    proIncluded,
   );
   const isPublishing = publishMutation.isPending;
 
@@ -408,6 +427,14 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
             >
               <ArrowLeft className="size-4" color="#FFF" />
               Regresar
+            </Button>
+            <Button
+              variant="linkSecondary"
+              size="default"
+              onClick={() => setThemeOpen(true)}
+            >
+              <PaletteIcon className="size-4" color="#FFF" />
+              <span className="hidden sm:inline">Tema</span>
             </Button>
             {stockStatus.data?.enabled && (
               <Button
@@ -569,6 +596,15 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
           }}
         />
       </main>
+      <ThemeDialog
+        open={themeOpen}
+        onOpenChange={setThemeOpen}
+        proIncluded={proIncluded}
+        onApply={(choice) => {
+          applyTheme(editorRef.current, choice);
+          setThemeOpen(false);
+        }}
+      />
       {stockStatus.data?.enabled && (
         <StockPhotosDialog
           tenantId={tenantId}
@@ -627,4 +663,21 @@ function applyStockAsset(
       'Foto agregada a tus imágenes. Selecciona una imagen y elígela en el gestor.',
     );
   }
+}
+
+function applyTheme(editor: EditorInstance | null, choice: ThemeChoice): void {
+  const colors = choice.palette
+    ? choice.dark && choice.palette.dark
+      ? choice.palette.dark
+      : choice.palette.light
+    : null;
+  const tokens = {
+    ...(colors ? paletteTokens(colors) : {}),
+    ...(choice.font ? fontTokens(choice.font) : {}),
+  };
+  const applied =
+    applyRootTokens(editor, tokens) &&
+    (!choice.font || applyFontLink(editor, googleFontsHref(choice.font)));
+  if (applied) toast.success('Tema aplicado. Ctrl/⌘ + Z para deshacer.');
+  else toast.error('No se pudo aplicar el tema. Recarga el editor e intenta de nuevo.');
 }

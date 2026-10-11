@@ -708,6 +708,10 @@ export type TenantTemplateAccessDto = {
      * picks an included template or upgrades. The published site stays online.
      */
     locked: boolean;
+    /**
+     * The plan includes Pro-tier extras: Pro templates, Pro editor blocks and Pro theme presets.
+     */
+    proIncluded: boolean;
 };
 
 export type BusinessAddressDto = {

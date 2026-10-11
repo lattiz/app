@@ -1,3 +1,4 @@
+import { evaluateTemplateAccess } from '../templates/template-access.policy';
 import { TemplateAccessService } from '../templates/template-access.service';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { sql, type SQL } from 'drizzle-orm';
@@ -185,7 +186,11 @@ export class TenantsService {
     tenantId: string,
   ): Promise<TenantTemplateAccessDto> {
     const state = await this.templateAccess.stateForTenant(tenantId);
-    return { current: state.current, locked: state.locked };
+    return {
+      current: state.current,
+      locked: state.locked,
+      proIncluded: evaluateTemplateAccess(state.templatePlan, 'pro').allowed,
+    };
   }
 
   private async getDomainStatus(

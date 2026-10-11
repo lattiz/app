@@ -155,10 +155,10 @@ describe('downgrade modal gating', () => {
 describe('locked banner', () => {
   it('shows only when the API says the template is locked', () => {
     expect(
-      isTemplateLocked({ templateAccess: { current: null, locked: true } }),
+      isTemplateLocked({ templateAccess: { current: null, locked: true, proIncluded: false } }),
     ).toBe(true);
     expect(
-      isTemplateLocked({ templateAccess: { current: null, locked: false } }),
+      isTemplateLocked({ templateAccess: { current: null, locked: false, proIncluded: false } }),
     ).toBe(false);
     expect(isTemplateLocked(undefined)).toBe(false);
   });

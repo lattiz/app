@@ -3469,11 +3469,16 @@
           "locked": {
             "type": "boolean",
             "description": "True when an active plan is below the current template's tier (after a\ndowngrade): editing, saving and publishing are blocked until the tenant\npicks an included template or upgrades. The published site stays online."
+          },
+          "proIncluded": {
+            "type": "boolean",
+            "description": "The plan includes Pro-tier extras: Pro templates, Pro editor blocks and Pro theme presets."
           }
         },
         "required": [
           "current",
-          "locked"
+          "locked",
+          "proIncluded"
         ]
       },
       "BusinessAddressDto": {

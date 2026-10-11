@@ -102,6 +102,10 @@ export class TenantTemplateAccessDto {
    */
   @ApiProperty()
   locked!: boolean;
+
+  /** The plan includes Pro-tier extras: Pro templates, Pro editor blocks and Pro theme presets. */
+  @ApiProperty()
+  proIncluded!: boolean;
 }
 
 export class TenantMeResponseDto {
