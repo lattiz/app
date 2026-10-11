@@ -184,6 +184,13 @@
     function add(el, fx, i, extra) {
       var t = { el: el, fx: fx, i: i, j: 0 };
       for (var k in extra) t[k] = extra[k];
+      // Counters inside a target (a stat card, a list item) play with it.
+      var nested = all(type === 'stats' ? '[data-lz-counter], *' : '[data-lz-counter]', el);
+      t.counters = [];
+      for (var n = 0; n < nested.length; n++) {
+        var c = counterFrom(nested[n]);
+        if (c) t.counters.push({ el: nested[n], c: c });
+      }
       targets.push(t);
       return t;
     }
@@ -208,6 +215,9 @@
           at++;
         } else if (c.hasAttribute('data-lz-words')) {
           add(c, 'words', at++, { step: num(c.getAttribute('data-lz-words'), 0) || null });
+        } else if (c.hasAttribute('data-lz-compare') || c.hasAttribute('data-lz-countdown')) {
+          // Widgets move as one piece; their own clip-path and text stay theirs.
+          add(c, 'rise', at++);
         } else if (c.hasAttribute('data-lz-reveal')) {
           add(c, kindOf(c, 'rise'), at++, {
             delay: c.getAttribute('data-lz-delay'),
@@ -290,10 +300,12 @@
     if (t.dur) s.setProperty('--lz-d', num(t.dur, 700) + 'ms');
     if (t.px) el.classList.add('lz-px');
     if (t.zoom) el.classList.add('lz-zoom');
-    if (t.counter) {
-      el.__lzOwned = true;
-      if (!t.now) el.textContent = formatCounter(t.counter, 0);
-    }
+    var counters = (t.counters || []).concat(t.counter ? [{ el: el, c: t.counter }] : []);
+    counters.forEach(function (n) {
+      n.el.__lzOwned = true;
+      if (!t.now) n.el.textContent = formatCounter(n.c, 0);
+    });
+    t.counters = counters;
     return [t];
   }
 
@@ -302,7 +314,7 @@
     t.el.style.setProperty('--lz-i', String(Math.min(i, MAX_STEP)));
     t.el.style.setProperty('--lz-j', String(Math.min(j, MAX_WORDS)));
     t.el.classList.add('lz-go');
-    if (t.counter) runCounter(t.el, t.counter);
+    (t.counters || []).forEach(function (n) { runCounter(n.el, n.c); });
   }
 
   /**

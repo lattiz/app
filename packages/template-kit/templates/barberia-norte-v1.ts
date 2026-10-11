@@ -26,4 +26,5 @@ export default {
     { slot: 'floating-whatsapp', variant: 'bubble' },
     { slot: 'footer', variant: 'minimal-centered' },
   ],
+  motion: { preset: 'editorial' },
 } satisfies Manifest;

@@ -38,6 +38,7 @@ const heroEditorial: SectionBlock = {
   content: {
     tagName: 'section',
     classes: ['lzb', 'lzb-hero-ed'],
+    attributes: { 'data-lz-section': 'hero' },
     styles: `${BASE_CSS}
 .lzb-hero-ed{overflow:hidden}
 .lzb-hero-ed__grid{display:grid;grid-template-columns:repeat(12,1fr);gap:20px;align-items:end}
@@ -67,7 +68,8 @@ const marquee: SectionBlock = {
   content: {
     tagName: 'section',
     classes: ['lzb', 'lzb-marquee'],
-    attributes: { 'aria-label': 'Lo que hacemos' },
+    // Self-animated: Lattiz Motion's section choreography stays out.
+    attributes: { 'aria-label': 'Lo que hacemos', 'data-lz-section': 'none' },
     styles: `${BASE_CSS}
 .lzb-marquee{padding:18px 0;overflow:hidden;background:var(--lzb-accent);color:var(--lzb-on-accent)}
 .lzb-marquee__track{display:flex;width:max-content;animation:lzb-marquee 28s linear infinite}
@@ -91,6 +93,7 @@ const stackedCards: SectionBlock = {
   content: {
     tagName: 'section',
     classes: ['lzb', 'lzb-stack'],
+    attributes: { 'data-lz-section': 'cards' },
     styles: `${BASE_CSS}
 .lzb-stack__list{display:grid;gap:24px;margin:40px 0 0;padding:0;list-style:none}
 .lzb-stack__card{position:sticky;top:calc(80px + var(--i,0) * 24px);display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;min-height:320px;padding:clamp(24px,4vw,48px);border-radius:var(--lzb-radius);background:var(--lzb-surface);border:var(--lz-border-width,1px) solid var(--lzb-line);box-shadow:0 -12px 40px rgba(0,0,0,.08)}
@@ -121,6 +124,7 @@ const snapGallery: SectionBlock = {
   content: {
     tagName: 'section',
     classes: ['lzb', 'lzb-snap'],
+    attributes: { 'data-lz-section': 'gallery' },
     styles: `${BASE_CSS}
 .lzb-snap__track{display:grid;grid-auto-flow:column;grid-auto-columns:min(78%,420px);gap:16px;margin-top:32px;padding:0 max(24px,calc((100% - var(--lz-container,1200px)) / 2)) 12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:max(24px,calc((100% - var(--lz-container,1200px)) / 2));overscroll-behavior-x:contain}
 .lzb-snap__track figure{margin:0;scroll-snap-align:start}
@@ -145,6 +149,7 @@ const beforeAfter: SectionBlock = {
   content: {
     tagName: 'section',
     classes: ['lzb', 'lzb-compare-block'],
+    attributes: { 'data-lz-section': 'text' },
     styles: `${BASE_CSS}
 .lzb-compare-block__frame{max-width:900px;margin:32px auto 0;border-radius:var(--lzb-radius);overflow:hidden}
 .lzb-compare-block__frame img{width:100%;aspect-ratio:4/3;object-fit:cover}
@@ -170,6 +175,7 @@ const statsCounters: SectionBlock = {
   content: {
     tagName: 'section',
     classes: ['lzb', 'lzb-stats'],
+    attributes: { 'data-lz-section': 'stats' },
     styles: `${BASE_CSS}
 .lzb-stats__list{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin:0;padding:0;list-style:none}
 .lzb-stats__item{display:flex;flex-direction:column;gap:6px;padding-top:20px;border-top:var(--lz-border-width,1px) solid var(--lzb-line)}
@@ -210,6 +216,7 @@ const promoBar: SectionBlock = {
   content: {
     tagName: 'section',
     classes: ['lzb', 'lzb-promo'],
+    attributes: { 'data-lz-section': 'cta' },
     styles: `${BASE_CSS}
 .lzb-promo{padding:14px 0;background:var(--lzb-text);color:var(--lzb-bg)}
 .lzb-promo__inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 20px;text-align:center}
@@ -280,6 +287,7 @@ const whatsappCards: SectionBlock = {
   content: {
     tagName: 'section',
     classes: ['lzb', 'lzb-menu'],
+    attributes: { 'data-lz-section': 'cards' },
     styles: `${BASE_CSS}
 .lzb-menu__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:32px 0 0;padding:0;list-style:none}
 .lzb-menu__card{display:flex;flex-direction:column;overflow:hidden;border-radius:var(--lzb-radius);background:var(--lzb-surface);border:var(--lz-border-width,1px) solid var(--lzb-line)}

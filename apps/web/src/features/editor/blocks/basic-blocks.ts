@@ -10,6 +10,7 @@ const heroSimple: SectionBlock = {
   content: {
     tagName: 'section',
     classes: ['lzb', 'lzb-hero'],
+    attributes: { 'data-lz-section': 'hero' },
     styles: `${BASE_CSS}
 .lzb-hero__grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,4vw,56px);align-items:center}
 .lzb-hero__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
@@ -39,6 +40,7 @@ const servicesGrid: SectionBlock = {
   content: {
     tagName: 'section',
     classes: ['lzb', 'lzb-services'],
+    attributes: { 'data-lz-section': 'cards' },
     styles: `${BASE_CSS}
 .lzb-services__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:32px 0 0;padding:0;list-style:none}
 .lzb-services__card{display:flex;flex-direction:column;gap:10px;padding:24px;border:var(--lz-border-width,1px) solid var(--lzb-line);border-radius:var(--lzb-radius);background:var(--lzb-surface)}
@@ -68,6 +70,7 @@ const galleryGrid: SectionBlock = {
   content: {
     tagName: 'section',
     classes: ['lzb', 'lzb-gallery'],
+    attributes: { 'data-lz-section': 'gallery' },
     styles: `${BASE_CSS}
 .lzb-gallery__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:32px}
 .lzb-gallery__grid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:var(--lzb-radius);transition:transform .4s ease}
@@ -93,6 +96,7 @@ const contactHours: SectionBlock = {
   content: {
     tagName: 'section',
     classes: ['lzb', 'lzb-contact'],
+    attributes: { 'data-lz-section': 'text' },
     styles: `${BASE_CSS}
 .lzb-contact__grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px}
 .lzb-contact__card{padding:24px;border-radius:var(--lzb-radius);background:var(--lzb-surface-2)}

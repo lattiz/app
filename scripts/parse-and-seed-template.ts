@@ -13,9 +13,11 @@
  * --dir reads <dir>/<id>.grapesjs + <dir>/index.html (packages/template-kit output) and uploads the
  * local `assets/…` files they reference the same way as cdn.grapesjs.com assets.
  * --tier defaults to `tier` in <dir>/template.meta.json; one of the two is required.
- * --motion (default none) adds Lattiz Motion attributes to the .grapesjs sections and to the
- * preview page (Pro sites only run them; see docs/lattiz-motion.md). Pro previews also inline the
- * runtime so they animate like a published Pro site. Idempotent: animated elements are skipped.
+ * --motion (default: `motion.preset` in template.meta.json, else none) tags every section with
+ * `data-lz-section` and the root wrapper with `data-lz-motion` (Lattiz Motion v2, Pro sites only;
+ * docs/lattiz-motion.md). Types come from a classifier; `motion.sections` in the manifest overrides
+ * it. The classification table is printed on every run (also with --dry-run). Pro previews inline
+ * the runtime so they animate like a published Pro site. Idempotent.
  * Env: see the root .env.example (read from ./.env, then apps/api/.env for the shared keys).
  * Workflow: docs/adding-templates.md
  */
@@ -33,12 +35,15 @@ import {
   createObjectStorage,
   resolveStorageProvider,
 } from '../apps/api/src/modules/storage/infrastructure/storage-provider.factory';
+import { injectMotion } from '../apps/tenant-sites/lib/lz-motion';
 import {
-  decorateMotion,
-  decorateMotionHtml,
+  classificationTable,
   MOTION_PRESETS,
+  motionHtml,
+  motionProject,
   type MotionPreset,
-} from './lib/motion-decorate';
+  type SectionOverrides,
+} from './lib/motion-sections';
 import { TEMPLATE_PREVIEWS_DIR, vercel } from './lib/vercel-cli';
 
 const REPO_ROOT = resolve(__dirname, '..');
@@ -97,6 +102,7 @@ interface CliArgs {
   sortOrder?: number;
   tier: TemplateTier;
   motion: MotionPreset;
+  motionSections: SectionOverrides;
   dryRun: boolean;
   deploy: boolean;
   thumbnail: boolean;
@@ -149,6 +155,16 @@ function isTier(value: unknown): value is TemplateTier {
   return (TIERS as readonly unknown[]).includes(value);
 }
 
+interface KitMeta {
+  tier?: unknown;
+  motion?: { preset?: MotionPreset; sections?: SectionOverrides };
+}
+
+function readMeta(dir: string | undefined): KitMeta | null {
+  const meta = dir && dir !== 'true' ? join(dir, 'template.meta.json') : null;
+  return meta && existsSync(meta) ? (JSON.parse(readFileSync(meta, 'utf8')) as KitMeta) : null;
+}
+
 /** --tier wins; otherwise the kit's template.meta.json next to the project. */
 function resolveTier(flag: string | undefined, dir: string | undefined): TemplateTier {
   if (flag !== undefined) {
@@ -157,7 +173,7 @@ function resolveTier(flag: string | undefined, dir: string | undefined): Templat
   }
   const meta = dir && dir !== 'true' ? join(dir, 'template.meta.json') : null;
   if (meta && existsSync(meta)) {
-    const tier: unknown = (JSON.parse(readFileSync(meta, 'utf8')) as { tier?: unknown }).tier;
+    const tier: unknown = readMeta(dir)?.tier;
     if (isTier(tier)) return tier;
     throw new StageError(`${meta} has no valid "tier" (${TIERS.join(' | ')}).`);
   }
@@ -193,7 +209,8 @@ function parseArgs(argv: string[]): CliArgs {
       raw.get('file') ??
         join(dir, `${raw.get('id') ?? basename(dir)}.grapesjs`),
     );
-    if (preview) raw.set('html', raw.get('html') ?? join(dir, 'index.html'));
+    // The HTML is also what --motion classifies, so it is read even with --no-preview.
+    raw.set('html', raw.get('html') ?? join(dir, 'index.html'));
   }
   const required = ['file', 'id', 'name', ...(preview ? ['html'] : [])];
   const missing = required.filter(
@@ -213,7 +230,8 @@ function parseArgs(argv: string[]): CliArgs {
 
   const file = raw.get('file') as string;
   const tier = resolveTier(raw.get('tier'), dir);
-  const motion = (raw.get('motion') ?? 'none') as MotionPreset;
+  const meta = readMeta(dir);
+  const motion = (raw.get('motion') ?? meta?.motion?.preset ?? 'none') as MotionPreset;
   if (!MOTION_PRESETS.includes(motion)) {
     throw new StageError(`--motion must be one of ${MOTION_PRESETS.join(' | ')}.`);
   }
@@ -231,6 +249,7 @@ function parseArgs(argv: string[]): CliArgs {
     sortOrder,
     tier,
     motion,
+    motionSections: meta?.motion?.sections ?? {},
     dryRun: raw.has('dry-run'),
     deploy: !raw.has('no-deploy'),
     thumbnail: !raw.has('no-thumbnail'),
@@ -768,7 +787,7 @@ async function run(argv: string[]): Promise<void> {
 
   // 1. Validate
   const project = validateProject(filePath, args);
-  const exportHtml = htmlPath ? loadExportHtml(htmlPath) : undefined;
+  let exportHtml = htmlPath ? loadExportHtml(htmlPath) : undefined;
   const plugins = (project.custom?.plugins ?? []).map(
     (p) => `${p.id}@${p.version ?? '?'}`,
   );
@@ -779,15 +798,29 @@ async function run(argv: string[]): Promise<void> {
   );
 
   // 1b. Motion
-  const decorated = decorateMotion(project, args.motion);
-  record(
-    '1b motion',
-    args.motion === 'none' ? '–' : '✓',
-    args.motion === 'none'
-      ? 'none'
-      : `${args.motion}: ${decorated.sections} section(s) + ${decorated.inner} inner element(s) decorated` +
-          (args.tier === 'basic' ? ' (runs only for Pro tenants)' : ''),
-  );
+  if (exportHtml) {
+    const tagged = motionHtml(exportHtml, args.motion, args.motionSections, false);
+    try {
+      motionProject(project, args.motion, tagged.result.rows);
+    } catch (error) {
+      throw new StageError(error instanceof Error ? error.message : String(error));
+    }
+    exportHtml = tagged.html;
+    const typed = tagged.result.rows.filter((r) => r.type !== 'skip').length;
+    record(
+      '1b motion',
+      args.motion === 'none' ? '–' : '✓',
+      args.motion === 'none'
+        ? 'none (classification shown for review, nothing tagged)'
+        : `${args.motion}: ${typed} section(s) tagged, ${tagged.result.changed} changed` +
+            (args.tier === 'basic' ? ' (runs only for Pro tenants)' : ''),
+    );
+    console.log(classificationTable(args.id, tagged.result.rows));
+  } else if (args.motion !== 'none') {
+    throw new StageError('--motion classifies the export HTML: pass --html or --dir.');
+  } else {
+    record('1b motion', '–', 'none');
+  }
 
   // 2. Collect
   const json = JSON.stringify(project);
@@ -883,14 +916,10 @@ async function run(argv: string[]): Promise<void> {
     const dir = join(TEMPLATE_PREVIEWS_DIR, 'public', args.id);
     mkdirSync(dir, { recursive: true });
     // Básico tenants never get the runtime, so only Pro previews animate.
-    const preview = decorateMotionHtml(
-      rewrittenHtml,
-      args.motion,
-      args.tier === 'pro',
-    );
+    const previewHtml = args.tier === 'pro' ? injectMotion(rewrittenHtml) : rewrittenHtml;
     writeFileSync(
       join(dir, 'index.html'),
-      finalizePreviewHtml(preview.html, args.name),
+      finalizePreviewHtml(previewHtml, args.name),
     );
     record(
       '5 write preview',
@@ -898,7 +927,7 @@ async function run(argv: string[]): Promise<void> {
       relative(REPO_ROOT, join(dir, 'index.html')) +
         (args.motion === 'none'
           ? ''
-          : ` (motion ${preview.summary.sections}+${preview.summary.inner}${args.tier === 'pro' ? ', runtime inlined' : ', static: Básico'})`),
+          : ` (motion ${args.motion}${args.tier === 'pro' ? ', runtime inlined' : ', static: Básico'})`),
     );
   } else {
     record('5 write preview', '–', 'skipped (--no-preview)');

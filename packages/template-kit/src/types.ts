@@ -148,6 +148,25 @@ export interface ManifestSection {
   props?: ContentObject;
 }
 
+export type MotionPreset = 'calm' | 'editorial' | 'none';
+export type MotionSectionType =
+  | 'hero'
+  | 'text'
+  | 'cards'
+  | 'gallery'
+  | 'stats'
+  | 'cta'
+  | 'footer'
+  | 'none';
+
+/** Lattiz Motion for the seed (docs/lattiz-motion.md); copied to template.meta.json. */
+export interface ManifestMotion {
+  /** Default `--motion` preset when the seed command doesn't pass one. */
+  preset?: MotionPreset;
+  /** Manual section types that beat the seed's classifier. Key: slot name, `#id` or section index. */
+  sections?: Record<string, MotionSectionType>;
+}
+
 export interface Manifest {
   id: string;
   name: string;
@@ -163,6 +182,7 @@ export interface Manifest {
   business?: Partial<Business>;
   head?: Partial<HeadContent>;
   sections: ManifestSection[];
+  motion?: ManifestMotion;
 }
 
 export interface BlueprintRole {

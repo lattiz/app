@@ -77,15 +77,25 @@ enhancement: Firefox doesn't support it, so the static state must be the finishe
 
 ## Seeding with motion
 
-`scripts/parse-and-seed-template.ts --motion calm|editorial|none` (default `none`) decorates
-the `.grapesjs` component tree, never navbar/hero/marquee/footer/floating WhatsApp:
+`scripts/parse-and-seed-template.ts --motion calm|editorial|none` (default: the manifest's
+`motion.preset`, else `none`) tags every section of the `.grapesjs` component tree and of the
+preview with `data-lz-section` and the root wrapper (`.lz-page`) with `data-lz-motion`. No inner
+node is decorated: the Lattiz Motion v2 runtime derives the choreography from the section type
+(`docs/lattiz-motion.md`). Navbar, floating WhatsApp and marquee are never tagged.
 
-- `calm`: every other section gets `data-lz-reveal="fade-up"`.
-- `editorial`: as calm, testimonials `zoom`, gallery/proof also `data-lz-lightbox`, the
-  first `h2` of a section gets `data-lz-words`, the first list with ≥ 3 items gets
-  `data-lz-stagger="90"`.
+Types come from a classifier over the exported HTML, first match wins: `footer` (tag or slot) →
+`hero` (has the `<h1>`, or first section) → `stats` (≥ 3 bare numbers, ≥ 1 per 4 text blocks;
+prices and years don't count) → `gallery` (≥ 3 images, ≥ 1 per 2 text blocks) → `cards`
+(≥ 3 look-alike siblings; runs of plain `<p>` don't count) → `cta` (last section with a
+button) → `text`. Every run prints the table (also with `--dry-run`). When a section is
+mis-typed, fix it in the manifest, never by hand in the HTML:
 
-The preview page (`apps/template-previews/public/<id>/index.html`) gets the same decoration,
-and Pro previews inline the runtime so they animate like a published Pro site; Básico previews
-stay static because Básico tenants never receive the runtime. Components that already carry a
-motion attribute are skipped, so re-seeding never doubles anything.
+```ts
+motion: { preset: 'editorial', sections: { about: 'text', '#galeria': 'gallery', 6: 'none' } },
+```
+
+Keys are a slot name, `#id` or the table's index. Precedence: manifest override > a
+`data-lz-section` already in the source > classifier. Re-running produces the same attributes.
+`editorial` galleries also get `data-lz-lightbox`. Pro previews inline the runtime; Básico
+previews stay static because Básico tenants never receive it. Section-kit blocks in the editor
+(`apps/web/src/features/editor/blocks`) ship with `data-lz-section` already set.

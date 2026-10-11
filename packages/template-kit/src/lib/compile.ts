@@ -22,6 +22,7 @@ import type {
   ContentObject,
   HeadContent,
   Manifest,
+  ManifestMotion,
   SectionMeta,
   Theme,
 } from '../types';
@@ -71,6 +72,7 @@ export interface TemplateMeta {
   schemaType: string;
   editableTokens: EditableToken[];
   slots: { slot: string; variant: string; role: Role; counted: boolean }[];
+  motion?: ManifestMotion;
 }
 
 export interface CompiledTemplate {
@@ -179,6 +181,7 @@ function templateMeta(
       role: s.role,
       counted: !UNCOUNTED_SLOTS.has(s.slot),
     })),
+    ...(manifest.motion ? { motion: manifest.motion } : {}),
   };
 }
 

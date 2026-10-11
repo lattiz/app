@@ -1,6 +1,6 @@
 # Lattiz Motion (v2)
 
-A small runtime (~7.9 KB gzip, budget 10 KB) that turns declarative `data-lz-*`
+A small runtime (~8.1 KB gzip, budget 10 KB) that turns declarative `data-lz-*`
 attributes into motion and interactive widgets **on published Pro sites only**.
 It is our own code: ScrollReveal (GPLv3/commercial) and GSAP (licence forbids
 no-code animation builders) were ruled out.
