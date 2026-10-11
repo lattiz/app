@@ -55,6 +55,7 @@
 - `format` / `format:check` — `prettier`
 - `test` — `turbo run test`
 - `generate:api` — `turbo run generate:openapi generate:client` (API writes `openapi.json`, then `api-client` regenerates)
+- `template:dev <id>` / `template:shots <id>` / `template:seed -- --only <id> [--dry-run]` — template tuning loop; see `docs/template-workflow.md`
 
 **`apps/api`** (`pnpm --filter @lattiz/api <script>`):
 - `dev` — `nest start --watch`

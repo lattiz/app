@@ -62,6 +62,26 @@ export interface ThemeShape {
   shadow: ShadowStyle;
 }
 
+/**
+ * Global rhythm knobs (all optional; defaults reproduce the kit's original values).
+ * `space` multiplies gaps, margins and paddings inside sections; `textScale` multiplies body and
+ * UI text; titles are fluid `clamp()` values. `*Md`/`*Sm` apply at ≤ 992px / ≤ 480px.
+ */
+export const RHYTHM_TOKENS = {
+  sectionPad: '--lz-section-pad',
+  gutter: '--lz-gutter',
+  gutterMd: '--lz-gutter-md',
+  gutterSm: '--lz-gutter-sm',
+  space: '--lz-space',
+  textScale: '--lz-text-scale',
+  titleHero: '--lz-title-hero',
+  titleHeroSm: '--lz-title-hero-sm',
+  titleSection: '--lz-title-section',
+  titleSectionSm: '--lz-title-section-sm',
+  titleSub: '--lz-title-sub',
+} as const;
+export type RhythmToken = keyof typeof RHYTHM_TOKENS;
+
 export interface Theme {
   name: string;
   label: string;
@@ -81,6 +101,7 @@ export interface Theme {
   container: string;
   /** Non-color, theme-dependent filters (maps and the image-bg hero are tuned per scheme). */
   effects: { mapFilter: string; heroImageFilter: string };
+  rhythm?: Partial<Record<RhythmToken, string>>;
 }
 
 export interface SectionMeta {

@@ -3,6 +3,7 @@ import { basename, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import {
   COLOR_TOKENS,
+  RHYTHM_TOKENS,
   type Blueprint,
   type ContentPack,
   type Manifest,
@@ -104,6 +105,16 @@ export function parseTheme(raw: unknown, file: string): Theme {
     ...requireStrings(shape, ['radiusCard', 'radiusPill', 'border'], 'shape'),
     ...requireOneOf(shape, 'shadow', ['none', 'soft', 'hard-offset'], 'shape'),
   );
+  if (raw.rhythm !== undefined) {
+    if (!isRecord(raw.rhythm)) problems.push('theme.rhythm must be an object');
+    else
+      for (const [key, value] of Object.entries(raw.rhythm)) {
+        if (!(key in RHYTHM_TOKENS))
+          problems.push(`rhythm.${key} is not one of ${Object.keys(RHYTHM_TOKENS).join(' | ')}`);
+        else if (typeof value !== 'string' || !value.trim())
+          problems.push(`rhythm.${key} must be a non-empty string`);
+      }
+  }
   const effects = isRecord(raw.effects) ? raw.effects : {};
   problems.push(
     ...requireStrings(effects, ['mapFilter', 'heroImageFilter'], 'effects'),

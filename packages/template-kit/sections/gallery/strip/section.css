@@ -6,8 +6,8 @@
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: calc((100% - 3 * 20px) / 3.4);
-  gap: 20px;
-  padding-bottom: 18px;
+  gap: calc(20px * var(--lz-space));
+  padding-bottom: calc(18px * var(--lz-space));
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-color: var(--lz-color-line-strong) transparent;
@@ -15,7 +15,7 @@
 
 .lz-gallery__item {
   display: grid;
-  gap: 14px;
+  gap: calc(14px * var(--lz-space));
   margin: 0;
   scroll-snap-align: start;
 }
@@ -30,10 +30,10 @@
 }
 
 .lz-gallery__caption {
-  padding-top: 12px;
+  padding-top: calc(12px * var(--lz-space));
   border-top: var(--lz-border-width) solid var(--lz-color-line);
   color: var(--lz-color-muted);
-  font-size: 14px;
+  font-size: calc(14px * var(--lz-text-scale));
 }
 
 @media (max-width: 992px) {
@@ -45,6 +45,6 @@
 @media (max-width: 480px) {
   .lz-gallery__strip {
     grid-auto-columns: 78%;
-    gap: 14px;
+    gap: calc(14px * var(--lz-space));
   }
 }

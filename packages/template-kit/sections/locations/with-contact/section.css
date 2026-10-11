@@ -5,9 +5,9 @@
 .lz-contact {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 48px;
+  gap: calc(48px * var(--lz-space));
   align-items: end;
-  margin-bottom: 40px;
+  margin-bottom: calc(40px * var(--lz-space));
 }
 
 .lz-contact__text {
@@ -18,16 +18,16 @@
 
 .lz-contact__channels {
   display: grid;
-  gap: 10px;
+  gap: calc(10px * var(--lz-space));
 }
 
 .lz-contact__channel {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: calc(20px * var(--lz-space));
   min-height: 72px;
-  padding: 16px 22px;
+  padding: calc(16px * var(--lz-space)) calc(22px * var(--lz-space));
   border: var(--lz-border-width) solid var(--lz-color-line);
   border-radius: var(--lz-radius-card);
   background: var(--lz-color-surface);
@@ -64,7 +64,7 @@
 
 .lz-contact__label {
   flex: 0 0 auto;
-  font-size: 12px;
+  font-size: calc(12px * var(--lz-text-scale));
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -83,7 +83,7 @@
 
 .lz-contact__value--small {
   font-family: var(--lz-font-body);
-  font-size: 17px;
+  font-size: calc(17px * var(--lz-text-scale));
   font-weight: 700;
   line-height: 1.3;
   text-transform: none;
@@ -92,7 +92,7 @@
 .lz-locations__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  gap: calc(24px * var(--lz-space));
 }
 
 .lz-branch {
@@ -105,8 +105,8 @@
 
 .lz-branch__body {
   display: grid;
-  gap: 20px;
-  padding: 24px;
+  gap: calc(20px * var(--lz-space));
+  padding: calc(24px * var(--lz-space));
 }
 
 .lz-branch__name {
@@ -119,7 +119,7 @@
 
 .lz-branch__meta {
   display: grid;
-  gap: 8px;
+  gap: calc(8px * var(--lz-space));
 }
 
 .lz-branch__line {
@@ -130,7 +130,7 @@
 .lz-branch__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: calc(12px * var(--lz-space));
 }
 
 .lz-branch__map {
@@ -152,7 +152,7 @@
 @media (max-width: 992px) {
   .lz-contact {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: calc(24px * var(--lz-space));
   }
 }
 
@@ -160,8 +160,8 @@
   .lz-contact__channel {
     flex-direction: column;
     align-items: start;
-    gap: 8px;
-    padding: 16px 18px;
+    gap: calc(8px * var(--lz-space));
+    padding: calc(16px * var(--lz-space)) calc(18px * var(--lz-space));
     box-shadow: var(--lz-shadow);
   }
   .lz-contact__value {
@@ -169,7 +169,7 @@
     text-align: left;
   }
   .lz-contact__value--small {
-    font-size: 16px;
+    font-size: calc(16px * var(--lz-text-scale));
   }
   .lz-locations__grid {
     grid-template-columns: 1fr;

@@ -9,12 +9,12 @@ export interface ShotSet {
   review: string[];
 }
 
-async function launch(): Promise<Browser> {
+export async function launch(): Promise<Browser> {
   // Same fallback as the seed script: an installed Chrome when `playwright install chromium` hasn't run.
   return chromium.launch().catch(() => chromium.launch({ channel: 'chrome' }));
 }
 
-async function open(page: Page, url: string): Promise<void> {
+export async function open(page: Page, url: string): Promise<void> {
   // Map iframes can keep the network busy; a loaded page with settled fonts is enough.
   await page
     .goto(url, { waitUntil: 'networkidle', timeout: 30_000 })
@@ -23,7 +23,7 @@ async function open(page: Page, url: string): Promise<void> {
 }
 
 /** Scrolls through the page so lazy images load before a full-page capture. */
-async function primeLazyContent(page: Page): Promise<void> {
+export async function primeLazyContent(page: Page): Promise<void> {
   await page.evaluate(async () => {
     const step = Math.max(200, Math.floor(window.innerHeight * 0.8));
     for (let y = 0; y < document.body.scrollHeight; y += step) {

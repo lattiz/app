@@ -10,7 +10,7 @@
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  gap: 24px;
+  gap: calc(24px * var(--lz-space));
   min-height: 84px;
 }
 
@@ -21,14 +21,14 @@
   min-height: 44px;
   color: var(--lz-color-muted);
   font-family: var(--lz-font-mono);
-  font-size: 13px;
+  font-size: calc(13px * var(--lz-text-scale));
   letter-spacing: 0.08em;
 }
 
 .lz-navbar-c__brand {
   display: grid;
   justify-items: center;
-  gap: 2px;
+  gap: calc(2px * var(--lz-space));
   min-height: 44px;
 }
 
@@ -44,7 +44,7 @@
 .lz-navbar-c__sub {
   color: var(--lz-color-muted);
   font-family: var(--lz-font-mono);
-  font-size: 10px;
+  font-size: calc(10px * var(--lz-text-scale));
   letter-spacing: 0.24em;
   text-transform: uppercase;
 }
@@ -60,7 +60,7 @@
 .lz-navbar-c__list {
   display: flex;
   justify-content: center;
-  gap: 36px;
+  gap: calc(36px * var(--lz-space));
   margin: 0 auto;
   padding: 0;
   list-style: none;
@@ -71,7 +71,7 @@
   align-items: center;
   min-height: 44px;
   color: var(--lz-color-text);
-  font-size: 13px;
+  font-size: calc(13px * var(--lz-text-scale));
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -121,7 +121,7 @@
   }
   .lz-navbar-c__cta .lz-button {
     width: auto;
-    padding: 14px 18px;
+    padding: calc(14px * var(--lz-space)) calc(18px * var(--lz-space));
     min-height: 44px;
   }
 }

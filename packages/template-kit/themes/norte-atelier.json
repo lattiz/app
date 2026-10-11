@@ -41,6 +41,12 @@
   "placeholder": "rules",
   "accentWords": "color",
   "container": "1240px",
+  "rhythm": {
+    "titleHero": "clamp(40px, 4.87vw + 27.8px, 104px)",
+    "titleHeroSm": "var(--lz-title-hero)",
+    "titleSection": "clamp(40px, 3.77vw + 32px, 88px)",
+    "titleSectionSm": "var(--lz-title-section)"
+  },
   "effects": {
     "mapFilter": "grayscale(1) sepia(.2) contrast(1.05)",
     "heroImageFilter": "sepia(.2) brightness(.95)"

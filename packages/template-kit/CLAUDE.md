@@ -11,7 +11,8 @@ tiers, SEO contract and gating proposal: `docs/template-tiers.md`.
 sections/<slot>/<variant>/  section.html (fragment + bindings) · section.css · meta.ts (label, region, contentKeys)
 core.css                    lz-* classes shared by more than one slot
 themes/<name>.json          the only token source → :root. tier, fontPair, colors (incl. accent-text), fonts (case, leading,
-                            weight, scale, accent style), shape (radii, border, shadow), density, photoTreatment, placeholder
+                            weight, scale, accent style), shape (radii, border, shadow), density, photoTreatment, placeholder,
+                            rhythm (optional: gutter, space, textScale, fluid title clamps — docs/template-workflow.md)
 content/<vertical>.<voice>.es-MX.ts  one pack per copy voice (barbería: oxido, norte, concreto, trazo); plumbing in <vertical>.shared.ts
 src/tiers.ts                Basic/Pro: counted range, required/optional roles, similarity limit, seoProfile, exclusive, editableTokens
 blueprints/<family>.<tier>.ts  roles allowed in that tier (+ allowed variants), archetypes, guidance
@@ -85,10 +86,11 @@ Findings carry `file:line`; markup findings point at the `section.html` line the
 - Don't run prettier on `sections/**/*.html` (whitespace-sensitive; the root `.prettierignore` only applies when run from the repo root).
 - Don't hardcode colors in sections or themes' consumers; add/derive a token (`color-mix()` against a token). Accent as text is `--lz-color-accent-text`; `--lz-color-accent` is for fills.
 - Don't hardcode type case, leading, borders or shadows in new variants; use `--lz-display-*`, `--lz-border-width`, `--lz-shadow(-sm)`, `--lz-photo-filter`, `--lz-stack`.
+- Spacing in new or edited variants: `calc(<px> * var(--lz-space))`; body/UI text ≤ 20px: `calc(<px> * var(--lz-text-scale))`; titles: `--lz-title-*`; container: `--lz-gutter*`. Defaults equal the old literals, so builds stay pixel-identical.
 - Don't reuse another slot's block class in a variant (`lz-card` is team's); give every variant its own `lz-<slot>-<variant>` block.
 - Don't change a shared section to fix one template; add a variant folder instead.
 - After changing a shared section, compare the previous build with the new one: copy `dist/<id>` aside before the change, rebuild, then `kit:compare <old>/index.html dist/<id>/index.html`. Sections are matched by `data-lz-slot`, so added sections don't hide other diffs. (`fixtures/oxido` is the phase-1 Studio original; the Pro ÓXIDO now adds gallery, FAQ and the contact block on top of it.)
 
 ## Commands
 
-`kit:extract <file.grapesjs|index.html [style.css]> --vertical v --variant n [--out dir] [--force]` · `kit:compile [manifest…]` · `kit:validate [dist/<id>|manifest…]` · `kit:shoot [dist/<id>…]` · `kit:build [manifest…]` · `kit:compare [reference.html] [dist/<id>/index.html]` · `kit:compare-visual [dist/<id>…] [--sheet file]` · `test` (vitest) · `typecheck`.
+`kit:extract <file.grapesjs|index.html [style.css]> --vertical v --variant n [--out dir] [--force]` · `kit:compile [manifest…]` · `kit:validate [dist/<id>|manifest…]` · `kit:shoot [dist/<id>…]` · `kit:shots <id>` (5 widths + overflow/small-text/tap-target report) · `kit:build [manifest…]` · `kit:compare [reference.html] [dist/<id>/index.html]` · `kit:compare-visual [dist/<id>…] [--sheet file]` · `test` (vitest) · `typecheck`.

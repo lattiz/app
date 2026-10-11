@@ -1,4 +1,10 @@
-import { COLOR_TOKENS, type ColorToken, type Theme } from '../types';
+import {
+  COLOR_TOKENS,
+  RHYTHM_TOKENS,
+  type ColorToken,
+  type RhythmToken,
+  type Theme,
+} from '../types';
 import { hueOf, parseColor, type Rgba, type VarResolver } from './color';
 
 const SECTION_PAD = {
@@ -8,6 +14,20 @@ const SECTION_PAD = {
 } as const;
 
 const STACK = { airy: '32px', regular: '24px', compact: '16px' } as const;
+
+/** The kit's original literal values; a theme's `rhythm` overrides any of them. */
+const RHYTHM_DEFAULTS: Record<Exclude<RhythmToken, 'sectionPad'>, string> = {
+  gutter: '24px',
+  gutterMd: '18px',
+  gutterSm: '12px',
+  space: '1',
+  textScale: '1',
+  titleHero: 'clamp(48px, 6.8vw, 104px)',
+  titleHeroSm: 'clamp(40px, 12vw, 56px)',
+  titleSection: 'clamp(40px, 6vw, 88px)',
+  titleSectionSm: 'clamp(40px, 12vw, 58px)',
+  titleSub: 'clamp(24px, 2.6vw, 34px)',
+};
 
 const SHADOWS = {
   none: ['none', 'none'],
@@ -77,9 +97,18 @@ export function themeVariables(theme: Theme): [string, string][] {
     ['--lz-border-width', theme.shape.border],
     ['--lz-shadow', shadow],
     ['--lz-shadow-sm', shadowSm],
-    ['--lz-section-pad', SECTION_PAD[theme.density]],
+    [
+      '--lz-section-pad',
+      theme.rhythm?.sectionPad ?? SECTION_PAD[theme.density],
+    ],
     ['--lz-stack', STACK[theme.density]],
     ['--lz-container', theme.container],
+    ...(Object.keys(RHYTHM_DEFAULTS) as (keyof typeof RHYTHM_DEFAULTS)[]).map(
+      (key): [string, string] => [
+        RHYTHM_TOKENS[key],
+        theme.rhythm?.[key] ?? RHYTHM_DEFAULTS[key],
+      ],
+    ),
     ['--lz-photo-filter', photoFilter(theme)],
     ['--lz-map-filter', theme.effects.mapFilter],
     ['--lz-hero-image-filter', theme.effects.heroImageFilter],
