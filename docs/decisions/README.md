@@ -45,3 +45,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [image-optimizer-memory-model](image-optimizer-memory-model.md) — WebP ≤ 2000 px con sharp; cola acotada + disco temporal; 290 MiB pico
 - [business-profile-site-tokens](business-profile-site-tokens.md) — business_profile jsonb; tokens {{lz:*}} + JSON-LD al servir; is_pro en SQL
 - [lattiz-motion-runtime](lattiz-motion-runtime.md) — runtime data-lz-* propio, solo Pro; se detecta por atributos de motion
+- [editor-theme-presets-and-blocks](editor-theme-presets-and-blocks.md) — Tema reescribe --lz-* en :root; bloques/temas Pro según proIncluded
