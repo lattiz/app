@@ -12,6 +12,27 @@ export interface RegistrationState {
   renewalDate: Date | null;
 }
 
+export type RegistrarLifecycleStatus =
+  | 'active'
+  | 'expired'
+  | 'pending'
+  | 'unknown';
+
+export interface RegistrarLifecycle {
+  status: RegistrarLifecycleStatus;
+  /** Date by which the registrar needs the next renewal; null if it reported none. */
+  renewalDate: Date | null;
+  /** Whether the registrar accepts a plain renewal right now. */
+  canRenew: boolean;
+  /** Last moment a restore is possible; null when the registrar gave none. */
+  restorableUntil: Date | null;
+}
+
+export interface RegistrarBalance {
+  /** Spendable balance (balance minus reserved) in the account currency, in cents. */
+  availableCents: number;
+}
+
 /** `default` follows the reseller-account setting, which the API cannot read per domain. */
 export type RegistrarAutoRenew = 'on' | 'off' | 'default';
 
@@ -21,7 +42,7 @@ export interface RegisteredDomain extends RegistrationState {
 }
 
 export interface RegistrarPort {
-  /** True when registration/status calls are faked (no money spent); availability and prices stay real. */
+  /** True when calls that spend money are faked; availability and prices stay real. */
   readonly isMockMode: boolean;
 
   checkAvailability(domain: string): Promise<DomainAvailability>;
@@ -48,7 +69,29 @@ export interface RegistrarPort {
   getAutoRenew(registrarDomainId: string): Promise<RegistrarAutoRenew>;
 
   /** Re-delegates an already-registered domain, e.g. when its DNS zone had to be recreated. */
-  setNameservers(registrarDomainId: string, nameservers: string[]): Promise<void>;
+  setNameservers(
+    registrarDomainId: string,
+    nameservers: string[],
+  ): Promise<void>;
+
+  /** Current lifecycle, including whether a plain renewal is accepted. */
+  getLifecycle(registrarDomainId: string): Promise<RegistrarLifecycle>;
+
+  /** Charges real money outside mock mode. The response has no new expiry. */
+  renewDomain(params: {
+    registrarDomainId: string;
+    domain: string;
+    periodYears: number;
+  }): Promise<void>;
+
+  /** Restores an expired domain. May charge; re-read the renewal date after. */
+  restoreDomain(params: {
+    registrarDomainId: string;
+    domain: string;
+  }): Promise<void>;
+
+  /** Spendable reseller balance in the account currency. */
+  getBalance(): Promise<RegistrarBalance>;
 }
 
 export const REGISTRAR_PORT = Symbol('REGISTRAR_PORT');

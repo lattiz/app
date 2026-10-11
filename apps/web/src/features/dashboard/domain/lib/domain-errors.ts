@@ -21,6 +21,9 @@ export function apiErrorCode(err: unknown): string | undefined {
   return (err as ApiErrorBody | null | undefined)?.error?.code;
 }
 
+const INCLUDED_DOMAIN_ALREADY_USED =
+  'Tu cuenta ya usó su dominio incluido. Escríbenos y te ayudamos a obtener uno nuevo.';
+
 const PROVIDER_UNAVAILABLE =
   'El servicio de dominios no está disponible en este momento. Inténtalo de nuevo en unos minutos.';
 
@@ -40,6 +43,8 @@ export function searchErrorMessage(err: unknown): string {
 
 export function quoteErrorMessage(err: unknown): string {
   switch (apiErrorCode(err)) {
+    case 'INCLUDED_DOMAIN_ALREADY_USED':
+      return INCLUDED_DOMAIN_ALREADY_USED;
     case 'REGISTRAR_API_ERROR':
       return PROVIDER_UNAVAILABLE;
     case 'TOO_MANY_REQUESTS':
@@ -50,12 +55,16 @@ export function quoteErrorMessage(err: unknown): string {
 }
 
 function notCoveredByPlanView(err: unknown): PurchaseErrorView {
-  const reason = (err as ApiErrorBody | null | undefined)?.error?.details?.reason;
+  const reason = (err as ApiErrorBody | null | undefined)?.error?.details
+    ?.reason;
   if (reason === 'requires_pro') {
     return { message: domainCoverageCopy.upgradeMessage, plansAction: true };
   }
   if (reason === 'renewal_over_cap') {
-    return { message: domainCoverageCopy.renewalOverAnyPlan, plansAction: false };
+    return {
+      message: domainCoverageCopy.renewalOverAnyPlan,
+      plansAction: false,
+    };
   }
   return { message: domainCoverageCopy.notCovered, plansAction: false };
 }
@@ -63,7 +72,10 @@ function notCoveredByPlanView(err: unknown): PurchaseErrorView {
 export function purchaseErrorView(err: unknown): PurchaseErrorView {
   switch (apiErrorCode(err)) {
     case 'DOMAIN_NOT_AVAILABLE':
-      return { message: domainCoverageCopy.noLongerAvailable, plansAction: false };
+      return {
+        message: domainCoverageCopy.noLongerAvailable,
+        plansAction: false,
+      };
     case 'DOMAIN_NOT_COVERED_BY_PLAN':
       return notCoveredByPlanView(err);
     case 'DOMAIN_AGREEMENTS_REQUIRED':
@@ -73,7 +85,12 @@ export function purchaseErrorView(err: unknown): PurchaseErrorView {
         plansAction: false,
       };
     case 'TENANT_ALREADY_HAS_DOMAIN':
-      return { message: 'Tu sitio ya tiene un dominio asociado.', plansAction: false };
+      return {
+        message: 'Tu sitio ya tiene un dominio asociado.',
+        plansAction: false,
+      };
+    case 'INCLUDED_DOMAIN_ALREADY_USED':
+      return { message: INCLUDED_DOMAIN_ALREADY_USED, plansAction: false };
     case 'REGISTRAR_API_ERROR':
     case 'DNS_PROVIDER_API_ERROR':
       return { message: PROVIDER_UNAVAILABLE, plansAction: false };
@@ -86,7 +103,10 @@ export function purchaseErrorView(err: unknown): PurchaseErrorView {
     case 'TOO_MANY_REQUESTS':
       return { message: TOO_MANY_REQUESTS, plansAction: false };
     default:
-      return { message: 'No se pudo iniciar la compra del dominio', plansAction: false };
+      return {
+        message: 'No se pudo iniciar la compra del dominio',
+        plansAction: false,
+      };
   }
 }
 
@@ -159,7 +179,27 @@ const UNKNOWN_FAILURE: JobFailureView = {
   next: 'retry',
 };
 
+export function renewalCheckoutErrorMessage(err: unknown): string {
+  switch (apiErrorCode(err)) {
+    case 'RENEWAL_NOT_DUE':
+      return 'Tu dominio todavía no necesita renovación.';
+    case 'RENEWAL_ALREADY_PAID':
+      return 'Ya recibimos el pago de esta renovación.';
+    case 'RENEWAL_WINDOW_CLOSED':
+      return 'El plazo para renovar este dominio terminó.';
+    case 'RENEWAL_REQUIRES_ACTIVE_SUBSCRIPTION':
+      return 'Para renovar tu dominio primero reactiva tu plan.';
+    default:
+      return 'No se pudo iniciar el pago de la renovación. Intenta de nuevo.';
+  }
+}
+
 /** Unknown or missing codes (older jobs, newer API) fall back to a generic message; raw provider text is never shown. */
-export function jobFailureView(code: string | null | undefined): JobFailureView {
-  return (code && (JOB_FAILURES as Record<string, JobFailureView>)[code]) || UNKNOWN_FAILURE;
+export function jobFailureView(
+  code: string | null | undefined,
+): JobFailureView {
+  return (
+    (code && (JOB_FAILURES as Record<string, JobFailureView>)[code]) ||
+    UNKNOWN_FAILURE
+  );
 }

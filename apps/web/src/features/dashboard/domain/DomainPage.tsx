@@ -1,8 +1,16 @@
-import { useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { tenantsControllerMeOptions } from '@lattiz/api-client';
+import { useEffect, useRef } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { getRouteApi, useNavigate } from '@tanstack/react-router';
+import {
+  domainsControllerGetDomainQueryKey,
+  domainsControllerGetRenewalQueryKey,
+  tenantsControllerMeOptions,
+  tenantsControllerMeQueryKey,
+} from '@lattiz/api-client';
+import { toast } from 'sonner';
 import { DashboardSkeleton } from '@/components/dashboard/DashboardSkeleton';
 import { UpgradeGate } from '@/components/dashboard/home/UpgradeGate';
+import { DomainRenewalNotice } from './components/DomainRenewalNotice';
 import { DomainWizardProgress } from './components/DomainWizardProgress';
 import { ActiveStep } from './steps/ActiveStep';
 import { ConnectFormStep } from './steps/ConnectFormStep';
@@ -13,7 +21,10 @@ import { PurchasingStep } from './steps/PurchasingStep';
 import { QuoteStep } from './steps/QuoteStep';
 import { SearchStep } from './steps/SearchStep';
 import { SuspendedStep } from './steps/SuspendedStep';
-import { useDomainWizardStore, type WizardStep } from './store/domain-wizard.store';
+import {
+  useDomainWizardStore,
+  type WizardStep,
+} from './store/domain-wizard.store';
 
 const STEP_VIEWS: Record<WizardStep, React.ReactNode> = {
   entry: <EntryStep />,
@@ -27,10 +38,41 @@ const STEP_VIEWS: Record<WizardStep, React.ReactNode> = {
   suspended: <SuspendedStep />,
 };
 
+const routeApi = getRouteApi('/_authenticated/dashboard/domain');
+
 export function DomainPage() {
   const step = useDomainWizardStore((s) => s.step);
   const domainSource = useDomainWizardStore((s) => s.domainSource);
   const { data: tenantMe, isLoading } = useQuery(tenantsControllerMeOptions());
+  const search = routeApi.useSearch();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const handledReturn = useRef(false);
+
+  useEffect(() => {
+    if (handledReturn.current) return;
+    if (search.renewal !== 'success' && search.renewal !== 'canceled') return;
+    handledReturn.current = true;
+
+    if (search.renewal === 'success') {
+      toast.success('Recibimos tu pago. Estamos renovando tu dominio.');
+      void queryClient.invalidateQueries({
+        queryKey: domainsControllerGetRenewalQueryKey(),
+      });
+      void queryClient.invalidateQueries({
+        queryKey: domainsControllerGetDomainQueryKey(),
+      });
+      void queryClient.invalidateQueries({
+        queryKey: tenantsControllerMeQueryKey(),
+      });
+    }
+
+    void navigate({
+      to: '/dashboard/domain',
+      search: {},
+      replace: true,
+    });
+  }, [search.renewal, navigate, queryClient]);
 
   const domainStatus = tenantMe?.domainStatus ?? null;
 
@@ -56,10 +98,18 @@ export function DomainPage() {
   }, [domainStatus]);
 
   if (isLoading) return <DashboardSkeleton />;
-  if (tenantMe && !tenantMe.isEntitled) return <UpgradeGate reason="domain" />;
+  if (tenantMe && !tenantMe.isEntitled) {
+    return (
+      <div className="flex flex-col gap-6">
+        <DomainRenewalNotice />
+        <UpgradeGate reason="domain" />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-6">
+      <DomainRenewalNotice />
       {step !== 'entry' && step !== 'suspended' && (
         <DomainWizardProgress currentStep={step} domainSource={domainSource} />
       )}

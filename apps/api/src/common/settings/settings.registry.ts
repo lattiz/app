@@ -41,9 +41,31 @@ export interface StringListSetting {
   readonly validate: (value: readonly string[], ctx: ResolveContext) => boolean;
 }
 
-export type SettingDefinition = BoolSetting | IntSetting | StringListSetting;
+export interface IntListSetting {
+  readonly key: string;
+  readonly type: 'int-list';
+  readonly envVar: string;
+  readonly default: readonly number[];
+  readonly validate: (value: readonly number[], ctx: ResolveContext) => boolean;
+}
+
+export interface StringSetting {
+  readonly key: string;
+  readonly type: 'string';
+  readonly envVar: string;
+  readonly default: string;
+  readonly validate: (value: string, ctx: ResolveContext) => boolean;
+}
+
+export type SettingDefinition =
+  | BoolSetting
+  | IntSetting
+  | StringListSetting
+  | IntListSetting
+  | StringSetting;
 
 const MIME_PATTERN = /^[\w.+-]+\/[\w.+-]+$/;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DEFAULT_MIME = [
   'image/png',
   'image/jpeg',
@@ -83,7 +105,35 @@ function stringListSetting(
   return { type: 'string-list', ...def };
 }
 
+function intListSetting(def: Omit<IntListSetting, 'type'>): IntListSetting {
+  return { type: 'int-list', ...def };
+}
+
+function stringSetting(def: Omit<StringSetting, 'type'>): StringSetting {
+  return { type: 'string', ...def };
+}
+
 const always = (): boolean => true;
+
+/** Each integer in range, no duplicates, at most `maxLength` items. Empty is allowed. */
+function intsInRange(min: number, max: number, maxLength: number) {
+  return (value: readonly number[]): boolean => {
+    if (value.length > maxLength) return false;
+    const seen = new Set<number>();
+    for (const item of value) {
+      if (
+        !Number.isSafeInteger(item) ||
+        item < min ||
+        item > max ||
+        seen.has(item)
+      ) {
+        return false;
+      }
+      seen.add(item);
+    }
+    return true;
+  };
+}
 
 export const SETTINGS = {
   'preview.enabled': boolSetting({
@@ -228,6 +278,81 @@ export const SETTINGS = {
     envVar: 'OPENPROVIDER_MOCK_PURCHASES',
     default: false,
   }),
+  // Off unless the database row or DOMAIN_RENEWAL_ENABLED is set.
+  'domain.renewal.enabled': boolSetting({
+    key: 'domain.renewal.enabled',
+    envVar: 'DOMAIN_RENEWAL_ENABLED',
+    default: false,
+  }),
+  'domain.renewal.fee_basic_mxn_cents': intSetting({
+    key: 'domain.renewal.fee_basic_mxn_cents',
+    envVar: 'DOMAIN_RENEWAL_FEE_BASIC_MXN_CENTS',
+    default: 59900,
+    expectation: 'at least 1 (MXN cents)',
+    validate: (value) => value >= 1,
+  }),
+  'domain.renewal.fee_pro_mxn_cents': intSetting({
+    key: 'domain.renewal.fee_pro_mxn_cents',
+    envVar: 'DOMAIN_RENEWAL_FEE_PRO_MXN_CENTS',
+    default: 59900,
+    expectation: 'at least 1 (MXN cents)',
+    validate: (value) => value >= 1,
+  }),
+  'domain.renewal.tax_rate_bps': intSetting({
+    key: 'domain.renewal.tax_rate_bps',
+    envVar: 'DOMAIN_RENEWAL_TAX_RATE_BPS',
+    default: 1600,
+    expectation: 'from 0 to 10000 basis points',
+    validate: (value) => value >= 0 && value <= 10_000,
+  }),
+  'domain.renewal.open_days_before': intSetting({
+    key: 'domain.renewal.open_days_before',
+    envVar: 'DOMAIN_RENEWAL_OPEN_DAYS_BEFORE',
+    default: 28,
+    expectation:
+      'from 1 to 28 (Openprovider renews only inside the previous 4 weeks)',
+    validate: (value) => value >= 1 && value <= 28,
+  }),
+  'domain.renewal.notice_days_before': intListSetting({
+    key: 'domain.renewal.notice_days_before',
+    envVar: 'DOMAIN_RENEWAL_NOTICE_DAYS_BEFORE',
+    default: [28, 14, 7, 3, 1, 0],
+    validate: intsInRange(0, 28, 12),
+  }),
+  'domain.renewal.late_days': intSetting({
+    key: 'domain.renewal.late_days',
+    envVar: 'DOMAIN_RENEWAL_LATE_DAYS',
+    default: 15,
+    expectation: 'from 0 to 30',
+    validate: (value) => value >= 0 && value <= 30,
+  }),
+  'domain.renewal.late_notice_days_after': intListSetting({
+    key: 'domain.renewal.late_notice_days_after',
+    envVar: 'DOMAIN_RENEWAL_LATE_NOTICE_DAYS_AFTER',
+    default: [7],
+    validate: intsInRange(1, 30, 12),
+  }),
+  'domain.renewal.max_registrar_attempts': intSetting({
+    key: 'domain.renewal.max_registrar_attempts',
+    envVar: 'DOMAIN_RENEWAL_MAX_REGISTRAR_ATTEMPTS',
+    default: 5,
+    expectation: 'from 1 to 20',
+    validate: (value) => value >= 1 && value <= 20,
+  }),
+  'domain.renewal.balance_alert_days': intSetting({
+    key: 'domain.renewal.balance_alert_days',
+    envVar: 'DOMAIN_RENEWAL_BALANCE_ALERT_DAYS',
+    default: 30,
+    expectation: 'from 1 to 90',
+    validate: (value) => value >= 1 && value <= 90,
+  }),
+  // Empty means operational alerts are not sent.
+  'alerts.admin_email': stringSetting({
+    key: 'alerts.admin_email',
+    envVar: 'ALERTS_ADMIN_EMAIL',
+    default: '',
+    validate: (value) => value === '' || EMAIL_PATTERN.test(value),
+  }),
 };
 
 export type SettingKey = keyof typeof SETTINGS;
@@ -242,6 +367,14 @@ export type IntKey = {
 
 export type StringListKey = {
   [K in SettingKey]: (typeof SETTINGS)[K] extends StringListSetting ? K : never;
+}[SettingKey];
+
+export type IntListKey = {
+  [K in SettingKey]: (typeof SETTINGS)[K] extends IntListSetting ? K : never;
+}[SettingKey];
+
+export type StringKey = {
+  [K in SettingKey]: (typeof SETTINGS)[K] extends StringSetting ? K : never;
 }[SettingKey];
 
 export type DbRead<T> = { ok: true; value: T } | { ok: false; reason: string };
@@ -329,6 +462,67 @@ export function dbInt(value: unknown): DbRead<number> {
     return {
       ok: false,
       reason: `expected a JSON integer, got ${describeJson(value)}`,
+    };
+  }
+  return { ok: true, value };
+}
+
+export function envIntList(
+  def: IntListSetting,
+  raw: string | undefined,
+): readonly number[] {
+  if (!def.validate(def.default, NO_CONTEXT)) {
+    throw new Error(
+      `${def.envVar} default [${def.default.join(', ')}] failed validation.`,
+    );
+  }
+  if (raw === undefined) return [...def.default];
+  const trimmed = raw.trim();
+  if (trimmed === '')
+    return def.validate([], NO_CONTEXT) ? [] : [...def.default];
+  const values: number[] = [];
+  for (const part of trimmed.split(',')) {
+    const piece = part.trim();
+    if (piece === '') continue;
+    if (!/^[0-9]+$/.test(piece)) return [...def.default];
+    const value = Number(piece);
+    if (!Number.isSafeInteger(value)) return [...def.default];
+    values.push(value);
+  }
+  if (!def.validate(values, NO_CONTEXT)) return [...def.default];
+  return values;
+}
+
+export function envString(def: StringSetting, raw: string | undefined): string {
+  if (!def.validate(def.default, NO_CONTEXT)) {
+    throw new Error(`${def.envVar} default failed validation.`);
+  }
+  if (raw === undefined) return def.default;
+  const value = raw.trim();
+  if (!def.validate(value, NO_CONTEXT)) return def.default;
+  return value;
+}
+
+export function dbIntList(value: unknown): DbRead<readonly number[]> {
+  if (
+    !Array.isArray(value) ||
+    value.some(
+      (item) => typeof item !== 'number' || !Number.isSafeInteger(item),
+    )
+  ) {
+    return {
+      ok: false,
+      reason: `expected a JSON array of integers, got ${describeJson(value)}`,
+    };
+  }
+  return { ok: true, value: [...value] };
+}
+
+export function dbString(value: unknown): DbRead<string> {
+  if (typeof value !== 'string') {
+    return {
+      ok: false,
+      reason: `expected a JSON string, got ${describeJson(value)}`,
     };
   }
   return { ok: true, value };

@@ -11,7 +11,7 @@ export const PRO_ONLY_FEATURES = [
   'Acceso a plantillas premium.',
   '(SEO Avanzado) Optimización en motores de búsqueda.',
   'Soporte prioritario por WhatsApp.',
-  'Acceso anticipado a nuevas funciones.'
+  'Acceso anticipado a nuevas funciones.',
 ];
 
 export const planChangeCopy = {
@@ -57,7 +57,7 @@ const BLOCKER_MESSAGES: Record<Blocker, string> = {
   UNSUPPORTED_SUBSCRIPTION:
     'Tu suscripción no se puede cambiar desde aquí. Escríbenos y lo resolvemos.',
   DOWNGRADE_DOMAIN_ABOVE_BASIC_CAP:
-    'La renovación de tu dominio no está incluida en Básico, así que por ahora no puedes cambiar a ese plan.',
+    'No puedes cambiar a Básico porque tu dominio solo está incluido en Pro.',
   DOWNGRADE_PRICE_UNAVAILABLE:
     'No pudimos confirmar el costo de renovación de tu dominio. Intenta de nuevo más tarde.',
 };

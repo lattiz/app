@@ -1,11 +1,17 @@
 import { Logger } from '@nestjs/common';
+import { PgDialect } from 'drizzle-orm/pg-core';
 import type { Database } from '../../database/database.module';
 import type { EmailOutboxService } from '../email/application/email-outbox.service';
+import type { DomainRenewalConfig } from './domain-renewal.config';
 import type { DnsProviderPort } from './domain/dns-provider.port';
 import type { DomainPriceCaps } from './domain/domain-pricing.policy';
 import type { EffectivePlanPort } from './domain/effective-plan.port';
 import type { RegistrarPort } from './domain/registrar.port';
-import { DomainNotCoveredByPlanException } from './domains.exceptions';
+import {
+  DomainNotCoveredByPlanException,
+  IncludedDomainAlreadyUsedException,
+  TenantAlreadyHasDomainException,
+} from './domains.exceptions';
 import { DomainsService } from './domains.service';
 import type { VercelDomainsService } from './vercel-domains.service';
 
@@ -32,10 +38,13 @@ interface PurchaseInternals {
   ): Promise<{ created: boolean; jobId: string }>;
   discardJob(jobId: string): Promise<void>;
   getDomainByTenant(tenantId: string): Promise<{
+    id?: string;
     domain: string;
-    released_at: null;
-    purchase_completed_at: null;
+    released_at: string | Date | null;
+    purchase_completed_at: string | Date | null;
+    dns_provider?: string | null;
   } | null>;
+  markVercelMapped(domain: string, vercelDomainId: string): Promise<void>;
   createDomainRecord(params: unknown): Promise<void>;
   runPurchasePipeline(...args: unknown[]): Promise<void>;
 }
@@ -44,6 +53,7 @@ function setup(
   prices: { create: number; renew: number },
   plan = 'basico',
   effectivePlan: string | null = plan,
+  includedDomainUsedAt: string | null = null,
 ) {
   const registrar: jest.Mocked<RegistrarPort> = {
     isMockMode: true,
@@ -58,10 +68,27 @@ function setup(
     getRegistrationStatus: jest.fn(),
     getAutoRenew: jest.fn().mockResolvedValue('off'),
     setNameservers: jest.fn(),
+    getLifecycle: jest.fn(),
+    renewDomain: jest.fn(),
+    restoreDomain: jest.fn(),
+    getBalance: jest.fn(),
   };
   // Only the tenant-plan lookup reaches the DB; every other helper is stubbed below.
+  const feeMxnCents = jest.fn((quotedPlan: string) =>
+    quotedPlan === 'pro' ? 79900 : 59900,
+  );
+  const renewalConfig = {
+    feeMxnCents,
+    taxRateBps: 1600,
+  } as unknown as DomainRenewalConfig;
   const db = {
-    execute: jest.fn().mockResolvedValue([{ id: TENANT_ID, plan }]),
+    execute: jest.fn().mockResolvedValue([
+      {
+        id: TENANT_ID,
+        plan,
+        included_domain_used_at: includedDomainUsedAt,
+      },
+    ]),
   };
   const effective: jest.Mocked<EffectivePlanPort> = {
     effectivePlanFor: jest.fn().mockResolvedValue(effectivePlan),
@@ -75,6 +102,7 @@ function setup(
     {} as EmailOutboxService,
     caps,
     effective,
+    renewalConfig,
   );
   const internals = service as unknown as PurchaseInternals;
   jest.spyOn(internals, 'getTenantIdByUserSub').mockResolvedValue(TENANT_ID);
@@ -99,6 +127,7 @@ function setup(
     discardJob,
     createDomainRecord,
     runPipeline,
+    feeMxnCents,
   };
 }
 
@@ -489,5 +518,195 @@ describe('DomainsService.auditRegistrarAutoRenew', () => {
     expect(db.execute).toHaveBeenCalledTimes(1);
     expect(registrar.registerDomain).not.toHaveBeenCalled();
     expect(registrar.setNameservers).not.toHaveBeenCalled();
+  });
+});
+
+const USED_AT = '2024-03-15T00:00:00.000Z';
+
+describe('DomainsService included domain', () => {
+  afterEach(() => jest.restoreAllMocks());
+
+  it('quotes the maintenance fee from renewal config for the resolved plan', async () => {
+    const basic = setup({ create: 1700, renew: 2000 }, 'basico');
+    const basicQuote = await basic.service.getQuote('user-1', DOMAIN);
+    expect(basic.feeMxnCents).toHaveBeenCalledWith('basico');
+    expect(basicQuote.maintenanceFee).toEqual({
+      amountCents: 59900,
+      currency: 'mxn',
+      taxRateBps: 1600,
+    });
+
+    const pro = setup({ create: 1700, renew: 2000 }, 'pro');
+    const proQuote = await pro.service.getQuote('user-1', DOMAIN);
+    expect(pro.feeMxnCents).toHaveBeenCalledWith('pro');
+    expect(proQuote.maintenanceFee.amountCents).toBe(79900);
+    expect(proQuote.maintenanceFee.taxRateBps).toBe(1600);
+  });
+
+  it('quotes when the account has not used its included domain', async () => {
+    const { service, registrar } = setup({ create: 1700, renew: 2000 });
+    const quote = await service.getQuote('user-1', DOMAIN);
+    expect(quote.domain).toBe(DOMAIN);
+    expect(registrar.checkAvailability).toHaveBeenCalledWith(DOMAIN);
+  });
+
+  it('refuses a quote after the included domain was used, before any price lookup', async () => {
+    const { service, registrar } = setup(
+      { create: 1700, renew: 2000 },
+      'basico',
+      'basico',
+      USED_AT,
+    );
+    await expect(service.getQuote('user-1', DOMAIN)).rejects.toBeInstanceOf(
+      IncludedDomainAlreadyUsedException,
+    );
+    expect(registrar.checkAvailability).not.toHaveBeenCalled();
+    expect(registrar.getPriceUsdCents).not.toHaveBeenCalled();
+  });
+
+  it('still quotes the domain of an in-progress purchase after the included domain was used', async () => {
+    const { service, registrar } = setup(
+      { create: 1700, renew: 2000 },
+      'basico',
+      'basico',
+      USED_AT,
+    );
+    const internals = service as unknown as PurchaseInternals;
+    jest.spyOn(internals, 'getDomainByTenant').mockResolvedValue({
+      domain: DOMAIN,
+      released_at: null,
+      purchase_completed_at: null,
+    });
+    const quote = await service.getQuote('user-1', DOMAIN);
+    expect(quote.coveredByPlan).toBe(true);
+    expect(registrar.checkAvailability).toHaveBeenCalledWith(DOMAIN);
+  });
+
+  it('purchases when the account has not used its included domain', async () => {
+    const { service, registrar, runPipeline } = setup({
+      create: 1500,
+      renew: 2000,
+    });
+    await expect(service.initiatePurchase('user-1', PURCHASE)).resolves.toEqual(
+      { jobId: 'job-1' },
+    );
+    expect(registrar.findDomain).toHaveBeenCalledWith(DOMAIN);
+    expect(runPipeline).toHaveBeenCalledTimes(1);
+  });
+
+  it('refuses a new purchase after the included domain was used, before the registrar', async () => {
+    const { service, registrar, discardJob, runPipeline } = setup(
+      { create: 1500, renew: 2000 },
+      'basico',
+      'basico',
+      USED_AT,
+    );
+    await expect(
+      service.initiatePurchase('user-1', PURCHASE),
+    ).rejects.toBeInstanceOf(IncludedDomainAlreadyUsedException);
+    expect(registrar.findDomain).not.toHaveBeenCalled();
+    expect(registrar.checkAvailability).not.toHaveBeenCalled();
+    expect(discardJob).toHaveBeenCalledWith('job-1');
+    expect(runPipeline).not.toHaveBeenCalled();
+  });
+
+  it('keeps TENANT_ALREADY_HAS_DOMAIN when a live domain exists, even if the mark is set', async () => {
+    const { service, registrar } = setup(
+      { create: 1500, renew: 2000 },
+      'basico',
+      'basico',
+      USED_AT,
+    );
+    const internals = service as unknown as PurchaseInternals;
+    jest.spyOn(internals, 'getDomainByTenant').mockResolvedValue({
+      domain: DOMAIN,
+      released_at: null,
+      purchase_completed_at: USED_AT,
+    });
+    await expect(
+      service.initiatePurchase('user-1', PURCHASE),
+    ).rejects.toBeInstanceOf(TenantAlreadyHasDomainException);
+    expect(registrar.findDomain).not.toHaveBeenCalled();
+  });
+
+  it('refuses a different name while an unfinished purchase exists and the included domain was used', async () => {
+    const { service, registrar } = setup(
+      { create: 1500, renew: 2000 },
+      'basico',
+      'basico',
+      USED_AT,
+    );
+    const internals = service as unknown as PurchaseInternals;
+    jest.spyOn(internals, 'getDomainByTenant').mockResolvedValue({
+      domain: 'otro.com',
+      released_at: null,
+      purchase_completed_at: null,
+    });
+    await expect(
+      service.initiatePurchase('user-1', PURCHASE),
+    ).rejects.toBeInstanceOf(IncludedDomainAlreadyUsedException);
+    expect(registrar.findDomain).not.toHaveBeenCalled();
+  });
+
+  it('refuses another purchase after the included domain was released', async () => {
+    const { service, registrar } = setup(
+      { create: 1500, renew: 2000 },
+      'basico',
+      'basico',
+      USED_AT,
+    );
+    const internals = service as unknown as PurchaseInternals;
+    jest.spyOn(internals, 'getDomainByTenant').mockResolvedValue({
+      id: 'row-1',
+      domain: 'viejo.com',
+      released_at: USED_AT,
+      purchase_completed_at: USED_AT,
+      dns_provider: null,
+    });
+    await expect(
+      service.initiatePurchase('user-1', PURCHASE),
+    ).rejects.toBeInstanceOf(IncludedDomainAlreadyUsedException);
+    expect(registrar.findDomain).not.toHaveBeenCalled();
+  });
+
+  it('resumes an in-progress purchase of the same domain after the included domain was used', async () => {
+    const { service, registrar, runPipeline } = setup(
+      { create: 1500, renew: 2000 },
+      'basico',
+      'basico',
+      USED_AT,
+    );
+    const internals = service as unknown as PurchaseInternals;
+    jest.spyOn(internals, 'getDomainByTenant').mockResolvedValue({
+      domain: DOMAIN,
+      released_at: null,
+      purchase_completed_at: null,
+    });
+    await expect(service.initiatePurchase('user-1', PURCHASE)).resolves.toEqual(
+      { jobId: 'job-1' },
+    );
+    expect(registrar.findDomain).toHaveBeenCalledWith(DOMAIN);
+    expect(runPipeline).toHaveBeenCalledTimes(1);
+  });
+
+  it('stamps included_domain_used_at when a managed purchase completes', async () => {
+    const { service } = setup({ create: 1500, renew: 2000 });
+    const db = (service as unknown as { db: { execute: jest.Mock } }).db;
+    db.execute.mockClear();
+    const internals = service as unknown as PurchaseInternals;
+    await internals.markVercelMapped(DOMAIN, 'vc-1');
+    const rendered = db.execute.mock.calls.map(
+      (call) => new PgDialect().sqlToQuery(call[0]).sql,
+    );
+    const stamp = rendered.find((sql) =>
+      sql.includes('included_domain_used_at'),
+    );
+    expect(stamp).toBeDefined();
+    expect(stamp).toContain('COALESCE');
+    expect(stamp).toContain("source = 'lattiz_managed'");
+    expect(stamp).toContain('is_mock = false');
+    expect(rendered.some((sql) => sql.includes('purchase_completed_at'))).toBe(
+      true,
+    );
   });
 });

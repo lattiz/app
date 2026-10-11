@@ -376,4 +376,148 @@ describe('SettingsService', () => {
       'example.com',
     ]);
   });
+
+  it('resolves integer lists from the database, then env, then the default', async () => {
+    captureLogs();
+    const rows = new Map<string, unknown>([
+      ['domain.renewal.notice_days_before', [14, 1, 0]],
+      ['domain.renewal.late_notice_days_after', [3, 3]],
+    ]);
+    const fromDb = serviceWith(
+      {
+        DOMAIN_RENEWAL_NOTICE_DAYS_BEFORE: '9',
+        DOMAIN_RENEWAL_LATE_NOTICE_DAYS_AFTER: '5',
+      },
+      { loadAll: async () => new Map(rows) },
+    );
+    await fromDb.reload();
+    assert.deepEqual(fromDb.getIntList('domain.renewal.notice_days_before'), [
+      14, 1, 0,
+    ]);
+    assert.deepEqual(
+      fromDb.getIntList('domain.renewal.late_notice_days_after'),
+      [5],
+    );
+    assert.deepEqual(
+      fromDb.getIntList('domain.renewal.late_notice_days_after'),
+      [5],
+    );
+    assert.equal(
+      warnings.filter((message) =>
+        message.includes('domain.renewal.late_notice_days_after'),
+      ).length,
+      1,
+    );
+
+    const fromEnv = serviceWith(
+      { DOMAIN_RENEWAL_NOTICE_DAYS_BEFORE: '28, 7' },
+      {
+        loadAll: async () =>
+          new Map<string, unknown>([
+            ['domain.renewal.notice_days_before', '14'],
+          ]),
+      },
+    );
+    await fromEnv.reload();
+    assert.deepEqual(fromEnv.getIntList('domain.renewal.notice_days_before'), [
+      28, 7,
+    ]);
+
+    const fromDefault = serviceWith(
+      { DOMAIN_RENEWAL_NOTICE_DAYS_BEFORE: '1,99' },
+      { loadAll: async () => new Map() },
+    );
+    assert.deepEqual(
+      fromDefault.getIntList('domain.renewal.notice_days_before'),
+      [28, 14, 7, 3, 1, 0],
+    );
+    assert.deepEqual(
+      serviceWith(
+        { DOMAIN_RENEWAL_LATE_NOTICE_DAYS_AFTER: '7,7' },
+        { loadAll: async () => new Map() },
+      ).getIntList('domain.renewal.late_notice_days_after'),
+      [7],
+    );
+    assert.deepEqual(
+      serviceWith(
+        {
+          DOMAIN_RENEWAL_NOTICE_DAYS_BEFORE: '0,1,2,3,4,5,6,7,8,9,10,11,12',
+        },
+        { loadAll: async () => new Map() },
+      ).getIntList('domain.renewal.notice_days_before'),
+      [28, 14, 7, 3, 1, 0],
+    );
+
+    const empty = serviceWith(
+      { DOMAIN_RENEWAL_LATE_NOTICE_DAYS_AFTER: '4' },
+      {
+        loadAll: async () =>
+          new Map<string, unknown>([
+            ['domain.renewal.late_notice_days_after', []],
+          ]),
+      },
+    );
+    await empty.reload();
+    assert.deepEqual(empty.getIntList('domain.renewal.late_notice_days_after'), []);
+    assert.deepEqual(
+      serviceWith(
+        { DOMAIN_RENEWAL_LATE_NOTICE_DAYS_AFTER: '' },
+        { loadAll: async () => new Map() },
+      ).getIntList('domain.renewal.late_notice_days_after'),
+      [],
+    );
+  });
+
+  it('resolves strings from the database, then env, then the default', async () => {
+    captureLogs();
+    const fromDb = serviceWith(
+      { ALERTS_ADMIN_EMAIL: 'env@lattiz.app' },
+      {
+        loadAll: async () =>
+          new Map<string, unknown>([
+            ['alerts.admin_email', 'ops@lattiz.app'],
+          ]),
+      },
+    );
+    await fromDb.reload();
+    assert.equal(fromDb.getString('alerts.admin_email'), 'ops@lattiz.app');
+
+    const fromEnv = serviceWith(
+      { ALERTS_ADMIN_EMAIL: '  env@lattiz.app  ' },
+      {
+        loadAll: async () =>
+          new Map<string, unknown>([['alerts.admin_email', 1]]),
+      },
+    );
+    await fromEnv.reload();
+    assert.equal(fromEnv.getString('alerts.admin_email'), 'env@lattiz.app');
+    assert.equal(fromEnv.getString('alerts.admin_email'), 'env@lattiz.app');
+    assert.equal(
+      warnings.filter((message) => message.includes('alerts.admin_email'))
+        .length,
+      1,
+    );
+
+    const fromDefault = serviceWith(
+      { ALERTS_ADMIN_EMAIL: 'not-an-email' },
+      { loadAll: async () => new Map() },
+    );
+    assert.equal(fromDefault.getString('alerts.admin_email'), '');
+
+    const empty = serviceWith(
+      { ALERTS_ADMIN_EMAIL: 'env@lattiz.app' },
+      {
+        loadAll: async () =>
+          new Map<string, unknown>([['alerts.admin_email', '']]),
+      },
+    );
+    await empty.reload();
+    assert.equal(empty.getString('alerts.admin_email'), '');
+    assert.equal(
+      serviceWith({}, { loadAll: async () => new Map() }).getString(
+        'alerts.admin_email',
+      ),
+      '',
+    );
+  });
 });

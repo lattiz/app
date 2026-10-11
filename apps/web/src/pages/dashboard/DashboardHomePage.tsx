@@ -7,6 +7,7 @@ import { QuickActionsCard } from '@/components/dashboard/home/QuickActionsCard';
 import { SiteCard } from '@/components/dashboard/home/SiteCard';
 import { SubscriptionCard } from '@/components/dashboard/home/SubscriptionCard';
 import { TrialBanner } from '@/components/dashboard/home/TrialBanner';
+import { DomainRenewalNotice } from '@/features/dashboard/domain/components/DomainRenewalNotice';
 import { useDashboardStore } from '@/stores/dashboard.store';
 
 export function DashboardHomePage() {
@@ -22,6 +23,7 @@ export function DashboardHomePage() {
   if (state === 'no-subscription') {
     return (
       <div className="flex flex-col gap-4">
+        <DomainRenewalNotice />
         <HomeBanners state={state} site={site} subscription={subscription} />
         <NoSubscriptionGate />
       </div>
@@ -30,6 +32,7 @@ export function DashboardHomePage() {
 
   return (
     <div className="flex flex-col gap-4">
+      <DomainRenewalNotice />
       <HomeBanners state={state} site={site} subscription={subscription} />
       <TrialBanner
         previewState={previewState}

@@ -59,6 +59,10 @@ export class DomainMaintenanceFeeDto {
   /** Lowercase ISO 4217 code, as Stripe uses it. */
   @ApiProperty()
   currency!: string;
+
+  /** IVA en puntos base; el monto no lo incluye. */
+  @ApiProperty()
+  taxRateBps!: number;
 }
 
 export class DomainQuoteResponseDto {
@@ -103,6 +107,74 @@ export class DomainQuoteResponseDto {
 
   @ApiProperty()
   irreversible!: boolean;
+}
+
+export const DOMAIN_RENEWAL_STATUSES = [
+  'open',
+  'overdue',
+  'paid',
+  'renewal_failed',
+] as const;
+
+export type DomainRenewalStatusValue = (typeof DOMAIN_RENEWAL_STATUSES)[number];
+
+export const DOMAIN_RENEWAL_PAY_BLOCKED_REASONS = [
+  'subscription_inactive',
+  'window_closed',
+] as const;
+
+export type DomainRenewalPayBlockedReason =
+  (typeof DOMAIN_RENEWAL_PAY_BLOCKED_REASONS)[number];
+
+export class DomainRenewalStatusDto {
+  /** Domain name this cycle renews. */
+  @ApiProperty()
+  domain!: string;
+
+  /** open: pago abierto; overdue: venció y aún puede pagar; paid: pago recibido, renovando; renewal_failed: pago recibido, Lattiz lo está resolviendo. */
+  @ApiProperty({ enum: DOMAIN_RENEWAL_STATUSES })
+  status!: DomainRenewalStatusValue;
+
+  /** End of the current registration period, as an ISO timestamp. */
+  @ApiProperty()
+  expiresAt!: string;
+
+  /** Last moment a late payment is still accepted, as an ISO timestamp; null before the domain expires. */
+  @ApiProperty({ type: String, nullable: true })
+  lateDeadlineAt!: string | null;
+
+  /** Renewal price before IVA, in cents. */
+  @ApiProperty()
+  baseCents!: number;
+
+  /** IVA in cents. */
+  @ApiProperty()
+  taxCents!: number;
+
+  /** baseCents plus taxCents. */
+  @ApiProperty()
+  totalCents!: number;
+
+  /** Lowercase ISO 4217 code. */
+  @ApiProperty()
+  currency!: string;
+
+  /** True when the tenant can start checkout for this cycle right now. */
+  @ApiProperty()
+  canPay!: boolean;
+
+  /** Por qué no puede pagar; null si puede o si ya pagó. */
+  @ApiProperty({
+    enum: [...DOMAIN_RENEWAL_PAY_BLOCKED_REASONS, null],
+    nullable: true,
+  })
+  payBlockedReason!: DomainRenewalPayBlockedReason | null;
+}
+
+export class DomainRenewalCheckoutResponseDto {
+  /** Stripe Checkout URL for the live renewal cycle. */
+  @ApiProperty()
+  url!: string;
 }
 
 export class DomainPurchaseResponseDto {
