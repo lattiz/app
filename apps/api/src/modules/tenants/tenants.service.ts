@@ -138,9 +138,10 @@ export class TenantsService {
   /** Resolves the authenticated user's tenant (single-tenant-per-user model). */
   async getMyTenant(userSub: string): Promise<TenantMeResponseDto> {
     const rows = await this.query<TenantRow>(
+      // to_jsonb(t) reads business_profile as null if the API ships before its migration.
       sql`SELECT id, slug, name, plan, status, domain, vercel_domain_mapped,
-                 preview_started_at, business_profile
-          FROM public.tenants
+                 preview_started_at, to_jsonb(t) -> 'business_profile' AS business_profile
+          FROM public.tenants t
           WHERE user_id = ${userSub}::uuid
           LIMIT 1`,
     );
