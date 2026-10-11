@@ -13,8 +13,9 @@
  * --dir reads <dir>/<id>.grapesjs + <dir>/index.html (packages/template-kit output) and uploads the
  * local `assets/…` files they reference the same way as cdn.grapesjs.com assets.
  * --tier defaults to `tier` in <dir>/template.meta.json; one of the two is required.
- * --motion (default none) adds Lattiz Motion attributes to the .grapesjs sections (Pro sites
- * only run them; see docs/lattiz-motion.md). Idempotent: already-animated components are skipped.
+ * --motion (default none) adds Lattiz Motion attributes to the .grapesjs sections and to the
+ * preview page (Pro sites only run them; see docs/lattiz-motion.md). Pro previews also inline the
+ * runtime so they animate like a published Pro site. Idempotent: animated elements are skipped.
  * Env: see the root .env.example (read from ./.env, then apps/api/.env for the shared keys).
  * Workflow: docs/adding-templates.md
  */
@@ -34,6 +35,7 @@ import {
 } from '../apps/api/src/modules/storage/infrastructure/storage-provider.factory';
 import {
   decorateMotion,
+  decorateMotionHtml,
   MOTION_PRESETS,
   type MotionPreset,
 } from './lib/motion-decorate';
@@ -880,14 +882,23 @@ async function run(argv: string[]): Promise<void> {
   if (args.preview && rewrittenHtml) {
     const dir = join(TEMPLATE_PREVIEWS_DIR, 'public', args.id);
     mkdirSync(dir, { recursive: true });
+    // Básico tenants never get the runtime, so only Pro previews animate.
+    const preview = decorateMotionHtml(
+      rewrittenHtml,
+      args.motion,
+      args.tier === 'pro',
+    );
     writeFileSync(
       join(dir, 'index.html'),
-      finalizePreviewHtml(rewrittenHtml, args.name),
+      finalizePreviewHtml(preview.html, args.name),
     );
     record(
       '5 write preview',
       '✓',
-      relative(REPO_ROOT, join(dir, 'index.html')),
+      relative(REPO_ROOT, join(dir, 'index.html')) +
+        (args.motion === 'none'
+          ? ''
+          : ` (motion ${preview.summary.sections}+${preview.summary.inner}${args.tier === 'pro' ? ', runtime inlined' : ', static: Básico'})`),
     );
   } else {
     record('5 write preview', '–', 'skipped (--no-preview)');

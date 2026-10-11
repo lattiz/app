@@ -85,5 +85,7 @@ the `.grapesjs` component tree, never navbar/hero/marquee/footer/floating WhatsA
   first `h2` of a section gets `data-lz-words`, the first list with ≥ 3 items gets
   `data-lz-stagger="90"`.
 
-Components that already carry a motion attribute are skipped, so re-seeding never doubles
-anything. Basic templates may be decorated too; the runtime only runs for Pro tenants.
+The preview page (`apps/template-previews/public/<id>/index.html`) gets the same decoration,
+and Pro previews inline the runtime so they animate like a published Pro site; Básico previews
+stay static because Básico tenants never receive the runtime. Components that already carry a
+motion attribute are skipped, so re-seeding never doubles anything.
