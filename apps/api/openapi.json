@@ -1336,6 +1336,61 @@
         ]
       }
     },
+    "/tenants/{tenantId}/business-profile": {
+      "patch": {
+        "operationId": "TenantsController_updateBusinessProfile",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BusinessProfileDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BusinessProfileDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed or INVALID_BUSINESS_PROFILE."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Tenant does not belong to the caller."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update the tenant business profile (protected)",
+        "tags": [
+          "tenants"
+        ]
+      }
+    },
     "/tenants/{tenantId}/site-settings": {
       "patch": {
         "operationId": "TenantsController_updateSiteSettings",
@@ -3162,6 +3217,272 @@
           "locked"
         ]
       },
+      "BusinessAddressDto": {
+        "type": "object",
+        "properties": {
+          "street": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 160
+          },
+          "city": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 80
+          },
+          "region": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 80
+          },
+          "postalCode": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 12
+          },
+          "country": {
+            "type": "string",
+            "nullable": true,
+            "description": "ISO 3166-1 alpha-2, e.g. `MX`.",
+            "pattern": "^[A-Za-z]{2}$",
+            "maxLength": 2
+          }
+        }
+      },
+      "BusinessGeoDto": {
+        "type": "object",
+        "properties": {
+          "lat": {
+            "type": "number"
+          },
+          "lng": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "lat",
+          "lng"
+        ]
+      },
+      "TimeRangeDto": {
+        "type": "object",
+        "properties": {
+          "open": {
+            "type": "string",
+            "example": "09:00"
+          },
+          "close": {
+            "type": "string",
+            "example": "19:00"
+          }
+        }
+      },
+      "BusinessHoursDto": {
+        "type": "object",
+        "properties": {
+          "mon": {
+            "maxItems": 2,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimeRangeDto"
+            }
+          },
+          "tue": {
+            "maxItems": 2,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimeRangeDto"
+            }
+          },
+          "wed": {
+            "maxItems": 2,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimeRangeDto"
+            }
+          },
+          "thu": {
+            "maxItems": 2,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimeRangeDto"
+            }
+          },
+          "fri": {
+            "maxItems": 2,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimeRangeDto"
+            }
+          },
+          "sat": {
+            "maxItems": 2,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimeRangeDto"
+            }
+          },
+          "sun": {
+            "maxItems": 2,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimeRangeDto"
+            }
+          }
+        }
+      },
+      "BusinessSocialDto": {
+        "type": "object",
+        "properties": {
+          "instagram": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 300,
+            "format": "uri"
+          },
+          "facebook": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 300,
+            "format": "uri"
+          },
+          "tiktok": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 300,
+            "format": "uri"
+          },
+          "youtube": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 300,
+            "format": "uri"
+          },
+          "x": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 300,
+            "format": "uri"
+          },
+          "linkedin": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 300,
+            "format": "uri"
+          },
+          "googleMaps": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 300,
+            "format": "uri"
+          }
+        }
+      },
+      "BusinessProfileDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 100
+          },
+          "category": {
+            "nullable": true,
+            "enum": [
+              "restaurant",
+              "medical",
+              "dental",
+              "legal",
+              "accounting",
+              "beauty_salon",
+              "barbershop",
+              "store",
+              "other"
+            ],
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 500
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true,
+            "description": "Any common format; stored as E.164 (Mexico assumed when there is no country code).",
+            "maxLength": 32
+          },
+          "whatsapp": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 32
+          },
+          "email": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 254,
+            "format": "email"
+          },
+          "address": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BusinessAddressDto"
+              }
+            ]
+          },
+          "geo": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BusinessGeoDto"
+              }
+            ]
+          },
+          "hours": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BusinessHoursDto"
+              }
+            ]
+          },
+          "timezone": {
+            "type": "string",
+            "nullable": true,
+            "description": "IANA zone the hours are in; defaults to America/Mexico_City when read.",
+            "example": "America/Mexico_City"
+          },
+          "priceRange": {
+            "nullable": true,
+            "enum": [
+              "$",
+              "$$",
+              "$$$",
+              "$$$$"
+            ],
+            "type": "string"
+          },
+          "social": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BusinessSocialDto"
+              }
+            ]
+          },
+          "logoUrl": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 500,
+            "format": "uri"
+          }
+        }
+      },
       "TenantMeResponseDto": {
         "type": "object",
         "properties": {
@@ -3263,6 +3584,14 @@
           },
           "templateAccess": {
             "$ref": "#/components/schemas/TenantTemplateAccessDto"
+          },
+          "businessProfile": {
+            "description": "\"Datos del negocio\": feeds {{lz:*}} tokens and JSON-LD on the published site.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BusinessProfileDto"
+              }
+            ]
           }
         },
         "required": [
@@ -3283,7 +3612,8 @@
           "canPublish",
           "previewExpiresAt",
           "branding",
-          "templateAccess"
+          "templateAccess",
+          "businessProfile"
         ]
       },
       "UpdateSlugDto": {

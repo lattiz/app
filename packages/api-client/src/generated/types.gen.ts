@@ -670,6 +670,69 @@ export type TenantTemplateAccessDto = {
     locked: boolean;
 };
 
+export type BusinessAddressDto = {
+    street?: string | null;
+    city?: string | null;
+    region?: string | null;
+    postalCode?: string | null;
+    /**
+     * ISO 3166-1 alpha-2, e.g. `MX`.
+     */
+    country?: string | null;
+};
+
+export type BusinessGeoDto = {
+    lat: number;
+    lng: number;
+};
+
+export type TimeRangeDto = {
+    open?: string;
+    close?: string;
+};
+
+export type BusinessHoursDto = {
+    mon?: Array<TimeRangeDto>;
+    tue?: Array<TimeRangeDto>;
+    wed?: Array<TimeRangeDto>;
+    thu?: Array<TimeRangeDto>;
+    fri?: Array<TimeRangeDto>;
+    sat?: Array<TimeRangeDto>;
+    sun?: Array<TimeRangeDto>;
+};
+
+export type BusinessSocialDto = {
+    instagram?: string | null;
+    facebook?: string | null;
+    tiktok?: string | null;
+    youtube?: string | null;
+    x?: string | null;
+    linkedin?: string | null;
+    googleMaps?: string | null;
+};
+
+export type BusinessProfileDto = {
+    name?: string | null;
+    category?: 'restaurant' | 'medical' | 'dental' | 'legal' | 'accounting' | 'beauty_salon' | 'barbershop' | 'store' | 'other';
+    description?: string | null;
+    /**
+     * Any common format; stored as E.164 (Mexico assumed when there is no country code).
+     */
+    phone?: string | null;
+    whatsapp?: string | null;
+    email?: string | null;
+    address?: BusinessAddressDto | null;
+    geo?: BusinessGeoDto | null;
+    hours?: BusinessHoursDto | null;
+    /**
+     * IANA zone the hours are in; defaults to America/Mexico_City when read.
+     */
+    timezone?: string | null;
+    priceRange?: '$' | '$$' | '$$$' | '$$$$';
+    social?: BusinessSocialDto | null;
+    logoUrl?: string | null;
+};
+
 export type TenantMeResponseDto = {
     /**
      * `tenants.id` — the id expected by the editor route (`/editor/:tenantId`).
@@ -718,6 +781,10 @@ export type TenantMeResponseDto = {
      */
     branding: TenantBrandingDto;
     templateAccess: TenantTemplateAccessDto;
+    /**
+     * "Datos del negocio": feeds {{lz:*}} tokens and JSON-LD on the published site.
+     */
+    businessProfile: BusinessProfileDto;
 };
 
 export type UpdateSlugDto = {
@@ -1453,6 +1520,36 @@ export type TenantsControllerUploadBrandingResponses = {
 };
 
 export type TenantsControllerUploadBrandingResponse = TenantsControllerUploadBrandingResponses[keyof TenantsControllerUploadBrandingResponses];
+
+export type TenantsControllerUpdateBusinessProfileData = {
+    body: BusinessProfileDto;
+    path: {
+        tenantId: string;
+    };
+    query?: never;
+    url: '/tenants/{tenantId}/business-profile';
+};
+
+export type TenantsControllerUpdateBusinessProfileErrors = {
+    /**
+     * Validation failed or INVALID_BUSINESS_PROFILE.
+     */
+    400: unknown;
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Tenant does not belong to the caller.
+     */
+    403: unknown;
+};
+
+export type TenantsControllerUpdateBusinessProfileResponses = {
+    200: BusinessProfileDto;
+};
+
+export type TenantsControllerUpdateBusinessProfileResponse = TenantsControllerUpdateBusinessProfileResponses[keyof TenantsControllerUpdateBusinessProfileResponses];
 
 export type TenantsControllerUpdateSiteSettingsData = {
     body: UpdateSiteSettingsDto;

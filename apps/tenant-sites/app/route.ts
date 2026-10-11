@@ -6,6 +6,8 @@ import {
   notFoundResponse,
   unavailableResponse,
 } from '@/lib/status-pages';
+import { buildLocalBusinessJsonLd, injectJsonLd } from '@/lib/json-ld';
+import { bindSiteTokens, stripSiteTokens } from '@/lib/site-tokens';
 import { normalizeHostname, originFor } from '@/lib/tenant-host';
 import { resolveTenantSite } from '@/lib/tenant-data';
 
@@ -59,6 +61,21 @@ function buildFaviconTags(meta: {
   tags.push(`<link rel="icon" href="${fallback}">`);
   tags.push(`<link rel="apple-touch-icon" href="${fallback}">`);
   return tags;
+}
+
+/** A failing serve-time step logs and falls back to its input: it must never break the page. */
+function step(
+  name: string,
+  html: string,
+  fn: (html: string) => string,
+  fallback = html,
+): string {
+  try {
+    return fn(html);
+  } catch (error) {
+    console.error(`[tenant-sites] ${name} step failed:`, error);
+    return fallback;
+  }
 }
 
 // Inject SEO tags into GrapesJS's exported <head>. If the document has no
@@ -127,16 +144,37 @@ export async function GET(request: NextRequest): Promise<Response> {
     site.socialPreviewUrl ??
     `${originFor(hostname)}/api/og?h=${encodeURIComponent(hostname)}`;
 
-  const seoHtml = injectSeo(site.exportedHtml, {
-    title: site.seoTitle || site.tenantName,
-    description: site.seoDescription || `Sitio web de ${site.tenantName}`,
-    ogSiteName: site.ogSiteName,
-    canonicalUrl: canonicalOrigin,
-    noindex: isPreview || !site.isPaid,
-    ogImageUrl,
-    faviconLightUrl: site.faviconLightUrl,
-    faviconDarkUrl: site.faviconDarkUrl,
-  });
+  // Order matters: tokens → SEO → JSON-LD → analytics (composePublishedHtml) → motion.
+  const profile = site.businessProfile;
+  const displayName = profile.name || site.tenantName;
+  const tokenHtml = step(
+    'tokens',
+    site.exportedHtml,
+    (html) => bindSiteTokens(html, profile),
+    stripSiteTokens(site.exportedHtml),
+  );
+  const withSeo = step('seo', tokenHtml, (html) =>
+    injectSeo(html, {
+      title: site.seoTitle || displayName,
+      description:
+        site.seoDescription ||
+        profile.description ||
+        `Sitio web de ${displayName}`,
+      ogSiteName: site.ogSiteName || displayName,
+      canonicalUrl: canonicalOrigin,
+      noindex: isPreview || !site.isPaid,
+      ogImageUrl,
+      faviconLightUrl: site.faviconLightUrl,
+      faviconDarkUrl: site.faviconDarkUrl,
+    }),
+  );
+  const seoHtml = step('json-ld', withSeo, (html) =>
+    injectJsonLd(
+      html,
+      buildLocalBusinessJsonLd(profile, canonicalOrigin),
+      profile.timezone,
+    ),
+  );
   const preview = loadPreviewConfig();
   const html = composePublishedHtml({
     seoHtml,

@@ -94,3 +94,19 @@ export class SlugTakenException extends DomainException {
     super('This address is already taken.');
   }
 }
+
+const BUSINESS_PROFILE_MESSAGES = {
+  phone: 'El teléfono no es un número válido.',
+  whatsapp: 'El número de WhatsApp no es válido.',
+  hours: 'Cada horario necesita una hora de apertura distinta a la de cierre.',
+} as const;
+
+/** A business-profile field passed shape validation but is not a real value (e.g. an impossible phone). */
+export class InvalidBusinessProfileException extends DomainException {
+  readonly code = 'INVALID_BUSINESS_PROFILE';
+  readonly status = HttpStatus.BAD_REQUEST;
+
+  constructor(field: keyof typeof BUSINESS_PROFILE_MESSAGES) {
+    super(BUSINESS_PROFILE_MESSAGES[field], { field });
+  }
+}

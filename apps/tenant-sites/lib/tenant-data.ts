@@ -1,3 +1,4 @@
+import { type BusinessProfile, parseBusinessProfile } from './business-profile';
 import { supabase } from './supabase';
 import {
   isUnderPreviewBase,
@@ -27,6 +28,10 @@ export interface TenantSiteData {
   /** False only when the SQL row says the tenant is not entitled. A missing column stays paid. */
   isPaid: boolean;
   previewExpiresAt: string | null;
+  /** "Datos del negocio"; `{}` when unset or when the SQL predates the column. */
+  businessProfile: BusinessProfile;
+  /** Live Pro subscription: gates Pro-only serve-time features (motion runtime). */
+  isPro: boolean;
 }
 
 export type SiteResolution =
@@ -63,6 +68,8 @@ interface PublicTenantSiteRow {
   is_paid: boolean | null;
   preview_expires_at: string | null;
   serving_state: string | null;
+  business_profile?: unknown;
+  is_pro?: boolean | null;
 }
 
 /**
@@ -140,6 +147,8 @@ export async function resolveTenantSite(
       redirectDomain,
       isPaid: row.is_paid !== false,
       previewExpiresAt: row.preview_expires_at ?? null,
+      businessProfile: parseBusinessProfile(row.business_profile),
+      isPro: row.is_pro === true,
     },
   };
 }

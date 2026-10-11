@@ -17,6 +17,8 @@ import {
   TenantBrandingDto,
 } from './dto/branding.response.dto';
 import type { BrandingType } from './dto/upload-branding.dto';
+import type { BusinessProfileDto } from './dto/business-profile.dto';
+import { businessProfilePatch, readBusinessProfile } from './business-profile';
 import type { UpdateSiteSettingsDto } from './dto/update-site-settings.dto';
 import {
   TenantDomainDto,
@@ -81,6 +83,7 @@ interface TenantRow {
   domain: string | null;
   vercel_domain_mapped: boolean;
   preview_started_at: string | Date | null;
+  business_profile: unknown;
 }
 
 interface SiteMetaRow {
@@ -136,7 +139,7 @@ export class TenantsService {
   async getMyTenant(userSub: string): Promise<TenantMeResponseDto> {
     const rows = await this.query<TenantRow>(
       sql`SELECT id, slug, name, plan, status, domain, vercel_domain_mapped,
-                 preview_started_at
+                 preview_started_at, business_profile
           FROM public.tenants
           WHERE user_id = ${userSub}::uuid
           LIMIT 1`,
@@ -173,6 +176,7 @@ export class TenantsService {
         : null,
       branding: await this.getBranding(row.id),
       templateAccess: await this.getTemplateAccess(row.id),
+      businessProfile: readBusinessProfile(row.business_profile),
     };
   }
 
@@ -382,6 +386,23 @@ export class TenantsService {
     }
 
     return this.getBranding(tenantId);
+  }
+
+  /** Shallow-merges the patch into tenants.business_profile; cleared keys are dropped. */
+  async updateBusinessProfile(
+    tenantId: string,
+    userSub: string,
+    dto: BusinessProfileDto,
+  ): Promise<BusinessProfileDto> {
+    await this.assertTenantOwnership(tenantId, userSub);
+    const patch = businessProfilePatch(dto);
+    const rows = await this.query<{ business_profile: unknown }>(
+      sql`UPDATE public.tenants
+          SET business_profile = jsonb_strip_nulls(business_profile || ${JSON.stringify(patch)}::jsonb)
+          WHERE id = ${tenantId}::uuid
+          RETURNING business_profile`,
+    );
+    return readBusinessProfile(rows[0]?.business_profile);
   }
 
   private async getBrandingColumn(

@@ -8,6 +8,7 @@ import { FlowChecklist } from '@/components/dashboard/customization/FlowChecklis
 import { TemplateSection } from '@/components/dashboard/customization/TemplateSection';
 import { SiteImagesSection } from '@/components/dashboard/customization/SiteImagesSection';
 import { NoSubscriptionGate } from '@/components/dashboard/home/NoSubscriptionGate';
+import { BusinessProfileCard } from '@/features/dashboard/business-profile/BusinessProfileCard';
 import { Button } from '@/components/ui/button';
 import { useDashboardStore } from '@/stores/dashboard.store';
 
@@ -93,6 +94,11 @@ export function CustomizationPage() {
           'tudominio.com'
         }
         branding={tenant.data.branding}
+        businessName={tenant.data.businessProfile.name ?? null}
+      />
+      <BusinessProfileCard
+        tenantId={tenant.data.tenantId}
+        profile={tenant.data.businessProfile}
       />
       <TemplateSection site={site} />
       <FlowChecklist site={site} subscription={subscription} />

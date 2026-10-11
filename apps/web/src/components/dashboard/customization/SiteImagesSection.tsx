@@ -26,6 +26,7 @@ interface SiteImagesSectionProps {
   tenantName: string;
   domain: string;
   branding: TenantBrandingDto;
+  businessName: string | null;
 }
 
 interface UploadSlotProps {
@@ -122,6 +123,7 @@ export function SiteImagesSection({
   tenantName,
   domain,
   branding,
+  businessName,
 }: SiteImagesSectionProps) {
   const [pending, setPending] = useState<BrandingType | null>(null);
   const upload = useUploadBranding();
@@ -221,7 +223,7 @@ export function SiteImagesSection({
           <SiteSeoFields
             key={`${branding.seoTitle}|${branding.seoDescription}|${branding.ogSiteName}`}
             tenantId={tenantId}
-            tenantName={tenantName}
+            tenantName={businessName || tenantName}
             domain={domain}
             branding={branding}
           />

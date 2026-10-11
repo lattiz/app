@@ -5,6 +5,7 @@ import {
   type PreviewState,
 } from '../../../common/billing/preview-capability';
 import { TenantBrandingDto } from './branding.response.dto';
+import { BusinessProfileDto } from './business-profile.dto';
 
 export class TenantSiteMetaDto {
   @ApiProperty({ type: String, nullable: true })
@@ -170,4 +171,8 @@ export class TenantMeResponseDto {
 
   @ApiProperty({ type: TenantTemplateAccessDto })
   templateAccess!: TenantTemplateAccessDto;
+
+  /** "Datos del negocio": feeds {{lz:*}} tokens and JSON-LD on the published site. */
+  @ApiProperty({ type: BusinessProfileDto })
+  businessProfile!: BusinessProfileDto;
 }

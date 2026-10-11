@@ -42,6 +42,7 @@ import {
   SlugAvailabilityResponseDto,
   TenantSlugResponseDto,
 } from './dto/slug.response.dto';
+import { BusinessProfileDto } from './dto/business-profile.dto';
 import { TenantMeResponseDto } from './dto/tenants.response.dto';
 import { SlugAvailabilityQueryDto, UpdateSlugDto } from './dto/update-slug.dto';
 import { UpdateSiteSettingsDto } from './dto/update-site-settings.dto';
@@ -160,6 +161,25 @@ export class TenantsController {
       dto.type,
       file,
     );
+  }
+
+  /** Updates "Datos del negocio" (contact, address, hours…) used by site tokens and JSON-LD. */
+  @Patch(':tenantId/business-profile')
+  @ApiOperation({ summary: 'Update the tenant business profile (protected)' })
+  @ApiOkResponse({ type: BusinessProfileDto })
+  @ApiUnauthorizedResponse({ description: 'Missing or invalid bearer token.' })
+  @ApiBadRequestResponse({
+    description: 'Validation failed or INVALID_BUSINESS_PROFILE.',
+  })
+  @ApiForbiddenResponse({
+    description: 'Tenant does not belong to the caller.',
+  })
+  async updateBusinessProfile(
+    @Param('tenantId', ParseUUIDPipe) tenantId: string,
+    @Body() dto: BusinessProfileDto,
+    @CurrentUser() user?: AuthenticatedUser,
+  ): Promise<BusinessProfileDto> {
+    return this.tenants.updateBusinessProfile(tenantId, requireSub(user), dto);
   }
 
   /** Updates the tenant site's SEO title, description and og:site_name. */
