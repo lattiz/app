@@ -5,10 +5,12 @@ import './editor-i18n.css';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link, useNavigate } from '@tanstack/react-router';
 import {
+  stockControllerStatusOptions,
   tenantsControllerMeOptions,
   tenantsControllerMeQueryKey,
+  type UploadedAssetResponseDto,
 } from '@lattiz/api-client';
-import { Loader2Icon, ArrowLeft } from 'lucide-react';
+import { Loader2Icon, ArrowLeft, ImagesIcon } from 'lucide-react';
 import { type ComponentProps, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
@@ -33,6 +35,7 @@ import {
 } from './api';
 import { grapesjsCoreLocaleEs, studioSdkLocaleEs } from './i18n';
 import { SaveStatusBadge } from './SaveStatusBadge';
+import { StockPhotosDialog } from './StockPhotosDialog';
 import {
   applyStyleMode,
   initStyleMode,
@@ -239,6 +242,11 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
   const grapesEditorRef = useRef<StyleModeEditor | null>(null);
   const [savedAt, setSavedAt] = useState<string | null>(null);
   const [headerHidden, setHeaderHidden] = useState(false);
+  const [stockOpen, setStockOpen] = useState(false);
+  const stockStatus = useQuery({
+    ...stockControllerStatusOptions(),
+    staleTime: Infinity,
+  });
   const [advancedStyles, setAdvancedStyles] = useState(
     readAdvancedStylesPreference,
   );
@@ -401,6 +409,16 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
               <ArrowLeft className="size-4" color="#FFF" />
               Regresar
             </Button>
+            {stockStatus.data?.enabled && (
+              <Button
+                variant="linkSecondary"
+                size="default"
+                onClick={() => setStockOpen(true)}
+              >
+                <ImagesIcon className="size-4" color="#FFF" />
+                <span className="hidden sm:inline">Fotos gratuitas</span>
+              </Button>
+            )}
             <div className="hidden sm:block">
               <SaveStatusBadge
                 status={saveStatus}
@@ -551,6 +569,17 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
           }}
         />
       </main>
+      {stockStatus.data?.enabled && (
+        <StockPhotosDialog
+          tenantId={tenantId}
+          open={stockOpen}
+          onOpenChange={setStockOpen}
+          onUse={(asset) => {
+            applyStockAsset(editorRef.current, asset);
+            setStockOpen(false);
+          }}
+        />
+      )}
     </div>
   );
 }
@@ -564,4 +593,38 @@ function toastSavings(uploaded: UploadedAsset[]): void {
       ? 'Optimizada'
       : `${uploaded.length} imágenes optimizadas`;
   toast.success(`${label}: ${formatBytes(original)} → ${formatBytes(stored)}`);
+}
+
+interface StockAssetEditor {
+  Assets: { add: (asset: Record<string, unknown>) => unknown };
+  getSelected: () =>
+    | { is: (type: string) => boolean; set: (props: Record<string, unknown>) => unknown }
+    | undefined;
+}
+
+/** Adds the imported photo to the asset manager and, when an image is selected, swaps its src. */
+function applyStockAsset(
+  editor: EditorInstance | null,
+  asset: UploadedAssetResponseDto,
+): void {
+  const studio = editor as unknown as StockAssetEditor | null;
+  if (!studio) return;
+  studio.Assets.add({
+    id: asset.id,
+    src: asset.src,
+    name: asset.name,
+    mimeType: asset.mimeType,
+    ...(asset.width && asset.height
+      ? { width: asset.width, height: asset.height }
+      : {}),
+  });
+  const selected = studio.getSelected();
+  if (selected?.is('image')) {
+    selected.set({ src: asset.src });
+    toast.success('Foto aplicada a la imagen seleccionada.');
+  } else {
+    toast.success(
+      'Foto agregada a tus imágenes. Selecciona una imagen y elígela en el gestor.',
+    );
+  }
 }

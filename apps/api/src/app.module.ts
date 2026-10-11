@@ -12,6 +12,7 @@ import { EmailModule } from './modules/email/email.module';
 import { HealthModule } from './modules/health/health.module';
 import { MeModule } from './modules/me/me.module';
 import { SitesModule } from './modules/sites/sites.module';
+import { StockModule } from './modules/stock/stock.module';
 import { TemplatesModule } from './modules/templates/templates.module';
 import { TenantsModule } from './modules/tenants/tenants.module';
 
@@ -31,6 +32,7 @@ import { TenantsModule } from './modules/tenants/tenants.module';
     HealthModule,
     MeModule,
     SitesModule,
+    StockModule,
     TemplatesModule,
     TenantsModule,
   ],

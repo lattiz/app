@@ -377,13 +377,24 @@ export class SitesService {
     }
   }
 
-  /** Gate + optimize + store for one image already on disk or in memory (stock imports). */
-  async storeOptimizedAsset(
+  /** Ownership + template lock, for callers that must check before doing paid work (stock imports). */
+  async assertAssetAccess(tenantId: string, userSub: string): Promise<void> {
+    await this.assertTenantOwnership(tenantId, userSub);
+    await this.templateAccess.assertNotLocked(tenantId);
+  }
+
+  /** Same rules as uploadAssets for one server-fetched image file; the caller owns the file. */
+  async addAssetFromFile(
     tenantId: string,
-    input: string | Buffer,
+    userSub: string,
+    path: string,
     name: string,
   ): Promise<UploadedAssetResponseDto> {
-    const image = await this.runOptimizer(() => this.optimizeOne(input, name));
+    await this.assertAssetAccess(tenantId, userSub);
+    const tenant = await this.loadTenantPreview(this.db, tenantId);
+    const isEntitled = tenant ? this.tenantIsEntitled(tenant) : false;
+    const image = await this.runOptimizer(() => this.optimizeOne(path, name));
+    await this.assertAssetQuota(tenantId, image.bytes, isEntitled);
     return this.storeAsset(tenantId, image, name);
   }
 

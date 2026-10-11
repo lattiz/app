@@ -1113,6 +1113,163 @@
         ]
       }
     },
+    "/stock/status": {
+      "get": {
+        "operationId": "StockController_status",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockStatusDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Stock photo feature status (protected)",
+        "tags": [
+          "stock"
+        ]
+      }
+    },
+    "/stock/photos": {
+      "get": {
+        "operationId": "StockController_search",
+        "parameters": [
+          {
+            "name": "query",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "minLength": 2,
+              "maxLength": 80,
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "perPage",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 24,
+              "default": 24,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockSearchResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "429": {
+            "description": "Per-user limit or STOCK_QUOTA_LOW (provider quota)."
+          },
+          "503": {
+            "description": "STOCK_PHOTOS_DISABLED."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Search free stock photos (protected)",
+        "tags": [
+          "stock"
+        ]
+      }
+    },
+    "/sites/{tenantId}/assets/stock": {
+      "post": {
+        "operationId": "SiteStockAssetsController_importPhoto",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportStockPhotoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadedAssetResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Tenant does not belong to the caller."
+          },
+          "404": {
+            "description": "STOCK_PHOTO_NOT_FOUND."
+          },
+          "503": {
+            "description": "STOCK_PHOTOS_DISABLED or IMAGE_PROCESSING_BUSY."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Import a stock photo as a site asset (protected)",
+        "tags": [
+          "sites"
+        ]
+      }
+    },
     "/tenants/me": {
       "get": {
         "operationId": "TenantsController_me",
@@ -2989,6 +3146,108 @@
           "tenantId",
           "templateId",
           "updatedAt"
+        ]
+      },
+      "StockStatusDto": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "False when the API has no PEXELS_API_KEY; the dashboard hides \"Fotos gratuitas\"."
+          }
+        },
+        "required": [
+          "enabled"
+        ]
+      },
+      "StockPhotoDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "width": {
+            "type": "number"
+          },
+          "height": {
+            "type": "number"
+          },
+          "alt": {
+            "type": "string"
+          },
+          "avgColor": {
+            "type": "string",
+            "nullable": true
+          },
+          "photographer": {
+            "type": "string"
+          },
+          "photographerUrl": {
+            "type": "string"
+          },
+          "pageUrl": {
+            "type": "string",
+            "description": "The photo's page on pexels.com (attribution link)."
+          },
+          "thumbUrl": {
+            "type": "string",
+            "description": "Small preview for the results grid (served by Pexels)."
+          }
+        },
+        "required": [
+          "id",
+          "width",
+          "height",
+          "alt",
+          "avgColor",
+          "photographer",
+          "photographerUrl",
+          "pageUrl",
+          "thumbUrl"
+        ]
+      },
+      "StockSearchResponseDto": {
+        "type": "object",
+        "properties": {
+          "photos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StockPhotoDto"
+            }
+          },
+          "page": {
+            "type": "number"
+          },
+          "perPage": {
+            "type": "number"
+          },
+          "totalResults": {
+            "type": "number"
+          },
+          "hasNext": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "photos",
+          "page",
+          "perPage",
+          "totalResults",
+          "hasNext"
+        ]
+      },
+      "ImportStockPhotoDto": {
+        "type": "object",
+        "properties": {
+          "photoId": {
+            "type": "string",
+            "description": "Pexels photo id from GET /stock/photos; the server fetches the image itself.",
+            "pattern": "^\\d{1,12}$",
+            "example": "3998429"
+          }
+        },
+        "required": [
+          "photoId"
         ]
       },
       "TenantDomainDto": {

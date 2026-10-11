@@ -595,6 +595,46 @@ export type ChangeTemplateResponseDto = {
     updatedAt: string;
 };
 
+export type StockStatusDto = {
+    /**
+     * False when the API has no PEXELS_API_KEY; the dashboard hides "Fotos gratuitas".
+     */
+    enabled: boolean;
+};
+
+export type StockPhotoDto = {
+    id: string;
+    width: number;
+    height: number;
+    alt: string;
+    avgColor: string | null;
+    photographer: string;
+    photographerUrl: string;
+    /**
+     * The photo's page on pexels.com (attribution link).
+     */
+    pageUrl: string;
+    /**
+     * Small preview for the results grid (served by Pexels).
+     */
+    thumbUrl: string;
+};
+
+export type StockSearchResponseDto = {
+    photos: Array<StockPhotoDto>;
+    page: number;
+    perPage: number;
+    totalResults: number;
+    hasNext: boolean;
+};
+
+export type ImportStockPhotoDto = {
+    /**
+     * Pexels photo id from GET /stock/photos; the server fetches the image itself.
+     */
+    photoId: string;
+};
+
 export type TenantDomainDto = {
     domain: string;
     source: 'lattiz_managed' | 'user_provided';
@@ -1390,6 +1430,92 @@ export type SitesControllerChangeTemplateResponses = {
 };
 
 export type SitesControllerChangeTemplateResponse = SitesControllerChangeTemplateResponses[keyof SitesControllerChangeTemplateResponses];
+
+export type StockControllerStatusData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/stock/status';
+};
+
+export type StockControllerStatusErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+};
+
+export type StockControllerStatusResponses = {
+    200: StockStatusDto;
+};
+
+export type StockControllerStatusResponse = StockControllerStatusResponses[keyof StockControllerStatusResponses];
+
+export type StockControllerSearchData = {
+    body?: never;
+    path?: never;
+    query: {
+        query: string;
+        page?: number;
+        perPage?: number;
+    };
+    url: '/stock/photos';
+};
+
+export type StockControllerSearchErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Per-user limit or STOCK_QUOTA_LOW (provider quota).
+     */
+    429: unknown;
+    /**
+     * STOCK_PHOTOS_DISABLED.
+     */
+    503: unknown;
+};
+
+export type StockControllerSearchResponses = {
+    200: StockSearchResponseDto;
+};
+
+export type StockControllerSearchResponse = StockControllerSearchResponses[keyof StockControllerSearchResponses];
+
+export type SiteStockAssetsControllerImportPhotoData = {
+    body: ImportStockPhotoDto;
+    path: {
+        tenantId: string;
+    };
+    query?: never;
+    url: '/sites/{tenantId}/assets/stock';
+};
+
+export type SiteStockAssetsControllerImportPhotoErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Tenant does not belong to the caller.
+     */
+    403: unknown;
+    /**
+     * STOCK_PHOTO_NOT_FOUND.
+     */
+    404: unknown;
+    /**
+     * STOCK_PHOTOS_DISABLED or IMAGE_PROCESSING_BUSY.
+     */
+    503: unknown;
+};
+
+export type SiteStockAssetsControllerImportPhotoResponses = {
+    200: UploadedAssetResponseDto;
+};
+
+export type SiteStockAssetsControllerImportPhotoResponse = SiteStockAssetsControllerImportPhotoResponses[keyof SiteStockAssetsControllerImportPhotoResponses];
 
 export type TenantsControllerMeData = {
     body?: never;
