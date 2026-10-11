@@ -45,5 +45,5 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [domain-renewal-fee](domain-renewal-fee.md) — cuota anual desde el año 2, pago por enlace, mora de 15 días, un dominio incluido por cuenta
 - [image-optimizer-memory-model](image-optimizer-memory-model.md) — WebP ≤ 2000 px con sharp; cola acotada + disco temporal; 290 MiB pico
 - [business-profile-site-tokens](business-profile-site-tokens.md) — business_profile jsonb; tokens {{lz:*}} + JSON-LD al servir; is_pro en SQL
-- [lattiz-motion-runtime](lattiz-motion-runtime.md) — runtime data-lz-* propio, solo Pro; se detecta por atributos de motion
+- [lattiz-motion-runtime](lattiz-motion-runtime.md) — runtime propio solo Pro; v2 coreografía por sección, un solo observer
 - [editor-theme-presets-and-blocks](editor-theme-presets-and-blocks.md) — Tema reescribe --lz-* en :root; bloques/temas Pro según proIncluded

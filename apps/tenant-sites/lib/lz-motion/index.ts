@@ -3,10 +3,13 @@ import { LZ_MOTION_CSS, LZ_MOTION_JS } from './runtime.generated';
 // Motion attributes only: template-kit's data-lz-slot/variant/key/… are on every block.
 const MOTION_ATTR_RE =
   /\sdata-lz-(?:reveal|stagger|counter|words|parallax|lightbox|compare|countdown|open-now)\b/;
+const SECTION_ATTR_RE = /\sdata-lz-section="(?!none")/;
+const MOTION_OFF_RE = /\sdata-lz-motion="none"/;
 const MARKER = 'id="lz-motion"';
 
 export function hasMotionAttributes(html: string): boolean {
-  return MOTION_ATTR_RE.test(html);
+  if (MOTION_ATTR_RE.test(html)) return true;
+  return SECTION_ATTR_RE.test(html) && !MOTION_OFF_RE.test(html);
 }
 
 /** Inlines the Lattiz Motion runtime (style before </head>, script before </body>). Callers gate on Pro. */

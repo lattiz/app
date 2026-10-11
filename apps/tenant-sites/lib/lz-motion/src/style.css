@@ -1,16 +1,121 @@
-/* Hidden states only exist under .lz-js and only on elements the runtime marked .lz-hide. */
-.lz-js .lz-hide { opacity: 0; transition: none; }
-.lz-js .lz-hide[data-lz-kind="fade-up"] { transform: translate3d(0, 24px, 0); }
-.lz-js .lz-hide[data-lz-kind="zoom"] { transform: scale(0.94); }
-.lz-js .lz-hide[data-lz-kind="slide-left"] { transform: translate3d(32px, 0, 0); }
-.lz-js .lz-hide[data-lz-kind="slide-right"] { transform: translate3d(-32px, 0, 0); }
-.lz-js .lz-in {
-  transition:
-    opacity var(--lz-dur, 700ms) ease var(--lz-delay, 0ms),
-    transform var(--lz-dur, 700ms) cubic-bezier(0.2, 0.7, 0.2, 1) var(--lz-delay, 0ms);
+/* Motion tokens. :where() keeps them at zero specificity so a template's own :root values win. */
+:where(:root) {
+  --lz-dur: 640ms;
+  --lz-media-dur: 900ms;
+  --lz-dist: 16px;
+  --lz-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --lz-stagger: 70ms;
+  --lz-word-step: 40ms;
 }
+:where([data-lz-motion="editorial"]) {
+  --lz-dur: 880ms;
+  --lz-media-dur: 1200ms;
+  --lz-dist: 32px;
+  --lz-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --lz-stagger: 95ms;
+  --lz-word-step: 55ms;
+}
+
+/* Hidden states only exist under .lz-js, on targets of a trigger the runtime armed (below the fold). */
+.lz-js .lz-armed .lz-t:not(.lz-go),
+.lz-js .lz-t.lz-armed:not(.lz-go) { opacity: 0; }
+/* i = cascade slot, j = word / v1 stagger child. Individual translate/scale compose with a template's own transform. */
+.lz-js .lz-go {
+  animation: var(--lz-k, lz-rise) var(--lz-d, var(--lz-dur)) var(--lz-ease) backwards;
+  animation-delay: calc(var(--lz-i, 0) * var(--lz-stagger) + var(--lz-j, 0) * var(--lz-step, var(--lz-word-step)) + var(--lz-delay, 0ms));
+}
+.lz-js .lz-go:not(.lz-done) { will-change: opacity, translate; }
+.lz-t[data-lz-fx="fade"] { --lz-k: lz-fade; }
+.lz-t[data-lz-fx="zoom"] { --lz-k: lz-zoom; }
+.lz-t[data-lz-fx="left"] { --lz-k: lz-left; }
+.lz-t[data-lz-fx="right"] { --lz-k: lz-right; }
+.lz-t[data-lz-fx="shift"] { --lz-k: lz-shift; }
+.lz-t[data-lz-fx="mask"] { --lz-k: lz-mask; --lz-d: var(--lz-media-dur); }
+.lz-t[data-lz-fx="settle"] { --lz-k: lz-settle; --lz-d: var(--lz-media-dur); }
+.lz-t[data-lz-fx="settle-lg"] { --lz-k: lz-settle-lg; --lz-d: var(--lz-media-dur); }
+.lz-t[data-lz-fx="word"] { --lz-k: lz-word; }
+.lz-t[data-lz-fx="word-shift"] { --lz-k: lz-shift; }
 .lz-word { display: inline-block; }
-[data-lz-parallax] { will-change: transform; }
+
+@keyframes lz-rise { from { opacity: 0; translate: 0 var(--lz-dist); } }
+@keyframes lz-word { from { opacity: 0; translate: 0 calc(var(--lz-dist) * 0.6); } }
+@keyframes lz-shift { from { translate: 0 var(--lz-dist); } }
+@keyframes lz-fade { from { opacity: 0; } }
+@keyframes lz-zoom { from { opacity: 0; scale: 0.94; } }
+@keyframes lz-left { from { opacity: 0; translate: calc(var(--lz-dist) * 1.5) 0; } }
+@keyframes lz-right { from { opacity: 0; translate: calc(var(--lz-dist) * -1.5) 0; } }
+@keyframes lz-mask { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0); } }
+@keyframes lz-settle { from { scale: 1.025; } }
+@keyframes lz-settle-lg { from { scale: 1.08; } }
+
+/* Scroll-linked effects: compositor-driven scroll timelines where supported; the runtime has a gated JS fallback. */
+@supports (animation-timeline: view()) {
+  .lz-js .lz-px { animation: lz-px linear both; animation-timeline: view(); }
+  .lz-js .lz-px.lz-go {
+    animation: lz-settle-px var(--lz-media-dur) var(--lz-ease) backwards, lz-px linear both;
+    animation-timeline: auto, view();
+  }
+  .lz-js .lz-pv { animation: lz-pv linear both; animation-timeline: view(); }
+}
+@keyframes lz-px { from { translate: 0 -4%; scale: 1.1; } to { translate: 0 4%; scale: 1.1; } }
+@keyframes lz-settle-px { from { scale: 1.16; } to { scale: 1.1; } }
+@keyframes lz-pv {
+  from { translate: 0 calc((50vh + 50%) * var(--lz-pf, 0.2) * -1); }
+  to { translate: 0 calc((50vh + 50%) * var(--lz-pf, 0.2)); }
+}
+@supports (animation-timeline: scroll()) {
+  .lz-progress {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 2147483000; height: 3px;
+    background: var(--lz-color-accent, currentColor); transform-origin: 0 50%; pointer-events: none;
+    animation: lz-progress linear both; animation-timeline: scroll(root);
+  }
+}
+@keyframes lz-progress { from { scale: 0 1; } to { scale: 1 1; } }
+
+.lz-sentinel {
+  position: absolute; top: 0; left: 0; width: 1px; height: 96px;
+  visibility: hidden; pointer-events: none;
+}
+.lz-header::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 18px;
+  background: linear-gradient(rgba(0, 0, 0, 0.12), transparent);
+  opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+}
+.lz-scrolled .lz-header::after { opacity: 1; }
+
+/* cta: a soft accent glow drifting behind the content (transform/opacity only). */
+.lz-drift { isolation: isolate; }
+.lz-drift::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(55% 60% at 30% 35%, color-mix(in srgb, var(--lz-color-accent, currentColor) 16%, transparent), transparent 70%);
+  animation: lz-drift 16s ease-in-out infinite alternate;
+}
+@keyframes lz-drift { from { translate: -4% -3%; opacity: 0.55; } to { translate: 4% 3%; opacity: 1; } }
+
+/* CSS-only helpers for section-kit blocks. */
+.lz-zoom, .lz-hover-zoom img { transition: scale 1.2s var(--lz-ease); }
+.lz-zoom:hover, .lz-hover-zoom:hover img { scale: 1.05; }
+.lz-hover-zoom { overflow: clip; }
+.lz-hover-lift { transition: translate 0.35s var(--lz-ease), box-shadow 0.35s var(--lz-ease); }
+.lz-hover-lift:hover { translate: 0 -4px; }
+.lz-fill-hover { position: relative; isolation: isolate; overflow: clip; transition: color 0.35s var(--lz-ease); }
+.lz-fill-hover::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--lz-fill, var(--lz-color-accent, currentColor));
+  scale: 0 1; transform-origin: 0 50%; transition: scale 0.45s var(--lz-ease);
+}
+.lz-fill-hover:hover, .lz-fill-hover:focus-visible { color: var(--lz-fill-text, var(--lz-color-on-accent, #fff)); }
+.lz-fill-hover:hover::before, .lz-fill-hover:focus-visible::before { scale: 1 1; }
+.lz-marquee { overflow: clip; }
+.lz-marquee > * { display: flex; width: max-content; animation: lz-marquee var(--lz-marquee-dur, 40s) linear infinite; }
+.lz-marquee:hover > * { animation-play-state: paused; }
+@keyframes lz-marquee { to { translate: -50% 0; } }
+.lz-stack > * { position: sticky; top: calc(var(--lz-stack-top, 96px) + var(--lz-n, 0) * 14px); }
+.lz-stack > :nth-child(2) { --lz-n: 1; }
+.lz-stack > :nth-child(3) { --lz-n: 2; }
+.lz-stack > :nth-child(4) { --lz-n: 3; }
+.lz-stack > :nth-child(5) { --lz-n: 4; }
+.lz-stack > :nth-child(n + 6) { --lz-n: 5; }
 
 .lz-compare { position: relative; overflow: hidden; }
 .lz-compare img { display: block; width: 100%; }
@@ -49,10 +154,17 @@
 .lz-lb-prev, .lz-lb-next { top: 50%; transform: translateY(-50%); }
 .lz-lb-prev { left: 16px; }
 .lz-lb-next { right: 16px; }
-@keyframes lz-fade { from { opacity: 0; } to { opacity: 1; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .lz-js .lz-hide { opacity: 1 !important; transform: none !important; }
-  .lz-js .lz-in, .lz-lightbox.lz-open { transition: none !important; animation: none !important; }
-  [data-lz-parallax] { transform: none !important; }
+  .lz-js .lz-t, .lz-js .lz-px, .lz-js .lz-pv, .lz-drift::before, .lz-marquee > *, .lz-lightbox.lz-open {
+    animation: none !important;
+  }
+  .lz-js .lz-t { opacity: 1 !important; }
+  .lz-zoom, .lz-hover-zoom img, .lz-hover-lift, .lz-fill-hover, .lz-fill-hover::before, .lz-header::after {
+    transition: none !important;
+  }
+  .lz-zoom:hover, .lz-hover-zoom:hover img, .lz-hover-lift:hover { scale: none; translate: none; }
+}
+@media print {
+  .lz-js .lz-t { opacity: 1 !important; animation: none !important; }
 }

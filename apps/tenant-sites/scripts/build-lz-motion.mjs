@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { gzipSync } from 'node:zlib';
 import { transform } from 'esbuild';
 
-const MAX_GZIP_BYTES = 8 * 1024;
+const MAX_GZIP_BYTES = 10 * 1024;
 const dir = join(dirname(fileURLToPath(import.meta.url)), '..', 'lib', 'lz-motion');
 
 const js = await transform(readFileSync(join(dir, 'src/runtime.js'), 'utf8'), {
