@@ -13,6 +13,20 @@ export interface GrapesJSAsset {
   src: string;
   mimeType?: string;
   type?: string;
+  width?: number;
+  height?: number;
+}
+
+/** POST /sites/:tenantId/assets item: the stored asset plus its size before/after optimization. */
+export interface UploadedAsset {
+  id: string;
+  name: string;
+  src: string;
+  mimeType: string;
+  width: number | null;
+  height: number | null;
+  originalBytes: number;
+  bytes: number;
 }
 
 // The `.grapesjs` export format has these top-level keys.

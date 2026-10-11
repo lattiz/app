@@ -41,15 +41,32 @@ export class UploadedAssetResponseDto {
 
   @ApiProperty({
     description:
-      'Public Supabase Storage URL, embedded as-is in the exported HTML.',
+      'Public object-storage URL, embedded as-is in the exported HTML.',
   })
   src!: string;
 
   @ApiProperty({ description: 'Original filename as uploaded.' })
   name!: string;
 
+  /** Stored type: `image/webp` unless the original was kept or passed through (SVG, animated). */
   @ApiProperty()
   mimeType!: string;
+
+  /** Pixel width of the stored image; null when it could not be read (some SVGs). */
+  @ApiProperty({ type: Number, nullable: true })
+  width!: number | null;
+
+  /** Pixel height of the stored image; null when it could not be read (some SVGs). */
+  @ApiProperty({ type: Number, nullable: true })
+  height!: number | null;
+
+  /** Size of the uploaded file in bytes. */
+  @ApiProperty()
+  originalBytes!: number;
+
+  /** Size of the stored file in bytes. */
+  @ApiProperty()
+  bytes!: number;
 }
 
 export class ChangeTemplateResponseDto {

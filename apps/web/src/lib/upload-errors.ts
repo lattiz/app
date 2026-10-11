@@ -2,7 +2,7 @@ import { toast } from 'sonner';
 import { templateAccessCopy } from '@/features/templates/template-access.copy';
 
 interface ApiErrorBody {
-  error?: { code?: string };
+  error?: { code?: string; message?: string };
   status?: number;
   response?: { status?: number };
 }
@@ -27,6 +27,17 @@ const ASSET_QUOTA = 'Alcanzaste el límite de imágenes de la prueba';
 const UNSUPPORTED_FILE =
   'Ese archivo no es una imagen. Sube un archivo de imagen (PNG, JPG, WebP, GIF).';
 const RATE_LIMIT = 'Demasiados intentos, espera un momento';
+const IMAGE_BUSY =
+  'Estamos procesando muchas imágenes. Inténtalo de nuevo en unos segundos.';
+const IMAGE_REJECTED =
+  'No pudimos procesar la imagen. Prueba con un archivo JPG, PNG o WebP.';
+
+/** IMAGE_REJECTED carries a specific es-MX reason (HEIC, too many pixels…) from the API. */
+function imageRejectedMessage(err: unknown): string {
+  return (
+    (err as ApiErrorBody | null | undefined)?.error?.message ?? IMAGE_REJECTED
+  );
+}
 const TEMPLATE_REQUIRES_PRO = templateAccessCopy.requiresProError;
 const TEMPLATE_LOCKED_BY_PLAN = templateAccessCopy.lockedError;
 
@@ -112,6 +123,10 @@ export function uploadErrorMessage(err: unknown): string {
       return STORAGE_UNAVAILABLE;
     case 'UNSUPPORTED_ASSET_TYPE':
       return UNSUPPORTED_FILE;
+    case 'IMAGE_REJECTED':
+      return imageRejectedMessage(err);
+    case 'IMAGE_PROCESSING_BUSY':
+      return IMAGE_BUSY;
     case 'ASSET_QUOTA_EXCEEDED':
       return ASSET_QUOTA;
     case 'EMAIL_NOT_VERIFIED':

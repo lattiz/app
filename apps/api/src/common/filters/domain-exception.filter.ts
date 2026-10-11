@@ -28,6 +28,9 @@ export class DomainExceptionFilter implements ExceptionFilter {
       );
     }
 
+    if (exception instanceof DomainException && exception.headers) {
+      response.set(exception.headers);
+    }
     response.status(status).json({ error: { code, message, details } });
   }
 

@@ -530,14 +530,33 @@ export type UploadedAssetResponseDto = {
      */
     id: string;
     /**
-     * Public Supabase Storage URL, embedded as-is in the exported HTML.
+     * Public object-storage URL, embedded as-is in the exported HTML.
      */
     src: string;
     /**
      * Original filename as uploaded.
      */
     name: string;
+    /**
+     * Stored type: `image/webp` unless the original was kept or passed through (SVG, animated).
+     */
     mimeType: string;
+    /**
+     * Pixel width of the stored image; null when it could not be read (some SVGs).
+     */
+    width: number | null;
+    /**
+     * Pixel height of the stored image; null when it could not be read (some SVGs).
+     */
+    height: number | null;
+    /**
+     * Size of the uploaded file in bytes.
+     */
+    originalBytes: number;
+    /**
+     * Size of the stored file in bytes.
+     */
+    bytes: number;
 };
 
 export type SelectTemplateDto = {
@@ -1227,6 +1246,14 @@ export type SitesControllerUploadAssetsErrors = {
      * Tenant does not belong to the caller.
      */
     403: unknown;
+    /**
+     * An image is HEIC, corrupt or too large to process.
+     */
+    422: unknown;
+    /**
+     * Image optimizer busy; retry after the Retry-After header.
+     */
+    503: unknown;
 };
 
 export type SitesControllerUploadAssetsResponses = {

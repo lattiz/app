@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PreviewModule } from '../../common/billing/preview.module';
+import { ImagesModule } from '../../common/images/images.module';
 import { DatabaseModule } from '../../database/database.module';
 import { StorageModule } from '../storage/storage.module';
 import { TemplatesModule } from '../templates/templates.module';
@@ -9,7 +10,13 @@ import { SitesController } from './sites.controller';
 import { SitesService } from './sites.service';
 
 @Module({
-  imports: [DatabaseModule, PreviewModule, StorageModule, TemplatesModule],
+  imports: [
+    DatabaseModule,
+    ImagesModule,
+    PreviewModule,
+    StorageModule,
+    TemplatesModule,
+  ],
   controllers: [SitesController],
   providers: [
     SitesService,

@@ -21,6 +21,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { formatBytes } from '@/lib/format-bytes';
 import { displayHost, liveSiteUrl } from '@/lib/site-address';
 import { reportSiteActionError } from '@/lib/upload-errors';
 import { cn } from '@/lib/utils';
@@ -46,6 +47,7 @@ import type {
   ProjectFile,
   PublishSitePayload,
   SaveStatus,
+  UploadedAsset,
 } from './types';
 
 interface SiteEditorProps {
@@ -198,7 +200,16 @@ function buildOptions(
       storageType: 'self',
       onUpload: async ({ files }) => {
         try {
-          return await uploadAssets(tenantId, files);
+          const uploaded = await uploadAssets(tenantId, files);
+          toastSavings(uploaded);
+          // Only what the asset manager needs ends up in the project JSON.
+          return uploaded.map(({ id, name, src, mimeType, width, height }) => ({
+            id,
+            name,
+            src,
+            mimeType,
+            ...(width && height ? { width, height } : {}),
+          }));
         } catch (err) {
           onUploadError(err);
           throw err;
@@ -542,4 +553,15 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
       </main>
     </div>
   );
+}
+
+function toastSavings(uploaded: UploadedAsset[]): void {
+  const original = uploaded.reduce((sum, a) => sum + a.originalBytes, 0);
+  const stored = uploaded.reduce((sum, a) => sum + a.bytes, 0);
+  if (stored >= original) return;
+  const label =
+    uploaded.length === 1
+      ? 'Optimizada'
+      : `${uploaded.length} imágenes optimizadas`;
+  toast.success(`${label}: ${formatBytes(original)} → ${formatBytes(stored)}`);
 }

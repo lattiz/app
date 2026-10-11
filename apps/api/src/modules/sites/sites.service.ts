@@ -1,8 +1,15 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { sql, type SQL } from 'drizzle-orm';
 import { randomUUID } from 'node:crypto';
-import { extname } from 'node:path';
+import { open, rm } from 'node:fs/promises';
 import { computeIsEntitled } from '../../common/billing/entitlement';
+import {
+  ImageOptimizer,
+  ImageOptimizerBusyError,
+  ImageRejectedError,
+  imageRejectionMessage,
+  type OptimizedImage,
+} from '../../common/images/image-optimizer';
 import { PreviewCapabilityService } from '../../common/billing/preview-capability.service';
 import { previewHost } from '../../common/preview/preview-url';
 import { type Database, DATABASE } from '../../database/database.module';
@@ -30,6 +37,8 @@ import {
 import {
   AssetQuotaExceededException,
   AssetUploadFailedException,
+  ImageProcessingBusyException,
+  ImageRejectedException,
   NoAssetsProvidedException,
   NoTemplateAvailableException,
   SiteNotFoundException,
@@ -43,12 +52,21 @@ import {
 
 type Json = Record<string, unknown>;
 
-/** The part of a multer file we use — avoids the ambient `Express.Multer` global. */
+/** The part of a multer disk-storage file we use — avoids the ambient `Express.Multer` global. */
 export interface UploadedFile {
   originalname: string;
   mimetype: string;
-  buffer: Buffer;
+  /** Temp file written by multer; uploadAssets() deletes it. */
+  path: string;
+  size: number;
 }
+
+const HEIC_MIME = new Set([
+  'image/heic',
+  'image/heif',
+  'image/heic-sequence',
+  'image/heif-sequence',
+]);
 
 interface ProjectRow {
   grapesjs_json: Json;
@@ -94,6 +112,7 @@ export class SitesService {
     private readonly preview: PreviewCapabilityService,
     @Inject(HTML_SANITIZER) private readonly htmlSanitizer: HtmlSanitizerPort,
     private readonly templateAccess: TemplateAccessService,
+    private readonly images: ImageOptimizer,
   ) {}
 
   /** Returns the editor project for a tenant, seeding it from a template on first load. */
@@ -305,72 +324,152 @@ export class SitesService {
   }
 
   /**
-   * Stores editor assets in the public bucket and returns their public URLs, which
-   * is what GrapesJS writes into the exported HTML — blob:/data: sources from
-   * the editor session would 404 on the published site.
+   * Optimizes editor images (WebP, ≤ IMAGE_MAX_DIMENSION) and stores them in the
+   * public bucket. The public URL is what GrapesJS writes into the exported HTML —
+   * blob:/data: sources from the editor session would 404 on the published site.
+   * Always deletes the multer temp files.
    */
   async uploadAssets(
     tenantId: string,
     userSub: string,
     files: UploadedFile[],
   ): Promise<UploadedAssetResponseDto[]> {
-    await this.assertTenantOwnership(tenantId, userSub);
-    await this.templateAccess.assertNotLocked(tenantId);
-    if (!files?.length) throw new NoAssetsProvidedException();
+    try {
+      await this.assertTenantOwnership(tenantId, userSub);
+      await this.templateAccess.assertNotLocked(tenantId);
+      if (!files?.length) throw new NoAssetsProvidedException();
 
-    const tenant = await this.loadTenantPreview(this.db, tenantId);
-    const isEntitled = tenant ? this.tenantIsEntitled(tenant) : false;
-    const verifyBytes = this.preview.shouldVerifyAssetBytes(isEntitled);
-    this.assertAssetTypes(files, verifyBytes);
-    await this.assertAssetQuota(tenantId, files, isEntitled);
+      const tenant = await this.loadTenantPreview(this.db, tenantId);
+      const isEntitled = tenant ? this.tenantIsEntitled(tenant) : false;
+      await this.assertAssetTypes(
+        files,
+        this.preview.shouldVerifyAssetBytes(isEntitled),
+      );
 
-    const assets: UploadedAssetResponseDto[] = [];
+      // Sequential inside one gate slot: a batch never holds more than one decode in memory.
+      const optimized = await this.runOptimizer(async () => {
+        const out: { file: UploadedFile; image: OptimizedImage }[] = [];
+        for (const file of files) {
+          out.push({
+            file,
+            image: await this.optimizeOne(file.path, file.originalname),
+          });
+        }
+        return out;
+      });
+      await this.assertAssetQuota(
+        tenantId,
+        optimized.reduce((sum, { image }) => sum + image.bytes, 0),
+        isEntitled,
+      );
 
-    for (const file of files) {
-      const assetId = randomUUID();
-      const extension = verifyBytes
-        ? (assetMagic.extensionFor(declaredMime(file.mimetype)) ?? '.bin')
-        : safeExtension(file.originalname);
-      // Path is derived server-side: a tenant can never write outside its prefix.
-      const storagePath = `${tenantAssetsPrefix(tenantId)}${assetId}${extension}`;
-
-      try {
-        const src = await this.storage.uploadPublic(
-          storagePath,
-          file.buffer,
-          file.mimetype,
-        );
-        assets.push({
-          id: assetId,
-          src,
-          name: file.originalname,
-          mimeType: file.mimetype,
-        });
-      } catch (error) {
-        this.logger.error(
-          `[assets] Upload failed for ${file.originalname}: ${describeStorageError(error)}`,
-        );
-        throw new AssetUploadFailedException(file.originalname);
+      const assets: UploadedAssetResponseDto[] = [];
+      for (const { file, image } of optimized) {
+        assets.push(await this.storeAsset(tenantId, image, file.originalname));
       }
+      return assets;
+    } finally {
+      await Promise.all(
+        (files ?? []).map((file) =>
+          rm(file.path, { force: true }).catch(() => undefined),
+        ),
+      );
     }
-
-    return assets;
   }
 
-  private assertAssetTypes(files: UploadedFile[], verifyBytes: boolean): void {
-    if (!verifyBytes) {
-      for (const file of files) {
-        if (!file.mimetype.startsWith('image/')) {
-          throw new UnsupportedAssetTypeException(file.mimetype);
-        }
+  /** Gate + optimize + store for one image already on disk or in memory (stock imports). */
+  async storeOptimizedAsset(
+    tenantId: string,
+    input: string | Buffer,
+    name: string,
+  ): Promise<UploadedAssetResponseDto> {
+    const image = await this.runOptimizer(() => this.optimizeOne(input, name));
+    return this.storeAsset(tenantId, image, name);
+  }
+
+  private async runOptimizer<T>(task: () => Promise<T>): Promise<T> {
+    try {
+      return await this.images.run(task);
+    } catch (error) {
+      if (error instanceof ImageOptimizerBusyError) {
+        throw new ImageProcessingBusyException(error.retryAfterSeconds);
       }
-      return;
+      throw error;
     }
+  }
+
+  private async optimizeOne(
+    input: string | Buffer,
+    name: string,
+  ): Promise<OptimizedImage> {
+    try {
+      return await this.images.optimize(input);
+    } catch (error) {
+      if (error instanceof ImageRejectedError) {
+        throw new ImageRejectedException(name, error.reason, error.message);
+      }
+      throw error;
+    }
+  }
+
+  private async storeAsset(
+    tenantId: string,
+    image: OptimizedImage,
+    name: string,
+  ): Promise<UploadedAssetResponseDto> {
+    const assetId = randomUUID();
+    // Path is derived server-side: a tenant can never write outside its prefix.
+    const storagePath = `${tenantAssetsPrefix(tenantId)}${assetId}${image.extension}`;
+    try {
+      const src = await this.storage.uploadPublic(
+        storagePath,
+        image.body,
+        image.mimeType,
+      );
+      return {
+        id: assetId,
+        src,
+        name,
+        mimeType: image.mimeType,
+        width: image.width,
+        height: image.height,
+        originalBytes: image.originalBytes,
+        bytes: image.bytes,
+      };
+    } catch (error) {
+      this.logger.error(
+        `[assets] Upload failed for ${name}: ${describeStorageError(error)}`,
+      );
+      throw new AssetUploadFailedException(name);
+    }
+  }
+
+  private async assertAssetTypes(
+    files: UploadedFile[],
+    verifyBytes: boolean,
+  ): Promise<void> {
+    for (const file of files) {
+      const mime = declaredMime(file.mimetype);
+      if (HEIC_MIME.has(mime)) {
+        throw new ImageRejectedException(
+          file.originalname,
+          'heic',
+          imageRejectionMessage('heic'),
+        );
+      }
+      if (!mime.startsWith('image/')) {
+        throw new UnsupportedAssetTypeException(file.mimetype);
+      }
+    }
+    if (!verifyBytes) return;
 
     const allowed = new Set(this.preview.allowedAssetMime());
     for (const file of files) {
       const mime = declaredMime(file.mimetype);
-      if (!allowed.has(mime) || !assetMagic.matches(mime, file.buffer)) {
+      if (
+        !allowed.has(mime) ||
+        !assetMagic.matches(mime, await readHeader(file.path))
+      ) {
         throw new UnsupportedAssetTypeException(file.mimetype);
       }
     }
@@ -378,12 +477,11 @@ export class SitesService {
 
   private async assertAssetQuota(
     tenantId: string,
-    files: UploadedFile[],
+    incoming: number,
     isEntitled: boolean,
   ): Promise<void> {
     const limit = this.preview.unpaidAssetByteLimit(isEntitled);
     if (limit === null) return;
-    const incoming = files.reduce((sum, file) => sum + file.buffer.length, 0);
     const used = await this.storage.usageBytes(tenantAssetsPrefix(tenantId));
     if (used + incoming > limit) throw new AssetQuotaExceededException(limit);
   }
@@ -577,10 +675,15 @@ function declaredMime(mimetype: string): string {
   return mimetype.split(';', 1)[0].trim().toLowerCase();
 }
 
-/** Keeps only a plain alphanumeric extension so the filename can't shape the storage path. */
-function safeExtension(filename: string): string {
-  const ext = extname(filename).slice(1).toLowerCase();
-  return /^[a-z0-9]{1,10}$/.test(ext) ? `.${ext}` : '.bin';
+async function readHeader(path: string): Promise<Buffer> {
+  const handle = await open(path, 'r');
+  try {
+    const buffer = Buffer.alloc(16);
+    const { bytesRead } = await handle.read(buffer, 0, 16, 0);
+    return buffer.subarray(0, bytesRead);
+  } finally {
+    await handle.close();
+  }
 }
 
 function toIso(value: string | Date): string {

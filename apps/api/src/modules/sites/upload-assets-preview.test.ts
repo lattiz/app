@@ -1,11 +1,15 @@
 import 'reflect-metadata';
 import assert from 'node:assert/strict';
+import { mkdtempSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { describe, it } from 'node:test';
 import type { ConfigService } from '@nestjs/config';
 import type { SQL } from 'drizzle-orm';
 import { PgDialect } from 'drizzle-orm/pg-core';
 import { PreviewCapabilityService } from '../../common/billing/preview-capability.service';
 import { PreviewConfig } from '../../common/billing/preview.config';
+import { ImageOptimizer } from '../../common/images/image-optimizer';
 import { SettingsService } from '../../common/settings/settings.service';
 import type { Database } from '../../database/database.module';
 import type { ObjectStoragePort } from '../storage/domain/object-storage.port';
@@ -24,8 +28,16 @@ const unlockedTemplates = {
 
 const dialect = new PgDialect();
 const DAY_MS = 86_400_000;
-const PNG = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x01]);
+const PNG = Buffer.from(
+  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
+  'base64',
+);
+const SVG = Buffer.from(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4"></svg>',
+  'utf8',
+);
 const HTML = Buffer.from('<html><script>bad</script></html>', 'utf8');
+const TMP = mkdtempSync(join(tmpdir(), 'lz-upload-test-'));
 
 function sqlText(statement: SQL): string {
   return dialect.sqlToQuery(statement).sql;
@@ -97,6 +109,7 @@ function serviceFor(
       preview,
       new SanitizeHtmlSanitizer(),
       unlockedTemplates,
+      new ImageOptimizer(),
     ),
     uploads: () => uploads,
     usageCalls: () => usageCalls,
@@ -108,7 +121,9 @@ function file(
   buffer: Buffer,
   originalname = 'photo.png',
 ): UploadedFile {
-  return { originalname, mimetype, buffer };
+  const path = join(TMP, `${Math.random().toString(36).slice(2)}`);
+  writeFileSync(path, buffer);
+  return { originalname, mimetype, path, size: buffer.length };
 }
 
 describe('uploadAssets unpaid defenses', () => {
@@ -138,14 +153,13 @@ describe('uploadAssets unpaid defenses', () => {
       { PREVIEW_MAX_ASSET_BYTES: '100000' },
       10,
     );
-    const second = Buffer.concat([PNG, Buffer.from([2])]);
     await harness.sites.uploadAssets('tenant-1', 'user-1', [
       file('image/png', PNG, 'evil.html'),
-      file('Image/PNG; charset=binary', second, 'also.html'),
+      file('Image/PNG; charset=binary', PNG, 'also.html'),
     ]);
     assert.deepEqual(harness.usageCalls(), ['tenant-assets/tenant-1/']);
     assert.equal(harness.uploads().length, 2);
-    assert.ok(harness.uploads().every((path) => path.endsWith('.png')));
+    assert.ok(harness.uploads().every((path) => /\.(png|webp)$/.test(path)));
     assert.ok(
       harness
         .uploads()
@@ -170,7 +184,7 @@ describe('uploadAssets unpaid defenses', () => {
   it('skips mime, magic, and quota checks for an entitled tenant', async () => {
     const harness = serviceFor(true, { PREVIEW_MAX_ASSET_BYTES: '1' }, 999_999);
     await harness.sites.uploadAssets('tenant-1', 'user-1', [
-      file('image/svg+xml', HTML, 'mark.svg'),
+      file('image/svg+xml', SVG, 'mark.svg'),
     ]);
     assert.deepEqual(harness.usageCalls(), []);
     assert.equal(harness.uploads().length, 1);
@@ -184,7 +198,7 @@ describe('uploadAssets unpaid defenses', () => {
       999_999,
     );
     await harness.sites.uploadAssets('tenant-1', 'user-1', [
-      file('image/svg+xml', HTML, 'mark.svg'),
+      file('image/svg+xml', SVG, 'mark.svg'),
     ]);
     assert.deepEqual(harness.usageCalls(), []);
     assert.equal(harness.uploads().length, 1);

@@ -2,11 +2,11 @@ import { client } from '@lattiz/api-client';
 import { uploadErrorMessage } from '@/lib/upload-errors';
 import type {
   EditorProjectResponse,
-  GrapesJSAsset,
   GrapesJSProjectJSON,
   PublishSitePayload,
   PublishSiteResult,
   SaveSchemaResult,
+  UploadedAsset,
 } from './types';
 
 // These calls use the shared, already-auth-configured api-client `client`
@@ -42,11 +42,11 @@ export async function saveEditorProject(
   return data as SaveSchemaResult;
 }
 
-/** Uploads editor images and returns their public URLs (what ends up in the exported HTML). */
+/** Uploads editor images (optimized to WebP by the API) and returns their public URLs and sizes. */
 export async function uploadAssets(
   tenantId: string,
   files: File[],
-): Promise<GrapesJSAsset[]> {
+): Promise<UploadedAsset[]> {
   const body = new FormData();
   files.forEach((file) => body.append('files', file));
 
@@ -62,7 +62,7 @@ export async function uploadAssets(
     console.error('[editor] Asset upload failed:', response?.status, error);
     throw error ?? new Error(uploadErrorMessage(error));
   }
-  return data as GrapesJSAsset[];
+  return data as UploadedAsset[];
 }
 
 export async function publishSite(

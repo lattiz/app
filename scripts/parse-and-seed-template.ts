@@ -21,6 +21,10 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, relative, resolve } from 'node:path';
 import { parseEnv } from 'node:util';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import {
+  ImageOptimizer,
+  imageOptimizerOptionsFromEnv,
+} from '../apps/api/src/common/images/image-optimizer';
 import type { ObjectStoragePort } from '../apps/api/src/modules/storage/domain/object-storage.port';
 import {
   createObjectStorage,
@@ -105,6 +109,13 @@ interface DownloadedAsset {
   body: Buffer;
   contentType: string;
   key: string;
+}
+
+interface MigratedAssets {
+  /** Source ref/URL → public R2 URL. */
+  replacements: Map<string, string>;
+  /** Public R2 URL → stored content type, for `assets[].mimeType`. */
+  mimeTypes: Map<string, string>;
 }
 
 type StageStatus = '✓' | '✗' | '–';
@@ -431,13 +442,38 @@ function readLocal(
   };
 }
 
+// Raster images go through the API's optimizer (WebP ≤ IMAGE_MAX_DIMENSION); SVG, video and fonts are stored as-is.
+const OPTIMIZABLE_TYPE_RE = /^image\/(?!svg\+xml$)/;
+
+/** Keys stay `sha256(source)[:16]`, so re-runs map the same source to the same object. */
+async function optimizeAsset(
+  optimizer: ImageOptimizer,
+  asset: DownloadedAsset,
+  templateId: string,
+): Promise<DownloadedAsset> {
+  if (!OPTIMIZABLE_TYPE_RE.test(asset.contentType)) return asset;
+  const image = await optimizer.optimize(asset.body);
+  const hash = createHash('sha256').update(asset.body).digest('hex').slice(0, 16);
+  if (image.transformed) {
+    console.log(
+      `    ${(image.originalBytes / 1024).toFixed(0).padStart(6)} KB → ${(image.bytes / 1024).toFixed(0).padStart(5)} KB  ${asset.url}`,
+    );
+  }
+  return {
+    url: asset.url,
+    body: image.body,
+    contentType: image.mimeType,
+    key: `templates/${templateId}/${hash}${image.extension}`,
+  };
+}
+
 async function migrateAssets(
   storage: ObjectStoragePort,
   urls: string[],
   localRefs: string[],
   baseDir: string,
   templateId: string,
-): Promise<Map<string, string>> {
+): Promise<MigratedAssets> {
   // All-or-nothing: every download must succeed before anything is uploaded or written.
   const settled = await Promise.allSettled([
     ...urls.map((url) => download(url, templateId)),
@@ -451,11 +487,25 @@ async function migrateAssets(
       `${failures.length} asset(s) failed to download:\n    ${failures.join('\n    ')}`,
     );
   }
-  const assets = settled.map(
+  const downloaded = settled.map(
     (r) => (r as PromiseFulfilledResult<DownloadedAsset>).value,
   );
 
+  // Sequential on purpose: one decode in memory at a time, same as the API.
+  const optimizer = new ImageOptimizer(
+    imageOptimizerOptionsFromEnv((key) => process.env[key]),
+  );
+  const assets: DownloadedAsset[] = [];
+  for (const asset of downloaded) {
+    try {
+      assets.push(await optimizeAsset(optimizer, asset, templateId));
+    } catch (error) {
+      throw new StageError(`${asset.url}: ${(error as Error).message}`);
+    }
+  }
+
   const replacements = new Map<string, string>();
+  const mimeTypes = new Map<string, string>();
   let uploaded = 0;
   for (const asset of assets) {
     const publicUrl = storage.publicUrl(asset.key);
@@ -464,11 +514,27 @@ async function migrateAssets(
       uploaded += 1;
     }
     replacements.set(asset.url, publicUrl);
+    mimeTypes.set(publicUrl, asset.contentType);
   }
   console.log(
     `    ${uploaded} uploaded, ${assets.length - uploaded} already in R2`,
   );
-  return replacements;
+  return { replacements, mimeTypes };
+}
+
+/** Points `assets[].mimeType` at the stored type (e.g. image/webp) for every migrated asset. */
+function updateAssetMimeTypes(
+  project: GrapesProject,
+  mimeTypes: Map<string, string>,
+): GrapesProject {
+  if (!Array.isArray(project.assets)) return project;
+  const assets = project.assets.map((entry) => {
+    if (!entry || typeof entry !== 'object') return entry;
+    const src = (entry as { src?: unknown }).src;
+    const mimeType = typeof src === 'string' ? mimeTypes.get(src) : undefined;
+    return mimeType ? { ...entry, mimeType } : entry;
+  });
+  return { ...project, assets };
 }
 
 function rewriteUrls(text: string, replacements: Map<string, string>): string {
@@ -754,7 +820,7 @@ async function run(argv: string[]): Promise<void> {
   const previewUrl = baseUrl ? `${baseUrl}/${args.id}` : null;
 
   // 3. Migrate
-  const replacements = await migrateAssets(
+  const { replacements, mimeTypes } = await migrateAssets(
     storage,
     urls,
     localRefs,
@@ -807,7 +873,7 @@ async function run(argv: string[]): Promise<void> {
   const { created, wasActive } = await upsertTemplate(
     supabase,
     args,
-    JSON.parse(rewrittenJson),
+    updateAssetMimeTypes(JSON.parse(rewrittenJson) as GrapesProject, mimeTypes),
     previewUrl,
   );
   record(

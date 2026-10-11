@@ -118,3 +118,28 @@ export class TenantNotFoundException extends DomainException {
     super('No tenant exists for this user.');
   }
 }
+
+/** The image could not be turned into a web image (HEIC, corrupt, too many pixels…). */
+export class ImageRejectedException extends DomainException {
+  readonly code = 'IMAGE_REJECTED';
+  readonly status = HttpStatus.UNPROCESSABLE_ENTITY;
+
+  constructor(filename: string, reason: string, message: string) {
+    super(message, { filename, reason });
+  }
+}
+
+/** The image optimizer queue is full; the client should retry after `Retry-After`. */
+export class ImageProcessingBusyException extends DomainException {
+  readonly code = 'IMAGE_PROCESSING_BUSY';
+  readonly status = HttpStatus.SERVICE_UNAVAILABLE;
+  readonly headers: Record<string, string>;
+
+  constructor(retryAfterSeconds: number) {
+    super(
+      'Estamos procesando muchas imágenes. Inténtalo de nuevo en unos segundos.',
+      { retryAfterSeconds },
+    );
+    this.headers = { 'Retry-After': String(retryAfterSeconds) };
+  }
+}

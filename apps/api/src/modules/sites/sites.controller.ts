@@ -14,6 +14,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { tmpdir } from 'node:os';
 import {
   ApiBearerAuth,
   ApiBody,
@@ -23,8 +24,10 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiServiceUnavailableResponse,
   ApiTags,
   ApiUnauthorizedResponse,
+  ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
 import { type AuthenticatedUser } from '../../common/auth/authenticated-user';
 import { CurrentUser } from '../../common/auth/current-user.decorator';
@@ -119,12 +122,14 @@ export class SitesController {
     );
   }
 
-  /** Uploads editor assets (images) and returns their public Supabase Storage URLs. */
+  /** Uploads editor images, optimized to WebP (≤ 2000 px), and returns their public URLs. */
   @Post(':tenantId/assets')
   @UseGuards(PublishAllowedGuard, PreviewRateLimitGuard)
   @PreviewAssetRateLimit()
   @UseInterceptors(
+    // Disk, not memory: uploads stay out of the V8 heap; the service deletes them.
     FilesInterceptor('files', MAX_ASSET_FILES, {
+      dest: tmpdir(),
       limits: { fileSize: MAX_ASSET_BYTES, files: MAX_ASSET_FILES },
     }),
   )
@@ -144,6 +149,12 @@ export class SitesController {
   @ApiUnauthorizedResponse({ description: 'Missing or invalid bearer token.' })
   @ApiForbiddenResponse({
     description: 'Tenant does not belong to the caller.',
+  })
+  @ApiUnprocessableEntityResponse({
+    description: 'An image is HEIC, corrupt or too large to process.',
+  })
+  @ApiServiceUnavailableResponse({
+    description: 'Image optimizer busy; retry after the Retry-After header.',
   })
   async uploadAssets(
     @Param('tenantId', ParseUUIDPipe) tenantId: string,

@@ -990,6 +990,12 @@
           },
           "403": {
             "description": "Tenant does not belong to the caller."
+          },
+          "422": {
+            "description": "An image is HEIC, corrupt or too large to process."
+          },
+          "503": {
+            "description": "Image optimizer busy; retry after the Retry-After header."
           }
         },
         "security": [
@@ -2822,21 +2828,44 @@
           },
           "src": {
             "type": "string",
-            "description": "Public Supabase Storage URL, embedded as-is in the exported HTML."
+            "description": "Public object-storage URL, embedded as-is in the exported HTML."
           },
           "name": {
             "type": "string",
             "description": "Original filename as uploaded."
           },
           "mimeType": {
-            "type": "string"
+            "type": "string",
+            "description": "Stored type: `image/webp` unless the original was kept or passed through (SVG, animated)."
+          },
+          "width": {
+            "type": "number",
+            "nullable": true,
+            "description": "Pixel width of the stored image; null when it could not be read (some SVGs)."
+          },
+          "height": {
+            "type": "number",
+            "nullable": true,
+            "description": "Pixel height of the stored image; null when it could not be read (some SVGs)."
+          },
+          "originalBytes": {
+            "type": "number",
+            "description": "Size of the uploaded file in bytes."
+          },
+          "bytes": {
+            "type": "number",
+            "description": "Size of the stored file in bytes."
           }
         },
         "required": [
           "id",
           "src",
           "name",
-          "mimeType"
+          "mimeType",
+          "width",
+          "height",
+          "originalBytes",
+          "bytes"
         ]
       },
       "SelectTemplateDto": {

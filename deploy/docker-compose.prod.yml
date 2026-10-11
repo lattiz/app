@@ -16,13 +16,16 @@ services:
     mem_limit: 900m
     pids_limit: 256
     read_only: true
+    # Upload temp files land here and tmpfs counts against mem_limit, so it is capped.
     tmpfs:
-      - /tmp
+      - /tmp:size=256m
     cap_drop: [ALL]
     security_opt: [no-new-privileges:true]
     # Heap ceiling below mem_limit leaves headroom for non-heap + the runtime.
+    # MALLOC_ARENA_MAX caps glibc arenas: sharp/libvips threads otherwise fragment native memory.
     environment:
       NODE_OPTIONS: "--max-old-space-size=768"
+      MALLOC_ARENA_MAX: "2"
     stop_grace_period: 20s
     expose:
       - "3000"

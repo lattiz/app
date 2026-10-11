@@ -9,6 +9,7 @@ import type { ObjectStoragePort } from '../storage/domain/object-storage.port';
 import { PreviewCapabilityService } from '../../common/billing/preview-capability.service';
 import { PreviewConfig } from '../../common/billing/preview.config';
 import { SettingsService } from '../../common/settings/settings.service';
+import { ImageOptimizer } from '../../common/images/image-optimizer';
 import { SanitizeHtmlSanitizer } from './sanitize-html.sanitizer';
 import { SitesService } from './sites.service';
 import type { TemplateAccessService } from '../templates/template-access.service';
@@ -107,6 +108,7 @@ function serviceFor(fixture: TenantFixture, env: Record<string, string> = {}) {
       preview(env),
       new SanitizeHtmlSanitizer(),
       unlockedTemplates,
+      new ImageOptimizer(),
     ),
     sealCount: () => seals,
     stored: () => stored,

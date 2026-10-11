@@ -4,6 +4,7 @@ import { PgDialect } from 'drizzle-orm/pg-core';
 import type { PreviewCapabilityService } from '../../common/billing/preview-capability.service';
 import type { Database } from '../../database/database.module';
 import type { ObjectStoragePort } from '../storage/domain/object-storage.port';
+import { ImageOptimizer } from '../../common/images/image-optimizer';
 import { TemplateAccessService } from '../templates/template-access.service';
 import type { HtmlSanitizerPort } from './html-sanitizer.port';
 import { SitesService } from './sites.service';
@@ -112,6 +113,7 @@ function harness(fixture: Fixture) {
     preview,
     { sanitizeUnpaidSiteHtml: (h: string) => h } as HtmlSanitizerPort,
     new TemplateAccessService(db),
+    new ImageOptimizer(),
   );
   const writes = () => recorded.filter((q) => /^(UPDATE|INSERT)/.test(q.sql));
   return { sites, recorded, writes };
@@ -152,7 +154,8 @@ describe('SitesService template access', () => {
           {
             originalname: 'a.png',
             mimetype: 'image/png',
-            buffer: Buffer.from('x'),
+            path: '/nonexistent/a.png',
+            size: 1,
           },
         ]),
       ).rejects.toMatchObject(locked);
