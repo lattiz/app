@@ -43,3 +43,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [accent-text-token](accent-text-token.md) — accent es relleno, accent-text es texto; highlight para acentos claros
 - [template-access-by-plan](template-access-by-plan.md) — acceso por plan derivado al leer; bloqueo tras bajar; archivar antes de reemplazar
 - [image-optimizer-memory-model](image-optimizer-memory-model.md) — WebP ≤ 2000 px con sharp; cola acotada + disco temporal; 290 MiB pico
+- [business-profile-site-tokens](business-profile-site-tokens.md) — business_profile jsonb; tokens {{lz:*}} + JSON-LD al servir; is_pro en SQL
