@@ -7,6 +7,7 @@ import {
   unavailableResponse,
 } from '@/lib/status-pages';
 import { buildLocalBusinessJsonLd, injectJsonLd } from '@/lib/json-ld';
+import { injectMotion } from '@/lib/lz-motion';
 import { bindSiteTokens, stripSiteTokens } from '@/lib/site-tokens';
 import { normalizeHostname, originFor } from '@/lib/tenant-host';
 import { resolveTenantSite } from '@/lib/tenant-data';
@@ -176,7 +177,7 @@ export async function GET(request: NextRequest): Promise<Response> {
     ),
   );
   const preview = loadPreviewConfig();
-  const html = composePublishedHtml({
+  const composed = composePublishedHtml({
     seoHtml,
     isPaid: site.isPaid,
     analyticsMeasurementId: site.analyticsMeasurementId,
@@ -184,6 +185,8 @@ export async function GET(request: NextRequest): Promise<Response> {
     upgradeUrl: preview.upgradeUrl,
     abuseReportUrl: preview.abuseReportUrl,
   });
+  // Lattiz Motion is a Pro feature; Básico serves the same HTML static and fully visible.
+  const html = site.isPro ? step('motion', composed, injectMotion) : composed;
 
   return new Response(html, {
     status: 200,

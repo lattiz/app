@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start --port 3002",
     "typecheck": "tsc --noEmit",
-    "test": "node --import tsx --test \"lib/**/*.test.ts\""
+    "test": "node --import tsx --test \"lib/**/*.test.ts\"",
+    "build:motion": "node scripts/build-lz-motion.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.0",
@@ -20,6 +21,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "esbuild": "0.25.12",
     "tsx": "^4.23.0",
     "typescript": "^5"
   }

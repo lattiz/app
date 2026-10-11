@@ -52,6 +52,15 @@ export default tseslint.config(
     files: ['apps/tenant-sites/**/*.{ts,tsx}'],
     languageOptions: { globals: { ...globals.node, ...globals.browser } },
   },
+  // Lattiz Motion: plain browser script inlined into published Pro sites.
+  {
+    files: ['apps/tenant-sites/lib/lz-motion/src/**/*.js'],
+    languageOptions: { sourceType: 'script', globals: { ...globals.browser } },
+  },
+  {
+    files: ['apps/tenant-sites/scripts/**/*.mjs'],
+    languageOptions: { globals: { ...globals.node } },
+  },
   // Disables stylistic rules that conflict with Prettier. Must come last.
   prettier,
 );
