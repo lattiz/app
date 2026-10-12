@@ -39,6 +39,8 @@ export interface GiroInfo extends GiroSummary {
     free: boolean;
   }[];
   fontPairsList: { id: string; label: string; mood: string; free: boolean }[];
+  /** Every other curated pair `brand.fontPair` accepts (outside the giro's list): for a tone the giro's pairs don't cover. */
+  otherFontPairs: { id: string; label: string; mood: string; free: boolean }[];
   shapes: { id: string; label: string }[];
   tiers: Record<
     SpecTier,
@@ -134,6 +136,7 @@ export async function giroInfo(id: string): Promise<GiroInfo | null> {
   const g = GIROS[id];
   if (!g) return null;
   const f = await freeness(g.id);
+  const freeFont = f.fontFree;
   const tiers = {} as GiroInfo['tiers'];
   const copy: GiroInfo['copy'] = {};
   for (const tier of ['basico', 'pro'] as SpecTier[]) {
@@ -213,6 +216,14 @@ export async function giroInfo(id: string): Promise<GiroInfo | null> {
       mood: mood(FONT_PAIRS[fid]?.label ?? ''),
       free: f.fontFree(fid),
     })),
+    otherFontPairs: Object.entries(FONT_PAIRS)
+      .filter(([fid]) => !g.fontPairs.includes(fid))
+      .map(([fid, f]) => ({
+        id: fid,
+        label: f.label,
+        mood: mood(f.label),
+        free: freeFont(fid),
+      })),
     shapes: g.shapes.map((sid) => ({
       id: sid,
       label: SHAPES[sid]?.label ?? sid,

@@ -69,6 +69,13 @@ async function runShow(ctx: Context): Promise<ExitCode> {
     log.plain(
       `  ${f.free ? c.green('libre ') : c.gray('usada ')} ${f.id.padEnd(34)} ${c.gray(f.label)}`,
     );
+  const others = info.otherFontPairs.filter((f) => f.free);
+  if (others.length)
+    log.plain(
+      c.gray(
+        `  También permitidas (fuera de la lista del giro): ${others.map((f) => f.id).join(', ')}`,
+      ),
+    );
   log.plain(
     `\n${c.bold('Formas:')} ${info.shapes.map((s) => s.id).join(', ')}`,
   );

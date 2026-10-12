@@ -14,7 +14,7 @@ en error, el mensaje va a stderr.
 | `list --offline --json`   | filas con `origin` (`generated`/`frozen`/`clone`/`manual`), `drift[]`, y `unbuilt`                                                                                                                                                                                                                                                                                                  |
 | `spec schema`             | JSON Schema del spec                                                                                                                                                                                                                                                                                                                                                                |
 
-`free: true` = esa paleta/tipografía no choca con ninguna plantilla del giro: úsala tal cual.
+`free: true` = esa paleta/tipografía no choca con ninguna plantilla del giro: úsala tal cual. `otherFontPairs[]` (misma forma que `fontPairsList`) son los demás pares curados que `brand.fontPair` acepta: úsalos cuando el tono del negocio no está en los del giro (p. ej. una taquería urbana en un giro de restaurantes con serifas).
 
 ## Spec
 

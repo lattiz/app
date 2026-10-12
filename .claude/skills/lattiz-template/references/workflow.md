@@ -33,8 +33,8 @@ hace falta). Checklist:
       TOL 722, TIJ 664, CUN 998, AGS 449, SLP 444, MOR 443, VER 229, OAX 951, CHIH 614, HMO 662,
       CUL 667), `email` `algo@<nombre>.mx`, `whatsappMessage`.
 - [ ] `todo` borrado.
-- [ ] `brand.palette.preset` y `brand.fontPair` con `free: true` y `mood` acorde; `brand.shape` del
-      giro. La Básica: el compilador le da la siguiente paleta libre; si quieres otra, ponla en
+- [ ] `brand.palette.preset` y `brand.fontPair` con `free: true` y `mood` acorde (si ningún par del giro
+      va con el tono, toma uno de `otherFontPairs` con `free: true`); `brand.shape` del giro. La Básica: el compilador le da la siguiente paleta libre; si quieres otra, ponla en
       `overrides.basico.brand`.
 - [ ] `copy.hero`: `eyebrow` (`<Giro> · {{branch}}`), `title` con un `<span class="lz-title__serif">…</span>`
       en la palabra clave (≤ 40 ideal), `text` (≤ 150), CTAs.
