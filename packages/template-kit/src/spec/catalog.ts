@@ -82,13 +82,15 @@ export function paletteIds(giro: GiroDefinition): string[] {
   return [...Object.keys(giro.palettes), ...Object.keys(EXTENDED_PALETTES)];
 }
 
-/** Font pair ids a spec of this catalog picks from, in pick order. */
+/** Font pair ids a spec of this catalog picks from, in pick order (before the seed rotation). */
 export function fontPairPool(giro: GiroDefinition, catalog: Catalog): string[] {
   if (catalog === 'legacy') return [...giro.fontPairs];
   const extended = byAffinity(Object.entries(EXTENDED_FONT_PAIRS), giro.id)
     .map(([id]) => id)
     .filter((id) => !giro.fontPairs.includes(id));
-  return [...giro.fontPairs, ...extended];
+  // Then the legacy pairs outside the giro's list: a last resort before the pool runs out.
+  const rest = LEGACY_FONT_PAIRS.filter((id) => !giro.fontPairs.includes(id));
+  return [...giro.fontPairs, ...extended, ...rest];
 }
 
 /** A curated pair by id, legacy or extended. */

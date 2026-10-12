@@ -30,18 +30,46 @@ const LOCAL_FALLBACK: Record<string, string> = {
 const CAPS_SIZE_ADJUST: Record<string, string> = {
   Anton: '70.94%',
   'Archivo Black': '113.73%',
+  // Extended pairs: measured against Arial's metric clone (Liberation Sans), 2026-10-12.
+  'Bebas Neue': '59.1%',
+  Oswald: '79.02%',
+};
+
+/**
+ * Extended display faces whose web font, at the pair's display weight, is > 1.5 % wider or narrower
+ * than Capsize's average-width sizing predicts (heavy weights against a regular fallback): measured
+ * on a Spanish sample against the fallback face itself in Chromium, 2026-10-12 (`kit:fonts --cls`).
+ * Only the theme's display face uses it.
+ */
+const DISPLAY_SIZE_ADJUST: Record<string, string> = {
+  Newsreader: '111.84%',
+  Gloock: '112.6%',
+  'League Spartan': '98.87%',
+  'Schibsted Grotesk': '109.58%',
+  Petrona: '110.53%',
+  'EB Garamond': '96.24%',
+  Anybody: '129.58%',
+  'Red Hat Display': '100.04%',
 };
 
 /**
  * Web fonts swap in after first paint; a local fallback sized to the web font's metrics
  * (size-adjust + ascent/descent overrides) keeps the text from reflowing when they do (CLS).
  */
-function metricFallback(stack: string, caps = false): { stack: string; face: string | null } {
+function metricFallback(
+  stack: string,
+  caps = false,
+  display = false,
+): { stack: string; face: string | null } {
   const parts = stack.split(',').map((p) => p.trim());
   const primary = metricsFor(fontFamilyName(stack));
   const local = METRICS.get(LOCAL_FALLBACK[parts[parts.length - 1]] ?? 'Arial');
   if (!primary || !local) return { stack, face: null };
-  const sizeAdjust = caps ? CAPS_SIZE_ADJUST[primary.familyName] : undefined;
+  const sizeAdjust = caps
+    ? CAPS_SIZE_ADJUST[primary.familyName]
+    : display
+      ? DISPLAY_SIZE_ADJUST[primary.familyName]
+      : undefined;
   const { fontFaces } = createFontStack(
     [primary, local],
     sizeAdjust ? { fontFaceProperties: { sizeAdjust } } : undefined,
@@ -172,15 +200,15 @@ export function themeVariables(theme: Theme): [string, string][] {
 /** One metric-matched fallback @font-face per web font the theme uses. */
 export function themeFontFaces(theme: Theme): string {
   const caps = theme.fonts.displayTransform === 'uppercase';
-  const stacks: [string, boolean][] = [
-    [theme.fonts.display, caps],
-    [theme.fonts.serif, false],
-    [theme.fonts.body, false],
-    [theme.fonts.mono ?? theme.fonts.body, false],
+  const stacks: [string, boolean, boolean][] = [
+    [theme.fonts.display, caps, true],
+    [theme.fonts.serif, false, false],
+    [theme.fonts.body, false, false],
+    [theme.fonts.mono ?? theme.fonts.body, false, false],
   ];
   const faces = new Map<string, string>();
-  for (const [stack, upper] of stacks) {
-    const { face } = metricFallback(stack, upper);
+  for (const [stack, upper, display] of stacks) {
+    const { face } = metricFallback(stack, upper, display);
     // One face per family; the display (uppercase) sizing wins when a family serves both.
     if (face && !faces.has(fontFamilyName(stack))) faces.set(fontFamilyName(stack), face);
   }

@@ -18,8 +18,8 @@ prueba de diversidad, docs y skill). Una sesión nueva retoma desde aquí. Estad
 | WP1   | Versionado del catálogo (legacy/extended) y lock | hecho     | a29eedd | nombrar un id nuevo vale en legacy                         |
 | WP2   | Galería del kit y especímenes                    | hecho     | 1b2ec67 | sin GrapesJS: CSS real + fragmento renderizado             |
 | WP3   | Tokens de estilo                                 | hecho     | 7b66734 | presets en `brand.style.*` (shape/density ya existían)     |
-| WP4   | Biblioteca de paletas                            | hecho     | (este)  | 37 paletas; 6 descartadas o rediseñadas por AA o duplicado |
-| WP5   | Biblioteca de pares tipográficos                 | pendiente |         |                                                            |
+| WP4   | Biblioteca de paletas                            | hecho     | a48bfb8 | 37 paletas; 6 descartadas o rediseñadas por AA o duplicado |
+| WP5   | Biblioteca de pares tipográficos                 | hecho     | (este)  | 16 pares; size-adjust medido para displays pesados         |
 | WP6   | Variantes de sección                             | pendiente |         |                                                            |
 | WP7   | Arquetipos de página y módulos verticales        | pendiente |         |                                                            |
 | WP8   | Registro, spec, compilador, CLI y skill          | pendiente |         |                                                            |
@@ -431,3 +431,117 @@ Galería: `pnpm lattiz kit gallery --palettes` (cada paleta como mini página co
 Crítica (ronda 1): las teñidas dan la variedad que faltaba (las legacy son casi todas blanco roto + un
 acento); `pal-limon` y `pal-girasol` se parecían en tres giros, `pal-girasol` se quedó con
 veterinaria, dental y despacho.
+
+## Biblioteca de pares tipográficos (WP5)
+
+`packages/template-kit/font-pairs/library.ts` (datos a mano): **16 pares nuevos**, cada uno con display
+(que también es el de encabezados: el kit usa la misma cara para todo título), cuerpo, acento (una de
+las dos familias: itálica, la misma display o la caligráfica), ánimo, afinidad por giro,
+`displayScale`, `case`/`tracking`/`typeScale` recomendados (presets de WP3) y licencia por familia.
+Misma entrega que los legacy: Google Fonts `css2` con `display=swap` (ningún origen nuevo) y fallback
+local con métricas de Capsize.
+
+- **Reglas (las verifica `pnpm --filter @lattiz/template-kit kit:fonts`, código 1 si un par nuevo las
+  rompe):** ≤ 2 familias y ≤ 4 archivos por página (subconjunto latin, que ya trae todo el español:
+  `ñ á é í ó ú ü ¿ ¡ “ ” — …`), latin-ext disponible, licencia abierta según `google/fonts`
+  (`ofl/<familia>/METADATA.pb`). Variables cuando la familia lo es (13 de 16 pares); el eje `opsz` se
+  fija en un valor (72 en display, 12–16 en texto) en vez de pedir el rango: Newsreader bajó de 151 a
+  74 KB, Source Serif 4 de 193 a 96, Literata de 144 a 72.
+- **Peso:** 33–96 KB por par (promedio 61 KB, 2–4 archivos) contra 77–322 KB (4–7 archivos) de los
+  legacy.
+- **Descartado:** Italiana (sin latin-ext) → Gilda Display; Big Shoulders Display (sin métricas en
+  Capsize, el fallback no se podría medir) → Oswald.
+- **Cubre:** serif editorial + sans limpia (Newsreader, EB Garamond), display de alto contraste
+  (Gloock, Libre Caslon Display, Gilda Display), geométrica (League Spartan, Outfit), humanista (Red
+  Hat), grotesca (Schibsted, Anybody), slab industrial (Zilla Slab), condensadas de cartel (Bebas Neue,
+  Oswald), redonda amable (Fredoka + Nunito) y caligrafía **solo de acento** (Jost en mayúsculas +
+  Pinyon Script en las palabras de acento).
+
+| Par                                      | Estilo                                              | Ánimo             | Afinidad                                  | Archivos | KB (latin) | Variable | CLS 390 / 1366 |
+| ---------------------------------------- | --------------------------------------------------- | ----------------- | ----------------------------------------- | -------- | ---------- | -------- | -------------- |
+| `newsreader+public-sans`                 | serif editorial y sans neutra                       | editorial, sobrio | despacho, clinica, floreria, restaurante  | 3        | 73.6       | 1/2      | 0.001 / 0.002  |
+| `gloock+onest`                           | display de alto contraste                           | lujo, editorial   | estetica, floreria, restaurante, barberia | 2        | 50.2       | 1/2      | 0.000 / 0.002  |
+| `libre-caslon-display+schibsted-grotesk` | didona clásica                                      | lujo, editorial   | estetica, despacho, tienda, floreria      | 2        | 61.5       | 1/2      | 0.000 / 0.000  |
+| `league-spartan+mulish`                  | geométrica pesada                                   | urbano, energía   | gimnasio, tienda, barberia                | 2        | 33.3       | 1/2      | 0.000 / 0.000  |
+| `red-hat-display+red-hat-text`           | humanista clara                                     | clínico, fresco   | clinica, dental, veterinaria, despacho    | 3        | 58.9       | 1/2      | 0.000 / 0.001  |
+| `schibsted-grotesk+source-serif-4`       | grotesca con texto serif                            | editorial, sobrio | despacho, tienda, restaurante             | 3        | 95.9       | 1/2      | 0.002 / 0.003  |
+| `zilla-slab+ibm-plex-sans`               | slab industrial                                     | urbano, rústico   | barberia, despacho, gimnasio, restaurante | 3        | 73.6       | 1/2      | 0.002 / 0.002  |
+| `bebas-neue+barlow`                      | condensada en mayúsculas                            | urbano, energía   | barberia, gimnasio, tienda                | 4        | 56.2       | 0/2      | 0.000 / 0.000  |
+| `oswald+source-sans-3`                   | condensada de cartel                                | urbano, energía   | gimnasio, barberia, restaurante           | 3        | 56         | 1/2      | 0.000 / 0.001  |
+| `fredoka+nunito`                         | redonda amable                                      | juguetón, suave   | veterinaria, tienda, dental, floreria     | 2        | 54.3       | 1/2      | 0.000 / 0.002  |
+| `jost+pinyon-script`                     | geométrica en mayúsculas, caligrafía solo de acento | lujo, suave       | estetica, floreria, tienda                | 2        | 53.4       | 1/2      | 0.001 / 0.003  |
+| `petrona+rubik`                          | serif cálida y sans redondeada                      | cálido, natural   | restaurante, floreria, veterinaria        | 3        | 67.4       | 1/2      | 0.001 / 0.002  |
+| `eb-garamond+albert-sans`                | garalda clásica                                     | sobrio, lujo      | despacho, estetica, clinica, floreria     | 3        | 82.3       | 1/2      | 0.001 / 0.001  |
+| `anybody+be-vietnam-pro`                 | grotesca expresiva                                  | energía, urbano   | gimnasio, tienda, barberia                | 3        | 38.2       | 0/2      | 0.002 / 0.004  |
+| `outfit+literata`                        | geométrica con texto serif                          | fresco, clínico   | clinica, dental, veterinaria, tienda      | 3        | 71.9       | 1/2      | 0.000 / 0.003  |
+| `gilda-display+hanken-grotesk`           | display fina y aireada                              | lujo, suave       | estetica, floreria, tienda, despacho      | 2        | 46.8       | 1/2      | 0.001 / 0.002  |
+
+Pares usables por giro (meta ≥ 8: los del giro + los de la biblioteca con afinidad; en `extended` el
+compilador además puede tomar los demás pares legacy como último recurso):
+
+| Giro        | Usables    | De la biblioteca                                                                                                                                                                                                                                |
+| ----------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| barberia    | 15 (9 + 6) | `gloock+onest`, `league-spartan+mulish`, `zilla-slab+ibm-plex-sans`, `bebas-neue+barlow`, `oswald+source-sans-3`, `anybody+be-vietnam-pro`                                                                                                      |
+| clinica     | 9 (5 + 4)  | `newsreader+public-sans`, `red-hat-display+red-hat-text`, `eb-garamond+albert-sans`, `outfit+literata`                                                                                                                                          |
+| dental      | 8 (5 + 3)  | `red-hat-display+red-hat-text`, `fredoka+nunito`, `outfit+literata`                                                                                                                                                                             |
+| despacho    | 12 (5 + 7) | `newsreader+public-sans`, `libre-caslon-display+schibsted-grotesk`, `red-hat-display+red-hat-text`, `schibsted-grotesk+source-serif-4`, `zilla-slab+ibm-plex-sans`, `eb-garamond+albert-sans`, `gilda-display+hanken-grotesk`                   |
+| estetica    | 10 (5 + 5) | `gloock+onest`, `libre-caslon-display+schibsted-grotesk`, `jost+pinyon-script`, `eb-garamond+albert-sans`, `gilda-display+hanken-grotesk`                                                                                                       |
+| floreria    | 13 (5 + 8) | `newsreader+public-sans`, `gloock+onest`, `libre-caslon-display+schibsted-grotesk`, `fredoka+nunito`, `jost+pinyon-script`, `petrona+rubik`, `eb-garamond+albert-sans`, `gilda-display+hanken-grotesk`                                          |
+| gimnasio    | 10 (5 + 5) | `league-spartan+mulish`, `zilla-slab+ibm-plex-sans`, `bebas-neue+barlow`, `oswald+source-sans-3`, `anybody+be-vietnam-pro`                                                                                                                      |
+| restaurante | 11 (5 + 6) | `newsreader+public-sans`, `gloock+onest`, `schibsted-grotesk+source-serif-4`, `zilla-slab+ibm-plex-sans`, `oswald+source-sans-3`, `petrona+rubik`                                                                                               |
+| tienda      | 14 (5 + 9) | `libre-caslon-display+schibsted-grotesk`, `league-spartan+mulish`, `schibsted-grotesk+source-serif-4`, `bebas-neue+barlow`, `fredoka+nunito`, `jost+pinyon-script`, `anybody+be-vietnam-pro`, `outfit+literata`, `gilda-display+hanken-grotesk` |
+| veterinaria | 9 (5 + 4)  | `red-hat-display+red-hat-text`, `fredoka+nunito`, `petrona+rubik`, `outfit+literata`                                                                                                                                                            |
+
+### CLS y LCP (`kit:fonts --cls`)
+
+Portada `navbar/inline` + `hero/split` con el CSS real del kit, las fuentes web retenidas 1.2 s para que
+el primer pintado use el fallback, a 390×844 y 1366×768, con y sin el fallback medido.
+
+- **Hallazgo del entorno:** el fallback del kit es `local('Arial')` / `local('Times New Roman')`, que
+  este contenedor (y Android) no tiene: ahí cae a la genérica y el fallback no sirve. La página de
+  prueba usa sus clones métricos (Liberation Sans/Serif) para medir lo que ve quien sí los tiene
+  (Windows, macOS, iOS). No cambia el CSS que se publica.
+- **Calibración nueva (solo caras nuevas, la salida legacy no cambia):** en los display de peso
+  alto, la fuente web es bastante más ancha que el Arial regular que Capsize toma de base, y el título
+  de la portada cambiaba de líneas al llegar la fuente (CLS 0.10–0.15 a 390 en cinco pares). Se midió
+  el `size-adjust` necesario en Chromium, al peso del display, con una muestra en español contra la
+  propia cara de fallback: `DISPLAY_SIZE_ADJUST` en `src/lib/theme.ts` (Newsreader 111.84 %, Gloock
+  112.6 %, League Spartan 98.87 %, Schibsted Grotesk 109.58 %, Petrona 110.53 %, EB Garamond 96.24 %,
+  Anybody 129.58 %, Red Hat Display 100.04 %) y `CAPS_SIZE_ADJUST` para los display en mayúsculas
+  (Bebas Neue 59.1 %, Oswald 79.02 %).
+- **Resultado:** los 16 pares nuevos con **CLS ≤ 0.004** en los dos anchos (sin el fallback: hasta
+  0.184); LCP 244–468 ms en local. Los tres representativos: `bebas-neue+barlow` 0.000/0.000,
+  `newsreader+public-sans` 0.001/0.002, `jost+pinyon-script` 0.001/0.003. Referencia legacy en la
+  misma página: `playfair-display+inter` 0.001/0.002; `anton+space-grotesk` **0.122** a 390 (preexistente;
+  calibrarlo cambiaría plantillas publicadas → backlog de la auditoría de WP9).
+
+Galería: `pnpm lattiz kit gallery --fonts`. Crítica: ronda 1 mostró las palabras de acento en
+mayúsculas (el espécimen no aplicaba `accentTransform`; Pinyon Script en mayúsculas no se lee);
+corregido el espécimen, ronda 2 limpia. Ojo de diseño: Libre Caslon Display y Gilda Display son de
+trazo fino: lucen en títulos grandes; en nombres de tarjeta pequeños se ven frágiles (preferir
+`typeScale: expressive`).
+
+## Capacidad después de la Parte 1
+
+`pnpm lattiz kit capacity --catalog extended` (2026-10-12). La regla de paleta del catálogo
+`extended` agrega una condición: además del tono a ≥ 30°, la paleta debe quedar a ≥ 15 (ΔE00 fondo +
+acento) de toda paleta ya usada en el giro. Sin eso, las paletas de acento neutro se repetían (la
+primera simulación dio 29 por giro reusando `pal-tinta-hueso` seis veces: un número falso).
+
+| Giro        | Antes (legacy) | Después (extended) | Pares | +Pro | +Básico | Lo limita ahora                                |
+| ----------- | -------------- | ------------------ | ----- | ---- | ------- | ---------------------------------------------- |
+| barberia    | 3              | **12**             | 0     | 0    | 12      | portadas Pro (0/4 libres) y tonos (4 ventanas) |
+| clinica     | 3              | **16**             | 3     | 3    | 16      | paletas (tonos + ΔE)                           |
+| dental      | 3              | **16**             | 3     | 3    | 17      | paletas                                        |
+| despacho    | 3              | **17**             | 3     | 3    | 17      | paletas                                        |
+| estetica    | 3              | **16**             | 3     | 3    | 15      | paletas                                        |
+| floreria    | 3              | **16**             | 3     | 3    | 16      | paletas                                        |
+| gimnasio    | 3              | **16**             | 3     | 3    | 16      | paletas                                        |
+| restaurante | 3              | **15**             | 3     | 3    | 17      | paletas                                        |
+| tienda      | 3              | **16**             | 3     | 3    | 17      | paletas                                        |
+| veterinaria | 3              | **17**             | 3     | 3    | 17      | paletas                                        |
+
+La meta de **≥ 12 por giro** se cumple sin tocar umbrales. Los **pares Básico + Pro** siguen topados por
+las portadas Pro (3 libres por giro, 0 en barbería): las 5 portadas nuevas de la Parte 2 (WP6) suben
+ese tope. Barbería depende de los acentos neutros: le quedan 4 ventanas de tono (≈ 43°, ≈ 110°,
+≈ 188°, ≈ 300°).

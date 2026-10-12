@@ -18,6 +18,7 @@
     "kit:spec": "tsx src/cli/spec.ts",
     "kit:capacity": "tsx src/cli/capacity.ts",
     "kit:gallery": "tsx src/cli/gallery.ts",
+    "kit:fonts": "tsx src/cli/fonts.ts",
     "kit:palettes": "tsx src/cli/palettes.ts",
     "kit:snapshot": "tsx src/cli/snapshot.ts write",
     "kit:verify-snapshot": "tsx src/cli/snapshot.ts verify"

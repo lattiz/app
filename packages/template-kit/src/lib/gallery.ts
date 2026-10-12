@@ -621,6 +621,7 @@ async function fontSheet(
       `--w:${pair.displayWeight}`,
       `--sc:${scale}`,
       `--as:${pair.accentStyle}`,
+      `--at:${pair.accentTransform}`,
     ].join(';');
     return `<article class="fp" style="${escapeHtml(style)}"><p class="k">${escapeHtml(id)}${extended ? ' · nuevo' : ''}${mood.length ? ` · ${escapeHtml(mood.join(', '))}` : ''} · escala ${scale}</p><p class="d">Corte clásico, <span class="a">sin prisa</span></p><p class="h">Agenda tu cita en Coyoacán</p><p class="b">Atendemos de martes a sábado. Pregunta por el diseño de barba con toalla caliente y el corte infantil; los precios incluyen IVA.</p><p class="g d2">${GLYPHS}</p><p class="g">${GLYPHS}</p><p class="mono">10:00–20:00 · $350 · 01</p></article>`;
   });
@@ -630,7 +631,7 @@ async function fontSheet(
 .fp .k{margin:0 0 8px;font:600 11px/1.4 system-ui;text-transform:uppercase;letter-spacing:.06em;color:#666}
 .fp .d,.fp .d2{font-family:var(--d);font-weight:var(--w);line-height:var(--lh);text-transform:var(--tt);font-size:calc(56px * var(--sc));margin:0 0 12px;letter-spacing:-.01em}
 .fp .d2{font-size:calc(28px * var(--sc))}
-.fp .a{font-family:var(--s);font-style:var(--as)}
+.fp .a{font-family:var(--s);font-style:var(--as);font-weight:400;text-transform:var(--at)}
 .fp .h{font-family:var(--d);font-weight:var(--w);text-transform:var(--tt);font-size:calc(28px * var(--sc));line-height:1.1;margin:0 0 10px}
 .fp .b{font-family:var(--b);font-size:17px;line-height:1.6;max-width:60ch;margin:0 0 10px}
 .fp .g{font-family:var(--b);font-size:16px;margin:0 0 8px}
