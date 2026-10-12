@@ -85,12 +85,18 @@ function compile(): Promise<void> {
   return building;
 }
 
-function meta(): { preset: MotionPreset; sections: SectionOverrides } {
+function meta(): { preset: MotionPreset; sections: SectionOverrides; progress: boolean } {
   const file = join(dist, 'template.meta.json');
   const raw = existsSync(file)
-    ? (JSON.parse(readFileSync(file, 'utf8')) as { motion?: { preset?: MotionPreset; sections?: SectionOverrides } })
+    ? (JSON.parse(readFileSync(file, 'utf8')) as {
+        motion?: { preset?: MotionPreset; sections?: SectionOverrides; progress?: boolean };
+      })
     : {};
-  return { preset: raw.motion?.preset ?? 'calm', sections: raw.motion?.sections ?? {} };
+  return {
+    preset: raw.motion?.preset ?? 'calm',
+    sections: raw.motion?.sections ?? {},
+    progress: raw.motion?.progress === true,
+  };
 }
 
 /** The runtime straight from its source, so runtime edits show without build:motion. */
@@ -109,10 +115,10 @@ const RELOAD = `<script>new EventSource('/events').onmessage=function(e){if(e.da
 function frame(params: URLSearchParams): string {
   const file = join(dist, 'index.html');
   if (!existsSync(file)) return '<p>Compiling…</p>';
-  const { preset: defaultPreset, sections } = meta();
+  const { preset: defaultPreset, sections, progress } = meta();
   const asked = params.get('preset') as MotionPreset | null;
   const preset = asked && MOTION_PRESETS.includes(asked) ? asked : defaultPreset;
-  let html = motionHtml(readFileSync(file, 'utf8'), preset, sections, false).html;
+  let html = motionHtml(readFileSync(file, 'utf8'), preset, sections, false, progress).html;
   if (params.get('motion') !== 'off') html = inject(html);
   if (params.get('reduced') === '1') {
     html = html

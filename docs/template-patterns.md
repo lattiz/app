@@ -79,23 +79,32 @@ enhancement: Firefox doesn't support it, so the static state must be the finishe
 
 `scripts/parse-and-seed-template.ts --motion calm|editorial|none` (default: the manifest's
 `motion.preset`, else `none`) tags every section of the `.grapesjs` component tree and of the
-preview with `data-lz-section` and the root wrapper (`.lz-page`) with `data-lz-motion`. No inner
-node is decorated: the Lattiz Motion v2 runtime derives the choreography from the section type
+preview with `data-lz-section` and its default `data-lz-pattern`, and the root wrapper (`.lz-page`)
+with `data-lz-motion` (+ `data-lz-progress` when `motion.progress` is true). No inner node is
+decorated: the Lattiz Motion v3 runtime builds reveal groups from the section type
 (`docs/lattiz-motion.md`). Navbar, floating WhatsApp and marquee are never tagged.
 
-Types come from a classifier over the exported HTML, first match wins: `footer` (tag or slot) →
-`hero` (has the `<h1>`, or first section) → `stats` (≥ 3 bare numbers, ≥ 1 per 4 text blocks;
-prices and years don't count) → `gallery` (≥ 3 images, ≥ 1 per 2 text blocks) → `cards`
-(≥ 3 look-alike siblings; runs of plain `<p>` don't count) → `cta` (last section with a
-button) → `text`. Every run prints the table (also with `--dry-run`). When a section is
-mis-typed, fix it in the manifest, never by hand in the HTML:
+Template-kit sections get their type from the slot (`services` → `cards`, `locations` → `contact`,
+`about`, `team`, `gallery`, `testimonials`, `faq`, `footer`…). Other exports go through heuristics,
+first match wins: `footer` (tag) → `hero` (has the `<h1>`, or first section) → `faq` (≥ 3
+`<details>`) → `contact` (has a `<form>`) → `stats` (≥ 3 bare numbers, ≥ 1 per 4 text blocks; prices
+and years don't count) → `gallery` (≥ 3 images, ≥ 1 per 2 text blocks) → `testimonials` (≥ 2
+`<blockquote>`) → `cards` (≥ 3 look-alike siblings; runs of plain `<p>` don't count) → `cta` (last
+section with a button) → `about`. Every run prints the table (also with `--dry-run`): type,
+pattern, why, and an estimate of reveal groups on a phone. When a section is mis-typed, fix it in
+the manifest, never by hand in the HTML:
 
 ```ts
-motion: { preset: 'editorial', sections: { about: 'text', '#galeria': 'gallery', 6: 'none' } },
+motion: {
+  preset: 'editorial',
+  progress: true,
+  sections: { about: 'about', faq: { pattern: 'cascade' }, '#resenas': { type: 'cards', pattern: 'converge' }, 6: 'none' },
+},
 ```
 
-Keys are a slot name, `#id` or the table's index. Precedence: manifest override > a
-`data-lz-section` already in the source > classifier. Re-running produces the same attributes.
-`editorial` galleries also get `data-lz-lightbox`. Pro previews inline the runtime; Básico
-previews stay static because Básico tenants never receive it. Section-kit blocks in the editor
+Keys are a slot name, `#id` or the table's index; a value is a type or `{ type?, pattern? }`.
+Precedence: manifest override > a `data-lz-section`/`data-lz-pattern` already in the source >
+classifier (a v2 `text` becomes `about`). Re-running produces the same attributes. `editorial`
+galleries also get `data-lz-lightbox`. Pro previews inline the runtime; Básico previews stay static
+because Básico tenants never receive it. Section-kit blocks in the editor
 (`apps/web/src/features/editor/blocks`) ship with `data-lz-section` already set.

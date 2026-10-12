@@ -20,28 +20,64 @@ export const MOTION_PRESETS: readonly MotionPreset[] = [
   'editorial',
   'none',
 ];
-export type SectionType =
-  | 'hero'
-  | 'text'
-  | 'cards'
-  | 'gallery'
-  | 'stats'
-  | 'cta'
-  | 'footer'
-  | 'none';
-const SECTION_TYPES: readonly string[] = [
+export const SECTION_TYPES = [
   'hero',
-  'text',
+  'about',
   'cards',
+  'steps',
+  'timeline',
   'gallery',
   'stats',
+  'testimonials',
+  'pricing',
+  'team',
+  'faq',
+  'contact',
   'cta',
   'footer',
   'none',
-];
+] as const;
+export type SectionType = (typeof SECTION_TYPES)[number];
+export const PATTERNS = ['cascade', 'alternate', 'converge', 'center-out', 'wave', 'none'] as const;
+export type Pattern = (typeof PATTERNS)[number];
 
+/** The runtime's default pattern per type (apps/tenant-sites/lib/lz-motion/src/runtime.js). */
+const DEFAULT_PATTERN: Partial<Record<SectionType, Pattern>> = {
+  faq: 'alternate',
+  steps: 'alternate',
+  timeline: 'alternate',
+  testimonials: 'alternate',
+  cards: 'converge',
+  pricing: 'converge',
+  gallery: 'wave',
+  stats: 'center-out',
+};
+
+/** Template-kit slots map straight to a type; heuristics only run for other exports. */
+const SLOT_TYPES: Record<string, SectionType> = {
+  hero: 'hero',
+  about: 'about',
+  services: 'cards',
+  catalog: 'cards',
+  pricing: 'pricing',
+  team: 'team',
+  gallery: 'gallery',
+  proof: 'gallery',
+  stats: 'stats',
+  steps: 'steps',
+  timeline: 'timeline',
+  testimonials: 'testimonials',
+  faq: 'faq',
+  locations: 'contact',
+  contact: 'contact',
+  cta: 'cta',
+  footer: 'footer',
+};
+
+/** One manual correction: a type, or a type plus a pattern. */
+export type SectionOverride = SectionType | { type?: SectionType; pattern?: Pattern };
 /** Keys: slot name, `#id` or the section's index in the classification table. */
-export type SectionOverrides = Record<string, SectionType>;
+export type SectionOverrides = Record<string, SectionOverride>;
 
 // Chrome that must stay put: fixed/sticky bars and self-animated tickers.
 const SKIP_SLOTS = new Set(['navbar', 'floating-whatsapp', 'marquee']);
@@ -53,7 +89,10 @@ export interface SectionRow {
   index: number;
   block: string;
   type: SectionType | 'skip';
+  pattern: Pattern | '';
   reason: string;
+  /** Rough count of reveal groups on a phone: heading block + items of look-alike lists + lone images. */
+  revealGroups: number;
   nodes: number;
   text: number;
   media: number;
@@ -136,14 +175,36 @@ function overrideFor(
   el: HTMLElement,
   index: number,
   overrides: SectionOverrides,
-): SectionType | undefined {
+): { type?: SectionType; pattern?: Pattern } | undefined {
   const slot = el.getAttribute('data-lz-slot');
   const id = el.getAttribute('id');
-  return (
+  const hit =
     overrides[String(index)] ??
     (id ? overrides[`#${id}`] : undefined) ??
-    (slot ? overrides[slot] : undefined)
-  );
+    (slot ? overrides[slot] : undefined);
+  return typeof hit === 'string' ? { type: hit } : hit;
+}
+
+/** Reveal groups the runtime will build when everything stacks (phones). */
+function revealGroups(el: HTMLElement): number {
+  let items = 0;
+  const visit = (node: HTMLElement): void => {
+    const kids = elements(node);
+    if (kids.length >= 3) {
+      const sig = signature(kids[1]);
+      const same = kids.filter((k) => signature(k) === sig).length;
+      if (same >= 3 && same >= kids.length - 1 && !sig.startsWith('p.')) {
+        items += kids.length;
+        return;
+      }
+    }
+    kids.forEach(visit);
+  };
+  visit(el);
+  const lone = el.querySelectorAll('img, video, iframe').filter(
+    (m) => !m.parentNode?.closest?.('li, figure, article, details'),
+  ).length;
+  return 1 + items + lone;
 }
 
 function classify(
@@ -173,6 +234,8 @@ function classify(
     const row = {
       index,
       block: describe(el),
+      pattern: '' as Pattern | '',
+      revealGroups: revealGroups(el),
       nodes: el.querySelectorAll('*').length + 1,
       text,
       media,
@@ -181,28 +244,39 @@ function classify(
       buttons,
     };
     const override = overrideFor(el, index, overrides);
-    if (override) return { ...row, type: override, reason: 'override' };
+    const manualPattern = el.getAttribute('data-lz-pattern');
+    const withPattern = (r: Omit<SectionRow, 'pattern'> & { pattern?: Pattern | '' }): SectionRow => {
+      const type = r.type;
+      const pattern =
+        override?.pattern ??
+        ((PATTERNS as readonly string[]).includes(manualPattern ?? '') ? (manualPattern as Pattern) : undefined) ??
+        (type === 'skip' || type === 'none' || type === 'footer' ? '' : (DEFAULT_PATTERN[type] ?? 'cascade'));
+      return { ...r, pattern };
+    };
     const manual = el.getAttribute('data-lz-section');
-    if (manual && SECTION_TYPES.includes(manual))
-      return { ...row, type: manual as SectionType, reason: 'manual' };
+    const known = (t: string | undefined): t is SectionType =>
+      !!t && (SECTION_TYPES as readonly string[]).includes(t);
+    if (override?.type) return withPattern({ ...row, type: override.type, reason: 'override' });
+    if (known(manual)) return withPattern({ ...row, type: manual, reason: 'manual' });
+    if (manual === 'text') return withPattern({ ...row, type: 'about', reason: 'manual (v2 text)' });
     if (SKIP_SLOTS.has(slot) || (!slot && tag === 'header'))
-      return { ...row, type: 'skip' as const, reason: 'chrome' };
+      return withPattern({ ...row, type: 'skip', reason: 'chrome' });
 
     const isFirst = firstContent;
     firstContent = false;
-    const pick = (type: SectionType, reason: string): SectionRow => ({
-      ...row,
-      type,
-      reason,
-    });
+    const pick = (type: SectionType, reason: string): SectionRow => withPattern({ ...row, type, reason });
+    if (SLOT_TYPES[slot]) return pick(SLOT_TYPES[slot], `slot ${slot}`);
     if (tag === 'footer' || slot === 'footer') return pick('footer', 'footer');
     if (el.querySelector('h1')) return pick('hero', 'has h1');
     if (isFirst) return pick('hero', 'first section');
+    if (el.querySelectorAll('details').length >= 3) return pick('faq', 'details list');
+    if (el.querySelector('form')) return pick('contact', 'has a form');
     if (numeric >= 3 && numeric * 4 >= text) return pick('stats', `${numeric} numbers`);
     if (images >= 3 && images * 2 >= text) return pick('gallery', `${images} images`);
+    if (el.querySelectorAll('blockquote').length >= 2) return pick('testimonials', 'quotes');
     if (groups > 0) return pick('cards', 'look-alike siblings');
     if (el === lastMain && buttons > 0) return pick('cta', 'last with a button');
-    return pick('text', 'default');
+    return pick('about', 'default');
   });
 }
 
@@ -216,6 +290,7 @@ export function motionHtml(
   preset: MotionPreset,
   overrides: SectionOverrides,
   withRuntime: boolean,
+  progress = false,
 ): { html: string; result: MotionResult } {
   const doc = parse(html, { comment: true });
   const sections = htmlSections(doc);
@@ -225,8 +300,14 @@ export function motionHtml(
   rows.forEach((row, i) => {
     if (row.type === 'skip') return;
     const el = sections[i];
-    if (el.getAttribute('data-lz-section') !== row.type) changed += 1;
+    if (
+      el.getAttribute('data-lz-section') !== row.type ||
+      (el.getAttribute('data-lz-pattern') ?? '') !== row.pattern
+    )
+      changed += 1;
     el.setAttribute('data-lz-section', row.type);
+    if (row.pattern) el.setAttribute('data-lz-pattern', row.pattern);
+    else el.removeAttribute('data-lz-pattern');
     if (
       preset === 'editorial' &&
       row.type === 'gallery' &&
@@ -234,7 +315,10 @@ export function motionHtml(
     )
       el.setAttribute('data-lz-lightbox', '');
   });
-  rootWrapper(doc)?.setAttribute('data-lz-motion', preset);
+  const root = rootWrapper(doc);
+  root?.setAttribute('data-lz-motion', preset);
+  if (progress) root?.setAttribute('data-lz-progress', '');
+  else root?.removeAttribute('data-lz-progress');
   const tagged = doc.toString();
   return {
     html: withRuntime ? injectMotion(tagged) : tagged,
@@ -299,6 +383,7 @@ export function motionProject(
   project: { pages?: unknown[] },
   preset: MotionPreset,
   rows: SectionRow[],
+  progress = false,
 ): void {
   if (preset === 'none') return;
   const frames = (project.pages ?? []).flatMap(
@@ -319,6 +404,8 @@ export function motionProject(
       const type = rows[i].type;
       if (type === 'skip') return;
       const attrs: Record<string, unknown> = { 'data-lz-section': type };
+      if (rows[i].pattern) attrs['data-lz-pattern'] = rows[i].pattern;
+      else if (c.attributes) delete c.attributes['data-lz-pattern'];
       if (
         preset === 'editorial' &&
         type === 'gallery' &&
@@ -329,16 +416,20 @@ export function motionProject(
     });
     const root = jsonRoot(wrapper);
     root.attributes = { ...(root.attributes ?? {}), 'data-lz-motion': preset };
+    if (progress) root.attributes['data-lz-progress'] = '';
+    else delete root.attributes['data-lz-progress'];
   }
 }
 
 export function classificationTable(id: string, rows: SectionRow[]): string {
-  const head = ['#', 'block', 'type', 'why', 'nodes', 'text', 'media', 'groups', 'num', 'btn'];
+  const head = ['#', 'block', 'type', 'pattern', 'why', 'reveal groups', 'nodes', 'text', 'media', 'lists', 'num', 'btn'];
   const body = rows.map((r) => [
     String(r.index),
     r.block,
     r.type,
+    r.pattern || '–',
     r.reason,
+    r.type === 'skip' ? '–' : String(r.revealGroups),
     String(r.nodes),
     String(r.text),
     String(r.media),

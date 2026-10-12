@@ -30,8 +30,9 @@ Una plantilla **es código** en `packages/template-kit`; no se edita un `.grapes
 solo para esa plantilla. Etapas (todas idempotentes; si algo falla, re-ejecuta el mismo comando):
 
 1. **validate** — proyecto de una página, tipo `web`.
-2. **1b motion** — etiqueta cada sección con `data-lz-section` y el contenedor raíz con
-   `data-lz-motion` (preset de `motion.preset` del manifiesto). Imprime la tabla de clasificación.
+2. **1b motion** — etiqueta cada sección con `data-lz-section` + `data-lz-pattern` y el contenedor
+   raíz con `data-lz-motion` (preset de `motion.preset` del manifiesto; `data-lz-progress` si
+   `motion.progress`). Imprime la tabla: tipo, patrón, por qué, grupos estimados en móvil.
 3. **collect / migrate** — sube las imágenes a R2 bajo `templates/<id>/…` (optimizadas a WebP).
 4. **rewrite** — cambia las rutas locales por URLs de `assets.lattiz.app`.
 5. **preview** — escribe `apps/template-previews/public/<id>/index.html`. Si la plantilla es Pro,
@@ -74,8 +75,10 @@ que cambiar de plantilla (pierde su contenido, que queda archivado) o hacerlo é
 ## 5. Versiones, tier y activación
 
 - El id lleva versión: `barberia-norte-v1`. **Mejoras compatibles**: mismo id, re-sembrar (upsert).
-  **Rediseño** que cambia la estructura: id nuevo (`-v2`) y nueva fila; la `-v1` sigue para quien la
-  tiene. El seed nunca desactiva otra plantilla.
+  **Cambios grandes** (estructura, otra composición del hero, quitar o reordenar secciones): id nuevo
+  (`-v2`) y nueva fila. Como los clientes reciben una **copia** al elegir (§3), los que ya usan la
+  `-v1` no ven ningún arreglo de la plantilla; la `-v2` deja claro qué versión tiene cada quien. El
+  seed nunca desactiva otra plantilla.
 - **Pro/Básico**: `tier` del manifiesto → `template.meta.json` → `templates.tier`. Qué planes la
   pueden usar se calcula en la API al leer (`modules/templates/template-access.policy.ts`). Un tema
   Pro solo sirve a plantillas Pro (lo valida `kit:validate`).
@@ -89,10 +92,34 @@ que cambiar de plantilla (pierde su contenido, que queda archivado) o hacerlo é
 | Comando | Para qué |
 |---|---|
 | `pnpm template:dev <id>` | Servidor local en `http://localhost:4400` con recarga en vivo: recompila al guardar secciones, tema, textos o manifiesto. Barra: 360/390/768/1024/1440, Motion on/off, preset, «Reduced motion». No toca nada remoto. |
-| `pnpm template:shots <id>` | Capturas a 360/390/768/1024/1440 en `packages/template-kit/dist/<id>/shots/` (no se commitean) + reporte: elementos más anchos que la pantalla, texto < 12 px, botones/enlaces < 44 px. |
+| `pnpm template:shots <id>` | Capturas a 360/390/768/1024/1440 en `packages/template-kit/dist/<id>/shots/` (no se commitean) + reporte: elementos más anchos que la pantalla, texto < 12 px, botones/enlaces < 44 px. **Reporte de encaje** (`fit.json`, `fit-<viewport>.png`): cada sección con `data-lz-fit` (los héroes) en 1440×900, 1366×768, 1280×720, 1920×1080, 390×844, 360×640 y 844×390 contra 0.9 × (alto de ventana − header): PASS / PASS (text) / FAIL / n/a. |
 | `pnpm --filter @lattiz/template-kit kit:validate dist/<id>` | Reglas del kit (contraste, breakpoints 992/480, etc.). `template:seed` lo corre siempre. |
-| `pnpm template:seed -- --only <id> --dry-run` | Muestra la clasificación de secciones y los assets; no escribe nada. |
-| `pnpm template:seed -- --only <id>` | Siembra esa plantilla (fila + R2 + preview + deploy de previews). |
+| `pnpm template:seed -- --only <id> --dry-run` | Muestra la clasificación de secciones (tipo y patrón de animación) y los assets; no escribe nada. |
+| `pnpm template:seed -- --only <id>` | Siembra esa plantilla (fila + R2 + preview + deploy de previews). Con `--no-deploy` no publica previews ni toma miniatura. |
+
+### El flujo, de punta a punta
+
+1. **Fuente** — cambia manifiesto, tema o sección en `packages/template-kit`.
+2. **Preview local** — `pnpm template:dev <id>`: revisa 360…1440, Motion on/off, reduced motion.
+3. **Motion dry-run** — `pnpm template:seed -- --only <id> --dry-run`: ¿cada sección tiene el tipo y
+   el patrón correctos? Si no, corrige `motion.sections` en el manifiesto (ver «Seeding with motion»
+   en `docs/template-patterns.md`).
+4. **Capturas y encaje** — `pnpm template:shots <id>`: sin `overflow`, héroes en PASS, CTA visible.
+5. **Sembrar una** — `pnpm template:seed -- --only <id>` (escribe directo en el Supabase remoto).
+6. **Publicar previews** — lo hace el paso anterior; si usaste `--no-deploy`:
+   `pnpm --filter @lattiz/template-previews deploy` y vuelve a correr el seed para la miniatura.
+7. **Verificar** — la fila en Supabase y `https://templates.lattiz.app/<id>`; commitea el
+   `apps/template-previews/public/<id>/index.html` regenerado.
+8. **Runtime** — si cambiaste Lattiz Motion: `pnpm --filter @lattiz/tenant-sites build:motion`,
+   commit y `vercel --prod` de tenant-sites (llega al instante a todos los sitios Pro publicados).
+
+### Ajustes de encaje en pantalla (viewport-fit)
+
+El hero (y cualquier sección con `data-lz-fit`) ocupa como máximo el 90 % de la ventana bajo el
+header: `--lz-fit = 0.9 × (100svh − --lz-header-h)`. Si un hero no cabe: baja el tope de su titular
+(`titleHero` en `rhythm` del tema, o el `svh` en `section.css`), limita la imagen con
+`max-height: var(--lz-fit)` o reduce el padding en `svh`. Nunca `overflow: hidden` para esconder lo que
+sobra. Ventanas de ≤ 560 px de alto (celular horizontal) vuelven al flujo normal a propósito.
 
 ### Tres niveles, del más amplio al más puntual
 

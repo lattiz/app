@@ -172,20 +172,30 @@ export interface ManifestSection {
 export type MotionPreset = 'calm' | 'editorial' | 'none';
 export type MotionSectionType =
   | 'hero'
-  | 'text'
+  | 'about'
   | 'cards'
+  | 'steps'
+  | 'timeline'
   | 'gallery'
   | 'stats'
+  | 'testimonials'
+  | 'pricing'
+  | 'team'
+  | 'faq'
+  | 'contact'
   | 'cta'
   | 'footer'
   | 'none';
+export type MotionPattern = 'cascade' | 'alternate' | 'converge' | 'center-out' | 'wave' | 'none';
 
 /** Lattiz Motion for the seed (docs/lattiz-motion.md); copied to template.meta.json. */
 export interface ManifestMotion {
   /** Default `--motion` preset when the seed command doesn't pass one. */
   preset?: MotionPreset;
-  /** Manual section types that beat the seed's classifier. Key: slot name, `#id` or section index. */
-  sections?: Record<string, MotionSectionType>;
+  /** Manual corrections that beat the seed's classifier. Key: slot name, `#id` or section index. */
+  sections?: Record<string, MotionSectionType | { type?: MotionSectionType; pattern?: MotionPattern }>;
+  /** Scroll progress bar on Pro sites (data-lz-progress on the root wrapper). */
+  progress?: boolean;
 }
 
 export interface Manifest {
