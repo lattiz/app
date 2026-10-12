@@ -102,20 +102,31 @@ function worst(statuses: Status[]): Status {
   return 'N/A';
 }
 
-/** Peak RSS of this process plus every Chromium process, sampled once a second (Linux/macOS `ps`). */
+/** Peak RSS of this process plus its descendants (Playwright's Chromium), sampled once a second (Linux/macOS `ps`). */
 function memorySampler(): { stop(): number } {
   let peak = 0;
   const sample = () => {
-    let chrome = 0;
-    const ps = spawnSync('ps', ['-A', '-o', 'rss=,comm='], {
+    const ps = spawnSync('ps', ['-A', '-o', 'pid=,ppid=,rss='], {
       encoding: 'utf8',
     });
+    const children = new Map<number, number[]>();
+    const rss = new Map<number, number>();
     for (const line of (ps.stdout ?? '').split('\n')) {
-      const m = /^\s*(\d+)\s+(.*)$/.exec(line);
-      if (m && /chrom|headless_shell/i.test(m[2]))
-        chrome += Number(m[1]) * 1024;
+      const m = /^\s*(\d+)\s+(\d+)\s+(\d+)/.exec(line);
+      if (!m) continue;
+      const [pid, ppid] = [Number(m[1]), Number(m[2])];
+      rss.set(pid, Number(m[3]) * 1024);
+      children.set(ppid, [...(children.get(ppid) ?? []), pid]);
     }
-    peak = Math.max(peak, process.memoryUsage().rss + chrome);
+    // Only our own tree: a desktop Chrome left open must not count.
+    let tree = 0;
+    const queue = [...(children.get(process.pid) ?? [])];
+    while (queue.length > 0) {
+      const pid = queue.pop() as number;
+      tree += rss.get(pid) ?? 0;
+      queue.push(...(children.get(pid) ?? []));
+    }
+    peak = Math.max(peak, process.memoryUsage().rss + tree);
   };
   sample();
   const timer = setInterval(sample, 1000);
