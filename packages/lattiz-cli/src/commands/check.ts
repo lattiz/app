@@ -78,6 +78,7 @@ const RULES = {
   alt: 'alt en <img>',
   images: `imágenes ≤ 300 KB / ${MAX_IMAGE_PX} px`,
   fit: 'viewport-fit (data-lz-fit)',
+  fold: 'CTA del hero sin scroll',
   motion: 'Motion: cobertura',
   nojs: 'sin JS: contenido visible',
   lighthouse: 'Lighthouse',
@@ -378,6 +379,18 @@ async function checkViewport(
       .map(([p, b]) => `${p.split('/').pop()} — ${Math.round(b / 1024)} KB`);
     const imageItems = [...heavy, ...f.bigPx];
     const fit = await page.evaluate(measureFit);
+    // Any hero variant, data-lz-fit or not: the primary CTA must show without scrolling.
+    const cta = await page.evaluate(() => {
+      const hero = document.querySelector('[data-lz-slot="hero"]');
+      const button = hero?.querySelector('a.lz-button, .lz-button');
+      if (!hero || !button) return null;
+      const box = button.getBoundingClientRect();
+      return {
+        bottom: Math.round(box.bottom + window.scrollY),
+        height: window.innerHeight,
+        variant: hero.getAttribute('data-lz-variant') ?? '?',
+      };
+    });
     return [
       ...layoutResults(vp.label, issues),
       lowContrast.length
@@ -408,6 +421,19 @@ async function checkViewport(
           )
         : result('images', vp.label, 'PASS', ''),
       fitResult(vp, fit),
+      vp.h <= FIT_MIN_HEIGHT || !cta
+        ? result('fold', vp.label, 'N/A', '')
+        : cta.bottom <= cta.height
+          ? result('fold', vp.label, 'PASS', '')
+          : result(
+              'fold',
+              vp.label,
+              'WARN',
+              `el CTA principal del hero queda bajo el pliegue`,
+              [
+                `hero — CTA termina en ${cta.bottom} px, la pantalla mide ${cta.height} px (hero/${cta.variant})`,
+              ],
+            ),
     ];
   } finally {
     await context.close();
@@ -787,6 +813,8 @@ export const check: Command = {
     '<title>/description, tokens {{lz:*}} crudos, Pro: contenido de Motion oculto sin JS.',
     'WARN (no bloquea): texto < 14 px (se marca < 12 px), toques < 44 px, imágenes > 300 KB o',
     '> 2000 px, Pro: secciones sin tipo de Motion.',
+    'Pliegue: en pantallas de más de 560 px de alto el CTA principal del hero debe verse sin scroll',
+    '(WARN; cubre también las portadas sin data-lz-fit, como offset-card y centered-arch).',
     'Encaje (como kit:shots): una sección data-lz-fit cuyo contenido pasa de 0.9 × (alto − header)',
     'y cuyo bloque de texto + CTA tampoco cabe es FAIL; con alto ≤ 560 px no aplica.',
     '',

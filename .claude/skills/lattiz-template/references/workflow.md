@@ -60,6 +60,7 @@ Cómo arreglar lo típico:
 | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | `longitud`              | acorta la clave indicada                                                                                                                        |
 | `fit` FAIL en hero      | `copy.hero.title` más corto (≤ 32 si es Anton/Archivo en mayúsculas), luego `copy.hero.text`; si no, otra variante de hero en `sections.<tier>` |
+| `fold` WARN             | `copy.hero.title` ≤ 28 caracteres con hero `offset-card` o `centered-arch` (no tienen encaje automático); o fija `hero` en `split`              |
 | `overflow`              | palabras largas en `copy.<slot>`; o variante distinta                                                                                           |
 | `contrast`              | otra paleta curada (`free: true`)                                                                                                               |
 | `kit` `unique-headline` | otro `copy.hero.title` (o `copy.hero.alternates`)                                                                                               |

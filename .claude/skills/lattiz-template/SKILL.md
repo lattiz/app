@@ -63,7 +63,7 @@ Comandos, flags y formas JSON: `references/commands.md`. Detalle de cada paso:
    `pnpm lattiz spec validate <stem> --strict --json` → corrige errores y los avisos de `generico`,
    `repetido`, `acentos` → `pnpm lattiz build <stem> --json` → por cada id, **uno a la vez**,
    `pnpm lattiz check <id> --json`. Arregla cada FAIL editando el spec según `findings[].specHint`.
-   Los WARN `font`/`tap`/`images` con `specHint: null` son de la variante: se aceptan.
+   El WARN `fold` (CTA del hero bajo el pliegue) **sí se arregla**, como un FAIL. Los WARN `font`/`tap`/`images` con `specHint: null` son de la variante: se aceptan.
 5. **Revisión visual** (máx. 2 rondas): `pnpm lattiz review <id>` por cada id; abre
    `movil-390x844.png`, `laptop-1366x768.png`, `escritorio-1440x900.png` y las capturas de
    `secciones/` que haga falta; lee `review.md`. Critica con `references/review-rubric.md`; cambia el

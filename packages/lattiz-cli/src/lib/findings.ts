@@ -145,6 +145,9 @@ export async function buildFindings(
             : null;
           break;
         }
+        case 'fold':
+          hint = `${cp('hero.title')} más corto (en offset-card y centered-arch, ≤ 28 caracteres), luego ${cp('hero.text')}; o sections.${t} → { "role": "hero", "variant": "split" } (con encaje)`;
+          break;
         case 'contrast':
           hint = `brand.palette${t === 'basico' ? ' (o overrides.basico.brand.palette)' : ''}: otra paleta curada del giro; las curadas pasan AA`;
           break;

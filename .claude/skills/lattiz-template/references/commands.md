@@ -91,7 +91,7 @@ editó el generado), `frozen`, `foreign`, `other-spec`. Opciones útiles: `--dry
 }
 ```
 
-Reglas: `kit`, `head`, `tokens`, `overflow`, `font`, `tap`, `contrast`, `alt`, `images`, `fit`, `motion`
+Reglas: `kit`, `head`, `tokens`, `overflow`, `font`, `tap`, `contrast`, `alt`, `images`, `fit`, `fold` (WARN: el CTA del hero no se ve sin scroll; para la skill es bloqueante), `motion`
 (Pro), `nojs` (Pro), `credits`. `specHint: null` = no se arregla desde el spec (estilo de la variante o
 del pipeline). Código 1 si hay FAIL.
 
