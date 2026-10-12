@@ -2,6 +2,163 @@
    de variables --tw-* ganaría a nuestras utilidades en toda la app. */
 @import '@grapesjs/studio-sdk/style' layer(grapesjs);
 
+/* Paleta Lattiz del editor, ligada a `.dark` en <html> (ThemeProvider). Va aquí y no en `customTheme`
+   porque el SDK aplica `customTheme.default` a ambos temas y solo lo lee al montar.
+   `:root:root` gana al <style> `:root` que el SDK inyecta con su paleta base. */
+:root:root {
+  --gs-theme-cl-glb-bg1: oklch(0.97 0 0); /* --muted */
+  --gs-theme-cl-glb-bg2: oklch(1 0 0); /* --card */
+  --gs-theme-cl-glb-bg3: oklch(1 0 0); /* --background */
+  --gs-theme-cl-glb-bgh: oklch(0.97 0 0); /* --accent */
+  --gs-theme-cl-glb-txt: oklch(0.145 0 0); /* --foreground */
+  --gs-theme-cl-glb-br: oklch(0.922 0 0); /* --border */
+  --gs-theme-cl-glb-fcs: oklch(44.322% 0.19799 262.397); /* --ring */
+  --gs-theme-cl-glb-plh: oklch(0.556 0 0); /* --muted-foreground */
+
+  --gs-theme-cl-prm-bg1: oklch(53% 0.237 262.2); /* --primary */
+  --gs-theme-cl-prm-bg2: oklch(0.92 0.06 262.2);
+  --gs-theme-cl-prm-bg3: oklch(0.97 0.03 262.2);
+  --gs-theme-cl-prm-bgh: oklch(44.322% 0.19799 262.397);
+  --gs-theme-cl-prm-txt: oklch(0.985 0 0);
+
+  --gs-theme-cl-cmp-bg1: hsl(210 75% 50%);
+  --gs-theme-cl-cmp-bg2: hsl(210 75% 70%);
+  --gs-theme-cl-cmp-bg3: hsl(210 75% 93%);
+  --gs-theme-cl-cmp-bgh: hsl(210 75% 60%);
+  --gs-theme-cl-cmp-txt: #ffffff;
+
+  --gs-theme-cl-sel-bg1: hsl(336 69% 30%);
+  --gs-theme-cl-sel-bg2: hsl(336 84% 90%);
+  --gs-theme-cl-sel-bg3: hsl(336 84% 97%);
+  --gs-theme-cl-sel-bgh: hsl(336 84% 80%);
+  --gs-theme-cl-sel-txt: #ffffff;
+
+  --gs-theme-cl-symb-bg1: oklch(53% 0.237 262.2);
+  --gs-theme-cl-symb-bg2: oklch(0.92 0.06 262.2);
+  --gs-theme-cl-symb-bg3: oklch(0.97 0.03 262.2);
+  --gs-theme-cl-symb-bgh: oklch(44.322% 0.19799 262.397);
+  --gs-theme-cl-symb-txt: oklch(0.985 0 0);
+}
+
+:root:root.dark {
+  --gs-theme-cl-glb-bg1: oklch(0.269 0 0); /* --muted */
+  --gs-theme-cl-glb-bg2: oklch(0.205 0 0); /* --card */
+  --gs-theme-cl-glb-bg3: oklch(0.145 0 0); /* --background */
+  --gs-theme-cl-glb-bgh: oklch(0.269 0 0); /* --accent */
+  --gs-theme-cl-glb-txt: oklch(0.985 0 0); /* --foreground */
+  --gs-theme-cl-glb-br: oklch(1 0 0 / 10%); /* --border */
+  --gs-theme-cl-glb-fcs: oklch(0.62 0.19 262.2);
+  --gs-theme-cl-glb-plh: oklch(0.708 0 0); /* --muted-foreground */
+
+  --gs-theme-cl-prm-bg1: oklch(53% 0.237 262.2); /* --primary */
+  --gs-theme-cl-prm-bg2: oklch(0.36 0.12 262.2);
+  --gs-theme-cl-prm-bg3: oklch(0.25 0.06 262.2);
+  --gs-theme-cl-prm-bgh: oklch(0.6 0.2 262.2);
+  --gs-theme-cl-prm-txt: oklch(0.985 0 0);
+
+  --gs-theme-cl-cmp-bg1: hsl(210 71% 53%);
+  --gs-theme-cl-cmp-bg2: hsl(201 90% 27%);
+  --gs-theme-cl-cmp-bg3: hsl(215 28% 17%);
+  --gs-theme-cl-cmp-bgh: hsl(210 75% 60%);
+  --gs-theme-cl-cmp-txt: #ffffff;
+
+  --gs-theme-cl-symb-bg1: oklch(53% 0.237 262.2);
+  --gs-theme-cl-symb-bg2: oklch(0.6 0.2 262.2);
+  --gs-theme-cl-symb-bg3: oklch(0.25 0.06 262.2);
+  --gs-theme-cl-symb-bgh: oklch(0.6 0.2 262.2);
+  --gs-theme-cl-symb-txt: oklch(0.985 0 0);
+}
+
+/* El SDK casi no lee las variables: pinta con clases `gs-theme-*` cuyas reglas solo genera desde
+   `customTheme` (y para un único tema). Estas son esas reglas (studio-sdk 1.1.1) leyendo las variables.
+   Sin capa, ganan a las utilidades `dark:` del SDK, que van en la capa `grapesjs`. */
+.gs-theme-cl-txt {
+  color: var(--gs-theme-cl-glb-txt);
+}
+.gs-theme-cl-bg {
+  background-color: var(--gs-theme-cl-glb-bg3);
+}
+.gs-theme-cl-br {
+  border-color: var(--gs-theme-cl-glb-br);
+}
+.gs-theme-cl-bgA,
+.gs-theme-cl-bgA2 {
+  background-color: var(--gs-theme-cl-prm-bg1);
+  color: var(--gs-theme-cl-prm-txt);
+}
+.gs-theme-cl-hBgAct:hover.gs-theme-cl-hBgAct:hover,
+.gs-theme-cl-hBgA2:hover.gs-theme-cl-hBgA2:hover {
+  background-color: var(--gs-theme-cl-prm-bgh);
+}
+.gs-theme-cl-tA,
+.gs-theme-cl-tAo {
+  color: var(--gs-theme-cl-prm-bg1);
+}
+.gs-theme-cl-hTAo:hover.gs-theme-cl-hTAo:hover,
+.group:hover .gs-theme-cl-grouphTAo {
+  color: var(--gs-theme-cl-prm-bgh);
+}
+.gs-theme-cl-bA {
+  border-color: var(--gs-theme-cl-prm-bg1);
+}
+.gs-theme-cl-bg0 {
+  background-color: var(--gs-theme-cl-prm-bg3);
+  color: var(--gs-theme-cl-prm-bg1);
+}
+.gs-theme-cl-bgH {
+  background-color: var(--gs-theme-cl-glb-bg1);
+}
+.gs-theme-cl-bgH2 {
+  background-color: var(--gs-theme-cl-glb-bg2);
+}
+.gs-theme-cl-hBgH:hover,
+.gs-theme-cl-hBgH2:hover {
+  background-color: var(--gs-theme-cl-glb-bgh);
+}
+.gs-theme-cl-sel {
+  background-color: var(--gs-theme-cl-sel-bg2);
+  color: var(--gs-theme-cl-sel-txt);
+}
+.gs-theme-cl-selBr {
+  border-color: var(--gs-theme-cl-sel-bg1);
+}
+.gs-theme-cl-cmp {
+  background-color: var(--gs-theme-cl-cmp-bg1);
+  color: var(--gs-theme-cl-cmp-txt);
+}
+.gs-theme-cl-cmpBgSoft {
+  background-color: var(--gs-theme-cl-cmp-bg2);
+}
+.gs-theme-cl-cmpBgSoftX {
+  background-color: var(--gs-theme-cl-cmp-bg3);
+}
+.gs-theme-cl-cmpBr {
+  border-color: var(--gs-theme-cl-cmp-bg1);
+}
+.gs-theme-cl-cmpSymbol {
+  background-color: var(--gs-theme-cl-symb-bg1);
+  color: var(--gs-theme-cl-symb-txt);
+}
+.gs-theme-cl-cmpBgSymbolSoft {
+  background-color: var(--gs-theme-cl-symb-bg2);
+}
+.gs-theme-cl-cmpBgSymbolSoftX {
+  background-color: var(--gs-theme-cl-symb-bg3);
+}
+.gs-theme-cl-cmpSymbolBr {
+  border-color: var(--gs-theme-cl-symb-bg1);
+}
+.gs-theme-cl-cmpTxtActive {
+  color: var(--gs-theme-cl-cmp-txt);
+}
+.gs-theme-ring-focus:focus-visible {
+  box-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width))
+    var(--gs-theme-cl-glb-fcs);
+}
+.gs-theme-elStyles-inputText::placeholder {
+  color: var(--gs-theme-cl-glb-plh);
+}
+
 /* Barra de formato de texto (RTE): mismo azul que la toolbar del componente, controles más grandes para táctil. */
 .gjs-rte-toolbar {
   background-color: hsl(210 75% 50%);

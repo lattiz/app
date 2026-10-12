@@ -11,7 +11,7 @@ import {
   type UploadedAssetResponseDto,
 } from '@lattiz/api-client';
 import { Loader2Icon, ArrowLeft, ImagesIcon, PaletteIcon } from 'lucide-react';
-import { type ComponentProps, useRef, useState } from 'react';
+import { type ComponentProps, useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/tooltip';
 import { formatBytes } from '@/lib/format-bytes';
 import { displayHost, liveSiteUrl } from '@/lib/site-address';
+import { type ResolvedTheme, useTheme } from '@/lib/theme-provider';
 import { reportSiteActionError } from '@/lib/upload-errors';
 import { cn } from '@/lib/utils';
 import {
@@ -36,6 +37,7 @@ import {
 import { grapesjsCoreLocaleEs, studioSdkLocaleEs } from './i18n';
 import { SaveStatusBadge } from './SaveStatusBadge';
 import { sectionBlocks } from './blocks';
+import { DeviceSwitcher, editorDevices } from './DeviceSwitcher';
 import { StockPhotosDialog } from './StockPhotosDialog';
 import { applyFontLink, applyRootTokens } from './theme-apply';
 import { type ThemeChoice, ThemeDialog } from './ThemeDialog';
@@ -69,35 +71,33 @@ type StudioProjectData = NonNullable<
 >;
 type StudioPlugins = NonNullable<StudioOptions['plugins']>;
 
-type DeviceOption = {
-  id: string;
-  name: string;
-  width: string | null;
-  widthMedia?: string | null;
-};
+type LayoutNode = { type: string; children?: LayoutNode[] } & Record<
+  string,
+  unknown
+>;
 
-const buildDevices = (device: string): DeviceOption => {
-  switch (device) {
-    case 'desktop':
-      return { id: 'desktop', name: 'Vista Escritorio', width: '' };
-    case 'tablet':
-      return {
-        id: 'tablet',
-        name: 'Vista Tablet',
-        width: '770px',
-        widthMedia: '992px',
-      };
-    case 'mobile':
-      return {
-        id: 'mobile',
-        name: 'Vista Móvil',
-        width: '375px',
-        widthMedia: '768px',
-      };
-    default:
-      return { id: 'desktop', name: 'Vista Escritorio', width: '' };
+// Escritorio y tablet: el <select> de dispositivos del topbar del canvas se cambia por botones con icono.
+// Móvil (≤ breakpointMobile) conserva el dropdown del SDK, que cabe mejor en la barra superior.
+function withDeviceSwitcher(layout: LayoutNode): LayoutNode {
+  if (layout.type === 'canvasSidebarTop') {
+    const sidebarTop = (layout.sidebarTop ?? {}) as Record<string, unknown>;
+    return {
+      ...layout,
+      sidebarTop: {
+        ...sidebarTop,
+        devices: false,
+        leftContainer: {
+          buttons: [
+            { id: 'lattiz-devices', type: 'custom', component: DeviceSwitcher },
+          ],
+        },
+      },
+    };
   }
-};
+  return layout.children
+    ? { ...layout, children: layout.children.map(withDeviceSwitcher) }
+    : layout;
+}
 
 // GrapesJS SDK does not auto-load plugins referenced inside the project JSON —
 // they must be declared explicitly in the SDK options.
@@ -107,11 +107,25 @@ function buildOptions(
   onSave: (project: GrapesJSProjectJSON) => void,
   onUploadError: (err: unknown) => void,
   proIncluded: boolean,
+  theme: ResolvedTheme,
 ): StudioOptions {
   const plugins = [
     // Sidebar de botones con layouts propios para tablet y móvil (el layout por defecto no es usable < 1000px).
     // Cast: los tipos del plugin y del SDK instalado divergen aunque el runtime lo acepta.
-    layoutSidebarButtons,
+    layoutSidebarButtons.init({
+      rootLayout: ({
+        rootLayout,
+        breakpoint,
+        breakpointMobile,
+      }: {
+        rootLayout: LayoutNode;
+        breakpoint: number;
+        breakpointMobile: number;
+      }) =>
+        breakpoint === breakpointMobile
+          ? rootLayout
+          : withDeviceSwitcher(rootLayout),
+    } as unknown as Parameters<typeof layoutSidebarButtons.init>[0]),
     ...(projectJSON.custom?.plugins ?? []).map((p) => ({
       id: p.id,
       src: p.src,
@@ -120,7 +134,7 @@ function buildOptions(
   ] as unknown as StudioPlugins;
 
   return {
-    theme: 'light',
+    theme,
 
     // ── Internacionalización ────────────────────────────────────────────────
     // System 1 (módulos propios del SDK) → i18n.locales.
@@ -131,62 +145,17 @@ function buildOptions(
       },
     },
 
-    // ── Paleta Lattiz (light) ───────────────────────────────────────────────
-    // Valores oklch resueltos de los tokens :root para que el editor
-    // permanezca en light mode aunque el resto de la app cambie de tema.
-    customTheme: {
-      default: {
-        colors: {
-          global: {
-            background1: 'oklch(0.97 0 0)', // --muted
-            background2: 'oklch(1 0 0)', // --card
-            background3: 'oklch(1 0 0)', // --background
-            backgroundHover: 'oklch(0.97 0 0)', // --accent
-            text: 'oklch(0.145 0 0)', // --foreground
-            border: 'oklch(0.922 0 0)', // --border
-            focus: 'oklch(44.322% 0.19799 262.397)', // --ring
-            placeholder: 'oklch(0.556 0 0)', // --muted-foreground
-          },
-          primary: {
-            background1: 'oklch(53% 0.237 262.2)', // --primary
-            background2: 'oklch(0.92 0.06 262.2)', // primary tint
-            background3: 'oklch(0.97 0.03 262.2)', // primary tint sutil
-            backgroundHover: 'oklch(44.322% 0.19799 262.397)', // --ring
-            text: 'oklch(0.985 0 0)', // --primary-foreground
-          },
-          component: {
-            background1: 'hsl(210 75% 50%)',
-            background2: 'hsl(210 75% 70%)',
-            background3: 'hsl(210 75% 93%)',
-            backgroundHover: 'hsl(210 75% 60%)',
-            text: '#ffffff',
-          },
-          selector: {
-            background1: 'hsl(336 69% 30%)',
-            background2: 'hsl(336 84% 90%)',
-            background3: 'hsl(336 84% 97%)',
-            backgroundHover: 'hsl(336 84% 80%)',
-            text: '#ffffff',
-          },
-          symbol: {
-            background1: 'oklch(53% 0.237 262.2)',
-            background2: 'oklch(0.92 0.06 262.2)',
-            background3: 'oklch(0.97 0.03 262.2)',
-            backgroundHover: 'oklch(44.322% 0.19799 262.397)',
-            text: 'oklch(0.985 0 0)',
-          },
-        },
-      },
-    },
+    // ── Tema ────────────────────────────────────────────────────────────────
+    // Sigue el tema del dashboard (ThemeProvider); la paleta Lattiz vive en grapesjs-sdk.css.
+    // Sin selector de tema propio del SDK: la preferencia se cambia desde el dashboard.
+    settingsMenu: { theme: false },
 
     // ── Restricciones WaaS ─────────────────────────────────────────────────
     // MVP: un sitio = una página → panel de páginas deshabilitado.
     pages: false,
     // Elimina acceso al código fuente (View code / Import code) del toolbar.
     devices: {
-      default: ['desktop', 'tablet', 'mobile'].map((device) =>
-        buildDevices(device),
-      ),
+      default: editorDevices,
       selected: 'desktop',
     },
     actions: ({ actions }) =>
@@ -264,6 +233,16 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
     readAdvancedStylesPreference,
   );
   const lastProjectRef = useRef<GrapesJSProjectJSON | null>(null);
+  const { resolvedTheme } = useTheme();
+  const themeRef = useRef(resolvedTheme);
+
+  // Studio lee `theme` solo al montar; los cambios posteriores (o el SO en modo 'system') van por comando.
+  useEffect(() => {
+    themeRef.current = resolvedTheme;
+    editorRef.current?.runCommand('studio:setStateTheme', {
+      theme: resolvedTheme,
+    });
+  }, [resolvedTheme]);
 
   const handleAdvancedStylesChange = (checked: boolean) => {
     setAdvancedStyles(checked);
@@ -394,6 +373,7 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
     handleSave,
     (err) => reportActionError(err, 'upload'),
     proIncluded,
+    resolvedTheme,
   );
   const isPublishing = publishMutation.isPending;
 
@@ -552,6 +532,10 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
 
             // Core GrapesJS i18n only responds to editor.I18n; SDK forces locale `en`.
             editor.on('load', () => {
+              // Por si el tema cambió entre el montaje (`options.theme`) y la carga del editor.
+              editor.runCommand('studio:setStateTheme', {
+                theme: themeRef.current,
+              });
               editor.I18n.addMessages({ en: grapesjsCoreLocaleEs });
               editor.I18n.setLocale('en');
               // Sin 'link' ni 'wrap' (el último botón): el RTE queda solo con formato básico.
