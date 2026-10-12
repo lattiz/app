@@ -1,0 +1,12 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-hoja-y-barro.spec.json (spec 06adb9f20372, file 3f1bdbbd3039). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "11e35e2298ccc9cf2ae98385e6b26eeeebbeb5e07c6672145b20a9689e240028",
+      "url": "https://images.pexels.com/photos/37239501/pexels-photo-37239501.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/37239501/"
+    }
+  ]
+}

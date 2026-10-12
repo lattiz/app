@@ -1,0 +1,145 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-hoja-y-barro.spec.json (spec 06adb9f20372, file 60997fd0bde0). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "622c613ab0ce90fea998f294d797cdf03adf0cf85890e3c43cd9966fb09b3e1c",
+      "url": "https://images.pexels.com/photos/37239501/pexels-photo-37239501.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/37239501/"
+    },
+    {
+      "file": "about.jpg",
+      "source": "url",
+      "sha256": "745dadc6b5bb98df9b00bf8129aa4013221696fdf9e02be16476fea4b0f78494",
+      "url": "https://images.pexels.com/photos/19750079/pexels-photo-19750079.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/19750079/"
+    },
+    {
+      "file": "product-01.jpg",
+      "source": "url",
+      "sha256": "37173745611818f5a8eed6025b653df797e29950f8826e2b835b5b11b7917d06",
+      "url": "https://images.pexels.com/photos/15631552/pexels-photo-15631552.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/15631552/"
+    },
+    {
+      "file": "product-02.jpg",
+      "source": "url",
+      "sha256": "a1341a90c15d2c01f0131f47e8d1d58ebad79f9f160a2621275612d46705bf3d",
+      "url": "https://images.pexels.com/photos/5852320/pexels-photo-5852320.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/5852320/"
+    },
+    {
+      "file": "product-03.jpg",
+      "source": "url",
+      "sha256": "e11470c6cc0624b23bd8619b96e680adff5da076c5e3f4e2b755e3823f1f179b",
+      "url": "https://images.pexels.com/photos/5897507/pexels-photo-5897507.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/5897507/"
+    },
+    {
+      "file": "product-04.jpg",
+      "source": "url",
+      "sha256": "50d175f9bafd8f8736cdaebe9ed0d2e2ea69eca483e80986e807249adf8e6c7a",
+      "url": "https://images.pexels.com/photos/8164708/pexels-photo-8164708.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/8164708/"
+    },
+    {
+      "file": "product-05.jpg",
+      "source": "url",
+      "sha256": "a09b3982c84762b4ba13cf2f211281c3172e060a02acf816ca0c26c5aad4289b",
+      "url": "https://images.pexels.com/photos/32055276/pexels-photo-32055276.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/32055276/"
+    },
+    {
+      "file": "product-06.jpg",
+      "source": "url",
+      "sha256": "8f42d5d2825e903de8b7aecfef2d25f8a6a2e3a34b42456c39fe3e5732f47df7",
+      "url": "https://images.pexels.com/photos/3065512/pexels-photo-3065512.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/3065512/"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "url",
+      "sha256": "dcf87650fc3a3d05db17cad7335bdc21208dc27cb88853106386234e3621c67c",
+      "url": "https://images.pexels.com/photos/20717338/pexels-photo-20717338.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/20717338/"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "url",
+      "sha256": "68aec603a3a83c3ec56c16c5d73328461197464f9511987902600baf8c56fd6b",
+      "url": "https://images.pexels.com/photos/36137408/pexels-photo-36137408.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/36137408/"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "url",
+      "sha256": "1e1d2a0e930411791775938b4140e7ce37fe6cd90934ee9af9ea61a97caabcb7",
+      "url": "https://images.pexels.com/photos/35363975/pexels-photo-35363975.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/35363975/"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "url",
+      "sha256": "1e1d2a0e930411791775938b4140e7ce37fe6cd90934ee9af9ea61a97caabcb7",
+      "url": "https://images.pexels.com/photos/35363975/pexels-photo-35363975.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/35363975/"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "url",
+      "sha256": "dc88acb7cc6e6263ca9f1767feedc8e768da717a86aa87d0623b4f28204e2cf0",
+      "url": "https://images.pexels.com/photos/16170228/pexels-photo-16170228.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/16170228/"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "url",
+      "sha256": "018189d31efec0ce90bd8d5df22a0790c420b1cd7143287490a9c1ce58c445aa",
+      "url": "https://images.pexels.com/photos/35363901/pexels-photo-35363901.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/35363901/"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "url",
+      "sha256": "3276f13a322a7a620268da7cbeaac9065f1241dba78b52dd3ab957c3ad451fda",
+      "url": "https://images.pexels.com/photos/5852341/pexels-photo-5852341.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/5852341/"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "url",
+      "sha256": "c22fcd60514018c5772344e753d5b5ef7a24cb328c071e721678380a150691ed",
+      "url": "https://images.pexels.com/photos/5852323/pexels-photo-5852323.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/5852323/"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "url",
+      "sha256": "bb264f6395b3fa2bbbff7a1af500b50b70ea2c45b724fa8951ef413e30bc32e5",
+      "url": "https://images.pexels.com/photos/13111782/pexels-photo-13111782.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/13111782/"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "url",
+      "sha256": "648268b5b148310bc2a038c7e020b6faa0e9151e464f48a46f970c06cb2bf624",
+      "url": "https://images.pexels.com/photos/12124907/pexels-photo-12124907.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/12124907/"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "url",
+      "sha256": "ad80eddd92fdd1f272f5771724178c853df6ad0651889cdefec97cb0e95f7e96",
+      "url": "https://images.pexels.com/photos/20718493/pexels-photo-20718493.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/20718493/"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "url",
+      "sha256": "c9cb04961dc9450f09bcdd5afaf60f91b539246d3495607e9073fce14bec6946",
+      "url": "https://images.pexels.com/photos/20329569/pexels-photo-20329569.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/20329569/"
+    }
+  ]
+}
