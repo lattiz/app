@@ -1,4 +1,4 @@
-// GENERATED from specs/barberia-abeto.spec.json (spec 041b68319ddd, file d678afea2ffc). Do not edit: use the spec, or freeze.
+// GENERATED from specs/barberia-abeto.spec.json (spec 0f4588fa7dff, file 4b7671b0a4eb). Do not edit: use the spec, or freeze.
 import type { ContentPack } from '../src/types';
 
 export default {
@@ -41,10 +41,6 @@ export default {
           href: '#servicios',
         },
         {
-          label: 'Barberos',
-          href: '#equipo',
-        },
-        {
           label: 'Preguntas',
           href: '#preguntas',
         },
@@ -57,7 +53,7 @@ export default {
     hero: {
       image: 'hero.jpg',
       imageAlt:
-        'Barbero afeitando con navaja recta a un cliente reclinado en un sillón de cuero',
+        'Barbero con mandil perfilando con navaja la nuca de un cliente',
       eyebrow: 'Barbería de caballeros · San Ángel',
       title: 'El ritual de la <span class="lz-title__serif">navaja</span>.',
       text: 'Afeitado con toalla caliente, corte a tijera y un sillón de cuero que te espera a tu hora. Reserva en un mensaje.',
@@ -89,8 +85,7 @@ export default {
       statement:
         'Una buena navaja no se apura: cada afeitado empieza con vapor, sigue con dos pasadas y termina en silencio.',
       image: 'about.jpg',
-      imageAlt:
-        'Hilera de navajas rectas y brochas de afeitar sobre una repisa de madera',
+      imageAlt: 'Mostrador antiguo con pomadas, tónicos y una caja de madera',
       paragraphs: [
         'Tenemos cuatro sillones de cuero restaurados y un poste de barbero que gira desde que abrimos.',
         'Cada cita dura lo que tiene que durar; entre una y otra limpiamos y esterilizamos todo.',
@@ -239,10 +234,6 @@ export default {
           href: '#servicios',
         },
         {
-          label: 'Barberos',
-          href: '#equipo',
-        },
-        {
           label: 'Preguntas',
           href: '#preguntas',
         },
@@ -294,43 +285,43 @@ export default {
       items: [
         {
           image: 'gallery-01.jpg',
-          caption: 'El poste',
-          alt: 'Poste de barbero rojo, blanco y azul girando en la entrada',
+          caption: 'Corte a tijera',
+          alt: 'Barbero cortando a tijera el cabello de un cliente',
         },
         {
           image: 'gallery-02.jpg',
           caption: 'Navaja recta',
-          alt: 'Navaja recta abierta sobre una toalla blanca',
+          alt: 'Barbero con cubrebocas perfilando con navaja recta',
         },
         {
           image: 'gallery-03.jpg',
-          caption: 'Sillón de cuero',
-          alt: 'Sillón de barbero de cuero verde con reposacabezas',
+          caption: 'Peine y navaja',
+          alt: 'Peine y navaja recta sobre el cabello, en blanco y negro',
         },
         {
           image: 'gallery-04.jpg',
-          caption: 'Toalla caliente',
-          alt: 'Barbero colocando una toalla caliente en el rostro de un cliente',
+          caption: 'Afeitado clásico',
+          alt: 'Barbero preparando el rostro de un cliente para el afeitado',
         },
         {
           image: 'gallery-05.jpg',
-          caption: 'Corte a tijera',
-          alt: 'Barbero cortando a tijera con peine de carey',
+          caption: 'El salón',
+          alt: 'Interior de la barbería visto desde la puerta, con cuadros en la pared',
         },
         {
           image: 'gallery-06.jpg',
-          caption: 'Barba perfilada',
-          alt: 'Barba recién perfilada con contornos limpios',
+          caption: 'Degradado',
+          alt: 'Corte degradado con raya marcada en un cliente con cubrebocas',
         },
         {
           image: 'gallery-07.jpg',
-          caption: 'Brochas',
-          alt: 'Brochas de afeitar y jabonera de acero sobre mármol',
+          caption: 'El poste',
+          alt: 'Poste de barbero rojo, blanco y azul iluminado',
         },
         {
           image: 'gallery-08.jpg',
-          caption: 'La fachada',
-          alt: 'Fachada de la barbería con letrero pintado a mano',
+          caption: 'La casa',
+          alt: 'Barberos trabajando en el salón con lámparas colgantes y ventanal',
         },
       ],
     },

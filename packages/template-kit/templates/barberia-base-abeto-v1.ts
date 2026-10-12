@@ -1,4 +1,4 @@
-// GENERATED from specs/barberia-abeto.spec.json (spec 041b68319ddd, file c5c1842b1480). Do not edit: use the spec, or freeze.
+// GENERATED from specs/barberia-abeto.spec.json (spec 0f4588fa7dff, file c5c1842b1480). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {

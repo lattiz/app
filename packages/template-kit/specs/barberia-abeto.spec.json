@@ -53,9 +53,6 @@
         "role": "contact"
       },
       {
-        "role": "team"
-      },
-      {
         "role": "testimonials"
       },
       {
@@ -105,7 +102,7 @@
     },
     "hero": {
       "image": "hero.jpg",
-      "imageAlt": "Barbero afeitando con navaja recta a un cliente reclinado en un sillón de cuero",
+      "imageAlt": "Barbero con mandil perfilando con navaja la nuca de un cliente",
       "eyebrow": "Barbería de caballeros · {{branch}}",
       "title": "El ritual de la <span class=\"lz-title__serif\">navaja</span>.",
       "text": "Afeitado con toalla caliente, corte a tijera y un sillón de cuero que te espera a tu hora. Reserva en un mensaje.",
@@ -134,7 +131,7 @@
       ],
       "statement": "Una buena navaja no se apura: cada afeitado empieza con vapor, sigue con dos pasadas y termina en silencio.",
       "image": "about.jpg",
-      "imageAlt": "Hilera de navajas rectas y brochas de afeitar sobre una repisa de madera",
+      "imageAlt": "Mostrador antiguo con pomadas, tónicos y una caja de madera",
       "paragraphs": [
         "Tenemos cuatro sillones de cuero restaurados y un poste de barbero que gira desde que abrimos.",
         "Cada cita dura lo que tiene que durar; entre una y otra limpiamos y esterilizamos todo.",
@@ -301,43 +298,43 @@
       "items": [
         {
           "image": "gallery-01.jpg",
-          "caption": "El poste",
-          "alt": "Poste de barbero rojo, blanco y azul girando en la entrada"
+          "caption": "Corte a tijera",
+          "alt": "Barbero cortando a tijera el cabello de un cliente"
         },
         {
           "image": "gallery-02.jpg",
           "caption": "Navaja recta",
-          "alt": "Navaja recta abierta sobre una toalla blanca"
+          "alt": "Barbero con cubrebocas perfilando con navaja recta"
         },
         {
           "image": "gallery-03.jpg",
-          "caption": "Sillón de cuero",
-          "alt": "Sillón de barbero de cuero verde con reposacabezas"
+          "caption": "Peine y navaja",
+          "alt": "Peine y navaja recta sobre el cabello, en blanco y negro"
         },
         {
           "image": "gallery-04.jpg",
-          "caption": "Toalla caliente",
-          "alt": "Barbero colocando una toalla caliente en el rostro de un cliente"
+          "caption": "Afeitado clásico",
+          "alt": "Barbero preparando el rostro de un cliente para el afeitado"
         },
         {
           "image": "gallery-05.jpg",
-          "caption": "Corte a tijera",
-          "alt": "Barbero cortando a tijera con peine de carey"
+          "caption": "El salón",
+          "alt": "Interior de la barbería visto desde la puerta, con cuadros en la pared"
         },
         {
           "image": "gallery-06.jpg",
-          "caption": "Barba perfilada",
-          "alt": "Barba recién perfilada con contornos limpios"
+          "caption": "Degradado",
+          "alt": "Corte degradado con raya marcada en un cliente con cubrebocas"
         },
         {
           "image": "gallery-07.jpg",
-          "caption": "Brochas",
-          "alt": "Brochas de afeitar y jabonera de acero sobre mármol"
+          "caption": "El poste",
+          "alt": "Poste de barbero rojo, blanco y azul iluminado"
         },
         {
           "image": "gallery-08.jpg",
-          "caption": "La fachada",
-          "alt": "Fachada de la barbería con letrero pintado a mano"
+          "caption": "La casa",
+          "alt": "Barberos trabajando en el salón con lámparas colgantes y ventanal"
         }
       ]
     },
@@ -377,85 +374,61 @@
     {
       "key": "hero",
       "source": {
-        "pexels": "barber straight razor shave leather chair"
+        "url": "https://images.pexels.com/photos/27497935/pexels-photo-27497935.jpeg"
       }
     },
     {
       "key": "about",
       "source": {
-        "pexels": "straight razors shaving brushes shelf"
-      }
-    },
-    {
-      "key": "team-1",
-      "source": {
-        "pexels": "master barber portrait leather apron"
-      }
-    },
-    {
-      "key": "team-2",
-      "source": {
-        "pexels": "barber sharpening razor strop"
-      }
-    },
-    {
-      "key": "team-3",
-      "source": {
-        "pexels": "barber portrait barber chair"
-      }
-    },
-    {
-      "key": "team-4",
-      "source": {
-        "pexels": "woman receptionist portrait"
+        "url": "https://images.pexels.com/photos/4969856/pexels-photo-4969856.jpeg"
       }
     },
     {
       "key": "gallery-01",
       "source": {
-        "pexels": "vintage barber pole"
+        "url": "https://images.pexels.com/photos/5568411/pexels-photo-5568411.jpeg"
       }
     },
     {
       "key": "gallery-02",
       "source": {
-        "pexels": "straight razor towel"
+        "url": "https://images.pexels.com/photos/7781845/pexels-photo-7781845.jpeg"
       }
     },
     {
       "key": "gallery-03",
       "source": {
-        "pexels": "green leather barber chair"
+        "url": "https://images.pexels.com/photos/11262382/pexels-photo-11262382.jpeg"
       }
     },
     {
       "key": "gallery-04",
       "source": {
-        "pexels": "hot towel shave barber"
+        "url": "https://images.pexels.com/photos/18298041/pexels-photo-18298041.jpeg"
       }
     },
     {
       "key": "gallery-05",
       "source": {
-        "pexels": "barber scissors comb haircut"
+        "url": "https://images.pexels.com/photos/14698370/pexels-photo-14698370.jpeg"
       }
     },
     {
       "key": "gallery-06",
       "source": {
-        "pexels": "groomed beard close up"
+        "url": "https://images.pexels.com/photos/7781844/pexels-photo-7781844.jpeg"
       }
     },
     {
       "key": "gallery-07",
       "source": {
-        "pexels": "shaving brush steel bowl marble"
+        "url": "https://images.pexels.com/photos/16474397/pexels-photo-16474397.jpeg"
       }
     },
     {
       "key": "gallery-08",
       "source": {
-        "pexels": "barbershop facade hand painted sign"
+        "url": "https://images.pexels.com/photos/29189823/pexels-photo-29189823.jpeg"
       }
     }
   ],

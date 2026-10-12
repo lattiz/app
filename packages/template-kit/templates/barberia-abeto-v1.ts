@@ -1,4 +1,4 @@
-// GENERATED from specs/barberia-abeto.spec.json (spec 041b68319ddd, file 588250332092). Do not edit: use the spec, or freeze.
+// GENERATED from specs/barberia-abeto.spec.json (spec 0f4588fa7dff, file 09cd68fdfdcf). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
@@ -41,10 +41,6 @@ export default {
     {
       slot: 'locations',
       variant: 'with-contact',
-    },
-    {
-      slot: 'team',
-      variant: 'grid',
     },
     {
       slot: 'testimonials',

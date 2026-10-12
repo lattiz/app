@@ -1,10 +1,12 @@
 {
-  "$lattiz": "GENERATED from specs/barberia-abeto.spec.json (spec 041b68319ddd, file b84e2f4de40d). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/barberia-abeto.spec.json (spec 0f4588fa7dff, file 49b5225a9765). Do not edit: use the spec, or freeze.",
   "images": [
     {
       "file": "hero.jpg",
-      "source": "placeholder",
-      "sha256": "2e9bab6fe832d101a95b52331218de4bff65ec3162e94047a79669da5d7f5e37"
+      "source": "url",
+      "sha256": "3c5a33db369e18207c35ce5d5f6c942663f4bc685bf9186633334028f7cc5efc",
+      "url": "https://images.pexels.com/photos/27497935/pexels-photo-27497935.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/27497935/"
     }
   ]
 }
