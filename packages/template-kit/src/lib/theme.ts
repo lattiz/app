@@ -5,7 +5,53 @@ import {
   type RhythmToken,
   type Theme,
 } from '../types';
+import { createFontStack, type FontMetrics } from '@capsizecss/core';
+import { entireMetricsCollection } from '@capsizecss/metrics/entireMetricsCollection';
 import { hueOf, parseColor, type Rgba, type VarResolver } from './color';
+
+type Metrics = Pick<FontMetrics, 'familyName' | 'ascent' | 'descent' | 'lineGap' | 'unitsPerEm' | 'xWidthAvg'>;
+const complete = (m: Partial<Metrics>): m is Metrics =>
+  typeof m.familyName === 'string' &&
+  [m.ascent, m.descent, m.lineGap, m.unitsPerEm, m.xWidthAvg].every((v) => typeof v === 'number');
+const METRICS = new Map<string, Metrics>(
+  (Object.values(entireMetricsCollection) as Partial<Metrics>[]).filter(complete).map((m) => [m.familyName, m]),
+);
+const LOCAL_FALLBACK: Record<string, string> = {
+  serif: 'Times New Roman',
+  'sans-serif': 'Arial',
+  monospace: 'Courier New',
+};
+
+/**
+ * Capsize sizes fallbacks from lowercase widths; display fonts set in uppercase need the capitals
+ * ratio instead (uppercase sample in the web font ÷ the same text in Arial, measured in Chromium).
+ */
+const CAPS_SIZE_ADJUST: Record<string, string> = {
+  Anton: '70.94%',
+  'Archivo Black': '113.73%',
+};
+
+/**
+ * Web fonts swap in after first paint; a local fallback sized to the web font's metrics
+ * (size-adjust + ascent/descent overrides) keeps the text from reflowing when they do (CLS).
+ */
+function metricFallback(stack: string, caps = false): { stack: string; face: string | null } {
+  const parts = stack.split(',').map((p) => p.trim());
+  const primary = metricsFor(fontFamilyName(stack));
+  const local = METRICS.get(LOCAL_FALLBACK[parts[parts.length - 1]] ?? 'Arial');
+  if (!primary || !local) return { stack, face: null };
+  const sizeAdjust = caps ? CAPS_SIZE_ADJUST[primary.familyName] : undefined;
+  const { fontFaces } = createFontStack(
+    [primary, local],
+    sizeAdjust ? { fontFaceProperties: { sizeAdjust } } : undefined,
+  );
+  const name = `'${primary.familyName} Fallback'`;
+  return { stack: [parts[0], name, ...parts.slice(1)].join(', '), face: fontFaces };
+}
+
+function metricsFor(family: string): Metrics | undefined {
+  return METRICS.get(family);
+}
 
 const SECTION_PAD = {
   airy: 'clamp(96px, 13vw, 184px)',
@@ -75,10 +121,10 @@ export function themeVariables(theme: Theme): [string, string][] {
       `--lz-color-${t}`,
       theme.colors[t],
     ]),
-    ['--lz-font-display', theme.fonts.display],
-    ['--lz-font-serif', theme.fonts.serif],
-    ['--lz-font-body', theme.fonts.body],
-    ['--lz-font-mono', theme.fonts.mono ?? theme.fonts.body],
+    ['--lz-font-display', metricFallback(theme.fonts.display).stack],
+    ['--lz-font-serif', metricFallback(theme.fonts.serif).stack],
+    ['--lz-font-body', metricFallback(theme.fonts.body).stack],
+    ['--lz-font-mono', metricFallback(theme.fonts.mono ?? theme.fonts.body).stack],
     ['--lz-display-transform', theme.fonts.displayTransform],
     ['--lz-display-leading', theme.fonts.displayLeading],
     ['--lz-display-weight', theme.fonts.displayWeight],
@@ -120,8 +166,27 @@ export function themeVariables(theme: Theme): [string, string][] {
   ];
 }
 
+/** One metric-matched fallback @font-face per web font the theme uses. */
+export function themeFontFaces(theme: Theme): string {
+  const caps = theme.fonts.displayTransform === 'uppercase';
+  const stacks: [string, boolean][] = [
+    [theme.fonts.display, caps],
+    [theme.fonts.serif, false],
+    [theme.fonts.body, false],
+    [theme.fonts.mono ?? theme.fonts.body, false],
+  ];
+  const faces = new Map<string, string>();
+  for (const [stack, upper] of stacks) {
+    const { face } = metricFallback(stack, upper);
+    // One face per family; the display (uppercase) sizing wins when a family serves both.
+    if (face && !faces.has(fontFamilyName(stack))) faces.set(fontFamilyName(stack), face);
+  }
+  return [...faces.values()].join('\n');
+}
+
 export function themeRootCss(theme: Theme): string {
-  return `:root {\n${themeVariables(theme)
+  const faces = themeFontFaces(theme);
+  return `${faces ? `${faces}\n` : ''}:root {\n${themeVariables(theme)
     .map(([k, v]) => `  ${k}: ${v};`)
     .join('\n')}\n}\n`;
 }
