@@ -207,3 +207,24 @@ export function idsOf(spec: Spec): string[] {
 }
 
 export { GIROS };
+
+/** What to run after a build, in order (`--json` callers such as the Claude Code skill follow it). */
+export function nextCommands(report: BuildReport): string[] {
+  const stem = report.spec.replace(/^.*\//, '').replace(/\.spec\.json$/, '');
+  if (report.code === 2)
+    return [`pnpm lattiz spec validate ${stem} --strict --json`];
+  if (!report.ok)
+    return [
+      `pnpm lattiz build ${stem} --dry-run --diff --json`,
+      `pnpm lattiz spec validate ${stem} --strict --json`,
+    ];
+  if (report.dryRun) return [`pnpm lattiz build ${stem} --json`];
+  const basico = report.tiers.find((t) => t.tier === 'basico')?.id;
+  const pro = report.tiers.find((t) => t.tier === 'pro')?.id;
+  return [
+    ...report.ids.map((id) => `pnpm lattiz check ${id} --json`),
+    ...report.ids.map((id) => `pnpm lattiz review ${id}`),
+    ...report.ids.map((id) => `pnpm lattiz dev ${id}`),
+    `pnpm lattiz ship ${[basico, pro].filter(Boolean).join(' ')}  # solo con aprobación humana explícita`,
+  ];
+}

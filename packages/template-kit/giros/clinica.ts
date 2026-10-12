@@ -6,6 +6,23 @@ import { palette } from '../src/spec/presets';
 export default {
   id: 'clinica',
   label: 'Clínica / consultorio',
+  aliases: [
+    'clínica',
+    'consultorio médico',
+    'médico general',
+    'pediatra',
+    'ginecólogo',
+    'nutrióloga',
+    'psicóloga',
+    'fisioterapia',
+    'laboratorio',
+    'especialista',
+  ],
+  rules: [
+    'Giro de salud: sin promesas de curación ni de resultados; describe servicios y forma de atención.',
+    'Credenciales como marcadores: «Cédula profesional {{…}}», nunca un número real.',
+    'En urgencias, remite al 911; no diagnósticos por WhatsApp.',
+  ],
   category: 'clinicas',
   businessCategory: 'medical',
   schemaType: 'MedicalClinic',

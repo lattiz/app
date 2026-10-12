@@ -38,6 +38,10 @@ export interface GiroImage {
 export interface GiroDefinition {
   id: string;
   label: string;
+  /** Free-text business kinds this giro covers (the skill maps «taquería» → restaurante). */
+  aliases?: string[];
+  /** Copy rules specific to the giro (regulated claims, credentials, tone). */
+  rules?: string[];
   /** templates.category for the gallery, plural (`florerias`). */
   category: string;
   businessCategory: BusinessCategory;

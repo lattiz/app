@@ -9,7 +9,7 @@ import {
 import { bool, type Command, type Context } from '../lib/command';
 import { EXIT, type ExitCode, gate, usage } from '../lib/errors';
 import { paths, REPO_ROOT, stateFile } from '../lib/paths';
-import { confirm } from '../lib/prompt';
+import { assertRemoteWrite, confirm } from '../lib/prompt';
 import {
   hasEnv,
   previewsBaseUrl,
@@ -193,6 +193,7 @@ export const deploy: Command = {
   ],
   options: { 'skip-verify': { type: 'boolean' } },
   run(ctx) {
+    assertRemoteWrite(ctx, 'deploy');
     return deployPreviews(ctx, { skipVerify: bool(ctx.flags, 'skip-verify') });
   },
 };

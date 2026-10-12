@@ -156,7 +156,7 @@ function fillBranch<T extends ContentValue>(value: T, branch: string): T {
   return value;
 }
 
-function branchName(spec: Spec, giro: GiroDefinition): string {
+export function branchName(spec: Spec, giro: GiroDefinition): string {
   return (
     spec.business.branch ??
     spec.business.branches?.[0]?.name ??
@@ -295,7 +295,7 @@ function pinnedBrand(
   return spec.brand?.[key] !== undefined;
 }
 
-function businessOf(spec: Spec, giro: GiroDefinition): Business {
+export function businessOf(spec: Spec, giro: GiroDefinition): Business {
   const b = spec.business;
   const city = b.city ?? giro.business.city;
   const q = `${b.name} ${b.branch ?? city}`

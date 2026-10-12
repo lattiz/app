@@ -1,0 +1,459 @@
+import { readdirSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { GIROS } from '../../giros';
+import { KIT_ROOT, paths } from '../lib/paths';
+import type { ContentObject, ContentPack, ContentValue } from '../types';
+import { branchName, businessOf, contentName, specTargets } from './compile';
+import type { Spec, SpecProblem, SpecTier } from './schema';
+import { mergedCopy } from './validate';
+
+/**
+ * Visible-text limits (characters, tags stripped, variables filled with the spec's data) per copy
+ * key. Calibrated ~20 % above the longest copy the existing templates fit with at 1366×768 and
+ * 390×844; past them a layout risks wrapping out of the viewport fit or breaking a card grid.
+ */
+export const COPY_LIMITS: Record<string, number> = {
+  'navbar.cta': 16,
+  'hero.eyebrow': 48,
+  'hero.title': 56,
+  'hero.text': 150,
+  'hero.primaryCta': 24,
+  'hero.secondaryCta': 18,
+  'hero.sticker': 24,
+  'about.title': 56,
+  'about.summary': 240,
+  'about.statement': 140,
+  'about.paragraphs[]': 230,
+  'about.stats[].value': 14,
+  'about.stats[].label': 24,
+  'about.sticker': 30,
+  'services.title': 32,
+  'services.intro': 120,
+  'services.prices[].name': 36,
+  'services.prices[].price': 12,
+  'services.prices[].description': 96,
+  'services.promos[].tag': 16,
+  'services.promos[].title': 48,
+  'services.promos[].text': 120,
+  'services.promos[].cta': 16,
+  'gallery.title': 32,
+  'gallery.items[].caption': 34,
+  'gallery.items[].alt': 125,
+  'team.title': 32,
+  'team.members[].name': 24,
+  'team.members[].role': 30,
+  'team.members[].tags[]': 24,
+  'testimonials.summary': 44,
+  'testimonials.reviews[].text': 190,
+  'testimonials.reviews[].author': 32,
+  'faq.title': 32,
+  'faq.intro': 140,
+  'faq.cta': 24,
+  'faq.items[].question': 70,
+  'faq.items[].answer': 220,
+  'locations.title': 32,
+  'locations.contactText': 160,
+  'locations.whatsappValue': 20,
+  'locations.whatsappCta': 24,
+  'marquee.label': 34,
+  'marquee.items[]': 28,
+  'floating-whatsapp.label': 34,
+  'footer.about': 160,
+  'head.title': 60,
+  'head.description': 160,
+};
+
+/** Copy rules for every giro (`lattiz giro show` prints them with the giro's own). */
+export const COPY_RULES: string[] = [
+  'Negocio, personas, reseñas y marcas ficticios: nunca un negocio, marca, logo o persona real.',
+  'Sin promesas ni superlativos: nada de «garantizado», «el/la mejor», «número uno», «100 %», curas o resultados.',
+  'Teléfono, WhatsApp, correo, dirección y ciudad van como variables ({{phone}}, {{whatsappUrl:mensaje}}, {{email}}, {{address}}, {{city}}): se vuelven tokens {{lz:*}} y el cliente pone los suyos. Teléfonos de demo con 0000.',
+  'Precios como ejemplo, en pesos mexicanos («Desde $350»); nunca precios de un negocio real.',
+  'Español de México, tuteo, frases cortas; cada clave respeta su límite de caracteres (lattiz giro show).',
+  'Cada sección dice algo distinto; la Básica y la Pro no repiten el texto del hero; nada copiado de otra plantilla del giro.',
+];
+
+// Marker words are uppercase on purpose: «todo» is ordinary Spanish.
+const PLACEHOLDER_RE =
+  /[Ll]orem|[Ii]psum|\bTODO\b|\bTBD\b|\bFIXME\b|\bPENDIENTE\b|\b[Xx]{3,}\b|<nombre>|\[[^\]]{1,40}\]|\.\.\.\s*$/;
+
+/** Claims a template must never make (ground rules: no guarantees, superlatives or outcomes). */
+const BANNED: [RegExp, string][] = [
+  [/garantizad[oa]s?|garantizamos/, 'promete resultados («garantizado»)'],
+  [/\b(el|la|los|las) mejor(es)?\b/, 'superlativo («el/la mejor»)'],
+  [/numero (uno|1)\b|#1\b|\bno\.? ?1 en\b/, 'superlativo («número uno»)'],
+  [
+    /100 ?% (efectiv|garantizad|segur|natural|libre de)/,
+    'promesa absoluta («100 %…»)',
+  ],
+  [/\bcura(r|mos|n)?\b|\bsana(r|mos)\b/, 'promete curar'],
+  [
+    /sin dolor|indolor[oa]|elimina(mos|r)? (el |la |las |los )?(dolor|arrugas|celulitis|grasa|caries|manchas)/,
+    'promesa de resultado clínico o estético',
+  ],
+  [/antes y despues/, 'antes/después de salud o estética'],
+  [/adelgaz|baja(r|s)? de peso|bajar \d+ ?kg/, 'promesa de peso'],
+  [
+    /resultados? (inmediat|permanente|definitiv|asegurad)/,
+    'promete resultados',
+  ],
+  [/milagro|infalible|sin riesgos?\b|cero riesgos?/, 'promesa absoluta'],
+  [
+    /gan(amos|aras|ar) (tu |el )?(juicio|caso|demanda|litigio)|recupera(mos)? tu dinero|evita(r|mos)? (la carcel|multas)/,
+    'promete un resultado legal o fiscal',
+  ],
+  [
+    /(avalad|certificad|aprobad)[oa]s? por (la )?(cofepris|sat|ssa|sep|profeco)/,
+    'aval de autoridad',
+  ],
+];
+
+/** High-confidence words written without their accent (ambiguous ones like más/está are left out). */
+const ACCENTS: Record<string, string> = Object.fromEntries(
+  [
+    'teléfono días atención también aquí fácil envío envíos médico médica médicos clínica crédito débito',
+    'dirección información ubicación sábado sábados miércoles méxico garantía revisión valoración',
+    'consultoría asesoría declaración nómina física jurídico jurídica técnica único única rápido',
+    'rápida último número página música café menú depilación pestañas cancelación vacunación',
+    'esterilización cirugía odontología extracción prótesis estética fotografía mamá papá niños',
+    'cotización',
+  ]
+    .join(' ')
+    .split(' ')
+    .filter((w) => /[áéíóúñ]/.test(w))
+    .map((w) => [fold(w), w]),
+);
+
+const BRANDS: string[] = (
+  JSON.parse(
+    readFileSync(resolve(KIT_ROOT, 'src/spec/brand-blocklist.json'), 'utf8'),
+  ) as { brands: string[] }
+).brands;
+
+function fold(text: string): string {
+  return text.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+}
+
+const NON_TEXT_KEY =
+  /(^|\.)(href|image|images|secondaryHref|url|mapUrl|directionsUrl|mapTitle)$|Url$/;
+
+interface Leaf {
+  /** Copy path with indexes, e.g. `services.prices[2].name`. */
+  path: string;
+  /** Limit key, e.g. `services.prices[].name`. */
+  key: string;
+  raw: string;
+}
+
+function leaves(copy: Record<string, ContentObject>): Leaf[] {
+  const out: Leaf[] = [];
+  const walk = (v: ContentValue | undefined, path: string, key: string) => {
+    if (typeof v === 'string') {
+      if (!NON_TEXT_KEY.test(key)) out.push({ path, key, raw: v });
+      return;
+    }
+    if (Array.isArray(v))
+      return v.forEach((x, i) => walk(x, `${path}[${i}]`, `${key}[]`));
+    if (v && typeof v === 'object')
+      for (const [k, x] of Object.entries(v))
+        walk(x, `${path}.${k}`, `${key}.${k}`);
+  };
+  for (const [slot, value] of Object.entries(copy)) walk(value, slot, slot);
+  return out;
+}
+
+const sentences = (text: string): string[] =>
+  fold(text)
+    .split(/[.!?¿¡:;]+/)
+    .map((s) =>
+      s
+        .replace(/[^a-z0-9ñ ]+/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim(),
+    )
+    .filter((s) => s.split(' ').length >= 5);
+
+/** Content packs of the giro other than this spec's own (hand-made or generated). */
+async function otherPacks(spec: Spec): Promise<[string, ContentPack][]> {
+  const own = contentName(spec);
+  const out: [string, ContentPack][] = [];
+  for (const file of readdirSync(paths.content).filter(
+    (f) => f.startsWith(`${spec.giro}.`) && f.endsWith('.es-MX.ts'),
+  )) {
+    const name = file.replace(/\.ts$/, '');
+    if (name === own) continue;
+    const mod = (await import(resolve(paths.content, file))) as {
+      default: ContentPack;
+    };
+    out.push([name, mod.default]);
+  }
+  return out;
+}
+
+/**
+ * `spec validate --strict`: copy rules a model or a person must meet before a build is worth
+ * reviewing. Errors block; warnings are judgment calls the review should look at.
+ */
+export async function lintCopy(spec: Spec): Promise<SpecProblem[]> {
+  const giro = GIROS[spec.giro];
+  if (!giro) return [];
+  const problems: SpecProblem[] = [];
+  const add = (
+    level: SpecProblem['level'],
+    rule: string,
+    path: string,
+    message: string,
+    hint?: string,
+  ) => {
+    if (problems.some((p) => p.path === path && p.rule === rule)) return;
+    problems.push({ level, rule, path, message, ...(hint ? { hint } : {}) });
+  };
+  const business = businessOf(spec, giro);
+  const branch = branchName(spec, giro);
+  const fill = (text: string) =>
+    text
+      .replace(/<[^>]+>/g, '')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/\{\{\s*index\s*\}\}/g, '01')
+      .replace(/\{\{\s*branch\s*\}\}/g, branch)
+      .replace(/\{\{\s*whatsappUrl(:[^}]*)?\s*\}\}/g, 'https://wa.me/x')
+      .replace(
+        /\{\{\s*(\w+)\s*\}\}/g,
+        (_m, k: string) =>
+          ((business as unknown as Record<string, string>)[k] ?? k) as string,
+      )
+      .trim();
+
+  // Business data: fictional and in the right fields.
+  const digits = (business.phone + business.whatsapp).replace(/\D/g, '');
+  if (!/0000/.test(digits))
+    add(
+      'warn',
+      'datos-ficticios',
+      'business.phone',
+      'el teléfono o WhatsApp no parece de demostración',
+      'Usa números ficticios con 0000 (p. ej. +52 55 0000 0000 / 5215500000000): las plantillas nunca llevan teléfonos reales.',
+    );
+  if (/ejemplo/i.test(business.address))
+    add(
+      'warn',
+      'placeholder',
+      'business.address',
+      'la dirección es la de ejemplo del giro',
+      'Pon una dirección ficticia con calle y colonia de la ciudad del negocio.',
+    );
+  for (const brand of BRANDS)
+    if (
+      new RegExp(
+        `(^|[^\\p{L}])${escapeRe(fold(brand))}($|[^\\p{L}])`,
+        'u',
+      ).test(fold(business.name))
+    )
+      add(
+        'error',
+        'marca-real',
+        'business.name',
+        `«${brand}» es una marca real`,
+        'Inventa un nombre ficticio.',
+      );
+
+  const tiers = specTargets(spec).map((t) => t.tier);
+  const copies = {} as Record<SpecTier, Record<string, ContentObject>>;
+  for (const t of tiers)
+    copies[t] = { ...mergedCopy(spec, t), head: headCopy(spec, t) };
+  const where = (tier: SpecTier, path: string) =>
+    spec.overrides?.[tier]?.copy && hasPath(spec.overrides[tier].copy, path)
+      ? `overrides.${tier}.copy.${path}`
+      : `copy.${path}`;
+
+  const seenInPage = new Map<string, string>();
+  for (const tier of tiers) {
+    for (const leaf of leaves(copies[tier])) {
+      const at = where(tier, leaf.path);
+      const text = fill(leaf.raw);
+      const folded = fold(text);
+      if (PLACEHOLDER_RE.test(leaf.raw))
+        add(
+          'error',
+          'placeholder',
+          at,
+          `texto de relleno: «${text.slice(0, 60)}»`,
+          'Escribe el texto final.',
+        );
+      const limit = COPY_LIMITS[leaf.key];
+      if (limit && text.length > limit)
+        add(
+          'error',
+          'longitud',
+          at,
+          `${text.length} caracteres; el máximo para ${leaf.key} es ${limit}`,
+          'Acórtalo: un texto más largo rompe el encaje o la retícula de la variante.',
+        );
+      for (const [re, what] of BANNED)
+        if (re.test(folded))
+          add(
+            'error',
+            'promesa',
+            at,
+            `${what}: «${text.slice(0, 70)}»`,
+            'Las plantillas no prometen resultados ni usan superlativos; describe el servicio.',
+          );
+      if (
+        /(\+?52[\s-]?)?\(?\d{2,3}\)?[\s-]?\d{3,4}[\s-]\d{4}\b/.test(leaf.raw) ||
+        /wa\.me\/|tel:\+?\d/.test(leaf.raw)
+      )
+        add(
+          'error',
+          'contacto-literal',
+          at,
+          'teléfono escrito a mano',
+          'Usa {{phone}}, {{phoneUrl}} o {{whatsappUrl:mensaje}}: se vuelven tokens {{lz:*}} y el cliente pone los suyos.',
+        );
+      if (/[\w.+-]+@[\w-]+\.[\w.]+/.test(leaf.raw))
+        add(
+          'error',
+          'contacto-literal',
+          at,
+          'correo escrito a mano',
+          'Usa {{email}} / {{emailUrl}}.',
+        );
+      for (const brand of BRANDS)
+        if (
+          new RegExp(
+            `(^|[^\\p{L}])${escapeRe(fold(brand))}($|[^\\p{L}])`,
+            'u',
+          ).test(folded)
+        )
+          add(
+            'error',
+            'marca-real',
+            at,
+            `menciona la marca real «${brand}»`,
+            'Solo negocios, productos y personas ficticios.',
+          );
+      for (const word of text.toLowerCase().match(/\p{L}+/gu) ?? []) {
+        const fixed = ACCENTS[word];
+        if (fixed)
+          add('warn', 'acentos', at, `«${word}» sin acento → «${fixed}»`);
+      }
+      if (
+        /question$/.test(leaf.key) &&
+        text.endsWith('?') &&
+        !text.startsWith('¿')
+      )
+        add('warn', 'ortografia', at, 'pregunta sin «¿» de apertura');
+      if (/\s{2,}| ,|,,|\.\./.test(text.replace(/\.\.\.$/, '')))
+        add('warn', 'ortografia', at, 'espacios o signos repetidos');
+      for (const s of sentences(text)) {
+        const first = seenInPage.get(`${tier}|${s}`);
+        if (first && first !== leaf.path.split(/[.[]/)[0])
+          add(
+            'warn',
+            'repetido',
+            at,
+            `la misma frase ya está en ${first}: «${s.slice(0, 60)}»`,
+            'Cada sección dice algo distinto.',
+          );
+        else seenInPage.set(`${tier}|${s}`, leaf.path.split(/[.[]/)[0]);
+      }
+    }
+  }
+
+  if (tiers.length === 2) {
+    const pro = fill(String(copies.pro.hero?.text ?? ''));
+    const basico = fill(String(copies.basico.hero?.text ?? ''));
+    if (pro && pro === basico)
+      add(
+        'warn',
+        'repetido',
+        'overrides.basico.copy.hero.text',
+        'la Básica y la Pro dicen lo mismo bajo el titular',
+        'Dale a la Básica un texto propio en overrides.basico.copy.hero.text (más directo; la Pro, más de marca).',
+      );
+  }
+
+  // Against the giro's default copy (generic) and the other templates of the giro.
+  const keys = [
+    'hero.title',
+    'hero.text',
+    'about.summary',
+    'about.statement',
+    'footer.about',
+    'head.description',
+  ];
+  const giroCopy = { ...giro.copy, head: giro.head } as Record<
+    string,
+    ContentObject
+  >;
+  for (const tier of tiers)
+    for (const key of keys) {
+      const [slot, k] = key.split('.');
+      const mine = copies[tier][slot]?.[k];
+      if (typeof mine === 'string' && mine === giroCopy[slot]?.[k])
+        add(
+          'warn',
+          'generico',
+          where(tier, key),
+          'es el texto por defecto del giro',
+          'Escríbelo para este negocio: el copy por defecto se repite en todas las plantillas del giro.',
+        );
+    }
+  const mineSentences = new Map<string, string>();
+  for (const tier of tiers)
+    for (const leaf of leaves(copies[tier]))
+      if (
+        !/(kicker|label|cta|title|caption|alt|name|tags)$/i.test(
+          leaf.key.split('.').pop() ?? '',
+        )
+      )
+        for (const s of sentences(fill(leaf.raw)))
+          mineSentences.set(s, where(tier, leaf.path));
+  for (const [name, pack] of await otherPacks(spec)) {
+    const theirs = new Set(
+      leaves({
+        ...pack.sections,
+        head: pack.head as unknown as ContentObject,
+      }).flatMap((l) => sentences(l.raw.replace(/<[^>]+>/g, ''))),
+    );
+    // One warning per slot: the review needs where, not every sentence.
+    const bySlot = new Map<string, string[]>();
+    for (const [s, at] of mineSentences)
+      if (theirs.has(s)) {
+        const slot = at
+          .replace(/^(overrides\.\w+\.)?copy\./, '')
+          .split(/[.[]/)[0];
+        bySlot.set(slot, [...(bySlot.get(slot) ?? []), s]);
+      }
+    for (const [slot, list] of bySlot)
+      add(
+        'warn',
+        'repetido',
+        `copy.${slot}`,
+        `${list.length} frase(s) iguales a content/${name} (p. ej. «${list[0].slice(0, 50)}»)`,
+        'Reescríbelas: dos plantillas del giro no deben sonar igual.',
+      );
+  }
+  return problems;
+}
+
+function headCopy(spec: Spec, tier: SpecTier): ContentObject {
+  const giro = GIROS[spec.giro];
+  return {
+    ...giro.head,
+    ...((spec.copy?.head ?? {}) as ContentObject),
+    ...((spec.overrides?.[tier]?.copy?.head ?? {}) as ContentObject),
+  };
+}
+
+function hasPath(obj: unknown, path: string): boolean {
+  let cur: unknown = obj;
+  for (const part of path.replace(/\[(\d+)\]/g, '.$1').split('.')) {
+    if (cur === null || typeof cur !== 'object') return false;
+    cur = (cur as Record<string, unknown>)[part];
+  }
+  return cur !== undefined;
+}
+
+function escapeRe(text: string): string {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}

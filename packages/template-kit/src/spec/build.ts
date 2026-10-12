@@ -61,6 +61,8 @@ export interface FileReport {
   kind: FileKind;
   ids: string[];
   action: FileAction;
+  /** Hash of the generated value (the marker's `file` hash). */
+  hash: string;
   diff?: string;
 }
 
@@ -351,6 +353,7 @@ export async function buildSpec(opts: BuildOptions): Promise<BuildReport> {
         kind: f.kind,
         ids: f.ids,
         action,
+        hash: f.hash,
         ...(wantDiff
           ? { diff: unifiedDiff(f.path, existing.text ?? '', text, scratch) }
           : {}),

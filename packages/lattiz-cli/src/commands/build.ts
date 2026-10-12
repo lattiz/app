@@ -5,7 +5,7 @@ import {
 import type { ImageMode } from '../../../template-kit/src/spec/images';
 import { bool, type Command, type Context, str } from '../lib/command';
 import { type ExitCode, usage } from '../lib/errors';
-import { printBuild, rel, resolveSpecArg } from '../lib/spec';
+import { nextCommands, printBuild, rel, resolveSpecArg } from '../lib/spec';
 import { writeState } from '../lib/state';
 import { c, duration, log, setQuiet } from '../lib/ui';
 
@@ -108,7 +108,10 @@ export const build: Command = {
       ctx,
       resolveSpecArg(ctx.positionals[0]),
     );
-    if (json) console.log(JSON.stringify(report, null, 2));
+    if (json)
+      console.log(
+        JSON.stringify({ ...report, next: nextCommands(report) }, null, 2),
+      );
     else printBuildSummary(report);
     return code;
   },

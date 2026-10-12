@@ -8,6 +8,7 @@ import {
   type Spec,
   type SpecTier,
 } from '../../../template-kit/src/spec/schema';
+import { lintCopy } from '../../../template-kit/src/spec/copy-lint';
 import { validateSpec } from '../../../template-kit/src/spec/validate';
 import { libraryFingerprints } from '../../../template-kit/src/lib/targets';
 import { bool, type Command, type Context, str } from '../lib/command';
@@ -125,8 +126,13 @@ async function runValidate(ctx: Context): Promise<ExitCode> {
   setQuiet(json);
   const file = resolveSpecArg(ctx.positionals[1]);
   const { spec, problems } = readSpecFile(file);
+  const strict = bool(ctx.flags, 'strict');
   const all = spec
-    ? [...problems, ...(await validateSpec(spec, file))]
+    ? [
+        ...problems,
+        ...(await validateSpec(spec, file)),
+        ...(strict ? await lintCopy(spec) : []),
+      ]
     : problems;
   const errors = all.filter((p) => p.level === 'error').length;
   if (json) {
@@ -135,7 +141,10 @@ async function runValidate(ctx: Context): Promise<ExitCode> {
         {
           file: rel(file),
           ok: errors === 0,
+          strict,
           ids: spec ? idsOf(spec) : [],
+          errors,
+          warnings: all.length - errors,
           problems: all,
         },
         null,
@@ -144,7 +153,7 @@ async function runValidate(ctx: Context): Promise<ExitCode> {
     );
     return errors ? EXIT.USAGE : EXIT.OK;
   }
-  log.title(`lattiz spec validate ${rel(file)}`);
+  log.title(`lattiz spec validate ${rel(file)}${strict ? ' --strict' : ''}`);
   printProblems(all);
   if (errors) {
     log.fail(`${errors} error(es); corrige el spec y vuelve a validar.`);
@@ -164,7 +173,11 @@ export const spec: Command = {
     'spec init --giro <giro> --nombre "<nombre>" [--twin | --tier pro|basico] [--id <id>] [--out archivo] [--force]',
     '    Escribe packages/template-kit/specs/<giro>-<nombre>.spec.json con el copy del giro, la paleta',
     '    y la tipografía libres en el giro y una lista "todo" de lo que falta revisar.',
-    'spec validate <archivo|id>   esquema + blueprint + copy completo (errores con ruta JSON)',
+    'spec validate <archivo|id> [--strict]',
+    '    esquema + blueprint + copy completo (errores con ruta JSON). --strict además revisa el copy:',
+    '    longitud por clave (lattiz giro show), relleno/TODO, promesas y superlativos, teléfonos o',
+    '    correos escritos a mano (usa {{phone}}, {{email}}), marcas reales, acentos, frases repetidas',
+    '    en la página, entre la gemela y contra otras plantillas del giro.',
     'spec schema                  JSON Schema del spec (autocompletado en el editor, skill de Claude)',
     '',
     `Giros: ${Object.keys(GIROS).join(', ')}. Todos aceptan --json.`,
@@ -177,6 +190,7 @@ export const spec: Command = {
     id: { type: 'string' },
     out: { type: 'string' },
     force: { type: 'boolean' },
+    strict: { type: 'boolean' },
     json: { type: 'boolean' },
   },
   async run(ctx) {

@@ -1,5 +1,5 @@
 import { spawn, spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, rmSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { relative, resolve } from 'node:path';
 import type { Browser, Page } from 'playwright';
@@ -17,6 +17,9 @@ import {
 
 type FitMeasure = Omit<FitRow, 'viewport' | 'verdict'>;
 import { browserPath, launchBrowser } from '../lib/browser';
+import { readSpecFile } from '../../../template-kit/src/spec/build';
+import { buildFindings, type Finding } from '../lib/findings';
+import { originOf, specFor } from '../lib/spec';
 import { bool, type Command } from '../lib/command';
 import { EXIT, type ExitCode } from '../lib/errors';
 import { KIT, REPO_ROOT, shotsDir } from '../lib/paths';
@@ -27,6 +30,7 @@ import {
   assertTemplate,
   cleanOutput,
   compile,
+  type DistMeta,
   readDist,
   tierLabel,
   validate,
@@ -177,8 +181,8 @@ function headAndTokens(
           GLOBAL,
           'PASS',
           sourceTokens === 0
-            ? 'la plantilla no usa tokens'
-            : `${sourceTokens} token(s) ${profile ? `resueltos con ${profile}` : 'vacíos (sin perfil demo)'}`,
+            ? 'el proyecto no usa tokens {{lz:*}}'
+            : `${sourceTokens} token(s) {{lz:*}} en el .grapesjs; el preview muestra el demo${profile ? ` (perfil ${profile})` : ''}`,
         ),
   ];
 }
@@ -539,6 +543,10 @@ function creditsResult(vertical: string, theme: string): RuleResult | null {
 export interface CheckOutcome {
   id: string;
   tier: string;
+  /** Spec file the template is generated from (null for hand-made or cloned templates). */
+  spec: string | null;
+  /** Every FAIL/WARN item with its section and, for generated templates, the spec field to change. */
+  findings: Finding[];
   status: 'PASS' | 'WARN' | 'FAIL';
   results: RuleResult[];
   ms: number;
@@ -569,7 +577,7 @@ export async function runCheck(
         cleanOutput(built.output).split('\n').slice(-15),
       ),
     );
-    return finish();
+    return withFindings(finish(), null);
   }
   const valid = await validate(id);
   const findings = cleanOutput(valid.output)
@@ -591,7 +599,11 @@ export async function runCheck(
   const tier = dist.meta.tier;
   const credits = creditsResult(dist.manifest.vertical, dist.manifest.theme);
   if (credits) results.push(credits);
-  const sourceTokens = (dist.html.match(/\{\{\s*lz:/g) ?? []).length;
+  // The .grapesjs carries the {{lz:*}} tokens; dist/index.html already shows the demo data.
+  const projectFile = resolve(dist.dir, `${id}.grapesjs`);
+  const sourceTokens = existsSync(projectFile)
+    ? (readFileSync(projectFile, 'utf8').match(/\{\{\s*lz:/g) ?? []).length
+    : 0;
   const server = await startPreviewServer({
     id,
     port: 0,
@@ -649,9 +661,32 @@ export async function runCheck(
     if (opts.lighthouse) results.push(await lighthouse(`${server.url}/site`));
     await server.close();
   }
-  return finish(tier);
+  return withFindings(finish(tier), dist.meta);
 
-  function finish(tier = '?'): CheckOutcome {
+  async function withFindings(
+    outcome: Omit<CheckOutcome, 'spec' | 'findings'>,
+    meta: DistMeta | null,
+  ): Promise<CheckOutcome> {
+    const origin = await originOf(id).catch(() => null);
+    const specFile =
+      origin?.spec ??
+      (origin?.origin === 'generated' ? specFor(id) : undefined);
+    const spec =
+      specFile && meta
+        ? {
+            stem: specFile,
+            tier: meta.tier === 'pro' ? ('pro' as const) : ('basico' as const),
+            twin: readSpecFile(resolve(KIT, specFile)).spec?.twin === true,
+          }
+        : null;
+    return {
+      ...outcome,
+      spec: specFile ?? null,
+      findings: await buildFindings(outcome.results, meta, spec),
+    };
+  }
+
+  function finish(tier = '?'): Omit<CheckOutcome, 'spec' | 'findings'> {
     const statuses = results.map((r) => r.status);
     return {
       id,
@@ -756,7 +791,8 @@ export const check: Command = {
     'y cuyo bloque de texto + CTA tampoco cabe es FAIL; con alto ≤ 560 px no aplica.',
     '',
     '  --lighthouse   además corre Lighthouse (npx lighthouse@12, se instala al vuelo; usa memoria)',
-    '  --json         imprime solo el resultado en JSON',
+    '  --json         imprime solo el resultado en JSON; findings[] trae cada FAIL/WARN con sección,',
+    '                 selector y, si la plantilla sale de un spec, specHint (qué campo del spec cambiar)',
   ],
   options: { lighthouse: { type: 'boolean' }, json: { type: 'boolean' } },
   async run(ctx): Promise<ExitCode> {

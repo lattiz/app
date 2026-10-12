@@ -6,6 +6,17 @@ import { palette } from '../src/spec/presets';
 export default {
   id: 'floreria',
   label: 'Florería',
+  aliases: [
+    'florería',
+    'flores',
+    'arreglos florales',
+    'vivero',
+    'decoración floral para eventos',
+    'regalos',
+  ],
+  rules: [
+    'Precios de arreglos como ejemplo; envíos «se cotizan según la zona».',
+  ],
   category: 'florerias',
   businessCategory: 'store',
   schemaType: 'Florist',

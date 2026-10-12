@@ -16,7 +16,7 @@ import {
   validate,
 } from '../lib/templates';
 import { c, log, setQuiet } from '../lib/ui';
-import { GIROS, rel } from '../lib/spec';
+import { GIROS, nextCommands, rel } from '../lib/spec';
 import { printBuildSummary, runBuild } from './build';
 import { initFromFlags } from './spec';
 
@@ -188,7 +188,13 @@ async function runFromSpec(ctx: Context): Promise<ExitCode> {
   } else log.info(`Spec: ${rel(file)}`);
   const { code, report } = await runBuild(ctx, file);
   if (json) {
-    console.log(JSON.stringify({ spec: rel(file), build: report }, null, 2));
+    console.log(
+      JSON.stringify(
+        { spec: rel(file), build: report, next: nextCommands(report) },
+        null,
+        2,
+      ),
+    );
     return code;
   }
   printBuildSummary(report);
@@ -206,8 +212,7 @@ export const newTemplate: Command = {
   name: 'new',
   summary:
     'Asistente: plantilla nueva desde un spec (recomendado) o clonando una base (legacy)',
-  usage:
-    'new [--spec archivo] [--modo spec|clon] [--giro g] [--nombre n]',
+  usage: 'new [--spec archivo] [--modo spec|clon] [--giro g] [--nombre n]',
   help: [
     'Desde spec (recomendado): escribe packages/template-kit/specs/<giro>-<nombre>.spec.json con el',
     'copy del giro y lo compila con `lattiz build` (único en el giro, validado antes de escribir).',

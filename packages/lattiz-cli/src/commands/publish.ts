@@ -1,6 +1,6 @@
 import { bool, type Command, type Context } from '../lib/command';
 import { CliError, EXIT, type ExitCode, usage } from '../lib/errors';
-import { confirm } from '../lib/prompt';
+import { assertRemoteWrite, confirm } from '../lib/prompt';
 import { previewUrl, waitFor200 } from '../lib/remote';
 import { writeState } from '../lib/state';
 import { assertTemplate, readDist, tierLabel } from '../lib/templates';
@@ -191,6 +191,7 @@ export const publish: Command = {
   options: shared.options,
   run(ctx) {
     const id = assertTemplate(ctx.positionals[0]);
+    assertRemoteWrite(ctx, `publish ${id}`);
     if (ctx.positionals.length > 1)
       throw usage(
         'publish recibe un id; para el par usa `pnpm lattiz ship <idA> <idB>`.',
@@ -217,6 +218,7 @@ export const ship: Command = {
     if (ctx.positionals.length < 1 || ctx.positionals.length > 2)
       throw usage('ship recibe uno o dos ids.');
     const ids = ctx.positionals.map((id) => assertTemplate(id));
+    assertRemoteWrite(ctx, `ship ${ids.join(' ')}`);
     return pipeline(ctx, ids, {
       force: bool(ctx.flags, 'force'),
       lighthouse: bool(ctx.flags, 'lighthouse'),

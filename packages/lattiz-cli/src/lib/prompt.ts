@@ -5,6 +5,8 @@ import { usage } from './errors';
 export interface PromptMode {
   yes: boolean;
   nonInteractive: boolean;
+  /** --confirm-remote: the second key a non-interactive caller must turn for remote writes. */
+  confirmRemote?: boolean;
 }
 
 export function interactive(mode: PromptMode): boolean {
@@ -14,6 +16,19 @@ export function interactive(mode: PromptMode): boolean {
 function cancelled(): never {
   p.cancel('Cancelado.');
   process.exit(130);
+}
+
+/**
+ * Remote writes (seed, deploy, publish, ship) without a terminal — a script or an agent — need
+ * --yes AND --confirm-remote; a person at a TTY is asked (or passes --yes).
+ */
+export function assertRemoteWrite(mode: PromptMode, what: string): void {
+  const tty = Boolean(process.stdin.isTTY) && !mode.nonInteractive;
+  if (tty || (mode.yes && mode.confirmRemote)) return;
+  throw usage(
+    `${what} escribe en Supabase, R2 o Vercel y no hay terminal interactiva.`,
+    'Sin TTY hace falta --yes y --confirm-remote, y solo con aprobación humana explícita.',
+  );
 }
 
 /** Remote writes: --yes skips; without a TTY and without --yes it refuses. */

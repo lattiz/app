@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import { bool, type Command, type Context } from '../lib/command';
 import { CliError, EXIT, type ExitCode, gate, usage } from '../lib/errors';
 import { distDir, REPO_ROOT } from '../lib/paths';
-import { confirm } from '../lib/prompt';
+import { assertRemoteWrite, confirm } from '../lib/prompt';
 import {
   missingEnv,
   previewUrl,
@@ -246,6 +246,7 @@ export const seed: Command = {
   options: { 'dry-run': { type: 'boolean' }, deploy: { type: 'boolean' } },
   run(ctx) {
     const id = assertTemplate(ctx.positionals[0]);
+    if (!bool(ctx.flags, 'dry-run')) assertRemoteWrite(ctx, `seed ${id}`);
     if (readState(id).lastCheck?.result === 'FAIL')
       log.warn(`El último \`lattiz check ${id}\` tuvo FAIL.`);
     return seedOne(ctx, id, {

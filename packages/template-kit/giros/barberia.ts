@@ -40,6 +40,7 @@ const sections = (pack: { sections: Record<string, ContentObject> }) =>
 export default {
   id: 'barberia',
   label: 'Barbería',
+  aliases: ['barbería', 'barber shop', 'peluquería de caballeros'],
   category: 'barberias',
   businessCategory: 'barbershop',
   schemaType: 'BarberShop',

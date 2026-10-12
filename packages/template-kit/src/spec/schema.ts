@@ -378,6 +378,8 @@ export interface SpecProblem {
   path: string;
   message: string;
   hint?: string;
+  /** `spec validate --strict` copy rule that raised it (length, claim, brand, …). */
+  rule?: string;
 }
 
 export function jsonPath(path: readonly PropertyKey[]): string {

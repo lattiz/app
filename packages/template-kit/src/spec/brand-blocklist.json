@@ -1,0 +1,18 @@
+{
+  "$comment": "Real brands that must never appear in template copy (fictional businesses only). Platforms the templates link to (Google, WhatsApp, Instagram, Facebook, TikTok) are allowed. Case-insensitive, whole words.",
+  "brands": [
+    "OXXO", "Walmart", "Bodega Aurrerá", "Soriana", "Chedraui", "La Comer", "Costco", "Sam's Club",
+    "Liverpool", "Palacio de Hierro", "Coppel", "Elektra", "Sanborns", "Suburbia", "Sears",
+    "Bimbo", "Coca-Cola", "Pepsi", "Starbucks", "McDonald's", "Burger King", "KFC", "Domino's",
+    "Little Caesars", "Vips", "Toks", "El Portón", "Italianni's", "Taco Bell", "Subway",
+    "Farmacias del Ahorro", "Farmacias Similares", "Dr. Simi", "Farmacias Guadalajara", "Benavides",
+    "Farmacias San Pablo", "Salud Digna", "Dentalia",
+    "Sephora", "L'Oréal", "Loreal", "Maybelline", "Revlon", "OPI", "Wella", "Schwarzkopf", "Kérastase",
+    "Nike", "Adidas", "Zara", "H&M", "Shein", "Pull&Bear", "Bershka", "Victoria's Secret",
+    "Apple", "iPhone", "Samsung", "Amazon", "Mercado Libre", "Rappi", "Uber Eats", "DiDi Food",
+    "Smart Fit", "Sports World", "Anytime Fitness", "Energy Fitness", "CrossFit", "Herbalife",
+    "Petco", "+Kota", "Royal Canin", "Pedigree", "Purina", "Hill's", "Whiskas",
+    "BBVA", "Banamex", "Santander", "Banorte", "HSBC", "Telcel", "Movistar", "Izzi", "Totalplay",
+    "Deloitte", "KPMG", "PwC", "Baker McKenzie", "CONTPAQi", "Aspel"
+  ]
+}

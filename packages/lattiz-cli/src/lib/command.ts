@@ -25,6 +25,7 @@ export const GLOBAL_OPTIONS: ParseArgsOptionsConfig = {
   help: { type: 'boolean', short: 'h' },
   yes: { type: 'boolean', short: 'y' },
   'non-interactive': { type: 'boolean' },
+  'confirm-remote': { type: 'boolean' },
   'no-color': { type: 'boolean' },
 };
 

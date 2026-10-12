@@ -9,10 +9,12 @@ import { deploy } from './commands/deploy';
 import { dev } from './commands/dev';
 import { doctor } from './commands/doctor';
 import { freeze, unfreeze } from './commands/freeze';
+import { giro } from './commands/giro';
 import { list } from './commands/list';
 import { motion } from './commands/motion';
 import { newTemplate } from './commands/new';
 import { publish, ship } from './commands/publish';
+import { review } from './commands/review';
 import { seed } from './commands/seed';
 import { spec } from './commands/spec';
 import { type Command, GLOBAL_OPTIONS } from './lib/command';
@@ -23,6 +25,7 @@ import { c, log, setColor } from './lib/ui';
 const COMMANDS: Command[] = [
   doctor,
   list,
+  giro,
   newTemplate,
   spec,
   build,
@@ -31,6 +34,7 @@ const COMMANDS: Command[] = [
   dev,
   motion,
   check,
+  review,
   seed,
   deploy,
   publish,
@@ -53,12 +57,13 @@ function globalHelp(): string {
     '  -h, --help           ayuda del comando',
     '  -y, --yes            confirma todo sin preguntar (escrituras remotas incluidas)',
     '  --non-interactive    nunca pregunta; usa flags o valores por defecto y falla si falta algo',
+    '  --confirm-remote     sin terminal (scripts, agentes), seed/deploy/publish/ship exigen --yes y esto',
     '  --no-color           salida sin colores',
     '',
     c.bold('Códigos de salida:') +
       ' 0 ok · 1 falló una verificación · 2 uso o entorno',
     '',
-    `Flujo de venta: doctor → spec init → build → dev → motion → check → publish (o ship). Guías: ${c.cyan('docs/lattiz-cli.md')}, ${c.cyan('docs/template-spec.md')}`,
+    `Flujo de venta: doctor → giro show → spec init → build → dev → motion → check → review → publish (o ship). Guías: ${c.cyan('docs/lattiz-cli.md')}, ${c.cyan('docs/template-spec.md')}`,
   ].join('\n');
 }
 
@@ -123,6 +128,7 @@ async function main(argv: string[]): Promise<ExitCode> {
     flags,
     yes: flags.yes === true,
     nonInteractive: flags['non-interactive'] === true,
+    confirmRemote: flags['confirm-remote'] === true,
   });
 }
 
