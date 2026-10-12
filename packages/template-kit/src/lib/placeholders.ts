@@ -165,9 +165,10 @@ const VERTICAL_MOTIFS: Record<
     about: 'toothbrush',
     cycle: ['sparkle', 'tooth', 'smile', 'toothbrush'],
   },
+  // Neutral for accounting and legal firms alike; the scales only show up in the gallery cycle.
   despacho: {
-    hero: 'scale',
-    about: 'document',
+    hero: 'document',
+    about: 'calculator',
     cycle: ['briefcase', 'calculator', 'document', 'scale'],
   },
   tienda: {

@@ -1,15 +1,15 @@
 {
-  "$lattiz": "GENERATED from specs/despacho-cifra-clara.spec.json (spec 5019d2696c43, file 56ee254bb9d0). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/despacho-cifra-clara.spec.json (spec 5019d2696c43, file a73a8c1283f1). Do not edit: use the spec, or freeze.",
   "images": [
     {
       "file": "hero.jpg",
       "source": "placeholder",
-      "sha256": "aa1be4cbcfbaa63f4ae2c8a6893fce6177c06d7fd66e70105522b94212362fd4"
+      "sha256": "474161a3e72fe1ee5ab5e5c6030ea7a1ef2bed97c4d86774999efe6014389fe9"
     },
     {
       "file": "about.jpg",
       "source": "placeholder",
-      "sha256": "e2bbaf98ed5c663ed648473aae64281c571ea47efbcceec9379c6535534dc119"
+      "sha256": "55c6f82692b1e41f49ddb144e99d0849f2232a59b66cbb947b0850154e928d63"
     },
     {
       "file": "team-1.jpg",
