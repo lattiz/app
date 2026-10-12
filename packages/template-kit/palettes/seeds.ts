@@ -293,6 +293,31 @@ export const PALETTE_SEEDS: Record<string, PaletteSeed> = {
     placeholder: 'arches',
   },
 
+  'pal-vino-hueso': {
+    label: 'Vino y hueso (fondo vino oscuro, acento hueso)',
+    mode: 'dark',
+    mood: ['lujo', 'sobrio'],
+    affinity: ['barberia', 'restaurante', 'despacho'],
+    bg: '#2A1416',
+    text: '#F1E7E3',
+    accent: '#E8DED8',
+    onAccent: '#2A1416',
+    photoTreatment: 'warm',
+    placeholder: 'grain',
+  },
+  'pal-marino-hueso': {
+    label: 'Marino y hueso (fondo marino profundo, acento hueso)',
+    mode: 'dark',
+    mood: ['sobrio', 'lujo'],
+    affinity: ['barberia', 'despacho', 'clinica'],
+    bg: '#0F1A33',
+    text: '#EDEEF3',
+    accent: '#E6E2D8',
+    onAccent: '#0F1A33',
+    photoTreatment: 'grayscale',
+    placeholder: 'rules',
+  },
+
   // ── Tinted (colored ground) ──────────────────────────────────────────────
   'pal-salvia-tinta': {
     label: 'Salvia (fondo salvia, acento tinta)',

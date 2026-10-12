@@ -1,4 +1,4 @@
-import type { Rgba } from './color';
+import { parseColor, type Rgba } from './color';
 
 /** sRGB → CIE Lab (D65), for perceptual distances between palettes. */
 export function toLab({ r, g, b }: Rgba): [number, number, number] {
@@ -70,4 +70,16 @@ export function deltaE2000(a: Rgba, b: Rgba): number {
       (dHp / Sh) ** 2 +
       Rt * (dCp / Sc) * (dHp / Sh),
   );
+}
+
+/** Two palettes closer than this (ΔE00 of the ground + ΔE00 of the accent) read as one. */
+export const MIN_PALETTE_DISTANCE = 15;
+
+/** Perceptual distance between two palettes: ΔE00 of the grounds + ΔE00 of the accents. */
+export function paletteDistance(
+  a: { bg: string; accent: string },
+  b: { bg: string; accent: string },
+): number {
+  const c = (v: string) => parseColor(v) as Rgba;
+  return deltaE2000(c(a.bg), c(b.bg)) + deltaE2000(c(a.accent), c(b.accent));
 }

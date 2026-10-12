@@ -12,23 +12,17 @@ import { GIROS } from '../../giros';
 import { PALETTE_SEEDS } from '../../palettes/seeds';
 import { parseArgs, runCli } from '../lib/args';
 import { hueOf, parseColor } from '../lib/color';
-import { deltaE2000 } from '../lib/delta-e';
+import {
+  MIN_PALETTE_DISTANCE,
+  paletteDistance as distance,
+} from '../lib/delta-e';
 import { KIT_ROOT, REPO_ROOT } from '../lib/paths';
 import { buildPalette } from '../spec/palette-builder';
 import type { GiroPalette } from '../spec/presets';
 import type { LibraryPalette } from '../../palettes';
 
-/** Two palettes of the same giro closer than this (ΔE00 of ground + ΔE00 of accent) read as one. */
-export const MIN_PALETTE_DISTANCE = 15;
-
-export function paletteDistance(a: GiroPalette, b: GiroPalette): number {
-  const c = (v: string) =>
-    parseColor(v) as NonNullable<ReturnType<typeof parseColor>>;
-  return (
-    deltaE2000(c(a.colors.bg), c(b.colors.bg)) +
-    deltaE2000(c(a.colors.accent), c(b.colors.accent))
-  );
-}
+const paletteDistance = (a: GiroPalette, b: GiroPalette) =>
+  distance(a.colors, b.colors);
 
 const hueLabel = (p: GiroPalette) => {
   const c = parseColor(p.colors.accent);

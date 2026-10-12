@@ -3,6 +3,7 @@ import { existsSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { GIROS } from '../../giros';
 import { hueDistance, hueOf, parseColor } from '../lib/color';
+import { MIN_PALETTE_DISTANCE, paletteDistance } from '../lib/delta-e';
 import { interpolate, mapsEmbedUrl, mapsLinkUrl } from '../lib/content';
 import { loadBlueprint, loadSectionMeta } from '../lib/load';
 import { paths } from '../lib/paths';
@@ -693,9 +694,20 @@ export async function planSpec(
       .filter((h): h is number => h !== null);
     const freePalette = (p: GiroPalette) => {
       const hue = accentHue(p);
-      return (
+      const hueFree =
         hue === null ||
-        takenHues.every((h) => hueDistance(h, hue) >= MIN_ACCENT_HUE_DISTANCE)
+        takenHues.every((h) => hueDistance(h, hue) >= MIN_ACCENT_HUE_DISTANCE);
+      // Extended only: a neutral accent passes the hue rule, so also keep palettes ΔE-apart.
+      if (!hueFree || catalog === 'legacy') return hueFree;
+      const own = { bg: p.colors.bg, accent: p.colors.accent };
+      return peers.every(
+        (q) =>
+          !q.bg ||
+          !q.accent ||
+          !/^#/.test(own.bg) ||
+          !/^#/.test(own.accent) ||
+          paletteDistance(own, { bg: q.bg, accent: q.accent }) >=
+            MIN_PALETTE_DISTANCE,
       );
     };
     const paletteCandidates = palettePool(giro, catalog).map(
