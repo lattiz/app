@@ -10,21 +10,26 @@ Se trabaja en tres partes (Parte 1: cimientos; Parte 2: secciones y arquetipos; 
 prueba de diversidad, docs y skill). Una sesión nueva retoma desde aquí. Estados: `pendiente` ·
 `en curso` · `hecho` · `bloqueado`.
 
-| WP    | Qué                                              | Estado    | Commits | Desviaciones                         |
-| ----- | ------------------------------------------------ | --------- | ------- | ------------------------------------ |
-| WP-1  | Línea base y snapshot dorado                     | hecho     | a151e30 | ver abajo                            |
-| WP0   | Inventario y modelo de capacidad                 | hecho     | (este)  | Motion lo pone el seed, no el markup |
-| WP0.5 | Skills de diseño: instalar, leer, destilar       | pendiente |         |                                      |
-| WP1   | Versionado del catálogo (legacy/extended) y lock | pendiente |         |                                      |
-| WP2   | Galería del kit y especímenes                    | pendiente |         |                                      |
-| WP3   | Tokens de estilo                                 | pendiente |         |                                      |
-| WP4   | Biblioteca de paletas                            | pendiente |         |                                      |
-| WP5   | Biblioteca de pares tipográficos                 | pendiente |         |                                      |
-| WP6   | Variantes de sección                             | pendiente |         |                                      |
-| WP7   | Arquetipos de página y módulos verticales        | pendiente |         |                                      |
-| WP8   | Registro, spec, compilador, CLI y skill          | pendiente |         |                                      |
-| WP9   | Prueba de diversidad (local)                     | pendiente |         |                                      |
-| WP10  | Documentación                                    | pendiente |         |                                      |
+| WP    | Qué                                              | Estado    | Commits | Desviaciones                                   |
+| ----- | ------------------------------------------------ | --------- | ------- | ---------------------------------------------- |
+| WP-1  | Línea base y snapshot dorado                     | hecho     | a151e30 | ver abajo                                      |
+| WP0   | Inventario y modelo de capacidad                 | hecho     | 405ac7d | Motion lo pone el seed, no el markup           |
+| WP0.5 | Skills de diseño: instalar, leer, destilar       | hecho     | (este)  | hover con `(hover: hover) and (pointer: fine)` |
+| WP1   | Versionado del catálogo (legacy/extended) y lock | pendiente |         |                                                |
+| WP2   | Galería del kit y especímenes                    | pendiente |         |                                                |
+| WP3   | Tokens de estilo                                 | pendiente |         |                                                |
+| WP4   | Biblioteca de paletas                            | pendiente |         |                                                |
+| WP5   | Biblioteca de pares tipográficos                 | pendiente |         |                                                |
+| WP6   | Variantes de sección                             | pendiente |         |                                                |
+| WP7   | Arquetipos de página y módulos verticales        | pendiente |         |                                                |
+| WP8   | Registro, spec, compilador, CLI y skill          | pendiente |         |                                                |
+| WP9   | Prueba de diversidad (local)                     | pendiente |         |                                                |
+| WP10  | Documentación                                    | pendiente |         |                                                |
+
+**Diseño:** reglamento y diales por arquetipo en `docs/template-kit-design-principles.md` (taste-skill
+`d237dd3` y skills de Emil Kowalski `2d22863`, MIT, instaladas en `~/.claude/skills`, no en el repo).
+Diales V/M/D por defecto: editorial 6/5/3 · showcase 8/6/3 · catalog 5/4/6 · booking 4/4/5 · trust
+3/4/5 · bold 9/7/4 · soft 5/5/3 · minimal 5/4/2 (Básico siempre sin Motion).
 
 **Regla de cada WP:** `pnpm --filter @lattiz/template-kit kit:verify-snapshot` limpio, `pnpm lint`,
 `pnpm typecheck` y build antes del commit.
