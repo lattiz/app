@@ -772,7 +772,9 @@ export async function planSpec(
         ? spec.copy.hero.alternates
         : []) as string[]),
       ...giro.heroAlternates,
-    ].filter(Boolean);
+    ]
+      .filter(Boolean)
+      .map((t) => fillBranch(t, branchName(spec, giro)));
     const takenTitles = new Set(peers.map((p) => p.headline).filter(Boolean));
     const title = titlePool.find(
       (t) => !takenTitles.has(normalizeHeadline(headlineOf(t, business))),

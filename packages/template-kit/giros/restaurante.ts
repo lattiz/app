@@ -425,7 +425,7 @@ export default {
     },
   },
   heroAlternates: [
-    'Sabores de <span class="lz-title__serif">casa</span> en el centro de {{city}}.',
+    'Sabores de <span class="lz-title__serif">casa</span> en {{branch}}.',
     'Tu mesa de <span class="lz-title__serif">siempre</span>, con el menú del día.',
     'Cocina de mercado, <span class="lz-title__serif">recién hecha</span>.',
     'Ven a comer <span class="lz-title__serif">sin prisa</span>.',
