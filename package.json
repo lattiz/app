@@ -29,6 +29,7 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "generate:api": "turbo run generate:openapi generate:client",
+    "lattiz": "tsx packages/lattiz-cli/src/main.ts",
     "template:dev": "tsx scripts/template-dev.ts",
     "template:seed": "tsx scripts/template-seed.ts",
     "template:shots": "pnpm --filter @lattiz/template-kit kit:shots"

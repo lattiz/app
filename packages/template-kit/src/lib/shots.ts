@@ -21,7 +21,7 @@ export interface WidthReport {
 }
 
 /** Runs in the page: elements past the viewport, text below the minimum size, small tap targets. */
-function audit(limits: { minFont: number; minTap: number }): LayoutIssue[] {
+export function audit(limits: { minFont: number; minTap: number }): LayoutIssue[] {
   const vw = document.documentElement.clientWidth;
   const issues: LayoutIssue[] = [];
   const name = (el: Element): string => {
