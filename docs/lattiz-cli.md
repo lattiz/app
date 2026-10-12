@@ -4,9 +4,34 @@
 **doctor → new → dev → motion → check → seed → deploy → publish/ship**. Código en
 `packages/lattiz-cli`; ayuda con `pnpm lattiz --help` y `pnpm lattiz <comando> --help`.
 
+## Estado del repo (2026-10-11, revisión de la Fase 1)
+
+- **Historia.** La Fase 1 se escribió en otra máquina (contenedor con Node 22, sin `.env` ni Vercel
+  CLI) en la rama `claude/awesome-keller-ss1s44` (PR #3, `08eb568`). `e8d278c` la fusiona con `main`,
+  que traía en paralelo Motion v3, el sistema de encaje (`data-lz-fit`), los fallbacks de fuentes y
+  `316f564` (`pnpm --filter @lattiz/template-previews run deploy`, porque `deploy` es un comando
+  propio de pnpm). El merge no tuvo conflictos y solo añade ese arreglo al CLI. No llegaron rubros,
+  plantillas ni reglas nuevas del validador: el kit sigue con un solo rubro (barbería, 6 plantillas).
+- **Integridad.** Sin marcadores de conflicto ni archivos a medio fusionar. `pnpm install
+--frozen-lockfile`, `pnpm typecheck` y `pnpm build` pasan; `pnpm lint` solo marca los 20 errores
+  previos de `packages/fixtures/*.js` (no son de la integración). `kit:validate` y los 87 tests del kit
+  pasan.
+- **Verificado en una Mac (Node 24.9, `.env` y Vercel CLI con sesión):** `doctor`, `list`/`status`
+  (también `--offline` y `--json`), `new` por clonación (y borrado después), `dev` (7 tamaños,
+  Motion solo en Pro, «Reduced motion», puerto ocupado → código 2), `motion`, `check` (Básico, ~24 s),
+  `seed --dry-run` (no escribe nada) y los códigos de salida de uso (id inválido, flag desconocido,
+  confirmación sin `--yes` → 2).
+- **Arreglado:** la memoria pico de `check` sumaba cualquier proceso «chrom» (un Chrome de escritorio
+  abierto daba ~6 GiB); ahora cuenta solo los procesos hijos del CLI. El `.grapesjs` traía ids de
+  página y frame aleatorios en cada compilación; ahora son estables (misma entrada → mismos bytes).
+- **No verificado aquí (escrituras remotas):** `seed` real, `deploy`, `publish` y `ship`. Revisión
+  estática sin hallazgos; prueba una vez de punta a punta con una plantilla desechable:
+  `pnpm lattiz seed <id>` → `pnpm lattiz deploy` → `pnpm lattiz status <id>` (o `pnpm lattiz
+publish <id>`).
+
 ## Nota de descubrimiento (qué había antes del CLI)
 
-Sacado del código el 2026-10-12. Si algo de aquí ya no coincide, manda el código.
+Sacado del código al construir la Fase 1. Si algo de aquí ya no coincide, manda el código.
 
 **Fuentes de las plantillas.** Una plantilla es código en `packages/template-kit`, no una carpeta
 por plantilla: el manifiesto `templates/<id>.ts` (id, nombre, categoría, `tier`, rubro, tema, voz,
