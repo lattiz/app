@@ -62,3 +62,5 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [placeholder-bytes-host-dependent](placeholder-bytes-host-dependent.md) — un build en otra máquina reescribe JPEG de placeholder; restaurarlos
 - [template-style-tokens](template-style-tokens.md) — presets de estilo opt-in en extended (brand.style); var() con el look de hoy de respaldo
 - [vitest-hook-timeout-dist](vitest-hook-timeout-dist.md) — «2 skipped» en el kit con más carpetas en dist/; borrar dist y repetir
+- [template-palette-library](template-palette-library.md) — paletas extended desde semillas (kit:palettes); AA por construcción, ΔE00 ≥ 15 por giro
+- [font-pair-library-fallbacks](font-pair-library-fallbacks.md) — pares extended de 2 familias; size-adjust medido al peso del display; Arial ausente en Linux
