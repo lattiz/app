@@ -21,6 +21,10 @@ export interface TemplateState {
   /** Seeded with --no-deploy; `lattiz deploy` still has to verify, thumbnail and activate it. */
   pendingFinalize?: boolean;
   lastDeploy?: { at: string; url: string; ok: boolean };
+  /** Last `lattiz build` of its spec. */
+  spec?: { file: string; hash: string; at: string; images: string };
+  /** `lattiz freeze`: the generated files are hand-owned (the files' own markers are the source of truth). */
+  frozen?: { at: string; files: string[] };
 }
 
 export function readState(id: string): TemplateState {

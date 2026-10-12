@@ -9,7 +9,16 @@ import {
   type RemoteTemplate,
   remoteTemplates,
 } from '../lib/remote';
+import {
+  listSpecFiles,
+  ORIGIN_LABEL,
+  originOf,
+  type OriginInfo,
+  rel,
+} from '../lib/spec';
 import { readState, type TemplateState } from '../lib/state';
+import { readSpecFile } from '../../../template-kit/src/spec/build';
+import { specTargets } from '../../../template-kit/src/spec/compile';
 import { assertTemplate, localIds, tierLabel } from '../lib/templates';
 import { badge, c, log, table } from '../lib/ui';
 
@@ -68,9 +77,22 @@ export const list: Command = {
       }
     }
     const byId = new Map((remote ?? []).map((r) => [r.id, r]));
+    const origins = new Map<string, OriginInfo>();
+    for (const id of ids) origins.set(id, await originOf(id));
+    const unbuilt = one
+      ? []
+      : listSpecFiles().flatMap((file) => {
+          const { spec } = readSpecFile(file);
+          return spec
+            ? specTargets(spec)
+                .filter((t) => !ids.includes(t.id))
+                .map((t) => ({ id: t.id, spec: rel(file) }))
+            : [];
+        });
     const rows = ids.map((id) => ({
       id,
       tier: localTier(id),
+      origin: origins.get(id) as OriginInfo,
       state: readState(id),
       remote: byId.get(id) ?? null,
       previewFile: existsSync(previewFile(id)),
@@ -78,7 +100,7 @@ export const list: Command = {
     }));
 
     if (bool(ctx.flags, 'json')) {
-      console.log(JSON.stringify({ remoteError, rows }, null, 2));
+      console.log(JSON.stringify({ remoteError, rows, unbuilt }, null, 2));
       return EXIT.OK;
     }
 
@@ -101,6 +123,7 @@ export const list: Command = {
         [
           'id',
           'tier',
+          'origen',
           'remoto',
           'activa',
           'creada',
@@ -112,6 +135,13 @@ export const list: Command = {
         rows.map((r) => [
           r.id,
           tierLabel(r.tier),
+          r.origin.drift.length > 0
+            ? c.yellow(`${ORIGIN_LABEL[r.origin.origin]} ⚠`)
+            : r.origin.origin === 'generated'
+              ? c.green(ORIGIN_LABEL[r.origin.origin])
+              : r.origin.origin === 'frozen'
+                ? c.cyan(ORIGIN_LABEL[r.origin.origin])
+                : ORIGIN_LABEL[r.origin.origin],
           r.remote
             ? r.remote.tier === r.tier
               ? tierLabel(r.remote.tier)
@@ -132,6 +162,12 @@ export const list: Command = {
         ]),
       ),
     );
+    for (const r of rows)
+      for (const d of r.origin.drift) log.warn(`${r.id}: ${d}`);
+    if (unbuilt.length > 0)
+      log.info(
+        `Specs sin build: ${unbuilt.map((u) => `${u.id} (${u.spec})`).join(', ')} → pnpm lattiz build <id>`,
+      );
     const orphans = (remote ?? []).filter((r) => !ids.includes(r.id));
     if (!one && orphans.length > 0) {
       log.info(
@@ -141,6 +177,8 @@ export const list: Command = {
     if (one) {
       const r = rows[0];
       log.plain();
+      if (r.origin.spec)
+        log.info(`spec: packages/template-kit/${r.origin.spec}`);
       if (r.remote?.preview_url)
         log.info(`preview_url: ${r.remote.preview_url}`);
       if (r.remote?.thumbnail_url)

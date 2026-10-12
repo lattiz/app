@@ -3,15 +3,18 @@
  * Commands live in ./commands; docs/lattiz-cli.md is the guide.
  */
 import { parseArgs } from 'node:util';
+import { build } from './commands/build';
 import { check } from './commands/check';
 import { deploy } from './commands/deploy';
 import { dev } from './commands/dev';
 import { doctor } from './commands/doctor';
+import { freeze, unfreeze } from './commands/freeze';
 import { list } from './commands/list';
 import { motion } from './commands/motion';
 import { newTemplate } from './commands/new';
 import { publish, ship } from './commands/publish';
 import { seed } from './commands/seed';
+import { spec } from './commands/spec';
 import { type Command, GLOBAL_OPTIONS } from './lib/command';
 import { CliError, EXIT, type ExitCode } from './lib/errors';
 import { env } from './lib/remote';
@@ -21,6 +24,10 @@ const COMMANDS: Command[] = [
   doctor,
   list,
   newTemplate,
+  spec,
+  build,
+  freeze,
+  unfreeze,
   dev,
   motion,
   check,
@@ -51,7 +58,7 @@ function globalHelp(): string {
     c.bold('Códigos de salida:') +
       ' 0 ok · 1 falló una verificación · 2 uso o entorno',
     '',
-    `Flujo de venta: doctor → new → dev → motion → check → publish (o ship). Guía: ${c.cyan('docs/lattiz-cli.md')}`,
+    `Flujo de venta: doctor → spec init → build → dev → motion → check → publish (o ship). Guías: ${c.cyan('docs/lattiz-cli.md')}, ${c.cyan('docs/template-spec.md')}`,
   ].join('\n');
 }
 

@@ -1,9 +1,13 @@
 import { spawn, spawnSync } from 'node:child_process';
-import { mkdirSync, rmSync } from 'node:fs';
+import { existsSync, mkdirSync, rmSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { relative, resolve } from 'node:path';
 import type { Browser, Page } from 'playwright';
 import { open, primeLazyContent } from '../../../template-kit/src/lib/shoot';
+import {
+  CREDITS_FILE,
+  readCredits,
+} from '../../../template-kit/src/spec/images';
 import {
   audit,
   type FitRow,
@@ -15,7 +19,7 @@ type FitMeasure = Omit<FitRow, 'viewport' | 'verdict'>;
 import { browserPath, launchBrowser } from '../lib/browser';
 import { bool, type Command } from '../lib/command';
 import { EXIT, type ExitCode } from '../lib/errors';
-import { REPO_ROOT, shotsDir } from '../lib/paths';
+import { KIT, REPO_ROOT, shotsDir } from '../lib/paths';
 import { renderPreview } from '../lib/preview';
 import { startPreviewServer } from '../lib/preview-server';
 import { type CheckSummary, writeState } from '../lib/state';
@@ -73,6 +77,7 @@ const RULES = {
   motion: 'Motion: cobertura',
   nojs: 'sin JS: contenido visible',
   lighthouse: 'Lighthouse',
+  credits: 'créditos de fotos',
 } as const;
 type RuleId = keyof typeof RULES;
 
@@ -504,6 +509,22 @@ function lighthouse(url: string): Promise<RuleResult> {
   });
 }
 
+/** INFO from assets/<vertical>/<theme>/CREDITS.json (spec builds); hand-made templates have none. */
+function creditsResult(vertical: string, theme: string): RuleResult | null {
+  const dir = resolve(KIT, 'assets', vertical, theme);
+  if (!existsSync(resolve(dir, CREDITS_FILE))) return null;
+  const images = readCredits(dir).images;
+  const pexels = images.filter((i) => i.source === 'pexels');
+  const placeholders = images.filter((i) => i.source === 'placeholder').length;
+  return result(
+    'credits',
+    GLOBAL,
+    'INFO',
+    `${pexels.length} foto(s) de Pexels, ${placeholders} placeholder(s) · ${relative(REPO_ROOT, resolve(dir, CREDITS_FILE))}`,
+    pexels.map((p) => `${p.file}: ${p.photographer} (${p.pexelsUrl})`),
+  );
+}
+
 export interface CheckOutcome {
   id: string;
   tier: string;
@@ -557,6 +578,8 @@ export async function runCheck(
 
   const dist = readDist(id);
   const tier = dist.meta.tier;
+  const credits = creditsResult(dist.manifest.vertical, dist.manifest.theme);
+  if (credits) results.push(credits);
   const sourceTokens = (dist.html.match(/\{\{\s*lz:/g) ?? []).length;
   const server = await startPreviewServer({
     id,
@@ -674,7 +697,7 @@ export function printCheck(outcome: CheckOutcome): void {
   }
   const info = outcome.results.filter(
     (r) =>
-      (r.status === 'PASS' || r.status === 'N/A') &&
+      (r.status === 'PASS' || r.status === 'N/A' || r.status === 'INFO') &&
       r.viewport === GLOBAL &&
       r.detail,
   );
