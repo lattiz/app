@@ -144,6 +144,7 @@ supabase/
 
 ## What to Never Do
 
+- **Secrets:** Never print, `cat`, `echo`, `grep` or log a secret value (`.env*`, API keys, tokens, service keys) — not even to check it. Check presence only (`[ -n "$VAR" ]`, `grep -c '^NAME=' .env`, or `pnpm lattiz doctor`, which reports names/presence). A Pexels key leaked once by grepping `apps/api/.env`; rotate any value that reaches a terminal or log.
 - **Database:** Never change the schema from the Supabase dashboard, `execute_sql`/`apply_migration`, or `drizzle-kit` — every change is a file in `supabase/migrations/` (the only schema history), tested with `supabase db reset --local` before `supabase db push`.
 - **Auth:** Never add signup/login/logout/forgot-password endpoints to `apps/api` — that logic lives only in Supabase, called from `apps/web/src/supabase.ts` / `LoginForm.tsx` via `supabase-js`.
 - **Auth:** Never verify JWTs against the HS256 legacy secret — `apps/api/src/common/auth/supabase-jwt.guard.ts` must keep `ALGORITHMS = ['ES256']` and derive JWKS from `SUPABASE_URL`/`SUPABASE_JWKS_URL`.

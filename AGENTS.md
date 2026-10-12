@@ -4,6 +4,8 @@ Multi-agent workflow for building Lattiz features on top of the conventions in `
 
 **Ground truth as of this writing:** only `HealthModule` and `MeModule` exist under `apps/api/src/modules/`. There is no `BillingModule`, `TenantsModule`, or Supabase admin/`service_role` usage anywhere in the codebase. (Since then: `apps/api` runs Jest and `@nestjs/throttler` is wired globally — see QA and Security below.) Where the pipeline below references a capability that doesn't exist yet, it says so explicitly instead of assuming it.
 
+**Secrets (every agent):** never print, `cat`, `echo`, `grep` or log a secret value (`.env*`, API keys, tokens). Check presence only (`[ -n "$VAR" ]`, `grep -c '^NAME=' .env`, `pnpm lattiz doctor`). Prompts for subagents must repeat this rule.
+
 ## Team Structure
 
 ```
