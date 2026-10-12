@@ -119,12 +119,10 @@ export function customPalette(seed: {
     if (contrastRatio(muted, bg) >= 4.6 && contrastRatio(muted, surface) >= 4.6)
       break;
   }
-  const onAccent =
-    contrastRatio(WHITE, accent) >= contrastRatio(text, accent)
-      ? WHITE
-      : dark
-        ? bg
-        : text;
+  // The most legible of white, the dark ink (text or bg) and the light one.
+  const onAccent = [WHITE, text, bg].reduce((best, c) =>
+    contrastRatio(c, accent) > contrastRatio(best, accent) ? c : best,
+  );
   if (contrastRatio(onAccent, accent) < 4.5)
     problems.push(
       `ningún texto se lee sobre el acento ${toHex(accent)} (máx. ${contrastRatio(onAccent, accent).toFixed(2)}:1, se necesita 4.5:1); oscurécelo o acláralo`,
