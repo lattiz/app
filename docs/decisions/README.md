@@ -46,8 +46,10 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [image-optimizer-memory-model](image-optimizer-memory-model.md) — WebP ≤ 2000 px con sharp; cola acotada + disco temporal; 290 MiB pico
 - [business-profile-site-tokens](business-profile-site-tokens.md) — business_profile jsonb; tokens {{lz:*}} + JSON-LD al servir; is_pro en SQL
 - [lattiz-motion-runtime](lattiz-motion-runtime.md) — runtime propio solo Pro; v3 grupos de revelado, un observer, barrido + centinela final
-- [editor-theme-presets-and-blocks](editor-theme-presets-and-blocks.md) — Tema reescribe --lz-* en :root; bloques/temas Pro según proIncluded
+- [editor-theme-presets-and-blocks](editor-theme-presets-and-blocks.md) — Tema reescribe --lz-\* en :root; bloques/temas Pro según proIncluded
 - [template-rhythm-tokens](template-rhythm-tokens.md) — ritmo global por tema (rhythm) con defaults = px originales; sin overrides.css
 - [viewport-fit-system](viewport-fit-system.md) — secciones data-lz-fit caben en 90 % de 100svh − header; reporte en template:shots
 - [font-metric-fallbacks](font-metric-fallbacks.md) — fallback local con métricas Capsize; mayúsculas con size-adjust medido; CLS ~0
 - [lattiz-template-cli](lattiz-template-cli.md) — pnpm lattiz; preview vía composeSiteHtml; seed sin deploy + deploy que finaliza
+- [template-spec-compiler](template-spec-compiler.md) — specs → plantillas únicas por construcción; GENERATED/FROZEN; sin overrides.css ni {{lz:*}}
+- [check-axe-marquee-offscreen](check-axe-marquee-offscreen.md) — axe + runtime de Motion: falso 1.08:1 en ítems recortados del marquee
