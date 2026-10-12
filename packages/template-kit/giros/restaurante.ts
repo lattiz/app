@@ -166,7 +166,7 @@ export default {
       image: 'hero.jpg',
       imageAlt:
         'Mesa servida con platillos de temporada y luz cálida de mediodía',
-      eyebrow: 'Cocina de temporada · {{city}}',
+      eyebrow: 'Cocina de temporada · {{branch}}',
       title:
         'Comida hecha con <span class="lz-title__serif">tiempo</span>, para compartir.',
       text: 'Ingredientes del mercado, recetas de casa y una mesa que te espera. Reserva por WhatsApp y llega a comer.',

@@ -1,0 +1,934 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "specVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "maxLength": 60,
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Id de la plantilla: Pro `<giro>-<nombre>-v1`, Básico `<giro>-base-<nombre>-v1`."
+    },
+    "idBase": {
+      "description": "`<giro>-<nombre>`: con twin genera `<giro>-base-<nombre>-v1` y `<giro>-<nombre>-v1`.",
+      "type": "string",
+      "maxLength": 52,
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "twin": {
+      "description": "true: genera el par Básico + Pro desde este spec.",
+      "type": "boolean"
+    },
+    "tier": {
+      "description": "Con `id`: pro o basico. Con `twin`: ambos.",
+      "type": "string",
+      "enum": ["pro", "basico", "ambos"]
+    },
+    "giro": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Giro (restaurante, clinica, floreria, barberia)."
+    },
+    "name": {
+      "description": "Nombre de la plantilla en la galería; por defecto el del negocio.",
+      "type": "string"
+    },
+    "description": {
+      "description": "Descripción de la galería; por defecto la del giro.",
+      "type": "string"
+    },
+    "business": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 2,
+          "description": "Nombre comercial que se muestra."
+        },
+        "shortName": {
+          "type": "string"
+        },
+        "tagline": {
+          "description": "Subtítulo de la marca en el navbar.",
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "branch": {
+          "description": "Colonia o sucursal principal (aparece en antetítulos).",
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "hours": {
+          "description": "Horario de la sucursal principal.",
+          "type": "string"
+        },
+        "phone": {
+          "description": "Teléfono visible, p. ej. +52 55 1234 5678.",
+          "type": "string"
+        },
+        "whatsapp": {
+          "type": "string",
+          "pattern": "^\\d{10,15}$"
+        },
+        "whatsappMessage": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+        },
+        "year": {
+          "type": "string",
+          "pattern": "^\\d{4}$"
+        },
+        "instagramUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "facebookUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "tiktokUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "googleReviewsUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "googleReviewUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "branches": {
+          "description": "Sucursales (Pro las muestra todas; Básico solo la primera).",
+          "minItems": 1,
+          "maxItems": 4,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Nombre corto de la sucursal o colonia."
+              },
+              "address": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Dirección completa; `{{address}}` usa la del negocio."
+              },
+              "shortAddress": {
+                "description": "Dirección corta para el pie.",
+                "type": "string"
+              },
+              "hours": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Horario legible, p. ej. \"Lun–Sáb 9:00–19:00\"."
+              },
+              "mapsQuery": {
+                "description": "Búsqueda de Google Maps; por defecto la dirección.",
+                "type": "string"
+              }
+            },
+            "required": ["name", "address", "hours"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["name"],
+      "additionalProperties": false,
+      "description": "Datos del negocio; el copy los usa como {{name}}, {{phone}}, {{address}}, {{city}}."
+    },
+    "brand": {
+      "type": "object",
+      "properties": {
+        "palette": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "preset": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Paleta curada del giro (`pnpm lattiz spec init` las lista)."
+                }
+              },
+              "required": ["preset"],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "custom": {
+                  "type": "object",
+                  "properties": {
+                    "bg": {
+                      "type": "string",
+                      "pattern": "^#[0-9a-fA-F]{6}$",
+                      "description": "Fondo de la página."
+                    },
+                    "accent": {
+                      "type": "string",
+                      "pattern": "^#[0-9a-fA-F]{6}$",
+                      "description": "Color de marca (botones, rellenos)."
+                    },
+                    "text": {
+                      "description": "Texto; por defecto casi negro o casi blanco según el fondo.",
+                      "type": "string",
+                      "pattern": "^#[0-9a-fA-F]{6}$"
+                    },
+                    "scheme": {
+                      "description": "Se deduce del fondo.",
+                      "type": "string",
+                      "enum": ["light", "dark"]
+                    }
+                  },
+                  "required": ["bg", "accent"],
+                  "additionalProperties": false
+                }
+              },
+              "required": ["custom"],
+              "additionalProperties": false
+            }
+          ],
+          "description": "Paleta: `{ \"preset\": \"<id>\" }` o `{ \"custom\": { \"bg\", \"accent\" } }` (se derivan tokens AA o se rechaza)."
+        },
+        "fontPair": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "description": "Par curado, p. ej. `cormorant-garamond+work-sans`."
+            },
+            {
+              "type": "object",
+              "properties": {
+                "display": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Familia para títulos (lista permitida en src/spec/presets.ts › CUSTOM_FONTS)."
+                },
+                "body": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Familia para texto."
+                }
+              },
+              "required": ["display", "body"],
+              "additionalProperties": false
+            }
+          ],
+          "description": "Par tipográfico: id curado o `{ display, body }` con fuentes permitidas."
+        },
+        "shape": {
+          "description": "Forma: filete, urbano, sutil, redondo, suave, organico, brutal.",
+          "type": "string",
+          "minLength": 1
+        },
+        "density": {
+          "description": "Aire entre secciones; por defecto el de la forma.",
+          "type": "string",
+          "enum": ["airy", "regular", "compact"]
+        },
+        "photoTreatment": {
+          "type": "string",
+          "enum": ["none", "duotone", "grayscale", "warm"]
+        },
+        "placeholder": {
+          "type": "string",
+          "enum": ["grain", "rules", "stripes", "blobs", "arches", "dots"]
+        },
+        "container": {
+          "description": "Ancho máximo, p. ej. 1200px.",
+          "type": "string",
+          "pattern": "^\\d{3,4}px$"
+        },
+        "displayScale": {
+          "description": "Multiplica el tamaño de los títulos (fuentes anchas < 1).",
+          "type": "string",
+          "pattern": "^\\d(\\.\\d+)?$"
+        },
+        "rhythm": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "enum": [
+              "sectionPad",
+              "gutter",
+              "gutterMd",
+              "gutterSm",
+              "space",
+              "textScale",
+              "titleHero",
+              "titleHeroSm",
+              "titleSection",
+              "titleSectionSm",
+              "titleSub"
+            ]
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Ajuste fino del ritmo del tema (docs/template-workflow.md §6): sectionPad, gutter, space, textScale, title*."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Identidad visual. Lo que falte lo elige el compilador entre lo curado del giro, sin chocar con el rubro."
+    },
+    "sections": {
+      "description": "Secciones por tier, en orden; sin ellas, las del giro.",
+      "type": "object",
+      "properties": {
+        "pro": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "role": {
+                "type": "string",
+                "enum": [
+                  "header",
+                  "hero",
+                  "marquee",
+                  "about",
+                  "catalog",
+                  "proof",
+                  "team",
+                  "testimonials",
+                  "faq",
+                  "contact",
+                  "whatsapp",
+                  "footer"
+                ],
+                "description": "Rol del blueprint (header, hero, about, catalog, proof, team, testimonials, faq, contact, whatsapp, footer, marquee)."
+              },
+              "slot": {
+                "description": "Slot del kit; se deduce del rol y el giro. Si lo pones, debe coincidir.",
+                "type": "string"
+              },
+              "variant": {
+                "description": "Variante del slot (sections/<slot>/<variante>); sin ella el compilador elige.",
+                "type": "string"
+              }
+            },
+            "required": ["role"],
+            "additionalProperties": false,
+            "description": "Una sección, en orden de página."
+          }
+        },
+        "basico": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "role": {
+                "type": "string",
+                "enum": [
+                  "header",
+                  "hero",
+                  "marquee",
+                  "about",
+                  "catalog",
+                  "proof",
+                  "team",
+                  "testimonials",
+                  "faq",
+                  "contact",
+                  "whatsapp",
+                  "footer"
+                ],
+                "description": "Rol del blueprint (header, hero, about, catalog, proof, team, testimonials, faq, contact, whatsapp, footer, marquee)."
+              },
+              "slot": {
+                "description": "Slot del kit; se deduce del rol y el giro. Si lo pones, debe coincidir.",
+                "type": "string"
+              },
+              "variant": {
+                "description": "Variante del slot (sections/<slot>/<variante>); sin ella el compilador elige.",
+                "type": "string"
+              }
+            },
+            "required": ["role"],
+            "additionalProperties": false,
+            "description": "Una sección, en orden de página."
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "copy": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "propertyNames": {
+          "type": "string"
+        },
+        "additionalProperties": {
+          "$ref": "#/$defs/__schema0"
+        }
+      },
+      "description": "Copy es-MX por slot con las claves del kit (meta.ts › contentKeys) y `head` { title, description }."
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^(hero|about|team-[1-4]|gallery-0[1-8])$"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "placeholder"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "pexels": {
+                    "type": "string",
+                    "minLength": 2,
+                    "description": "Búsqueda en Pexels."
+                  }
+                },
+                "required": ["pexels"],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Ruta local (relativa al spec)."
+                  }
+                },
+                "required": ["file"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "alt": {
+            "description": "Texto alternativo; sustituye al del copy.",
+            "type": "string",
+            "minLength": 3
+          },
+          "orientation": {
+            "type": "string",
+            "enum": ["landscape", "portrait", "square"]
+          }
+        },
+        "required": ["key", "source"],
+        "additionalProperties": false
+      }
+    },
+    "demoProfile": {
+      "description": "Perfil demo (forma de business_profile) para `lattiz dev`/`check`; por defecto se arma con business.",
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {}
+    },
+    "motion": {
+      "type": "object",
+      "properties": {
+        "preset": {
+          "type": "string",
+          "enum": ["calm", "editorial", "none"]
+        },
+        "progress": {
+          "description": "Barra de progreso de scroll.",
+          "type": "boolean"
+        },
+        "overrides": {
+          "description": "Correcciones al clasificador: slot, #id o índice → tipo o { type, pattern }.",
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "hero",
+                  "about",
+                  "cards",
+                  "steps",
+                  "timeline",
+                  "gallery",
+                  "stats",
+                  "testimonials",
+                  "pricing",
+                  "team",
+                  "faq",
+                  "contact",
+                  "cta",
+                  "footer",
+                  "none"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "hero",
+                      "about",
+                      "cards",
+                      "steps",
+                      "timeline",
+                      "gallery",
+                      "stats",
+                      "testimonials",
+                      "pricing",
+                      "team",
+                      "faq",
+                      "contact",
+                      "cta",
+                      "footer",
+                      "none"
+                    ]
+                  },
+                  "pattern": {
+                    "type": "string",
+                    "enum": [
+                      "cascade",
+                      "alternate",
+                      "converge",
+                      "center-out",
+                      "wave",
+                      "none"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false,
+      "description": "Lattiz Motion (solo Pro) → motion del manifiesto."
+    },
+    "overrides": {
+      "description": "Diferencias por tier (marca o copy) sobre lo compartido.",
+      "type": "object",
+      "properties": {
+        "pro": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "Nombre de la plantilla en la galería para este tier.",
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "brand": {
+              "type": "object",
+              "properties": {
+                "palette": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "preset": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Paleta curada del giro (`pnpm lattiz spec init` las lista)."
+                        }
+                      },
+                      "required": ["preset"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "custom": {
+                          "type": "object",
+                          "properties": {
+                            "bg": {
+                              "type": "string",
+                              "pattern": "^#[0-9a-fA-F]{6}$",
+                              "description": "Fondo de la página."
+                            },
+                            "accent": {
+                              "type": "string",
+                              "pattern": "^#[0-9a-fA-F]{6}$",
+                              "description": "Color de marca (botones, rellenos)."
+                            },
+                            "text": {
+                              "description": "Texto; por defecto casi negro o casi blanco según el fondo.",
+                              "type": "string",
+                              "pattern": "^#[0-9a-fA-F]{6}$"
+                            },
+                            "scheme": {
+                              "description": "Se deduce del fondo.",
+                              "type": "string",
+                              "enum": ["light", "dark"]
+                            }
+                          },
+                          "required": ["bg", "accent"],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": ["custom"],
+                      "additionalProperties": false
+                    }
+                  ],
+                  "description": "Paleta: `{ \"preset\": \"<id>\" }` o `{ \"custom\": { \"bg\", \"accent\" } }` (se derivan tokens AA o se rechaza)."
+                },
+                "fontPair": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Par curado, p. ej. `cormorant-garamond+work-sans`."
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "display": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Familia para títulos (lista permitida en src/spec/presets.ts › CUSTOM_FONTS)."
+                        },
+                        "body": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Familia para texto."
+                        }
+                      },
+                      "required": ["display", "body"],
+                      "additionalProperties": false
+                    }
+                  ],
+                  "description": "Par tipográfico: id curado o `{ display, body }` con fuentes permitidas."
+                },
+                "shape": {
+                  "description": "Forma: filete, urbano, sutil, redondo, suave, organico, brutal.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                "density": {
+                  "description": "Aire entre secciones; por defecto el de la forma.",
+                  "type": "string",
+                  "enum": ["airy", "regular", "compact"]
+                },
+                "photoTreatment": {
+                  "type": "string",
+                  "enum": ["none", "duotone", "grayscale", "warm"]
+                },
+                "placeholder": {
+                  "type": "string",
+                  "enum": [
+                    "grain",
+                    "rules",
+                    "stripes",
+                    "blobs",
+                    "arches",
+                    "dots"
+                  ]
+                },
+                "container": {
+                  "description": "Ancho máximo, p. ej. 1200px.",
+                  "type": "string",
+                  "pattern": "^\\d{3,4}px$"
+                },
+                "displayScale": {
+                  "description": "Multiplica el tamaño de los títulos (fuentes anchas < 1).",
+                  "type": "string",
+                  "pattern": "^\\d(\\.\\d+)?$"
+                },
+                "rhythm": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string",
+                    "enum": [
+                      "sectionPad",
+                      "gutter",
+                      "gutterMd",
+                      "gutterSm",
+                      "space",
+                      "textScale",
+                      "titleHero",
+                      "titleHeroSm",
+                      "titleSection",
+                      "titleSectionSm",
+                      "titleSub"
+                    ]
+                  },
+                  "additionalProperties": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "description": "Ajuste fino del ritmo del tema (docs/template-workflow.md §6): sectionPad, gutter, space, textScale, title*."
+                }
+              },
+              "additionalProperties": false,
+              "description": "Identidad visual. Lo que falte lo elige el compilador entre lo curado del giro, sin chocar con el rubro."
+            },
+            "copy": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {
+                  "$ref": "#/$defs/__schema0"
+                }
+              },
+              "description": "Copy es-MX por slot con las claves del kit (meta.ts › contentKeys) y `head` { title, description }."
+            }
+          },
+          "additionalProperties": false
+        },
+        "basico": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "Nombre de la plantilla en la galería para este tier.",
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "brand": {
+              "type": "object",
+              "properties": {
+                "palette": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "preset": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Paleta curada del giro (`pnpm lattiz spec init` las lista)."
+                        }
+                      },
+                      "required": ["preset"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "custom": {
+                          "type": "object",
+                          "properties": {
+                            "bg": {
+                              "type": "string",
+                              "pattern": "^#[0-9a-fA-F]{6}$",
+                              "description": "Fondo de la página."
+                            },
+                            "accent": {
+                              "type": "string",
+                              "pattern": "^#[0-9a-fA-F]{6}$",
+                              "description": "Color de marca (botones, rellenos)."
+                            },
+                            "text": {
+                              "description": "Texto; por defecto casi negro o casi blanco según el fondo.",
+                              "type": "string",
+                              "pattern": "^#[0-9a-fA-F]{6}$"
+                            },
+                            "scheme": {
+                              "description": "Se deduce del fondo.",
+                              "type": "string",
+                              "enum": ["light", "dark"]
+                            }
+                          },
+                          "required": ["bg", "accent"],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": ["custom"],
+                      "additionalProperties": false
+                    }
+                  ],
+                  "description": "Paleta: `{ \"preset\": \"<id>\" }` o `{ \"custom\": { \"bg\", \"accent\" } }` (se derivan tokens AA o se rechaza)."
+                },
+                "fontPair": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Par curado, p. ej. `cormorant-garamond+work-sans`."
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "display": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Familia para títulos (lista permitida en src/spec/presets.ts › CUSTOM_FONTS)."
+                        },
+                        "body": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Familia para texto."
+                        }
+                      },
+                      "required": ["display", "body"],
+                      "additionalProperties": false
+                    }
+                  ],
+                  "description": "Par tipográfico: id curado o `{ display, body }` con fuentes permitidas."
+                },
+                "shape": {
+                  "description": "Forma: filete, urbano, sutil, redondo, suave, organico, brutal.",
+                  "type": "string",
+                  "minLength": 1
+                },
+                "density": {
+                  "description": "Aire entre secciones; por defecto el de la forma.",
+                  "type": "string",
+                  "enum": ["airy", "regular", "compact"]
+                },
+                "photoTreatment": {
+                  "type": "string",
+                  "enum": ["none", "duotone", "grayscale", "warm"]
+                },
+                "placeholder": {
+                  "type": "string",
+                  "enum": [
+                    "grain",
+                    "rules",
+                    "stripes",
+                    "blobs",
+                    "arches",
+                    "dots"
+                  ]
+                },
+                "container": {
+                  "description": "Ancho máximo, p. ej. 1200px.",
+                  "type": "string",
+                  "pattern": "^\\d{3,4}px$"
+                },
+                "displayScale": {
+                  "description": "Multiplica el tamaño de los títulos (fuentes anchas < 1).",
+                  "type": "string",
+                  "pattern": "^\\d(\\.\\d+)?$"
+                },
+                "rhythm": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string",
+                    "enum": [
+                      "sectionPad",
+                      "gutter",
+                      "gutterMd",
+                      "gutterSm",
+                      "space",
+                      "textScale",
+                      "titleHero",
+                      "titleHeroSm",
+                      "titleSection",
+                      "titleSectionSm",
+                      "titleSub"
+                    ]
+                  },
+                  "additionalProperties": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "description": "Ajuste fino del ritmo del tema (docs/template-workflow.md §6): sectionPad, gutter, space, textScale, title*."
+                }
+              },
+              "additionalProperties": false,
+              "description": "Identidad visual. Lo que falte lo elige el compilador entre lo curado del giro, sin chocar con el rubro."
+            },
+            "copy": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {
+                  "$ref": "#/$defs/__schema0"
+                }
+              },
+              "description": "Copy es-MX por slot con las claves del kit (meta.ts › contentKeys) y `head` { title, description }."
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "todo": {
+      "description": "Pendientes de revisar; `spec validate` avisa mientras no esté vacío.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": ["specVersion", "giro", "business"],
+  "additionalProperties": false,
+  "$defs": {
+    "__schema0": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/__schema0"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/__schema0"
+          }
+        }
+      ]
+    }
+  },
+  "$id": "https://lattiz.app/schemas/template.spec.v1.json",
+  "title": "Lattiz template.spec.json (specVersion 1)"
+}

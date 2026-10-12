@@ -63,8 +63,11 @@ export function resolveFontPair(
 ): { id: string; fonts: FontPairPreset } | undefined {
   if (value === undefined) return undefined;
   if (typeof value === 'string')
-    return FONT_PAIRS[value] ? { id: value, fonts: FONT_PAIRS[value] } : undefined;
-  if (!CUSTOM_FONTS[value.display] || !CUSTOM_FONTS[value.body]) return undefined;
+    return FONT_PAIRS[value]
+      ? { id: value, fonts: FONT_PAIRS[value] }
+      : undefined;
+  if (!CUSTOM_FONTS[value.display] || !CUSTOM_FONTS[value.body])
+    return undefined;
   return {
     id: `${slug(value.display)}+${slug(value.body)}`,
     fonts: customFontPair(value.display, value.body),
@@ -113,10 +116,7 @@ export function customPalette(seed: {
   let muted = text;
   for (let w = 0.55; w <= 1; w += 0.05) {
     muted = mix(text, bg, w);
-    if (
-      contrastRatio(muted, bg) >= 4.6 &&
-      contrastRatio(muted, surface) >= 4.6
-    )
+    if (contrastRatio(muted, bg) >= 4.6 && contrastRatio(muted, surface) >= 4.6)
       break;
   }
   const onAccent =

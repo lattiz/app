@@ -14,13 +14,15 @@
     "kit:shots": "tsx src/cli/shots.ts",
     "kit:build": "tsx src/cli/build.ts",
     "kit:compare": "tsx src/cli/compare.ts",
-    "kit:compare-visual": "tsx src/cli/compare-visual.ts"
+    "kit:compare-visual": "tsx src/cli/compare-visual.ts",
+    "kit:spec": "tsx src/cli/spec.ts"
   },
   "dependencies": {
     "grapesjs": "0.22.16",
     "jsdom": "^30.1.2",
     "playwright": "^1.63.0",
     "postcss": "^8.5.29",
+    "prettier": "^3.8.3",
     "sharp": "^0.35.5",
     "zod": "^4.4.3"
   },

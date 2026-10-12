@@ -20,6 +20,7 @@ import type {
   Blueprint,
   Business,
   ContentObject,
+  ContentPack,
   HeadContent,
   Manifest,
   ManifestMotion,
@@ -196,6 +197,7 @@ async function resolveImages(
   theme: Theme,
   meta: SectionMeta,
   assets: Map<string, CompiledAsset>,
+  assetsRoot: string,
 ): Promise<void> {
   const refs: { el: Element; attr: string }[] = [];
   for (const el of Array.from(
@@ -207,7 +209,7 @@ async function resolveImages(
     const src = el.getAttribute(attr) ?? '';
     if (!isRelativeAsset(src)) continue;
     const name = basename(src);
-    const source = resolve(paths.assets, vertical, theme.name, name);
+    const source = resolve(assetsRoot, vertical, theme.name, name);
     if (!assets.has(name)) {
       const size = meta.placeholder ?? { width: 1200, height: 800 };
       const generated = await ensurePlaceholder(
@@ -235,13 +237,23 @@ function headHtml(head: HeadContent, theme: Theme): string {
   ].join('');
 }
 
+/** In-memory inputs for a compile that must not read or write the kit's folders (spec builds). */
+export interface CompileSources {
+  theme?: Theme;
+  pack?: ContentPack;
+  /** Root of `<vertical>/<theme>/` images; missing ones become placeholders there. */
+  assetsRoot?: string;
+  outDir?: string;
+}
+
 export async function compileManifest(
   manifest: Manifest,
   manifestFile: string | null = null,
+  sources: CompileSources = {},
 ): Promise<CompiledTemplate> {
   const blueprint = await loadBlueprint(manifest.family, manifest.tier);
-  const theme = loadTheme(manifest.theme);
-  const pack = await loadContentPack(manifest.content);
+  const theme = sources.theme ?? loadTheme(manifest.theme);
+  const pack = sources.pack ?? (await loadContentPack(manifest.content));
   if (pack.vertical !== manifest.vertical) {
     throw new KitError(
       `Content pack ${manifest.content} is for "${pack.vertical}", the manifest is "${manifest.vertical}".`,
@@ -282,7 +294,14 @@ export async function compileManifest(
         `${relative(KIT_ROOT, htmlFile)}: root must carry data-lz-slot="${entry.slot}" data-lz-variant="${entry.variant}".`,
       );
     }
-    await resolveImages(root, manifest.vertical, theme, meta, assets);
+    await resolveImages(
+      root,
+      manifest.vertical,
+      theme,
+      meta,
+      assets,
+      sources.assetsRoot ?? paths.assets,
+    );
     sections.push({
       slot: entry.slot,
       variant: entry.variant,
@@ -346,7 +365,7 @@ export async function compileManifest(
     css: build.css,
     previewHtml: `${previewHtml}\n`,
     assets: [...assets.values()],
-    outDir: distDir(manifest.id),
+    outDir: sources.outDir ?? distDir(manifest.id),
   };
 }
 

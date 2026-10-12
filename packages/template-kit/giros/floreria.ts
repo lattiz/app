@@ -152,7 +152,7 @@ export default {
     hero: {
       image: 'hero.jpg',
       imageAlt: 'Ramo de flores de temporada envuelto en papel kraft',
-      eyebrow: 'Florería · {{city}}',
+      eyebrow: 'Florería · {{branch}}',
       title:
         'Flores frescas para decir <span class="lz-title__serif">lo que sientes</span>.',
       text: 'Ramos y arreglos hechos a mano con flor de temporada. Pide por WhatsApp y lo entregamos el mismo día en {{city}}.',

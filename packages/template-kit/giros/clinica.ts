@@ -150,7 +150,7 @@ export default {
     hero: {
       image: 'hero.jpg',
       imageAlt: 'Médica conversando con un paciente en un consultorio luminoso',
-      eyebrow: 'Atención médica · {{city}}',
+      eyebrow: 'Atención médica · {{branch}}',
       title:
         'Atención médica <span class="lz-title__serif">cercana</span>, sin esperas largas.',
       text: 'Consultas con tiempo para escucharte, estudios en el mismo lugar y seguimiento por WhatsApp. Agenda tu cita en un mensaje.',
