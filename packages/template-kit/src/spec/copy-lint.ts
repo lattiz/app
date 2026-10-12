@@ -407,7 +407,7 @@ export async function lintCopy(spec: Spec): Promise<SpecProblem[]> {
   for (const tier of tiers)
     for (const leaf of leaves(copies[tier]))
       if (
-        !/(kicker|label|cta|title|caption|alt|name|tags)$/i.test(
+        !/(kicker|label|cta|title|caption|alt|name|tags|question)$/i.test(
           leaf.key.split('.').pop() ?? '',
         )
       )
@@ -434,7 +434,10 @@ export async function lintCopy(spec: Spec): Promise<SpecProblem[]> {
         'warn',
         'repetido',
         `copy.${slot}`,
-        `${list.length} frase(s) iguales a content/${name} (p. ej. «${list[0].slice(0, 50)}»)`,
+        `${list.length} frase(s) iguales a content/${name}: ${list
+          .slice(0, 3)
+          .map((x) => `«${x.slice(0, 50)}»`)
+          .join(', ')}`,
         'Reescríbelas: dos plantillas del giro no deben sonar igual.',
       );
   }
