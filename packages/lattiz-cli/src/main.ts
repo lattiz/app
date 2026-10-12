@@ -132,13 +132,18 @@ async function main(argv: string[]): Promise<ExitCode> {
   });
 }
 
+// Exit only after stdout drains: process.exit() drops a pending pipe write (--json past 64 KiB).
+const exitAfterFlush = (code: number) =>
+  process.stdout.write('', () => process.exit(code));
+
 main(process.argv.slice(2))
-  .then((code) => process.exit(code))
+  .then(exitAfterFlush)
   .catch((error: unknown) => {
     if (error instanceof CliError) {
       log.fail(error.message);
       if (error.hint) log.hint(error.hint);
-      process.exit(error.code);
+      exitAfterFlush(error.code);
+      return;
     }
     console.error(error);
     process.exit(EXIT.USAGE);
