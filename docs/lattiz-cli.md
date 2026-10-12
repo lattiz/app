@@ -4,6 +4,23 @@
 **doctor → new → dev → motion → check → seed → deploy → publish/ship**. Código en
 `packages/lattiz-cli`; ayuda con `pnpm lattiz --help` y `pnpm lattiz <comando> --help`.
 
+## Estado del repo (2026-10-12, inicio de la Fase 4)
+
+- **Historia.** Desde la Fase 2 no entró nada de otros entornos: `main` local seguía en `c71427b`
+  (15 commits sin subir). `pnpm install --frozen-lockfile`, `typecheck` y `build` pasan. Durante la
+  sesión apareció una edición ajena sin commitear en `apps/web/src/features/editor/SaveStatusBadge.tsx`
+  (no compila); no es de este trabajo y no se tocó.
+- **Lint.** Los 20 errores viejos eran de `packages/fixtures/*.js` (scripts CommonJS de un spike de
+  GrapesJS, sin `package.json`, que nada importa): se ignoran como `template-kit/fixtures` (`1a5c841`).
+- **Datos de contacto como tokens.** El `.grapesjs` (lo que copia quien adopta una plantilla) ya
+  lleva `{{lz:phone|phone_tel|whatsapp_url|email|address|city}}`; el `index.html` del kit (el que el
+  seed publica) los resuelve con el demo mediante `bindSiteTokens` (`062afb3`). Sin «Datos del
+  negocio» quedan vacíos: ver «Pendientes» en `docs/template-spec.md`.
+- **Encaje.** El `--lz-header-h` de los navbars no contaba el borde de 2 px de algunos temas: el hero
+  `split` se pasaba 1 px a 1366×768 (`barberia-base-solar-v1`). Arreglado en la sección (`725a31f`).
+- **Secretos.** Regla en `CLAUDE.md`/`AGENTS.md`: nunca imprimir valores, solo presencia. Ningún
+  comando del CLI imprime valores de env (`doctor` muestra nombre, presencia y archivo de origen).
+
 ## Estado del repo (2026-10-11, revisión de la Fase 1)
 
 - **Historia.** La Fase 1 se escribió en otra máquina (contenedor con Node 22, sin `.env` ni Vercel
