@@ -11,11 +11,12 @@ import { parseEnv } from 'node:util';
 import sharp from 'sharp';
 import { REPO_ROOT } from '../lib/paths';
 import type { GiroDefinition, GiroImage } from './giro';
-import type { Spec } from './schema';
+import { isAllowedImageUrl, type Spec } from './schema';
 
 /**
- * Where each image of a generated template comes from: a placeholder (default), a local file or a
- * Pexels photo (`--images pexels`). Real photos already in the folder are never overwritten: the
+ * Where each image of a generated template comes from: a placeholder (default), a local file, a
+ * public photo URL from an allowed host (downloaded once, no API key) or a Pexels search
+ * (`--images pexels`, needs PEXELS_API_KEY). Real photos already in the folder are never overwritten: the
  * credits file records the hash of what the build wrote, and anything else is hand-placed.
  */
 
@@ -23,7 +24,7 @@ export type ImageMode = 'placeholder' | 'none' | 'pexels';
 
 export interface ImageCredit {
   file: string;
-  source: 'placeholder' | 'pexels' | 'file';
+  source: 'placeholder' | 'pexels' | 'file' | 'url';
   sha256: string;
   query?: string;
   pexelsId?: number;
@@ -31,6 +32,9 @@ export interface ImageCredit {
   photographer?: string;
   photographerUrl?: string;
   path?: string;
+  /** `url` source: what the spec pasted, and the photo's page when the host has one (Pexels). */
+  url?: string;
+  pageUrl?: string;
 }
 
 export interface CreditsFile {
@@ -134,6 +138,52 @@ async function pexelsDownload(photo: PexelsPhoto): Promise<Buffer> {
   return buffer;
 }
 
+const URL_CACHE = resolve(REPO_ROOT, '.lattiz/cache/images');
+const MAX_DOWNLOAD_BYTES = 15 * 1024 * 1024;
+
+/** Asks the CDN for a 2000 px rendition when it supports it; the seed converts to WebP ≤ 2000 px anyway. */
+function sizedUrl(raw: string): string {
+  const url = new URL(raw);
+  if (url.hostname === 'images.pexels.com' && !url.search)
+    url.search = '?auto=compress&cs=tinysrgb&w=2000';
+  if (url.hostname === 'images.unsplash.com' && !url.searchParams.has('w')) {
+    url.searchParams.set('w', '2000');
+    url.searchParams.set('q', '85');
+  }
+  return url.toString();
+}
+
+/** The photo's page for the credits, when the URL says which photo it is. */
+function photoPage(raw: string): string | undefined {
+  const id = /^\/photos\/(\d+)\//.exec(new URL(raw).pathname)?.[1];
+  return new URL(raw).hostname === 'images.pexels.com' && id
+    ? `https://www.pexels.com/photo/${id}/`
+    : undefined;
+}
+
+/** Downloads a pasted photo URL once (cached by URL), refusing other hosts, redirects off the list and non-images. */
+async function downloadImageUrl(raw: string): Promise<Buffer> {
+  if (!isAllowedImageUrl(raw))
+    throw new Error(`images: URL no permitida (${raw})`);
+  const file = resolve(URL_CACHE, `${cacheKey(raw)}.img`);
+  if (existsSync(file)) return readFileSync(file);
+  const res = await fetch(sizedUrl(raw), {
+    signal: AbortSignal.timeout(60_000),
+  });
+  if (!isAllowedImageUrl(res.url))
+    throw new Error(`images: ${raw} redirige a un host no permitido`);
+  if (!res.ok)
+    throw new Error(`images: no pude descargar ${raw} (${res.status})`);
+  if (!/^image\//.test(res.headers.get('content-type') ?? ''))
+    throw new Error(`images: ${raw} no es una imagen`);
+  const buffer = Buffer.from(await res.arrayBuffer());
+  if (buffer.length > MAX_DOWNLOAD_BYTES)
+    throw new Error(`images: ${raw} pesa más de 15 MB`);
+  mkdirSync(URL_CACHE, { recursive: true });
+  writeFileSync(file, buffer);
+  return buffer;
+}
+
 export interface ImageJob {
   /** `hero.jpg`, `gallery-03.jpg`… */
   name: string;
@@ -208,6 +258,22 @@ export async function sourceImages(opts: {
         source: 'file',
         sha256: sha256File(tempFile),
         path: specImage.source.file,
+      });
+      continue;
+    }
+    if (
+      specImage &&
+      typeof specImage.source === 'object' &&
+      'url' in specImage.source
+    ) {
+      const url = specImage.source.url;
+      writeFileSync(tempFile, await fit(await downloadImageUrl(url)));
+      credits.push({
+        file: job.name,
+        source: 'url',
+        sha256: sha256File(tempFile),
+        url,
+        ...(photoPage(url) ? { pageUrl: photoPage(url) } : {}),
       });
       continue;
     }

@@ -31,8 +31,12 @@ y te detienes **antes** de cualquier escritura remota. Todo pasa por un spec en
 6. **Nada remoto.** No corras `seed`, `deploy`, `publish` ni `ship` (ni `--confirm-remote`) salvo que el
    usuario lo pida **explícitamente en esta conversación**. Tampoco `build --force`, `unfreeze --yes`,
    `git push` ni commits si no te lo piden.
-7. **Fotos:** placeholders por defecto. Pexels solo si el usuario lo pide (`--images pexels`; la clave
-   va en el entorno, nunca la pidas ni la muestres).
+7. **Fotos:** placeholders por defecto. Si el usuario pega URLs de fotos, van en `images[]` como
+   `{ "key": "hero", "source": { "url": "https://images.pexels.com/…" } }` (solo `images.pexels.com`,
+   `images.unsplash.com`, `cdn.pixabay.com`; sin API key); en `copy` queda el nombre local
+   (`"image": "hero.jpg"`, `team-1.jpg`, `gallery-01.jpg`…), nunca la URL. `--images pexels` solo si el
+   usuario lo pide y hay key (no la pidas ni la muestres). Revisa que cada `alt`/pie describa la foto
+   real y que `team-*` sean retratos; si no, quita la sección opcional o pide otras URLs.
 8. **Paradas:** máximo 4 vueltas de validar/compilar/checar y 2 rondas de revisión visual. Si algo
    sigue fallando, detente y reporta qué falta.
 

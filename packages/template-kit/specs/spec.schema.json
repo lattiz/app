@@ -425,6 +425,17 @@
                 },
                 "required": ["file"],
                 "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "Foto pública que el build descarga, recorta y guarda en assets/ (sin API key)."
+                  }
+                },
+                "required": ["url"],
+                "additionalProperties": false
               }
             ]
           },

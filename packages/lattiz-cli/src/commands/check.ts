@@ -556,13 +556,17 @@ function creditsResult(vertical: string, theme: string): RuleResult | null {
   if (!existsSync(resolve(dir, CREDITS_FILE))) return null;
   const images = readCredits(dir).images;
   const pexels = images.filter((i) => i.source === 'pexels');
+  const urls = images.filter((i) => i.source === 'url');
   const placeholders = images.filter((i) => i.source === 'placeholder').length;
   return result(
     'credits',
     GLOBAL,
     'INFO',
-    `${pexels.length} foto(s) de Pexels, ${placeholders} placeholder(s) · ${relative(REPO_ROOT, resolve(dir, CREDITS_FILE))}`,
-    pexels.map((p) => `${p.file}: ${p.photographer} (${p.pexelsUrl})`),
+    `${pexels.length} foto(s) de Pexels, ${urls.length} por URL, ${placeholders} placeholder(s) · ${relative(REPO_ROOT, resolve(dir, CREDITS_FILE))}`,
+    [
+      ...pexels.map((p) => `${p.file}: ${p.photographer} (${p.pexelsUrl})`),
+      ...urls.map((u) => `${u.file}: ${u.pageUrl ?? u.url}`),
+    ],
   );
 }
 

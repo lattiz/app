@@ -47,6 +47,8 @@ hace falta). Checklist:
       pon `copy.navbar.links` = `[{ "label": "Taqueros", "href": "#equipo" }, …]` con las anclas de
       las secciones (`#nosotros`, `#servicios`, `#equipo`, `#galeria`, `#resenas`, `#preguntas`,
       `#sucursales`); el compilador quita las que un tier no tiene. Igual con `copy.footer.links`.
+- [ ] Fotos: si el usuario dio URLs, `images[]` con `{ "source": { "url": … } }` y nombres locales en
+      `copy`; ajusta cada `alt`/`caption` a lo que muestra la foto (ábrela en `review`).
 - [ ] Nada de `{{lz:*}}`, teléfonos, correos o direcciones escritos a mano en el copy.
 
 ## 4. Validar → compilar → checar

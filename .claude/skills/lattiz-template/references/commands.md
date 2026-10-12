@@ -72,7 +72,7 @@ ruta en el spec que hay que cambiar (`copy.hero.title`, `overrides.basico.copy.h
 
 `files[].action`: `create`, `update`, `unchanged`; conflictos que detienen el build: `edited` (alguien
 editó el generado), `frozen`, `foreign`, `other-spec`. Opciones útiles: `--dry-run --diff`,
-`--images placeholder|pexels|none`. **Nunca** `--force`.
+`--images placeholder|pexels|none`. **Nunca** `--force`. Sin `PEXELS_API_KEY`, las fotos van por URL en el spec: `images[].source: { "url": "https://images.pexels.com/…" }` (hosts permitidos: `images.pexels.com`, `images.unsplash.com`, `cdn.pixabay.com`); el build las descarga una vez (caché `.lattiz/cache/images/`), las recorta y anota `CREDITS.json` (`source: "url"`, `url`, `pageUrl`). Una URL escrita en `copy.*.image` es error de `spec validate`.
 
 ## Revisar (uno a la vez)
 

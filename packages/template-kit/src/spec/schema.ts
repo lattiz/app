@@ -10,6 +10,25 @@ import { RHYTHM_TOKENS, type RhythmToken } from '../types';
 export const SPEC_VERSION = 1;
 export const ID_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 /** Image keys the kit's sections reference (`<key>.jpg` in assets/<giro>/<theme>/). */
+/** Hosts a spec may download photos from (`images[].source.url`); nothing else reaches the build. */
+export const IMAGE_URL_HOSTS = [
+  'images.pexels.com',
+  'images.unsplash.com',
+  'cdn.pixabay.com',
+] as const;
+
+export function isAllowedImageUrl(value: string): boolean {
+  try {
+    const url = new URL(value);
+    return (
+      url.protocol === 'https:' &&
+      (IMAGE_URL_HOSTS as readonly string[]).includes(url.hostname)
+    );
+  } catch {
+    return false;
+  }
+}
+
 export const IMAGE_KEY_RE =
   /^(hero|about|team-[1-4]|gallery-0[1-8]|product-0[1-8])$/;
 const HEX_RE = /^#[0-9a-fA-F]{6}$/;
@@ -201,6 +220,17 @@ const ImageSourceSchema = z.union([
   }),
   z.strictObject({
     file: z.string().trim().min(1).describe('Ruta local (relativa al spec).'),
+  }),
+  z.strictObject({
+    url: z
+      .string()
+      .trim()
+      .refine(isAllowedImageUrl, {
+        message: `URL de imagen no permitida: https y uno de ${IMAGE_URL_HOSTS.join(', ')}`,
+      })
+      .describe(
+        'Foto pública que el build descarga, recorta y guarda en assets/ (sin API key).',
+      ),
   }),
 ]);
 

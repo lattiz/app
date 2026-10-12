@@ -168,12 +168,13 @@ export function printBuild(report: BuildReport): void {
       );
     const photos = t.images.filter((i) => i.source === 'pexels').length;
     const files = t.images.filter((i) => i.source === 'file').length;
+    const urls = t.images.filter((i) => i.source === 'url').length;
     const placeholders = t.images.filter(
       (i) => i.source === 'placeholder',
     ).length;
     log.plain(
       c.gray(
-        `  imágenes: ${placeholders} placeholder(s)${photos ? `, ${photos} de Pexels` : ''}${files ? `, ${files} archivo(s)` : ''}`,
+        `  imágenes: ${placeholders} placeholder(s)${photos ? `, ${photos} de Pexels` : ''}${files ? `, ${files} archivo(s)` : ''}${urls ? `, ${urls} por URL` : ''}`,
       ),
     );
     for (const n of t.imageNotes) log.info(n);

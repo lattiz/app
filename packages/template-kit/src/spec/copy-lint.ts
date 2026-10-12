@@ -150,6 +150,8 @@ interface Leaf {
   raw: string;
 }
 
+const DERIVED_KEYS = new Set(['links', 'branch', 'branches']);
+
 function leaves(copy: Record<string, ContentObject>): Leaf[] {
   const out: Leaf[] = [];
   const walk = (v: ContentValue | undefined, path: string, key: string) => {
@@ -160,8 +162,11 @@ function leaves(copy: Record<string, ContentObject>): Leaf[] {
     if (Array.isArray(v))
       return v.forEach((x, i) => walk(x, `${path}[${i}]`, `${key}[]`));
     if (v && typeof v === 'object')
-      for (const [k, x] of Object.entries(v))
+      for (const [k, x] of Object.entries(v)) {
+        // links/branch/branches are rebuilt from business and sections: not copy the spec writes.
+        if (key === path && DERIVED_KEYS.has(k)) continue;
         walk(x, `${path}.${k}`, `${key}.${k}`);
+      }
   };
   for (const [slot, value] of Object.entries(copy)) walk(value, slot, slot);
   return out;

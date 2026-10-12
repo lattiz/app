@@ -248,6 +248,33 @@ export async function validateSpec(
       );
   }
 
+  // A pasted URL in the copy would ship as a hotlink; photos go through images[] and land in assets/.
+  const localName = (path: string): string => {
+    const n = Number(/\[(\d+)\]/.exec(path)?.[1] ?? 0) + 1;
+    if (/members\[/.test(path)) return `team-${n}`;
+    if (/items\[/.test(path)) return `gallery-${String(n).padStart(2, '0')}`;
+    if (/products\[/.test(path)) return `product-${String(n).padStart(2, '0')}`;
+    return /about\./.test(path) ? 'about' : 'hero';
+  };
+  const remote = (value: unknown, path: string): void => {
+    if (typeof value === 'string') {
+      if (/^https?:\/\//.test(value) && /(^|\.)image$/.test(path))
+        err(
+          path,
+          'la imagen es una URL: el kit solo usa archivos locales',
+          `Pon "${localName(path)}.jpg" aquí y la URL en images[]: { "key": "${localName(path)}", "source": { "url": "${value}" } }.`,
+        );
+      return;
+    }
+    if (Array.isArray(value))
+      return value.forEach((v, n) => remote(v, `${path}[${n}]`));
+    if (value && typeof value === 'object')
+      for (const [k, v] of Object.entries(value)) remote(v, `${path}.${k}`);
+  };
+  remote(spec.copy ?? {}, 'copy');
+  for (const tier of ['pro', 'basico'] as const)
+    remote(spec.overrides?.[tier]?.copy ?? {}, `overrides.${tier}.copy`);
+
   (spec.images ?? []).forEach((img, i) => {
     if (!usedImages.has(img.key))
       warn(
