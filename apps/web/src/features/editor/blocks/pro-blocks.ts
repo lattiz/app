@@ -93,7 +93,7 @@ const stackedCards: SectionBlock = {
   content: {
     tagName: 'section',
     classes: ['lzb', 'lzb-stack'],
-    attributes: { 'data-lz-section': 'cards' },
+    attributes: { 'data-lz-section': 'steps', 'data-lz-pattern': 'cascade' },
     styles: `${BASE_CSS}
 .lzb-stack__list{display:grid;gap:24px;margin:40px 0 0;padding:0;list-style:none}
 .lzb-stack__card{position:sticky;top:calc(80px + var(--i,0) * 24px);display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;min-height:320px;padding:clamp(24px,4vw,48px);border-radius:var(--lzb-radius);background:var(--lzb-surface);border:var(--lz-border-width,1px) solid var(--lzb-line);box-shadow:0 -12px 40px rgba(0,0,0,.08)}
@@ -149,7 +149,7 @@ const beforeAfter: SectionBlock = {
   content: {
     tagName: 'section',
     classes: ['lzb', 'lzb-compare-block'],
-    attributes: { 'data-lz-section': 'text' },
+    attributes: { 'data-lz-section': 'about' },
     styles: `${BASE_CSS}
 .lzb-compare-block__frame{max-width:900px;margin:32px auto 0;border-radius:var(--lzb-radius);overflow:hidden}
 .lzb-compare-block__frame img{width:100%;aspect-ratio:4/3;object-fit:cover}

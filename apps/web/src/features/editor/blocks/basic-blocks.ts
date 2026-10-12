@@ -96,7 +96,7 @@ const contactHours: SectionBlock = {
   content: {
     tagName: 'section',
     classes: ['lzb', 'lzb-contact'],
-    attributes: { 'data-lz-section': 'text' },
+    attributes: { 'data-lz-section': 'contact' },
     styles: `${BASE_CSS}
 .lzb-contact__grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px}
 .lzb-contact__card{padding:24px;border-radius:var(--lzb-radius);background:var(--lzb-surface-2)}

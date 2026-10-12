@@ -313,7 +313,9 @@
         add(flow(), c, kindOf(c, text));
       } else if (type !== 'footer' && isGroup(c)) {
         var chosen = PATTERNS[c.getAttribute('data-lz-pattern')] ? c.getAttribute('data-lz-pattern') : pattern;
-        items(Array.prototype.slice.call(c.children), chosen, type === 'gallery' ? 'mask-wipe' : 'fade-up');
+        // A sideways carousel of quotes just fades: items off to the side never cross the line together.
+        var carousel = type === 'testimonials' && /auto|scroll/.test(getComputedStyle(c).overflowX);
+        items(Array.prototype.slice.call(c.children), carousel ? 'cascade' : chosen, type === 'gallery' ? 'mask-wipe' : carousel ? 'fade' : 'fade-up');
       } else if (type !== 'footer' && type !== 'hero' && isSplit(c)) {
         // Columns converge: the left one travels right, the right one travels left.
         current = null;
