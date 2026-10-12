@@ -57,6 +57,9 @@ export interface GiroInfo extends GiroSummary {
       }[];
     }
   >;
+  /** Accent hues already taken in the giro, and the hue ranges a custom palette can still use. */
+  usedAccentHues: { id: string; hue: number }[];
+  freeHueRanges: [number, number][];
   /** Per slot: every copy key an allowed variant reads, its length limit and the giro's example. */
   copy: Record<
     string,
@@ -81,6 +84,25 @@ async function freeness(giroId: string) {
   const fonts = new Set(library.map((f) => f.fonts));
   return {
     templates: library.map((f) => `${f.id} (${f.tier})`).sort(),
+    usedHues: library
+      .filter((f) => f.accentHue !== null)
+      .map((f) => ({ id: f.id, hue: Math.round(f.accentHue as number) }))
+      .sort((a, b) => a.hue - b.hue),
+    freeHueRanges: (() => {
+      const free: [number, number][] = [];
+      let start: number | null = null;
+      for (let h = 0; h <= 360; h += 1) {
+        const ok =
+          h < 360 &&
+          hues.every((x) => hueDistance(x, h) >= MIN_ACCENT_HUE_DISTANCE);
+        if (ok && start === null) start = h;
+        if (!ok && start !== null) {
+          free.push([start, h - 1]);
+          start = null;
+        }
+      }
+      return free;
+    })(),
     hueFree: (accent: string) => {
       const c = parseColor(accent);
       const h = c ? hueOf(c) : null;
@@ -228,6 +250,8 @@ export async function giroInfo(id: string): Promise<GiroInfo | null> {
       id: sid,
       label: SHAPES[sid]?.label ?? sid,
     })),
+    usedAccentHues: f.usedHues,
+    freeHueRanges: f.freeHueRanges,
     tiers,
     copy,
     heroAlternates: g.heroAlternates,

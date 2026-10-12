@@ -43,6 +43,10 @@ hace falta). Checklist:
       verosímiles para la ciudad, 2 promos con `{{whatsappUrl:mensaje}}`), `copy.team` (si el Pro lo
       usa), `copy.testimonials` (3 reseñas concretas, nombre + inicial), `copy.faq` (6 preguntas
       reales del giro), `copy.locations.contactText`, `copy.footer.about`, `copy.head.description`.
+- [ ] Menú: si las etiquetas del giro no van con el negocio («Cocina», «Reservar» en una taquería),
+      pon `copy.navbar.links` = `[{ "label": "Taqueros", "href": "#equipo" }, …]` con las anclas de
+      las secciones (`#nosotros`, `#servicios`, `#equipo`, `#galeria`, `#resenas`, `#preguntas`,
+      `#sucursales`); el compilador quita las que un tier no tiene. Igual con `copy.footer.links`.
 - [ ] Nada de `{{lz:*}}`, teléfonos, correos o direcciones escritos a mano en el copy.
 
 ## 4. Validar → compilar → checar
