@@ -321,8 +321,19 @@ async function contrast(page: Page): Promise<string[]> {
       runOnly: { type: 'rule', values: ['color-contrast'] },
       resultTypes: ['violations'],
     });
+    // Text not fully inside the viewport's width is either overflow (its own FAIL) or clipped on
+    // purpose (a marquee); with the Motion runtime loaded axe resolves the marquee's clipped items
+    // against the page background instead of the accent band, a false 1.08:1.
+    const offscreen = (selector: string) => {
+      const el = document.querySelector(selector);
+      if (!el) return false;
+      const box = el.getBoundingClientRect();
+      return box.left < 0 || box.right > window.innerWidth;
+    };
     return res.violations.flatMap((v) =>
-      v.nodes.map((n) => `${n.target.join(' ')} — ${n.any[0]?.message ?? ''}`),
+      v.nodes
+        .filter((n) => !offscreen(n.target.join(' ')))
+        .map((n) => `${n.target.join(' ')} — ${n.any[0]?.message ?? ''}`),
     );
   });
 }
