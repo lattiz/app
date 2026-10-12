@@ -1,4 +1,4 @@
-// GENERATED from specs/estetica-estudio-nacar.spec.json (spec 76f9b169c1da, file ad9a5b7a07ec). Do not edit: use the spec, or freeze.
+// GENERATED from specs/estetica-estudio-nacar.spec.json (spec b88261b2b3eb, file b6ad6b107939). Do not edit: use the spec, or freeze.
 import type { ContentPack } from '../src/types';
 
 export default {
@@ -58,7 +58,7 @@ export default {
       imageAlt: 'Estilista peinando a una clienta frente al espejo del salón',
       eyebrow: 'Salón de belleza · La Paz',
       title: 'Tu rato para <span class="lz-title__serif">consentirte</span>.',
-      text: 'Corte, color, uñas y pestañas con calma, en un salón tranquilo. Agenda por WhatsApp y llega a tu hora.',
+      text: 'Corte, color, uñas y pestañas, con calma. Agenda por WhatsApp y llega a tu hora.',
       primaryCta: 'Agendar por WhatsApp',
       secondaryCta: 'Ver servicios',
       secondaryHref: '#servicios',

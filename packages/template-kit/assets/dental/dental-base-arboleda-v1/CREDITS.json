@@ -1,10 +1,10 @@
 {
-  "$lattiz": "GENERATED from specs/dental-arboleda.spec.json (spec 0757763d1134, file 5c660062067a). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/dental-arboleda.spec.json (spec 0757763d1134, file 065102151176). Do not edit: use the spec, or freeze.",
   "images": [
     {
       "file": "hero.jpg",
       "source": "placeholder",
-      "sha256": "e3300b9ac48061e1cd452c7e06f86233bb518d0a730ba4852be1257f240a4f99"
+      "sha256": "e1af6970493a3ce7e7de3500c6769ae372a72f8e0f496c92a7fd4b3a33c6fe42"
     }
   ]
 }

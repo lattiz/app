@@ -116,7 +116,7 @@ export default {
   sections: {
     pro: [
       { role: 'header', variant: 'centered-logo' },
-      { role: 'hero', variant: 'offset-card' },
+      { role: 'hero', variant: 'split' },
       { role: 'marquee', variant: 'ticker' },
       { role: 'about', variant: 'text-image-offset' },
       { role: 'catalog', variant: 'price-list' },
@@ -171,7 +171,7 @@ export default {
       imageAlt: 'Estilista peinando a una clienta frente al espejo del salón',
       eyebrow: 'Salón de belleza · {{branch}}',
       title: 'Tu rato para <span class="lz-title__serif">consentirte</span>.',
-      text: 'Corte, color, uñas y pestañas con calma, en un salón tranquilo. Agenda por WhatsApp y llega a tu hora.',
+      text: 'Corte, color, uñas y pestañas, con calma. Agenda por WhatsApp y llega a tu hora.',
       primaryCta: 'Agendar por WhatsApp',
       secondaryCta: 'Ver servicios',
       secondaryHref: '#servicios',

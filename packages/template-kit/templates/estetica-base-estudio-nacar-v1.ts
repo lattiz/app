@@ -1,4 +1,4 @@
-// GENERATED from specs/estetica-estudio-nacar.spec.json (spec 76f9b169c1da, file 26ff1bfa8682). Do not edit: use the spec, or freeze.
+// GENERATED from specs/estetica-estudio-nacar.spec.json (spec b88261b2b3eb, file 26ff1bfa8682). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {

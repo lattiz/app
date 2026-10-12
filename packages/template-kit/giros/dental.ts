@@ -128,7 +128,7 @@ export default {
     ],
     basico: [
       { role: 'header', variant: 'inline' },
-      { role: 'hero', variant: 'offset-card' },
+      { role: 'hero', variant: 'image-bg' },
       { role: 'about', variant: 'brief' },
       { role: 'catalog', variant: 'cards' },
       { role: 'faq', variant: 'list' },

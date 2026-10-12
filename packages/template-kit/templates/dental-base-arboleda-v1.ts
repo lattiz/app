@@ -1,4 +1,4 @@
-// GENERATED from specs/dental-arboleda.spec.json (spec 0757763d1134, file 44c86e7beced). Do not edit: use the spec, or freeze.
+// GENERATED from specs/dental-arboleda.spec.json (spec 0757763d1134, file d919ea1c303d). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
@@ -40,7 +40,7 @@ export default {
     },
     {
       slot: 'hero',
-      variant: 'offset-card',
+      variant: 'image-bg',
       props: {
         title:
           'Tu dentista de confianza en <span class="lz-title__serif">García Ginerés</span>.',

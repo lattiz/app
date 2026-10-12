@@ -1,4 +1,4 @@
-// GENERATED from specs/estetica-estudio-nacar.spec.json (spec 76f9b169c1da, file f3ed5a62f4be). Do not edit: use the spec, or freeze.
+// GENERATED from specs/estetica-estudio-nacar.spec.json (spec b88261b2b3eb, file 91a215655d22). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
@@ -20,7 +20,7 @@ export default {
     },
     {
       slot: 'hero',
-      variant: 'offset-card',
+      variant: 'split',
     },
     {
       slot: 'marquee',

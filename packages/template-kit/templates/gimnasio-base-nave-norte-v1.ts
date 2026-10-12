@@ -1,4 +1,4 @@
-// GENERATED from specs/gimnasio-nave-norte.spec.json (spec 2f28c4a23c7a, file c707caf91222). Do not edit: use the spec, or freeze.
+// GENERATED from specs/gimnasio-nave-norte.spec.json (spec 2f28c4a23c7a, file 8b5087a6c91b). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
@@ -40,7 +40,7 @@ export default {
     },
     {
       slot: 'hero',
-      variant: 'offset-card',
+      variant: 'split',
       props: {
         title:
           'Grupos pequeños, <span class="lz-title__serif">técnica primero</span>.',
