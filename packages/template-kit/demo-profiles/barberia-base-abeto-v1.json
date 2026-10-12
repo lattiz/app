@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/barberia-abeto.spec.json (spec 041b68319ddd, file 92360ffafee0). Do not edit: use the spec, or freeze.",
+  "name": "Abeto Barbería",
+  "category": "barbershop",
+  "phone": "+525500000000",
+  "whatsapp": "+5215500000000",
+  "email": "citas@abetobarberia.mx",
+  "address": {
+    "street": "Av. de la Paz 38, San Ángel, Álvaro Obregón",
+    "city": "CDMX",
+    "country": "MX"
+  },
+  "hours": {
+    "tue": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "sun": [
+      {
+        "open": "11:00",
+        "close": "16:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}

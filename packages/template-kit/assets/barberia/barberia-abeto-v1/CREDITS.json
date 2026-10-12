@@ -1,0 +1,75 @@
+{
+  "$lattiz": "GENERATED from specs/barberia-abeto.spec.json (spec 041b68319ddd, file c2923483a86d). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "e0032203e6ec492bba78b515fab5ad71c30a75564b9c6a723cce2ea5f7137371"
+    },
+    {
+      "file": "about.jpg",
+      "source": "placeholder",
+      "sha256": "cfa3287d5664229289183c3ec77fafcecd7ed4c6c841477ebe065191663a768f"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "placeholder",
+      "sha256": "bd53557678fd0fcca2d3ef6713993a832836ab59bcdf08e5768478b9ae860af8"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "placeholder",
+      "sha256": "3b1dfbd2534c693c72aab2a5c447a569a0850d6858c1eb0a03db0daf92e11a1e"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "placeholder",
+      "sha256": "5124687a5f9f8ccd77c554f125333d798e49c31c1b2ff5765f2cbb064bd20e77"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "placeholder",
+      "sha256": "25f32f7dee9acd61029c03c79a9a745b5f60f88d45180949fef261306355997c"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "placeholder",
+      "sha256": "2b1427d9000163f65ab636ad008bff46fb30bc7d52fc7da4246047d8620c4e37"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "placeholder",
+      "sha256": "0a7fb721763c519df3a70748244e00445f9ac0da2f3a859afc40a767ede28a4b"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "placeholder",
+      "sha256": "08a9506091efa822498cd00cc427a312143717a80203e7bca3d9f85b00958689"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "placeholder",
+      "sha256": "4a571b9d388178847551767a353f1e375cffb9c4b16adec96f6e673f9c558e89"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "placeholder",
+      "sha256": "32335bbecad6aeedc6666f78f095de3fb10131dc20df71c7f8b0b699fbf382be"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "placeholder",
+      "sha256": "594e0be2877e24671220c4da43cdd6e25f7b98dc92532a50663569ccabd90b2c"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "placeholder",
+      "sha256": "c3cf789802c1f5d00785921e6c6a3bb8d57dea14ca53f06e2718c5119af94fea"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "placeholder",
+      "sha256": "70503d1c6277a733defe2c850b97cbb9a1b04fc4d5774c729c1332208e5503d0"
+    }
+  ]
+}

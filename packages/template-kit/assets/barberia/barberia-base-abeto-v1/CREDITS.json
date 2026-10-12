@@ -1,0 +1,10 @@
+{
+  "$lattiz": "GENERATED from specs/barberia-abeto.spec.json (spec 041b68319ddd, file b84e2f4de40d). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "2e9bab6fe832d101a95b52331218de4bff65ec3162e94047a79669da5d7f5e37"
+    }
+  ]
+}
