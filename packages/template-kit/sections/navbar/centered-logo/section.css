@@ -1,5 +1,6 @@
 :root {
-  --lz-header-h: 110px;
+  /* Top row + nav row (1px line) + the theme's bottom border. */
+  --lz-header-h: calc(109px + var(--lz-border-width));
 }
 
 .lz-navbar-c {
@@ -111,7 +112,7 @@
 
 @media (max-width: 992px) {
   :root {
-    --lz-header-h: 65px;
+    --lz-header-h: calc(64px + var(--lz-border-width));
   }
   .lz-navbar-c__nav {
     display: none;

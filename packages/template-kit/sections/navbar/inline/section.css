@@ -1,5 +1,6 @@
 :root {
-  --lz-header-h: 73px;
+  /* Bar height + the theme's bottom border: the fit math must match the real header. */
+  --lz-header-h: calc(72px + var(--lz-border-width));
 }
 
 .lz-navbar {
@@ -101,7 +102,7 @@
 
 @media (max-width: 480px) {
   :root {
-    --lz-header-h: 65px;
+    --lz-header-h: calc(64px + var(--lz-border-width));
   }
   .lz-navbar__inner {
     height: 64px;
