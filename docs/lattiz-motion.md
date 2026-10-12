@@ -153,9 +153,9 @@ Below 768 px durations are multiplied by `--lz-dur-k: 1.2` and both presets use 
 `lz-marquee` (the single child scrolls; duplicate its content once; `--lz-marquee-dur`) ·
 `lz-stack` (children stack as sticky cards; `--lz-stack-top`). All off with reduced motion.
 A sticky/fixed `<header>` gets `.lz-header`; `html.lz-scrolled` toggles from a sentinel element (the
-`centered-logo` navbar slides its top row away with it). In-page nav links (`header a[href^="#"]`) get
-`.lz-active` + `aria-current` for the section crossing 35 % of the screen, re-evaluated on every
-observer callback (no scroll listener).
+`centered-logo` navbar slides its top row away with it). Nav links are not highlighted by section:
+the active-link tracking was removed (2026-10, it lit up late or at the end of a section); links keep
+only their hover style.
 
 ## v1 attributes (version-stable)
 

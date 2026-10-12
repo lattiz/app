@@ -34,6 +34,7 @@ fixtures/                   oxido/ (Studio export), broken/ (must fail every rul
 - **Basic** (any tenant): header, hero, catalog, contact (`locations/single`), faq, footer + whatsapp; optional about (`about/brief`). Basic templates of a vertical share the roles; theme, hero/services variants and copy make them distinct (similarity ≤ 0.85).
 - **Pro** (Pro and higher plans; not exclusive, tenants can share one): header, hero, about (`text-image-offset` | `statement` | `stats-strip`), catalog, proof, testimonials, faq, contact (`locations/with-contact`), footer + whatsapp; optional team, marquee. Each Pro must feel distinct (similarity ≤ 0.5 vs other Pro of the vertical).
 - Roles resolve to slots per vertical (`blueprints/service-landing.shared.ts › verticals`). Barbería: catalog → `services`, proof → `gallery`, contact → `locations`.
+- Navbars (both variants) carry the mobile menu: ≤ 992 px a toggle links to `#menu` and `.lz-menu:target` opens it (no JS; a section link retargets the hash and closes it). Styles live in `core.css`: Básico gets a floating card, Pro (`.lz-page--pro`, set by the compiler) a full-screen panel; the CTA is repeated inside. Desktop links have hover only: Motion no longer marks the active section.
 - No `<form>` anywhere; contact = WhatsApp / `{{phoneUrl}}` / `{{emailUrl}}` / map buttons. `floating-whatsapp` is mandatory and links to `{{whatsappUrl…}}`.
 
 ## Don't clone: pick theme, variants and voice

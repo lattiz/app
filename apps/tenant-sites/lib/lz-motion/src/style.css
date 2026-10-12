@@ -113,7 +113,6 @@
 }
 .lz-scrolled .lz-header::after { opacity: 1; }
 /* Section in view: its nav link (set from the observer, no scroll listener). */
-.lz-active { color: var(--lz-color-accent-text, currentColor); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.45em; }
 
 /* cta: a soft accent glow drifting behind the content (transform/opacity only). */
 .lz-drift { isolation: isolate; }

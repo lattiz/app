@@ -544,37 +544,6 @@
     });
   });
 
-  // Active nav link: re-evaluated on every observer callback (sections are watched too), no scroll listener.
-  safe('nav', function () {
-    if (!io) return;
-    var links = [];
-    all('header a[href^="#"], nav a[href^="#"]').forEach(function (a) {
-      var id = a.getAttribute('href').slice(1);
-      var target = id && doc.getElementById(decodeURIComponent(id));
-      if (target && !target.contains(a)) links.push({ a: a, t: target });
-    });
-    if (!links.length) return;
-    var update = function () {
-      var line = vh * 0.35;
-      var current = null;
-      links.forEach(function (l) {
-        var r = l.t.getBoundingClientRect();
-        if (r.top <= line && r.bottom > line) current = l.t;
-      });
-      links.forEach(function (l) {
-        var on = l.t === current;
-        l.a.classList.toggle('lz-active', on);
-        if (on) l.a.setAttribute('aria-current', 'true');
-        else l.a.removeAttribute('aria-current');
-      });
-    };
-    links.forEach(function (l) {
-      // Never take over an element a reveal group already watches.
-      if (!watchers.has(l.t)) watch(l.t, function () { return false; });
-    });
-    afterBatch.push(update);
-  });
-
   // Failsafe: nothing stays hidden if the observer never reports (broken IO, odd layouts).
   safe('failsafe', function () {
     if (!pending.length) return;

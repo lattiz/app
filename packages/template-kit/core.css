@@ -94,7 +94,9 @@ a {
 }
 
 .lz-title--section {
-  font-size: calc(min(var(--lz-title-section), 10svh) * var(--lz-display-scale));
+  font-size: calc(
+    min(var(--lz-title-section), 10svh) * var(--lz-display-scale)
+  );
   max-width: 900px;
 }
 
@@ -264,6 +266,193 @@ a {
     width: 100%;
   }
   .lz-title--section {
-    font-size: calc(min(var(--lz-title-section-sm), 9svh) * var(--lz-display-scale));
+    font-size: calc(
+      min(var(--lz-title-section-sm), 9svh) * var(--lz-display-scale)
+    );
+  }
+}
+
+/* ── Mobile menu (both navbars). No JS: the toggle links to #menu and :target opens the panel;
+   tapping a section link retargets the hash, which closes it. Básico: floating card; Pro: full screen. */
+.lz-page .lz-menu-toggle,
+.lz-page .lz-menu__cta,
+.lz-page .lz-menu__anchor {
+  display: none;
+}
+
+@media (max-width: 992px) {
+  .lz-page .lz-menu-toggle--open {
+    display: inline-flex;
+  }
+  .lz-page .lz-menu-toggle {
+    align-items: center;
+    justify-content: center;
+    justify-self: end;
+    width: 44px;
+    height: 44px;
+    border: var(--lz-border-width) solid var(--lz-color-line);
+    border-radius: var(--lz-radius-pill);
+    color: var(--lz-color-text);
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+  }
+  .lz-page .lz-menu-toggle:hover,
+  .lz-page .lz-menu-toggle:focus-visible {
+    background: var(--lz-color-surface-2);
+    outline: none;
+  }
+  .lz-page .lz-menu-toggle:focus-visible {
+    outline: 2px solid var(--lz-color-accent-text);
+    outline-offset: 2px;
+  }
+  /* A fixed target: jumping to it to close the menu never scrolls the page. */
+  .lz-page .lz-menu__anchor {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+  }
+  .lz-page .lz-menu {
+    display: none;
+  }
+  .lz-page .lz-menu:target {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: calc(20px * var(--lz-space));
+    z-index: 70;
+    border: 0;
+  }
+  .lz-page .lz-menu__list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(4px * var(--lz-space));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .lz-page .lz-menu__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 calc(16px * var(--lz-space));
+    color: var(--lz-color-text);
+    font-family: var(--lz-font-display);
+    font-size: 22px;
+    font-weight: var(--lz-display-weight);
+    letter-spacing: 0.01em;
+    text-transform: none;
+  }
+  .lz-page .lz-menu__link:hover {
+    color: var(--lz-color-accent-text);
+  }
+  .lz-page .lz-menu:target .lz-menu__cta {
+    display: inline-flex;
+    justify-content: space-between;
+    gap: calc(16px * var(--lz-space));
+    width: 100%;
+    min-height: 56px;
+    border-radius: var(--lz-radius-pill);
+    text-transform: none;
+    letter-spacing: 0.02em;
+  }
+  .lz-page .lz-menu__icon {
+    flex: none;
+  }
+  /* Open state: swap the toggles and lock the page scroll. */
+  .lz-page header:has(.lz-menu:target) .lz-menu-toggle--open {
+    display: none;
+  }
+  .lz-page header:has(.lz-menu:target) .lz-menu-toggle--close {
+    display: inline-flex;
+  }
+  /* A filter or transform on the header would become the panel's containing block, and jumping to
+     #menu / #menu-cerrado would scroll the page to it. */
+  .lz-page [data-lz-slot='navbar'] {
+    backdrop-filter: none;
+    translate: none;
+    background: var(--lz-color-bg);
+  }
+  /* On body, not html: html overflow would stop body's propagating to the viewport and unstick the header. */
+  body:has(.lz-menu:target) {
+    overflow: hidden;
+  }
+  body:has(.lz-menu:target) [data-lz-slot='floating-whatsapp'] {
+    display: none;
+  }
+
+  /* Básico: a floating card under the header. */
+  .lz-page .lz-menu:target {
+    top: calc(var(--lz-header-h) + 8px);
+    right: 12px;
+    width: min(420px, calc(100vw - 24px));
+    padding: calc(28px * var(--lz-space)) calc(20px * var(--lz-space))
+      calc(20px * var(--lz-space));
+    border: var(--lz-border-width) solid var(--lz-color-line);
+    border-radius: var(--lz-radius-card);
+    background: color-mix(in srgb, var(--lz-color-surface) 92%, transparent);
+    /* The huge spread dims the page behind the card (--lz-shadow can be "none", so it stays alone). */
+    box-shadow: 0 0 0 100vmax
+      color-mix(in srgb, var(--lz-color-ink) 35%, transparent);
+    backdrop-filter: blur(18px);
+  }
+  .lz-page .lz-menu__icon--arrow {
+    display: none;
+  }
+  .lz-page .lz-menu-toggle--close {
+    background: var(--lz-color-accent);
+    border-color: var(--lz-color-accent);
+    color: var(--lz-color-on-accent);
+  }
+
+  /* Pro: the whole screen, links centered, the CTA at the bottom. */
+  .lz-page--pro .lz-menu:target {
+    inset: 0;
+    width: auto;
+    z-index: -1;
+    justify-content: center;
+    gap: calc(32px * var(--lz-space));
+    padding: calc(var(--lz-header-h) + 24px) 24px
+      calc(32px + env(safe-area-inset-bottom));
+    border: 0;
+    border-radius: 0;
+    background: var(--lz-color-bg);
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+  .lz-page--pro .lz-menu__list {
+    gap: calc(12px * var(--lz-space));
+    margin: auto 0;
+  }
+  .lz-page--pro .lz-menu__link {
+    font-size: 30px;
+  }
+  .lz-page--pro .lz-menu:target .lz-menu__cta {
+    align-self: center;
+    width: min(100%, 320px);
+  }
+  .lz-page--pro .lz-menu__icon--arrow {
+    display: block;
+  }
+  .lz-page--pro .lz-menu__icon--whatsapp {
+    display: none;
+  }
+  .lz-page--pro .lz-menu-toggle--close {
+    border-color: var(--lz-color-line);
+    background: transparent;
+    color: var(--lz-color-text);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lz-page .lz-menu-toggle {
+    animation: none !important;
+    transition: none !important;
   }
 }

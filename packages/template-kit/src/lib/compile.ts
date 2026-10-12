@@ -341,7 +341,7 @@ export async function compileManifest(
       .join('');
   const sourceHtml =
     `<!DOCTYPE html><html lang="${pack.locale}"><head>${headHtml(headOf(true), theme)}</head>` +
-    `<body><div class="lz-page" data-lz-name="Página">${region('header')}` +
+    `<body><div class="lz-page lz-page--${manifest.tier}" data-lz-name="Página">${region('header')}` +
     `<main data-lz-name="Contenido">${region('main')}</main>${region('footer')}</div></body></html>`;
 
   const core = readFileSync(paths.core, 'utf8');

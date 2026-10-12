@@ -56,6 +56,9 @@
 }
 
 .lz-navbar-c__cta {
+  display: flex;
+  align-items: center;
+  gap: calc(8px * var(--lz-space));
   justify-self: end;
 }
 
@@ -114,9 +117,6 @@
   :root {
     --lz-header-h: calc(64px + var(--lz-border-width));
   }
-  .lz-navbar-c__nav {
-    display: none;
-  }
   .lz-scrolled .lz-navbar-c {
     translate: none;
   }
@@ -140,8 +140,6 @@
     display: none;
   }
   .lz-navbar-c__cta .lz-button {
-    width: auto;
-    padding: calc(14px * var(--lz-space)) calc(18px * var(--lz-space));
-    min-height: 44px;
+    display: none;
   }
 }

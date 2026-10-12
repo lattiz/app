@@ -92,11 +92,11 @@
 
 @media (max-width: 992px) {
   .lz-navbar__inner {
-    grid-template-columns: auto auto;
-    justify-content: space-between;
+    grid-template-columns: auto 1fr auto auto;
+    gap: 12px;
   }
-  .lz-nav {
-    display: none;
+  .lz-navbar__cta {
+    justify-self: end;
   }
 }
 
@@ -114,12 +114,8 @@
     display: none;
     font-family: var(--lz-font-mono);
   }
-  .lz-navbar__cta .lz-button {
-    width: auto;
-    padding: 14px 16px;
-    min-height: 44px;
-    white-space: nowrap;
-    letter-spacing: 0.08em;
+  .lz-navbar__cta {
+    display: none;
   }
   .lz-navbar__inner {
     gap: 12px;
