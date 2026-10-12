@@ -53,3 +53,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [lattiz-template-cli](lattiz-template-cli.md) — pnpm lattiz; preview vía composeSiteHtml; seed sin deploy + deploy que finaliza
 - [template-spec-compiler](template-spec-compiler.md) — specs → plantillas únicas por construcción; GENERATED/FROZEN; sin overrides.css ni {{lz:*}}
 - [check-axe-marquee-offscreen](check-axe-marquee-offscreen.md) — axe + runtime de Motion: falso 1.08:1 en ítems recortados del marquee
+- [kit-contact-site-tokens](kit-contact-site-tokens.md) — el .grapesjs lleva {{lz:*}} de contacto; el HTML del kit los resuelve con el demo
