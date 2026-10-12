@@ -1,58 +1,88 @@
-/* Motion tokens. :where() keeps them at zero specificity so a template's own :root values win. */
+/* Motion tokens. :where() keeps them at zero specificity so a template's own :root values win.
+ * Distances scale with the screen; phones get ~20 % longer animations and a firmer ease-out. */
 :where(:root) {
-  --lz-dur: 640ms;
-  --lz-media-dur: 900ms;
-  --lz-dist: 16px;
+  --lz-dur: 700ms;
+  --lz-media-dur: 1000ms;
+  --lz-dist: clamp(20px, 6vw, 56px);
+  --lz-dist-x: clamp(16px, 5vw, 64px);
   --lz-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --lz-stagger: 70ms;
   --lz-word-step: 40ms;
 }
 :where([data-lz-motion="editorial"]) {
-  --lz-dur: 880ms;
-  --lz-media-dur: 1200ms;
-  --lz-dist: 32px;
+  --lz-dur: 900ms;
+  --lz-media-dur: 1250ms;
+  --lz-dist: clamp(24px, 8vw, 72px);
+  --lz-dist-x: clamp(18px, 6vw, 80px);
   --lz-ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --lz-stagger: 95ms;
-  --lz-word-step: 55ms;
+  --lz-stagger: 80ms;
+  --lz-word-step: 50ms;
 }
+@media (max-width: 767px) {
+  :where(:root) { --lz-dur-k: 1.2; }
+  :where([data-lz-motion]) { --lz-ease: cubic-bezier(0.16, 1, 0.3, 1); }
+}
+/* Sideways travel never creates a horizontal scrollbar (clip, unlike hidden, keeps sticky working). */
+.lz-js [data-lz-motion] { overflow-x: clip; }
 
-/* Hidden states only exist under .lz-js, on targets of a trigger the runtime armed (below the fold). */
-.lz-js .lz-armed .lz-t:not(.lz-go),
-.lz-js .lz-t.lz-armed:not(.lz-go) { opacity: 0; }
-/* i = cascade slot, j = word / v1 stagger child. Individual translate/scale compose with a template's own transform. */
+/* Hidden states only exist under .lz-js, on targets of groups the runtime armed below the fold. */
+.lz-js .lz-t:not(.lz-go) { opacity: 0; }
+/* i = slot in the group, b = group order in a batch, j = word / v1 stagger child.
+ * Individual translate/scale/clip-path compose with a template's own transform. */
 .lz-js .lz-go {
-  animation: var(--lz-k, lz-rise) var(--lz-d, var(--lz-dur)) var(--lz-ease) backwards;
-  animation-delay: calc(var(--lz-i, 0) * var(--lz-stagger) + var(--lz-j, 0) * var(--lz-step, var(--lz-word-step)) + var(--lz-delay, 0ms));
+  animation: var(--lz-k, lz-fade-up) calc(var(--lz-d, var(--lz-dur)) * var(--lz-dur-k, 1)) var(--lz-ease) backwards;
+  animation-delay: calc((var(--lz-i, 0) + var(--lz-b, 0)) * var(--lz-stagger) + var(--lz-j, 0) * var(--lz-step, var(--lz-word-step)) + var(--lz-delay, 0ms));
 }
 .lz-js .lz-go:not(.lz-done) { will-change: opacity, translate; }
 .lz-t[data-lz-fx="fade"] { --lz-k: lz-fade; }
-.lz-t[data-lz-fx="zoom"] { --lz-k: lz-zoom; }
-.lz-t[data-lz-fx="left"] { --lz-k: lz-left; }
-.lz-t[data-lz-fx="right"] { --lz-k: lz-right; }
-.lz-t[data-lz-fx="shift"] { --lz-k: lz-shift; }
-.lz-t[data-lz-fx="mask"] { --lz-k: lz-mask; --lz-d: var(--lz-media-dur); }
+.lz-t[data-lz-fx="fade-down"] { --lz-k: lz-fade-down; }
+.lz-t[data-lz-fx="fade-left"] { --lz-k: lz-fade-left; }
+.lz-t[data-lz-fx="fade-right"] { --lz-k: lz-fade-right; }
+.lz-t[data-lz-fx="zoom-in"] { --lz-k: lz-zoom-in; }
+.lz-t[data-lz-fx="rise-scale"] { --lz-k: lz-rise-scale; }
+.lz-t[data-lz-fx="mask-up"] { --lz-k: lz-mask-up; }
+.lz-t[data-lz-fx="mask-wipe"] { --lz-k: lz-wipe-r; --lz-d: var(--lz-media-dur); }
+.lz-t[data-lz-fx="mask-wipe"][data-lz-dir="left"] { --lz-k: lz-wipe-l; }
+.lz-t[data-lz-fx="mask-wipe"][data-lz-dir="up"] { --lz-k: lz-wipe-u; }
+.lz-t[data-lz-fx="shift"], .lz-t[data-lz-fx="word-shift"] { --lz-k: lz-shift; }
+.lz-t[data-lz-fx="shift-left"] { --lz-k: lz-shift-left; --lz-d: var(--lz-media-dur); }
 .lz-t[data-lz-fx="settle"] { --lz-k: lz-settle; --lz-d: var(--lz-media-dur); }
 .lz-t[data-lz-fx="settle-lg"] { --lz-k: lz-settle-lg; --lz-d: var(--lz-media-dur); }
 .lz-t[data-lz-fx="word"] { --lz-k: lz-word; }
-.lz-t[data-lz-fx="word-shift"] { --lz-k: lz-shift; }
 .lz-word { display: inline-block; }
 
-@keyframes lz-rise { from { opacity: 0; translate: 0 var(--lz-dist); } }
-@keyframes lz-word { from { opacity: 0; translate: 0 calc(var(--lz-dist) * 0.6); } }
-@keyframes lz-shift { from { translate: 0 var(--lz-dist); } }
+@keyframes lz-fade-up { from { opacity: 0; translate: 0 var(--lz-dist); } }
+@keyframes lz-fade-down { from { opacity: 0; translate: 0 calc(var(--lz-dist) * -1); } }
+@keyframes lz-fade-left { from { opacity: 0; translate: var(--lz-dist-x) 0; } }
+@keyframes lz-fade-right { from { opacity: 0; translate: calc(var(--lz-dist-x) * -1) 0; } }
 @keyframes lz-fade { from { opacity: 0; } }
-@keyframes lz-zoom { from { opacity: 0; scale: 0.94; } }
-@keyframes lz-left { from { opacity: 0; translate: calc(var(--lz-dist) * 1.5) 0; } }
-@keyframes lz-right { from { opacity: 0; translate: calc(var(--lz-dist) * -1.5) 0; } }
-@keyframes lz-mask { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0); } }
+@keyframes lz-zoom-in { from { opacity: 0; scale: 0.94; } }
+@keyframes lz-rise-scale { from { opacity: 0; translate: 0 calc(var(--lz-dist) * 0.6); scale: 0.96; } }
+/* Masks reveal through clip-path (negative insets leave room for descenders), no opacity. */
+@keyframes lz-mask-up {
+  from { clip-path: inset(100% -5% -20% -5%); translate: 0 0.4em; }
+  to { clip-path: inset(-20% -5% -20% -5%); translate: 0 0; }
+}
+@keyframes lz-word {
+  from { clip-path: inset(100% -10% -25% -10%); translate: 0 0.6em; }
+  to { clip-path: inset(-25% -10% -25% -10%); translate: 0 0; }
+}
+@keyframes lz-wipe-r { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
+@keyframes lz-wipe-l { from { clip-path: inset(0 0 0 100%); } to { clip-path: inset(0); } }
+@keyframes lz-wipe-u { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0); } }
+/* LCP-safe: transform only, never transparent or clipped. */
+@keyframes lz-shift { from { translate: 0 var(--lz-dist); } }
+@keyframes lz-shift-left { from { translate: var(--lz-dist-x) 0; } }
 @keyframes lz-settle { from { scale: 1.025; } }
 @keyframes lz-settle-lg { from { scale: 1.08; } }
+
+.lz-end { position: relative; height: 20vh; margin-top: -20vh; visibility: hidden; pointer-events: none; }
 
 /* Scroll-linked effects: compositor-driven scroll timelines where supported; the runtime has a gated JS fallback. */
 @supports (animation-timeline: view()) {
   .lz-js .lz-px { animation: lz-px linear both; animation-timeline: view(); }
   .lz-js .lz-px.lz-go {
-    animation: lz-settle-px var(--lz-media-dur) var(--lz-ease) backwards, lz-px linear both;
+    animation: lz-settle-px calc(var(--lz-media-dur) * var(--lz-dur-k, 1)) var(--lz-ease) backwards, lz-px linear both;
     animation-timeline: auto, view();
   }
   .lz-js .lz-pv { animation: lz-pv linear both; animation-timeline: view(); }
