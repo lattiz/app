@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import type { Component, Editor, ParsedCssRule, ProjectData } from 'grapesjs';
 import { JSDOM } from 'jsdom';
 import postcss, { type ChildNode, type Container } from 'postcss';
@@ -168,6 +169,15 @@ function nameComponents(
 
 type Json = Record<string, unknown>;
 
+/** 16 alphanumerics like GrapesJS's own ids, but stable per template so builds are reproducible. */
+function stableId(seed: string): string {
+  return createHash('sha256')
+    .update(seed)
+    .digest('base64')
+    .replace(/[^A-Za-z0-9]/g, '')
+    .slice(0, 16);
+}
+
 function isJson(value: unknown): value is Json {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
@@ -180,16 +190,19 @@ function normalizeProject(
 ): ProjectData {
   const out: Json = JSON.parse(JSON.stringify(project));
   const pages = Array.isArray(out.pages) ? out.pages : [];
-  for (const page of pages) {
-    if (!isJson(page)) continue;
+  pages.forEach((page, p) => {
+    if (!isJson(page)) return;
     page.name = pageName;
+    if (typeof page.id === 'string') page.id = stableId(`${templateId}:page:${p}`);
     delete page.type;
     const frames = Array.isArray(page.frames) ? page.frames : [];
-    for (const frame of frames) {
-      if (isJson(frame) && isJson(frame.component))
-        delete frame.component.stylable;
-    }
-  }
+    frames.forEach((frame, f) => {
+      if (!isJson(frame)) return;
+      if (typeof frame.id === 'string')
+        frame.id = stableId(`${templateId}:frame:${p}:${f}`);
+      if (isJson(frame.component)) delete frame.component.stylable;
+    });
+  });
   return {
     dataSources: [],
     assets: [],
