@@ -41,7 +41,7 @@ solo para esa plantilla. Etapas (todas idempotentes; si algo falla, re-ejecuta e
    actualiza y **conserva** `is_active`. Si cambias el tier y hay clientes usándola, avisa.
 7. **deploy previews** — `vercel deploy --prod` de `apps/template-previews` (sube la carpeta completa
    de previews; las demás plantillas no cambian porque sus archivos no cambiaron). Se salta con
-   `--no-deploy`; después: `pnpm --filter @lattiz/template-previews deploy`.
+   `--no-deploy`; después: `pnpm --filter @lattiz/template-previews run deploy`.
 8. **thumbnail** — captura del preview publicado → R2 → `thumbnail_url`.
 9. **activate** — `is_active = true` solo si 7 y 8 salieron bien.
 
@@ -107,7 +107,7 @@ que cambiar de plantilla (pierde su contenido, que queda archivado) o hacerlo é
 4. **Capturas y encaje** — `pnpm template:shots <id>`: sin `overflow`, héroes en PASS, CTA visible.
 5. **Sembrar una** — `pnpm template:seed -- --only <id>` (escribe directo en el Supabase remoto).
 6. **Publicar previews** — lo hace el paso anterior; si usaste `--no-deploy`:
-   `pnpm --filter @lattiz/template-previews deploy` y vuelve a correr el seed para la miniatura.
+   `pnpm --filter @lattiz/template-previews run deploy` y vuelve a correr el seed para la miniatura.
 7. **Verificar** — la fila en Supabase y `https://templates.lattiz.app/<id>`; commitea el
    `apps/template-previews/public/<id>/index.html` regenerado.
 8. **Runtime** — si cambiaste Lattiz Motion: `pnpm --filter @lattiz/tenant-sites build:motion`,

@@ -28,7 +28,7 @@ Cloudflare plus the `TEMPLATE_PREVIEWS_BASE_URL` value.
 The seed script deploys after each template (skip with `--no-deploy`). Manually:
 
 ```bash
-pnpm --filter @lattiz/template-previews deploy
+pnpm --filter @lattiz/template-previews run deploy
 ```
 
 See `docs/adding-templates.md` for the full designer → live workflow.

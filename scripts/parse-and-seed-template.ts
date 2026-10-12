@@ -956,7 +956,7 @@ async function run(argv: string[]): Promise<void> {
     record(
       '7 deploy previews',
       '–',
-      'skipped (--no-deploy); run `pnpm --filter @lattiz/template-previews deploy` later',
+      'skipped (--no-deploy); run `pnpm --filter @lattiz/template-previews run deploy` later',
     );
   } else {
     const deploy = vercel(['deploy', '--prod', '--yes']);
