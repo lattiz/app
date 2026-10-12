@@ -288,6 +288,47 @@ header que no resta altura) con `svh` en vez de `dvh` para evitar saltos de la b
 | CLS | 0.120 | 0.207 |
 | TBT | 0 ms | 0 ms |
 | Runtime | 22 557 B min · 8 068 B gzip | igual |
-| Observados | máx. 10 a la vez, ~50 `observe()` por recorrido | máx. 11, ~60 |
+| Observados | máx. 10 a la vez, 53 `observe()` por recorrido (390 px) | máx. 10, 52 |
 
 CLS de carga en ambos: «Web font loaded» (Playfair / Anton reacomodan el titular). No es motion.
+
+## Motion v3 — antes / después (WP6)
+
+Antes = previews con Motion v2 (línea base WP0); después = los previews v3 commiteados (assets R2,
+runtime v3 final, viewport-fit, fallbacks de fuentes). Lighthouse móvil, mediana de 3.
+
+| Métrica | Norte antes | Norte después | ÓXIDO antes | ÓXIDO después |
+|---|---|---|---|---|
+| Lighthouse móvil (score) | 88 | **92** | 79 | **90** |
+| LCP | 3 231 ms | 3 239 ms | 3 021 ms | 3 015 ms |
+| CLS | 0.120 | **0.002** | 0.207 | **0.004** |
+| TBT | 0 ms | 0 ms | 0 ms | 0 ms |
+| Runtime gzip | 8 068 B | 9 670 B (presupuesto 12 KB) | igual | igual |
+| `IntersectionObserver` | 1 | 1 | 1 | 1 |
+| Observados a la vez (máx., 390 px) | 10 | 52 (un ancla por grupo) | 10 | 62 |
+| Long tasks en scroll con CPU 4× (390 px) | 2 (60–79 ms) | 2 (63–68 ms) | 1 (54 ms) | 2 (50–70 ms) |
+| Elementos que se quedan invisibles (360×640) | **8** | 0 | **40** | 0 |
+| Terminaron antes de verse (6 viewports) | 0–1 | **0** | 0 | **0** |
+| Espera tras entrar a 390×844 (mediana / p90) | 100 / 103 ms | 52 / 86 ms | 100 / 101 ms | 57 / 132 ms |
+| Espera p90 en escritorio | 307–369 ms | 188–225 ms | 370–498 ms | 207–227 ms |
+| Recorrido a 390 px / 1440 px | 32 / 32 px | 31 / 72 px | 32 / 32 px | 31 / 80 px |
+| Duración a 390 px / 1440 px | 880 / 880 ms | 1 080 / 900 ms | igual | igual |
+| Reporte de encaje (héroes, sin horizontal) | 4/6 PASS, CTA bajo el pliegue en 1366 y 1280 | **6/6**, CTA visible en todos | 3/6 PASS, CTA bajo el pliegue en los 4 escritorios y 360×640 | **6/6**, CTA visible en todos |
+| Scroll horizontal (todos los anchos) | 0 | 0 | 0 | 0 |
+
+Lectura:
+
+- **Percepción en móvil:** ningún elemento termina antes de verse en ningún viewport y ninguno se
+  queda oculto; al dispararse, cada elemento ya muestra ~42 px (390×844) y la animación dura 1 080 ms
+  con un ease-out más firme, así que se ve en curso. Los máximos de ~500 ms en Norte son la tira de
+  galería horizontal (6 pasos × 80 ms, cada imagen a la derecha espera su turno).
+- **Observados:** v3 observa el primer elemento de cada grupo (52–62 a la vez) en lugar de secciones +
+  anclas; sigue siendo un solo observer y el costo no se nota en long tasks (iguales a v2, son
+  decodificación de imágenes).
+- **CLS:** el compactado del hero subió el CLS de Norte a 0.20 (la imagen del hero quedó completa en la
+  primera pantalla, así que el reacomodo por fuentes la desplazaba más). Lo corrigen los fallbacks con
+  métricas (`docs/decisions/font-metric-fallbacks.md`): 0.002 y 0.004.
+- **Recorrido en escritorio (72–80 px editorial)** es mayor que en v2; si se siente excesivo, bajar
+  `--lz-dist` del preset `editorial` en `style.css` (un solo token).
+- Plantillas fuera del piloto: `concreto` (hero `offset-card`) y `claro` (hero `centered-arch`) aún no
+  usan el sistema de encaje; las que comparten navbar/hero con los pilotos (`oscuro`, `solar`) ya sí.
