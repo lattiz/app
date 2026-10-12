@@ -17,6 +17,7 @@
     "kit:compare-visual": "tsx src/cli/compare-visual.ts",
     "kit:spec": "tsx src/cli/spec.ts",
     "kit:capacity": "tsx src/cli/capacity.ts",
+    "kit:gallery": "tsx src/cli/gallery.ts",
     "kit:snapshot": "tsx src/cli/snapshot.ts write",
     "kit:verify-snapshot": "tsx src/cli/snapshot.ts verify"
   },

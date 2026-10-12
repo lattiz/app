@@ -15,8 +15,8 @@ prueba de diversidad, docs y skill). Una sesión nueva retoma desde aquí. Estad
 | WP-1  | Línea base y snapshot dorado                     | hecho     | a151e30 | ver abajo                                      |
 | WP0   | Inventario y modelo de capacidad                 | hecho     | 405ac7d | Motion lo pone el seed, no el markup           |
 | WP0.5 | Skills de diseño: instalar, leer, destilar       | hecho     | 95de8d4 | hover con `(hover: hover) and (pointer: fine)` |
-| WP1   | Versionado del catálogo (legacy/extended) y lock | hecho     | (este)  | nombrar un id nuevo vale en legacy             |
-| WP2   | Galería del kit y especímenes                    | pendiente |         |                                                |
+| WP1   | Versionado del catálogo (legacy/extended) y lock | hecho     | a29eedd | nombrar un id nuevo vale en legacy             |
+| WP2   | Galería del kit y especímenes                    | hecho     | (este)  | sin GrapesJS: CSS real + fragmento renderizado |
 | WP3   | Tokens de estilo                                 | pendiente |         |                                                |
 | WP4   | Biblioteca de paletas                            | pendiente |         |                                                |
 | WP5   | Biblioteca de pares tipográficos                 | pendiente |         |                                                |
@@ -267,3 +267,30 @@ los JPEG de placeholder del spec (mismo resultado con `main` sin cambios): la im
 rasterizado y los bytes dependen de las fuentes del sistema. Las fuentes generadas no cambian; se
 restauraron las imágenes commiteadas. El snapshot dorado usa las imágenes del repo, así que no le
 afecta.
+
+## Galería del kit (WP2)
+
+`pnpm lattiz kit gallery [--slot hero,footer] [--palettes] [--fonts] [--themes a,b] [--sin-imagen]`
+(o `pnpm --filter @lattiz/template-kit kit:gallery`). Escribe `.lattiz/gallery/` (no se commitea):
+
+- `sections/<slot>.html`: cada variante del slot renderizada con su `section.html` + `core.css` + su
+  `section.css` + el `:root` del tema (sin pasar por GrapesJS: los selectores son de clase, se ve
+  igual), en un tema claro y uno oscuro (`norte-atelier`, `oxido`), con copy **demo** (el del giro),
+  **corto** (3 elementos, dos palabras por texto, negocio «Jo») y **largo** (8 elementos, cada texto
+  al límite de `COPY_LIMITS`, nombre «Peluquería y Barbería Hermanos Domínguez-Echeverría» y correo
+  largo), a 390 y 1440 px (página completa). `--sin-imagen` agrega un modo con fotos faltantes.
+- `palettes.html` + `.png`: cada paleta (las de cada giro y las de la biblioteca) como mini página con
+  los contrastes de `kit:validate` y PASS/FAIL.
+- `fonts.html` + `.png`: cada par con display, encabezado, cuerpo y acento a su escala real y la
+  prueba de glifos `ñ á é í ó ú ü ¿ ¡ “ ” « » — …`.
+- Un solo navegador, en serie, siempre cerrado (`finally`). Toda la galería: 374 capturas en ~4.6 min.
+  En este contenedor hace falta `LATTIZ_CHROMIUM_PATH=/opt/pw-browsers/chromium` (Playwright espera
+  otra versión de Chromium).
+
+Después de cualquier cambio visual, se abren las capturas y se critican con el pre-vuelo y las reglas
+anti-genérico de `docs/template-kit-design-principles.md` (máximo tres rondas por variante).
+
+**Primera lectura (variantes existentes, solo para el backlog de WP9, no se tocan):** con copy largo,
+el titular de 56 caracteres de `hero/split` ocupa 5 líneas a 1440 px y empuja los CTA bajo el pliegue
+de 900 px; con copy corto los CTA de dos palabras se cortan a «Reservar una» (es el modo de estrés,
+no un caso real).
