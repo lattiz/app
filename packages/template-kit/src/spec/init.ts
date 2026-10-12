@@ -70,9 +70,18 @@ export function initSpec(opts: {
     (opts.tier === 'basico'
       ? `${giro.id}-base-${name}-v1`
       : `${giro.id}-${name}-v1`);
-  const imageKeys = Object.keys(giro.images).filter((k) =>
-    tiers.includes('pro') ? true : k === 'hero',
+  // Only images a default section of these tiers shows.
+  const used = new Set(
+    tiers.flatMap((t) => giro.sections[t]).map((s) => `${s.role}/${s.variant}`),
   );
+  const shows = (k: string) =>
+    k === 'hero' ||
+    (k === 'about' &&
+      (used.has('about/text-image-offset') || used.has('about/statement'))) ||
+    (k.startsWith('product-') && used.has('catalog/product-grid')) ||
+    (k.startsWith('team-') && [...used].some((u) => u.startsWith('team/'))) ||
+    (k.startsWith('gallery-') && [...used].some((u) => u.startsWith('proof/')));
+  const imageKeys = Object.keys(giro.images).filter(shows);
   return {
     $schema: './spec.schema.json',
     specVersion: SPEC_VERSION,

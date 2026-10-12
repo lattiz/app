@@ -218,6 +218,11 @@ export async function runReview(id: string): Promise<ReviewBundle> {
       if (s.file === 'escritorio-1440-completa.png') {
         await page.evaluate('window.__name = (fn) => fn');
         const texts = await page.evaluate(sectionCopy);
+        // A sticky header would cover the top of every section shot.
+        await page.addStyleTag({
+          content:
+            '[data-lz-slot="navbar"]{position:static!important}[data-lz-slot="floating-whatsapp"]{display:none!important}',
+        });
         const handles = await page.$$('[data-lz-slot]');
         copy = [];
         for (const [i, t] of texts.entries()) {
