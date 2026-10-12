@@ -116,8 +116,8 @@ describe('blueprints and role → slot resolution', () => {
 
   it('fails on a vertical without a role map', async () => {
     const blueprint = await loadBlueprint('service-landing', 'basic');
-    expect(() => slotRoles(blueprint, 'despacho')).toThrow(
-      /no role map for vertical "despacho"/,
+    expect(() => slotRoles(blueprint, 'notaria')).toThrow(
+      /no role map for vertical "notaria"/,
     );
   });
 

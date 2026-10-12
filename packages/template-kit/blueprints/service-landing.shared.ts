@@ -89,6 +89,12 @@ export const verticals: Record<string, BlueprintVertical> = {
   restaurante: { schemaType: 'Restaurant', slots: serviceSlots },
   clinica: { schemaType: 'MedicalClinic', slots: serviceSlots },
   floreria: { schemaType: 'Florist', slots: serviceSlots },
+  estetica: { schemaType: 'BeautySalon', slots: serviceSlots },
+  dental: { schemaType: 'Dentist', slots: serviceSlots },
+  despacho: { schemaType: 'AccountingService', slots: serviceSlots },
+  tienda: { schemaType: 'Store', slots: serviceSlots },
+  gimnasio: { schemaType: 'ExerciseGym', slots: serviceSlots },
+  veterinaria: { schemaType: 'VeterinaryCare', slots: serviceSlots },
 };
 
 export const guidance = [

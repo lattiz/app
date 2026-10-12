@@ -39,7 +39,30 @@ type Motif =
   | 'flower'
   | 'leaf'
   | 'tulip'
-  | 'pot';
+  | 'pot'
+  | 'mirror'
+  | 'brush'
+  | 'polish'
+  | 'drop'
+  | 'tooth'
+  | 'toothbrush'
+  | 'sparkle'
+  | 'smile'
+  | 'scale'
+  | 'document'
+  | 'briefcase'
+  | 'calculator'
+  | 'bag'
+  | 'tag'
+  | 'box'
+  | 'hanger'
+  | 'dumbbell'
+  | 'kettlebell'
+  | 'stopwatch'
+  | 'pulse'
+  | 'paw'
+  | 'bone'
+  | 'collar';
 
 const MOTIFS: Record<Motif, string> = {
   scissors:
@@ -68,6 +91,43 @@ const MOTIFS: Record<Motif, string> = {
   tulip:
     '<path d="M32 18l9 12 9-14 9 14 9-12v22c0 12-8 20-18 20s-18-8-18-20z"/><path d="M50 60v34M50 80c-10-10-22-10-26-8M50 74c8-8 18-8 22-6"/>',
   pot: '<path d="M24 54h52l-8 38H32z"/><path d="M20 46h60v8H20z"/><path d="M50 46c0-16 8-28 22-34M50 46c-2-14-10-24-22-26"/>',
+  mirror:
+    '<ellipse cx="50" cy="40" rx="26" ry="32"/><path d="M50 72v20M34 92h32"/>',
+  brush:
+    '<path d="M40 40c0-18 4-30 10-32 6 2 10 14 10 32z"/><path d="M40 40h20v10H40z"/><path d="M44 50h12l-2 42h-8z"/>',
+  polish:
+    '<rect x="32" y="44" width="36" height="46" rx="6"/><path d="M42 44V30h16v14"/><path d="M44 30V10h12v20"/>',
+  drop: '<path d="M50 10C38 30 26 44 26 60a24 24 0 0 0 48 0c0-16-12-30-24-50z"/>',
+  tooth:
+    '<path d="M30 14c-10 2-16 12-14 26 2 12 8 18 10 30 2 14 6 22 12 22 6 0 6-18 12-18s6 18 12 18c6 0 10-8 12-22 2-12 8-18 10-30 2-14-4-24-14-26-8-2-12 4-20 4s-12-6-20-4z"/>',
+  toothbrush:
+    '<path d="M14 86 64 36"/><path d="M58 30l12 12 18-18-12-12z"/><path d="M64 24l-6-6M70 18l-6-6M76 12l-6-6"/>',
+  sparkle: '<path d="M50 10l8 32 32 8-32 8-8 32-8-32-32-8 32-8z"/>',
+  smile:
+    '<circle cx="50" cy="50" r="40"/><path d="M30 58c6 12 34 12 40 0"/><path d="M36 38v6M64 38v6"/>',
+  scale:
+    '<path d="M50 12v76M30 88h40M18 28h64"/><path d="M18 28 8 54h20zM82 28l-10 26h20z"/>',
+  document:
+    '<path d="M24 8h36l18 18v66H24z"/><path d="M60 8v18h18M34 44h32M34 56h32M34 68h20"/>',
+  briefcase:
+    '<rect x="12" y="32" width="76" height="52" rx="6"/><path d="M36 32V22h28v10M12 52h76"/>',
+  calculator:
+    '<rect x="22" y="8" width="56" height="84" rx="6"/><rect x="32" y="18" width="36" height="16"/><path d="M34 48h6M48 48h6M62 48h6M34 62h6M48 62h6M62 62h6M34 76h6M48 76h6M62 76h6"/>',
+  bag: '<path d="M18 34h64l-6 56H24z"/><path d="M36 34v-6a14 14 0 0 1 28 0v6"/>',
+  tag: '<path d="M12 50 50 12h38v38L50 88z"/><circle cx="70" cy="30" r="6"/>',
+  box: '<path d="M14 30 50 14l36 16v40L50 86 14 70z"/><path d="M14 30l36 16 36-16M50 46v40"/>',
+  hanger: '<path d="M50 30v-6a8 8 0 1 1 8-8"/><path d="M50 30 10 70h80z"/>',
+  dumbbell:
+    '<path d="M30 50h40"/><rect x="14" y="32" width="16" height="36" rx="3"/><rect x="70" y="32" width="16" height="36" rx="3"/><path d="M6 42v16M94 42v16"/>',
+  kettlebell:
+    '<path d="M34 40a16 16 0 1 1 32 0"/><path d="M28 40h44l6 14c4 14-6 34-28 34S18 68 22 54z"/>',
+  stopwatch:
+    '<circle cx="50" cy="56" r="32"/><path d="M50 56V36M42 12h16M50 12v12"/>',
+  pulse: '<path d="M8 54h20l8-20 12 40 10-28 6 8h28"/>',
+  paw: '<ellipse cx="50" cy="66" rx="20" ry="16"/><circle cx="26" cy="42" r="8"/><circle cx="42" cy="28" r="8"/><circle cx="58" cy="28" r="8"/><circle cx="74" cy="42" r="8"/>',
+  bone: '<path d="M34 30a10 10 0 1 0-12 12l36 36a10 10 0 1 0 12-12z"/><path d="M66 30a10 10 0 1 1 12 12"/><path d="M34 70a10 10 0 1 1-12-12"/>',
+  collar:
+    '<circle cx="50" cy="44" r="30"/><circle cx="50" cy="44" r="22"/><circle cx="50" cy="84" r="8"/><path d="M50 74v2"/>',
 };
 
 /** hero, about and the gallery cycle per vertical; barbería keeps the original set. */
@@ -94,6 +154,36 @@ const VERTICAL_MOTIFS: Record<
     hero: 'flower',
     about: 'tulip',
     cycle: ['leaf', 'flower', 'pot', 'tulip'],
+  },
+  estetica: {
+    hero: 'mirror',
+    about: 'brush',
+    cycle: ['drop', 'brush', 'polish', 'mirror'],
+  },
+  dental: {
+    hero: 'tooth',
+    about: 'toothbrush',
+    cycle: ['sparkle', 'tooth', 'smile', 'toothbrush'],
+  },
+  despacho: {
+    hero: 'scale',
+    about: 'document',
+    cycle: ['briefcase', 'calculator', 'document', 'scale'],
+  },
+  tienda: {
+    hero: 'bag',
+    about: 'tag',
+    cycle: ['box', 'bag', 'hanger', 'tag'],
+  },
+  gimnasio: {
+    hero: 'dumbbell',
+    about: 'kettlebell',
+    cycle: ['pulse', 'dumbbell', 'stopwatch', 'kettlebell'],
+  },
+  veterinaria: {
+    hero: 'paw',
+    about: 'bone',
+    cycle: ['heart', 'paw', 'collar', 'bone'],
   },
 };
 

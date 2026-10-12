@@ -394,7 +394,7 @@
         "properties": {
           "key": {
             "type": "string",
-            "pattern": "^(hero|about|team-[1-4]|gallery-0[1-8])$"
+            "pattern": "^(hero|about|team-[1-4]|gallery-0[1-8]|product-0[1-8])$"
           },
           "source": {
             "anyOf": [
