@@ -1,0 +1,49 @@
+{
+  "$lattiz": "GENERATED from specs/clinica-alba.spec.json (spec 47c45aaae383, file e7c5ccd48b0e). Do not edit: use the spec, or freeze.",
+  "name": "clinica-base-alba-v1",
+  "label": "Clínica Alba · Básico",
+  "tier": "basic",
+  "fontPair": "fraunces+nunito-sans",
+  "colors": {
+    "bg": "#FAF6F1",
+    "surface": "#FFFFFF",
+    "surface-2": "#F0E6DA",
+    "text": "#2A1D16",
+    "muted": "#62544A",
+    "accent": "#B44C33",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#C0583E",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#2A1D16",
+    "on-overlay": "#FAF6F1",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#2A1D16"
+  },
+  "fonts": {
+    "display": "'Fraunces', serif",
+    "serif": "'Fraunces', serif",
+    "body": "'Nunito Sans', sans-serif",
+    "googleFonts": "family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500&family=Nunito+Sans:wght@400;600;700",
+    "displayTransform": "none",
+    "displayLeading": "1.02",
+    "displayWeight": "600",
+    "accentStyle": "italic",
+    "accentTransform": "none"
+  },
+  "shape": {
+    "radiusCard": "0px",
+    "radiusPill": "0px",
+    "border": "1px",
+    "shadow": "none"
+  },
+  "density": "airy",
+  "photoTreatment": "warm",
+  "placeholder": "arches",
+  "accentWords": "color",
+  "container": "1200px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(.62) saturate(.95)"
+  }
+}

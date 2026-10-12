@@ -1,0 +1,50 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-casa-comal.spec.json (spec 12fc8dabf1eb, file a9fb5e0c6887). Do not edit: use the spec, or freeze.",
+  "name": "restaurante-casa-comal-v1",
+  "label": "Casa Comal · Pro",
+  "tier": "pro",
+  "fontPair": "young-serif+figtree",
+  "colors": {
+    "bg": "#F6EFE6",
+    "surface": "#FBF7F1",
+    "surface-2": "#EADFD0",
+    "text": "#231A14",
+    "muted": "#5E5248",
+    "accent": "#B23A22",
+    "on-accent": "#FFF8F0",
+    "accent-text": "#C2492F",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#231A14",
+    "on-overlay": "#F6EFE6",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#231A14"
+  },
+  "fonts": {
+    "display": "'Young Serif', serif",
+    "serif": "'Young Serif', serif",
+    "body": "'Figtree', sans-serif",
+    "googleFonts": "family=Young+Serif&family=Figtree:wght@400;500;600",
+    "displayTransform": "none",
+    "displayLeading": "1.04",
+    "displayWeight": "400",
+    "displayScale": "0.9",
+    "accentStyle": "normal",
+    "accentTransform": "none"
+  },
+  "shape": {
+    "radiusCard": "14px",
+    "radiusPill": "999px",
+    "border": "1px",
+    "shadow": "soft"
+  },
+  "density": "regular",
+  "photoTreatment": "warm",
+  "placeholder": "blobs",
+  "accentWords": "color",
+  "container": "1200px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(.62) saturate(.95)"
+  }
+}

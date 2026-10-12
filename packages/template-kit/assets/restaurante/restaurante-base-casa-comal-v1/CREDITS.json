@@ -1,0 +1,10 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-casa-comal.spec.json (spec 12fc8dabf1eb, file 11ae315b145d). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "c0c02a26e6e32a154bac76dc052a7c5dc02028bf9a10f4bcdb0377ac9e07f264"
+    }
+  ]
+}

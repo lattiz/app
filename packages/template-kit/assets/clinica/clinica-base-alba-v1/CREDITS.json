@@ -1,0 +1,10 @@
+{
+  "$lattiz": "GENERATED from specs/clinica-alba.spec.json (spec 47c45aaae383, file 3a7779cd4ab8). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "a2d82dc413cb324411e8f386a0660af6494381718236f4cfef79f81301ef9f37"
+    }
+  ]
+}

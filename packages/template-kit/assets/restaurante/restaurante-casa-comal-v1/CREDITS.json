@@ -1,0 +1,75 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-casa-comal.spec.json (spec 12fc8dabf1eb, file 7d302b794c3c). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "e55088fc2c903878d7fa35b8b97f62631df0bc73afdb6d511b1a00a4afef74a9"
+    },
+    {
+      "file": "about.jpg",
+      "source": "placeholder",
+      "sha256": "62cb9407a0961d8191242f258c0944ee126605e3e3e2974e4483ece6e0ed22f6"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "placeholder",
+      "sha256": "dc8564ad7679217d1dd5286bd372ee66e385f97d4a7da4d3bff1f50978d2a798"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "placeholder",
+      "sha256": "d6e273b7d686495d4fe7f3e89c5021fdff9cb108714e0f790de989b939bc8f27"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "placeholder",
+      "sha256": "f4fdb4b54a063e7d81f8210f62fc59b96590154c02c031a5ffd4142c9a61c27a"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "placeholder",
+      "sha256": "85af0496539913f210593a40640c8686d29779ccfa6bcf3c1701ec4eb58b9288"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "placeholder",
+      "sha256": "c490ec8539f9c35049385f6da0538dcf3a0e656cd776b1166ef320c16e147ef6"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "placeholder",
+      "sha256": "ea1efa67a07f7fcd9f165bcafbf8ffcbc20914882fcc15c7819c23f6ce11993a"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "placeholder",
+      "sha256": "f22a08c2293d8b0e474745dfd90422458b115ee3a4930cd26b590802fd7d4913"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "placeholder",
+      "sha256": "b86432ed41e24a17e65c0d6cdd499b313170acfd9a9ac339f37eb174f8657a67"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "placeholder",
+      "sha256": "3a374e94522e3d603e71c85632d26fd41314301da3014b3b0b57c5aa338d6546"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "placeholder",
+      "sha256": "713d012dd4dde276e79f25aded85853d806edc315240fa187d5904dae6be0854"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "placeholder",
+      "sha256": "50257b99ee6cb260ca69002cffe9ed6a2c6b3c9d8eca7d2bbafcfee6a2c68996"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "placeholder",
+      "sha256": "6b96da9aa4137336c4b80411d5e7584f6bd5e0cc2b4c5700a597789e7c88ad77"
+    }
+  ]
+}

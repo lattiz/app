@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/clinica-alba.spec.json (spec 47c45aaae383, file 1e25cb7eff26). Do not edit: use the spec, or freeze.",
+  "name": "Clínica Alba",
+  "category": "medical",
+  "phone": "+525500000000",
+  "whatsapp": "+5215500000000",
+  "email": "citas@clinicaalba.mx",
+  "address": {
+    "street": "Av. Universidad 1020, Narvarte Poniente, Benito Juárez, CDMX",
+    "city": "CDMX",
+    "country": "MX"
+  },
+  "hours": {
+    "mon": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "tue": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "09:00",
+        "close": "14:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}
