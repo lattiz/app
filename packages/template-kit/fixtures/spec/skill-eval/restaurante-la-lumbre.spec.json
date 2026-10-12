@@ -1,0 +1,514 @@
+{
+  "$schema": "../../../specs/spec.schema.json",
+  "specVersion": 1,
+  "idBase": "restaurante-la-lumbre",
+  "twin": true,
+  "giro": "restaurante",
+  "business": {
+    "name": "Taquería La Lumbre",
+    "shortName": "La Lumbre",
+    "tagline": "Tacos al carbón",
+    "city": "Querétaro",
+    "branch": "Cimatario",
+    "address": "Av. Constituyentes 315, Col. Cimatario, Querétaro",
+    "hours": "Mar–Dom 19:00–24:00",
+    "phone": "+52 442 000 0000",
+    "whatsapp": "5214420000000",
+    "whatsappMessage": "Hola, quiero hacer un pedido",
+    "email": "pedidos@lalumbre.mx"
+  },
+  "brand": {
+    "palette": {
+      "preset": "nocturno"
+    },
+    "fontPair": "dm-serif-display+dm-sans",
+    "shape": "brutal"
+  },
+  "sections": {
+    "pro": [
+      {
+        "role": "header"
+      },
+      {
+        "role": "hero"
+      },
+      {
+        "role": "marquee"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog"
+      },
+      {
+        "role": "proof"
+      },
+      {
+        "role": "team"
+      },
+      {
+        "role": "testimonials"
+      },
+      {
+        "role": "faq"
+      },
+      {
+        "role": "contact"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer"
+      }
+    ],
+    "basico": [
+      {
+        "role": "header"
+      },
+      {
+        "role": "hero"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog"
+      },
+      {
+        "role": "faq"
+      },
+      {
+        "role": "contact"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer"
+      }
+    ]
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "{{name}} en {{city}}: tacos al pastor al carbón, tortillas a mano y pedidos para llevar por WhatsApp."
+    },
+    "navbar": {
+      "cta": "Pedir"
+    },
+    "hero": {
+      "image": "hero.jpg",
+      "imageAlt": "Taquero rebanando carne al pastor del trompo junto al carbón",
+      "eyebrow": "Taquería · {{branch}}",
+      "title": "Tacos al pastor <span class=\"lz-title__serif\">al carbón</span>.",
+      "text": "Trompo, tortillas hechas a mano y salsas de molcajete, de martes a domingo desde las 7 de la noche. Pide por WhatsApp y pasa por tu orden.",
+      "primaryCta": "Pedir por WhatsApp",
+      "secondaryCta": "Ver el menú",
+      "secondaryHref": "#servicios",
+      "sticker": "Abrimos 7 pm"
+    },
+    "marquee": {
+      "label": "Lo que más sale",
+      "items": [
+        "Pastor al carbón",
+        "Tortillas a mano",
+        "Salsas de molcajete",
+        "Gringas y volcanes",
+        "Para llevar"
+      ]
+    },
+    "about": {
+      "kicker": "{{index}} — Nosotros",
+      "title": "Una taquería <span class=\"lz-title__serif\">de barrio</span>, con trompo propio.",
+      "summary": "En {{shortName}} marinamos el pastor desde la mañana, lo cocinamos al carbón y hacemos la tortilla al momento. Sin prisas, con la salsa que te guste.",
+      "statement": "El pastor se marina desde temprano y se corta al momento: así sabe a taquería de barrio.",
+      "image": "about.jpg",
+      "imageAlt": "Trompo de pastor girando frente a las brasas por la noche",
+      "sticker": "Desde 2016",
+      "paragraphs": [
+        "Empezamos con un trompo y seis bancos en la banqueta; hoy tenemos mesas adentro y la misma receta.",
+        "Las salsas se hacen en molcajete cada tarde: verde cruda, roja de árbol y una de habanero para valientes.",
+        "Pide por WhatsApp para llevar y te avisamos cuando tu orden esté lista."
+      ],
+      "stats": [
+        {
+          "value": "+300",
+          "label": "Tacos por noche"
+        },
+        {
+          "value": "4",
+          "label": "Salsas de la casa"
+        },
+        {
+          "value": "4.8 ★",
+          "label": "En Google"
+        }
+      ]
+    },
+    "services": {
+      "kicker": "{{index}} — Menú",
+      "title": "El <span class=\"lz-title__serif\">menú</span>",
+      "intro": "Precios en pesos mexicanos. Órdenes de cinco tacos; pregunta por los de la semana.",
+      "prices": [
+        {
+          "name": "Orden de pastor",
+          "price": "$95",
+          "description": "Cinco tacos con piña, cebolla y cilantro."
+        },
+        {
+          "name": "Orden de suadero",
+          "price": "$105",
+          "description": "Cinco tacos, en tortilla de maíz a mano."
+        },
+        {
+          "name": "Gringa de pastor",
+          "price": "$75",
+          "description": "Tortilla de harina con queso y pastor."
+        },
+        {
+          "name": "Volcán",
+          "price": "$45",
+          "description": "Tostada con queso gratinado y tu guiso favorito."
+        },
+        {
+          "name": "Kilo de pastor",
+          "price": "$420",
+          "description": "Con tortillas, salsas y verdura para la familia."
+        },
+        {
+          "name": "Agua del día",
+          "price": "$35",
+          "description": "Horchata, jamaica o la de temporada, de medio litro."
+        }
+      ],
+      "promos": [
+        {
+          "tag": "Martes",
+          "title": "Martes de pastor",
+          "text": "Segunda orden de pastor a mitad de precio en mesa, toda la noche.",
+          "cta": "Apartar mesa",
+          "href": "{{whatsappUrl:Hola, quiero apartar mesa para el martes}}"
+        },
+        {
+          "tag": "Para llevar",
+          "title": "Kilo para la reunión",
+          "text": "Pide el kilo con tiempo y te lo entregamos listo con salsas y tortillas.",
+          "cta": "Pedir kilo",
+          "href": "{{whatsappUrl:Hola, quiero pedir un kilo de pastor}}"
+        }
+      ]
+    },
+    "gallery": {
+      "kicker": "{{index}} — La noche",
+      "title": "Así se ve una <span class=\"lz-title__serif\">noche</span>",
+      "items": [
+        {
+          "image": "gallery-01.jpg",
+          "caption": "Trompo",
+          "alt": "Trompo de pastor dorándose junto al carbón"
+        },
+        {
+          "image": "gallery-02.jpg",
+          "caption": "Tortillas",
+          "alt": "Manos haciendo tortillas en el comal"
+        },
+        {
+          "image": "gallery-03.jpg",
+          "caption": "Salsas",
+          "alt": "Cuatro molcajetes con salsas de colores"
+        },
+        {
+          "image": "gallery-04.jpg",
+          "caption": "Orden de pastor",
+          "alt": "Plato con cinco tacos al pastor y piña"
+        },
+        {
+          "image": "gallery-05.jpg",
+          "caption": "Gringa",
+          "alt": "Gringa de pastor partida a la mitad"
+        },
+        {
+          "image": "gallery-06.jpg",
+          "caption": "La barra",
+          "alt": "Barra de la taquería con bancos altos de noche"
+        },
+        {
+          "image": "gallery-07.jpg",
+          "caption": "Aguas",
+          "alt": "Jarras de horchata y jamaica en la barra"
+        },
+        {
+          "image": "gallery-08.jpg",
+          "caption": "La entrada",
+          "alt": "Fachada iluminada de la taquería por la noche"
+        }
+      ]
+    },
+    "team": {
+      "kicker": "{{index}} — Taqueros",
+      "title": "Quién <span class=\"lz-title__serif\">corta</span> el pastor",
+      "members": [
+        {
+          "name": "Don Ramiro Uribe",
+          "role": "Taquero y fundador",
+          "tags": [
+            "Trompo",
+            "Marinado"
+          ],
+          "image": "team-1.jpg",
+          "imageAlt": "Retrato de Don Ramiro Uribe frente al trompo"
+        },
+        {
+          "name": "Lupita Esquivel",
+          "role": "Tortillera",
+          "tags": [
+            "Maíz",
+            "Comal"
+          ],
+          "image": "team-2.jpg",
+          "imageAlt": "Retrato de Lupita Esquivel junto al comal"
+        },
+        {
+          "name": "Jonathan Ríos",
+          "role": "Parrilla",
+          "tags": [
+            "Suadero",
+            "Carbón"
+          ],
+          "image": "team-3.jpg",
+          "imageAlt": "Retrato de Jonathan Ríos en la parrilla"
+        },
+        {
+          "name": "Sara Pineda",
+          "role": "Pedidos y caja",
+          "tags": [
+            "WhatsApp",
+            "Para llevar"
+          ],
+          "image": "team-4.jpg",
+          "imageAlt": "Retrato de Sara Pineda en la caja"
+        }
+      ]
+    },
+    "testimonials": {
+      "kicker": "{{index}} — Reseñas",
+      "score": "4.8",
+      "summary": "412 opiniones en Google",
+      "allReviewsCta": "Ver todas en Google",
+      "writeReviewCta": "Dejar reseña en Google",
+      "reviews": [
+        {
+          "text": "El pastor tiene ese sabor a carbón que ya casi no encuentras. La salsa de árbol pica rico.",
+          "author": "Alejandro M."
+        },
+        {
+          "text": "Pedí un kilo por WhatsApp para el cumpleaños de mi papá y llegó a la hora, con todo y salsas.",
+          "author": "Fernanda Q."
+        },
+        {
+          "text": "Vamos cada martes desde hace dos años. Las tortillas a mano hacen la diferencia.",
+          "author": "Iván T."
+        }
+      ]
+    },
+    "faq": {
+      "kicker": "{{index}} — Preguntas",
+      "title": "Antes de <span class=\"lz-title__serif\">venir</span>",
+      "intro": "Horarios, pedidos y fiestas: aquí van las dudas de siempre. Lo demás, pregúntalo por WhatsApp.",
+      "cta": "Preguntar por WhatsApp",
+      "items": [
+        {
+          "question": "¿A qué hora abren?",
+          "answer": "De martes a domingo, de 7 de la noche a medianoche. Los lunes descansamos."
+        },
+        {
+          "question": "¿Puedo pedir para llevar?",
+          "answer": "Sí. Pide por WhatsApp, te decimos el tiempo y pasas por tu orden sin hacer fila."
+        },
+        {
+          "question": "¿Hacen pedidos para fiestas?",
+          "answer": "Sí, por kilo o con taquero en tu evento. Escríbenos con una semana de anticipación."
+        },
+        {
+          "question": "¿Tienen opciones sin carne?",
+          "answer": "Hay tacos de champiñón al pastor y quesadillas de flor de calabaza en temporada."
+        },
+        {
+          "question": "¿Qué formas de pago aceptan?",
+          "answer": "Efectivo, tarjeta y transferencia."
+        },
+        {
+          "question": "¿Hay estacionamiento?",
+          "answer": "Hay lugares en la calle y un estacionamiento público a media cuadra."
+        }
+      ]
+    },
+    "locations": {
+      "kicker": "{{index}} — Visítanos",
+      "title": "Te esperamos en <span class=\"lz-title__serif\">Cimatario</span>",
+      "contactText": "Pedidos por WhatsApp de martes a domingo desde las 6 de la tarde. Para fiestas, con una semana de anticipación.",
+      "whatsappLabel": "WhatsApp",
+      "whatsappValue": "Hacer pedido",
+      "callLabel": "Teléfono",
+      "emailLabel": "Correo",
+      "directionsLabel": "Cómo llegar",
+      "hoursLabel": "Horario",
+      "whatsappCta": "Pedir por WhatsApp",
+      "callCta": "Llamar"
+    },
+    "floating-whatsapp": {
+      "label": "Pedir tacos por WhatsApp"
+    },
+    "footer": {
+      "about": "Taquería en {{city}}. Pastor al carbón, tortillas a mano y salsas de molcajete. Pedidos por WhatsApp.",
+      "branchesTitle": "Dónde estamos",
+      "linksTitle": "Explorar",
+      "contactTitle": "Contacto"
+    }
+  },
+  "images": [
+    {
+      "key": "hero",
+      "source": {
+        "pexels": "taquero cutting al pastor trompo night"
+      }
+    },
+    {
+      "key": "about",
+      "source": {
+        "pexels": "al pastor trompo charcoal"
+      }
+    },
+    {
+      "key": "team-1",
+      "source": {
+        "pexels": "female chef portrait"
+      }
+    },
+    {
+      "key": "team-2",
+      "source": {
+        "pexels": "grill cook portrait"
+      }
+    },
+    {
+      "key": "team-3",
+      "source": {
+        "pexels": "pastry chef portrait"
+      }
+    },
+    {
+      "key": "team-4",
+      "source": {
+        "pexels": "bartender portrait"
+      }
+    },
+    {
+      "key": "gallery-01",
+      "source": {
+        "pexels": "al pastor spit"
+      }
+    },
+    {
+      "key": "gallery-02",
+      "source": {
+        "pexels": "handmade corn tortillas comal"
+      }
+    },
+    {
+      "key": "gallery-03",
+      "source": {
+        "pexels": "salsa molcajete"
+      }
+    },
+    {
+      "key": "gallery-04",
+      "source": {
+        "pexels": "tacos al pastor plate"
+      }
+    },
+    {
+      "key": "gallery-05",
+      "source": {
+        "pexels": "gringa quesadilla"
+      }
+    },
+    {
+      "key": "gallery-06",
+      "source": {
+        "pexels": "taco stand counter night"
+      }
+    },
+    {
+      "key": "gallery-07",
+      "source": {
+        "pexels": "agua fresca horchata jamaica"
+      }
+    },
+    {
+      "key": "gallery-08",
+      "source": {
+        "pexels": "taqueria facade night"
+      }
+    }
+  ],
+  "motion": {
+    "preset": "calm",
+    "progress": false
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Tacos de barrio, <span class=\"lz-title__serif\">al momento</span>.",
+          "text": "Órdenes de pastor desde $95, tortillas a mano y salsas de molcajete. Pide por WhatsApp y pasa por ellos."
+        }
+      },
+      "brand": {
+        "fontPair": "anton+space-grotesk"
+      }
+    }
+  },
+  "demoProfile": {
+    "hours": {
+      "tue": [
+        {
+          "open": "19:00",
+          "close": "24:00"
+        }
+      ],
+      "wed": [
+        {
+          "open": "19:00",
+          "close": "24:00"
+        }
+      ],
+      "thu": [
+        {
+          "open": "19:00",
+          "close": "24:00"
+        }
+      ],
+      "fri": [
+        {
+          "open": "19:00",
+          "close": "24:00"
+        }
+      ],
+      "sat": [
+        {
+          "open": "19:00",
+          "close": "24:00"
+        }
+      ],
+      "sun": [
+        {
+          "open": "19:00",
+          "close": "24:00"
+        }
+      ]
+    }
+  }
+}

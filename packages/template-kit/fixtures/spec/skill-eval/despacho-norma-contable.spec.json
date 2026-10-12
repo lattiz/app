@@ -1,0 +1,469 @@
+{
+  "$schema": "../../../specs/spec.schema.json",
+  "specVersion": 1,
+  "idBase": "despacho-norma-contable",
+  "twin": true,
+  "giro": "despacho",
+  "business": {
+    "name": "Norma Contable",
+    "shortName": "Norma",
+    "tagline": "Despacho contable",
+    "city": "Monterrey",
+    "branch": "Del Valle",
+    "address": "Av. Vasconcelos 455, Piso 4, Col. Del Valle, San Pedro Garza García",
+    "hours": "Lun–Vie 8:30–18:00",
+    "phone": "+52 81 0000 0000",
+    "whatsapp": "5218100000000",
+    "whatsappMessage": "Hola, quiero cotizar la contabilidad de mi negocio",
+    "email": "contacto@normacontable.mx"
+  },
+  "brand": {
+    "palette": {
+      "preset": "ingles"
+    },
+    "fontPair": "sora+inter",
+    "shape": "urbano"
+  },
+  "sections": {
+    "pro": [
+      {
+        "role": "header"
+      },
+      {
+        "role": "hero",
+        "variant": "offset-card"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog"
+      },
+      {
+        "role": "team"
+      },
+      {
+        "role": "proof"
+      },
+      {
+        "role": "testimonials"
+      },
+      {
+        "role": "faq"
+      },
+      {
+        "role": "contact"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer"
+      }
+    ],
+    "basico": [
+      {
+        "role": "header"
+      },
+      {
+        "role": "hero"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog"
+      },
+      {
+        "role": "faq"
+      },
+      {
+        "role": "contact"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer"
+      }
+    ]
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "{{name}} en {{city}}: contabilidad, nómina e impuestos para PyMEs, con un reporte mensual claro."
+    },
+    "navbar": {
+      "cta": "Cotizar"
+    },
+    "hero": {
+      "image": "hero.jpg",
+      "imageAlt": "Contador revisando reportes con la dueña de un negocio en una sala de juntas",
+      "eyebrow": "Contabilidad para PyMEs · {{branch}}",
+      "title": "Tus números, <span class=\"lz-title__serif\">claros</span>.",
+      "text": "Llevamos la contabilidad, la nómina y los impuestos de negocios regios con un reporte mensual que sí se entiende. Cotiza en un mensaje.",
+      "primaryCta": "Cotizar por WhatsApp",
+      "secondaryCta": "Ver servicios",
+      "secondaryHref": "#servicios",
+      "sticker": "Reporte mensual"
+    },
+    "marquee": {
+      "label": "Lo que hacemos cada mes",
+      "items": [
+        "Contabilidad electrónica",
+        "Impuestos mensuales",
+        "Nómina e IMSS",
+        "Facturación",
+        "Reportes para dirección"
+      ]
+    },
+    "about": {
+      "kicker": "{{index}} — Despacho",
+      "title": "Tus números, <span class=\"lz-title__serif\">a la vista</span> cada mes.",
+      "summary": "En {{shortName}} trabajamos con negocios de comercio, servicios e industria ligera de Monterrey: cerramos el mes, presentamos impuestos y te explicamos en una página cómo vas.",
+      "statement": "Un buen cierre de mes cabe en una página: cuánto vendiste, cuánto pagaste y qué viene.",
+      "image": "about.jpg",
+      "imageAlt": "Escritorio con laptop, reporte impreso y calculadora junto a una ventana",
+      "sticker": "Cédula profesional 0000000",
+      "paragraphs": [
+        "Cada negocio tiene un contador responsable y un respaldo que conoce su caso.",
+        "El día 10 recibes tu reporte del mes con impuestos, flujo y pendientes.",
+        "Trabajamos con tu sistema de facturación y en línea, sin que cargues cajas de papeles."
+      ],
+      "stats": [
+        {
+          "value": "+14 años",
+          "label": "Con negocios regios"
+        },
+        {
+          "value": "+120",
+          "label": "PyMEs al mes"
+        },
+        {
+          "value": "Día 10",
+          "label": "Tu reporte mensual"
+        }
+      ]
+    },
+    "services": {
+      "kicker": "{{index}} — Servicios",
+      "title": "Servicios y <span class=\"lz-title__serif\">honorarios</span>",
+      "intro": "Montos de referencia, más IVA. Tu cotización final depende de facturas y empleados.",
+      "prices": [
+        {
+          "name": "Contabilidad PyME",
+          "price": "Desde $2,400",
+          "description": "Cierre mensual, impuestos y reporte del día 10."
+        },
+        {
+          "name": "Nómina",
+          "price": "$110/persona",
+          "description": "Recibos, cuotas y movimientos ante el IMSS."
+        },
+        {
+          "name": "Persona física con negocio",
+          "price": "Desde $1,300",
+          "description": "Declaraciones mensuales y anual incluidas."
+        },
+        {
+          "name": "Alta de empresa",
+          "price": "Cotiza",
+          "description": "Te acompañamos en los trámites del arranque."
+        },
+        {
+          "name": "Puesta al día",
+          "price": "Cotiza",
+          "description": "Revisamos lo pendiente y armamos un calendario."
+        },
+        {
+          "name": "Consulta",
+          "price": "$750/hora",
+          "description": "Para una decisión puntual: compra, crédito, socio."
+        }
+      ],
+      "promos": [
+        {
+          "tag": "Diagnóstico",
+          "title": "Revisión de tu contabilidad actual",
+          "text": "Te decimos qué está al día y qué falta en una llamada de 30 minutos.",
+          "cta": "Agendar",
+          "href": "{{whatsappUrl:Hola, quiero una revisión de mi contabilidad}}"
+        },
+        {
+          "tag": "Empresas",
+          "title": "Contabilidad + nómina en un solo equipo",
+          "text": "Para negocios de 5 a 50 personas, con un contador de contacto.",
+          "cta": "Cotizar",
+          "href": "{{whatsappUrl:Hola, quiero cotizar contabilidad y nómina}}"
+        }
+      ]
+    },
+    "gallery": {
+      "kicker": "{{index}} — Oficina",
+      "title": "El <span class=\"lz-title__serif\">despacho</span>",
+      "items": [
+        {
+          "image": "gallery-01.jpg",
+          "caption": "Recepción",
+          "alt": "Recepción del despacho con sillas y una planta"
+        },
+        {
+          "image": "gallery-02.jpg",
+          "caption": "Sala de juntas",
+          "alt": "Sala de juntas con mesa de madera"
+        },
+        {
+          "image": "gallery-03.jpg",
+          "caption": "Escritorios",
+          "alt": "Escritorios con computadoras y documentos ordenados"
+        },
+        {
+          "image": "gallery-04.jpg",
+          "caption": "Archivo",
+          "alt": "Estantes con carpetas archivadas"
+        },
+        {
+          "image": "gallery-05.jpg",
+          "caption": "Reunión",
+          "alt": "Dos personas revisando una laptop en una mesa"
+        },
+        {
+          "image": "gallery-06.jpg",
+          "caption": "Biblioteca",
+          "alt": "Libros de consulta en una repisa"
+        },
+        {
+          "image": "gallery-07.jpg",
+          "caption": "Café",
+          "alt": "Taza de café junto a una libreta"
+        },
+        {
+          "image": "gallery-08.jpg",
+          "caption": "Edificio",
+          "alt": "Fachada del edificio de oficinas"
+        }
+      ]
+    },
+    "team": {
+      "kicker": "{{index}} — Socios",
+      "title": "Tu equipo <span class=\"lz-title__serif\">contable</span>",
+      "members": [
+        {
+          "name": "C.P. Norma Garza",
+          "role": "Socia fundadora",
+          "tags": [
+            "Cédula 0000000",
+            "PyMEs"
+          ],
+          "image": "team-1.jpg",
+          "imageAlt": "Retrato de la C.P. Norma Garza en su oficina"
+        },
+        {
+          "name": "C.P. Rogelio Treviño",
+          "role": "Impuestos",
+          "tags": [
+            "Cédula 0000000",
+            "Industria"
+          ],
+          "image": "team-2.jpg",
+          "imageAlt": "Retrato del C.P. Rogelio Treviño con camisa azul"
+        },
+        {
+          "name": "Lic. Mariela Cantú",
+          "role": "Nómina e IMSS",
+          "tags": [
+            "Recibos",
+            "Movimientos"
+          ],
+          "image": "team-3.jpg",
+          "imageAlt": "Retrato de la Lic. Mariela Cantú sonriendo"
+        },
+        {
+          "name": "Lic. Arturo Elizondo",
+          "role": "Reportes",
+          "tags": [
+            "Flujo",
+            "Indicadores"
+          ],
+          "image": "team-4.jpg",
+          "imageAlt": "Retrato del Lic. Arturo Elizondo junto a una ventana"
+        }
+      ]
+    },
+    "testimonials": {
+      "kicker": "{{index}} — Clientes",
+      "score": "4.9",
+      "summary": "88 opiniones en Google",
+      "allReviewsCta": "Ver todas en Google",
+      "writeReviewCta": "Dejar reseña en Google",
+      "reviews": [
+        {
+          "text": "El reporte del día 10 me cambió la forma de ver mi negocio. Una página y entiendo cómo voy.",
+          "author": "Lorena V."
+        },
+        {
+          "text": "Teníamos meses pendientes y en tres semanas armaron un calendario para ponernos al día.",
+          "author": "Héctor S."
+        },
+        {
+          "text": "Llevan la nómina de mis 30 empleados y nunca se les ha pasado un pago.",
+          "author": "Gerardo P."
+        }
+      ]
+    },
+    "faq": {
+      "kicker": "{{index}} — Preguntas",
+      "title": "Preguntas <span class=\"lz-title__serif\">frecuentes</span>",
+      "intro": "Lo que nos preguntan los dueños de negocio antes de cambiarse de contador.",
+      "cta": "Preguntar por WhatsApp",
+      "items": [
+        {
+          "question": "¿Con qué tipo de negocios trabajan?",
+          "answer": "Comercio, servicios e industria ligera, de 1 a 50 personas, en Monterrey y su zona metropolitana."
+        },
+        {
+          "question": "¿Cómo es el cambio de contador?",
+          "answer": "Pedimos la información de los últimos meses, revisamos qué está al día y tomamos la contabilidad desde el siguiente cierre."
+        },
+        {
+          "question": "¿Qué incluye el reporte mensual?",
+          "answer": "Ventas, gastos, impuestos pagados, flujo y pendientes del mes que viene, en una página."
+        },
+        {
+          "question": "¿Trabajan en línea?",
+          "answer": "Sí. La mayoría de nuestros clientes nos manda todo por correo o WhatsApp y nos vemos por videollamada."
+        },
+        {
+          "question": "¿Cuánto cobran?",
+          "answer": "Depende de tu volumen de facturas y empleados. Te mandamos una cotización por escrito."
+        },
+        {
+          "question": "¿Dan factura?",
+          "answer": "Sí, facturamos cada servicio el mismo mes."
+        }
+      ]
+    },
+    "locations": {
+      "kicker": "{{index}} — Contacto",
+      "title": "Cotiza tu <span class=\"lz-title__serif\">contabilidad</span>",
+      "contactText": "Respondemos en horario de oficina. Las reuniones son en el despacho, en tu negocio o por videollamada.",
+      "whatsappLabel": "WhatsApp",
+      "whatsappValue": "Cotizar",
+      "callLabel": "Teléfono",
+      "emailLabel": "Correo",
+      "directionsLabel": "Cómo llegar",
+      "hoursLabel": "Horario",
+      "whatsappCta": "Cotizar por WhatsApp",
+      "callCta": "Llamar"
+    },
+    "floating-whatsapp": {
+      "label": "Cotizar contabilidad por WhatsApp"
+    },
+    "footer": {
+      "about": "Despacho contable en {{city}}. Contabilidad, nómina e impuestos para PyMEs, con reporte mensual.",
+      "branchesTitle": "Oficina",
+      "linksTitle": "Secciones",
+      "contactTitle": "Contacto"
+    }
+  },
+  "images": [
+    {
+      "key": "hero",
+      "source": {
+        "pexels": "accountant meeting client office documents"
+      }
+    },
+    {
+      "key": "about",
+      "source": {
+        "pexels": "office desk folders natural light"
+      }
+    },
+    {
+      "key": "team-1",
+      "source": {
+        "pexels": "businesswoman portrait office"
+      }
+    },
+    {
+      "key": "team-2",
+      "source": {
+        "pexels": "businessman portrait suit"
+      }
+    },
+    {
+      "key": "team-3",
+      "source": {
+        "pexels": "young professional woman portrait"
+      }
+    },
+    {
+      "key": "team-4",
+      "source": {
+        "pexels": "young professional man portrait window"
+      }
+    },
+    {
+      "key": "gallery-01",
+      "source": {
+        "pexels": "office reception plant"
+      }
+    },
+    {
+      "key": "gallery-02",
+      "source": {
+        "pexels": "meeting room wooden table"
+      }
+    },
+    {
+      "key": "gallery-03",
+      "source": {
+        "pexels": "office desks computers"
+      }
+    },
+    {
+      "key": "gallery-04",
+      "source": {
+        "pexels": "archive shelves folders"
+      }
+    },
+    {
+      "key": "gallery-05",
+      "source": {
+        "pexels": "two people laptop meeting"
+      }
+    },
+    {
+      "key": "gallery-06",
+      "source": {
+        "pexels": "books shelf office"
+      }
+    },
+    {
+      "key": "gallery-07",
+      "source": {
+        "pexels": "coffee notebook desk"
+      }
+    },
+    {
+      "key": "gallery-08",
+      "source": {
+        "pexels": "office building facade"
+      }
+    }
+  ],
+  "motion": {
+    "preset": "editorial",
+    "progress": false
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Contabilidad <span class=\"lz-title__serif\">sin sorpresas</span>.",
+          "text": "Impuestos, nómina y contabilidad mensual para tu negocio, con honorarios claros. Cotiza por WhatsApp."
+        }
+      }
+    }
+  }
+}

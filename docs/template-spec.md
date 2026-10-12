@@ -232,25 +232,25 @@ Esquema: `packages/template-kit/src/spec/schema.ts` (zod); JSON Schema en
 `packages/template-kit/specs/spec.schema.json` (`pnpm lattiz spec schema`). Los specs de `specs/`
 traen `"$schema": "./spec.schema.json"` para autocompletar en el editor.
 
-| Campo                   | Tipo                                                                              | Notas                                                                                                                                                                                                                                                                                   |
-| ----------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `specVersion`           | `1`                                                                               | obligatorio                                                                                                                                                                                                                                                                             |
-| `id` + `tier`           | id + `"pro"` \| `"basico"`                                                        | un solo tier                                                                                                                                                                                                                                                                            |
-| `idBase` + `twin: true` | `<giro>-<nombre>`                                                                 | el par: `<giro>-<nombre>-v1` (Pro) y `<giro>-base-<nombre>-v1` (Básico)                                                                                                                                                                                                                 |
-| `giro`                  | `restaurante` \| `clinica` \| `floreria` \| `barberia`                            | registro en `packages/template-kit/giros/`                                                                                                                                                                                                                                              |
-| `name`, `description`   | texto                                                                             | nombre y descripción de la galería; por defecto el nombre del negocio y la descripción del giro                                                                                                                                                                                         |
-| `business`              | objeto                                                                            | `name` (obligatorio), `shortName`, `tagline`, `city`, `branch` (colonia), `address`, `hours`, `phone`, `whatsapp` (dígitos), `whatsappMessage`, `email`, `year`, redes, `googleReviewsUrl`, `googleReviewUrl`, `branches[]` (`name`, `address`, `shortAddress?`, `hours`, `mapsQuery?`) |
-| `brand.palette`         | `{ "preset": "<id>" }` \| `{ "custom": { "bg", "accent", "text?", "scheme?" } }`  | curada del giro, o propia: se derivan los 14 tokens con AA o se rechaza                                                                                                                                                                                                                 |
-| `brand.fontPair`        | id curado \| `{ "display", "body" }`                                              | familias permitidas en `CUSTOM_FONTS` (todas con métricas para el fallback sin CLS)                                                                                                                                                                                                     |
-| `brand.shape`           | `filete` \| `urbano` \| `sutil` \| `redondo` \| `suave` \| `organico` \| `brutal` | radios, borde, sombra, densidad y arquetipo Pro                                                                                                                                                                                                                                         |
-| `brand.*` (ajuste fino) | `density`, `photoTreatment`, `placeholder`, `container`, `displayScale`, `rhythm` | `rhythm` = tokens del tema (`sectionPad`, `gutter*`, `space`, `textScale`, `title*`)                                                                                                                                                                                                    |
-| `sections.pro/basico`   | `[{ "role", "variant?", "slot?" }]`                                               | en orden de página; sin `variant` elige el compilador (y puede cambiarla para cumplir unicidad/similitud); con `variant` queda fija                                                                                                                                                     |
-| `copy`                  | `{ "<slot>": { claves del kit }, "head": { title, description } }`                | se fusiona sobre el copy del giro (objetos por clave, listas completas); `copy.hero.alternates[]` = titulares de repuesto                                                                                                                                                               |
-| `images`                | `[{ "key", "source", "alt?", "orientation?" }]`                                   | `key`: `hero`, `about`, `team-1…4`, `gallery-01…08`; `source`: `"placeholder"`, `{ "pexels": "búsqueda" }` o `{ "file": "ruta" }`                                                                                                                                                       |
-| `demoProfile`           | objeto (`business_profile`)                                                       | se fusiona sobre el que arma el compilador (categoría, horario, dirección)                                                                                                                                                                                                              |
-| `motion` (solo Pro)     | `{ "preset", "progress?", "overrides?" }`                                         | `overrides` → `motion.sections` del manifiesto (slot, `#id` o índice → tipo o `{ type, pattern }`)                                                                                                                                                                                      |
-| `overrides.pro/basico`  | `{ "name?", "description?", "brand?", "copy?" }`                                  | lo que cambia en un tier del par; la marca de la Básica sale de aquí o la elige el compilador                                                                                                                                                                                           |
-| `todo`                  | lista de textos                                                                   | `spec validate` avisa mientras no esté vacía; no cambia la salida                                                                                                                                                                                                                       |
+| Campo                   | Tipo                                                                                                                                      | Notas                                                                                                                                                                                                                                                                                   |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `specVersion`           | `1`                                                                                                                                       | obligatorio                                                                                                                                                                                                                                                                             |
+| `id` + `tier`           | id + `"pro"` \| `"basico"`                                                                                                                | un solo tier                                                                                                                                                                                                                                                                            |
+| `idBase` + `twin: true` | `<giro>-<nombre>`                                                                                                                         | el par: `<giro>-<nombre>-v1` (Pro) y `<giro>-base-<nombre>-v1` (Básico)                                                                                                                                                                                                                 |
+| `giro`                  | `barberia` \| `clinica` \| `dental` \| `despacho` \| `estetica` \| `floreria` \| `gimnasio` \| `restaurante` \| `tienda` \| `veterinaria` | registro en `packages/template-kit/giros/`                                                                                                                                                                                                                                              |
+| `name`, `description`   | texto                                                                                                                                     | nombre y descripción de la galería; por defecto el nombre del negocio y la descripción del giro                                                                                                                                                                                         |
+| `business`              | objeto                                                                                                                                    | `name` (obligatorio), `shortName`, `tagline`, `city`, `branch` (colonia), `address`, `hours`, `phone`, `whatsapp` (dígitos), `whatsappMessage`, `email`, `year`, redes, `googleReviewsUrl`, `googleReviewUrl`, `branches[]` (`name`, `address`, `shortAddress?`, `hours`, `mapsQuery?`) |
+| `brand.palette`         | `{ "preset": "<id>" }` \| `{ "custom": { "bg", "accent", "text?", "scheme?" } }`                                                          | curada del giro, o propia: se derivan los 14 tokens con AA o se rechaza                                                                                                                                                                                                                 |
+| `brand.fontPair`        | id curado \| `{ "display", "body" }`                                                                                                      | familias permitidas en `CUSTOM_FONTS` (todas con métricas para el fallback sin CLS)                                                                                                                                                                                                     |
+| `brand.shape`           | `filete` \| `urbano` \| `sutil` \| `redondo` \| `suave` \| `organico` \| `brutal`                                                         | radios, borde, sombra, densidad y arquetipo Pro                                                                                                                                                                                                                                         |
+| `brand.*` (ajuste fino) | `density`, `photoTreatment`, `placeholder`, `container`, `displayScale`, `rhythm`                                                         | `rhythm` = tokens del tema (`sectionPad`, `gutter*`, `space`, `textScale`, `title*`)                                                                                                                                                                                                    |
+| `sections.pro/basico`   | `[{ "role", "variant?", "slot?" }]`                                                                                                       | en orden de página; sin `variant` elige el compilador (y puede cambiarla para cumplir unicidad/similitud); con `variant` queda fija                                                                                                                                                     |
+| `copy`                  | `{ "<slot>": { claves del kit }, "head": { title, description } }`                                                                        | se fusiona sobre el copy del giro (objetos por clave, listas completas); `copy.hero.alternates[]` = titulares de repuesto                                                                                                                                                               |
+| `images`                | `[{ "key", "source", "alt?", "orientation?" }]`                                                                                           | `key`: `hero`, `about`, `team-1…4`, `gallery-01…08`; `source`: `"placeholder"`, `{ "pexels": "búsqueda" }` o `{ "file": "ruta" }`                                                                                                                                                       |
+| `demoProfile`           | objeto (`business_profile`)                                                                                                               | se fusiona sobre el que arma el compilador (categoría, horario, dirección)                                                                                                                                                                                                              |
+| `motion` (solo Pro)     | `{ "preset", "progress?", "overrides?" }`                                                                                                 | `overrides` → `motion.sections` del manifiesto (slot, `#id` o índice → tipo o `{ type, pattern }`)                                                                                                                                                                                      |
+| `overrides.pro/basico`  | `{ "name?", "description?", "brand?", "copy?" }`                                                                                          | lo que cambia en un tier del par; la marca de la Básica sale de aquí o la elige el compilador                                                                                                                                                                                           |
+| `todo`                  | lista de textos                                                                                                                           | `spec validate` avisa mientras no esté vacía; no cambia la salida                                                                                                                                                                                                                       |
 
 Reglas que conviene saber:
 
@@ -384,11 +384,15 @@ de `kit:validate`; dentro de un giro los acentos están a ≥ 30° entre sí, as
 plantillas por giro sin chocar. Barbería conserva sus 6 plantillas hechas a mano: sus temas son sus
 primeras 6 paletas (todas ocupadas) y una barbería nueva cae en `petroleo`, `uva` u `hoja`.
 
-No hizo falta ninguna variante de sección nueva: el menú del restaurante, las consultas de la clínica y
-los arreglos de la florería son `services` (`price-list`, `cards`, `editorial-table`), y el resto de
-roles existe tal cual. Los tres giros son rubros del kit con el mismo mapa rol → slot que barbería
-(`blueprints/service-landing.shared.ts`). Los placeholders usan motivos del giro (platos y cubiertos;
-cruz, estetoscopio y corazón; flores, hojas y macetas).
+Los menús, consultas, arreglos, tratamientos, membresías y honorarios son `services` (`price-list`,
+`cards`, `editorial-table`); la única variante nueva es **`services/product-grid`** (Fase 4, para
+`tienda`: foto 4:5, nombre, precio y botón de pedido por WhatsApp por producto; imágenes
+`product-01…08`). El gimnasio no necesitó una de horarios: membresías en `cards` y horarios en
+`about`/`faq`. Todos los giros usan el mapa rol → slot de barbería
+(`blueprints/service-landing.shared.ts`) y motivos propios en los placeholders. `lattiz giro show
+<giro>` imprime todo esto (más las claves de copy con su límite) y sale del código, así que manda
+sobre esta lista. Los giros `dental` y `despacho` son **regulados**: cédulas `0000000`, sin promesas
+de resultado; léelos (y pásalos por el abogado) antes de venderlos.
 
 #### Barbería (`barberia`)
 
@@ -412,6 +416,48 @@ Categoría `clinicas` · business_profile `medical` · schema.org `MedicalClinic
 - **Formas:** `suave`, `redondo`, `organico`, `sutil`, `filete`
 - **Menú:** about «Nosotros», services «Servicios», team «Especialistas», gallery «Instalaciones», testimonials «Opiniones», faq «Preguntas», locations «Citas»
 
+#### Consultorio dental (`dental`)
+
+Categoría `dentales` · business_profile `dental` · schema.org `Dentist` · Motion `calm`
+
+- **Pro:** header→inline · hero→split · about→stats-strip · catalog→cards · team→grid · proof→grid · testimonials→cards · faq→two-col · contact→with-contact · whatsapp→bubble · footer→columns
+- **Básico:** header→inline · hero→image-bg · about→brief · catalog→cards · faq→list · contact→single · whatsapp→bubble · footer→minimal-centered
+- **Paletas:** `nube` (clara, 212°), `agua` (clara, 167°), `coral` (clara, 6°), `iris` (clara, 248°), `grafito` (oscura, 41°)
+- **Tipografías:** `sora+inter`, `lora+figtree`, `bricolage-grotesque+inter`, `libre-baskerville+source-sans-3`, `fraunces+nunito-sans`
+- **Formas:** `suave`, `redondo`, `sutil`, `organico`
+- **Menú:** about «Consultorio», services «Tratamientos», team «Especialistas», gallery «Instalaciones», testimonials «Opiniones», faq «Preguntas», locations «Citas»
+- **Cubre:** dentista, consultorio dental, clínica dental, ortodoncia, ortodoncista, odontopediatría, endodoncia, implantes dentales, limpieza dental
+- **Reglas del giro:** Giro regulado: nada de «sin dolor», «sonrisa perfecta», «resultados garantizados» ni antes/después. Cédulas como marcador: «Cédula profesional 0000000»; el cliente pone la real. Nunca una cédula real. Precios «desde» y de referencia: el plan exacto se da tras la valoración. Urgencias: indica llamar o escribir; no diagnósticos por WhatsApp.
+- **Ejemplo:** `specs/dental-arboleda.spec.json`
+
+#### Despacho contable o jurídico (`despacho`)
+
+Categoría `despachos` · business_profile `accounting` · schema.org `AccountingService` · Motion `editorial`
+
+- **Pro:** header→inline · hero→image-bg · about→statement · catalog→editorial-table · team→list · proof→strip · testimonials→quote-feature · faq→two-col · contact→with-contact · whatsapp→bubble · footer→columns
+- **Básico:** header→inline · hero→split · about→brief · catalog→editorial-table · faq→list · contact→single · whatsapp→bubble · footer→columns
+- **Paletas:** `marino` (clara, 219°), `ingles` (clara, 152°), `vino` (clara, 350°), `berenjena` (clara, 271°), `nocturno` (oscura, 42°)
+- **Tipografías:** `libre-baskerville+source-sans-3`, `playfair-display+inter`, `instrument-serif+instrument-sans`, `sora+inter`, `dm-serif-display+dm-sans`
+- **Formas:** `filete`, `sutil`, `urbano`, `suave`
+- **Menú:** about «Despacho», services «Servicios», team «Socios», gallery «Oficina», testimonials «Clientes», faq «Preguntas», locations «Contacto»
+- **Cubre:** despacho contable, contador, contadora, contabilidad, despacho jurídico, abogado, abogada, despacho fiscal, asesoría fiscal, gestoría, consultoría
+- **Reglas del giro:** Giro regulado: sin «ganamos tu juicio», «evita multas», «recupera tu dinero» ni promesas de resultado fiscal o legal. Cédulas como marcador: «Cédula profesional 0000000»; nunca una cédula, RFC o número de registro real. Honorarios «desde» y de referencia; el monto exacto, en la cotización. Jurídico: cambia services, faq y about en el spec y pon "demoProfile": { "category": "legal" }.
+- **Ejemplo:** `specs/despacho-cifra-clara.spec.json`
+
+#### Estética / salón de belleza (`estetica`)
+
+Categoría `esteticas` · business_profile `beauty_salon` · schema.org `BeautySalon` · Motion `calm`
+
+- **Pro:** header→centered-logo · hero→split · marquee→ticker · about→text-image-offset · catalog→price-list · team→grid · proof→mosaic · testimonials→quote-feature · faq→list · contact→with-contact · whatsapp→bubble · footer→big-wordmark
+- **Básico:** header→centered-logo · hero→centered-arch · about→brief · catalog→price-list · faq→list · contact→single · whatsapp→bubble · footer→minimal-centered
+- **Paletas:** `rubor` (clara, 336°), `menta` (clara, 165°), `champan` (clara, 47°), `malva` (clara, 266°), `terciopelo` (oscura, 15°)
+- **Tipografías:** `cormorant-garamond+work-sans`, `bodoni-moda+karla`, `dm-serif-display+dm-sans`, `instrument-serif+instrument-sans`, `playfair-display+inter`
+- **Formas:** `organico`, `suave`, `filete`, `sutil`
+- **Menú:** about «El salón», services «Servicios», team «Equipo», gallery «Fotos», testimonials «Reseñas», faq «Preguntas», locations «Citas»
+- **Cubre:** estética, salón de belleza, spa, uñas, nail bar, pestañas y cejas, peluquería, barbería unisex, maquillaje, depilación, masajes, cosmetología
+- **Reglas del giro:** Sin promesas de resultado: nada de «elimina arrugas», «rejuvenece», «adelgaza» ni «antes y después». Tratamientos faciales y corporales como servicios de cuidado, no como tratamientos médicos. Marcas de productos ficticias o genéricas («tinte sin amoniaco», «esmalte en gel»).
+- **Ejemplo:** `specs/estetica-estudio-nacar.spec.json`
+
 #### Florería (`floreria`)
 
 Categoría `florerias` · business_profile `store` · schema.org `Florist` · Motion `editorial`
@@ -423,6 +469,20 @@ Categoría `florerias` · business_profile `store` · schema.org `Florist` · Mo
 - **Formas:** `organico`, `filete`, `suave`, `sutil`, `redondo`
 - **Menú:** about «Nosotros», services «Arreglos», team «Floristas», gallery «Galería», testimonials «Reseñas», faq «Preguntas», locations «Pedidos»
 
+#### Gimnasio / estudio (`gimnasio`)
+
+Categoría `gimnasios` · business_profile `other` · schema.org `ExerciseGym` · Motion `editorial + barra de progreso`
+
+- **Pro:** header→inline · hero→image-bg · marquee→ticker · about→stats-strip · catalog→cards · team→grid · proof→mosaic · testimonials→cards · faq→two-col · contact→with-contact · whatsapp→bubble · footer→big-wordmark
+- **Básico:** header→inline · hero→split · about→brief · catalog→cards · faq→list · contact→single · whatsapp→bubble · footer→minimal-centered
+- **Paletas:** `voltaje` (oscura, 76°), `brasa` (oscura, 18°), `hielo` (oscura, 194°), `cal` (clara, 261°), `cancha` (clara, 141°)
+- **Tipografías:** `anton+space-grotesk`, `archivo-black+space-grotesk`, `unbounded+manrope`, `syne+karla`, `bricolage-grotesque+inter`
+- **Formas:** `brutal`, `urbano`, `sutil`, `redondo`
+- **Menú:** about «El gym», services «Membresías», team «Coaches», gallery «Fotos», testimonials «Reseñas», faq «Horarios», locations «Visítanos»
+- **Cubre:** gimnasio, gym, estudio de yoga, pilates, entrenamiento funcional, box, spinning, artes marciales, danza, natación, entrenador personal
+- **Reglas del giro:** Sin promesas físicas: nada de «baja X kilos», «resultados en 30 días», «cuerpo perfecto» ni antes/después. Marcas de métodos registradas no se nombran (escribe «entrenamiento funcional», no la marca). Recomienda consultar a un médico antes de empezar si hay lesiones; no consejos médicos.
+- **Ejemplo:** `specs/gimnasio-nave-norte.spec.json`
+
 #### Restaurante (`restaurante`)
 
 Categoría `restaurantes` · business_profile `restaurant` · schema.org `Restaurant` · Motion `calm`
@@ -433,6 +493,34 @@ Categoría `restaurantes` · business_profile `restaurant` · schema.org `Restau
 - **Tipografías:** `young-serif+figtree`, `bricolage-grotesque+inter`, `cormorant-garamond+work-sans`, `dm-serif-display+dm-sans`, `playfair-display+inter`
 - **Formas:** `suave`, `filete`, `sutil`, `redondo`, `organico`, `brutal`
 - **Menú:** about «Nosotros», services «Menú», team «Cocina», gallery «Platillos», testimonials «Reseñas», faq «Preguntas», locations «Reservar»
+
+#### Tienda / boutique (`tienda`)
+
+Categoría `tiendas` · business_profile `store` · schema.org `Store` · Motion `editorial`
+
+- **Pro:** header→centered-logo · hero→image-bg · marquee→ticker · about→text-image-offset · catalog→product-grid · proof→mosaic · testimonials→cards · faq→list · contact→with-contact · whatsapp→bubble · footer→big-wordmark
+- **Básico:** header→inline · hero→split · about→brief · catalog→product-grid · faq→list · contact→single · whatsapp→bubble · footer→minimal-centered
+- **Paletas:** `papel` (clara, 223°), `jitomate` (clara, 8°), `nopal` (clara, 102°), `ciruela` (clara, 318°), `carbon` (oscura, 47°)
+- **Tipografías:** `bricolage-grotesque+inter`, `syne+karla`, `young-serif+figtree`, `unbounded+manrope`, `dm-serif-display+dm-sans`
+- **Formas:** `redondo`, `sutil`, `brutal`, `suave`, `urbano`
+- **Menú:** about «La tienda», services «Catálogo», team «Equipo», gallery «Fotos», testimonials «Reseñas», faq «Envíos», locations «Visítanos»
+- **Cubre:** tienda, boutique, tienda de ropa, zapatería, accesorios, joyería de fantasía, regalos, papelería, tienda de decoración, artesanías, catálogo por WhatsApp, tienda de abarrotes gourmet
+- **Reglas del giro:** Productos, marcas y diseñadores ficticios: nunca una marca real ni «tipo …» de una marca. Precios de ejemplo; existencias, envíos y apartados «se confirman por WhatsApp». Sin «originales 100 %» ni «la mejor calidad»: describe material, medida y uso.
+- **Ejemplo:** `specs/tienda-lote-doce.spec.json`
+
+#### Veterinaria / estética canina (`veterinaria`)
+
+Categoría `veterinarias` · business_profile `other` · schema.org `VeterinaryCare` · Motion `calm`
+
+- **Pro:** header→inline · hero→split · about→text-image-offset · catalog→cards · team→grid · proof→grid · testimonials→cards · faq→list · contact→with-contact · whatsapp→bubble · footer→columns
+- **Básico:** header→inline · hero→centered-arch · about→brief · catalog→price-list · faq→two-col · contact→single · whatsapp→bubble · footer→minimal-centered
+- **Paletas:** `hierbabuena` (clara, 169°), `cielo` (clara, 212°), `durazno` (clara, 17°), `lila` (clara, 260°), `bosque` (oscura, 88°)
+- **Tipografías:** `young-serif+figtree`, `fraunces+nunito-sans`, `bricolage-grotesque+inter`, `lora+figtree`, `sora+inter`
+- **Formas:** `redondo`, `organico`, `suave`, `sutil`
+- **Menú:** about «Nosotros», services «Servicios», team «Médicos», gallery «Instalaciones», testimonials «Reseñas», faq «Preguntas», locations «Citas»
+- **Cubre:** veterinaria, veterinario, clínica veterinaria, estética canina, grooming, hotel de mascotas, guardería canina, tienda de mascotas con consultorio
+- **Reglas del giro:** Sin promesas de curación ni diagnósticos por WhatsApp; urgencias: llamar. Médicos con «Cédula profesional 0000000» como marcador; nunca una cédula real. Marcas de alimento o medicamento ficticias o genéricas («alimento premium», «desparasitante»).
+- **Ejemplo:** `specs/veterinaria-clinica-nogal.spec.json`
 
 Pares tipográficos (`src/spec/presets.ts › FONT_PAIRS`):
 
@@ -539,35 +627,47 @@ validador y la similitud entre plantillas. Lo que haría un override va en el pa
 
 ## Contrato para la skill de Claude Code (Fase 4)
 
-Todo sin preguntas y con códigos de salida estables: **0** ok · **1** falló una verificación
-(validación, unicidad, archivo editado a mano o congelado, FAIL en `check`) · **2** uso o datos
-(spec inválido, falta un flag, falta una variable). En error, stdout queda vacío y el mensaje va a
-stderr.
+La skill está hecha: `.claude/skills/lattiz-template/` (guía en `docs/lattiz-skill.md`); la referencia
+exacta de flags y formas JSON es su `references/commands.md`. Códigos de salida estables: **0** ok ·
+**1** falló una verificación (validación, unicidad, archivo editado a mano o congelado, FAIL en
+`check`) · **2** uso o datos (spec inválido, falta un flag, falta una variable). Con `--json`, stdout es
+solo el JSON; en error, el mensaje va a stderr.
 
-| Paso                    | Comando                                                                                                 | Salida                                                                                                                                           |
-| ----------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Esquema (una vez)       | `pnpm lattiz spec schema`                                                                               | JSON Schema del spec                                                                                                                             |
-| Crear y compilar        | `pnpm lattiz new --spec <archivo> --yes --json` (si el archivo no existe, con `--giro --nombre --twin`) | `{ spec, build: BuildReport }`                                                                                                                   |
-| Validar un spec editado | `pnpm lattiz spec validate <archivo\|id> --json`                                                        | `{ file, ok, ids, problems[] }` (cada problema: `level`, `path`, `message`, `hint?`)                                                             |
-| Recompilar              | `pnpm lattiz build <archivo\|id> --json`                                                                | `BuildReport`: `ok`, `code`, `ids`, `tiers[]` (`choices`, `findings`, `similarity`, `images`), `files[]` (`action`, `diff?`), `problems[]`, `ms` |
-| Revisar                 | `pnpm lattiz check <id> --json` (secuencial)                                                            | resultado por regla y tamaño; código 1 si hay FAIL                                                                                               |
-| Estado                  | `pnpm lattiz list --offline --json`                                                                     | filas con `origin` (generated/frozen/clone/manual, `drift[]`) + `unbuilt`                                                                        |
-| Publicar                | `pnpm lattiz ship <idBásico> <idPro> --yes` **solo con aprobación humana**                              | pasos y URLs                                                                                                                                     |
+| Paso     | Comando                                                                   | Salida                                                                                                                                      |
+| -------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Giros    | `pnpm lattiz giro list --json` · `giro show <giro> --json`                | alias, paletas y tipografías con `mood` y `free`, `otherFontPairs`, roles y variantes por tier, claves de copy con límite y ejemplo, reglas |
+| Crear    | `pnpm lattiz spec init --giro <g> --nombre "<N>" --twin --json`           | `{ file, ids, todo }`                                                                                                                       |
+| Validar  | `pnpm lattiz spec validate <stem> --strict --json`                        | `{ ok, errors, warnings, problems[{ level, path, message, hint?, rule? }] }`                                                                |
+| Compilar | `pnpm lattiz build <stem> --json` (o `new --spec <archivo> --yes --json`) | `BuildReport` + `files[].hash` + `next[]`                                                                                                   |
+| Revisar  | `pnpm lattiz check <id> --json` (secuencial)                              | `results[]` + `findings[{ rule, severity, viewport, section, variant, selector, message, specHint }]`; código 1 si hay FAIL                 |
+| Ver      | `pnpm lattiz review <id> [--json]`                                        | `.lattiz/review/<id>/` (capturas 390×844, 1366×768, 1440×900, páginas completas, una por sección, `review.md`)                              |
+| Estado   | `pnpm lattiz list --offline --json`                                       | filas con `origin` y `drift[]` + `unbuilt`                                                                                                  |
+| Publicar | `pnpm lattiz ship <idBásico> <idPro>` **solo con aprobación humana**      | sin TTY exige `--yes --confirm-remote`                                                                                                      |
 
-Secuencia segura: `new --spec … --yes --json` → bucle { editar spec → `build --json` → `check <id>
---json` por id } hasta que ninguno tenga FAIL → aprobación humana (dev/capturas) → `ship --yes`. La
-skill nunca usa `--force` ni `unfreeze --yes` sin que el humano lo pida, y nunca edita los archivos
-generados: edita el spec.
+Secuencia: `giro show` → `spec init` → editar el spec → { `spec validate --strict` → `build` →
+`check` por id } hasta 0 FAIL y sin WARN `fold` → `review` por id → entrega con el comando `ship`. La
+skill nunca usa `--force` ni `unfreeze --yes`, nunca edita archivos generados y nunca escribe en
+remoto sin pedido explícito.
 
 ## Pendientes y decisiones abiertas
 
+- **Florería Pro de la Fase 2** (`floreria-flores-lupita-v1`): la regla `fold` marca el CTA bajo el
+  pliegue a 1440×900 y 1366×768 (portada `offset-card`). No se tocó (es salida de la Fase 2). Arreglo
+  en el spec: `copy.hero.title` ≤ 28 caracteres o `sections.pro` → hero `split`; luego `build` y
+  `check`.
+- **Portadas sin encaje:** `hero/offset-card` y `hero/centered-arch` no llevan `data-lz-fit`; hoy las
+  cubre la regla `fold` (WARN). Darles encaje es cambiar secciones compartidas (afecta barberías ya
+  publicadas): decisión aparte.
+- **Capacidad por giro:** con 5 paletas curadas y acentos a ≥ 30°, un giro admite ~2 pares con
+  paletas curadas; después el compilador pide `brand.palette.custom` (la skill la elige con
+  `giro show → freeHueRanges`). Si un giro se vende mucho, agrega paletas curadas.
 - Créditos de Pexels en el sitio (arriba).
 - Sitio adoptado **sin** «Datos del negocio»: los tokens vacíos dejan etiquetas sin valor
   («Teléfono:»), botones de WhatsApp que apuntan a `?text=…`, `tel:`/`mailto:` vacíos, el mapa en
   `?q=` y frases como «Consultorio médico en .». Conviene pedir teléfono/WhatsApp y dirección antes
   de publicar (decisión de producto; `compose-site.ts` no cambia).
-- Giros de `bases.json` sin registro (despacho, estética, tienda, otro) siguen por clonación.
-- `categories` nuevas (`restaurantes`, `clinicas`, `florerias`) llegan a la galería con el seed;
+- `lattiz new --modo clon` sigue usando `packages/lattiz-cli/bases.json` (bases de barbería); el giro `otro` no tiene registro.
+- `categories` nuevas (`restaurantes`, `clinicas`, `florerias`, `dentales`, `despachos`, `esteticas`, `tiendas`, `gimnasios`, `veterinarias`) llegan a la galería con el seed;
   revisa que el dashboard las muestre bien antes de publicarlas.
 
 ## Verificación (2026-10-11, local)

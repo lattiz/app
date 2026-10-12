@@ -1,0 +1,468 @@
+{
+  "$schema": "../../../specs/spec.schema.json",
+  "specVersion": 1,
+  "idBase": "veterinaria-tejocote",
+  "twin": true,
+  "giro": "veterinaria",
+  "business": {
+    "name": "Veterinaria Tejocote",
+    "shortName": "Tejocote",
+    "tagline": "Perros y gatos",
+    "city": "CDMX",
+    "branch": "Portales",
+    "address": "Calz. de Tlalpan 1840, Col. Portales Norte, Benito Juárez, CDMX",
+    "hours": "Lun–Sáb 9:00–20:00 · Dom 10:00–14:00",
+    "phone": "+52 55 0000 0000",
+    "whatsapp": "5215500000000",
+    "whatsappMessage": "Hola, quiero agendar una cita para mi mascota",
+    "email": "citas@tejocote.mx"
+  },
+  "brand": {
+    "palette": {
+      "preset": "cielo"
+    },
+    "fontPair": "fraunces+nunito-sans",
+    "shape": "organico"
+  },
+  "sections": {
+    "pro": [
+      {
+        "role": "header"
+      },
+      {
+        "role": "hero"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog"
+      },
+      {
+        "role": "team"
+      },
+      {
+        "role": "proof"
+      },
+      {
+        "role": "testimonials"
+      },
+      {
+        "role": "faq"
+      },
+      {
+        "role": "contact"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer"
+      }
+    ],
+    "basico": [
+      {
+        "role": "header"
+      },
+      {
+        "role": "hero"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog"
+      },
+      {
+        "role": "faq"
+      },
+      {
+        "role": "contact"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer"
+      }
+    ]
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "{{name}} en {{city}}: consultas sin estrés para perros y gatos, sala felina, vacunas, estética y hospedaje."
+    },
+    "navbar": {
+      "cta": "Agendar"
+    },
+    "hero": {
+      "image": "hero.jpg",
+      "imageAlt": "Médica veterinaria acariciando a un gato atigrado en la mesa de consulta",
+      "eyebrow": "Veterinaria · {{branch}}",
+      "title": "Consultas <span class=\"lz-title__serif\">sin estrés</span>.",
+      "text": "Para perros y gatos: sala de espera felina, consultas de 30 minutos y recordatorios de vacunas por WhatsApp.",
+      "primaryCta": "Agendar consulta",
+      "secondaryCta": "Ver servicios",
+      "secondaryHref": "#servicios",
+      "sticker": "Sala para gatos"
+    },
+    "marquee": {
+      "label": "En la clínica",
+      "items": [
+        "Consulta sin prisa",
+        "Sala para gatos",
+        "Vacunas y carnet",
+        "Baño y corte",
+        "Hospedaje con fotos"
+      ]
+    },
+    "about": {
+      "kicker": "{{index}} — Nosotros",
+      "title": "Pensada para que <span class=\"lz-title__serif\">lleguen tranquilos</span>.",
+      "summary": "En {{shortName}} separamos la sala de gatos, damos citas de media hora y revisamos con calma, con premios y una mesa tibia. Tú recibes el carnet y los recordatorios por WhatsApp.",
+      "statement": "Un gato que llega asustado no se revisa bien: por eso la sala, el tiempo y la paciencia van primero.",
+      "image": "about.jpg",
+      "imageAlt": "Sala de espera para gatos con repisas de madera y transportadoras",
+      "sticker": "Cédula profesional 0000000",
+      "paragraphs": [
+        "Atendemos perros y gatos de todas las edades, con cita para que no coincidan en la sala.",
+        "Te explicamos lo que encontramos y lo que sigue, y te mandamos el resumen por WhatsApp.",
+        "En baño y corte usamos secado de baja temperatura y descansos para los nerviosos."
+      ],
+      "stats": [
+        {
+          "value": "30 min",
+          "label": "Por consulta"
+        },
+        {
+          "value": "2 salas",
+          "label": "Perros y gatos"
+        },
+        {
+          "value": "4.9 ★",
+          "label": "En Google"
+        }
+      ]
+    },
+    "services": {
+      "kicker": "{{index}} — Servicios",
+      "title": "Servicios y <span class=\"lz-title__serif\">precios</span>",
+      "intro": "Precios en pesos mexicanos; varían por tamaño o peso. Te confirmamos al agendar.",
+      "prices": [
+        {
+          "name": "Consulta",
+          "price": "$480",
+          "description": "Revisión completa de 30 minutos y plan de cuidado."
+        },
+        {
+          "name": "Consulta felina",
+          "price": "$480",
+          "description": "En la sala de gatos, con manejo de bajo estrés."
+        },
+        {
+          "name": "Vacuna",
+          "price": "Desde $380",
+          "description": "Aplicación, carnet y recordatorio de la siguiente."
+        },
+        {
+          "name": "Desparasitación",
+          "price": "Desde $190",
+          "description": "Según peso; interna y externa."
+        },
+        {
+          "name": "Baño y corte",
+          "price": "Desde $420",
+          "description": "Baño, corte, uñas, oídos y moño de regalo."
+        },
+        {
+          "name": "Hospedaje",
+          "price": "$380/noche",
+          "description": "Cama, dos paseos al día y una foto cada tarde."
+        }
+      ],
+      "promos": [
+        {
+          "tag": "Gatitos",
+          "title": "Primer chequeo de tu gatito",
+          "text": "Consulta, desparasitación y plan de vacunas en una sola visita.",
+          "cta": "Agendar",
+          "href": "{{whatsappUrl:Hola, quiero el primer chequeo de mi gatito}}"
+        },
+        {
+          "tag": "Adultos mayores",
+          "title": "Revisión para perros y gatos senior",
+          "text": "Para mascotas de más de 8 años: revisión completa y plan de seguimiento.",
+          "cta": "Preguntar",
+          "href": "{{whatsappUrl:Hola, quiero la revisión senior}}"
+        }
+      ]
+    },
+    "gallery": {
+      "kicker": "{{index}} — Instalaciones",
+      "title": "Un lugar <span class=\"lz-title__serif\">limpio</span> y tranquilo",
+      "items": [
+        {
+          "image": "gallery-01.jpg",
+          "caption": "Recepción",
+          "alt": "Recepción de la veterinaria con un perro esperando"
+        },
+        {
+          "image": "gallery-02.jpg",
+          "caption": "Consultorio",
+          "alt": "Mesa de consulta veterinaria limpia"
+        },
+        {
+          "image": "gallery-03.jpg",
+          "caption": "Estética",
+          "alt": "Perro en la tina de baño con espuma"
+        },
+        {
+          "image": "gallery-04.jpg",
+          "caption": "Gatos",
+          "alt": "Gato descansando en una cama de consultorio"
+        },
+        {
+          "image": "gallery-05.jpg",
+          "caption": "Corte",
+          "alt": "Estilista canina cortando el pelo a un perro pequeño"
+        },
+        {
+          "image": "gallery-06.jpg",
+          "caption": "Hospedaje",
+          "alt": "Área de hospedaje con camas y juguetes"
+        },
+        {
+          "image": "gallery-07.jpg",
+          "caption": "Vacunas",
+          "alt": "Carnet de vacunación junto a una correa"
+        },
+        {
+          "image": "gallery-08.jpg",
+          "caption": "Entrada",
+          "alt": "Fachada de la veterinaria con un perro en la puerta"
+        }
+      ]
+    },
+    "team": {
+      "kicker": "{{index}} — Médicos",
+      "title": "Quién los <span class=\"lz-title__serif\">cuida</span>",
+      "members": [
+        {
+          "name": "MVZ Regina Lozano",
+          "role": "Medicina felina",
+          "tags": [
+            "Cédula 0000000",
+            "Gatos"
+          ],
+          "image": "team-1.jpg",
+          "imageAlt": "Retrato de la MVZ Regina Lozano con un gato en brazos"
+        },
+        {
+          "name": "MVZ Tomás Arriaga",
+          "role": "Medicina general",
+          "tags": [
+            "Cédula 0000000",
+            "Perros"
+          ],
+          "image": "team-2.jpg",
+          "imageAlt": "Retrato del MVZ Tomás Arriaga con un perro"
+        },
+        {
+          "name": "Fabiola Ruiz",
+          "role": "Estética",
+          "tags": [
+            "Baño",
+            "Corte"
+          ],
+          "image": "team-3.jpg",
+          "imageAlt": "Retrato de Fabiola Ruiz en el área de estética"
+        },
+        {
+          "name": "Mateo Ibarra",
+          "role": "Recepción y hospedaje",
+          "tags": [
+            "Citas",
+            "Paseos"
+          ],
+          "image": "team-4.jpg",
+          "imageAlt": "Retrato de Mateo Ibarra en la recepción"
+        }
+      ]
+    },
+    "testimonials": {
+      "kicker": "{{index}} — Reseñas",
+      "score": "4.9",
+      "summary": "174 opiniones en Google",
+      "allReviewsCta": "Ver todas en Google",
+      "writeReviewCta": "Dejar reseña en Google",
+      "reviews": [
+        {
+          "text": "Mi gata llegaba temblando a otras veterinarias. Aquí, con su sala aparte, hasta se dejó revisar sin bufar.",
+          "author": "Andrea L."
+        },
+        {
+          "text": "Me mandaron el carnet por WhatsApp y un recordatorio justo cuando tocaba la vacuna.",
+          "author": "Pablo G."
+        },
+        {
+          "text": "El baño de mi perro grande les tomó tiempo y paciencia; regresó feliz y con moño.",
+          "author": "Mónica E."
+        }
+      ]
+    },
+    "faq": {
+      "kicker": "{{index}} — Preguntas",
+      "title": "Preguntas <span class=\"lz-title__serif\">frecuentes</span>",
+      "intro": "Dudas de antes de la primera visita. Para todo lo demás, mándanos un mensaje.",
+      "cta": "Preguntar por WhatsApp",
+      "items": [
+        {
+          "question": "¿Por qué una sala para gatos?",
+          "answer": "Porque el olor y el ruido de los perros los estresan. Separados, llegan más tranquilos a la consulta."
+        },
+        {
+          "question": "¿Necesito cita?",
+          "answer": "Sí, para consulta y estética. Si es una urgencia, llámanos antes de salir."
+        },
+        {
+          "question": "¿Qué llevo a la primera consulta?",
+          "answer": "El carnet si lo tienes; los gatos, siempre en transportadora."
+        },
+        {
+          "question": "¿Cuánto tarda un baño?",
+          "answer": "De hora y media a tres horas según tamaño; te avisamos por WhatsApp cuando esté listo."
+        },
+        {
+          "question": "¿Qué formas de pago aceptan?",
+          "answer": "Efectivo, tarjeta y transferencia."
+        },
+        {
+          "question": "¿Qué piden para el hospedaje?",
+          "answer": "Vacunas al día y su comida de siempre; nosotros ponemos paseos, cama y fotos diarias."
+        }
+      ]
+    },
+    "locations": {
+      "kicker": "{{index}} — Citas",
+      "title": "Agenda su <span class=\"lz-title__serif\">consulta</span>",
+      "contactText": "Contestamos en horario de la clínica. En una urgencia fuera de horario, acude a un hospital veterinario 24 horas.",
+      "whatsappLabel": "WhatsApp",
+      "whatsappValue": "Agendar cita",
+      "callLabel": "Teléfono",
+      "emailLabel": "Correo",
+      "directionsLabel": "Cómo llegar",
+      "hoursLabel": "Horario",
+      "whatsappCta": "Agendar por WhatsApp",
+      "callCta": "Llamar"
+    },
+    "floating-whatsapp": {
+      "label": "Agendar cita por WhatsApp"
+    },
+    "footer": {
+      "about": "Veterinaria en {{city}} para perros y gatos, con sala felina, estética y hospedaje. Citas por WhatsApp.",
+      "branchesTitle": "Clínica",
+      "linksTitle": "Secciones",
+      "contactTitle": "Contacto"
+    }
+  },
+  "images": [
+    {
+      "key": "hero",
+      "source": {
+        "pexels": "veterinarian petting tabby cat"
+      }
+    },
+    {
+      "key": "about",
+      "source": {
+        "pexels": "cat waiting room shelves"
+      }
+    },
+    {
+      "key": "team-1",
+      "source": {
+        "pexels": "female veterinarian with dog portrait"
+      }
+    },
+    {
+      "key": "team-2",
+      "source": {
+        "pexels": "male veterinarian holding cat"
+      }
+    },
+    {
+      "key": "team-3",
+      "source": {
+        "pexels": "dog groomer portrait"
+      }
+    },
+    {
+      "key": "team-4",
+      "source": {
+        "pexels": "young man portrait reception"
+      }
+    },
+    {
+      "key": "gallery-01",
+      "source": {
+        "pexels": "vet clinic reception dog"
+      }
+    },
+    {
+      "key": "gallery-02",
+      "source": {
+        "pexels": "veterinary exam table"
+      }
+    },
+    {
+      "key": "gallery-03",
+      "source": {
+        "pexels": "dog bath grooming foam"
+      }
+    },
+    {
+      "key": "gallery-04",
+      "source": {
+        "pexels": "cat resting bed"
+      }
+    },
+    {
+      "key": "gallery-05",
+      "source": {
+        "pexels": "groomer cutting small dog"
+      }
+    },
+    {
+      "key": "gallery-06",
+      "source": {
+        "pexels": "dog boarding beds toys"
+      }
+    },
+    {
+      "key": "gallery-07",
+      "source": {
+        "pexels": "dog leash vaccination card"
+      }
+    },
+    {
+      "key": "gallery-08",
+      "source": {
+        "pexels": "dog at shop door"
+      }
+    }
+  ],
+  "motion": {
+    "preset": "calm",
+    "progress": false
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Tu veterinaria en <span class=\"lz-title__serif\">Portales</span>.",
+          "text": "Consultas, vacunas, baño y corte para perros y gatos, con precios claros. Agenda por WhatsApp."
+        }
+      }
+    }
+  }
+}

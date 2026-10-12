@@ -8,6 +8,7 @@
 - `packages/api-client` — typed API client generated from `apps/api/openapi.json` via `@hey-api/openapi-ts`, with TanStack Query bindings.
 - `packages/template-kit` — templates as source (sections + themes + content packs) compiled into GrapesJS projects + previews; see its `CLAUDE.md`.
 - `packages/lattiz-cli` — `pnpm lattiz`: template → `templates.lattiz.app` pipeline over the kit, the seed and the previews deploy; see `docs/lattiz-cli.md`.
+- `.claude/skills/lattiz-template` — Claude Code skill (`/lattiz-template <negocio> en <ciudad>`): builds a Básico + Pro pair from a spec through the CLI and stops before anything remote; see `docs/lattiz-skill.md`.
 
 ## Architecture Invariants
 
@@ -57,7 +58,7 @@
 - `test` — `turbo run test`
 - `generate:api` — `turbo run generate:openapi generate:client` (API writes `openapi.json`, then `api-client` regenerates)
 - `template:dev <id>` / `template:shots <id>` / `template:seed -- --only <id> [--dry-run]` — template tuning loop; see `docs/template-workflow.md`
-- `lattiz <command>` — guided template pipeline (`doctor`, `list`, `new`, `spec`, `build`, `freeze`, `unfreeze`, `dev`, `motion`, `check`, `seed`, `deploy`, `publish`, `ship`) in `packages/lattiz-cli`; see `docs/lattiz-cli.md` and, for spec-driven templates, `docs/template-spec.md`
+- `lattiz <command>` — guided template pipeline (`doctor`, `list`, `giro`, `new`, `spec`, `build`, `freeze`, `unfreeze`, `dev`, `motion`, `check`, `review`, `seed`, `deploy`, `publish`, `ship`) in `packages/lattiz-cli`; see `docs/lattiz-cli.md` and, for spec-driven templates, `docs/template-spec.md`
 
 **`apps/api`** (`pnpm --filter @lattiz/api <script>`):
 - `dev` — `nest start --watch`

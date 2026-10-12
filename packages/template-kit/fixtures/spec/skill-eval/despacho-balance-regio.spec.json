@@ -1,0 +1,478 @@
+{
+  "$schema": "../../../specs/spec.schema.json",
+  "specVersion": 1,
+  "idBase": "despacho-balance-regio",
+  "twin": true,
+  "giro": "despacho",
+  "business": {
+    "name": "Balance Regio",
+    "shortName": "Balance",
+    "tagline": "Contadores",
+    "city": "Monterrey",
+    "branch": "Cumbres",
+    "address": "Av. Paseo de los Leones 2310, Local 8, Col. Cumbres, Monterrey",
+    "hours": "Lun–Vie 9:00–18:30 · Sáb 9:00–13:00",
+    "phone": "+52 81 0000 0000",
+    "whatsapp": "5218100000000",
+    "whatsappMessage": "Hola, quiero ayuda con mis impuestos",
+    "email": "hola@balanceregio.mx"
+  },
+  "brand": {
+    "palette": {
+      "preset": "nocturno"
+    },
+    "fontPair": "playfair-display+inter",
+    "shape": "filete"
+  },
+  "sections": {
+    "pro": [
+      {
+        "role": "header"
+      },
+      {
+        "role": "hero"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog"
+      },
+      {
+        "role": "team"
+      },
+      {
+        "role": "proof"
+      },
+      {
+        "role": "testimonials"
+      },
+      {
+        "role": "faq"
+      },
+      {
+        "role": "contact"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer"
+      }
+    ],
+    "basico": [
+      {
+        "role": "header"
+      },
+      {
+        "role": "hero"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog"
+      },
+      {
+        "role": "faq"
+      },
+      {
+        "role": "contact"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer"
+      }
+    ]
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "{{name}} en {{city}}: impuestos y declaraciones para profesionistas, arrendadores y pequeños negocios."
+    },
+    "navbar": {
+      "cta": "Escríbenos"
+    },
+    "hero": {
+      "image": "hero.jpg",
+      "imageAlt": "Contadora explicando una declaración a una clienta en su escritorio",
+      "eyebrow": "Contadores · {{branch}}",
+      "title": "Tus impuestos, <span class=\"lz-title__serif\">en calma</span>.",
+      "text": "Llevamos las declaraciones de profesionistas, médicos, arrendadores y pequeños negocios de Monterrey. Te avisamos fechas y te explicamos cada pago.",
+      "primaryCta": "Escribir por WhatsApp",
+      "secondaryCta": "Ver servicios",
+      "secondaryHref": "#servicios",
+      "sticker": "Respuesta en el día"
+    },
+    "marquee": {
+      "label": "Para quién trabajamos",
+      "items": [
+        "Profesionistas",
+        "Arrendadores",
+        "Médicos y dentistas",
+        "Pequeños negocios",
+        "Declaración anual"
+      ]
+    },
+    "about": {
+      "kicker": "{{index}} — Despacho",
+      "title": "Un contador que <span class=\"lz-title__serif\">te explica</span>.",
+      "summary": "En {{shortName}} atendemos a personas: profesionistas, arrendadores y dueños de un negocio pequeño. Revisamos tus facturas cada mes, presentamos tus impuestos y te decimos qué pagaste y por qué.",
+      "statement": "Pagar impuestos no tiene que dar miedo: con fechas claras y alguien que conteste, es un trámite más.",
+      "image": "about.jpg",
+      "imageAlt": "Mesa con facturas ordenadas, una laptop y una taza de café",
+      "sticker": "Cédula profesional 0000000",
+      "paragraphs": [
+        "Te mandamos un recordatorio antes de cada fecha y la línea de captura con tiempo.",
+        "Revisamos tus deducciones personales para tu declaración anual.",
+        "Todo por WhatsApp o correo; si prefieres, nos vemos en la oficina en Cumbres."
+      ],
+      "stats": [
+        {
+          "value": "+11 años",
+          "label": "Con familias regias"
+        },
+        {
+          "value": "+300",
+          "label": "Declaraciones al año"
+        },
+        {
+          "value": "Mismo día",
+          "label": "Para responderte"
+        }
+      ]
+    },
+    "services": {
+      "kicker": "{{index}} — Servicios",
+      "title": "Servicios y <span class=\"lz-title__serif\">honorarios</span>",
+      "intro": "Montos de referencia en pesos, más IVA; te cotizamos según tus ingresos y facturas.",
+      "prices": [
+        {
+          "name": "Profesionista",
+          "price": "Desde $950",
+          "description": "Declaraciones mensuales y recordatorios."
+        },
+        {
+          "name": "Arrendamiento",
+          "price": "Desde $750",
+          "description": "Para quien renta uno o más inmuebles."
+        },
+        {
+          "name": "Declaración anual",
+          "price": "Desde $1,100",
+          "description": "Con revisión de deducciones personales."
+        },
+        {
+          "name": "Pequeño negocio",
+          "price": "Desde $1,600",
+          "description": "Contabilidad, impuestos y facturación."
+        },
+        {
+          "name": "Alta en el SAT",
+          "price": "$650",
+          "description": "Te acompañamos en el registro y la firma."
+        },
+        {
+          "name": "Consulta",
+          "price": "$700/hora",
+          "description": "Una duda puntual, con respuesta por escrito."
+        }
+      ],
+      "promos": [
+        {
+          "tag": "Anual",
+          "title": "Prepara tu declaración anual",
+          "text": "Mándanos tus facturas desde enero y la presentamos con tiempo.",
+          "cta": "Empezar",
+          "href": "{{whatsappUrl:Hola, quiero preparar mi declaración anual}}"
+        },
+        {
+          "tag": "Rentas",
+          "title": "Si rentas un departamento",
+          "text": "Te explicamos cómo facturar tus rentas y qué impuestos pagas.",
+          "cta": "Preguntar",
+          "href": "{{whatsappUrl:Hola, rento un inmueble y tengo dudas}}"
+        }
+      ]
+    },
+    "gallery": {
+      "kicker": "{{index}} — Oficina",
+      "title": "Dónde <span class=\"lz-title__serif\">trabajamos</span>",
+      "items": [
+        {
+          "image": "gallery-01.jpg",
+          "caption": "Recepción",
+          "alt": "Recepción del despacho con sillas y una planta"
+        },
+        {
+          "image": "gallery-02.jpg",
+          "caption": "Sala de juntas",
+          "alt": "Sala de juntas con mesa de madera"
+        },
+        {
+          "image": "gallery-03.jpg",
+          "caption": "Escritorios",
+          "alt": "Escritorios con computadoras y documentos ordenados"
+        },
+        {
+          "image": "gallery-04.jpg",
+          "caption": "Archivo",
+          "alt": "Estantes con carpetas archivadas"
+        },
+        {
+          "image": "gallery-05.jpg",
+          "caption": "Reunión",
+          "alt": "Dos personas revisando una laptop en una mesa"
+        },
+        {
+          "image": "gallery-06.jpg",
+          "caption": "Biblioteca",
+          "alt": "Libros de consulta en una repisa"
+        },
+        {
+          "image": "gallery-07.jpg",
+          "caption": "Café",
+          "alt": "Taza de café junto a una libreta"
+        },
+        {
+          "image": "gallery-08.jpg",
+          "caption": "Edificio",
+          "alt": "Fachada del edificio de oficinas"
+        }
+      ]
+    },
+    "team": {
+      "kicker": "{{index}} — Socios",
+      "title": "Quién te <span class=\"lz-title__serif\">atiende</span>",
+      "members": [
+        {
+          "name": "C.P. Lucía Montemayor",
+          "role": "Socia",
+          "tags": [
+            "Cédula 0000000",
+            "Profesionistas"
+          ],
+          "image": "team-1.jpg",
+          "imageAlt": "Retrato de la C.P. Lucía Montemayor"
+        },
+        {
+          "name": "C.P. Ernesto Salinas",
+          "role": "Impuestos personales",
+          "tags": [
+            "Cédula 0000000",
+            "Anual"
+          ],
+          "image": "team-2.jpg",
+          "imageAlt": "Retrato del C.P. Ernesto Salinas"
+        },
+        {
+          "name": "Lic. Paulina Garza",
+          "role": "Arrendamiento",
+          "tags": [
+            "Rentas",
+            "Facturas"
+          ],
+          "image": "team-3.jpg",
+          "imageAlt": "Retrato de la Lic. Paulina Garza"
+        },
+        {
+          "name": "Diego Villarreal",
+          "role": "Atención a clientes",
+          "tags": [
+            "WhatsApp",
+            "Citas"
+          ],
+          "image": "team-4.jpg",
+          "imageAlt": "Retrato de Diego Villarreal"
+        }
+      ]
+    },
+    "testimonials": {
+      "kicker": "{{index}} — Clientes",
+      "score": "4.9",
+      "summary": "126 opiniones en Google",
+      "allReviewsCta": "Ver todas en Google",
+      "writeReviewCta": "Dejar reseña en Google",
+      "reviews": [
+        {
+          "text": "Soy dentista y nunca entendía mis impuestos. Ahora me llega un mensaje antes de cada pago con todo explicado.",
+          "author": "Mariana T."
+        },
+        {
+          "text": "Me ayudaron a facturar las rentas de un departamento heredado. Paciencia total.",
+          "author": "Jorge A."
+        },
+        {
+          "text": "Mi declaración anual quedó lista en marzo, sin carreras.",
+          "author": "Silvia G."
+        }
+      ]
+    },
+    "faq": {
+      "kicker": "{{index}} — Preguntas",
+      "title": "Preguntas <span class=\"lz-title__serif\">frecuentes</span>",
+      "intro": "Dudas de quien busca contador por primera vez. Escríbenos con tu caso.",
+      "cta": "Preguntar por WhatsApp",
+      "items": [
+        {
+          "question": "¿Atienden a personas o solo empresas?",
+          "answer": "Sobre todo a personas: profesionistas, arrendadores y negocios pequeños."
+        },
+        {
+          "question": "¿Qué necesito para empezar?",
+          "answer": "Tu RFC y acceso a tus facturas; en la primera llamada te damos la lista completa."
+        },
+        {
+          "question": "¿Cómo me avisan de los pagos?",
+          "answer": "Por WhatsApp, con la línea de captura y la fecha límite, unos días antes."
+        },
+        {
+          "question": "¿Puedo cambiarme de contador a mitad de año?",
+          "answer": "Sí. Revisamos lo presentado y tomamos tu contabilidad desde el siguiente mes."
+        },
+        {
+          "question": "¿Cuánto cobran?",
+          "answer": "Depende de tus ingresos y facturas; te damos una cotización por escrito."
+        },
+        {
+          "question": "¿Dan factura?",
+          "answer": "Sí, cada mes facturamos nuestros honorarios."
+        }
+      ]
+    },
+    "locations": {
+      "kicker": "{{index}} — Contacto",
+      "title": "Escríbenos con <span class=\"lz-title__serif\">tu caso</span>",
+      "contactText": "Contestamos el mismo día hábil. Atendemos en Cumbres o por videollamada.",
+      "whatsappLabel": "WhatsApp",
+      "whatsappValue": "Escribir",
+      "callLabel": "Teléfono",
+      "emailLabel": "Correo",
+      "directionsLabel": "Cómo llegar",
+      "hoursLabel": "Horario",
+      "whatsappCta": "Escribir por WhatsApp",
+      "callCta": "Llamar"
+    },
+    "floating-whatsapp": {
+      "label": "Escribir al contador por WhatsApp"
+    },
+    "footer": {
+      "about": "Contadores en {{city}} para profesionistas, arrendadores y negocios pequeños. Impuestos al día y explicados.",
+      "branchesTitle": "Oficina",
+      "linksTitle": "Secciones",
+      "contactTitle": "Contacto"
+    }
+  },
+  "images": [
+    {
+      "key": "hero",
+      "source": {
+        "pexels": "accountant meeting client office documents"
+      }
+    },
+    {
+      "key": "about",
+      "source": {
+        "pexels": "office desk folders natural light"
+      }
+    },
+    {
+      "key": "team-1",
+      "source": {
+        "pexels": "businesswoman portrait office"
+      }
+    },
+    {
+      "key": "team-2",
+      "source": {
+        "pexels": "businessman portrait suit"
+      }
+    },
+    {
+      "key": "team-3",
+      "source": {
+        "pexels": "young professional woman portrait"
+      }
+    },
+    {
+      "key": "team-4",
+      "source": {
+        "pexels": "young professional man portrait window"
+      }
+    },
+    {
+      "key": "gallery-01",
+      "source": {
+        "pexels": "office reception plant"
+      }
+    },
+    {
+      "key": "gallery-02",
+      "source": {
+        "pexels": "meeting room wooden table"
+      }
+    },
+    {
+      "key": "gallery-03",
+      "source": {
+        "pexels": "office desks computers"
+      }
+    },
+    {
+      "key": "gallery-04",
+      "source": {
+        "pexels": "archive shelves folders"
+      }
+    },
+    {
+      "key": "gallery-05",
+      "source": {
+        "pexels": "two people laptop meeting"
+      }
+    },
+    {
+      "key": "gallery-06",
+      "source": {
+        "pexels": "books shelf office"
+      }
+    },
+    {
+      "key": "gallery-07",
+      "source": {
+        "pexels": "coffee notebook desk"
+      }
+    },
+    {
+      "key": "gallery-08",
+      "source": {
+        "pexels": "office building facade"
+      }
+    }
+  ],
+  "motion": {
+    "preset": "editorial",
+    "progress": false
+  },
+  "overrides": {
+    "basico": {
+      "brand": {
+        "palette": {
+          "custom": {
+            "bg": "#F4F7F7",
+            "accent": "#0E6E78"
+          }
+        },
+        "fontPair": "lora+figtree",
+        "shape": "sutil"
+      },
+      "copy": {
+        "hero": {
+          "title": "Impuestos <span class=\"lz-title__serif\">al día</span>.",
+          "text": "Declaraciones mensuales y anual para profesionistas y personas con negocio, con honorarios claros. Escríbenos."
+        }
+      }
+    }
+  }
+}
