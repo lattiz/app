@@ -57,7 +57,7 @@
 - `test` — `turbo run test`
 - `generate:api` — `turbo run generate:openapi generate:client` (API writes `openapi.json`, then `api-client` regenerates)
 - `template:dev <id>` / `template:shots <id>` / `template:seed -- --only <id> [--dry-run]` — template tuning loop; see `docs/template-workflow.md`
-- `lattiz <command>` — guided template pipeline (`doctor`, `list`, `new`, `dev`, `motion`, `check`, `seed`, `deploy`, `publish`, `ship`) in `packages/lattiz-cli`; see `docs/lattiz-cli.md`
+- `lattiz <command>` — guided template pipeline (`doctor`, `list`, `new`, `spec`, `build`, `freeze`, `unfreeze`, `dev`, `motion`, `check`, `seed`, `deploy`, `publish`, `ship`) in `packages/lattiz-cli`; see `docs/lattiz-cli.md` and, for spec-driven templates, `docs/template-spec.md`
 
 **`apps/api`** (`pnpm --filter @lattiz/api <script>`):
 - `dev` — `nest start --watch`

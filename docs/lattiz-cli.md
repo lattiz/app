@@ -24,6 +24,10 @@
 - **Arreglado:** la memoria pico de `check` sumaba cualquier proceso «chrom» (un Chrome de escritorio
   abierto daba ~6 GiB); ahora cuenta solo los procesos hijos del CLI. El `.grapesjs` traía ids de
   página y frame aleatorios en cada compilación; ahora son estables (misma entrada → mismos bytes).
+- **Arreglado después (Fase 2):** `check` marcaba FAIL de contraste en los elementos de un
+  marquee recortados fuera de la pantalla cuando el runtime de Motion está cargado (axe tomaba el
+  fondo de la página, 1.08:1); ahora ignora el texto que no cabe completo en el ancho de la pantalla
+  (el desbordamiento real ya lo marca su propia regla).
 - **No verificado aquí (escrituras remotas):** `seed` real, `deploy`, `publish` y `ship`. Revisión
   estática sin hallazgos; prueba una vez de punta a punta con una plantilla desechable:
   `pnpm lattiz seed <id>` → `pnpm lattiz deploy` → `pnpm lattiz status <id>` (o `pnpm lattiz
@@ -137,18 +141,21 @@ vez y luego tome miniatura y active cada plantilla pendiente.
 
 ## Comandos
 
-| Comando                                                       | Qué hace                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pnpm lattiz doctor`                                          | Node, pnpm, dependencias, Chromium, variables del seed (nombre y presencia), lectura de Supabase, Vercel CLI y sesión, enlace del proyecto de previews, puerto 4400, git. Sale con 2 si algo bloquea.                                                                                                                                                                                                                                          |
-| `pnpm lattiz list [id] [--offline] [--json]` (alias `status`) | Plantillas locales con tier; del remoto (solo lectura): tier, `is_active`, `created_at`, si `templates.lattiz.app/<id>` responde; y el último check/seed/deploy local.                                                                                                                                                                                                                                                                         |
-| `pnpm lattiz new`                                             | Asistente: tier (`pro`, `basico`, `ambos`), giro, nombre, id y base. Clona el manifiesto base a `packages/template-kit/templates/<id>.ts`, reescribe id, nombre, categoría, descripción y nombre del negocio, deja `motion.sections` vacío (Pro), compila y corre `kit:validate`. Flags: `--tier --giro --nombre --id --id-pro --id-basico --base --base-pro --base-basico`.                                                                   |
-| `pnpm lattiz dev <id> [--port 4400] [--runtime-src]`          | Servidor local con recarga en vivo (al guardar manifiesto, secciones, temas, textos, assets o `core.css`). La página pasa por `composeSiteHtml`, igual que en producción: tokens con el perfil demo → SEO → JSON-LD → Motion **solo si es Pro**. Barra: 360/390/768/1024/1440, alto de pantalla 1366×768 y 844×390, Motion on/off y preset (Pro), «Reduced motion», «Abrir sin marco» (`/site`). `pnpm template:dev <id>` es el mismo comando. |
-| `pnpm lattiz motion <id> [--edit]`                            | Pro: compila y muestra la tabla del clasificador de secciones (índice, bloque, tipo, motivo, grupos…) sin escribir nada, y dónde ajustarla (`motion.sections` del manifiesto). `--edit` abre el manifiesto en `$EDITOR`. En Básico explica que no aplica.                                                                                                                                                                                      |
-| `pnpm lattiz check <id> [--lighthouse] [--json]`              | Revisión con Playwright (abajo). Tabla PASS/WARN/FAIL por regla y tamaño, capturas en `.lattiz/shots/<id>/`, resultado en `.lattiz/state/<id>.json`, sale con 1 si hay FAIL.                                                                                                                                                                                                                                                                   |
-| `pnpm lattiz seed <id> [--dry-run] [--deploy]`                | Corre siempre el dry-run del seed (compila, valida, tabla de Motion, assets), imprime el plan (id, tier, INSERT o UPDATE de **una** fila, assets a R2, archivo de preview, URL), pide confirmación y siembra con `--no-deploy`. Luego verifica la fila (tier, `is_active`, `created_at`). `--dry-run` no escribe nada; `--deploy` corre el seed completo de siempre.                                                                           |
-| `pnpm lattiz deploy [--skip-verify]`                          | Muestra qué sube (todo `apps/template-previews/public`, qué previews no están commiteados, qué plantillas quedan por terminar), pide confirmación, `vercel deploy --prod`, sondea la URL hasta 200 (2 min) y termina las plantillas sembradas sin deploy (`seed --finalize`: miniatura + activar).                                                                                                                                             |
-| `pnpm lattiz publish <id> [--force] [--lighthouse]`           | Lista los pasos y los marca: `check` (FAIL bloquea salvo `--force`, que se avisa en grande y queda en el estado) → Pro: tabla de Motion y «¿continuar?» → `seed` → `deploy` → verifica `https://templates.lattiz.app/<id>`. Si un paso falla dice qué comando re-ejecutar.                                                                                                                                                                     |
-| `pnpm lattiz ship <idA> [idB]`                                | `publish` del par (Básico + Pro): checks y seeds en orden, **un** deploy al final, y las dos URLs.                                                                                                                                                                                                                                                                                                                                             |
+| Comando                                                                                                     | Qué hace                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm lattiz doctor`                                                                                        | Node, pnpm, dependencias, Chromium, variables del seed (nombre y presencia), lectura de Supabase, Vercel CLI y sesión, enlace del proyecto de previews, puerto 4400, git. Sale con 2 si algo bloquea.                                                                                                                                                                                                                                          |
+| `pnpm lattiz list [id] [--offline] [--json]` (alias `status`)                                               | Plantillas locales con tier y origen (`generada`, `congelada`, `clon`, `a mano`; ⚠ si se editó a mano o el spec cambió; specs sin build); del remoto (solo lectura): tier, `is_active`, `created_at`, si `templates.lattiz.app/<id>` responde; y el último check/seed/deploy local.                                                                                                                                                            |
+| `pnpm lattiz new [--spec archivo] [--modo spec\|clon]`                                                      | **Desde spec (recomendado):** `spec init` + `build` (ver abajo; `--spec <archivo> --yes --json` sin preguntas). **Clonar (legacy):** tier, giro, nombre, id y base; clona el manifiesto base, reescribe id, nombre, categoría, descripción y nombre del negocio, deja `motion.sections` vacío (Pro), compila y valida. Sin terminal, el modo por defecto sigue siendo clonar.                                                                  |
+| `pnpm lattiz spec init\|validate\|schema`                                                                   | `init --giro --nombre [--twin\|--tier] [--id]`: escribe `packages/template-kit/specs/<giro>-<nombre>.spec.json` con el copy del giro, paleta y tipografía libres y una lista `todo`. `validate <archivo\|id>`: esquema, blueprint y copy completo con rutas JSON. `schema`: JSON Schema. Todos con `--json`.                                                                                                                                   |
+| `pnpm lattiz build <id\|spec> [--dry-run] [--diff] [--images placeholder\|none\|pexels] [--force] [--json]` | Compila el spec: manifiesto(s), tema(s), copy y perfil demo únicos en el giro; valida en una carpeta temporal y solo entonces escribe y compila `dist/`. Se niega ante archivos editados a mano (sin `--force`) o congelados. Guía: `docs/template-spec.md`.                                                                                                                                                                                   |
+| `pnpm lattiz freeze <id>` / `unfreeze <id>`                                                                 | Congela los archivos generados (el build ya no los toca y muestra el diff) / los devuelve al spec con confirmación (`--yes`).                                                                                                                                                                                                                                                                                                                  |
+| `pnpm lattiz dev <id> [--port 4400] [--runtime-src]`                                                        | Servidor local con recarga en vivo (al guardar manifiesto, secciones, temas, textos, assets o `core.css`). La página pasa por `composeSiteHtml`, igual que en producción: tokens con el perfil demo → SEO → JSON-LD → Motion **solo si es Pro**. Barra: 360/390/768/1024/1440, alto de pantalla 1366×768 y 844×390, Motion on/off y preset (Pro), «Reduced motion», «Abrir sin marco» (`/site`). `pnpm template:dev <id>` es el mismo comando. |
+| `pnpm lattiz motion <id> [--edit]`                                                                          | Pro: compila y muestra la tabla del clasificador de secciones (índice, bloque, tipo, motivo, grupos…) sin escribir nada, y dónde ajustarla (`motion.sections` del manifiesto). `--edit` abre el manifiesto en `$EDITOR`. En Básico explica que no aplica.                                                                                                                                                                                      |
+| `pnpm lattiz check <id> [--lighthouse] [--json]`                                                            | Revisión con Playwright (abajo). Tabla PASS/WARN/FAIL por regla y tamaño, capturas en `.lattiz/shots/<id>/`, resultado en `.lattiz/state/<id>.json`, sale con 1 si hay FAIL.                                                                                                                                                                                                                                                                   |
+| `pnpm lattiz seed <id> [--dry-run] [--deploy]`                                                              | Corre siempre el dry-run del seed (compila, valida, tabla de Motion, assets), imprime el plan (id, tier, INSERT o UPDATE de **una** fila, assets a R2, archivo de preview, URL), pide confirmación y siembra con `--no-deploy`. Luego verifica la fila (tier, `is_active`, `created_at`). `--dry-run` no escribe nada; `--deploy` corre el seed completo de siempre.                                                                           |
+| `pnpm lattiz deploy [--skip-verify]`                                                                        | Muestra qué sube (todo `apps/template-previews/public`, qué previews no están commiteados, qué plantillas quedan por terminar), pide confirmación, `vercel deploy --prod`, sondea la URL hasta 200 (2 min) y termina las plantillas sembradas sin deploy (`seed --finalize`: miniatura + activar).                                                                                                                                             |
+| `pnpm lattiz publish <id> [--force] [--lighthouse]`                                                         | Lista los pasos y los marca: `check` (FAIL bloquea salvo `--force`, que se avisa en grande y queda en el estado) → Pro: tabla de Motion y «¿continuar?» → `seed` → `deploy` → verifica `https://templates.lattiz.app/<id>`. Si un paso falla dice qué comando re-ejecutar.                                                                                                                                                                     |
+| `pnpm lattiz ship <idA> [idB]`                                                                              | `publish` del par (Básico + Pro): checks y seeds en orden, **un** deploy al final, y las dos URLs.                                                                                                                                                                                                                                                                                                                                             |
 
 ### Qué revisa `check`
 
@@ -170,6 +177,7 @@ Tamaños: 360×780, 390×844, 768×1024, 1024×768, 1440×900 (página completa)
 | Imagen > 300 KB o > 2000 px de ancho (en `dist/`, antes de que el seed la pase a WebP ≤ 2000 px)                                                                                            | WARN         |
 | Secciones `data-lz-fit` (héroes): contenido vs `0.9 × (alto − header)`, o texto + CTA visibles si la imagen va abajo; misma regla que `kit:shots`. Alto ≤ 560 px o sin secciones fit: `N/A` | FAIL / N/A   |
 | Pro: secciones sin tipo de Motion (preset `none` o tipo `none`) y número de grupos                                                                                                          | WARN         |
+| Plantillas de spec: créditos de fotos (`assets/<giro>/<tema>/CREDITS.json`)                                                                                                                 | INFO         |
 | `--lighthouse`: rendimiento, accesibilidad, buenas prácticas y SEO (`npx lighthouse@12`)                                                                                                    | WARN si < 80 |
 
 El texto < 14 px es WARN porque todas las plantillas actuales tienen etiquetas de 10–12 px
@@ -181,28 +189,34 @@ compartida, así que el uso real es menor). Lighthouse corre aparte, después de
 
 ## El ciclo de venta, paso a paso
 
+Con spec (recomendado; detalle en `docs/template-spec.md`):
+
 1. **`pnpm lattiz doctor`** — arregla lo que marque (sesión de Vercel, variables, Chromium).
-2. **`pnpm lattiz new`** — p. ej. `--tier ambos --giro floreria --nombre "Flores Lupita"`. Crea
-   `floreria-base-flores-lupita-v1` (Básico) y `floreria-flores-lupita-v1` (Pro) clonando las bases
-   de `packages/lattiz-cli/bases.json`.
-3. **Edita** cada manifiesto: un tema propio en `themes/` (colores, tipografías, forma), variantes
-   de hero y servicios distintas a las de su base, y el copy (hero, marca, sucursal).
-   **Mientras el clon sea idéntico a su base, `kit:validate` falla también para la base y para el
-   resto del rubro** (tema, par tipográfico y titular deben ser únicos): sus seeds quedan
-   bloqueados hasta que lo diferencies o lo borres. El copy no se reescribe solo para el giro, y
-   solo existe el rubro barbería: los otros giros arrancan de una barbería.
-4. **`pnpm lattiz dev <id>`** — abre `http://localhost:4400`, revisa los 7 tamaños, con Motion y
-   con «Reduced motion».
-5. **`pnpm lattiz motion <id>`** (Pro) — revisa la tabla; corrige tipos en `motion.sections`.
-6. **`pnpm lattiz check <id>`** — hasta que no haya FAIL; revisa las capturas.
-7. **`pnpm lattiz publish <id>`**, o **`pnpm lattiz ship <idBásico> <idPro>`** para el par.
-8. **Comparte** `https://templates.lattiz.app/<id>`. Commitea el manifiesto, el tema y
-   `apps/template-previews/public/<id>/index.html`.
+2. **`pnpm lattiz spec init --giro floreria --nombre "Flores Lupita" --twin`** — escribe
+   `packages/template-kit/specs/floreria-flores-lupita.spec.json` (giros: restaurante, clinica,
+   floreria, barberia).
+3. **Edita el spec** — datos del negocio, copy (precios, equipo, reseñas, preguntas), marca y fotos;
+   vacía `todo`. `pnpm lattiz spec validate floreria-flores-lupita`.
+4. **`pnpm lattiz build floreria-flores-lupita`** — genera `floreria-flores-lupita-v1` (Pro) y
+   `floreria-base-flores-lupita-v1` (Básico), únicas en el giro y validadas antes de escribir.
+5. **`pnpm lattiz dev <id>`** — `http://localhost:4400`, los 7 tamaños, con Motion y con «Reduced motion».
+6. **`pnpm lattiz motion <idPro>`** — si un tipo está mal, `motion.overrides` en el spec y `build`.
+7. **`pnpm lattiz check <id>`** — cada una, de una en una, hasta que no haya FAIL.
+8. **`pnpm lattiz ship <idBásico> <idPro>`** y comparte `https://templates.lattiz.app/<id>`. Commitea
+   el spec, los archivos generados y `apps/template-previews/public/<id>/index.html`.
+
+Clonando (legacy, para giros sin registro como despacho o estética): `pnpm lattiz new --modo clon
+--tier ambos --giro despacho --nombre "…"` y edita cada manifiesto a mano (tema propio, variantes de
+hero y servicios, copy). **Mientras el clon sea idéntico a su base, `kit:validate` falla también para
+la base y para el resto del rubro** (tema, par tipográfico y titular deben ser únicos).
 
 ### Dónde ajustar espacios, tipografía y responsive
 
 De lo más amplio a lo más puntual (detalle en `docs/template-workflow.md` §6):
 
+0. **El spec** — en plantillas generadas, todo se ajusta en el spec (`brand.rhythm`,
+   `brand.displayScale`, variantes de sección) y se recompila; editar los archivos generados exige
+   `lattiz freeze`.
 1. **Tokens del tema** — `themes/<tema>.json › rhythm` (`sectionPad`, `gutter*`, `space`,
    `textScale`, `title*`) y `fonts.displayScale`. Como el tema es único por plantilla dentro del
    rubro, en la práctica es «por plantilla».
@@ -220,25 +234,16 @@ miniatura). Lo único que se inyecta al servir y llega a todos es lo de `route.t
 JSON-LD, analítica y el runtime de Motion para Pro). Si cambias el tier de una plantilla en uso, el
 seed avisa cuántos sitios la usan.
 
-## Fase 2 (diseño, no implementado)
+## Fase 2 (hecha) y lo que sigue
 
-Lo de abajo es diseño; nada existe todavía. La Fase 1 deja la superficie de comandos y las rutas
-listas para esto: los comandos reciben ids, el estado vive en `.lattiz/`, y `new` solo produce un
-manifiesto del kit, que es justo lo que el compilador generaría.
+La Fase 2 está implementada: `template.spec.json` + compilador (`kit:spec` / `lattiz build`),
+gemelas, unicidad por construcción, congelado y tres giros nuevos. Referencia, catálogo de giros y
+contrato para la skill de Claude Code: `docs/template-spec.md`.
 
-- **`template.spec.json`** por plantilla (junto al manifiesto o en `packages/template-kit/specs/`):
-  giro, tier, paleta, par tipográfico, secciones con variante, copy es-MX, búsquedas de Pexels para
-  las fotos y un perfil demo. Es la fuente; el manifiesto, el tema y el pack de copy se generan.
-- **Compilador** en `packages/template-kit` (`kit:spec`): compone el kit de secciones + tokens + tags
-  de Motion en el manifiesto/tema/copy y de ahí en `.grapesjs` + HTML con el compilador actual.
-  Valida contra los blueprints antes de escribir.
-- **Gemelas**: un spec produce la Básica y la Pro (`twin: true`), con roles y variantes permitidas
-  por tier y temas distintos que pasan las reglas de unicidad del rubro.
-- **`--freeze`**: para plantillas retocadas a mano o en el editor visual, congela la salida
-  compilada y el spec deja de sobrescribirla (el CLI avisa si el spec y lo congelado difieren).
+Pendiente (diseño):
+
 - **`pnpm lattiz prospect <id>`**: URL privada de demo (no listada, `noindex`, con caducidad), una
   marca `demo` en `templates` (requiere migración en `supabase/migrations/`) para que no aparezca en
   la galería, y una hoja de pitch (PDF/PNG) con capturas y código QR.
-- **Skill de Claude Code** que maneja el CLI sin preguntas: `pnpm lattiz new --spec <archivo>
---yes`, luego `dev`/`check --json` en bucle hasta que no haya FAIL, y `ship --yes` cuando el
-  humano lo apruebe. Los códigos de salida y `--json` ya están pensados para eso.
+- **Skill de Claude Code** sobre el contrato de `docs/template-spec.md` (`new --spec --yes --json` →
+  `build`/`check --json` en bucle → aprobación humana → `ship --yes`).
