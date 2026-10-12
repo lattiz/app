@@ -122,6 +122,14 @@ export async function validateSpec(
       );
     }
   }
+  if (catalogOf(spec) === 'legacy')
+    for (const [path, brand] of brands)
+      if (brand?.style)
+        err(
+          `${path}.style`,
+          'los estilos (brand.style) son del catálogo extended',
+          'Agrega "catalog": "extended" en brand, o quita style.',
+        );
   if (spec.overrides) {
     for (const tier of Object.keys(spec.overrides) as SpecTier[])
       if (!targets.some((t) => t.tier === tier))

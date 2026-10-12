@@ -21,6 +21,7 @@ async function main(): Promise<void> {
     slots: list('slot'),
     palettes: flags.has('palettes'),
     fonts: flags.has('fonts'),
+    tokens: flags.has('tokens'),
     themes: list('themes'),
     noImage: flags.has('sin-imagen'),
     log: (line) => console.log(line),

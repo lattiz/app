@@ -10,21 +10,21 @@ Se trabaja en tres partes (Parte 1: cimientos; Parte 2: secciones y arquetipos; 
 prueba de diversidad, docs y skill). Una sesión nueva retoma desde aquí. Estados: `pendiente` ·
 `en curso` · `hecho` · `bloqueado`.
 
-| WP    | Qué                                              | Estado    | Commits | Desviaciones                                   |
-| ----- | ------------------------------------------------ | --------- | ------- | ---------------------------------------------- |
-| WP-1  | Línea base y snapshot dorado                     | hecho     | a151e30 | ver abajo                                      |
-| WP0   | Inventario y modelo de capacidad                 | hecho     | 405ac7d | Motion lo pone el seed, no el markup           |
-| WP0.5 | Skills de diseño: instalar, leer, destilar       | hecho     | 95de8d4 | hover con `(hover: hover) and (pointer: fine)` |
-| WP1   | Versionado del catálogo (legacy/extended) y lock | hecho     | a29eedd | nombrar un id nuevo vale en legacy             |
-| WP2   | Galería del kit y especímenes                    | hecho     | (este)  | sin GrapesJS: CSS real + fragmento renderizado |
-| WP3   | Tokens de estilo                                 | pendiente |         |                                                |
-| WP4   | Biblioteca de paletas                            | pendiente |         |                                                |
-| WP5   | Biblioteca de pares tipográficos                 | pendiente |         |                                                |
-| WP6   | Variantes de sección                             | pendiente |         |                                                |
-| WP7   | Arquetipos de página y módulos verticales        | pendiente |         |                                                |
-| WP8   | Registro, spec, compilador, CLI y skill          | pendiente |         |                                                |
-| WP9   | Prueba de diversidad (local)                     | pendiente |         |                                                |
-| WP10  | Documentación                                    | pendiente |         |                                                |
+| WP    | Qué                                              | Estado    | Commits | Desviaciones                                           |
+| ----- | ------------------------------------------------ | --------- | ------- | ------------------------------------------------------ |
+| WP-1  | Línea base y snapshot dorado                     | hecho     | a151e30 | ver abajo                                              |
+| WP0   | Inventario y modelo de capacidad                 | hecho     | 405ac7d | Motion lo pone el seed, no el markup                   |
+| WP0.5 | Skills de diseño: instalar, leer, destilar       | hecho     | 95de8d4 | hover con `(hover: hover) and (pointer: fine)`         |
+| WP1   | Versionado del catálogo (legacy/extended) y lock | hecho     | a29eedd | nombrar un id nuevo vale en legacy                     |
+| WP2   | Galería del kit y especímenes                    | hecho     | 1b2ec67 | sin GrapesJS: CSS real + fragmento renderizado         |
+| WP3   | Tokens de estilo                                 | hecho     | (este)  | presets en `brand.style.*` (shape/density ya existían) |
+| WP4   | Biblioteca de paletas                            | pendiente |         |                                                        |
+| WP5   | Biblioteca de pares tipográficos                 | pendiente |         |                                                        |
+| WP6   | Variantes de sección                             | pendiente |         |                                                        |
+| WP7   | Arquetipos de página y módulos verticales        | pendiente |         |                                                        |
+| WP8   | Registro, spec, compilador, CLI y skill          | pendiente |         |                                                        |
+| WP9   | Prueba de diversidad (local)                     | pendiente |         |                                                        |
+| WP10  | Documentación                                    | pendiente |         |                                                        |
 
 **Diseño:** reglamento y diales por arquetipo en `docs/template-kit-design-principles.md` (taste-skill
 `d237dd3` y skills de Emil Kowalski `2d22863`, MIT, instaladas en `~/.claude/skills`, no en el repo).
@@ -294,3 +294,54 @@ anti-genérico de `docs/template-kit-design-principles.md` (máximo tres rondas 
 el titular de 56 caracteres de `hero/split` ocupa 5 líneas a 1440 px y empuja los CTA bajo el pliegue
 de 900 px; con copy corto los CTA de dos palabras se cortan a «Reservar una» (es el modo de estrés,
 no un caso real).
+
+## Tokens de estilo (WP3)
+
+Presets **opt-in** del catálogo `extended`: un tema con `style` (`themes/<id>.json › style`, o
+`brand.style` en un spec con `brand.catalog: "extended"`) agrega tokens a `:root`; un tema sin `style`
+no emite ninguno, así que las plantillas legacy compilan byte a byte. Las **variantes nuevas** los leen
+con respaldo (`var(--lz-card-bg, var(--lz-color-surface))`), así que también funcionan bajo un tema
+legacy. **Las variantes existentes no se retroalimentan** (cambiaría su salida); hacerlo variante por
+variante es una opción futura, con su propio commit y snapshot. Definición: `src/lib/style.ts`;
+antes/después: `pnpm lattiz kit gallery --tokens` → `.lattiz/gallery/tokens.html`.
+
+| Preset (`style.*`) | Valores                                                    | Qué cambia                                                                                                                                                                                                                                                                         | Respaldo sin `style`                      |
+| ------------------ | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| `shape`            | `sharp` · `soft` · `round` · `pill`                        | `radiusCard`/`radiusPill` del tema (0/0, 12/10, 22/999, 32/999 px) + `--lz-radius-img` (0, 10, 18, 32) y `--lz-radius-inner` (0, 6, 12, 20)                                                                                                                                        | `--lz-radius-card`                        |
+| `surface`          | `flat` · `outlined` · `tinted` · `elevated`                | `--lz-card-bg`, `--lz-card-border`, `--lz-card-shadow`, `--lz-card-pad` (plano sin caja ni padding; con filete; `surface-2`; `surface` con sombra difusa)                                                                                                                          | `surface` + filete de `--lz-border-width` |
+| `density`          | `compact` · `cozy` · `airy`                                | `density` del tema (compact/regular/airy → `--lz-section-pad`, `--lz-stack`), contenedor 1120/1200/1280 px, `--lz-gap` 16/24/40 y `--lz-gap-lg` 32/48/72 px                                                                                                                        | `24px`                                    |
+| `divider`          | `none` · `hairline` · `rule`                               | `--lz-divider`: nada, `1px` en `line`, `2px` en `text` (borde superior de la sección)                                                                                                                                                                                              | `none`                                    |
+| `imageTreatment`   | `plain` · `framed` · `arch` · `offset` · `duotone-overlay` | `--lz-img-shape` (arco = `999px 999px r r`), `--lz-img-pad` + `--lz-img-frame` + `--lz-img-ring` (marco), `--lz-img-offset` + `--lz-img-offset-bg` (bloque de acento desplazado 14 px), `--lz-img-overlay` + `--lz-img-blend` (velo del acento en `multiply`, sin filtros pesados) | sin marco, sin velo                       |
+| `typeScale`        | `tight` · `normal` · `expressive`                          | multiplica `displayScale` del par (×0.88, ×1, ×1.15; un `brand.displayScale` explícito gana) y `--lz-heading-scale` (0.92, 1, 1.12)                                                                                                                                                | `1`                                       |
+| `displayCase`      | `none` · `upper`                                           | `displayTransform` del tema                                                                                                                                                                                                                                                        | el del par                                |
+| `tracking`         | `tight` · `normal` · `wide`                                | `--lz-display-tracking` (−0.02, 0, 0.04 em)                                                                                                                                                                                                                                        | `0em`                                     |
+
+**Interacción** (siempre que hay `style`; principios §4): `--lz-ease-out: cubic-bezier(0.23, 1, 0.32,
+1)`, `--lz-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1)`, `--lz-dur-press: 120ms`, `--lz-dur-ui:
+160ms`, `--lz-dur-reveal: 240ms`, `--lz-press-scale: 0.97`. Las variantes nuevas escriben el mismo
+valor como respaldo: `transition: transform var(--lz-dur-press, 120ms) var(--lz-ease-out,
+cubic-bezier(.23,1,.32,1))`, hover dentro de `@media (hover: hover) and (pointer: fine)`, `:active`
+con `scale(var(--lz-press-scale, .97))`, `:focus-visible` sin transición y su override de
+`prefers-reduced-motion`.
+
+**Contrato para variantes nuevas** (el bloque de demostración de `src/lib/gallery-style.ts ›
+TOKEN_DEMO_CSS` lo muestra funcionando): cada `var()` lleva el look de hoy como respaldo; una foto con
+`offset` reserva `--lz-img-offset` de margen (si no, se sale de la columna a 390 px); el `::before`
+del desplazamiento usa `--lz-img-offset-bg` (transparente salvo con `offset`, para que el marco no
+herede el acento).
+
+**Desviación de nombres:** el spec ya tenía `brand.shape` (filete, urbano…) y `brand.density`
+(airy|regular|compact), así que los presets van en `brand.style.{shape, surface, density, divider,
+imageTreatment, typeScale, displayCase, tracking}` en vez de `brand.shape|surface|…` sueltos. Un spec
+legacy con `brand.style` es error de `spec validate` («los estilos son del catálogo extended»).
+
+**Verificado:** `kit:verify-snapshot` idéntico; un spec `extended` de clínica con los ocho presets
+compila las dos gemelas y `kit:validate` no da hallazgos (radios 32/999, contenedor 1280, escala
+1.31, tokens en `:root`); la galería de tokens (31 capturas) pasó dos rondas de crítica: en la
+primera el marco heredaba el acento del desplazamiento y los separadores quedaban en el borde de la
+captura; corregido.
+
+**Hallazgo (preexistente):** el `beforeAll` de `test/validate.test.ts` compila seis plantillas con el
+`hookTimeout` por defecto de vitest (10 s) y queda al límite: con más carpetas en `dist/` (dos más de
+un `lattiz build`) se pasa del tiempo y vitest reporta «85 passed | 2 skipped». `main` sin cambios
+hace lo mismo con esas carpetas; sin ellas pasan las 87. No se tocó la configuración de pruebas.

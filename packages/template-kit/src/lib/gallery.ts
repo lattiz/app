@@ -29,6 +29,7 @@ import type {
   Theme,
 } from '../types';
 import { contrastRatio, hueOf, parseColor } from './color';
+import { styleSheet } from './gallery-style';
 import { mapsLinkUrl, renderSection } from './content';
 import { escapeHtml } from './dom';
 import { loadSectionMeta, loadTheme } from './load';
@@ -58,6 +59,8 @@ export interface GalleryOptions {
   sections?: boolean;
   palettes?: boolean;
   fonts?: boolean;
+  /** Style presets before/after (src/lib/style.ts). */
+  tokens?: boolean;
   /** Theme names under themes/ (default: one light, one dark). */
   themes?: string[];
   /** Adds a mode whose images point at missing files (the no-image fallback). */
@@ -651,11 +654,13 @@ export async function kitGallery(
     opts.sections ||
     opts.palettes ||
     opts.fonts ||
+    opts.tokens ||
     (opts.slots?.length ?? 0) > 0;
   const want = {
     sections: any ? Boolean(opts.sections || opts.slots?.length) : true,
     palettes: any ? Boolean(opts.palettes) : true,
     fonts: any ? Boolean(opts.fonts) : true,
+    tokens: any ? Boolean(opts.tokens) : true,
   };
   const slots = opts.slots?.length
     ? opts.slots
@@ -692,6 +697,12 @@ export async function kitGallery(
       shots += r.shots;
       log('  ✓ paletas');
     }
+    if (want.tokens) {
+      const r = await styleSheet(page, out);
+      pages.push(r.page);
+      shots += r.shots;
+      log('  ✓ tokens de estilo');
+    }
     if (want.fonts) {
       const r = await fontSheet(page, out);
       pages.push(r.page);
@@ -709,7 +720,7 @@ export async function kitGallery(
     : [];
   writeFileSync(
     index,
-    `<!DOCTYPE html><html lang="es-MX"><head><meta charset="UTF-8"><title>Galería del kit</title><style>${SHEET_CSS} li{margin:6px 0}</style></head><body><header><h1>Galería del kit</h1>${escapeHtml(relative(REPO_ROOT, out))} · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}</header><ul style="margin:24px 32px">${sheets.map((f) => `<li><a href="sections/${f}">Sección ${f.replace('.html', '')}</a></li>`).join('')}${existsSync(resolve(out, 'palettes.html')) ? '<li><a href="palettes.html">Paletas</a> · <a href="palettes.png">PNG</a></li>' : ''}${existsSync(resolve(out, 'fonts.html')) ? '<li><a href="fonts.html">Pares tipográficos</a> · <a href="fonts.png">PNG</a></li>' : ''}</ul><p class="note">Generada con <code>pnpm lattiz kit gallery</code> (o <code>kit:gallery</code>). Reglas para criticar: docs/template-kit-design-principles.md.</p></body></html>\n`,
+    `<!DOCTYPE html><html lang="es-MX"><head><meta charset="UTF-8"><title>Galería del kit</title><style>${SHEET_CSS} li{margin:6px 0}</style></head><body><header><h1>Galería del kit</h1>${escapeHtml(relative(REPO_ROOT, out))} · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}</header><ul style="margin:24px 32px">${sheets.map((f) => `<li><a href="sections/${f}">Sección ${f.replace('.html', '')}</a></li>`).join('')}${existsSync(resolve(out, 'palettes.html')) ? '<li><a href="palettes.html">Paletas</a> · <a href="palettes.png">PNG</a></li>' : ''}${existsSync(resolve(out, 'fonts.html')) ? '<li><a href="fonts.html">Pares tipográficos</a> · <a href="fonts.png">PNG</a></li>' : ''}${existsSync(resolve(out, 'tokens.html')) ? '<li><a href="tokens.html">Tokens de estilo (antes / después)</a></li>' : ''}</ul><p class="note">Generada con <code>pnpm lattiz kit gallery</code> (o <code>kit:gallery</code>). Reglas para criticar: docs/template-kit-design-principles.md.</p></body></html>\n`,
   );
   return { out, index, pages, shots, ms: Date.now() - started };
 }

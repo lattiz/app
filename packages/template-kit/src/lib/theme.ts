@@ -8,6 +8,7 @@ import {
 import { createFontStack, type FontMetrics } from '@capsizecss/core';
 import { entireMetricsCollection } from '@capsizecss/metrics/entireMetricsCollection';
 import { hueOf, parseColor, type Rgba, type VarResolver } from './color';
+import { styleVariables } from './style';
 
 type Metrics = Pick<FontMetrics, 'familyName' | 'ascent' | 'descent' | 'lineGap' | 'unitsPerEm' | 'xWidthAvg'>;
 const complete = (m: Partial<Metrics>): m is Metrics =>
@@ -163,6 +164,8 @@ export function themeVariables(theme: Theme): [string, string][] {
     ['--lz-photo-filter', photoFilter(theme)],
     ['--lz-map-filter', theme.effects.mapFilter],
     ['--lz-hero-image-filter', theme.effects.heroImageFilter],
+    // Only extended themes carry `style`; legacy :root stays byte for byte.
+    ...(theme.style ? styleVariables(theme.style) : []),
   ];
 }
 

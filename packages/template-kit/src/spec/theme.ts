@@ -1,4 +1,5 @@
 import { checkTheme } from '../lib/validate';
+import { DENSITY_PRESETS, SHAPE_RADII, TYPE_SCALES } from '../lib/style';
 import { fontPairById } from './catalog';
 import { contrastRatio, parseColor, toHex, type Rgba } from '../lib/color';
 import type { Tier } from '../tiers';
@@ -29,7 +30,23 @@ export function composeTheme(input: {
   const { brand, shape } = input;
   const { label: _label, ...fonts } = input.fontPair.fonts;
   void _label;
-  const displayScale = brand.displayScale ?? fonts.displayScale;
+  const style =
+    brand.style && Object.keys(brand.style).length > 0
+      ? brand.style
+      : undefined;
+  const radii = style?.shape ? SHAPE_RADII[style.shape] : undefined;
+  const density = style?.density ? DENSITY_PRESETS[style.density] : undefined;
+  const typeScale = style?.typeScale ? TYPE_SCALES[style.typeScale] : undefined;
+  const baseScale = brand.displayScale ?? fonts.displayScale;
+  const displayScale =
+    typeScale && !brand.displayScale && typeScale.display !== 1
+      ? String(
+          Math.round(Number(baseScale ?? '1') * typeScale.display * 100) / 100,
+        )
+      : baseScale;
+  if (style?.displayCase)
+    fonts.displayTransform =
+      style.displayCase === 'upper' ? 'uppercase' : 'none';
   return {
     name: input.name,
     label: input.label,
@@ -41,20 +58,21 @@ export function composeTheme(input: {
       ...(displayScale ? { displayScale } : {}),
     },
     shape: {
-      radiusCard: shape.radiusCard,
-      radiusPill: shape.radiusPill,
+      radiusCard: radii?.card ?? shape.radiusCard,
+      radiusPill: radii?.pill ?? shape.radiusPill,
       border: shape.border,
       shadow: shape.shadow,
     },
-    density: brand.density ?? shape.density,
+    density: brand.density ?? density?.density ?? shape.density,
     photoTreatment: brand.photoTreatment ?? input.palette.photoTreatment,
     placeholder: brand.placeholder ?? input.palette.placeholder,
     accentWords: input.palette.accentWords,
-    container: brand.container ?? '1200px',
+    container: brand.container ?? density?.container ?? '1200px',
     effects: { ...input.palette.effects },
     ...(brand.rhythm && Object.keys(brand.rhythm).length > 0
       ? { rhythm: { ...brand.rhythm } }
       : {}),
+    ...(style ? { style: { ...style } } : {}),
   };
 }
 

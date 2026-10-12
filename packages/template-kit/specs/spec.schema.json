@@ -290,6 +290,51 @@
             "minLength": 1
           },
           "description": "Ajuste fino del ritmo del tema (docs/template-workflow.md §6): sectionPad, gutter, space, textScale, title*."
+        },
+        "style": {
+          "type": "object",
+          "properties": {
+            "shape": {
+              "description": "Radios de botones, tarjetas e imágenes.",
+              "type": "string",
+              "enum": ["sharp", "soft", "round", "pill"]
+            },
+            "surface": {
+              "description": "Tarjetas y paneles: planos, con filete, teñidos o elevados.",
+              "type": "string",
+              "enum": ["flat", "outlined", "tinted", "elevated"]
+            },
+            "density": {
+              "description": "Aire: padding de sección, separaciones y ancho del contenedor.",
+              "type": "string",
+              "enum": ["compact", "cozy", "airy"]
+            },
+            "divider": {
+              "description": "Separador entre secciones.",
+              "type": "string",
+              "enum": ["none", "hairline", "rule"]
+            },
+            "imageTreatment": {
+              "description": "Marco o máscara de las fotos (solo CSS).",
+              "type": "string",
+              "enum": ["plain", "framed", "arch", "offset", "duotone-overlay"]
+            },
+            "typeScale": {
+              "description": "Tamaño de títulos respecto al par tipográfico.",
+              "type": "string",
+              "enum": ["tight", "normal", "expressive"]
+            },
+            "displayCase": {
+              "type": "string",
+              "enum": ["none", "upper"]
+            },
+            "tracking": {
+              "type": "string",
+              "enum": ["tight", "normal", "wide"]
+            }
+          },
+          "additionalProperties": false,
+          "description": "Estilos opt-in del catálogo extended (docs/template-kit-catalog.md › Tokens de estilo). Solo con brand.catalog: extended."
         }
       },
       "additionalProperties": false,
@@ -702,6 +747,57 @@
                     "minLength": 1
                   },
                   "description": "Ajuste fino del ritmo del tema (docs/template-workflow.md §6): sectionPad, gutter, space, textScale, title*."
+                },
+                "style": {
+                  "type": "object",
+                  "properties": {
+                    "shape": {
+                      "description": "Radios de botones, tarjetas e imágenes.",
+                      "type": "string",
+                      "enum": ["sharp", "soft", "round", "pill"]
+                    },
+                    "surface": {
+                      "description": "Tarjetas y paneles: planos, con filete, teñidos o elevados.",
+                      "type": "string",
+                      "enum": ["flat", "outlined", "tinted", "elevated"]
+                    },
+                    "density": {
+                      "description": "Aire: padding de sección, separaciones y ancho del contenedor.",
+                      "type": "string",
+                      "enum": ["compact", "cozy", "airy"]
+                    },
+                    "divider": {
+                      "description": "Separador entre secciones.",
+                      "type": "string",
+                      "enum": ["none", "hairline", "rule"]
+                    },
+                    "imageTreatment": {
+                      "description": "Marco o máscara de las fotos (solo CSS).",
+                      "type": "string",
+                      "enum": [
+                        "plain",
+                        "framed",
+                        "arch",
+                        "offset",
+                        "duotone-overlay"
+                      ]
+                    },
+                    "typeScale": {
+                      "description": "Tamaño de títulos respecto al par tipográfico.",
+                      "type": "string",
+                      "enum": ["tight", "normal", "expressive"]
+                    },
+                    "displayCase": {
+                      "type": "string",
+                      "enum": ["none", "upper"]
+                    },
+                    "tracking": {
+                      "type": "string",
+                      "enum": ["tight", "normal", "wide"]
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Estilos opt-in del catálogo extended (docs/template-kit-catalog.md › Tokens de estilo). Solo con brand.catalog: extended."
                 }
               },
               "additionalProperties": false
@@ -874,6 +970,57 @@
                     "minLength": 1
                   },
                   "description": "Ajuste fino del ritmo del tema (docs/template-workflow.md §6): sectionPad, gutter, space, textScale, title*."
+                },
+                "style": {
+                  "type": "object",
+                  "properties": {
+                    "shape": {
+                      "description": "Radios de botones, tarjetas e imágenes.",
+                      "type": "string",
+                      "enum": ["sharp", "soft", "round", "pill"]
+                    },
+                    "surface": {
+                      "description": "Tarjetas y paneles: planos, con filete, teñidos o elevados.",
+                      "type": "string",
+                      "enum": ["flat", "outlined", "tinted", "elevated"]
+                    },
+                    "density": {
+                      "description": "Aire: padding de sección, separaciones y ancho del contenedor.",
+                      "type": "string",
+                      "enum": ["compact", "cozy", "airy"]
+                    },
+                    "divider": {
+                      "description": "Separador entre secciones.",
+                      "type": "string",
+                      "enum": ["none", "hairline", "rule"]
+                    },
+                    "imageTreatment": {
+                      "description": "Marco o máscara de las fotos (solo CSS).",
+                      "type": "string",
+                      "enum": [
+                        "plain",
+                        "framed",
+                        "arch",
+                        "offset",
+                        "duotone-overlay"
+                      ]
+                    },
+                    "typeScale": {
+                      "description": "Tamaño de títulos respecto al par tipográfico.",
+                      "type": "string",
+                      "enum": ["tight", "normal", "expressive"]
+                    },
+                    "displayCase": {
+                      "type": "string",
+                      "enum": ["none", "upper"]
+                    },
+                    "tracking": {
+                      "type": "string",
+                      "enum": ["tight", "normal", "wide"]
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Estilos opt-in del catálogo extended (docs/template-kit-catalog.md › Tokens de estilo). Solo con brand.catalog: extended."
                 }
               },
               "additionalProperties": false

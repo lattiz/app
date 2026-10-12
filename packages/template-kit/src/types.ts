@@ -1,5 +1,6 @@
 /** Shared shapes for the template-kit source library (sections, themes, content packs, manifests). */
 
+import type { ThemeStyle } from './lib/style';
 import type { Role, Tier } from './tiers';
 
 export type Region = 'header' | 'main' | 'footer';
@@ -102,6 +103,8 @@ export interface Theme {
   /** Non-color, theme-dependent filters (maps and the image-bg hero are tuned per scheme). */
   effects: { mapFilter: string; heroImageFilter: string };
   rhythm?: Partial<Record<RhythmToken, string>>;
+  /** Extended catalog only: opt-in style presets (src/lib/style.ts); absent = no extra tokens. */
+  style?: ThemeStyle;
 }
 
 export interface SectionMeta {
