@@ -60,3 +60,5 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [spec-image-url-source](spec-image-url-source.md) — fotos por URL pegada en images[] (sin API key); se descargan en el build, nunca hotlink
 - [template-catalog-versioning](template-catalog-versioning.md) — extender sin mutar: catálogo legacy/extended, lock por spec, snapshot dorado
 - [placeholder-bytes-host-dependent](placeholder-bytes-host-dependent.md) — un build en otra máquina reescribe JPEG de placeholder; restaurarlos
+- [template-style-tokens](template-style-tokens.md) — presets de estilo opt-in en extended (brand.style); var() con el look de hoy de respaldo
+- [vitest-hook-timeout-dist](vitest-hook-timeout-dist.md) — «2 skipped» en el kit con más carpetas en dist/; borrar dist y repetir
