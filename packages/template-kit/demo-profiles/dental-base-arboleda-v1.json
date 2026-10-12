@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/dental-arboleda.spec.json (spec 0757763d1134, file 387295c906ea). Do not edit: use the spec, or freeze.",
+  "name": "Dental Arboleda",
+  "category": "dental",
+  "phone": "+529990000000",
+  "whatsapp": "+5219990000000",
+  "email": "citas@dentalarboleda.mx",
+  "address": {
+    "street": "Calle 27 #502, Col. García Ginerés",
+    "city": "Mérida",
+    "country": "MX"
+  },
+  "hours": {
+    "mon": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "tue": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "09:00",
+        "close": "14:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}

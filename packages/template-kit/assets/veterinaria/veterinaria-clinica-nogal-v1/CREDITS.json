@@ -1,0 +1,75 @@
+{
+  "$lattiz": "GENERATED from specs/veterinaria-clinica-nogal.spec.json (spec 62220a7fac35, file 3a13821d6e14). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "32129c835615f5c5cd71a69457f3da4bb48e37222f0293040aaed941a8cd7a87"
+    },
+    {
+      "file": "about.jpg",
+      "source": "placeholder",
+      "sha256": "020a72ef057d02d6e76c3a9a9acdbbaa5e8e6d2e6b8675bd7e757992ff8ab33d"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "placeholder",
+      "sha256": "6911f9d7aae1c69607265b887dcdf85f5c0d730e23f8d0a89dc38f95de3a8ba9"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "placeholder",
+      "sha256": "22942cc14894a316105cd0d837083c70ec363c79bce19ea71b326a79b6ffcf49"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "placeholder",
+      "sha256": "cea470b3641720e14e0009b6bff18ec9d6ca87e1aa8eb3efc38b2a5495f54d2a"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "placeholder",
+      "sha256": "ee2f6e0952028a88895047eb624927f9cee473204baed859344fbf8287fe7968"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "placeholder",
+      "sha256": "e023672e372db7862685ba7b460182ea3478d8a149c15ed07bff97dc979cbccb"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "placeholder",
+      "sha256": "86784bb8c53255e745fda807dd2f2638bcf51a5232a546c9608fab65dd6481e6"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "placeholder",
+      "sha256": "180360995ecd8d9632ac50a418af3a4883ccf8f1a320060db1be306489793ca8"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "placeholder",
+      "sha256": "b1a4660e509b1a5c77f1aef097d35fb4126d6db3fd5a4e76eaecc1481c794ceb"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "placeholder",
+      "sha256": "0f50830c9602f8ddcbeb21f33920ae99ea9c9f4fa7a0049068306d0d3ab3c658"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "placeholder",
+      "sha256": "4ccfe8eef2105a5be393599cc1e7cf9038b43eb5bed948f4c12a6213fd41b5be"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "placeholder",
+      "sha256": "c9512930ab0e245bdf2af233450fdc24be1fa310e443db1a7586f7459b0811c2"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "placeholder",
+      "sha256": "be35cb183c648c4337f3313a2b10f3de9a85409f8d70adb8ba7587e7c7261911"
+    }
+  ]
+}

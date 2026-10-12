@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/estetica-estudio-nacar.spec.json (spec 76f9b169c1da, file c415a1103c9c). Do not edit: use the spec, or freeze.",
+  "name": "Estudio Nácar",
+  "category": "beauty_salon",
+  "phone": "+522220000000",
+  "whatsapp": "+5212220000000",
+  "email": "citas@estudionacar.mx",
+  "address": {
+    "street": "Calle 25 Sur 1310, Col. La Paz",
+    "city": "Puebla",
+    "country": "MX"
+  },
+  "hours": {
+    "tue": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "sun": [
+      {
+        "open": "10:00",
+        "close": "15:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "$lattiz": "GENERATED from specs/tienda-lote-doce.spec.json (spec 3065d05f2254, file e2fb8d6add44). Do not edit: use the spec, or freeze.",
+  "name": "Lote Doce",
+  "category": "store",
+  "phone": "+523300000000",
+  "whatsapp": "+5213300000000",
+  "email": "pedidos@lotedoce.mx",
+  "address": {
+    "street": "Calle Libertad 1820, Col. Americana",
+    "city": "Guadalajara",
+    "country": "MX"
+  },
+  "hours": {
+    "mon": [
+      {
+        "open": "11:00",
+        "close": "20:00"
+      }
+    ],
+    "tue": [
+      {
+        "open": "11:00",
+        "close": "20:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "11:00",
+        "close": "20:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "11:00",
+        "close": "20:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "11:00",
+        "close": "20:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "11:00",
+        "close": "20:00"
+      }
+    ],
+    "sun": [
+      {
+        "open": "11:00",
+        "close": "16:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}

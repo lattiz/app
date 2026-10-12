@@ -1,0 +1,10 @@
+{
+  "$lattiz": "GENERATED from specs/veterinaria-clinica-nogal.spec.json (spec 62220a7fac35, file 51837c738e2d). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "2c5fc939d4d916471323e25cf20a16332128b0425467e3d1d5442d9762f750db"
+    }
+  ]
+}

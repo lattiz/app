@@ -1,0 +1,85 @@
+{
+  "$lattiz": "GENERATED from specs/tienda-lote-doce.spec.json (spec 3065d05f2254, file 42928509cd37). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "8028876b7048921959ff424d485c027c008bfa60b3a6006269ed7a180b1c9e40"
+    },
+    {
+      "file": "about.jpg",
+      "source": "placeholder",
+      "sha256": "e8965be60fb4b551aa8391297ee4fefa4d1aba1507394fd053de7a59c481dfec"
+    },
+    {
+      "file": "product-01.jpg",
+      "source": "placeholder",
+      "sha256": "791a5f75df6e71782c5696686b09e31ee043b103343384259f894f5c56c35c58"
+    },
+    {
+      "file": "product-02.jpg",
+      "source": "placeholder",
+      "sha256": "9b215e7f41180cfbc94329341fc47f8e4159a5c4143ab940627011ac722034eb"
+    },
+    {
+      "file": "product-03.jpg",
+      "source": "placeholder",
+      "sha256": "6eb73b6220cc21121943ddf243895bb7d466389a3bea61ee1032232dbd916c5d"
+    },
+    {
+      "file": "product-04.jpg",
+      "source": "placeholder",
+      "sha256": "c25b7fd7871d7c226923c05bd10b58f31197e400a322b057ac68d49cf2f9ddad"
+    },
+    {
+      "file": "product-05.jpg",
+      "source": "placeholder",
+      "sha256": "224a3adc2019eceac56314a4bce8a2a89cda197665aec02addd68f8891d83ff9"
+    },
+    {
+      "file": "product-06.jpg",
+      "source": "placeholder",
+      "sha256": "d75cf96038575ec02f96d40fd774941785ff2ed1046bb3f6ebd4221a546267a5"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "placeholder",
+      "sha256": "20d6a42f9dd23186ad9026659105ee0197b4d2eba3310ba355c97c2174fddf45"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "placeholder",
+      "sha256": "c24f15f6f6b07b4a457bbfd9b010e07968fce6943c20f3e7a67bb3dc29ba8f72"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "placeholder",
+      "sha256": "e4469d7641ab08d1b9bb6870941f8e0089dea15eaecc3cc6441fa9692e03e7f1"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "placeholder",
+      "sha256": "dc03df1d6201870f129dee9cc2f2c93bbb7878bc1d40c303820ff79c10affc5b"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "placeholder",
+      "sha256": "08cc5fe5f44adab879cd7a8df4ce10b2374d3efc2c8f1f7977b85b66431a8145"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "placeholder",
+      "sha256": "ced81a26da119bd670b9122c2fa6b7827370390f3d06642c096970063852fb8a"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "placeholder",
+      "sha256": "fb1c9bfa0744a8ab7fc83ef83f065b5686a86842d6289c5d839029612bc872b4"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "placeholder",
+      "sha256": "5d872c9ec5b1fd2e6a634a7f2eb208c53c78a471843a15ea46aab551760b5306"
+    }
+  ]
+}

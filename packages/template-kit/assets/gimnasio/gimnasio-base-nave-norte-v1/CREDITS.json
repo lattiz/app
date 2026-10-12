@@ -1,0 +1,10 @@
+{
+  "$lattiz": "GENERATED from specs/gimnasio-nave-norte.spec.json (spec 2f28c4a23c7a, file c87bec38d916). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "5a1497605477038e2873fb11e1fad94252363a4a08aa3cb7b19d763fe773c38c"
+    }
+  ]
+}

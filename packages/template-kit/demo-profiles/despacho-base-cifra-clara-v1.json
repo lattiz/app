@@ -1,0 +1,51 @@
+{
+  "$lattiz": "GENERATED from specs/despacho-cifra-clara.spec.json (spec 5019d2696c43, file fedc58c8d669). Do not edit: use the spec, or freeze.",
+  "name": "Cifra Clara",
+  "category": "accounting",
+  "phone": "+524420000000",
+  "whatsapp": "+5214420000000",
+  "email": "contacto@cifraclara.mx",
+  "address": {
+    "street": "Blvd. Bernardo Quintana 4100, Piso 2, Centro Sur",
+    "city": "Querétaro",
+    "country": "MX"
+  },
+  "hours": {
+    "mon": [
+      {
+        "open": "09:00",
+        "close": "18:00"
+      }
+    ],
+    "tue": [
+      {
+        "open": "09:00",
+        "close": "18:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "09:00",
+        "close": "18:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "09:00",
+        "close": "18:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "09:00",
+        "close": "18:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}

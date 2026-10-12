@@ -1,0 +1,50 @@
+{
+  "$lattiz": "GENERATED from specs/estetica-estudio-nacar.spec.json (spec 76f9b169c1da, file dd010171b008). Do not edit: use the spec, or freeze.",
+  "name": "estetica-estudio-nacar-v1",
+  "label": "Estudio Nácar · Pro",
+  "tier": "pro",
+  "fontPair": "cormorant-garamond+work-sans",
+  "colors": {
+    "bg": "#FBF6F5",
+    "surface": "#FFFFFF",
+    "surface-2": "#F3E4E6",
+    "text": "#2A171C",
+    "muted": "#654E54",
+    "accent": "#A3456B",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#A74C71",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#2A171C",
+    "on-overlay": "#FBF6F5",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#2A171C"
+  },
+  "fonts": {
+    "display": "'Cormorant Garamond', serif",
+    "serif": "'Cormorant Garamond', serif",
+    "body": "'Work Sans', sans-serif",
+    "googleFonts": "family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Work+Sans:wght@400;500;600",
+    "displayTransform": "none",
+    "displayLeading": "1",
+    "displayWeight": "600",
+    "displayScale": "1.12",
+    "accentStyle": "italic",
+    "accentTransform": "none"
+  },
+  "shape": {
+    "radiusCard": "24px",
+    "radiusPill": "999px",
+    "border": "1px",
+    "shadow": "none"
+  },
+  "density": "airy",
+  "photoTreatment": "warm",
+  "placeholder": "arches",
+  "accentWords": "color",
+  "container": "1200px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(.62) saturate(.95)"
+  }
+}

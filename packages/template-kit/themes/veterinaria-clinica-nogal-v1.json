@@ -1,0 +1,50 @@
+{
+  "$lattiz": "GENERATED from specs/veterinaria-clinica-nogal.spec.json (spec 62220a7fac35, file 670bbf719846). Do not edit: use the spec, or freeze.",
+  "name": "veterinaria-clinica-nogal-v1",
+  "label": "Clínica Nogal · Pro",
+  "tier": "pro",
+  "fontPair": "young-serif+figtree",
+  "colors": {
+    "bg": "#F3F8F6",
+    "surface": "#FFFFFF",
+    "surface-2": "#DDECE6",
+    "text": "#0F201B",
+    "muted": "#455E57",
+    "accent": "#1F7A6A",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#2A8574",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#0F201B",
+    "on-overlay": "#F3F8F6",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#0F201B"
+  },
+  "fonts": {
+    "display": "'Young Serif', serif",
+    "serif": "'Young Serif', serif",
+    "body": "'Figtree', sans-serif",
+    "googleFonts": "family=Young+Serif&family=Figtree:wght@400;500;600",
+    "displayTransform": "none",
+    "displayLeading": "1.04",
+    "displayWeight": "400",
+    "displayScale": "0.9",
+    "accentStyle": "normal",
+    "accentTransform": "none"
+  },
+  "shape": {
+    "radiusCard": "12px",
+    "radiusPill": "12px",
+    "border": "2px",
+    "shadow": "soft"
+  },
+  "density": "regular",
+  "photoTreatment": "none",
+  "placeholder": "blobs",
+  "accentWords": "color",
+  "container": "1200px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(.62) saturate(.95)"
+  }
+}

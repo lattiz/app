@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/gimnasio-nave-norte.spec.json (spec 2f28c4a23c7a, file f760701129f8). Do not edit: use the spec, or freeze.",
+  "name": "Nave Norte",
+  "category": "other",
+  "phone": "+524770000000",
+  "whatsapp": "+5214770000000",
+  "email": "hola@navenorte.mx",
+  "address": {
+    "street": "Blvd. Campestre 1520, Jardines del Moral",
+    "city": "León",
+    "country": "MX"
+  },
+  "hours": {
+    "mon": [
+      {
+        "open": "06:00",
+        "close": "22:00"
+      }
+    ],
+    "tue": [
+      {
+        "open": "06:00",
+        "close": "22:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "06:00",
+        "close": "22:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "06:00",
+        "close": "22:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "06:00",
+        "close": "22:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "08:00",
+        "close": "14:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}

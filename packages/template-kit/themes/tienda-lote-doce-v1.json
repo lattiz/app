@@ -1,0 +1,50 @@
+{
+  "$lattiz": "GENERATED from specs/tienda-lote-doce.spec.json (spec 3065d05f2254, file 2b26c988eab8). Do not edit: use the spec, or freeze.",
+  "name": "tienda-lote-doce-v1",
+  "label": "Lote Doce · Pro",
+  "tier": "pro",
+  "fontPair": "bricolage-grotesque+inter",
+  "colors": {
+    "bg": "#F7F5F0",
+    "surface": "#FFFFFF",
+    "surface-2": "#E9E5DB",
+    "text": "#16171C",
+    "muted": "#52535C",
+    "accent": "#2B4FA8",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#4464B2",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#16171C",
+    "on-overlay": "#F7F5F0",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#16171C"
+  },
+  "fonts": {
+    "display": "'Bricolage Grotesque', sans-serif",
+    "serif": "'Instrument Serif', serif",
+    "body": "'Inter', sans-serif",
+    "googleFonts": "family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600",
+    "displayTransform": "none",
+    "displayLeading": "0.98",
+    "displayWeight": "800",
+    "displayScale": "0.92",
+    "accentStyle": "italic",
+    "accentTransform": "none"
+  },
+  "shape": {
+    "radiusCard": "12px",
+    "radiusPill": "12px",
+    "border": "2px",
+    "shadow": "soft"
+  },
+  "density": "regular",
+  "photoTreatment": "none",
+  "placeholder": "rules",
+  "accentWords": "color",
+  "container": "1200px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(.62) saturate(.95)"
+  }
+}

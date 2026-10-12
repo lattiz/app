@@ -1,0 +1,70 @@
+{
+  "$lattiz": "GENERATED from specs/gimnasio-nave-norte.spec.json (spec 2f28c4a23c7a, file 551c69893f12). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "1c0b9b1b0bd6cdd9480d55f401c173d9fbc01f8e5762ab455d93a14dbbfadfa0"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "placeholder",
+      "sha256": "dca02d46629355437b7c536bcc5528bd06fc0ea3600654e6a026b3053b5c63be"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "placeholder",
+      "sha256": "b12d9488fe2ec482333f02235d0259282aed8c3385e98e70f302ffccfbdb54bc"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "placeholder",
+      "sha256": "ddd4f86ce2e4b61d195c959996272d27e0e9c84b9b821ad66c038e593c8605c3"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "placeholder",
+      "sha256": "83961e3f96bc5d96cff7497159adf589ef45a5f2a1bc8fce36d616b9119b76da"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "placeholder",
+      "sha256": "0fd9954024a17a9743052dd64edec8466d95fdd0e4aa5b514a35783f85ce3923"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "placeholder",
+      "sha256": "1926c43bbcca1afc03be74a4a4efe7a26b358329036de4ab7031ed3fa726aaed"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "placeholder",
+      "sha256": "17edf81f52418a7eb0ba356b3d27a4e88e30b0959e91e63d30d76a42c956f41e"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "placeholder",
+      "sha256": "46a683e8f83ded6d0c8a3dbf460ec2351682fd6c54a25e972f14a271aa89110b"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "placeholder",
+      "sha256": "c82d97513443bc5fd620c88645959a8016bab6915ddb37e3938d6ae69957a97d"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "placeholder",
+      "sha256": "e817300b7bab133b456f84a4a84ce079d41525be78156432b7f66ebeacad8dd8"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "placeholder",
+      "sha256": "30204f490bfa081e47e23dc3daca32c5442593f2b60dcd24587ea51b3644a2a0"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "placeholder",
+      "sha256": "c929e3209b0a8689af2f383f4f5c566c9d42bf80a2c332019fc89a4166fcd1bd"
+    }
+  ]
+}

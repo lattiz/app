@@ -1,0 +1,40 @@
+{
+  "$lattiz": "GENERATED from specs/tienda-lote-doce.spec.json (spec 3065d05f2254, file 863075b196a2). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "0a3069a8b45fe0ada8a0a7c2492c19590f7caaaedb16a74c95ce00604c79d626"
+    },
+    {
+      "file": "product-01.jpg",
+      "source": "placeholder",
+      "sha256": "571292648ecb3bcdc945a81c7771a76315a9d3a261db294913386583e6aa66b1"
+    },
+    {
+      "file": "product-02.jpg",
+      "source": "placeholder",
+      "sha256": "f8163d945f08daeade2db3b6038d04eb7282522d3f58b0ce4a4074b323288115"
+    },
+    {
+      "file": "product-03.jpg",
+      "source": "placeholder",
+      "sha256": "cf394d66fd23fbd5fd9636c9da22e8f7c2ccc832c755a07675a00a71e3c1a35b"
+    },
+    {
+      "file": "product-04.jpg",
+      "source": "placeholder",
+      "sha256": "6343649de68a24cbd31ad34f0e5fec8afbd2586d8ef246e47f36085faca59bc7"
+    },
+    {
+      "file": "product-05.jpg",
+      "source": "placeholder",
+      "sha256": "706acf74f5191a07ad45bd1af88c73d2fa9a3677374152862b6384297e1899cb"
+    },
+    {
+      "file": "product-06.jpg",
+      "source": "placeholder",
+      "sha256": "a3fb2270eba7670d42e1bb703a8956ed10348724cb26cc8968cfb2d1c1dd5b42"
+    }
+  ]
+}

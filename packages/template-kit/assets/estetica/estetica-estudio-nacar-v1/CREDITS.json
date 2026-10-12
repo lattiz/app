@@ -1,0 +1,75 @@
+{
+  "$lattiz": "GENERATED from specs/estetica-estudio-nacar.spec.json (spec 76f9b169c1da, file fec7dabaedbf). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "c9424e6db35ffe150931647a65c27acfadb32cb1b3c6444c4f4f724b6ce69a3b"
+    },
+    {
+      "file": "about.jpg",
+      "source": "placeholder",
+      "sha256": "1c2ba7536257fe5783a3639096c9eaff046c13bd904c9145446021eba469ebf9"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "placeholder",
+      "sha256": "2cd2bab3deb09ac7e3b79408ef7c640a7997ef9e0842a61020b30898d8f8349c"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "placeholder",
+      "sha256": "ed904e39c43791e071ce8f8a18567e76896cd14a5514011211219da3bfeb4536"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "placeholder",
+      "sha256": "99d7cd15b932ac7934c07369f3f6a29d63b3e92934057f681758dd4a89aaf0ac"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "placeholder",
+      "sha256": "d912ee6e3f27854d83bc1f9e6610c083f7b1de2293d8d43a3e873ba096c8422f"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "placeholder",
+      "sha256": "a6cd1a86cdd4088c0afde7dd61b4b038a63f7f943d7d354e5d67fc6a74e8b797"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "placeholder",
+      "sha256": "eb99bdd0988524b226b2c1c88f4871c7e15b13d150293da3af5eb8c3d2c10ea6"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "placeholder",
+      "sha256": "d2fa6d238216e152098b071d763c691b1216217980c4635d3616004485dfb1c3"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "placeholder",
+      "sha256": "4debc455f557207fe3e7dfa5da65e796d59c0b81edae71ea7d734640089be8d4"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "placeholder",
+      "sha256": "e1d5c75df030d378885b742a2ec13837d299986cbd60aeec3d9c46ccfd8da6fe"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "placeholder",
+      "sha256": "045d82aa217cf2302715817c9a2a12d728a0c4ab397c0a6fa8ef205113d61f5c"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "placeholder",
+      "sha256": "b702c08e45f44c285fa94447e9dec8b0cc766e6b89e724e09416511a9a414d01"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "placeholder",
+      "sha256": "07fc78d0f82395cbdb16b6644c28015a6c3d0d7327e544d0d1788e5c5b1c0ec6"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "$lattiz": "GENERATED from specs/dental-arboleda.spec.json (spec 0757763d1134, file 1ab6d04193ae). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "e827fb2c1c051723371f2f94d32ab9f386b9955895d96423ef801ebfcbd9e1d5"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "placeholder",
+      "sha256": "df80f1906d2e4fb2e2d2071e59a6ff3637c601a984266a906133fa19e09aee69"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "placeholder",
+      "sha256": "a21b659548c6d99493981ae6c928df624c86c9189811604b1f9b90e61343dc40"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "placeholder",
+      "sha256": "225b9bf9300c0237b7007d8ae6fb1b6275a397ff20e03a6aae5dd6b021ab6554"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "placeholder",
+      "sha256": "105d838bf335d0c6138c84ccea2e99bdeb1d0b59775c129f6631165ec52aab76"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "placeholder",
+      "sha256": "36d033b5f8305ef2956f0ffcbd62e539eb96202a2e76ae8b5b8c39b244ebde09"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "placeholder",
+      "sha256": "621a231183b18e91a8d7e3d00f47a5107205d9e0b414aa972fc9c071c7098759"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "placeholder",
+      "sha256": "c9514d8de7a3273e1135d109e6e9259f53e367b2ecf8ccd42d26ddf483c4a034"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "placeholder",
+      "sha256": "3b8d5ddff28c61ebefac75d1604eeb6e9421ee262b02be3a0c98ff927633e2e3"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "placeholder",
+      "sha256": "b7b5125617cbccfeba8eae75cf1c16a5455aad0c9e50b2401ac358ae9ff9afec"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "placeholder",
+      "sha256": "c34a77695997febfeb91da656e8af02033798afa7fff4720de956eddfc579219"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "placeholder",
+      "sha256": "11f2fcdeb3f9c06886f811b1ec6d2e0b5e432f1eb808f1b042c8818be87b65d8"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "placeholder",
+      "sha256": "a80da522d880ed45eefb08940b2ba8d1f92a759900882d352786f1e2be2d15df"
+    }
+  ]
+}

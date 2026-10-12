@@ -1,0 +1,50 @@
+{
+  "$lattiz": "GENERATED from specs/despacho-cifra-clara.spec.json (spec 5019d2696c43, file e7ab69c640f4). Do not edit: use the spec, or freeze.",
+  "name": "despacho-cifra-clara-v1",
+  "label": "Cifra Clara · Pro",
+  "tier": "pro",
+  "fontPair": "libre-baskerville+source-sans-3",
+  "colors": {
+    "bg": "#F5F6F8",
+    "surface": "#FFFFFF",
+    "surface-2": "#E3E7EE",
+    "text": "#111827",
+    "muted": "#4B5563",
+    "accent": "#1E3A6E",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#546991",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#111827",
+    "on-overlay": "#F5F6F8",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#111827"
+  },
+  "fonts": {
+    "display": "'Libre Baskerville', serif",
+    "serif": "'Libre Baskerville', serif",
+    "body": "'Source Sans 3', sans-serif",
+    "googleFonts": "family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;500;600",
+    "displayTransform": "none",
+    "displayLeading": "1.1",
+    "displayWeight": "400",
+    "displayScale": "0.86",
+    "accentStyle": "italic",
+    "accentTransform": "none"
+  },
+  "shape": {
+    "radiusCard": "0px",
+    "radiusPill": "0px",
+    "border": "1px",
+    "shadow": "none"
+  },
+  "density": "airy",
+  "photoTreatment": "none",
+  "placeholder": "rules",
+  "accentWords": "color",
+  "container": "1200px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(.62) saturate(.95)"
+  }
+}

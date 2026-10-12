@@ -1,0 +1,50 @@
+{
+  "$lattiz": "GENERATED from specs/estetica-estudio-nacar.spec.json (spec 76f9b169c1da, file 51c65cff3b81). Do not edit: use the spec, or freeze.",
+  "name": "estetica-base-estudio-nacar-v1",
+  "label": "Estudio Nácar · Básico",
+  "tier": "basic",
+  "fontPair": "instrument-serif+instrument-sans",
+  "colors": {
+    "bg": "#F7F4F8",
+    "surface": "#FFFFFF",
+    "surface-2": "#E9E1EE",
+    "text": "#1F1726",
+    "muted": "#5A4E63",
+    "accent": "#6D4A9C",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#7C5CA6",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#1F1726",
+    "on-overlay": "#F7F4F8",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#1F1726"
+  },
+  "fonts": {
+    "display": "'Instrument Serif', serif",
+    "serif": "'Instrument Serif', serif",
+    "body": "'Instrument Sans', sans-serif",
+    "googleFonts": "family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600",
+    "displayTransform": "none",
+    "displayLeading": "0.98",
+    "displayWeight": "400",
+    "displayScale": "1.14",
+    "accentStyle": "italic",
+    "accentTransform": "none"
+  },
+  "shape": {
+    "radiusCard": "24px",
+    "radiusPill": "999px",
+    "border": "1px",
+    "shadow": "none"
+  },
+  "density": "airy",
+  "photoTreatment": "none",
+  "placeholder": "dots",
+  "accentWords": "color",
+  "container": "1200px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(.62) saturate(.95)"
+  }
+}
