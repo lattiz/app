@@ -311,7 +311,7 @@
         }
       } else if (isButton(c)) {
         add(flow(), c, kindOf(c, text));
-      } else if (type !== 'footer' && isGroup(c)) {
+      } else if (isGroup(c)) {
         var chosen = PATTERNS[c.getAttribute('data-lz-pattern')] ? c.getAttribute('data-lz-pattern') : pattern;
         // A sideways carousel of quotes just fades: items off to the side never cross the line together.
         var carousel = type === 'testimonials' && /auto|scroll/.test(getComputedStyle(c).overflowX);
@@ -345,14 +345,15 @@
       if (rect.width * rect.height >= heroArea) heroTitle.shift = true;
     }
     groups = groups.filter(function (g) { return g.targets.length; });
-    if (type === 'footer' && groups.length) {
-      var one = groups[0];
-      groups.slice(1).forEach(function (g) { one.targets = one.targets.concat(g.targets); });
-      one.targets.forEach(function (t) {
-        t.fx = 'fade';
-        t.i = 0;
+    // Footer: a plain fade with no stagger; its blocks stay separate groups so a tall phone footer
+    // fades in as it arrives instead of all at once below the screen.
+    if (type === 'footer') {
+      groups.forEach(function (g) {
+        g.targets.forEach(function (t) {
+          t.fx = 'fade';
+          t.i = 0;
+        });
       });
-      groups = [one];
     }
     groups.forEach(function (g) {
       g.anchor = g.targets[0].el;

@@ -124,7 +124,7 @@ One primary + one secondary motion per group.
 | `faq` | `alternate` (left/right per item; the native `<details>` toggle is untouched) |
 | `contact` | form and info converge |
 | `cta` | heading `zoom-in`, button `fade-up`, soft accent glow drifting behind (CSS `::before`) |
-| `footer` | one `fade`, no stagger |
+| `footer` | a plain `fade`, no stagger (each footer block fades as it arrives) |
 
 In every recipe the first heading of a section uses `mask-up`, the rest of the text `fade-up` (or the
 column's direction). Navbar, floating buttons and marquees are not tagged.

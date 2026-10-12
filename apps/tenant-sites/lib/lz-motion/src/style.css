@@ -76,7 +76,7 @@
 @keyframes lz-settle { from { scale: 1.025; } }
 @keyframes lz-settle-lg { from { scale: 1.08; } }
 
-.lz-end { position: relative; height: 20vh; margin-top: -20vh; visibility: hidden; pointer-events: none; }
+.lz-end { position: relative; height: 9vh; margin-top: -9vh; visibility: hidden; pointer-events: none; }
 
 /* Scroll-linked effects: compositor-driven scroll timelines where supported; the runtime has a gated JS fallback. */
 @supports (animation-timeline: view()) {
