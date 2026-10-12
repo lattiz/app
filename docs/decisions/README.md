@@ -58,3 +58,5 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [cli-exit-after-stdout-flush](cli-exit-after-stdout-flush.md) — process.exit() corta stdout por tubería a 64 KiB; salir tras vaciar stdout
 - [navbar-mobile-menu-target](navbar-mobile-menu-target.md) — menú móvil sin JS con #menu + :target; Básico tarjeta, Pro pantalla completa
 - [spec-image-url-source](spec-image-url-source.md) — fotos por URL pegada en images[] (sin API key); se descargan en el build, nunca hotlink
+- [template-catalog-versioning](template-catalog-versioning.md) — extender sin mutar: catálogo legacy/extended, lock por spec, snapshot dorado
+- [placeholder-bytes-host-dependent](placeholder-bytes-host-dependent.md) — un build en otra máquina reescribe JPEG de placeholder; restaurarlos
