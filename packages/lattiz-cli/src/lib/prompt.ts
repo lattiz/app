@@ -17,10 +17,16 @@ function cancelled(): never {
 }
 
 /** Remote writes: --yes skips; without a TTY and without --yes it refuses. */
-export async function confirm(mode: PromptMode, message: string): Promise<boolean> {
+export async function confirm(
+  mode: PromptMode,
+  message: string,
+): Promise<boolean> {
   if (mode.yes) return true;
   if (!interactive(mode))
-    throw usage(`Se necesita confirmación: ${message}`, 'Vuelve a correr con --yes para confirmar sin preguntar.');
+    throw usage(
+      `Se necesita confirmación: ${message}`,
+      'Vuelve a correr con --yes para confirmar sin preguntar.',
+    );
   const answer = await p.confirm({ message, initialValue: false });
   if (p.isCancel(answer)) cancelled();
   return answer;
@@ -28,16 +34,28 @@ export async function confirm(mode: PromptMode, message: string): Promise<boolea
 
 export async function select<T extends string>(
   mode: PromptMode,
-  opts: { message: string; flag: string; value?: T; options: { value: T; label: string; hint?: string }[]; initial?: T },
+  opts: {
+    message: string;
+    flag: string;
+    value?: T;
+    options: { value: T; label: string; hint?: string }[];
+    initial?: T;
+  },
 ): Promise<T> {
   if (opts.value !== undefined) {
     if (!opts.options.some((o) => o.value === opts.value))
-      throw usage(`Valor inválido para --${opts.flag}: "${opts.value}".`, `Opciones: ${opts.options.map((o) => o.value).join(', ')}`);
+      throw usage(
+        `Valor inválido para --${opts.flag}: "${opts.value}".`,
+        `Opciones: ${opts.options.map((o) => o.value).join(', ')}`,
+      );
     return opts.value;
   }
   if (!interactive(mode)) {
     if (opts.initial !== undefined) return opts.initial;
-    throw usage(`Falta --${opts.flag}.`, `Opciones: ${opts.options.map((o) => o.value).join(', ')}`);
+    throw usage(
+      `Falta --${opts.flag}.`,
+      `Opciones: ${opts.options.map((o) => o.value).join(', ')}`,
+    );
   }
   const answer = await p.select({
     message: opts.message,
@@ -50,7 +68,13 @@ export async function select<T extends string>(
 
 export async function text(
   mode: PromptMode,
-  opts: { message: string; flag: string; value?: string; initial?: string; validate?: (v: string) => string | undefined },
+  opts: {
+    message: string;
+    flag: string;
+    value?: string;
+    initial?: string;
+    validate?: (v: string) => string | undefined;
+  },
 ): Promise<string> {
   const check = (v: string) => {
     const problem = opts.validate?.(v);

@@ -30,7 +30,7 @@
     "test": "turbo run test",
     "generate:api": "turbo run generate:openapi generate:client",
     "lattiz": "tsx packages/lattiz-cli/src/main.ts",
-    "template:dev": "tsx scripts/template-dev.ts",
+    "template:dev": "tsx packages/lattiz-cli/src/main.ts dev",
     "template:seed": "tsx scripts/template-seed.ts",
     "template:shots": "pnpm --filter @lattiz/template-kit kit:shots"
   }

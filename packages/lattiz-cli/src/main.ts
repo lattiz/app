@@ -3,11 +3,32 @@
  * Commands live in ./commands; docs/lattiz-cli.md is the guide.
  */
 import { parseArgs } from 'node:util';
+import { check } from './commands/check';
+import { deploy } from './commands/deploy';
+import { dev } from './commands/dev';
+import { doctor } from './commands/doctor';
+import { list } from './commands/list';
+import { motion } from './commands/motion';
+import { newTemplate } from './commands/new';
+import { publish, ship } from './commands/publish';
+import { seed } from './commands/seed';
 import { type Command, GLOBAL_OPTIONS } from './lib/command';
 import { CliError, EXIT, type ExitCode } from './lib/errors';
+import { env } from './lib/remote';
 import { c, log, setColor } from './lib/ui';
 
-const COMMANDS: Command[] = [];
+const COMMANDS: Command[] = [
+  doctor,
+  list,
+  newTemplate,
+  dev,
+  motion,
+  check,
+  seed,
+  deploy,
+  publish,
+  ship,
+];
 
 function globalHelp(): string {
   const width = Math.max(...COMMANDS.map((cmd) => cmd.usage.length));
@@ -17,7 +38,9 @@ function globalHelp(): string {
     `${c.bold('Uso:')} pnpm lattiz <comando> [opciones]`,
     '',
     c.bold('Comandos:'),
-    ...COMMANDS.map((cmd) => `  ${cmd.usage.padEnd(width)}  ${c.gray(cmd.summary)}`),
+    ...COMMANDS.map(
+      (cmd) => `  ${cmd.usage.padEnd(width)}  ${c.gray(cmd.summary)}`,
+    ),
     '',
     c.bold('Opciones globales:'),
     '  -h, --help           ayuda del comando',
@@ -25,7 +48,8 @@ function globalHelp(): string {
     '  --non-interactive    nunca pregunta; usa flags o valores por defecto y falla si falta algo',
     '  --no-color           salida sin colores',
     '',
-    c.bold('Códigos de salida:') + ' 0 ok · 1 falló una verificación · 2 uso o entorno',
+    c.bold('Códigos de salida:') +
+      ' 0 ok · 1 falló una verificación · 2 uso o entorno',
     '',
     `Flujo de venta: doctor → new → dev → motion → check → publish (o ship). Guía: ${c.cyan('docs/lattiz-cli.md')}`,
   ].join('\n');
@@ -37,7 +61,9 @@ function commandHelp(cmd: Command): string {
     '',
     cmd.summary,
     ...(cmd.help.length > 0 ? ['', ...cmd.help] : []),
-    ...(cmd.aliases?.length ? ['', `${c.bold('Alias:')} ${cmd.aliases.join(', ')}`] : []),
+    ...(cmd.aliases?.length
+      ? ['', `${c.bold('Alias:')} ${cmd.aliases.join(', ')}`]
+      : []),
   ].join('\n');
 }
 
@@ -49,7 +75,9 @@ async function main(argv: string[]): Promise<ExitCode> {
     console.log(globalHelp());
     return name ? EXIT.OK : EXIT.USAGE;
   }
-  const cmd = COMMANDS.find((x) => x.name === name || x.aliases?.includes(name));
+  const cmd = COMMANDS.find(
+    (x) => x.name === name || x.aliases?.includes(name),
+  );
   if (!cmd) {
     log.fail(`Comando desconocido: ${name}`);
     console.log(`\n${globalHelp()}`);
@@ -64,7 +92,15 @@ async function main(argv: string[]): Promise<ExitCode> {
       strict: true,
     });
   } catch (error) {
-    log.fail((error as Error).message.split('\n')[0]);
+    const { code, message } = error as NodeJS.ErrnoException;
+    const option = /'(-[^']+)'/.exec(message)?.[1] ?? '';
+    log.fail(
+      code === 'ERR_PARSE_ARGS_UNKNOWN_OPTION'
+        ? `Opción desconocida: ${option}`
+        : code === 'ERR_PARSE_ARGS_INVALID_OPTION_VALUE'
+          ? `Valor inválido para ${option || 'una opción'} (¿falta el valor?)`
+          : message.split('\n')[0],
+    );
     console.log(`\n${commandHelp(cmd)}`);
     return EXIT.USAGE;
   }
@@ -73,6 +109,8 @@ async function main(argv: string[]): Promise<ExitCode> {
     console.log(commandHelp(cmd));
     return EXIT.OK;
   }
+  // Same .env files as the seed (also where LATTIZ_CHROMIUM_PATH can live).
+  env();
   return cmd.run({
     positionals: parsed.positionals,
     flags,

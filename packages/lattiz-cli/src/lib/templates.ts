@@ -15,7 +15,11 @@ export function tierLabel(tier: string | undefined): string {
 }
 
 export function assertId(id: string | undefined): string {
-  if (!id) throw usage('Falta el id de la plantilla.', 'Ejemplo: pnpm lattiz check barberia-norte-v1');
+  if (!id)
+    throw usage(
+      'Falta el id de la plantilla.',
+      'Ejemplo: pnpm lattiz check barberia-norte-v1',
+    );
   if (!ID_RE.test(id) || id.length > 60)
     throw usage(
       `Id inválido: "${id}".`,
@@ -44,7 +48,9 @@ export function localIds(): string[] {
 
 /** Reads the manifest straight from its TS module (tsx runs it). */
 export async function loadManifest(id: string): Promise<Manifest> {
-  const mod = (await import(`${manifestFile(id)}?t=${Date.now()}`)) as { default: Manifest };
+  const mod = (await import(`${manifestFile(id)}?t=${Date.now()}`)) as {
+    default: Manifest;
+  };
   return mod.default;
 }
 
@@ -66,12 +72,22 @@ export interface Dist {
 export function readDist(id: string): Dist {
   const dir = distDir(id);
   const file = resolve(dir, 'index.html');
-  if (!existsSync(file)) throw usage(`No hay build de ${id}.`, `Compila con \`pnpm lattiz dev ${id}\` o \`pnpm lattiz check ${id}\`.`);
+  if (!existsSync(file))
+    throw usage(
+      `No hay build de ${id}.`,
+      `Compila con \`pnpm lattiz dev ${id}\` o \`pnpm lattiz check ${id}\`.`,
+    );
   return {
     dir,
     html: readFileSync(file, 'utf8'),
-    meta: JSON.parse(readFileSync(resolve(dir, 'template.meta.json'), 'utf8')) as DistMeta,
-    manifest: (JSON.parse(readFileSync(resolve(dir, 'manifest.json'), 'utf8')) as { manifest: Manifest }).manifest,
+    meta: JSON.parse(
+      readFileSync(resolve(dir, 'template.meta.json'), 'utf8'),
+    ) as DistMeta,
+    manifest: (
+      JSON.parse(readFileSync(resolve(dir, 'manifest.json'), 'utf8')) as {
+        manifest: Manifest;
+      }
+    ).manifest,
   };
 }
 
@@ -97,18 +113,28 @@ export function run(
     let output = '';
     child.stdout?.on('data', (d: Buffer) => (output += d));
     child.stderr?.on('data', (d: Buffer) => (output += d));
-    child.on('error', (error) => done({ code: 127, output: error.message, ms: Date.now() - started }));
-    child.on('close', (code) => done({ code: code ?? 1, output, ms: Date.now() - started }));
+    child.on('error', (error) =>
+      done({ code: 127, output: error.message, ms: Date.now() - started }),
+    );
+    child.on('close', (code) =>
+      done({ code: code ?? 1, output, ms: Date.now() - started }),
+    );
   });
 }
 
 /** kit:compile in a child process: manifests and content packs are TS modules this process would cache. */
 export function compile(id: string): Promise<RunResult> {
-  return run('pnpm', ['exec', 'tsx', 'src/cli/compile.ts', `templates/${id}.ts`], { cwd: KIT });
+  return run(
+    'pnpm',
+    ['exec', 'tsx', 'src/cli/compile.ts', `templates/${id}.ts`],
+    { cwd: KIT },
+  );
 }
 
 export function validate(id: string): Promise<RunResult> {
-  return run('pnpm', ['exec', 'tsx', 'src/cli/validate.ts', `dist/${id}`], { cwd: KIT });
+  return run('pnpm', ['exec', 'tsx', 'src/cli/validate.ts', `dist/${id}`], {
+    cwd: KIT,
+  });
 }
 
 /** Drops pnpm's engine warnings from captured output. */

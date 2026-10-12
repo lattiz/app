@@ -4,7 +4,10 @@
  */
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { type BusinessProfile, parseBusinessProfile } from '../../../../apps/tenant-sites/lib/business-profile';
+import {
+  type BusinessProfile,
+  parseBusinessProfile,
+} from '../../../../apps/tenant-sites/lib/business-profile';
 import { composeSiteHtml } from '../../../../apps/tenant-sites/lib/compose-site';
 import { loadPreviewConfig } from '../../../../apps/tenant-sites/lib/preview-config';
 import {
@@ -37,7 +40,10 @@ export interface Preview {
   profileSource: string | null;
 }
 
-export function demoProfile(id: string): { profile: BusinessProfile; source: string | null } {
+export function demoProfile(id: string): {
+  profile: BusinessProfile;
+  source: string | null;
+} {
   const file = demoProfileFile(id);
   if (!existsSync(file)) return { profile: {}, source: null };
   return {
@@ -46,7 +52,9 @@ export function demoProfile(id: string): { profile: BusinessProfile; source: str
   };
 }
 
-export function templatePreset(meta: { motion?: { preset?: MotionPreset } }): MotionPreset {
+export function templatePreset(meta: {
+  motion?: { preset?: MotionPreset };
+}): MotionPreset {
   return meta.motion?.preset ?? 'none';
 }
 
@@ -64,15 +72,22 @@ function withRuntimeSource(html: string): string {
   const css = readFileSync(resolve(paths.motionSrc, 'style.css'), 'utf8');
   const js = readFileSync(resolve(paths.motionSrc, 'runtime.js'), 'utf8');
   return html
-    .replace(/(<style id="lz-motion-css">)[\s\S]*?(<\/style>)/, (_m, a: string, b: string) => a + css + b)
-    .replace(/(<script id="lz-motion">)[\s\S]*?(<\/script>)/, (_m, a: string, b: string) => a + js + b);
+    .replace(
+      /(<style id="lz-motion-css">)[\s\S]*?(<\/style>)/,
+      (_m, a: string, b: string) => a + css + b,
+    )
+    .replace(
+      /(<script id="lz-motion">)[\s\S]*?(<\/script>)/,
+      (_m, a: string, b: string) => a + js + b,
+    );
 }
 
 export function renderPreview(id: string, opts: PreviewOptions): Preview {
   const dist = readDist(id);
   const tier = dist.meta.tier;
   const preset = opts.preset ?? templatePreset(dist.meta);
-  const sections: SectionOverrides = (dist.meta.motion?.sections ?? {}) as SectionOverrides;
+  const sections: SectionOverrides = (dist.meta.motion?.sections ??
+    {}) as SectionOverrides;
   // The seed tags every template (stage 1b); only the serve step decides whether the runtime runs.
   const tagged = motionHtml(dist.html, preset, sections, false);
   const { profile, source } = demoProfile(id);
@@ -96,5 +111,11 @@ export function renderPreview(id: string, opts: PreviewOptions): Preview {
   });
   if (opts.runtimeSrc) html = withRuntimeSource(html);
   if (opts.reducedMotion) html = emulateReducedMotion(html);
-  return { html, tier, preset, rows: tagged.result.rows, profileSource: source };
+  return {
+    html,
+    tier,
+    preset,
+    rows: tagged.result.rows,
+    profileSource: source,
+  };
 }

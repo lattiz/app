@@ -55,26 +55,41 @@ export function badge(status: Status): string {
   }
 }
 
+let quiet = false;
+/** --json: keep stdout for the JSON document only. */
+export function setQuiet(value: boolean): void {
+  quiet = value;
+}
+export function isQuiet(): boolean {
+  return quiet;
+}
+
 export const log = {
   title(text: string): void {
+    if (quiet) return;
     console.log(`\n${c.bold(c.cyan(`▸ ${text}`))}`);
   },
   ok(text: string): void {
+    if (quiet) return;
     console.log(`${c.green('✓')} ${text}`);
   },
   warn(text: string): void {
+    if (quiet) return;
     console.log(`${c.yellow('!')} ${text}`);
   },
   fail(text: string): void {
     console.error(`${c.red('✗')} ${text}`);
   },
   info(text: string): void {
+    if (quiet) return;
     console.log(`${c.blue('·')} ${text}`);
   },
   hint(text: string): void {
+    if (quiet) return;
     console.log(`  ${c.gray('→')} ${c.gray(text)}`);
   },
   plain(text = ''): void {
+    if (quiet) return;
     console.log(text);
   },
 };

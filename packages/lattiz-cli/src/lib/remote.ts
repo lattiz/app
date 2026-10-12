@@ -3,7 +3,11 @@
  * Same env and precedence as the seed (scripts/lib/seed-env.ts).
  */
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-import { loadSeedEnv, OPTIONAL_SEED_ENV, SEED_ENV } from '../../../../scripts/lib/seed-env';
+import {
+  loadSeedEnv,
+  OPTIONAL_SEED_ENV,
+  SEED_ENV,
+} from '../../../../scripts/lib/seed-env';
 
 export { OPTIONAL_SEED_ENV, SEED_ENV };
 
@@ -26,7 +30,9 @@ export function missingEnv(keys: readonly string[]): string[] {
 
 export function previewsBaseUrl(): string | null {
   env();
-  return process.env.TEMPLATE_PREVIEWS_BASE_URL?.trim().replace(/\/+$/, '') || null;
+  return (
+    process.env.TEMPLATE_PREVIEWS_BASE_URL?.trim().replace(/\/+$/, '') || null
+  );
 }
 
 export function previewUrl(id: string): string | null {
@@ -45,17 +51,25 @@ export interface RemoteTemplate {
   thumbnail_url: string | null;
 }
 
-const COLUMNS = 'id, name, category, tier, is_active, created_at, preview_url, thumbnail_url';
+const COLUMNS =
+  'id, name, category, tier, is_active, created_at, preview_url, thumbnail_url';
 
 function client(): SupabaseClient | null {
-  if (missingEnv(['SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY']).length > 0) return null;
-  return createClient(process.env.SUPABASE_URL as string, process.env.SUPABASE_SERVICE_ROLE_KEY as string, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
+  if (missingEnv(['SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY']).length > 0)
+    return null;
+  return createClient(
+    process.env.SUPABASE_URL as string,
+    process.env.SUPABASE_SERVICE_ROLE_KEY as string,
+    {
+      auth: { persistSession: false, autoRefreshToken: false },
+    },
+  );
 }
 
 /** null when Supabase env is missing; throws on a query error. */
-export async function remoteTemplates(ids?: string[]): Promise<RemoteTemplate[] | null> {
+export async function remoteTemplates(
+  ids?: string[],
+): Promise<RemoteTemplate[] | null> {
   const supabase = client();
   if (!supabase) return null;
   let query = supabase.from('templates').select(COLUMNS).order('id');
@@ -65,7 +79,9 @@ export async function remoteTemplates(ids?: string[]): Promise<RemoteTemplate[] 
   return data as RemoteTemplate[];
 }
 
-export async function remoteTemplate(id: string): Promise<RemoteTemplate | null | undefined> {
+export async function remoteTemplate(
+  id: string,
+): Promise<RemoteTemplate | null | undefined> {
   const rows = await remoteTemplates([id]);
   if (rows === null) return undefined;
   return rows[0] ?? null;
@@ -83,9 +99,16 @@ export async function tenantsUsing(id: string): Promise<number | null> {
   return count ?? 0;
 }
 
-export async function httpStatus(url: string, timeoutMs = 8000): Promise<number | string> {
+export async function httpStatus(
+  url: string,
+  timeoutMs = 8000,
+): Promise<number | string> {
   try {
-    const res = await fetch(url, { method: 'GET', cache: 'no-store', signal: AbortSignal.timeout(timeoutMs) });
+    const res = await fetch(url, {
+      method: 'GET',
+      cache: 'no-store',
+      signal: AbortSignal.timeout(timeoutMs),
+    });
     return res.status;
   } catch (error) {
     return (error as Error).message;

@@ -33,7 +33,10 @@ export function readState(id: string): TemplateState {
   }
 }
 
-export function writeState(id: string, patch: Partial<TemplateState>): TemplateState {
+export function writeState(
+  id: string,
+  patch: Partial<TemplateState>,
+): TemplateState {
   const next = { ...readState(id), ...patch, id };
   const file = stateFile(id);
   mkdirSync(dirname(file), { recursive: true });

@@ -17,9 +17,13 @@ export const paths = {
   bases: resolve(CLI_ROOT, 'bases.json'),
 } as const;
 
-export const manifestFile = (id: string) => resolve(paths.templates, `${id}.ts`);
+export const manifestFile = (id: string) =>
+  resolve(paths.templates, `${id}.ts`);
 export const distDir = (id: string) => resolve(paths.dist, id);
-export const stateFile = (id: string) => resolve(paths.work, 'state', `${id}.json`);
+export const stateFile = (id: string) =>
+  resolve(paths.work, 'state', `${id}.json`);
 export const shotsDir = (id: string) => resolve(paths.work, 'shots', id);
-export const demoProfileFile = (id: string) => resolve(paths.demoProfiles, `${id}.json`);
-export const previewFile = (id: string) => resolve(paths.previewsPublic, id, 'index.html');
+export const demoProfileFile = (id: string) =>
+  resolve(paths.demoProfiles, `${id}.json`);
+export const previewFile = (id: string) =>
+  resolve(paths.previewsPublic, id, 'index.html');

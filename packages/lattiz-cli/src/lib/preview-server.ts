@@ -36,25 +36,46 @@ export interface PreviewServerOptions {
   shell?(): string;
 }
 
-function send(res: ServerResponse, status: number, type: string, body: string | Buffer): void {
+function send(
+  res: ServerResponse,
+  status: number,
+  type: string,
+  body: string | Buffer,
+): void {
   const buf = typeof body === 'string' ? Buffer.from(body) : body;
-  res.writeHead(status, { 'Content-Type': type, 'Content-Length': buf.length, 'Cache-Control': 'no-store' });
+  res.writeHead(status, {
+    'Content-Type': type,
+    'Content-Length': buf.length,
+    'Cache-Control': 'no-store',
+  });
   res.end(buf);
 }
 
 /** Serves the composed page, the template's dist/ assets and a live-reload SSE stream. */
-export function startPreviewServer(opts: PreviewServerOptions): Promise<PreviewServer> {
+export function startPreviewServer(
+  opts: PreviewServerOptions,
+): Promise<PreviewServer> {
   const root = distDir(opts.id);
   const clients = new Set<ServerResponse>();
   const server = createServer((req, res) => {
     const url = new URL(req.url ?? '/', 'http://localhost');
     try {
-      if (url.pathname === '/' && opts.shell) return send(res, 200, 'text/html; charset=utf-8', opts.shell());
+      if (url.pathname === '/' && opts.shell)
+        return send(res, 200, 'text/html; charset=utf-8', opts.shell());
       if (url.pathname === '/' || url.pathname === '/site') {
-        return send(res, 200, 'text/html; charset=utf-8', opts.render(url.searchParams));
+        return send(
+          res,
+          200,
+          'text/html; charset=utf-8',
+          opts.render(url.searchParams),
+        );
       }
       if (url.pathname === '/events') {
-        res.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-store', Connection: 'keep-alive' });
+        res.writeHead(200, {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-store',
+          Connection: 'keep-alive',
+        });
         res.write(': connected\n\n');
         clients.add(res);
         req.on('close', () => clients.delete(res));
@@ -63,12 +84,26 @@ export function startPreviewServer(opts: PreviewServerOptions): Promise<PreviewS
       const file = TENANT_STATIC.has(url.pathname)
         ? resolve(paths.tenantSitesApp, url.pathname.slice(1))
         : normalize(resolve(root, `.${decodeURIComponent(url.pathname)}`));
-      if ((!TENANT_STATIC.has(url.pathname) && !file.startsWith(root + sep)) || !existsSync(file) || !statSync(file).isFile()) {
+      if (
+        (!TENANT_STATIC.has(url.pathname) && !file.startsWith(root + sep)) ||
+        !existsSync(file) ||
+        !statSync(file).isFile()
+      ) {
         return send(res, 404, 'text/plain', 'Not found');
       }
-      return send(res, 200, TYPES[extname(file).toLowerCase()] ?? 'application/octet-stream', readFileSync(file));
+      return send(
+        res,
+        200,
+        TYPES[extname(file).toLowerCase()] ?? 'application/octet-stream',
+        readFileSync(file),
+      );
     } catch (error) {
-      return send(res, 500, 'text/plain; charset=utf-8', `Error al componer la vista:\n${(error as Error).stack ?? error}`);
+      return send(
+        res,
+        500,
+        'text/plain; charset=utf-8',
+        `Error al componer la vista:\n${(error as Error).stack ?? error}`,
+      );
     }
   });
   return new Promise((done, fail) => {
