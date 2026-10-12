@@ -106,6 +106,7 @@ interface CliArgs {
   tier: TemplateTier;
   motion: MotionPreset;
   motionSections: SectionOverrides;
+  motionProgress: boolean;
   dryRun: boolean;
   deploy: boolean;
   finalize: boolean;
@@ -161,7 +162,7 @@ function isTier(value: unknown): value is TemplateTier {
 
 interface KitMeta {
   tier?: unknown;
-  motion?: { preset?: MotionPreset; sections?: SectionOverrides };
+  motion?: { preset?: MotionPreset; sections?: SectionOverrides; progress?: boolean };
 }
 
 function readMeta(dir: string | undefined): KitMeta | null {
@@ -254,6 +255,7 @@ function parseArgs(argv: string[]): CliArgs {
     tier,
     motion,
     motionSections: meta?.motion?.sections ?? {},
+    motionProgress: meta?.motion?.progress === true,
     dryRun: raw.has('dry-run'),
     deploy: !raw.has('no-deploy'),
     finalize: raw.has('finalize'),
@@ -784,9 +786,9 @@ async function run(argv: string[]): Promise<void> {
 
   // 1b. Motion
   if (exportHtml) {
-    const tagged = motionHtml(exportHtml, args.motion, args.motionSections, false);
+    const tagged = motionHtml(exportHtml, args.motion, args.motionSections, false, args.motionProgress);
     try {
-      motionProject(project, args.motion, tagged.result.rows);
+      motionProject(project, args.motion, tagged.result.rows, args.motionProgress);
     } catch (error) {
       throw new StageError(error instanceof Error ? error.message : String(error));
     }

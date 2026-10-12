@@ -117,6 +117,9 @@
 }
 
 @media (max-width: 480px) {
+  .lz-price-item__desc {
+    font-size: 16px;
+  }
   .lz-price-item {
     grid-template-columns: 1fr auto;
   }

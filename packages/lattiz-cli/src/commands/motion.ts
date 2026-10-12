@@ -3,6 +3,8 @@ import { relative } from 'node:path';
 import {
   classificationTable,
   motionHtml,
+  PATTERNS,
+  SECTION_TYPES,
   type SectionOverrides,
   type SectionRow,
 } from '../../../../scripts/lib/motion-sections';
@@ -25,6 +27,7 @@ export interface MotionReport {
   table: string;
   /** Non-skipped sections the runtime won't animate (preset none or type none). */
   untyped: number;
+  /** Reveal groups on a phone, summed over animated sections. */
   groups: number;
 }
 
@@ -32,7 +35,13 @@ export function motionReport(id: string): MotionReport {
   const dist = readDist(id);
   const preset = dist.meta.motion?.preset ?? 'none';
   const overrides = (dist.meta.motion?.sections ?? {}) as SectionOverrides;
-  const { result } = motionHtml(dist.html, preset, overrides, false);
+  const { result } = motionHtml(
+    dist.html,
+    preset,
+    overrides,
+    false,
+    dist.meta.motion?.progress === true,
+  );
   const typed = result.rows.filter((r) => r.type !== 'skip');
   return {
     preset,
@@ -43,13 +52,13 @@ export function motionReport(id: string): MotionReport {
       preset === 'none'
         ? typed.length
         : typed.filter((r) => r.type === 'none').length,
-    groups: result.rows.reduce((n, r) => n + r.groups, 0),
+    groups: typed.reduce((n, r) => n + r.revealGroups, 0),
   };
 }
 
 export function printMotion(id: string, report: MotionReport): void {
   log.info(
-    `preset ${c.bold(report.preset)} · ${report.rows.filter((r) => r.type !== 'skip').length} sección(es) animables · ${report.groups} grupo(s)`,
+    `preset ${c.bold(report.preset)} · ${report.rows.filter((r) => r.type !== 'skip').length} sección(es) animables · ${report.groups} grupo(s) de revelado`,
   );
   console.log(report.table);
   if (report.untyped > 0)
@@ -69,7 +78,8 @@ export function printMotion(id: string, report: MotionReport): void {
   );
   log.plain(
     c.gray(
-      "  Claves: nombre del slot, '#id' o el # de la tabla. Tipos: hero text cards gallery stats cta footer none",
+      `  Claves: nombre del slot, '#id' o el # de la tabla. Valor: un tipo o { type, pattern }.\n` +
+        `  Tipos: ${SECTION_TYPES.join(' ')}\n  Patrones: ${PATTERNS.join(' ')}`,
     ),
   );
 }

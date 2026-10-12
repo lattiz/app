@@ -63,7 +63,8 @@ describe('theme → tokens', () => {
     expect(oxido.get('--lz-shadow')).toBe('none');
     expect(oxido.get('--lz-section-pad')).toBe('clamp(72px, 10vw, 140px)');
     expect(oxido.get('--lz-photo-filter')).toBe('grayscale(1)');
-    expect(oxido.get('--lz-font-mono')).toBe("'Space Grotesk', sans-serif");
+    // A metric-matched local fallback sits between the web font and the generic family (no swap CLS).
+    expect(oxido.get('--lz-font-mono')).toBe("'Space Grotesk', 'Space Grotesk Fallback', sans-serif");
   });
 });
 

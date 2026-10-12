@@ -171,3 +171,164 @@ Verificado además a mano: `prefers-reduced-motion` y sin JS → 0 nodos ocultos
 `data-lz-motion="none"` → el runtime ni se inyecta; Básico → mismo HTML sin runtime (las 6 plantillas
 del kit compilan pixel-idénticas tras el cambio de tokens); al saltar a media sección (ancla o scroll
 rápido) lo visible aparece de inmediato y lo de más abajo espera a su ancla.
+
+
+---
+
+# Motion v3 — auditoría (WP0)
+
+Fecha: 2026-10-11. Pilotos: `barberia-norte-v1` y **`barberia-oxido-v1`** (confirmado por Santi; había
+tres candidatos con «óxido»: esta plantilla Pro del kit, la Básico `barberia-v1` «Barbería Premium»
+con la marca ÓXIDO dentro de su JSON, y el export de Studio `packages/template-kit/fixtures/oxido`).
+Medido sobre el HTML de los previews (assets en R2) con Motion v2 y el clasificador del seed.
+
+## Percepción en móvil: cuándo se dispara vs. cuándo se ve (WP0.1–0.2)
+
+Herramienta: Playwright con emulación móvil (390×844, 360×640, 844×390, DPR 2, touch) y escritorio
+(1440×900, 1366×768, 1920×1080); scroll continuo a 900 px/s (lectura) y 2 500 px/s (flick). Por cada
+elemento animado: distancia recorrida (`translate` resuelto al arrancar), duración, alto, `scrollY` al
+dispararse y al entrar al viewport, y si al entrar la animación ya había terminado, estaba en curso o
+aún no empezaba.
+
+| Viewport (900 px/s) | Norte: espera tras entrar (mediana / p90) | ÓXIDO: espera (mediana / p90) | Terminó antes de verse | Recorrido | Duración | Recorrido / alto (mediana) |
+|---|---|---|---|---|---|---|
+| 390×844 | 100 / 103 ms | 100 / 101 ms | 0 | 32 px | 880 ms | 23 % |
+| 360×640 | 68 / 84 ms | 67 / 87 ms | 0 | 32 px | 880 ms | 21–22 % |
+| 844×390 | 34 / 36 ms | 34 / 51 ms | 1 (hero, norte) | 32 px | 880 ms | 29–31 % |
+| 1440×900 | 101 / 307 ms | 101 / 386 ms | 0 | 32 px | 880 ms | 25–26 % |
+| 1366×768 | 84 / 369 ms | 84 / 370 ms | 0 | 32 px | 880 ms | 25–26 % |
+| 1920×1080 | 134 / 324 ms | 134 / 498 ms | 0 | 32 px | 880 ms | 25–26 % |
+
+Al dispararse, cada elemento ya muestra de mediana 81 px (390×844), 54 px (360×640) y 84–107 px
+(escritorio) dentro de la pantalla; a 2 500 px/s la espera baja a 17–34 ms pero el p90 de escritorio
+sigue en 200–500 ms (son los escalones de cascada, hasta 8 × 95 ms).
+
+**Hallazgo principal (bug, no hipótesis): contenido que se queda invisible.** En 360×640 Norte deja
+8 elementos y ÓXIDO 40 (galería y equipo completos) en `opacity: 0` para siempre, aun volviendo a
+subir. Dos causas, ambas en el runtime v2:
+
+1. **Ancla diferida que se borra a sí misma.** Cuando un ancla se dispara, `play()` recalcula qué
+   está «en pantalla» con `top < 0.88 × vh`; el observer usa `rootMargin: -12%` y redondea distinto.
+   Si el ancla queda en la frontera (sub-píxel), `play()` la vuelve a elegir como siguiente ancla y la
+   registra *dentro* del callback del observer, que justo después borra el watcher de ese elemento.
+   La cadena de esa sección se corta. Es intermitente (depende de la posición exacta y del DPR).
+2. **Franja inferior muerta.** Con `rootMargin` inferior negativo, lo que vive en el último 12 % de la
+   página nunca cruza la línea (p. ej. la línea legal del footer). El failsafe de 2.5 s no lo cubre:
+   solo actúa si el observer nunca reportó nada.
+
+**Hipótesis:**
+
+| | Resultado | Evidencia |
+|---|---|---|
+| **H1** se dispara por sección y lo de abajo termina antes de verse | **No se cumple en v2** | 0 elementos terminaron antes de verse (salvo 1 del hero en horizontal). Pasa lo contrario: entran ocultos y esperan. El problema real son las cadenas rotas de arriba. |
+| **H2** distancias fijas en px pensadas para escritorio | **Se cumple (en parte)** | `--lz-dist` = 32 px (editorial) en todos los viewports; es 21–31 % del alto del elemento, perceptible en tarjetas bajas pero 5 % en tarjetas de 576 px (equipo de ÓXIDO en móvil). No escala con la pantalla. |
+| **H3** el observer se dispara demasiado pronto en móvil | **No** | Se dispara cuando el elemento ya está 54–81 px dentro; si acaso, tarde. |
+| **H4** duración/curva corta o reduced-motion/failsafe interfiriendo | **Parcial** | Duración 880 ms (editorial) / 640 ms (calm): no es corta. Reduced-motion no estaba activo. El failsafe **sí falla**: no cubre cadenas rotas ni la franja inferior. Además el hero escalona hasta ~700 ms: el CTA aparece tarde. |
+
+## Viewport-fit (WP0.3)
+
+`header` = alto del header sticky; disponible = `innerHeight − header`. Contenido = caja que une los
+hijos visibles de la sección (sin su padding).
+
+**barberia-norte-v1** — altura de contenido / 0.9 × disponible (✓ cabe, ✗ no cabe)
+
+| Sección | 1440x900 | 1366x768 | 1280x720 | 1920x1080 | 390x844 | 360x640 | 844x390 |
+|---|---|---|---|---|---|---|---|
+| *header / disponible* | 130 / 770 | 130 / 638 | 130 / 590 | 130 / 950 | 75 / 769 | 75 / 565 | 85 / 305 |
+| hero/split | 649/693 ✓ | 651/574 ✗ | 650/531 ✗ | 644/855 ✓ | 774/692 ✗ | 747/509 ✗ | 1061/275 ✗ |
+| about/statement | 947/693 ✗ | 931/574 ✗ | 909/531 ✗ | 950/855 ✗ | 1053/692 ✗ | 1054/509 ✗ | 691/275 ✗ |
+| services/editorial-table | 965/693 ✗ | 965/574 ✗ | 960/531 ✗ | 965/855 ✗ | 1767/692 ✗ | 1767/509 ✗ | 1375/275 ✗ |
+| team/list | 917/693 ✗ | 914/574 ✗ | 911/531 ✗ | 919/855 ✗ | 790/692 ✗ | 787/509 ✗ | 889/275 ✗ |
+| gallery/strip | 688/693 ✓ | 685/574 ✗ | 679/531 ✗ | 690/855 ✓ | 613/692 ✓ | 580/509 ✗ | 659/275 ✗ |
+| testimonials/quote-feature | 736/693 ✗ | 718/574 ✗ | 641/531 ✗ | 737/855 ✓ | 963/692 ✗ | 963/509 ✗ | 704/275 ✗ |
+| faq/two-col | 1006/693 ✗ | 1006/574 ✗ | 1006/531 ✗ | 1006/855 ✗ | 1444/692 ✗ | 1538/509 ✗ | 1266/275 ✗ |
+| locations/with-contact | 898/693 ✗ | 893/574 ✗ | 886/531 ✗ | 902/855 ✗ | 1675/692 ✗ | 1672/509 ✗ | 1072/275 ✗ |
+| footer/minimal-centered | 370/693 ✓ | 370/574 ✓ | 369/531 ✓ | 370/855 ✓ | 471/692 ✓ | 471/509 ✓ | 351/275 ✗ |
+
+**barberia-oxido-v1** — altura de contenido / 0.9 × disponible (✓ cabe, ✗ no cabe)
+
+| Sección | 1440x900 | 1366x768 | 1280x720 | 1920x1080 | 390x844 | 360x640 | 844x390 |
+|---|---|---|---|---|---|---|---|
+| *header / disponible* | 85 / 815 | 85 / 683 | 85 / 635 | 85 / 995 | 75 / 769 | 75 / 565 | 85 / 305 |
+| hero/image-bg | 900/734 ✗ | 804/615 ✗ | 778/572 ✗ | 1080/896 ✗ | 844/692 ✗ | 754/509 ✗ | 600/275 ✗ |
+| about/text-image-offset | 793/734 ✗ | 793/615 ✗ | 793/572 ✗ | 793/896 ✓ | 1317/692 ✗ | 1322/509 ✗ | 1665/275 ✗ |
+| services/price-list | 977/734 ✗ | 977/615 ✗ | 977/572 ✗ | 977/896 ✗ | 2019/692 ✗ | 2172/509 ✗ | 1630/275 ✗ |
+| gallery/grid | 855/734 ✗ | 851/615 ✗ | 846/572 ✗ | 857/896 ✓ | 1073/692 ✗ | 1068/509 ✗ | 1397/275 ✗ |
+| locations/with-contact | 903/734 ✗ | 895/615 ✗ | 877/572 ✗ | 907/896 ✗ | 1641/692 ✗ | 1636/509 ✗ | 1078/275 ✗ |
+| team/grid | 684/734 ✓ | 680/615 ✗ | 675/572 ✗ | 686/896 ✓ | 2691/692 ✗ | 2533/509 ✗ | 1455/275 ✗ |
+| testimonials/cards | 485/734 ✓ | 485/615 ✓ | 485/572 ✓ | 485/896 ✓ | 1261/692 ✗ | 1315/509 ✗ | 852/275 ✗ |
+| faq/list | 1383/734 ✗ | 1379/615 ✗ | 1374/572 ✗ | 1386/896 ✗ | 1724/692 ✗ | 1810/509 ✗ | 1349/275 ✗ |
+| footer/big-wordmark | 566/734 ✓ | 553/615 ✓ | 537/572 ✓ | 569/896 ✓ | 895/692 ✗ | 895/509 ✗ | 945/275 ✗ |
+
+Lectura:
+
+- **Header de Norte: 130 px** (fila de 84 px + navegación de 46 px), no ~290 px como decía el brief;
+  sigue siendo el más caro (ÓXIDO: 85 px).
+- **Hero de Norte**: cabe en 1440×900 y 1920×1080 pero la imagen termina en 906 px (recortada en
+  900); a 1366×768 y 1280×720 el CTA cae bajo el pliegue (822 y 809 px). Titular 90–104 px.
+- **Hero de ÓXIDO**: alto = `100vh` completo sin descontar el header, titular de 150–168 px en
+  escritorio; **el CTA queda bajo el pliegue en todos los tamaños de escritorio** y en 360×640.
+- Las secciones de contenido (servicios, FAQ, sucursales, galería, equipo) no caben ni deben caber:
+  fluyen. Composición (hero, about en dos columnas) sí son candidatas a encajar.
+- Horizontal 844×390: nada cabe (305 px disponibles); se tratará con el fallback `max-height: 560px`.
+- No hay scroll horizontal en ningún viewport.
+
+## Referencia flor-coco (WP0.5, solo técnica)
+
+Hero a `height: 100dvh` con la navegación como píldora flotante encima (no consume alto del flujo),
+titular moderado y bloque de texto+CTA anclado abajo. Tomamos la técnica (unidades de viewport,
+header que no resta altura) con `svh` en vez de `dvh` para evitar saltos de la barra del navegador.
+
+## Línea base (WP0.6)
+
+| Métrica (Lighthouse móvil, mediana de 3) | Norte v2 | ÓXIDO v2 |
+|---|---|---|
+| Score | 88 | 79 |
+| LCP | 3 231 ms (imagen del hero) | 3 021 ms (imagen del hero) |
+| CLS | 0.120 | 0.207 |
+| TBT | 0 ms | 0 ms |
+| Runtime | 22 557 B min · 8 068 B gzip | igual |
+| Observados | máx. 10 a la vez, 53 `observe()` por recorrido (390 px) | máx. 10, 52 |
+
+CLS de carga en ambos: «Web font loaded» (Playfair / Anton reacomodan el titular). No es motion.
+
+## Motion v3 — antes / después (WP6)
+
+Antes = previews con Motion v2 (línea base WP0); después = los previews v3 commiteados (assets R2,
+runtime v3 final, viewport-fit, fallbacks de fuentes). Lighthouse móvil, mediana de 3.
+
+| Métrica | Norte antes | Norte después | ÓXIDO antes | ÓXIDO después |
+|---|---|---|---|---|
+| Lighthouse móvil (score) | 88 | **92** | 79 | **90** |
+| LCP | 3 231 ms | 3 239 ms | 3 021 ms | 3 015 ms |
+| CLS | 0.120 | **0.002** | 0.207 | **0.004** |
+| TBT | 0 ms | 0 ms | 0 ms | 0 ms |
+| Runtime gzip | 8 068 B | 9 670 B (presupuesto 12 KB) | igual | igual |
+| `IntersectionObserver` | 1 | 1 | 1 | 1 |
+| Observados a la vez (máx., 390 px) | 10 | 52 (un ancla por grupo) | 10 | 62 |
+| Long tasks en scroll con CPU 4× (390 px) | 2 (60–79 ms) | 2 (63–68 ms) | 1 (54 ms) | 2 (50–70 ms) |
+| Elementos que se quedan invisibles (360×640) | **8** | 0 | **40** | 0 |
+| Terminaron antes de verse (6 viewports) | 0–1 | **0** | 0 | **0** |
+| Espera tras entrar a 390×844 (mediana / p90) | 100 / 103 ms | 52 / 86 ms | 100 / 101 ms | 57 / 132 ms |
+| Espera p90 en escritorio | 307–369 ms | 188–225 ms | 370–498 ms | 207–227 ms |
+| Recorrido a 390 px / 1440 px | 32 / 32 px | 31 / 72 px | 32 / 32 px | 31 / 80 px |
+| Duración a 390 px / 1440 px | 880 / 880 ms | 1 080 / 900 ms | igual | igual |
+| Reporte de encaje (héroes, sin horizontal) | 4/6 PASS, CTA bajo el pliegue en 1366 y 1280 | **6/6**, CTA visible en todos | 3/6 PASS, CTA bajo el pliegue en los 4 escritorios y 360×640 | **6/6**, CTA visible en todos |
+| Scroll horizontal (todos los anchos) | 0 | 0 | 0 | 0 |
+
+Lectura:
+
+- **Percepción en móvil:** ningún elemento termina antes de verse en ningún viewport y ninguno se
+  queda oculto; al dispararse, cada elemento ya muestra ~42 px (390×844) y la animación dura 1 080 ms
+  con un ease-out más firme, así que se ve en curso. Los máximos de ~500 ms en Norte son la tira de
+  galería horizontal (6 pasos × 80 ms, cada imagen a la derecha espera su turno).
+- **Observados:** v3 observa el primer elemento de cada grupo (52–62 a la vez) en lugar de secciones +
+  anclas; sigue siendo un solo observer y el costo no se nota en long tasks (iguales a v2, son
+  decodificación de imágenes).
+- **CLS:** el compactado del hero subió el CLS de Norte a 0.20 (la imagen del hero quedó completa en la
+  primera pantalla, así que el reacomodo por fuentes la desplazaba más). Lo corrigen los fallbacks con
+  métricas (`docs/decisions/font-metric-fallbacks.md`): 0.002 y 0.004.
+- **Recorrido en escritorio (72–80 px editorial)** es mayor que en v2; si se siente excesivo, bajar
+  `--lz-dist` del preset `editorial` en `style.css` (un solo token).
+- Plantillas fuera del piloto: `concreto` (hero `offset-card`) y `claro` (hero `centered-arch`) aún no
+  usan el sistema de encaje; las que comparten navbar/hero con los pilotos (`oscuro`, `solar`) ya sí.

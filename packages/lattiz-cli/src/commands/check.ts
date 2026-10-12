@@ -4,7 +4,14 @@ import { createRequire } from 'node:module';
 import { relative, resolve } from 'node:path';
 import type { Browser, Page } from 'playwright';
 import { open, primeLazyContent } from '../../../template-kit/src/lib/shoot';
-import { audit, type LayoutIssue } from '../../../template-kit/src/lib/shots';
+import {
+  audit,
+  type FitRow,
+  type LayoutIssue,
+  measureFit,
+} from '../../../template-kit/src/lib/shots';
+
+type FitMeasure = Omit<FitRow, 'viewport' | 'verdict'>;
 import { browserPath, launchBrowser } from '../lib/browser';
 import { bool, type Command } from '../lib/command';
 import { EXIT, type ExitCode } from '../lib/errors';
@@ -49,7 +56,8 @@ const HARD_MIN_FONT = 12;
 const MIN_TAP = 44;
 const MAX_IMAGE_BYTES = 300 * 1024;
 const MAX_IMAGE_PX = 2000;
-const FIT_SHARE = 0.9;
+/** kit:shots' rule: below this window height hero sections fall back to natural flow. */
+const FIT_MIN_HEIGHT = 560;
 
 const RULES = {
   kit: 'kit:validate',
@@ -61,7 +69,7 @@ const RULES = {
   contrast: 'contraste (axe)',
   alt: 'alt en <img>',
   images: `imágenes ≤ 300 KB / ${MAX_IMAGE_PX} px`,
-  fit: 'viewport-fit (--lz-fit)',
+  fit: 'viewport-fit (data-lz-fit)',
   motion: 'Motion: cobertura',
   nojs: 'sin JS: contenido visible',
   lighthouse: 'Lighthouse',
@@ -209,10 +217,50 @@ function layoutResults(vp: string, issues: LayoutIssue[]): RuleResult[] {
   ];
 }
 
+/** Same verdict as kit:shots' fit report (docs/decisions/viewport-fit-system.md). */
+function fitResult(vp: Viewport, rows: FitMeasure[]): RuleResult {
+  if (rows.length === 0)
+    return result('fit', vp.label, 'N/A', 'N/A (no viewport-fit tokens)');
+  if (vp.h <= FIT_MIN_HEIGHT)
+    return result(
+      'fit',
+      vp.label,
+      'N/A',
+      `alto ≤ ${FIT_MIN_HEIGHT} px: flujo natural`,
+    );
+  const failed = rows.filter(
+    (r) =>
+      r.content > r.fit &&
+      !(r.text !== null && r.text <= r.fit && r.ctaVisible),
+  );
+  const line = (r: FitMeasure) =>
+    `${r.slot} — contentHeight ${r.content} px vs ${r.fit} px (0.9 × (${vp.h} − header ${r.header}))` +
+    (r.text !== null ? ` · texto ${r.text} px` : '') +
+    (r.ctaVisible === null
+      ? ''
+      : r.ctaVisible
+        ? ' · CTA visible'
+        : ' · CTA bajo el pliegue');
+  return failed.length
+    ? result(
+        'fit',
+        vp.label,
+        'FAIL',
+        `${failed.length}/${rows.length} sección(es) data-lz-fit no caben`,
+        failed.map(line),
+      )
+    : result(
+        'fit',
+        vp.label,
+        'PASS',
+        `${rows.length} sección(es) data-lz-fit caben`,
+        rows.map(line),
+      );
+}
+
 interface PageFacts {
   noAlt: string[];
   bigPx: string[];
-  fit: { slot: string; height: number; available: number }[];
   sections: number;
   runtime: boolean;
 }
@@ -224,22 +272,11 @@ function facts(maxPx: number): PageFacts {
     return `${slot ? `${slot} › ` : ''}${(el.getAttribute('src') ?? '').split('/').pop()}`;
   };
   const imgs = Array.from(document.querySelectorAll('img'));
-  const fitSections = Array.from(
-    document.querySelectorAll('[data-lz-slot]'),
-  ).filter((el) => {
-    const v = getComputedStyle(el).getPropertyValue('--lz-fit').trim();
-    return v !== '' && v !== 'none' && v !== '0';
-  });
   return {
     noAlt: imgs.filter((i) => !i.hasAttribute('alt')).map(name),
     bigPx: imgs
       .filter((i) => i.naturalWidth > maxPx)
       .map((i) => `${name(i)} — ${i.naturalWidth} px`),
-    fit: fitSections.map((el) => ({
-      slot: el.getAttribute('data-lz-slot') ?? '?',
-      height: Math.round(el.getBoundingClientRect().height),
-      available: window.innerHeight,
-    })),
     sections: document.querySelectorAll('[data-lz-section]').length,
     runtime: Boolean(document.getElementById('lz-motion')),
   };
@@ -309,7 +346,7 @@ async function checkViewport(
       .filter(([, b]) => b > MAX_IMAGE_BYTES)
       .map(([p, b]) => `${p.split('/').pop()} — ${Math.round(b / 1024)} KB`);
     const imageItems = [...heavy, ...f.bigPx];
-    const fitOver = f.fit.filter((s) => s.height > FIT_SHARE * s.available);
+    const fit = await page.evaluate(measureFit);
     return [
       ...layoutResults(vp.label, issues),
       lowContrast.length
@@ -339,25 +376,7 @@ async function checkViewport(
             imageItems,
           )
         : result('images', vp.label, 'PASS', ''),
-      f.fit.length === 0
-        ? result('fit', vp.label, 'N/A', 'N/A (no viewport-fit tokens)')
-        : fitOver.length
-          ? result(
-              'fit',
-              vp.label,
-              'WARN',
-              `${fitOver.length}/${f.fit.length} sección(es) fit > ${FIT_SHARE * 100}% del alto`,
-              fitOver.map(
-                (s) =>
-                  `${s.slot} — contentHeight ${s.height} px vs ${Math.round(FIT_SHARE * s.available)} px (0.9 × ${s.available})`,
-              ),
-            )
-          : result(
-              'fit',
-              vp.label,
-              'PASS',
-              `${f.fit.length} sección(es) fit caben`,
-            ),
+      fitResult(vp, fit),
     ];
   } finally {
     await context.close();
@@ -569,13 +588,13 @@ export async function runCheck(
               'motion',
               GLOBAL,
               'WARN',
-              `${report.untyped}/${typed} sección(es) sin tipo animable · ${report.groups} grupo(s) · preset ${report.preset}`,
+              `${report.untyped}/${typed} sección(es) sin tipo animable · ${report.groups} grupo(s) de revelado · preset ${report.preset}`,
             )
           : result(
               'motion',
               GLOBAL,
               'PASS',
-              `${typed} sección(es) con tipo · ${report.groups} grupo(s) · preset ${report.preset}`,
+              `${typed} sección(es) con tipo · ${report.groups} grupo(s) de revelado · preset ${report.preset}`,
             ),
       );
       results.push(await noJs(browser, `${server.url}/site`));
@@ -687,7 +706,9 @@ export const check: Command = {
     'FAIL (sale con 1): kit:validate, overflow, contraste AA (axe), <img> sin alt, falta',
     '<title>/description, tokens {{lz:*}} crudos, Pro: contenido de Motion oculto sin JS.',
     'WARN (no bloquea): texto < 14 px (se marca < 12 px), toques < 44 px, imágenes > 300 KB o',
-    '> 2000 px, sección fit > 90 % del alto, Pro: secciones sin tipo de Motion.',
+    '> 2000 px, Pro: secciones sin tipo de Motion.',
+    'Encaje (como kit:shots): una sección data-lz-fit cuyo contenido pasa de 0.9 × (alto − header)',
+    'y cuyo bloque de texto + CTA tampoco cabe es FAIL; con alto ≤ 560 px no aplica.',
     '',
     '  --lighthouse   además corre Lighthouse (npx lighthouse@12, se instala al vuelo; usa memoria)',
     '  --json         imprime solo el resultado en JSON',

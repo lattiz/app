@@ -1,12 +1,12 @@
-/* Lattiz Motion v2 — section choreography plus the v1 data-lz-* behaviors, published Pro sites only.
+/* Lattiz Motion v3 — reveal groups with smart variants plus the v1 data-lz-* behaviors, Pro sites only.
  * Contract: docs/lattiz-motion.md. Inert without this script (editor, Básico).
- * Rules: one IntersectionObserver per page, sections are the triggers; transform/opacity only
- * (clip-path for media masks); never hide above-the-fold content; respect prefers-reduced-motion;
- * every module is isolated in its own try/catch. */
+ * Rules: one IntersectionObserver per page observing reveal groups; transform/opacity only (clip-path
+ * for masks); never hide above-the-fold content; respect prefers-reduced-motion; every module is
+ * isolated in its own try/catch. */
 (function () {
   'use strict';
   if (window.__lzMotion) return;
-  window.__lzMotion = 2;
+  window.__lzMotion = 3;
   var doc = document;
   var root = doc.documentElement;
   root.classList.add('lz-js');
@@ -20,7 +20,7 @@
   var still = reduced || preset === 'none';
   var hasIO = 'IntersectionObserver' in window;
   var FAILSAFE_MS = 2500;
-  var MAX_STEP = 8;
+  var MAX_STEP = 6;
   var MAX_WORDS = 16;
   var vh = window.innerHeight || root.clientHeight;
 
@@ -38,9 +38,6 @@
       if (window.console) console.warn('[lz-motion] ' + name, error);
     }
   }
-  function inFirstViewport(rect) {
-    return rect.top < vh && rect.bottom > 0;
-  }
   function clips(el) {
     return !!el && getComputedStyle(el).overflow !== 'visible';
   }
@@ -51,8 +48,10 @@
   }
 
   // ── One IntersectionObserver for the whole page ──
+  var TRIGGER = 0.15;
   var watchers = new Map();
   var reported = false;
+  var afterBatch = [];
   var io = hasIO
     ? new IntersectionObserver(
         function (entries) {
@@ -60,25 +59,34 @@
           for (var i = 0; i < entries.length; i++) {
             var target = entries[i].target;
             var fn = watchers.get(target);
-            if (fn && fn(entries[i].isIntersecting)) {
+            // A callback may re-watch its own target; only drop the watcher that just ran.
+            if (fn && fn(entries[i]) && watchers.get(target) === fn) {
               watchers.delete(target);
               io.unobserve(target);
             }
           }
+          for (var k = 0; k < afterBatch.length; k++) afterBatch[k]();
         },
-        { rootMargin: '0px 0px -12% 0px' }
+        { rootMargin: '0px 0px -8% 0px', threshold: [0, TRIGGER] }
       )
     : null;
-  /** fn(inView) runs on every change; returning true stops watching. */
+  /** fn(entry) runs on every change (entry is null without IntersectionObserver); true stops watching. */
   function watch(el, fn) {
-    if (!io) return fn(true);
+    if (!io) return fn(null);
     watchers.set(el, fn);
     io.observe(el);
   }
+  /** Visible enough: 15 % of the element, or a quarter of the screen for very tall ones. */
+  function seen(e) {
+    if (!e) return true;
+    var h = e.rootBounds ? e.rootBounds.height : vh;
+    return e.isIntersecting && (e.intersectionRatio >= TRIGGER || e.intersectionRect.height >= h * 0.25);
+  }
   function once(el, fn) {
-    watch(el, function (inView) {
-      if (inView) fn();
-      return inView;
+    watch(el, function (e) {
+      var ok = seen(e);
+      if (ok) fn();
+      return ok;
     });
   }
 
@@ -128,15 +136,28 @@
     requestAnimationFrame(tick);
   }
 
-  // ── Choreography: read everything first, then write once ──
-  var KINDS = { 'fade-up': 'rise', fade: 'fade', zoom: 'zoom', 'slide-left': 'left', 'slide-right': 'right' };
-  var TYPES = { hero: 1, text: 1, cards: 1, gallery: 1, stats: 1, cta: 1, footer: 1 };
+  // ── Choreography: groups are read in one pass, written in one pass, observed one by one ──
+  var VARIANTS = { fade: 1, 'fade-up': 1, 'fade-down': 1, 'fade-left': 1, 'fade-right': 1, 'zoom-in': 1, 'mask-up': 1, 'mask-wipe': 1, 'rise-scale': 1 };
+  // Names say where the element travels (fade-right starts on the left); from-* say where it starts.
+  var ALIASES = { '': 'fade-up', 'from-left': 'fade-right', 'from-right': 'fade-left', 'from-top': 'fade-down', 'from-bottom': 'fade-up', zoom: 'zoom-in', 'slide-left': 'fade-left', 'slide-right': 'fade-right' };
+  var TYPES = { hero: 1, about: 1, text: 1, cards: 1, steps: 1, timeline: 1, gallery: 1, stats: 1, testimonials: 1, pricing: 1, team: 1, faq: 1, contact: 1, cta: 1, footer: 1 };
+  var PATTERNS = { cascade: 1, alternate: 1, converge: 1, 'center-out': 1, wave: 1, none: 1 };
+  var DEFAULT_PATTERN = { faq: 'alternate', steps: 'alternate', timeline: 'alternate', testimonials: 'alternate', cards: 'converge', pricing: 'converge', gallery: 'wave', stats: 'center-out' };
   var BLOCK = /^(H[1-6]|P|BLOCKQUOTE|DL|DT|DD|FIGCAPTION|SUMMARY|LI|TABLE|ADDRESS)$/;
   var MEDIA = /^(IMG|PICTURE|VIDEO|IFRAME)$/;
   var SKIP = /^(SCRIPT|STYLE|TEMPLATE|NOSCRIPT|BR)$/;
+  var FEATURED = /featured|popular|destacad|recomendad/i;
 
+  function variant(name, fallback) {
+    if (name === null || name === undefined) return fallback;
+    if (ALIASES[name] !== undefined) name = ALIASES[name];
+    return VARIANTS[name] ? name : fallback;
+  }
   function kindOf(el, fallback) {
-    return KINDS[el.getAttribute('data-lz-reveal')] || fallback;
+    return variant(el.getAttribute('data-lz-reveal'), fallback);
+  }
+  function optedOut(el) {
+    return el.getAttribute('data-lz-reveal') === 'none';
   }
   function isButton(el) {
     return (
@@ -148,41 +169,63 @@
   function signature(el) {
     return el.tagName + '.' + (el.classList[0] || '');
   }
-  /** ≥ 3 children that look alike (one odd sibling allowed): cards, rows, list items. */
-  function isGroup(el) {
-    var kids = el.children;
-    if (kids.length < 3) return false;
-    var sig = signature(kids[1]);
-    var same = 0;
-    for (var i = 0; i < kids.length; i++) if (signature(kids[i]) === sig) same++;
-    return same >= 3 && same >= kids.length - 1;
+  function kids(el) {
+    return Array.prototype.slice.call(el.children).filter(function (k) {
+      return !SKIP.test(k.tagName) && k.getBoundingClientRect().height > 0;
+    });
   }
-  /** Row index per item (same top = same row), so grids cascade by row and lists by item. */
-  function rows(items) {
-    var out = [];
-    var row = -1;
-    var lastTop = null;
-    for (var i = 0; i < items.length; i++) {
-      var top = Math.round(items[i].getBoundingClientRect().top);
-      if (lastTop === null || Math.abs(top - lastTop) > 4) row++;
-      lastTop = top;
-      out.push(row);
-    }
-    return out;
+  /** ≥ 3 children that look alike (one odd sibling allowed): cards, rows, list items. Runs of <p> are prose. */
+  function isGroup(el) {
+    var list = el.children;
+    if (list.length < 3) return false;
+    var sig = signature(list[1]);
+    if (sig.indexOf('P.') === 0) return false;
+    var same = 0;
+    for (var i = 0; i < list.length; i++) if (signature(list[i]) === sig) same++;
+    return same >= 3 && same >= list.length - 1;
+  }
+  /** Two blocks side by side (text + media, form + info): each column enters from its side. */
+  function isSplit(el) {
+    var list = kids(el);
+    if (list.length !== 2) return false;
+    var a = list[0].getBoundingClientRect();
+    var b = list[1].getBoundingClientRect();
+    return Math.abs(a.top - b.top) < a.height / 2 && b.left >= a.right - 4;
+  }
+  /** Rows and columns from the boxes: same top = same row, ordered by left. */
+  function layout(items) {
+    var boxes = items.map(function (el) { return el.getBoundingClientRect(); });
+    var rowsOut = [];
+    boxes.forEach(function (box, i) {
+      var row = null;
+      for (var r = 0; r < rowsOut.length; r++) if (Math.abs(rowsOut[r].top - box.top) < 4) row = rowsOut[r];
+      if (!row) rowsOut.push((row = { top: box.top, items: [] }));
+      row.items.push({ el: items[i], left: box.left });
+    });
+    rowsOut.forEach(function (row) {
+      row.items.sort(function (a, b) { return a.left - b.left; });
+    });
+    return rowsOut;
   }
 
   /**
-   * Walks one section in document order. `i` is the cascade slot (stagger token apart),
-   * `j` a position inside a slot (word or v1 stagger child, `step` apart).
+   * Walks one section in document order into reveal groups. Inside a group `i` is the cascade
+   * slot (stagger token apart) and `j` a word or v1 stagger child (`step` apart).
    */
-  function collectSection(sec, type) {
-    var targets = [];
-    var at = 0;
+  function collectSection(sec, type, pattern) {
+    var groups = [];
+    var current = null;
     var heroArea = 0;
     var heroTitle = null;
+    var headed = false;
 
-    function add(el, fx, i, extra) {
-      var t = { el: el, fx: fx, i: i, j: 0 };
+    function group() {
+      var g = { targets: [], at: 0, section: sec };
+      groups.push(g);
+      return g;
+    }
+    function add(g, el, fx, extra) {
+      var t = { el: el, fx: fx, i: g.at++, j: 0 };
       for (var k in extra) t[k] = extra[k];
       // Counters inside a target (a stat card, a list item) play with it.
       var nested = all(type === 'stats' ? '[data-lz-counter], *' : '[data-lz-counter]', el);
@@ -191,76 +234,133 @@
         var c = counterFrom(nested[n]);
         if (c) t.counters.push({ el: nested[n], c: c });
       }
-      targets.push(t);
+      g.targets.push(t);
       return t;
     }
-    function group(items, fx) {
-      var r = rows(items);
-      for (var i = 0; i < items.length; i++) {
-        if (items[i].getAttribute('data-lz-reveal') !== 'none') add(items[i], kindOf(items[i], fx), at + r[i]);
-      }
-      at += r.length ? r[r.length - 1] + 1 : 0;
+    function items(list, chosen, base) {
+      current = null;
+      var shown = list.filter(function (el) { return !optedOut(el); });
+      var rows = layout(shown);
+      var single = rows.every(function (row) { return row.items.length === 1; });
+      // Stacked (mobile) lists only keep sideways travel for alternate.
+      var p = single && chosen !== 'alternate' && chosen !== 'none' ? 'cascade' : chosen;
+      if (p === 'none') return;
+      var index = 0;
+      rows.forEach(function (row) {
+        var g = group();
+        var n = row.items.length;
+        var center = (n - 1) / 2;
+        row.items.forEach(function (it, c) {
+          var fx = base;
+          var i = c;
+          if (p === 'alternate') fx = index % 2 ? 'fade-left' : 'fade-right';
+          else if (p === 'converge') {
+            fx = c < center - 0.01 ? 'fade-right' : c > center + 0.01 ? 'fade-left' : base;
+            i = 0;
+          } else if (p === 'center-out') i = Math.round(Math.abs(c - center));
+          if (FEATURED.test(it.el.className) || it.el.hasAttribute('data-lz-featured')) fx = 'rise-scale';
+          var t = add(g, it.el, kindOf(it.el, fx));
+          t.i = i;
+          if (t.fx === 'mask-wipe') t.dir = 'right';
+          index++;
+        });
+      });
     }
 
-    (function walk(node) {
-      for (var c = node.firstElementChild; c; c = c.nextElementSibling) {
-        if (SKIP.test(c.tagName) || c.getAttribute('data-lz-reveal') === 'none') continue;
-        // v1 attributes inside a v2 section are overrides played by the section's trigger.
-        if (c.hasAttribute('data-lz-stagger')) {
-          var step = num(c.getAttribute('data-lz-stagger'), 90);
-          var kind = kindOf(c, 'rise');
-          Array.prototype.slice.call(c.children).forEach(function (child, k) {
-            add(child, kindOf(child, kind), at, { j: k, step: step });
-          });
-          at++;
-        } else if (c.hasAttribute('data-lz-words')) {
-          add(c, 'words', at++, { step: num(c.getAttribute('data-lz-words'), 0) || null });
-        } else if (c.hasAttribute('data-lz-compare') || c.hasAttribute('data-lz-countdown')) {
-          // Widgets move as one piece; their own clip-path and text stay theirs.
-          add(c, 'rise', at++);
-        } else if (c.hasAttribute('data-lz-reveal')) {
-          add(c, kindOf(c, 'rise'), at++, {
-            delay: c.getAttribute('data-lz-delay'),
-            dur: c.getAttribute('data-lz-duration'),
-          });
-        } else if (MEDIA.test(c.tagName)) {
-          if (type === 'hero') {
-            var rect = c.getBoundingClientRect();
-            heroArea = Math.max(heroArea, rect.width * rect.height);
-            var frame = framed(c);
-            add(c, frame ? 'settle-lg' : 'settle', 0, { px: frame });
-          } else {
-            add(c, 'mask', at++, { zoom: type === 'gallery' && framed(c) });
-          }
-        } else if (isButton(c)) {
-          add(c, 'rise', at++);
-        } else if (type !== 'footer' && isGroup(c)) {
-          group(Array.prototype.slice.call(c.children), type === 'gallery' ? 'mask' : 'rise');
-        } else if (BLOCK.test(c.tagName) || (!c.children.length && c.textContent.trim())) {
-          if (type === 'hero' && c.tagName === 'H1') {
-            heroTitle = add(c, 'words', at++);
-          } else {
-            var counter = (type === 'stats' || c.hasAttribute('data-lz-counter')) && counterFrom(c);
-            add(c, 'rise', at++, counter ? { counter: counter } : null);
-          }
+    function walk(node, into, sideFx) {
+      for (var c = node.firstElementChild; c; c = c.nextElementSibling) visit(c, into, sideFx);
+    }
+    function visit(c, into, sideFx) {
+      if (SKIP.test(c.tagName) || optedOut(c)) return;
+      var flow = function () {
+        if (into) return into;
+        if (!current) current = group();
+        return current;
+      };
+      var text = sideFx || 'fade-up';
+      if (c.hasAttribute('data-lz-stagger')) {
+        // v1 override: its own group, children `step` apart.
+        var step = num(c.getAttribute('data-lz-stagger'), 90);
+        var kind = kindOf(c, 'fade-up');
+        var g = into || group();
+        var slot = g.at++;
+        Array.prototype.slice.call(c.children).forEach(function (child, k) {
+          add(g, child, kindOf(child, kind), { j: k, step: step }).i = slot;
+        });
+        if (!into) current = null;
+      } else if (c.hasAttribute('data-lz-words')) {
+        add(flow(), c, 'words', { step: num(c.getAttribute('data-lz-words'), 0) || null });
+      } else if (c.hasAttribute('data-lz-compare') || c.hasAttribute('data-lz-countdown')) {
+        // Widgets move as one piece; their own clip-path and text stay theirs.
+        add(flow(), c, kindOf(c, text));
+      } else if (c.hasAttribute('data-lz-reveal')) {
+        add(flow(), c, kindOf(c, text), { delay: c.getAttribute('data-lz-delay'), dur: c.getAttribute('data-lz-duration') });
+      } else if (MEDIA.test(c.tagName)) {
+        var box = c.getBoundingClientRect();
+        if (type === 'hero') {
+          heroArea = Math.max(heroArea, box.width * box.height);
+          var frame = framed(c);
+          // The LCP image never fades or clips: it settles, or slides in from the right.
+          var fx = frame ? 'settle-lg' : box.left + box.width / 2 > innerWidth * 0.55 ? 'shift-left' : 'settle';
+          add(flow(), c, fx, { px: frame }).i = 0;
         } else {
-          walk(c);
+          var mg = into || group();
+          var dir = sideFx === 'fade-left' ? 'left' : sideFx === 'fade-right' ? 'right' : box.width > innerWidth * 0.7 ? 'up' : 'right';
+          add(mg, c, kindOf(c, 'mask-wipe'), { dir: dir, zoom: type === 'gallery' && framed(c) });
+          if (!into) current = null;
         }
+      } else if (isButton(c)) {
+        add(flow(), c, kindOf(c, text));
+      } else if (isGroup(c)) {
+        var chosen = PATTERNS[c.getAttribute('data-lz-pattern')] ? c.getAttribute('data-lz-pattern') : pattern;
+        // A sideways carousel of quotes just fades: items off to the side never cross the line together.
+        var carousel = type === 'testimonials' && /auto|scroll/.test(getComputedStyle(c).overflowX);
+        items(Array.prototype.slice.call(c.children), carousel ? 'cascade' : chosen, type === 'gallery' ? 'mask-wipe' : carousel ? 'fade' : 'fade-up');
+      } else if (type !== 'footer' && type !== 'hero' && isSplit(c)) {
+        // Columns converge: the left one travels right, the right one travels left.
+        current = null;
+        var cols = kids(c);
+        visit(cols[0], into || group(), 'fade-right');
+        current = null;
+        visit(cols[1], into || group(), 'fade-left');
+        current = null;
+      } else if (BLOCK.test(c.tagName) || (!c.children.length && c.textContent.trim())) {
+        var counter = (type === 'stats' || c.hasAttribute('data-lz-counter')) && counterFrom(c);
+        var g2 = flow();
+        if (type === 'hero' && c.tagName === 'H1') heroTitle = add(g2, c, 'words');
+        else if (type === 'hero' && !heroTitle) add(g2, c, 'fade-down');
+        else if (/^H[1-3]$/.test(c.tagName) && !headed) {
+          headed = true;
+          add(g2, c, type === 'cta' ? 'zoom-in' : 'mask-up');
+        } else add(g2, c, text, counter ? { counter: counter } : null);
+      } else {
+        walk(c, into, sideFx);
       }
-    })(sec);
+    }
+    walk(sec, null, null);
 
-    // LCP guard: a headline bigger than the hero image moves but never starts transparent.
+    // LCP guard: a headline bigger than the hero image moves but never starts hidden.
     if (heroTitle) {
-      var box = heroTitle.el.getBoundingClientRect();
-      if (box.width * box.height >= heroArea) heroTitle.shift = true;
+      var rect = heroTitle.el.getBoundingClientRect();
+      if (rect.width * rect.height >= heroArea) heroTitle.shift = true;
     }
+    groups = groups.filter(function (g) { return g.targets.length; });
+    // Footer: a plain fade with no stagger; its blocks stay separate groups so a tall phone footer
+    // fades in as it arrives instead of all at once below the screen.
     if (type === 'footer') {
-      for (var i = 0; i < targets.length; i++) {
-        targets[i].fx = 'fade';
-        targets[i].i = 0;
-      }
+      groups.forEach(function (g) {
+        g.targets.forEach(function (t) {
+          t.fx = 'fade';
+          t.i = 0;
+        });
+      });
     }
-    return targets;
+    groups.forEach(function (g) {
+      g.anchor = g.targets[0].el;
+      var r = g.anchor.getBoundingClientRect();
+      g.visible = r.top < vh && r.bottom > 0;
+    });
+    return groups;
   }
 
   /** Splits text into word spans (inline markup survives) and returns one target per word. */
@@ -290,11 +390,14 @@
 
   /** Write pass for one target; returns the targets that end up in the DOM. */
   function apply(t) {
-    if (t.fx === 'words') return splitWords(t).map(apply).map(function (list) { return list[0]; });
+    if (t.fx === 'words') return [].concat.apply([], splitWords(t).map(apply));
     var el = t.el;
     var s = el.style;
     el.classList.add('lz-t');
     el.setAttribute('data-lz-fx', t.fx);
+    if (t.dir) el.setAttribute('data-lz-dir', t.dir);
+    s.setProperty('--lz-i', String(Math.min(t.i, MAX_STEP)));
+    if (t.j) s.setProperty('--lz-j', String(Math.min(t.j, MAX_WORDS)));
     if (t.step) s.setProperty('--lz-step', t.step + 'ms');
     if (t.delay) s.setProperty('--lz-delay', num(t.delay, 0) + 'ms');
     if (t.dur) s.setProperty('--lz-d', num(t.dur, 700) + 'ms');
@@ -309,63 +412,45 @@
     return [t];
   }
 
-  function go(t, i, j) {
-    t.gone = true;
-    t.el.style.setProperty('--lz-i', String(Math.min(i, MAX_STEP)));
-    t.el.style.setProperty('--lz-j', String(Math.min(j, MAX_WORDS)));
-    t.el.classList.add('lz-go');
-    (t.counters || []).forEach(function (n) { runCounter(n.el, n.c); });
-  }
-
-  /**
-   * Plays what is in view now, cascading from index 0, and leaves the rest for when it
-   * scrolls in: one deferred anchor per trigger, watched by the same observer.
-   */
-  function play(list) {
-    var now = [];
-    var later = [];
-    var minI = Infinity;
-    var minJ = {};
-    for (var k = 0; k < list.length; k++) {
-      var r = list[k].el.getBoundingClientRect();
-      var entry = { t: list[k], top: r.top, past: r.bottom <= 0 };
-      if (r.top >= vh * 0.88) later.push(entry);
-      else {
-        now.push(entry);
-        if (!entry.past) {
-          minI = Math.min(minI, list[k].i);
-          minJ[list[k].i] = Math.min(minJ[list[k].i] === undefined ? Infinity : minJ[list[k].i], list[k].j);
-        }
-      }
-    }
-    now.forEach(function (e) {
-      go(e.t, e.past ? 0 : e.t.i - minI, e.past ? 0 : e.t.j - minJ[e.t.i]);
-    });
-    if (!later.length) return;
-    var anchor = later[0];
-    later.forEach(function (e) {
-      if (e.top < anchor.top) anchor = e;
-    });
-    once(anchor.t.el, function () {
-      play(later.map(function (e) { return e.t; }));
+  // ── Playback: groups that become visible in the same observer callback cascade in page order ──
+  var pending = [];
+  var due = [];
+  function play(g, offset) {
+    if (g.done) return;
+    g.done = true;
+    if (g.section) g.section.classList.add('lz-in');
+    g.targets.forEach(function (t) {
+      if (offset) t.el.style.setProperty('--lz-b', String(offset));
+      t.el.classList.add('lz-go');
+      t.counters.forEach(function (n) { runCounter(n.el, n.c); });
     });
   }
-
-  var armed = [];
-  function trigger(el, targets, now) {
-    if (now) {
-      el.classList.add('lz-in');
-      return targets.forEach(function (t) { go(t, t.i, t.j); });
-    }
-    el.classList.add('lz-armed');
-    armed.push(targets);
-    once(el, function () {
-      el.classList.add('lz-in');
-      play(targets);
+  function arm(g) {
+    pending.push(g);
+    watch(g.anchor, function (e) {
+      if (!g.done && seen(e)) due.push(g);
+      return g.done || seen(e);
     });
   }
+  // Groups jumped over (anchor links, fast flicks) play with the next callback: read first, then write.
+  afterBatch.push(function () {
+    pending.forEach(function (g) {
+      if (!g.done && due.indexOf(g) < 0 && g.anchor.getBoundingClientRect().top < vh * 0.92) due.push(g);
+    });
+    due.sort(function (a, b) { return a.order - b.order; });
+    due.forEach(function (g, k) { play(g, Math.min(k, 4)); });
+    due = [];
+    pending = pending.filter(function (g) { return !g.done; });
+  });
   function flatten(lists) {
     return [].concat.apply([], lists);
+  }
+  var order = 0;
+  function schedule(g, now) {
+    g.order = order++;
+    g.targets = flatten(g.targets.map(apply));
+    if (now) play(g, 0);
+    else arm(g);
   }
 
   safe('sections', function () {
@@ -373,69 +458,71 @@
     var plans = [];
     all('[data-lz-section]').forEach(function (sec) {
       var type = sec.getAttribute('data-lz-section');
-      if (type === 'none' || sec.getAttribute('data-lz-reveal') === 'none') return;
-      if (!TYPES[type]) type = 'text';
-      var visible = inFirstViewport(sec.getBoundingClientRect());
-      // Above the fold only the hero plays (from first paint); anything else there stays static.
-      if (visible && type !== 'hero') return;
+      if (type === 'none' || optedOut(sec)) return;
+      if (!TYPES[type]) type = 'about';
+      if (type === 'text') type = 'about';
+      var p = sec.getAttribute('data-lz-pattern');
       plans.push({
         el: sec,
-        now: visible,
+        type: type,
         drift: type === 'cta' && getComputedStyle(sec).position !== 'static',
-        targets: collectSection(sec, type),
+        groups: collectSection(sec, type, PATTERNS[p] ? p : DEFAULT_PATTERN[type] || 'cascade'),
       });
     });
     plans.forEach(function (plan) {
-      plan.targets.forEach(function (t) { t.now = plan.now; });
-      var live = flatten(plan.targets.map(apply));
       if (plan.drift) plan.el.classList.add('lz-drift');
-      trigger(plan.el, live, plan.now);
+      plan.groups.forEach(function (g) {
+        // In the first viewport only the hero plays (from first paint); anything else stays static.
+        if (g.visible && plan.type !== 'hero') return;
+        g.targets.forEach(function (t) { t.now = g.visible; });
+        schedule(g, g.visible);
+      });
     });
   });
 
-  // ── v1 attributes outside v2 sections: the outermost reveal is the trigger ──
+  // ── v1 attributes outside v2/v3 sections: the outermost reveal is the trigger ──
   safe('legacy', function () {
     if (still) return;
-    var groups = new Map();
-    all('[data-lz-reveal],[data-lz-stagger],[data-lz-words],[data-lz-counter]').forEach(function (el) {
-      if (el.closest('[data-lz-section]:not([data-lz-section="none"])')) return;
-      if (el.getAttribute('data-lz-reveal') === 'none') return;
+    var hosts = new Map();
+    all('[data-lz-reveal],[data-lz-stagger],[data-lz-words]').forEach(function (el) {
+      if (el.closest('[data-lz-section]:not([data-lz-section="none"])') || optedOut(el)) return;
       var host = el;
       for (var p = el.parentElement; p; p = p.parentElement) {
-        if (p.hasAttribute('data-lz-reveal') && p.getAttribute('data-lz-reveal') !== 'none') host = p;
+        if (p.hasAttribute('data-lz-reveal') && !optedOut(p)) host = p;
       }
-      if (!groups.has(host)) {
-        groups.set(host, { visible: inFirstViewport(host.getBoundingClientRect()), targets: [] });
+      if (!hosts.has(host)) {
+        var r = host.getBoundingClientRect();
+        hosts.set(host, { anchor: host, visible: r.top < vh && r.bottom > 0, targets: [] });
       }
-      var g = groups.get(host);
+      var g = hosts.get(host);
       var slot = host === el ? 0 : 1;
       if (el.hasAttribute('data-lz-stagger')) {
         var step = num(el.getAttribute('data-lz-stagger'), 90);
-        var kind = kindOf(el, 'rise');
+        var kind = kindOf(el, 'fade-up');
         Array.prototype.slice.call(el.children).forEach(function (child, k) {
-          g.targets.push({ el: child, fx: kindOf(child, kind), i: slot, j: k, step: step, dur: el.getAttribute('data-lz-duration') });
+          g.targets.push({ el: child, fx: kindOf(child, kind), i: slot, j: k, step: step, dur: el.getAttribute('data-lz-duration'), counters: [] });
         });
       } else if (el.hasAttribute('data-lz-words')) {
-        g.targets.push({ el: el, fx: 'words', i: slot, step: num(el.getAttribute('data-lz-words'), 45) || 45 });
-      } else if (el.hasAttribute('data-lz-reveal')) {
-        g.targets.push({ el: el, fx: kindOf(el, 'rise'), i: slot, j: 0, delay: el.getAttribute('data-lz-delay'), dur: el.getAttribute('data-lz-duration') });
+        g.targets.push({ el: el, fx: 'words', i: slot, j: 0, step: num(el.getAttribute('data-lz-words'), 45) || 45, counters: [] });
+      } else {
+        g.targets.push({ el: el, fx: kindOf(el, 'fade-up'), i: slot, j: 0, delay: el.getAttribute('data-lz-delay'), dur: el.getAttribute('data-lz-duration'), counters: [] });
       }
     });
-    groups.forEach(function (g, host) {
+    hosts.forEach(function (g) {
       // v1 rule: elements in the first viewport are never hidden.
-      if (g.visible || !g.targets.length) return;
-      trigger(host, flatten(g.targets.map(apply)), false);
+      if (!g.visible && g.targets.length) schedule(g, false);
     });
   });
 
-  // Counters no trigger above owns (e.g. inside a card) count when they themselves scroll in.
+  // Counters no group owns (e.g. outside any section) count when they themselves scroll in.
   safe('counter', function () {
     if (still) return;
     all('[data-lz-counter]').forEach(function (el) {
       if (el.__lzCounted || el.__lzOwned) return;
       var c = counterFrom(el);
       if (!c) return;
-      if (inFirstViewport(el.getBoundingClientRect())) return runCounter(el, c);
+      var r = el.getBoundingClientRect();
+      if (r.top < vh && r.bottom > 0) return runCounter(el, c);
       el.textContent = formatCounter(c, 0);
       once(el, function () {
         runCounter(el, c);
@@ -443,14 +530,56 @@
     });
   });
 
+  // The last strip of the page can't cross the trigger line: reaching the end plays everything left.
+  safe('end', function () {
+    if (!pending.length || !io) return;
+    var end = doc.createElement('div');
+    end.className = 'lz-end';
+    end.setAttribute('aria-hidden', 'true');
+    doc.body.appendChild(end);
+    watch(end, function (e) {
+      if (!e.isIntersecting) return false;
+      pending.forEach(function (g) { if (due.indexOf(g) < 0) due.push(g); });
+      return true;
+    });
+  });
+
+  // Active nav link: re-evaluated on every observer callback (sections are watched too), no scroll listener.
+  safe('nav', function () {
+    if (!io) return;
+    var links = [];
+    all('header a[href^="#"], nav a[href^="#"]').forEach(function (a) {
+      var id = a.getAttribute('href').slice(1);
+      var target = id && doc.getElementById(decodeURIComponent(id));
+      if (target && !target.contains(a)) links.push({ a: a, t: target });
+    });
+    if (!links.length) return;
+    var update = function () {
+      var line = vh * 0.35;
+      var current = null;
+      links.forEach(function (l) {
+        var r = l.t.getBoundingClientRect();
+        if (r.top <= line && r.bottom > line) current = l.t;
+      });
+      links.forEach(function (l) {
+        var on = l.t === current;
+        l.a.classList.toggle('lz-active', on);
+        if (on) l.a.setAttribute('aria-current', 'true');
+        else l.a.removeAttribute('aria-current');
+      });
+    };
+    links.forEach(function (l) {
+      // Never take over an element a reveal group already watches.
+      if (!watchers.has(l.t)) watch(l.t, function () { return false; });
+    });
+    afterBatch.push(update);
+  });
+
   // Failsafe: nothing stays hidden if the observer never reports (broken IO, odd layouts).
   safe('failsafe', function () {
-    if (!armed.length) return;
+    if (!pending.length) return;
     setTimeout(function () {
-      if (reported) return;
-      flatten(armed).forEach(function (t) {
-        if (!t.gone) go(t, 0, 0);
-      });
+      if (!reported) pending.forEach(function (g) { play(g, 0); });
     }, FAILSAFE_MS);
   });
 
@@ -506,7 +635,8 @@
     hero.forEach(function (el) {
       el.style.scale = '1.1';
       var inView = false;
-      watch(el, function (now) {
+      watch(el, function (e) {
+        var now = !!(e && e.isIntersecting);
         if (now !== inView) live += now ? 1 : -1;
         inView = now;
         listen(live > 0 || legacy.length > 0);
@@ -537,8 +667,8 @@
     sentinel.className = 'lz-sentinel';
     sentinel.setAttribute('aria-hidden', 'true');
     doc.body.appendChild(sentinel);
-    watch(sentinel, function (inView) {
-      root.classList.toggle('lz-scrolled', !inView);
+    watch(sentinel, function (e) {
+      root.classList.toggle('lz-scrolled', !(e && e.isIntersecting));
     });
   });
 

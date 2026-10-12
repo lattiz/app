@@ -89,7 +89,13 @@ export function renderPreview(id: string, opts: PreviewOptions): Preview {
   const sections: SectionOverrides = (dist.meta.motion?.sections ??
     {}) as SectionOverrides;
   // The seed tags every template (stage 1b); only the serve step decides whether the runtime runs.
-  const tagged = motionHtml(dist.html, preset, sections, false);
+  const tagged = motionHtml(
+    dist.html,
+    preset,
+    sections,
+    false,
+    dist.meta.motion?.progress === true,
+  );
   const { profile, source } = demoProfile(id);
   let html = composeSiteHtml({
     exportedHtml: tagged.html,

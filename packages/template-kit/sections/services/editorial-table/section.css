@@ -124,6 +124,12 @@
 }
 
 @media (max-width: 480px) {
+  .lz-services-table__desc {
+    font-size: calc(16px * var(--lz-text-scale));
+  }
+  .lz-services-table__note-text {
+    font-size: calc(16px * var(--lz-text-scale));
+  }
   .lz-services-table__row {
     grid-template-columns: 36px 1fr;
   }

@@ -55,7 +55,8 @@
 
 .lz-footer-min__link:focus-visible {
   color: var(--lz-color-accent-text);
-  outline: none;
+  outline: 2px solid var(--lz-color-accent-text);
+  outline-offset: 3px;
 }
 
 .lz-footer-min__branches {
@@ -113,7 +114,8 @@
   border-color: var(--lz-color-accent-text);
   color: var(--lz-color-accent-text);
   background: var(--lz-color-surface-2);
-  outline: none;
+  outline: 2px solid var(--lz-color-accent-text);
+  outline-offset: 3px;
 }
 
 .lz-socials__icon {
@@ -133,6 +135,9 @@
 }
 
 @media (max-width: 480px) {
+  .lz-footer-min__branch {
+    font-size: calc(16px * var(--lz-text-scale));
+  }
   .lz-footer-min__links {
     gap: 0 calc(18px * var(--lz-space));
   }

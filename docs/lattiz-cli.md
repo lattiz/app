@@ -51,7 +51,9 @@ tokens, `alt`, `<title>` + descripción, breakpoints, unicidad dentro del rubro�
 `kit:compare-visual`. Clasificador de secciones de Motion en `scripts/lib/motion-sections.ts`
 (`motionHtml`, `classificationTable`). Los tipos manuales de Motion van en el manifiesto
 (`motion.sections`), no en un `motion.json`. No hay `overrides.css` por plantilla a propósito
-(ver `docs/decisions/template-rhythm-tokens.md`) y no existe ningún token `--lz-fit`.
+(ver `docs/decisions/template-rhythm-tokens.md`). El sistema de encaje (`data-lz-fit` en los héroes,
+`--lz-fit` = 90 % de `100svh − header`) llegó a `main` después; `kit:shots` ya lo reporta y `check`
+reusa su medición (`measureFit`).
 
 **Cómo sirve `route.ts`.** `apps/tenant-sites/app/route.ts` compone, cada paso con try/catch:
 tokens `{{lz:*}}` (`bindSiteTokens`, si falla `stripSiteTokens`) → SEO (`injectSeo`, privado en
@@ -129,21 +131,21 @@ Tamaños: 360×780, 390×844, 768×1024, 1024×768, 1440×900 (página completa)
 (solo lo que cabe en pantalla). Un solo navegador, un contexto a la vez con
 `prefers-reduced-motion: reduce` (para medir el estado final), cerrado siempre al terminar.
 
-| Regla                                                                                                                  | Resultado    |
-| ---------------------------------------------------------------------------------------------------------------------- | ------------ |
-| `kit:validate` (tema/titular únicos, similitud, contraste de tokens, `alt`, breakpoints…)                              | FAIL         |
-| Elementos más anchos que la pantalla (reusa la auditoría de `kit:shots`)                                               | FAIL         |
-| Contraste de texto (axe `color-contrast`, AA)                                                                          | FAIL         |
-| `<img>` sin `alt`                                                                                                      | FAIL         |
-| Falta `<title>` o meta description en el HTML servido                                                                  | FAIL         |
-| Tokens `{{lz:*}}` crudos en el HTML servido (sin perfil demo deben quedar vacíos)                                      | FAIL         |
-| Pro: con JS apagado, contenido de las secciones de Motion oculto                                                       | FAIL         |
-| Texto < 14 px (se marca aparte lo < 12 px)                                                                             | WARN         |
-| Objetivos táctiles < 44 px                                                                                             | WARN         |
-| Imagen > 300 KB o > 2000 px de ancho (en `dist/`, antes de que el seed la pase a WebP ≤ 2000 px)                       | WARN         |
-| Secciones con `--lz-fit`: alto del contenido vs `0.9 ×` alto de pantalla; sin el token, `N/A (no viewport-fit tokens)` | WARN / N/A   |
-| Pro: secciones sin tipo de Motion (preset `none` o tipo `none`) y número de grupos                                     | WARN         |
-| `--lighthouse`: rendimiento, accesibilidad, buenas prácticas y SEO (`npx lighthouse@12`)                               | WARN si < 80 |
+| Regla                                                                                                                                                                                       | Resultado    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
+| `kit:validate` (tema/titular únicos, similitud, contraste de tokens, `alt`, breakpoints…)                                                                                                   | FAIL         |
+| Elementos más anchos que la pantalla (reusa la auditoría de `kit:shots`)                                                                                                                    | FAIL         |
+| Contraste de texto (axe `color-contrast`, AA)                                                                                                                                               | FAIL         |
+| `<img>` sin `alt`                                                                                                                                                                           | FAIL         |
+| Falta `<title>` o meta description en el HTML servido                                                                                                                                       | FAIL         |
+| Tokens `{{lz:*}}` crudos en el HTML servido (sin perfil demo deben quedar vacíos)                                                                                                           | FAIL         |
+| Pro: con JS apagado, contenido de las secciones de Motion oculto                                                                                                                            | FAIL         |
+| Texto < 14 px (se marca aparte lo < 12 px)                                                                                                                                                  | WARN         |
+| Objetivos táctiles < 44 px                                                                                                                                                                  | WARN         |
+| Imagen > 300 KB o > 2000 px de ancho (en `dist/`, antes de que el seed la pase a WebP ≤ 2000 px)                                                                                            | WARN         |
+| Secciones `data-lz-fit` (héroes): contenido vs `0.9 × (alto − header)`, o texto + CTA visibles si la imagen va abajo; misma regla que `kit:shots`. Alto ≤ 560 px o sin secciones fit: `N/A` | FAIL / N/A   |
+| Pro: secciones sin tipo de Motion (preset `none` o tipo `none`) y número de grupos                                                                                                          | WARN         |
+| `--lighthouse`: rendimiento, accesibilidad, buenas prácticas y SEO (`npx lighthouse@12`)                                                                                                    | WARN si < 80 |
 
 El texto < 14 px es WARN porque todas las plantillas actuales tienen etiquetas de 10–12 px
 (subtítulo de la marca, índices); hacerlo FAIL bloquearía republicarlas.

@@ -1,7 +1,12 @@
+:root {
+  --lz-header-h: 110px;
+}
+
 .lz-navbar-c {
   position: sticky;
   top: 0;
   z-index: 60;
+  transition: translate 0.35s ease;
   border-bottom: var(--lz-border-width) solid var(--lz-color-line-strong);
   background: var(--lz-color-navbar-bg);
 }
@@ -11,7 +16,7 @@
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: calc(24px * var(--lz-space));
-  min-height: 84px;
+  height: 64px;
 }
 
 .lz-navbar-c__phone {
@@ -85,10 +90,19 @@
 
 .lz-navbar-c__link:focus-visible {
   color: var(--lz-color-accent-text);
-  outline: none;
+  outline: 2px solid var(--lz-color-accent-text);
+  outline-offset: 3px;
+}
+
+/* Pro sites (Lattiz Motion adds .lz-scrolled): the top row slides away, the nav stays. */
+.lz-scrolled .lz-navbar-c {
+  translate: 0 -64px;
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .lz-navbar-c {
+    transition: none !important;
+  }
   .lz-navbar-c__link {
     animation: none !important;
     transition: none !important;
@@ -96,8 +110,14 @@
 }
 
 @media (max-width: 992px) {
+  :root {
+    --lz-header-h: 65px;
+  }
   .lz-navbar-c__nav {
     display: none;
+  }
+  .lz-scrolled .lz-navbar-c {
+    translate: none;
   }
 }
 
@@ -105,7 +125,6 @@
   .lz-navbar-c__top {
     grid-template-columns: auto auto;
     justify-content: space-between;
-    min-height: 74px;
   }
   .lz-navbar-c__phone {
     display: none;

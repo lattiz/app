@@ -27,7 +27,8 @@
 
 .lz-whatsapp__link:focus-visible {
   transform: translateY(-2px) scale(1.03);
-  outline: none;
+  outline: 2px solid var(--lz-color-accent-text);
+  outline-offset: 3px;
 }
 
 .lz-whatsapp__icon {

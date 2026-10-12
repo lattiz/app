@@ -27,4 +27,5 @@ export default {
     { slot: 'floating-whatsapp', variant: 'bubble' },
     { slot: 'footer', variant: 'big-wordmark' },
   ],
+  motion: { preset: 'editorial', progress: true },
 } satisfies Manifest;

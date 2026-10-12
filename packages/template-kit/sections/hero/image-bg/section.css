@@ -1,5 +1,5 @@
 .lz-title--hero {
-  font-size: calc(clamp(56px, 11vw, 168px) * var(--lz-display-scale));
+  font-size: calc(min(clamp(56px, 11vw, 168px), 13svh) * var(--lz-display-scale));
   max-width: 900px;
 }
 
@@ -17,7 +17,8 @@
 .lz-hero {
   --lz-color-bg: var(--lz-color-overlay);
   --lz-color-text: var(--lz-color-on-overlay);
-  min-height: 100vh;
+  /* Viewport fit: the full-bleed hero fills 90 % of the window under the header. */
+  min-height: min(var(--lz-fit), var(--lz-fit-max));
   display: flex;
   align-items: stretch;
   overflow: clip;
@@ -52,7 +53,7 @@
   z-index: 1;
   display: flex;
   align-items: end;
-  padding: 120px 0 54px;
+  padding: clamp(24px, 9svh, 120px) 0 max(clamp(20px, 5svh, 54px), env(safe-area-inset-bottom));
 }
 
 .lz-hero__content {
@@ -83,7 +84,7 @@
 
 @media (max-width: 992px) {
   .lz-hero__inner {
-    padding: 110px 0 38px;
+    padding: clamp(24px, 8svh, 110px) 0 max(clamp(20px, 4svh, 38px), env(safe-area-inset-bottom));
   }
   .lz-hero__content {
     max-width: 100%;
@@ -96,13 +97,27 @@
 
 @media (max-width: 480px) {
   .lz-title--hero {
-    font-size: calc(clamp(56px, 18vw, 84px) * var(--lz-display-scale));
+    font-size: calc(min(clamp(44px, 15vw, 84px), 8svh) * var(--lz-display-scale));
   }
   .lz-hero__text {
     font-size: 16px;
+    margin-bottom: clamp(16px, 3svh, 32px);
+  }
+  .lz-hero__inner {
+    padding-top: clamp(20px, 5svh, 110px);
   }
   .lz-hero__actions {
     flex-direction: column;
     align-items: stretch;
+  }
+}
+
+/* Landscape phones and tiny windows: no fitting, natural flow. */
+@media (max-height: 560px) {
+  .lz-hero {
+    min-height: 0;
+  }
+  .lz-title--hero {
+    font-size: calc(clamp(40px, 7vw, 96px) * var(--lz-display-scale));
   }
 }
