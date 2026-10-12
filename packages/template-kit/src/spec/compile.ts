@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 import { GIROS } from '../../giros';
 import { hueDistance, hueOf, parseColor } from '../lib/color';
 import { interpolate, mapsEmbedUrl, mapsLinkUrl } from '../lib/content';
-import { loadBlueprint } from '../lib/load';
+import { loadBlueprint, loadSectionMeta } from '../lib/load';
 import { paths } from '../lib/paths';
 import { streetOf } from '../lib/profile';
 import {
@@ -35,6 +35,7 @@ import {
   type ShapePreset,
 } from './presets';
 import type { Spec, SpecBrand, SpecProblem, SpecTier } from './schema';
+import { missingPaths } from './copy-keys';
 import { composeTheme, customPalette, resolveFontPair } from './theme';
 
 /**
@@ -77,6 +78,20 @@ const NAV_PRIORITY = [
   'gallery',
   'testimonials',
 ];
+const fitCache = new Map<string, string[]>();
+async function copyFits(
+  slot: string,
+  variant: string,
+  data: ContentObject,
+): Promise<boolean> {
+  const key = `${slot}/${variant}`;
+  if (!fitCache.has(key))
+    fitCache.set(key, (await loadSectionMeta(slot, variant)).contentKeys);
+  return (fitCache.get(key) ?? []).every(
+    (k) => missingPaths(data, k).length === 0,
+  );
+}
+
 /** Slots the similarity pass may swap when the spec doesn't pin them, most visible first. */
 const SWAPPABLE = [
   'services',
@@ -880,6 +895,8 @@ export async function planSpec(
           slot,
         )) {
           if (variant === current) continue;
+          // A variant whose copy the giro doesn't write (product-grid outside tienda) is never a candidate.
+          if (!(await copyFits(slot, variant, copy[slot] ?? {}))) continue;
           manifest.sections[index].variant = variant;
           const score = worst();
           if (!best || score < best.score) best = { index, variant, score };

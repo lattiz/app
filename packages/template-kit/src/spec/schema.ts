@@ -10,7 +10,8 @@ import { RHYTHM_TOKENS, type RhythmToken } from '../types';
 export const SPEC_VERSION = 1;
 export const ID_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 /** Image keys the kit's sections reference (`<key>.jpg` in assets/<giro>/<theme>/). */
-export const IMAGE_KEY_RE = /^(hero|about|team-[1-4]|gallery-0[1-8])$/;
+export const IMAGE_KEY_RE =
+  /^(hero|about|team-[1-4]|gallery-0[1-8]|product-0[1-8])$/;
 const HEX_RE = /^#[0-9a-fA-F]{6}$/;
 
 const text = (description: string) =>
@@ -206,7 +207,10 @@ const ImageSourceSchema = z.union([
 export const ImageSchema = z.strictObject({
   key: z
     .string()
-    .regex(IMAGE_KEY_RE, 'hero, about, team-1…team-4 o gallery-01…gallery-08'),
+    .regex(
+      IMAGE_KEY_RE,
+      'hero, about, team-1…team-4, gallery-01…gallery-08 o product-01…product-08',
+    ),
   source: ImageSourceSchema,
   alt: z
     .string()
