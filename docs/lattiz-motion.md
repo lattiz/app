@@ -152,7 +152,10 @@ Below 768 px durations are multiplied by `--lz-dur-k: 1.2` and both presets use 
 `lz-fill-hover` (button fill sweeps in on hover; `--lz-fill`, `--lz-fill-text`) ·
 `lz-marquee` (the single child scrolls; duplicate its content once; `--lz-marquee-dur`) ·
 `lz-stack` (children stack as sticky cards; `--lz-stack-top`). All off with reduced motion.
-A sticky/fixed `<header>` gets `.lz-header`; `html.lz-scrolled` toggles from a sentinel element.
+A sticky/fixed `<header>` gets `.lz-header`; `html.lz-scrolled` toggles from a sentinel element (the
+`centered-logo` navbar slides its top row away with it). In-page nav links (`header a[href^="#"]`) get
+`.lz-active` + `aria-current` for the section crossing 35 % of the screen, re-evaluated on every
+observer callback (no scroll listener).
 
 ## v1 attributes (version-stable)
 

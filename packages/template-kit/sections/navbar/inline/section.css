@@ -78,7 +78,8 @@
 
 .lz-nav__link:focus-visible {
   color: var(--lz-color-accent-text);
-  outline: none;
+  outline: 2px solid var(--lz-color-accent-text);
+  outline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
