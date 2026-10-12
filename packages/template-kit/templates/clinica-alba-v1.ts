@@ -1,4 +1,4 @@
-// GENERATED from specs/clinica-alba.spec.json (spec 47c45aaae383, file 2cc794e4db0f). Do not edit: use the spec, or freeze.
+// GENERATED from specs/clinica-alba.spec.json (spec e21639659c03, file 2cc794e4db0f). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {

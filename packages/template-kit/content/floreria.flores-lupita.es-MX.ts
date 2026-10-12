@@ -1,4 +1,4 @@
-// GENERATED from specs/floreria-flores-lupita.spec.json (spec 96279fd527fb, file d0c6ad5cf01f). Do not edit: use the spec, or freeze.
+// GENERATED from specs/floreria-flores-lupita.spec.json (spec 2ccbfca28d27, file 7bad28574ec8). Do not edit: use the spec, or freeze.
 import type { ContentPack } from '../src/types';
 
 export default {
@@ -318,10 +318,8 @@ export default {
           name: 'Coyoacán',
           address: '{{address}}',
           hours: 'Lun–Sáb 9:00–19:00 · Dom 9:00–14:00',
-          directionsUrl:
-            'https://maps.google.com/?q=Francisco+Sosa+214%2C+Coyoac%C3%A1n%2C+CDMX',
-          mapUrl:
-            'https://www.google.com/maps?q=Francisco%20Sosa%20214%2C%20Coyoac%C3%A1n%2C%20CDMX&output=embed',
+          directionsUrl: 'https://maps.google.com/?q={{address}}',
+          mapUrl: 'https://www.google.com/maps?q={{address}}&output=embed',
           mapTitle: 'Mapa de la sucursal Coyoacán',
         },
       ],
@@ -360,7 +358,7 @@ export default {
       branches: [
         {
           name: 'Coyoacán',
-          address: 'Francisco Sosa 214, Coyoacán, CDMX',
+          address: '{{address}}',
           hours: 'Lun–Sáb 9:00–19:00 · Dom 9:00–14:00',
         },
       ],

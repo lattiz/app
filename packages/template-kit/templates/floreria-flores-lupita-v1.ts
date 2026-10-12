@@ -1,4 +1,4 @@
-// GENERATED from specs/floreria-flores-lupita.spec.json (spec 96279fd527fb, file 0c9cae7c9857). Do not edit: use the spec, or freeze.
+// GENERATED from specs/floreria-flores-lupita.spec.json (spec 2ccbfca28d27, file 0c9cae7c9857). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {

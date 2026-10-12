@@ -1,5 +1,5 @@
 {
-  "$lattiz": "GENERATED from specs/restaurante-casa-comal.spec.json (spec 12fc8dabf1eb, file da220c59aadb). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/restaurante-casa-comal.spec.json (spec 0325fbce6706, file da220c59aadb). Do not edit: use the spec, or freeze.",
   "name": "restaurante-base-casa-comal-v1",
   "label": "Casa Comal · Básico",
   "tier": "basic",

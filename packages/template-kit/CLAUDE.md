@@ -80,6 +80,7 @@ manual flow below.
 - `data-lz-attr-<name>="path"` → attribute value. `data-lz-if="path"` → drop element if empty.
 - `data-lz-each="path"` → repeat the element (or a `<template>`'s children) per list item; lookups fall back to the section scope.
 - `{{name}} {{shortName}} {{tagline}} {{phone}} {{email}} {{address}} {{city}} {{year}} {{instagramUrl}} {{googleReviewsUrl}} {{googleReviewUrl}} …` business fields, `{{whatsappUrl}}` / `{{whatsappUrl:mensaje}}`, `{{phoneUrl}}` (tel:), `{{emailUrl}}` (mailto:), `{{index}}` (sections with `numbered: true`). Unknown keys/variables fail the compile.
+- Contact variables (`phone`, `phoneUrl`, `whatsappUrl`, `email`, `emailUrl`, `address`, `city`) compile to tenant-sites `{{lz:*}}` tokens in the `.grapesjs` only; every HTML output (index.html, validation) binds them to the demo `business` with `bindSiteTokens` (`src/lib/profile.ts`). Never write `{{lz:*}}` in content: it fails the compile.
 - `data-lz-name="…"` names an inner component in the editor's layer manager (section roots get `meta.label`).
 
 ## Rules the validator enforces (`kit:validate`)

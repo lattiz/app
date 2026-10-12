@@ -1,4 +1,4 @@
-// GENERATED from specs/clinica-alba.spec.json (spec 47c45aaae383, file f8299be5de4d). Do not edit: use the spec, or freeze.
+// GENERATED from specs/clinica-alba.spec.json (spec e21639659c03, file e32a1ae2d7fb). Do not edit: use the spec, or freeze.
 import type { ContentPack } from '../src/types';
 
 export default {
@@ -318,10 +318,8 @@ export default {
           name: 'Narvarte',
           address: '{{address}}',
           hours: 'Lun–Vie 9:00–19:00 · Sáb 9:00–14:00',
-          directionsUrl:
-            'https://maps.google.com/?q=Av.+Universidad+1020%2C+Narvarte+Poniente%2C+Benito+Ju%C3%A1rez%2C+CDMX',
-          mapUrl:
-            'https://www.google.com/maps?q=Av.%20Universidad%201020%2C%20Narvarte%20Poniente%2C%20Benito%20Ju%C3%A1rez%2C%20CDMX&output=embed',
+          directionsUrl: 'https://maps.google.com/?q={{address}}',
+          mapUrl: 'https://www.google.com/maps?q={{address}}&output=embed',
           mapTitle: 'Mapa de la sucursal Narvarte',
         },
       ],
@@ -360,8 +358,7 @@ export default {
       branches: [
         {
           name: 'Narvarte',
-          address:
-            'Av. Universidad 1020, Narvarte Poniente, Benito Juárez, CDMX',
+          address: '{{address}}',
           hours: 'Lun–Vie 9:00–19:00 · Sáb 9:00–14:00',
         },
       ],

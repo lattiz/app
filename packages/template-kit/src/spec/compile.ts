@@ -6,6 +6,7 @@ import { hueDistance, hueOf, parseColor } from '../lib/color';
 import { interpolate, mapsEmbedUrl, mapsLinkUrl } from '../lib/content';
 import { loadBlueprint } from '../lib/load';
 import { paths } from '../lib/paths';
+import { streetOf } from '../lib/profile';
 import {
   fingerprint,
   normalizeHeadline,
@@ -43,7 +44,7 @@ import { composeTheme, customPalette, resolveFontPair } from './theme';
  */
 
 /** Bumped when the generator's output changes for the same spec. */
-export const GENERATOR_VERSION = 1;
+export const GENERATOR_VERSION = 2;
 
 export const KIT_TIER: Record<SpecTier, Tier> = { pro: 'pro', basico: 'basic' };
 export const TIER_LABEL: Record<SpecTier, string> = {
@@ -339,34 +340,34 @@ interface BranchCard {
   mapTitle: string;
 }
 
-function branchesOf(spec: Spec, giro: GiroDefinition, business: Business) {
+function branchesOf(spec: Spec, giro: GiroDefinition) {
   const list = spec.business.branches ?? [
     {
       name: spec.business.branch ?? giro.business.branch,
       address: '{{address}}',
-      shortAddress: business.address,
       hours: spec.business.hours ?? giro.business.hours,
-      mapsQuery: business.address,
-    },
+    } as NonNullable<Spec['business']['branches']>[number],
   ];
   const cards: BranchCard[] = list.map((b) => {
-    const query =
-      b.mapsQuery ??
-      (b.address === '{{address}}' ? business.address : b.address);
+    // The business address stays a variable: adopted sites point the map at their own address.
+    const own = !b.mapsQuery && b.address === '{{address}}';
+    const query = b.mapsQuery ?? b.address;
     return {
       name: b.name,
       address: b.address,
       hours: b.hours,
-      directionsUrl: mapsLinkUrl(query),
-      mapUrl: mapsEmbedUrl(query),
+      directionsUrl: own
+        ? 'https://maps.google.com/?q={{address}}'
+        : mapsLinkUrl(query),
+      mapUrl: own
+        ? 'https://www.google.com/maps?q={{address}}&output=embed'
+        : mapsEmbedUrl(query),
       mapTitle: `Mapa de la sucursal ${b.name}`,
     };
   });
   const footer = list.map((b) => ({
     name: b.name,
-    address:
-      b.shortAddress ??
-      (b.address === '{{address}}' ? business.address : b.address),
+    address: b.shortAddress ?? b.address,
     hours: b.hours,
   }));
   return { cards, footer };
@@ -505,7 +506,7 @@ function demoProfileOf(
     phone: business.phone.replace(/[^\d+]/g, ''),
     whatsapp: `+${business.whatsapp}`,
     email: business.email,
-    address: { street: business.address, city: business.city, country: 'MX' },
+    address: { street: streetOf(business), city: business.city, country: 'MX' },
     hours,
     timezone: 'America/Mexico_City',
     priceRange: giro.priceRange,
@@ -571,7 +572,7 @@ export async function planSpec(
     (f) => f.vertical === giro.id && !ownIds.has(f.id),
   );
   const business = businessOf(spec, giro);
-  const branches = branchesOf(spec, giro, business);
+  const branches = branchesOf(spec, giro);
   const tiers: TierPlan[] = [];
   const copies = new Map<SpecTier, Record<string, ContentObject>>();
 

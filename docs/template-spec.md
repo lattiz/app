@@ -60,11 +60,16 @@ numeradas). `sections` es un objeto por slot con las claves de su variante. Los 
 helpers de `content/barberia.shared.ts` (`branchCards`, `footerBranches`, `galleryItems`) y
 `singleBranch` de `barberia.trazo.es-MX.ts` para las Basic.
 
-**`{{lz:*}}` no existe en el kit.** `interpolate` (`src/lib/content.ts`) trata `{{lz:phone}}` como la
-variable desconocida `lz` y la compilación falla. Esos tokens los reemplaza tenant-sites al servir
-con el `business_profile` del cliente; en `templates.lattiz.app` no hay perfil y quedarían vacíos.
-Por eso el copy del spec usa las variables del kit (`{{name}}`, `{{phone}}`, `{{address}}`,
-`{{city}}`), que salen de `business` del spec.
+**Datos de contacto = tokens `{{lz:*}}` en el proyecto.** Desde la Fase 4 el kit compila
+`{{phone}}`, `{{phoneUrl}}`, `{{whatsappUrl[:mensaje]}}`, `{{email}}`, `{{emailUrl}}`, `{{address}}`
+y `{{city}}` a `{{lz:phone}}`, `{{lz:phone_tel}}`, `{{lz:whatsapp_url}}?text=…`, `{{lz:email}}`,
+`mailto:{{lz:email}}`, `{{lz:address}}` y `{{lz:city}}` **en el `.grapesjs`** (lo que copia quien
+adopta la plantilla); tenant-sites los llena al servir con su `business_profile`. Todo HTML que sale
+del kit (`dist/<id>/index.html`, que el seed publica en `templates.lattiz.app`, y lo que valida
+`kit:validate`) los resuelve con los datos demo de `business` mediante el mismo `bindSiteTokens` de
+tenant-sites (`src/lib/profile.ts`). `{{name}}`, `{{shortName}}`, horarios, colonias y mapas de
+sucursales con dirección propia siguen siendo texto demo que el cliente edita en el editor.
+`{{lz:*}}` escrito a mano en el copy sigue sin compilar: usa las variables del kit.
 
 ### Blueprints, tiers y roles
 
@@ -253,8 +258,8 @@ Reglas que conviene saber:
   `{{phone}}`, `{{address}}`, `{{whatsappUrl:mensaje}}`, `{{index}}`) y `{{branch}}` (la colonia de
   `business.branch`, que el compilador reemplaza al generar). Menú, pie, sucursales y mapas se
   derivan de las secciones y de `business`; si pones `navbar.links`/`footer.links`, se filtran por las
-  anclas de cada tier. **`{{lz:*}}` no se usa**: el kit no lo compila y en `templates.lattiz.app`
-  quedaría vacío; pasar a esos tokens es decisión aparte (ver «Pendientes»).
+  anclas de cada tier. En el `.grapesjs` los datos de contacto quedan como tokens
+  `{{lz:*}}` (ver arriba); la sucursal única usa `{{address}}` también en el pie y en el mapa.
 - **Twin.** La Pro usa `brand` y `copy` tal cual; la Básica recibe su propia paleta, tipografía y
   forma (las siguientes libres del giro, o `overrides.basico.brand`), evita la portada de la Pro y
   toma un titular alternativo (o `overrides.basico.copy.hero.title`). Básico: sin Motion.
@@ -557,9 +562,10 @@ generados: edita el spec.
 ## Pendientes y decisiones abiertas
 
 - Créditos de Pexels en el sitio (arriba).
-- `{{lz:*}}` en las plantillas: el copy generado usa datos de demostración en `business`; pasar a
-  tokens de `business_profile` exige que el kit los compile (hoy fallan) y decidir qué se ve en
-  `templates.lattiz.app` sin perfil.
+- Sitio adoptado **sin** «Datos del negocio»: los tokens vacíos dejan etiquetas sin valor
+  («Teléfono:»), botones de WhatsApp que apuntan a `?text=…`, `tel:`/`mailto:` vacíos, el mapa en
+  `?q=` y frases como «Consultorio médico en .». Conviene pedir teléfono/WhatsApp y dirección antes
+  de publicar (decisión de producto; `compose-site.ts` no cambia).
 - Giros de `bases.json` sin registro (despacho, estética, tienda, otro) siguen por clonación.
 - `categories` nuevas (`restaurantes`, `clinicas`, `florerias`) llegan a la galería con el seed;
   revisa que el dashboard las muestre bien antes de publicarlas.

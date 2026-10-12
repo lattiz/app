@@ -1,4 +1,4 @@
-// GENERATED from specs/restaurante-casa-comal.spec.json (spec 12fc8dabf1eb, file df33c371024d). Do not edit: use the spec, or freeze.
+// GENERATED from specs/restaurante-casa-comal.spec.json (spec 0325fbce6706, file df33c371024d). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {

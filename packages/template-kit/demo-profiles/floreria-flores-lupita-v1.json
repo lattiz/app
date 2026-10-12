@@ -1,12 +1,12 @@
 {
-  "$lattiz": "GENERATED from specs/floreria-flores-lupita.spec.json (spec 96279fd527fb, file 3ed8dc45db40). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/floreria-flores-lupita.spec.json (spec 2ccbfca28d27, file 71f619f70ce6). Do not edit: use the spec, or freeze.",
   "name": "Flores Lupita",
   "category": "store",
   "phone": "+525500000000",
   "whatsapp": "+5215500000000",
   "email": "pedidos@floreslupita.mx",
   "address": {
-    "street": "Francisco Sosa 214, Coyoacán, CDMX",
+    "street": "Francisco Sosa 214, Coyoacán",
     "city": "CDMX",
     "country": "MX"
   },

@@ -1,12 +1,12 @@
 {
-  "$lattiz": "GENERATED from specs/restaurante-casa-comal.spec.json (spec 12fc8dabf1eb, file cc7c221afe61). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/restaurante-casa-comal.spec.json (spec 0325fbce6706, file b35cfeec967e). Do not edit: use the spec, or freeze.",
   "name": "Casa Comal",
   "category": "restaurant",
   "phone": "+525500000000",
   "whatsapp": "+5215500000000",
   "email": "reservas@casacomal.mx",
   "address": {
-    "street": "Jaime Torres Bodet 150, Santa María la Ribera, CDMX",
+    "street": "Jaime Torres Bodet 150, Santa María la Ribera",
     "city": "CDMX",
     "country": "MX"
   },

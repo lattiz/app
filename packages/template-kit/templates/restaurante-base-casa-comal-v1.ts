@@ -1,4 +1,4 @@
-// GENERATED from specs/restaurante-casa-comal.spec.json (spec 12fc8dabf1eb, file 1215d309a5a1). Do not edit: use the spec, or freeze.
+// GENERATED from specs/restaurante-casa-comal.spec.json (spec 0325fbce6706, file c5c1eee8ce1a). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
@@ -66,10 +66,8 @@ export default {
           name: 'Santa María la Ribera',
           address: '{{address}}',
           hours: 'Mar–Sáb 13:00–23:00 · Dom 13:00–18:00',
-          directionsUrl:
-            'https://maps.google.com/?q=Jaime+Torres+Bodet+150%2C+Santa+Mar%C3%ADa+la+Ribera%2C+CDMX',
-          mapUrl:
-            'https://www.google.com/maps?q=Jaime%20Torres%20Bodet%20150%2C%20Santa%20Mar%C3%ADa%20la%20Ribera%2C%20CDMX&output=embed',
+          directionsUrl: 'https://maps.google.com/?q={{address}}',
+          mapUrl: 'https://www.google.com/maps?q={{address}}&output=embed',
           mapTitle: 'Mapa de la sucursal Santa María la Ribera',
         },
       },

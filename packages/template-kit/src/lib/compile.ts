@@ -40,6 +40,7 @@ import {
 } from './load';
 import { KIT_ROOT, distDir, paths, sectionDir } from './paths';
 import { ensurePlaceholder } from './placeholders';
+import { bindDemoTokens } from './profile';
 import { slotRoles } from './roles';
 import { googleFontsHref, themeRootCss } from './theme';
 
@@ -50,8 +51,10 @@ export interface CompiledSection {
   meta: SectionMeta;
   htmlFile: string;
   cssFile: string;
-  /** The fragment after content was applied (before GrapesJS). */
+  /** The fragment after content was applied (before GrapesJS), with the demo contact data. */
   rendered: string;
+  /** Same fragment with `{{lz:*}}` contact tokens: what the .grapesjs project carries. */
+  tokenized: string;
   css: string;
 }
 
@@ -285,6 +288,7 @@ export async function compileManifest(
       business,
       index,
       source: relative(KIT_ROOT, htmlFile),
+      tokens: true,
     });
     if (
       root.getAttribute('data-lz-slot') !== entry.slot ||
@@ -309,26 +313,34 @@ export async function compileManifest(
       meta,
       htmlFile,
       cssFile,
-      rendered: root.outerHTML,
+      rendered: bindDemoTokens(root.outerHTML, business),
+      tokenized: root.outerHTML,
       css: existsSync(cssFile) ? readFileSync(cssFile, 'utf8') : '',
     });
   }
 
-  const ctx = { business, source: `content/${manifest.content}.ts (head)` };
-  const head: HeadContent = {
-    title: interpolate(manifest.head?.title ?? pack.head.title, ctx),
-    description: interpolate(
-      manifest.head?.description ?? pack.head.description,
-      ctx,
-    ),
+  const headOf = (tokens: boolean): HeadContent => {
+    const ctx = {
+      business,
+      tokens,
+      source: `content/${manifest.content}.ts (head)`,
+    };
+    return {
+      title: interpolate(manifest.head?.title ?? pack.head.title, ctx),
+      description: interpolate(
+        manifest.head?.description ?? pack.head.description,
+        ctx,
+      ),
+    };
   };
+  const head = headOf(false);
   const region = (r: SectionMeta['region']) =>
     sections
       .filter((s) => s.meta.region === r)
-      .map((s) => s.rendered)
+      .map((s) => s.tokenized)
       .join('');
   const sourceHtml =
-    `<!DOCTYPE html><html lang="${pack.locale}"><head>${headHtml(head, theme)}</head>` +
+    `<!DOCTYPE html><html lang="${pack.locale}"><head>${headHtml(headOf(true), theme)}</head>` +
     `<body><div class="lz-page" data-lz-name="Página">${region('header')}` +
     `<main data-lz-name="Contenido">${region('main')}</main>${region('footer')}</div></body></html>`;
 
@@ -343,7 +355,9 @@ export async function compileManifest(
     pageName: manifest.name,
     slotNames: Object.fromEntries(sections.map((s) => [s.slot, s.meta.label])),
   });
-  const previewHtml = build.html.replace(
+  // The project keeps the {{lz:*}} tokens; every HTML output shows the demo data.
+  const html = bindDemoTokens(build.html, business);
+  const previewHtml = html.replace(
     '</head>',
     `<style>${build.css}</style></head>`,
   );
@@ -361,7 +375,7 @@ export async function compileManifest(
     sourceHtml,
     sourceCss,
     project: build.project,
-    html: build.html,
+    html,
     css: build.css,
     previewHtml: `${previewHtml}\n`,
     assets: [...assets.values()],

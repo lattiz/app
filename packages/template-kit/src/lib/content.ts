@@ -26,6 +26,11 @@ export function phoneUrl(phone: string): string {
 
 export interface RenderContext {
   business: Business;
+  /**
+   * Contact variables become tenant-sites `{{lz:*}}` tokens (bound from business_profile at serve
+   * time) instead of the demo values, so an adopted template never publishes fake contact data.
+   */
+  tokens?: boolean;
   /** Two-digit position among numbered sections, e.g. "02". */
   index?: string;
   /** For error messages: the fragment being rendered. */
@@ -38,8 +43,22 @@ const VAR_RE = /\{\{\s*([\w]+)(?::([^}]*))?\s*\}\}/g;
  * Replaces `{{var}}` business variables; `{{whatsappUrl:mensaje}}` builds a link with a custom message,
  * `{{phoneUrl}}` / `{{emailUrl}}` the tel: / mailto: links.
  */
+const SITE_TOKEN_OF: Record<string, string> = {
+  phone: '{{lz:phone}}',
+  phoneUrl: '{{lz:phone_tel}}',
+  email: '{{lz:email}}',
+  emailUrl: 'mailto:{{lz:email}}',
+  address: '{{lz:address}}',
+  city: '{{lz:city}}',
+};
+
 export function interpolate(text: string, ctx: RenderContext): string {
   return text.replace(VAR_RE, (_all, name: string, arg: string | undefined) => {
+    if (ctx.tokens) {
+      if (name === 'whatsappUrl')
+        return `{{lz:whatsapp_url}}?text=${encodeURIComponent(arg?.trim() || ctx.business.whatsappMessage)}`;
+      if (name in SITE_TOKEN_OF) return SITE_TOKEN_OF[name];
+    }
     if (name === 'whatsappUrl')
       return whatsappUrl(ctx.business, arg?.trim() || undefined);
     if (name === 'phoneUrl') return phoneUrl(ctx.business.phone);
