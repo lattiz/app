@@ -76,16 +76,19 @@ const commonSlots = {
   footer: 'footer',
 } satisfies Partial<Record<Role, string>>;
 
+const serviceSlots = {
+  ...commonSlots,
+  catalog: 'services',
+  proof: 'gallery',
+  contact: 'locations',
+} satisfies Partial<Record<Role, string>>;
+
+// Spec giros (giros/<id>.ts) reuse the service slots: the menu, consultations and arrangements are all `services`.
 export const verticals: Record<string, BlueprintVertical> = {
-  barberia: {
-    schemaType: 'BarberShop',
-    slots: {
-      ...commonSlots,
-      catalog: 'services',
-      proof: 'gallery',
-      contact: 'locations',
-    },
-  },
+  barberia: { schemaType: 'BarberShop', slots: serviceSlots },
+  restaurante: { schemaType: 'Restaurant', slots: serviceSlots },
+  clinica: { schemaType: 'MedicalClinic', slots: serviceSlots },
+  floreria: { schemaType: 'Florist', slots: serviceSlots },
 };
 
 export const guidance = [

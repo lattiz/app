@@ -215,6 +215,7 @@ async function resolveImages(
         size.width,
         size.height,
         theme,
+        vertical,
       );
       assets.set(name, { source, name, generated });
     }

@@ -22,6 +22,7 @@
     "sections/**/*",
     "content/**/*",
     "blueprints/**/*",
+    "giros/**/*",
     "templates/**/*",
     "vitest.config.ts"
   ],

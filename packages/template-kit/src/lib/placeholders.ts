@@ -7,8 +7,8 @@ import { escapeHtml } from './dom';
 import { tokenColor } from './theme';
 
 /**
- * Art-directed placeholders: the theme's palette + its pattern + a barbería motif picked from the
- * file name, so heroes and cards of different templates already differ before real photos arrive.
+ * Art-directed placeholders: the theme's palette + its pattern + a motif of the vertical picked from
+ * the file name, so heroes and cards of different templates already differ before real photos arrive.
  */
 
 interface Palette {
@@ -22,7 +22,24 @@ interface Palette {
 
 const WHITE: Rgba = { r: 255, g: 255, b: 255, a: 1 };
 
-type Motif = 'scissors' | 'comb' | 'razor' | 'pole' | 'person';
+type Motif =
+  | 'scissors'
+  | 'comb'
+  | 'razor'
+  | 'pole'
+  | 'person'
+  | 'plate'
+  | 'cutlery'
+  | 'bowl'
+  | 'chili'
+  | 'cross'
+  | 'heart'
+  | 'pill'
+  | 'stethoscope'
+  | 'flower'
+  | 'leaf'
+  | 'tulip'
+  | 'pot';
 
 const MOTIFS: Record<Motif, string> = {
   scissors:
@@ -33,14 +50,60 @@ const MOTIFS: Record<Motif, string> = {
   pole: '<rect x="38" y="6" width="24" height="88" rx="12"/><path d="M38 26 62 10M38 46 62 30M38 66 62 50M38 86 62 70"/>',
   person:
     '<circle cx="50" cy="34" r="17"/><path d="M16 96c0-22 15-34 34-34s34 12 34 34"/>',
+  plate: '<circle cx="50" cy="50" r="40"/><circle cx="50" cy="50" r="26"/>',
+  cutlery:
+    '<path d="M34 8v34c0 6 4 10 8 10v40M26 8v26M42 8v26"/><path d="M66 92V8c-8 6-12 18-12 32 0 8 4 12 12 12"/>',
+  bowl: '<path d="M10 50h80c0 22-18 38-40 38S10 72 10 50z"/><path d="M36 38c-4-6 4-10 0-18M52 38c-4-6 4-10 0-18M68 38c-4-6 4-10 0-18"/>',
+  chili:
+    '<path d="M30 30c-14 24-6 54 26 60 10-14 16-36 6-58-8-8-24-10-32-2z"/><path d="M44 26c0-10 6-16 14-18"/>',
+  cross: '<path d="M38 12h24v26h26v24H62v26H38V62H12V38h26z"/>',
+  heart:
+    '<path d="M50 86 16 52c-10-10-10-26 2-34 10-6 24-4 32 8 8-12 22-14 32-8 12 8 12 24 2 34z"/><path d="M22 50h16l6-12 8 24 6-12h20"/>',
+  pill: '<rect x="14" y="34" width="72" height="32" rx="16" transform="rotate(-35 50 50)"/><path d="M40 36 60 64"/>',
+  stethoscope:
+    '<path d="M26 10v28c0 14 10 24 22 24s22-10 22-24V10"/><path d="M48 62v10c0 10 8 16 18 16s16-6 16-16v-8"/><circle cx="82" cy="58" r="7"/>',
+  flower:
+    '<circle cx="50" cy="40" r="9"/><circle cx="50" cy="20" r="11"/><circle cx="69" cy="34" r="11"/><circle cx="62" cy="56" r="11"/><circle cx="38" cy="56" r="11"/><circle cx="31" cy="34" r="11"/><path d="M50 67v27"/>',
+  leaf: '<path d="M18 82C18 40 44 16 84 16c0 42-26 66-66 66z"/><path d="M18 82 64 36"/>',
+  tulip:
+    '<path d="M32 18l9 12 9-14 9 14 9-12v22c0 12-8 20-18 20s-18-8-18-20z"/><path d="M50 60v34M50 80c-10-10-22-10-26-8M50 74c8-8 18-8 22-6"/>',
+  pot: '<path d="M24 54h52l-8 38H32z"/><path d="M20 46h60v8H20z"/><path d="M50 46c0-16 8-28 22-34M50 46c-2-14-10-24-22-26"/>',
 };
 
-function motifFor(name: string): Motif {
+/** hero, about and the gallery cycle per vertical; barbería keeps the original set. */
+const VERTICAL_MOTIFS: Record<
+  string,
+  { hero: Motif; about: Motif; cycle: Motif[] }
+> = {
+  barberia: {
+    hero: 'pole',
+    about: 'comb',
+    cycle: ['scissors', 'razor', 'comb', 'pole'],
+  },
+  restaurante: {
+    hero: 'plate',
+    about: 'cutlery',
+    cycle: ['bowl', 'plate', 'chili', 'cutlery'],
+  },
+  clinica: {
+    hero: 'stethoscope',
+    about: 'cross',
+    cycle: ['heart', 'cross', 'pill', 'stethoscope'],
+  },
+  floreria: {
+    hero: 'flower',
+    about: 'tulip',
+    cycle: ['leaf', 'flower', 'pot', 'tulip'],
+  },
+};
+
+function motifFor(name: string, vertical: string): Motif {
+  const set = VERTICAL_MOTIFS[vertical] ?? VERTICAL_MOTIFS.barberia;
   if (name.startsWith('team')) return 'person';
-  if (name.startsWith('hero')) return 'pole';
-  if (name.startsWith('about')) return 'comb';
+  if (name.startsWith('hero')) return set.hero;
+  if (name.startsWith('about')) return set.about;
   const n = Number(/\d+/.exec(name)?.[0] ?? 0);
-  return (['scissors', 'razor', 'comb', 'pole'] as const)[n % 4];
+  return set.cycle[n % 4];
 }
 
 function palette(theme: Theme): Palette {
@@ -114,12 +177,13 @@ function placeholderSvg(
   height: number,
   label: string,
   theme: Theme,
+  vertical: string,
 ): string {
   const p = palette(theme);
   const m = Math.min(width, height);
   const size = m * 0.42;
   const font = Math.round(Math.max(12, m / 48));
-  const motif = MOTIFS[motifFor(label)];
+  const motif = MOTIFS[motifFor(label, vertical)];
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
 ${patternLayer(theme.placeholder, width, height, p)}
 <g transform="translate(${width * 0.28 - size / 2} ${height * 0.5 - size / 2}) scale(${size / 100})" fill="none" stroke="${p.stroke}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".78">${motif}</g>
@@ -134,11 +198,14 @@ export async function ensurePlaceholder(
   width: number,
   height: number,
   theme: Theme,
+  vertical = 'barberia',
 ): Promise<boolean> {
   if (existsSync(file)) return false;
   mkdirSync(dirname(file), { recursive: true });
   const label = `${basename(file)} · ${width}×${height} · placeholder`;
-  await sharp(Buffer.from(placeholderSvg(width, height, label, theme)))
+  await sharp(
+    Buffer.from(placeholderSvg(width, height, label, theme, vertical)),
+  )
     .jpeg({ quality: 80, mozjpeg: true })
     .toFile(file);
   return true;

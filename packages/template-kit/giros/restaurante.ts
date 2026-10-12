@@ -1,0 +1,464 @@
+import type { GiroDefinition } from '../src/spec/giro';
+import { palette } from '../src/spec/presets';
+
+/** Restaurante: menú con precios, reservas por WhatsApp, cocina y comedor en fotos. */
+
+export default {
+  id: 'restaurante',
+  label: 'Restaurante',
+  category: 'restaurantes',
+  businessCategory: 'restaurant',
+  schemaType: 'Restaurant',
+  description: {
+    pro: 'Restaurante con identidad propia: menú, la cocina en fotos, equipo, reseñas, preguntas y reservas',
+    basico:
+      'Restaurante de barrio: menú con precios, preguntas frecuentes y ubicación',
+  },
+  palettes: {
+    terracota: palette({
+      label: 'Terracota (claro, cálido)',
+      scheme: 'light',
+      bg: '#F6EFE6',
+      surface: '#FBF7F1',
+      surface2: '#EADFD0',
+      text: '#231A14',
+      muted: '#5E5248',
+      accent: '#B23A22',
+      onAccent: '#FFF8F0',
+      accentText: '#C2492F',
+      photoTreatment: 'warm',
+      placeholder: 'blobs',
+    }),
+    nocturno: palette({
+      label: 'Nocturno (oscuro, acento mostaza)',
+      scheme: 'dark',
+      bg: '#15120F',
+      surface: '#1F1A16',
+      surface2: '#2A241F',
+      text: '#F4ECDF',
+      muted: '#BBAF9F',
+      accent: '#E0B243',
+      onAccent: '#15120F',
+      accentText: '#E6BE5C',
+      photoTreatment: 'warm',
+      placeholder: 'grain',
+    }),
+    olivo: palette({
+      label: 'Olivo (claro, mediterráneo)',
+      scheme: 'light',
+      bg: '#F2F1EA',
+      surface: '#FAFAF5',
+      surface2: '#E3E4D6',
+      text: '#1C1F17',
+      muted: '#535A4A',
+      accent: '#56702A',
+      onAccent: '#FAFAF5',
+      accentText: '#6A8A34',
+      photoTreatment: 'none',
+      placeholder: 'rules',
+    }),
+    talavera: palette({
+      label: 'Talavera (claro, azul cobalto)',
+      scheme: 'light',
+      bg: '#F7F5F0',
+      surface: '#FFFFFF',
+      surface2: '#E6E9F0',
+      text: '#141B2D',
+      muted: '#4A5266',
+      accent: '#1F4FA8',
+      onAccent: '#FFFFFF',
+      accentText: '#1F4FA8',
+      overlay: 'bg',
+      photoTreatment: 'none',
+      placeholder: 'dots',
+    }),
+    agave: palette({
+      label: 'Agave (oscuro, acento verde)',
+      scheme: 'dark',
+      bg: '#0F1A16',
+      surface: '#15241F',
+      surface2: '#1E3029',
+      text: '#EAF2EC',
+      muted: '#A7B8AE',
+      accent: '#5CC48E',
+      onAccent: '#0F1A16',
+      accentText: '#72D3A0',
+      photoTreatment: 'none',
+      placeholder: 'arches',
+    }),
+    jamaica: palette({
+      label: 'Jamaica (oscuro, acento rosa intenso)',
+      scheme: 'dark',
+      bg: '#1B0F14',
+      surface: '#26151C',
+      surface2: '#331D26',
+      text: '#F7E9EE',
+      muted: '#C6ACB6',
+      accent: '#E8558A',
+      onAccent: '#1B0F14',
+      accentText: '#EE6E9A',
+      photoTreatment: 'duotone',
+      placeholder: 'stripes',
+    }),
+  },
+  fontPairs: [
+    'young-serif+figtree',
+    'bricolage-grotesque+inter',
+    'cormorant-garamond+work-sans',
+    'dm-serif-display+dm-sans',
+    'playfair-display+inter',
+  ],
+  shapes: ['suave', 'filete', 'sutil', 'redondo', 'organico', 'brutal'],
+  sections: {
+    pro: [
+      { role: 'header', variant: 'centered-logo' },
+      { role: 'hero', variant: 'split' },
+      { role: 'marquee', variant: 'ticker' },
+      { role: 'about', variant: 'text-image-offset' },
+      { role: 'catalog', variant: 'editorial-table' },
+      { role: 'proof', variant: 'mosaic' },
+      { role: 'team', variant: 'list' },
+      { role: 'testimonials', variant: 'quote-feature' },
+      { role: 'faq', variant: 'two-col' },
+      { role: 'contact', variant: 'with-contact' },
+      { role: 'whatsapp', variant: 'bubble' },
+      { role: 'footer', variant: 'big-wordmark' },
+    ],
+    basico: [
+      { role: 'header', variant: 'inline' },
+      { role: 'hero', variant: 'centered-arch' },
+      { role: 'about', variant: 'brief' },
+      { role: 'catalog', variant: 'price-list' },
+      { role: 'faq', variant: 'list' },
+      { role: 'contact', variant: 'single' },
+      { role: 'whatsapp', variant: 'bubble' },
+      { role: 'footer', variant: 'columns' },
+    ],
+  },
+  motion: { preset: 'calm', progress: false },
+  navLabels: {
+    about: 'Nosotros',
+    services: 'Menú',
+    team: 'Cocina',
+    gallery: 'Platillos',
+    testimonials: 'Reseñas',
+    faq: 'Preguntas',
+    locations: 'Reservar',
+  },
+  business: {
+    tagline: 'Cocina de temporada',
+    whatsappMessage: 'Hola, quiero reservar una mesa',
+    phone: '+52 55 0000 0000',
+    whatsapp: '5215500000000',
+    city: 'CDMX',
+    hours: 'Mar–Sáb 13:00–23:00 · Dom 13:00–18:00',
+    address: 'Av. Ejemplo 123, Col. Centro, CDMX',
+    branch: 'Centro',
+  },
+  head: {
+    title: '{{name}}',
+    description:
+      '{{name}} en {{city}}: cocina de temporada, menú con precios y reservaciones por WhatsApp.',
+  },
+  copy: {
+    navbar: { cta: 'Reservar' },
+    hero: {
+      image: 'hero.jpg',
+      imageAlt:
+        'Mesa servida con platillos de temporada y luz cálida de mediodía',
+      eyebrow: 'Cocina de temporada · {{city}}',
+      title:
+        'Comida hecha con <span class="lz-title__serif">tiempo</span>, para compartir.',
+      text: 'Ingredientes del mercado, recetas de casa y una mesa que te espera. Reserva por WhatsApp y llega a comer.',
+      primaryCta: 'Reservar mesa',
+      secondaryCta: 'Ver el menú',
+      secondaryHref: '#servicios',
+      sticker: 'Mesa para hoy',
+    },
+    marquee: {
+      label: 'Lo que nos piden siempre',
+      items: [
+        'Cocina de mercado',
+        'Tortillas a mano',
+        'Mezcal y vinos mexicanos',
+        'Postres de la casa',
+        'Reservas por WhatsApp',
+      ],
+    },
+    about: {
+      kicker: '{{index}} — Nosotros',
+      title:
+        'Una cocina <span class="lz-title__serif">abierta</span> y sin prisas.',
+      summary:
+        'En {{shortName}} cocinamos lo que llega del mercado esa mañana. Recetas de familia, porciones generosas y un servicio que te trata como de casa.',
+      statement:
+        'Cocinamos como en casa: lo que hay en el mercado, bien hecho y para compartir en la mesa.',
+      image: 'about.jpg',
+      imageAlt:
+        'Cocinera emplatando en una cocina abierta con fogones encendidos',
+      sticker: 'Desde 2015',
+      paragraphs: [
+        '{{shortName}} abrió como una fonda de seis mesas. Hoy la cocina sigue a la vista y el menú cambia con la temporada.',
+        'Compramos a productores de la región, hacemos las tortillas a mano y preparamos los postres cada día.',
+        'Ven con calma: la sobremesa también es parte de la comida.',
+      ],
+      stats: [
+        { value: '+10 años', label: 'Cocinando en {{city}}' },
+        { value: '40 platillos', label: 'En la carta del año' },
+        { value: '4.8 ★', label: 'En Google' },
+      ],
+    },
+    services: {
+      kicker: '{{index}} — Menú',
+      title: 'El <span class="lz-title__serif">menú</span>',
+      intro:
+        'Precios en pesos mexicanos, IVA incluido. Pregunta por el platillo del día.',
+      prices: [
+        {
+          name: 'Sopa del día',
+          price: '$95',
+          description: 'Caldo de la casa con verduras del mercado.',
+        },
+        {
+          name: 'Tostadas de la casa',
+          price: '$140',
+          description: 'Tres tostadas con guisos de temporada.',
+        },
+        {
+          name: 'Plato fuerte',
+          price: '$220',
+          description: 'Guiso del día con arroz, frijoles y tortillas a mano.',
+        },
+        {
+          name: 'Pescado a la talla',
+          price: '$290',
+          description: 'Filete al carbón con ensalada y salsa de la casa.',
+        },
+        {
+          name: 'Menú infantil',
+          price: '$120',
+          description: 'Porción pequeña con agua fresca y postre.',
+        },
+        {
+          name: 'Postre de la casa',
+          price: '$85',
+          description: 'Flan, pastel o nieve, según el día.',
+        },
+      ],
+      promos: [
+        {
+          tag: 'Comida corrida',
+          title: 'Menú del día de lunes a viernes',
+          text: 'Sopa, plato fuerte, agua y postre por $175.',
+          cta: 'Reservar',
+          href: '{{whatsappUrl:Hola, quiero reservar para el menú del día}}',
+        },
+        {
+          tag: 'Eventos',
+          title: 'Cumpleaños y comidas de empresa',
+          text: 'Reservamos el salón para grupos de hasta 30 personas.',
+          cta: 'Cotizar',
+          href: '{{whatsappUrl:Hola, quiero cotizar un evento}}',
+        },
+      ],
+    },
+    gallery: {
+      kicker: '{{index}} — Platillos',
+      title: 'De la cocina a tu <span class="lz-title__serif">mesa</span>',
+      items: [
+        {
+          image: 'gallery-01.jpg',
+          caption: 'Guiso del día',
+          alt: 'Cazuela de barro con guiso rojo y tortillas a un lado',
+        },
+        {
+          image: 'gallery-02.jpg',
+          caption: 'Tostadas de la casa',
+          alt: 'Tres tostadas con guisos y crema sobre un plato de talavera',
+        },
+        {
+          image: 'gallery-03.jpg',
+          caption: 'Tortillas a mano',
+          alt: 'Manos haciendo tortillas en un comal',
+        },
+        {
+          image: 'gallery-04.jpg',
+          caption: 'Pescado a la talla',
+          alt: 'Filete de pescado asado al carbón con limones',
+        },
+        {
+          image: 'gallery-05.jpg',
+          caption: 'El comedor',
+          alt: 'Comedor con mesas de madera y luz natural',
+        },
+        {
+          image: 'gallery-06.jpg',
+          caption: 'Aguas frescas',
+          alt: 'Jarras de agua de jamaica y horchata sobre la barra',
+        },
+        {
+          image: 'gallery-07.jpg',
+          caption: 'Postres del día',
+          alt: 'Flan casero con caramelo en un plato blanco',
+        },
+        {
+          image: 'gallery-08.jpg',
+          caption: 'La barra',
+          alt: 'Barra con botellas de mezcal y copas',
+        },
+      ],
+    },
+    team: {
+      kicker: '{{index}} — Cocina',
+      title: 'Quién <span class="lz-title__serif">cocina</span>',
+      members: [
+        {
+          name: 'Carmen Ortiz',
+          role: 'Chef y fundadora',
+          tags: ['Cocina de mercado', 'Guisos'],
+          image: 'team-1.jpg',
+          imageAlt: 'Retrato de Carmen Ortiz con filipina blanca en la cocina',
+        },
+        {
+          name: 'Luis Herrera',
+          role: 'Parrilla',
+          tags: ['Carbón', 'Pescados'],
+          image: 'team-2.jpg',
+          imageAlt: 'Retrato de Luis Herrera junto a la parrilla',
+        },
+        {
+          name: 'Ana Ruiz',
+          role: 'Repostería',
+          tags: ['Postres', 'Pan'],
+          image: 'team-3.jpg',
+          imageAlt: 'Retrato de Ana Ruiz decorando un pastel',
+        },
+        {
+          name: 'Jorge Méndez',
+          role: 'Sala y barra',
+          tags: ['Mezcal', 'Servicio'],
+          image: 'team-4.jpg',
+          imageAlt: 'Retrato de Jorge Méndez detrás de la barra',
+        },
+      ],
+    },
+    testimonials: {
+      kicker: '{{index}} — Reseñas',
+      score: '4.8',
+      summary: '320 opiniones en Google',
+      allReviewsCta: 'Ver todas en Google',
+      writeReviewCta: 'Dejar reseña en Google',
+      reviews: [
+        {
+          text: 'El guiso del día sabe a casa. Fuimos un domingo con mis papás y ya queremos regresar.',
+          author: 'Daniela R.',
+        },
+        {
+          text: 'Reservé por WhatsApp en dos minutos y la mesa estaba lista cuando llegamos. Las tortillas a mano, increíbles.',
+          author: 'Miguel A.',
+        },
+        {
+          text: 'Hicimos la comida de fin de año de la oficina en el salón. Atentos con todo y el menú, delicioso.',
+          author: 'Paola S.',
+        },
+      ],
+    },
+    faq: {
+      kicker: '{{index}} — Preguntas',
+      title: 'Antes de <span class="lz-title__serif">venir</span>',
+      intro:
+        'Lo que más nos preguntan. Si tienes otra duda, escríbenos por WhatsApp.',
+      cta: 'Preguntar por WhatsApp',
+      items: [
+        {
+          question: '¿Necesito reservar?',
+          answer:
+            'Los fines de semana sí te lo recomendamos. Entre semana suele haber mesa, pero reservar por WhatsApp te asegura lugar.',
+        },
+        {
+          question: '¿Tienen opciones vegetarianas?',
+          answer:
+            'Sí, siempre hay al menos un plato fuerte y una entrada sin carne. Pregúntanos por el del día.',
+        },
+        {
+          question: '¿Qué formas de pago aceptan?',
+          answer: 'Efectivo, tarjetas de débito y crédito, y transferencia.',
+        },
+        {
+          question: '¿Hacen pedidos para llevar?',
+          answer:
+            'Sí. Escríbenos por WhatsApp con tu pedido y te decimos a qué hora pasar por él.',
+        },
+        {
+          question: '¿Pueden recibir grupos o eventos?',
+          answer:
+            'Tenemos un salón para grupos de hasta 30 personas. Escríbenos con la fecha y te mandamos opciones de menú.',
+        },
+        {
+          question: '¿Hay estacionamiento?',
+          answer:
+            'No tenemos estacionamiento propio, pero hay estacionamientos públicos a una cuadra.',
+        },
+      ],
+    },
+    locations: {
+      kicker: '{{index}} — Reservar',
+      title: 'Te esperamos a la <span class="lz-title__serif">mesa</span>',
+      contactText:
+        'Reservas y pedidos por WhatsApp en horario del restaurante. Para eventos preferimos el correo.',
+      whatsappLabel: 'WhatsApp',
+      whatsappValue: 'Reservar mesa',
+      callLabel: 'Teléfono',
+      emailLabel: 'Correo',
+      directionsLabel: 'Cómo llegar',
+      hoursLabel: 'Horario',
+      whatsappCta: 'Reservar por WhatsApp',
+      callCta: 'Llamar',
+    },
+    'floating-whatsapp': { label: 'Reservar por WhatsApp' },
+    footer: {
+      about:
+        'Cocina de temporada en {{city}}. Reservas y pedidos para llevar por WhatsApp.',
+      branchesTitle: 'Dónde estamos',
+      linksTitle: 'Explorar',
+      contactTitle: 'Contacto',
+    },
+  },
+  heroAlternates: [
+    'Sabores de <span class="lz-title__serif">casa</span> en el centro de {{city}}.',
+    'Tu mesa de <span class="lz-title__serif">siempre</span>, con el menú del día.',
+    'Cocina de mercado, <span class="lz-title__serif">recién hecha</span>.',
+    'Ven a comer <span class="lz-title__serif">sin prisa</span>.',
+  ],
+  images: {
+    hero: { query: 'mexican food table restaurant', orientation: 'landscape' },
+    about: { query: 'chef plating open kitchen', orientation: 'portrait' },
+    'team-1': { query: 'female chef portrait', orientation: 'portrait' },
+    'team-2': { query: 'grill cook portrait', orientation: 'portrait' },
+    'team-3': { query: 'pastry chef portrait', orientation: 'portrait' },
+    'team-4': { query: 'bartender portrait', orientation: 'portrait' },
+    'gallery-01': { query: 'mexican stew clay pot', orientation: 'square' },
+    'gallery-02': { query: 'tostadas mexican food', orientation: 'square' },
+    'gallery-03': { query: 'handmade tortillas comal', orientation: 'square' },
+    'gallery-04': { query: 'grilled fish lime', orientation: 'square' },
+    'gallery-05': {
+      query: 'cozy restaurant dining room',
+      orientation: 'square',
+    },
+    'gallery-06': {
+      query: 'agua fresca jamaica horchata',
+      orientation: 'square',
+    },
+    'gallery-07': { query: 'flan caramel dessert', orientation: 'square' },
+    'gallery-08': { query: 'mezcal bar', orientation: 'square' },
+  },
+  demoHours: {
+    tue: [{ open: '13:00', close: '23:00' }],
+    wed: [{ open: '13:00', close: '23:00' }],
+    thu: [{ open: '13:00', close: '23:00' }],
+    fri: [{ open: '13:00', close: '23:00' }],
+    sat: [{ open: '13:00', close: '23:00' }],
+    sun: [{ open: '13:00', close: '18:00' }],
+  },
+  priceRange: '$$',
+} satisfies GiroDefinition;
