@@ -25,6 +25,8 @@ export default tseslint.config(
       '**/next-env.d.ts',
       // Reference material (Studio exports, throwaway spike scripts) and extract scratch output.
       'packages/template-kit/fixtures/**',
+      // GrapesJS spike scripts (CommonJS, no package.json); kept as reference, never run by the build.
+      'packages/fixtures/**',
       'packages/template-kit/extracted/**',
     ],
   },
