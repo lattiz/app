@@ -14,8 +14,8 @@ prueba de diversidad, docs y skill). Una sesión nueva retoma desde aquí. Estad
 | ----- | ------------------------------------------------ | --------- | ------- | ---------------------------------------------- |
 | WP-1  | Línea base y snapshot dorado                     | hecho     | a151e30 | ver abajo                                      |
 | WP0   | Inventario y modelo de capacidad                 | hecho     | 405ac7d | Motion lo pone el seed, no el markup           |
-| WP0.5 | Skills de diseño: instalar, leer, destilar       | hecho     | (este)  | hover con `(hover: hover) and (pointer: fine)` |
-| WP1   | Versionado del catálogo (legacy/extended) y lock | pendiente |         |                                                |
+| WP0.5 | Skills de diseño: instalar, leer, destilar       | hecho     | 95de8d4 | hover con `(hover: hover) and (pointer: fine)` |
+| WP1   | Versionado del catálogo (legacy/extended) y lock | hecho     | (este)  | nombrar un id nuevo vale en legacy             |
 | WP2   | Galería del kit y especímenes                    | pendiente |         |                                                |
 | WP3   | Tokens de estilo                                 | pendiente |         |                                                |
 | WP4   | Biblioteca de paletas                            | pendiente |         |                                                |
@@ -227,3 +227,43 @@ que la topa, en orden: (1) paletas con tonos libres → WP4; (2) pares tipográf
 portadas Pro (una por Pro del giro) → WP6 (+5); (4) el techo de 12 tonos de color por giro: barbería
 ya usa 6 tonos y le quedan **4**; el resto de su holgura solo puede venir de paletas de acento neutro
 (casi gris), que la regla existente no cuenta. Se reporta tal cual, sin bajar el umbral de 30°.
+
+## Versionado del catálogo y locks (WP1)
+
+**Por qué:** el compilador elige paleta, par tipográfico y variantes rotando pools con una semilla del
+id. Si un pool crece, la misma semilla cae en otro elemento y **recompilar un spec existente cambiaría
+su plantilla** sin que nadie lo pidiera.
+
+- **`brand.catalog`** (`legacy` | `extended`, opcional). **Sin el campo = `legacy`:** el compilador ve
+  solo los pools de antes de la extensión, en su orden original: las paletas de `giros/<giro>.ts`,
+  `giro.fontPairs` y las 31 variantes de `LEGACY_VARIANTS` (`src/spec/catalog.ts`; cualquier carpeta
+  nueva en `sections/` es `extended` sin tener que marcarla). `extended` suma la biblioteca global de
+  paletas (`packages/template-kit/palettes/`), la de pares (`packages/template-kit/font-pairs/`) y las
+  variantes nuevas, ordenadas por afinidad con el giro. `lattiz spec init` escribe `extended`; los specs
+  existentes siguen `legacy`.
+- **Nombrar un id nuevo funciona en cualquier catálogo** (`brand.palette.preset`, `brand.fontPair`,
+  `sections[].variant`): solo cambia el spec que lo nombra. Lo que depende del catálogo es lo que el
+  compilador elige solo.
+- **Lock** (`specs/<stem>.lock.json`, se commitea): por tier, la paleta, el par, la forma, el arquetipo
+  y la variante de cada rol que resolvió el compilador, más `catalog` y `catalogVersion`. `lattiz build`
+  lo lee y fija todo lo que el spec no fija; si algo del lock ya choca (por ejemplo, el spec ahora fija
+  una paleta igual a la de otra plantilla), el build **falla** en vez de moverse, y sugiere
+  `pnpm lattiz spec lock <stem> --refresh`. Un lock resuelto con otro catálogo se ignora. El build
+  escribe el lock si no existía o si cambiaron las elecciones.
+- **`pnpm lattiz spec lock <stem> | --all [--refresh]`:** planea el spec (con su lock, o desde cero con
+  `--refresh`), comprueba que reproduce **valor por valor** los archivos generados que hay en disco y
+  solo entonces escribe el lock. Código 1 si no reproduce.
+
+**Verificado (2026-10-12):** `spec lock --all` creó los 10 locks y los 10 reproducen sus 7 archivos;
+una segunda corrida dice «ya estaba al día»; `build clinica-alba --dry-run` usa el lock («paleta …
+(del lock)») y deja todo «sin cambios»; con `.lattiz/cache` borrado, `build restaurante-casa-comal`
+deja manifiestos, temas, packs y perfiles idénticos. Prueba de crecimiento: con una carpeta
+`sections/hero/aaa-probe` de más, `kit:verify-snapshot` sigue idéntico (los specs legacy no la ven);
+con seis paletas de prueba agregadas a la biblioteca con afinidad `restaurante`, un spec `extended` sin
+lock cambia de paleta y el mismo spec con lock da los mismos bytes.
+
+**Hallazgo (preexistente, no de este trabajo):** en este contenedor, un `lattiz build` real reescribe
+los JPEG de placeholder del spec (mismo resultado con `main` sin cambios): la imagen lleva texto SVG
+rasterizado y los bytes dependen de las fuentes del sistema. Las fuentes generadas no cambian; se
+restauraron las imágenes commiteadas. El snapshot dorado usa las imágenes del repo, así que no le
+afecta.

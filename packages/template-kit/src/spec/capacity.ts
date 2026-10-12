@@ -4,8 +4,12 @@ import { loadBlueprint } from '../lib/load';
 import type { Fingerprint } from '../lib/similarity';
 import { libraryFingerprints } from '../lib/targets';
 import { MIN_ACCENT_HUE_DISTANCE } from '../lib/validate';
+import { fontPairPool, palettePool } from './catalog';
 import { allowedVariants, planSpec } from './compile';
 import { parseSpec, type SpecTier } from './schema';
+import type { Catalog } from './catalog';
+
+export type { Catalog };
 
 /**
  * Capacity per giro: how many more templates the uniqueness rules (kit:validate's accent hue, font
@@ -13,8 +17,6 @@ import { parseSpec, type SpecTier } from './schema';
  * specs one after another until it refuses. Synthetic specs write their own headline, so the
  * number measures the design pools, not the copy.
  */
-
-export type Catalog = 'legacy' | 'extended';
 
 export interface Headroom {
   /** Templates added before the compiler refused. */
@@ -154,11 +156,12 @@ export async function giroCapacity(
     .filter((h): h is number => h !== null);
   const takenFonts = new Set(mine.map((f) => f.fonts));
   const proBlueprint = await loadBlueprint('service-landing', 'pro');
-  const heroes = allowedVariants(proBlueprint, 'hero', 'hero');
+  const heroes = allowedVariants(proBlueprint, 'hero', 'hero', catalog);
   const usedHeroes = new Set(
     mine.filter((f) => f.tier === 'pro').map((f) => f.hero),
   );
-  const palettes = Object.values(giro.palettes);
+  const palettes = palettePool(giro, catalog).map(([, p]) => p);
+  const fontPairs = fontPairPool(giro, catalog);
 
   const twins = await simulate(giroId, all, 'twin', catalog, 1);
   const pro = await simulate(giroId, all, 'pro', catalog, 1);
@@ -196,8 +199,8 @@ export async function giroCapacity(
           takenHues.every((t) => hueDistance(t, h) >= MIN_ACCENT_HUE_DISTANCE)
         );
       }).length,
-      fontPairs: giro.fontPairs.length,
-      fontPairsFree: giro.fontPairs.filter((f) => !takenFonts.has(f)).length,
+      fontPairs: fontPairs.length,
+      fontPairsFree: fontPairs.filter((f) => !takenFonts.has(f)).length,
       heroVariants: heroes.length,
       heroFreePro: heroes.filter((h) => !usedHeroes.has(h)).length,
       shapes: giro.shapes.length,

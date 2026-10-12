@@ -1,0 +1,58 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/despacho-cifra-clara.spec.json",
+  "catalog": "legacy",
+  "catalogVersion": 1,
+  "tiers": {
+    "despacho-cifra-clara-v1": {
+      "tier": "pro",
+      "palette": "marino",
+      "fontPair": "libre-baskerville+source-sans-3",
+      "shape": "filete",
+      "archetype": "editorial-atelier",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "image-bg" },
+        { "role": "about", "slot": "about", "variant": "statement" },
+        { "role": "catalog", "slot": "services", "variant": "editorial-table" },
+        { "role": "team", "slot": "team", "variant": "list" },
+        { "role": "proof", "slot": "gallery", "variant": "strip" },
+        {
+          "role": "testimonials",
+          "slot": "testimonials",
+          "variant": "quote-feature"
+        },
+        { "role": "faq", "slot": "faq", "variant": "two-col" },
+        { "role": "contact", "slot": "locations", "variant": "with-contact" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "columns" }
+      ]
+    },
+    "despacho-base-cifra-clara-v1": {
+      "tier": "basico",
+      "palette": "vino",
+      "fontPair": "instrument-serif+instrument-sans",
+      "shape": "filete",
+      "archetype": "essential",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "split" },
+        { "role": "about", "slot": "about", "variant": "brief" },
+        { "role": "catalog", "slot": "services", "variant": "editorial-table" },
+        { "role": "faq", "slot": "faq", "variant": "list" },
+        { "role": "contact", "slot": "locations", "variant": "single" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "columns" }
+      ]
+    }
+  }
+}

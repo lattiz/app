@@ -156,6 +156,11 @@
     "brand": {
       "type": "object",
       "properties": {
+        "catalog": {
+          "description": "Catálogo del que elige el compilador: legacy (por defecto, los pools de siempre) o extended (más paletas, tipografías, variantes y arquetipos). `lattiz spec init` escribe extended.",
+          "type": "string",
+          "enum": ["legacy", "extended"]
+        },
         "palette": {
           "anyOf": [
             {
@@ -699,8 +704,7 @@
                   "description": "Ajuste fino del ritmo del tema (docs/template-workflow.md §6): sectionPad, gutter, space, textScale, title*."
                 }
               },
-              "additionalProperties": false,
-              "description": "Identidad visual. Lo que falte lo elige el compilador entre lo curado del giro, sin chocar con el rubro."
+              "additionalProperties": false
             },
             "copy": {
               "type": "object",
@@ -872,8 +876,7 @@
                   "description": "Ajuste fino del ritmo del tema (docs/template-workflow.md §6): sectionPad, gutter, space, textScale, title*."
                 }
               },
-              "additionalProperties": false,
-              "description": "Identidad visual. Lo que falte lo elige el compilador entre lo curado del giro, sin chocar con el rubro."
+              "additionalProperties": false
             },
             "copy": {
               "type": "object",

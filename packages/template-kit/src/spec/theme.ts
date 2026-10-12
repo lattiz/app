@@ -1,4 +1,5 @@
 import { checkTheme } from '../lib/validate';
+import { fontPairById } from './catalog';
 import { contrastRatio, parseColor, toHex, type Rgba } from '../lib/color';
 import type { Tier } from '../tiers';
 import type { Theme } from '../types';
@@ -62,10 +63,10 @@ export function resolveFontPair(
   value: SpecBrand['fontPair'],
 ): { id: string; fonts: FontPairPreset } | undefined {
   if (value === undefined) return undefined;
-  if (typeof value === 'string')
-    return FONT_PAIRS[value]
-      ? { id: value, fonts: FONT_PAIRS[value] }
-      : undefined;
+  if (typeof value === 'string') {
+    const fonts = fontPairById(value);
+    return fonts ? { id: value, fonts } : undefined;
+  }
   if (!CUSTOM_FONTS[value.display] || !CUSTOM_FONTS[value.body])
     return undefined;
   return {

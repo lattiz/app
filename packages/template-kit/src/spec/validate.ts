@@ -5,6 +5,7 @@ import { loadBlueprint, loadSectionMeta } from '../lib/load';
 import { paths } from '../lib/paths';
 import { countedSlots, TIERS, type Role } from '../tiers';
 import type { ContentObject } from '../types';
+import { catalogOf, fontPairIds, paletteById, paletteIds } from './catalog';
 import { missingPaths } from './copy-keys';
 import {
   allowedVariants,
@@ -92,21 +93,26 @@ export async function validateSpec(
     if (
       brand.palette &&
       'preset' in brand.palette &&
-      !giro.palettes[brand.palette.preset]
+      !paletteById(giro, brand.palette.preset)
     ) {
-      const guess = closest(brand.palette.preset, Object.keys(giro.palettes));
+      const guess = closest(brand.palette.preset, paletteIds(giro));
       err(
         `${path}.palette.preset`,
         `la paleta "${brand.palette.preset}" no existe para ${giro.label}`,
-        `${guess ? `¿"${guess}"? ` : ''}Opciones: ${Object.keys(giro.palettes).join(', ')}`,
+        `${guess ? `¿"${guess}"? ` : ''}Del giro: ${Object.keys(giro.palettes).join(', ')} (o una de la biblioteca: kit:spec presets)`,
       );
     }
-    if (brand.fontPair !== undefined && !resolveFontPair(brand.fontPair))
+    if (brand.fontPair !== undefined && !resolveFontPair(brand.fontPair)) {
+      const guess =
+        typeof brand.fontPair === 'string'
+          ? closest(brand.fontPair, fontPairIds())
+          : undefined;
       err(
         `${path}.fontPair`,
         `par tipográfico no permitido: ${JSON.stringify(brand.fontPair)}`,
-        `Curados para ${giro.label}: ${giro.fontPairs.join(', ')}`,
+        `${guess ? `¿"${guess}"? ` : ''}Curados para ${giro.label}: ${giro.fontPairs.join(', ')}`,
       );
+    }
     if (brand.shape && !SHAPES[brand.shape]) {
       const guess = closest(brand.shape, Object.keys(SHAPES));
       err(
@@ -155,8 +161,9 @@ export async function validateSpec(
       const variant =
         ('variant' in entry ? entry.variant : undefined) ??
         giro.sections[tier].find((d) => d.role === entry.role)?.variant ??
-        allowedVariants(blueprint, entry.role, slot)[0];
-      const allowed = allowedVariants(blueprint, entry.role, slot);
+        allowedVariants(blueprint, entry.role, slot, catalogOf(spec))[0];
+      // Naming a variant works in any catalog; only the compiler's own picks are catalog-bound.
+      const allowed = allowedVariants(blueprint, entry.role, slot, 'extended');
       if (!existsSync(resolve(paths.sections, slot, variant)))
         err(
           `${at}.variant`,

@@ -121,6 +121,12 @@ const RhythmSchema = z
 
 export const BrandSchema = z
   .strictObject({
+    catalog: z
+      .enum(['legacy', 'extended'])
+      .optional()
+      .describe(
+        'Catálogo del que elige el compilador: legacy (por defecto, los pools de siempre) o extended (más paletas, tipografías, variantes y arquetipos). `lattiz spec init` escribe extended.',
+      ),
     palette: PaletteSchema.optional(),
     fontPair: FontPairSchema.optional(),
     shape: z
@@ -312,7 +318,7 @@ const TierOverrideSchema = z.strictObject({
     .optional()
     .describe('Nombre de la plantilla en la galería para este tier.'),
   description: z.string().optional(),
-  brand: BrandSchema.optional(),
+  brand: BrandSchema.omit({ catalog: true }).optional(),
   copy: CopySchema.optional(),
 });
 

@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
-import { readSpecFile } from '../../../template-kit/src/spec/build';
+import { lockSpec, readSpecFile } from '../../../template-kit/src/spec/build';
 import { specStem } from '../../../template-kit/src/spec/compile';
 import { initSpec } from '../../../template-kit/src/spec/init';
 import {
@@ -17,6 +17,7 @@ import { select, text } from '../lib/prompt';
 import {
   GIROS,
   idsOf,
+  listSpecFiles,
   printProblems,
   rel,
   resolveSpecArg,
@@ -165,10 +166,43 @@ async function runValidate(ctx: Context): Promise<ExitCode> {
   return EXIT.OK;
 }
 
+async function runLock(ctx: Context): Promise<ExitCode> {
+  const json = bool(ctx.flags, 'json');
+  setQuiet(json);
+  const all = bool(ctx.flags, 'all');
+  if (all && ctx.positionals[1]) throw usage('Usa un spec o --all, no ambos.');
+  const files = all ? listSpecFiles() : [resolveSpecArg(ctx.positionals[1])];
+  const refresh = bool(ctx.flags, 'refresh');
+  if (!json)
+    log.title(
+      `lattiz spec lock${all ? ' --all' : ''}${refresh ? ' --refresh' : ''}`,
+    );
+  const reports = [];
+  for (const file of files) {
+    const r = await lockSpec(file, { refresh });
+    reports.push(r);
+    if (json) continue;
+    if (r.code === 0)
+      log.ok(
+        `${r.lock} ${c.gray(`(${r.action === 'unchanged' ? 'ya estaba al día' : r.action === 'create' ? 'creado' : 'actualizado'}; reproduce ${r.files.length} archivo(s) → ${r.ids.join(' + ')})`)}`,
+      );
+    else {
+      log.fail(`${rel(file)}: ${r.message ?? 'falló'}`);
+      for (const f of r.files.filter((x) => !x.same))
+        log.plain(`    ${c.red('≠')} ${f.path} ${c.gray(`(${f.state})`)}`);
+      printProblems(r.problems.filter((p) => p.level === 'error'));
+    }
+  }
+  const worst = Math.max(0, ...reports.map((r) => r.code)) as ExitCode;
+  if (json) console.log(JSON.stringify(reports, null, 2));
+  return worst;
+}
+
 export const spec: Command = {
   name: 'spec',
-  summary: 'Specs de plantilla: init (prellenado por giro), validate, schema',
-  usage: 'spec init|validate|schema',
+  summary:
+    'Specs de plantilla: init (prellenado por giro), validate, lock, schema',
+  usage: 'spec init|validate|lock|schema',
   help: [
     'spec init --giro <giro> --nombre "<nombre>" [--twin | --tier pro|basico] [--id <id>] [--out archivo] [--force]',
     '    Escribe packages/template-kit/specs/<giro>-<nombre>.spec.json con el copy del giro, la paleta',
@@ -178,6 +212,11 @@ export const spec: Command = {
     '    longitud por clave (lattiz giro show), relleno/TODO, promesas y superlativos, teléfonos o',
     '    correos escritos a mano (usa {{phone}}, {{email}}), marcas reales, acentos, frases repetidas',
     '    en la página, entre la gemela y contra otras plantillas del giro.',
+    'spec lock <archivo|id> | --all [--refresh]',
+    '    Escribe specs/<stem>.lock.json con lo que eligió el compilador (paleta, tipografía, forma,',
+    '    variantes, arquetipo, catálogo) después de comprobar que el spec reproduce sus archivos',
+    '    generados. `lattiz build` reusa el lock: un catálogo que crece no cambia la plantilla.',
+    '    --refresh vuelve a elegir sin el lock (y solo escribe si sigue reproduciendo).',
     'spec schema                  JSON Schema del spec (autocompletado en el editor, skill de Claude)',
     '',
     `Giros: ${Object.keys(GIROS).join(', ')}. Todos aceptan --json.`,
@@ -192,18 +231,21 @@ export const spec: Command = {
     force: { type: 'boolean' },
     strict: { type: 'boolean' },
     json: { type: 'boolean' },
+    all: { type: 'boolean' },
+    refresh: { type: 'boolean' },
   },
   async run(ctx) {
     const sub = ctx.positionals[0];
     if (sub === 'init') return runInit(ctx);
     if (sub === 'validate') return runValidate(ctx);
+    if (sub === 'lock') return runLock(ctx);
     if (sub === 'schema') {
       console.log(JSON.stringify(specJsonSchema(), null, 2));
       return EXIT.OK;
     }
     throw usage(
       sub ? `Subcomando desconocido: ${sub}` : 'Falta el subcomando.',
-      'pnpm lattiz spec init|validate|schema',
+      'pnpm lattiz spec init|validate|lock|schema',
     );
   },
 };
