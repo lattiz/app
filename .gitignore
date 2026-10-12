@@ -33,3 +33,6 @@ pnpm-debug.log*
 # Coverage
 coverage/
 .codegraph.bak/
+
+# Lattiz CLI: per-template state and screenshots (pnpm lattiz)
+.lattiz/

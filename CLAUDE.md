@@ -7,6 +7,7 @@
 - `apps/web` — React 19 + Vite 8 SPA, TanStack Query, Tailwind CSS v4 + shadcn/ui (`base-luma` style), Supabase Auth client.
 - `packages/api-client` — typed API client generated from `apps/api/openapi.json` via `@hey-api/openapi-ts`, with TanStack Query bindings.
 - `packages/template-kit` — templates as source (sections + themes + content packs) compiled into GrapesJS projects + previews; see its `CLAUDE.md`.
+- `packages/lattiz-cli` — `pnpm lattiz`: template → `templates.lattiz.app` pipeline over the kit, the seed and the previews deploy; see `docs/lattiz-cli.md`.
 
 ## Architecture Invariants
 
@@ -56,6 +57,7 @@
 - `test` — `turbo run test`
 - `generate:api` — `turbo run generate:openapi generate:client` (API writes `openapi.json`, then `api-client` regenerates)
 - `template:dev <id>` / `template:shots <id>` / `template:seed -- --only <id> [--dry-run]` — template tuning loop; see `docs/template-workflow.md`
+- `lattiz <command>` — guided template pipeline (`doctor`, `list`, `new`, `dev`, `motion`, `check`, `seed`, `deploy`, `publish`, `ship`) in `packages/lattiz-cli`; see `docs/lattiz-cli.md`
 
 **`apps/api`** (`pnpm --filter @lattiz/api <script>`):
 - `dev` — `nest start --watch`

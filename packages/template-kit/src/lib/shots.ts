@@ -21,7 +21,7 @@ export interface WidthReport {
 }
 
 /** Runs in the page: elements past the viewport, text below the minimum size, small tap targets. */
-function audit(limits: { minFont: number; minTap: number }): LayoutIssue[] {
+export function audit(limits: { minFont: number; minTap: number }): LayoutIssue[] {
   const vw = document.documentElement.clientWidth;
   const issues: LayoutIssue[] = [];
   const name = (el: Element): string => {
@@ -109,7 +109,7 @@ export interface FitRow {
 }
 
 /** Runs in the page: content height of every [data-lz-fit] section, background media excluded. */
-function measureFit(): Omit<FitRow, 'viewport' | 'verdict'>[] {
+export function measureFit(): Omit<FitRow, 'viewport' | 'verdict'>[] {
   const header = document.querySelector('header, [data-lz-slot="navbar"]');
   const hh = header ? Math.round(header.getBoundingClientRect().height) : 0;
   const fit = Math.round((innerHeight - hh) * 0.9);

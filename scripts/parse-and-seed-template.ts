@@ -8,8 +8,11 @@
  *     (--file ./x.grapesjs --html ./x-export/index.html | --dir packages/template-kit/dist/<id>) \
  *     --id restaurante-moderno-v1 --name "Restaurante Moderno" --category restaurantes \
  *     [--description ".."] [--sort-order 10] [--tier basic|pro] [--motion calm|editorial|none] \
- *     [--dry-run] [--no-deploy] [--no-thumbnail] [--no-preview]
+ *     [--dry-run] [--no-deploy] [--no-thumbnail] [--no-preview] [--finalize]
  *
+ * --finalize: the previews were already deployed (`pnpm lattiz deploy`); skip stages 1b–6 and the
+ * deploy, wait for <TEMPLATE_PREVIEWS_BASE_URL>/<id> to answer 200, then thumbnail and activate.
+ * The row must exist (a previous run with --no-deploy).
  * --dir reads <dir>/<id>.grapesjs + <dir>/index.html (packages/template-kit output) and uploads the
  * local `assets/…` files they reference the same way as cdn.grapesjs.com assets.
  * --tier defaults to `tier` in <dir>/template.meta.json; one of the two is required.
@@ -24,7 +27,6 @@
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, relative, resolve } from 'node:path';
-import { parseEnv } from 'node:util';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import {
   ImageOptimizer,
@@ -44,6 +46,7 @@ import {
   type MotionPreset,
   type SectionOverrides,
 } from './lib/motion-sections';
+import { loadSeedEnv } from './lib/seed-env';
 import { TEMPLATE_PREVIEWS_DIR, vercel } from './lib/vercel-cli';
 
 const REPO_ROOT = resolve(__dirname, '..');
@@ -106,6 +109,7 @@ interface CliArgs {
   motionProgress: boolean;
   dryRun: boolean;
   deploy: boolean;
+  finalize: boolean;
   thumbnail: boolean;
   preview: boolean;
 }
@@ -254,29 +258,10 @@ function parseArgs(argv: string[]): CliArgs {
     motionProgress: meta?.motion?.progress === true,
     dryRun: raw.has('dry-run'),
     deploy: !raw.has('no-deploy'),
+    finalize: raw.has('finalize'),
     thumbnail: !raw.has('no-thumbnail'),
     preview,
   };
-}
-
-/** Root .env first; apps/api/.env fills only the keys the script shares with the API (Supabase, R2). */
-function loadEnv(): void {
-  const root = join(REPO_ROOT, '.env');
-  if (existsSync(root)) process.loadEnvFile(root);
-
-  // Never import the API's VERCEL_* (tenant-sites project/token) — the CLI would deploy there.
-  const api = join(REPO_ROOT, 'apps/api/.env');
-  if (!existsSync(api)) return;
-  const shared = parseEnv(readFileSync(api, 'utf8'));
-  for (const [key, value] of Object.entries(shared)) {
-    if (
-      /^(SUPABASE_URL|SUPABASE_SERVICE_ROLE_KEY|STORAGE_PROVIDER|R2_[A-Z_]+)$/.test(
-        key,
-      )
-    ) {
-      process.env[key] ??= value;
-    }
-  }
 }
 
 function requireEnv(key: string): string {
@@ -782,7 +767,7 @@ function printSummary(): void {
 }
 
 async function run(argv: string[]): Promise<void> {
-  loadEnv();
+  loadSeedEnv();
   const args = parseArgs(argv);
   const filePath = resolve(process.cwd(), args.file);
   const htmlPath = args.html ? resolve(process.cwd(), args.html) : undefined;
@@ -880,6 +865,22 @@ async function run(argv: string[]): Promise<void> {
     : null;
   const previewUrl = baseUrl ? `${baseUrl}/${args.id}` : null;
 
+  if (args.finalize) {
+    const { data: row, error } = await supabase
+      .from('templates')
+      .select('id, is_active, tier')
+      .eq('id', args.id)
+      .maybeSingle<TemplateRow>();
+    if (error) throw new StageError(error.message);
+    if (!row)
+      throw new StageError(
+        `--finalize needs an existing row; seed ${args.id} without --finalize first.`,
+      );
+    record('3–6 seed', '–', '--finalize: assets, preview file and row already written');
+    await finishPublish(args, argv, supabase, storage, previewUrl, row.is_active);
+    return;
+  }
+
   // 3. Migrate
   const { replacements, mimeTypes } = await migrateAssets(
     storage,
@@ -948,10 +949,26 @@ async function run(argv: string[]): Promise<void> {
     created ? 'inserted (inactive)' : `updated (is_active=${wasActive} kept)`,
   );
 
+  await finishPublish(args, argv, supabase, storage, previewUrl, wasActive);
+}
+
+/** Stages 7–9: deploy (or, with --finalize, only wait for the deployed preview), thumbnail, activate. */
+async function finishPublish(
+  args: CliArgs,
+  argv: string[],
+  supabase: SupabaseClient,
+  storage: ObjectStoragePort,
+  previewUrl: string | null,
+  wasActive: boolean,
+): Promise<void> {
   // 7. Deploy
   let previewLive = false;
   if (!args.preview || !previewUrl) {
     record('7 deploy previews', '–', 'skipped (--no-preview)');
+  } else if (args.finalize) {
+    await waitForPreview(previewUrl);
+    previewLive = true;
+    record('7 deploy previews', '✓', `already deployed; ${previewUrl} → 200`);
   } else if (!args.deploy) {
     record(
       '7 deploy previews',

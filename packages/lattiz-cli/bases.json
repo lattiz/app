@@ -1,0 +1,53 @@
+{
+  "$comment": "Base template per giro for `lattiz new` (clone-based in Phase 1). Edit freely: values must be ids in packages/template-kit/templates with the matching tier. Only the barbería vertical exists today, so every giro starts from a barbería until it gets its own vertical.",
+  "giros": {
+    "restaurante": {
+      "label": "Restaurante",
+      "category": "restaurantes",
+      "basico": "barberia-base-claro-v1",
+      "pro": "barberia-norte-v1"
+    },
+    "barberia": {
+      "label": "Barbería",
+      "category": "barberias",
+      "basico": "barberia-base-oscuro-v1",
+      "pro": "barberia-oxido-v1"
+    },
+    "clinica": {
+      "label": "Clínica / consultorio",
+      "category": "clinicas",
+      "basico": "barberia-base-claro-v1",
+      "pro": "barberia-norte-v1"
+    },
+    "floreria": {
+      "label": "Florería",
+      "category": "florerias",
+      "basico": "barberia-base-solar-v1",
+      "pro": "barberia-norte-v1"
+    },
+    "despacho": {
+      "label": "Despacho",
+      "category": "despachos",
+      "basico": "barberia-base-claro-v1",
+      "pro": "barberia-concreto-v1"
+    },
+    "estetica": {
+      "label": "Estética",
+      "category": "esteticas",
+      "basico": "barberia-base-solar-v1",
+      "pro": "barberia-norte-v1"
+    },
+    "tienda": {
+      "label": "Tienda",
+      "category": "tiendas",
+      "basico": "barberia-base-claro-v1",
+      "pro": "barberia-concreto-v1"
+    },
+    "otro": {
+      "label": "Otro",
+      "category": "general",
+      "basico": "barberia-base-claro-v1",
+      "pro": "barberia-norte-v1"
+    }
+  }
+}
