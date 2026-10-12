@@ -1,4 +1,5 @@
 import type { GiroPalette } from '../src/spec/presets';
+import { LIBRARY } from './library';
 
 /**
  * Global palette library (extended catalog): any giro may use any of these; `affinity` only orders
@@ -13,4 +14,5 @@ export interface LibraryPalette extends GiroPalette {
   affinity: string[];
 }
 
-export const EXTENDED_PALETTES: Record<string, LibraryPalette> = {};
+/** Built from palettes/seeds.ts by `kit:palettes --write` (AA-checked, frozen hex values). */
+export const EXTENDED_PALETTES: Record<string, LibraryPalette> = LIBRARY;

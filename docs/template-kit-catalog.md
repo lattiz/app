@@ -10,21 +10,21 @@ Se trabaja en tres partes (Parte 1: cimientos; Parte 2: secciones y arquetipos; 
 prueba de diversidad, docs y skill). Una sesión nueva retoma desde aquí. Estados: `pendiente` ·
 `en curso` · `hecho` · `bloqueado`.
 
-| WP    | Qué                                              | Estado    | Commits | Desviaciones                                           |
-| ----- | ------------------------------------------------ | --------- | ------- | ------------------------------------------------------ |
-| WP-1  | Línea base y snapshot dorado                     | hecho     | a151e30 | ver abajo                                              |
-| WP0   | Inventario y modelo de capacidad                 | hecho     | 405ac7d | Motion lo pone el seed, no el markup                   |
-| WP0.5 | Skills de diseño: instalar, leer, destilar       | hecho     | 95de8d4 | hover con `(hover: hover) and (pointer: fine)`         |
-| WP1   | Versionado del catálogo (legacy/extended) y lock | hecho     | a29eedd | nombrar un id nuevo vale en legacy                     |
-| WP2   | Galería del kit y especímenes                    | hecho     | 1b2ec67 | sin GrapesJS: CSS real + fragmento renderizado         |
-| WP3   | Tokens de estilo                                 | hecho     | (este)  | presets en `brand.style.*` (shape/density ya existían) |
-| WP4   | Biblioteca de paletas                            | pendiente |         |                                                        |
-| WP5   | Biblioteca de pares tipográficos                 | pendiente |         |                                                        |
-| WP6   | Variantes de sección                             | pendiente |         |                                                        |
-| WP7   | Arquetipos de página y módulos verticales        | pendiente |         |                                                        |
-| WP8   | Registro, spec, compilador, CLI y skill          | pendiente |         |                                                        |
-| WP9   | Prueba de diversidad (local)                     | pendiente |         |                                                        |
-| WP10  | Documentación                                    | pendiente |         |                                                        |
+| WP    | Qué                                              | Estado    | Commits | Desviaciones                                               |
+| ----- | ------------------------------------------------ | --------- | ------- | ---------------------------------------------------------- |
+| WP-1  | Línea base y snapshot dorado                     | hecho     | a151e30 | ver abajo                                                  |
+| WP0   | Inventario y modelo de capacidad                 | hecho     | 405ac7d | Motion lo pone el seed, no el markup                       |
+| WP0.5 | Skills de diseño: instalar, leer, destilar       | hecho     | 95de8d4 | hover con `(hover: hover) and (pointer: fine)`             |
+| WP1   | Versionado del catálogo (legacy/extended) y lock | hecho     | a29eedd | nombrar un id nuevo vale en legacy                         |
+| WP2   | Galería del kit y especímenes                    | hecho     | 1b2ec67 | sin GrapesJS: CSS real + fragmento renderizado             |
+| WP3   | Tokens de estilo                                 | hecho     | 7b66734 | presets en `brand.style.*` (shape/density ya existían)     |
+| WP4   | Biblioteca de paletas                            | hecho     | (este)  | 37 paletas; 6 descartadas o rediseñadas por AA o duplicado |
+| WP5   | Biblioteca de pares tipográficos                 | pendiente |         |                                                            |
+| WP6   | Variantes de sección                             | pendiente |         |                                                            |
+| WP7   | Arquetipos de página y módulos verticales        | pendiente |         |                                                            |
+| WP8   | Registro, spec, compilador, CLI y skill          | pendiente |         |                                                            |
+| WP9   | Prueba de diversidad (local)                     | pendiente |         |                                                            |
+| WP10  | Documentación                                    | pendiente |         |                                                            |
 
 **Diseño:** reglamento y diales por arquetipo en `docs/template-kit-design-principles.md` (taste-skill
 `d237dd3` y skills de Emil Kowalski `2d22863`, MIT, instaladas en `~/.claude/skills`, no en el repo).
@@ -345,3 +345,89 @@ captura; corregido.
 `hookTimeout` por defecto de vitest (10 s) y queda al límite: con más carpetas en `dist/` (dos más de
 un `lattiz build`) se pasa del tiempo y vitest reporta «85 passed | 2 skipped». `main` sin cambios
 hace lo mismo con esas carpetas; sin ellas pasan las 87. No se tocó la configuración de pruebas.
+
+## Biblioteca de paletas (WP4)
+
+`packages/template-kit/palettes/`: las semillas a mano en `seeds.ts` (fondo, texto, acento y lo que
+se quiera fijar, más ánimo, tipo y afinidad por giro); `pnpm --filter @lattiz/template-kit kit:palettes
+--write` deriva el resto de los tokens (`src/spec/palette-builder.ts`: superficies por mezcla, el
+secundario más cercano al fondo que da AA en fondo y superficies, el texto sobre el acento más legible,
+el acento como texto oscurecido o aclarado hasta 3:1 sobre fondo, superficie y velo), corre las reglas
+de contraste de `kit:validate` y **rechaza** la que no pase, mide la distancia entre paletas y congela
+el resultado en `library.ts` (hex fijos; no se edita a mano). `kit:spec presets` las lista con el tono
+del acento. Ids estables `pal-<nombre>`: nunca se recolorea una publicada, se agrega otra.
+
+- **37 paletas:** 14 claras, 10 oscuras, 13 teñidas (fondo de color). 7 con **acento neutro** (tinta,
+  hueso, plata, piedra) que la regla de tono no cuenta: son las que más capacidad dan a barbería.
+- **Sin duplicados:** distancia = ΔE00 del fondo + ΔE00 del acento; dentro de un giro (sus paletas
+  legacy + las de la biblioteca con afinidad) ninguna pareja queda **por debajo de 15**. La primera
+  versión tenía 11 casi duplicados de paletas legacy (los nombres «talavera», «jamaica», «nopal»,
+  «lavanda» ya existían en los giros: `pal-jacaranda` contra `floreria:lavanda` daba 2.2); se
+  rediseñaron como fondos teñidos u oscuros, se quitaron tres y se recortaron afinidades.
+- **Descartadas:** `pal-coral` y `pal-mandarina` (el texto sobre el acento no llegaba a 4.5:1),
+  `pal-albahaca` (igual a `pal-nopal`, 2.0), `pal-uva-silvestre` (a < 11 de los morados de cinco
+  giros), `pal-terracota-pizarra` y `pal-agave-claro` (duplicaban las terracotas y verdes azulados
+  de casi todos los giros).
+- La afinidad solo ordena: con `brand.catalog: "extended"` el compilador prueba primero las paletas del
+  giro, luego las de la biblioteca que lo listan (en orden) y luego el resto; nombrar
+  `brand.palette.preset: "pal-…"` funciona en cualquier spec.
+
+| Id                     | Tipo   | Ánimo                     | Acento           | Afinidad (orden)                              |
+| ---------------------- | ------ | ------------------------- | ---------------- | --------------------------------------------- |
+| `pal-papel-tinta`      | clara  | editorial, sobrio         | `#1A1917` neutro | despacho, floreria, tienda, barberia, clinica |
+| `pal-nopal`            | clara  | natural, mexicano, fresco | `#3E7B2E` 108°   | veterinaria, barberia, clinica, dental        |
+| `pal-cempasuchil`      | clara  | festivo, cálido, mexicano | `#E8891C` 32°    | restaurante, tienda, estetica, gimnasio       |
+| `pal-navy-laton`       | clara  | lujo, sobrio              | `#C69B46` 40°    | despacho, barberia, clinica, restaurante      |
+| `pal-rubor-salvia`     | clara  | suave, natural            | `#4F7356` 132°   | estetica, clinica, dental                     |
+| `pal-cantera`          | clara  | rústico, sobrio, mexicano | `#4A4540` neutro | restaurante, despacho, barberia, tienda       |
+| `pal-limon`            | clara  | fresco, juguetón          | `#B5CB2A` 68°    | tienda, gimnasio, restaurante, veterinaria    |
+| `pal-granada`          | clara  | lujo, cálido              | `#8E1F3A` 345°   | restaurante, barberia, tienda                 |
+| `pal-orquidea`         | clara  | lujo, fresco              | `#9A2E8C` 308°   | floreria, dental, gimnasio                    |
+| `pal-girasol`          | clara  | juguetón, cálido          | `#F2CF2F` 49°    | veterinaria, dental, despacho                 |
+| `pal-cielo-abierto`    | clara  | fresco, juguetón          | `#1A72A8` 203°   | tienda, gimnasio, restaurante, floreria       |
+| `pal-niebla-grafito`   | clara  | sobrio, clínico           | `#59626B` neutro | clinica, dental, despacho, gimnasio           |
+| `pal-pistache`         | clara  | fresco, juguetón          | `#93B53C` 77°    | floreria, estetica, dental, clinica           |
+| `pal-turquesa-claro`   | clara  | fresco, mexicano          | `#0B7F7A` 177°   | tienda, floreria, restaurante, gimnasio       |
+| `pal-carbon-lima`      | oscura | urbano, energía           | `#C6F432` 74°    | barberia, tienda                              |
+| `pal-bosque-profundo`  | oscura | lujo, natural             | `#7FC8A0` 147°   | barberia, veterinaria, floreria               |
+| `pal-medianoche-laton` | oscura | lujo, sobrio              | `#D2A852` 40°    | barberia, restaurante, estetica               |
+| `pal-mezcal-humo`      | oscura | urbano, mexicano          | `#4FB3A9` 174°   | restaurante, tienda                           |
+| `pal-tinta-hueso`      | oscura | editorial, sobrio         | `#EDE8DF` neutro | barberia, despacho, tienda, gimnasio          |
+| `pal-jamaica-noche`    | oscura | festivo, mexicano         | `#E0457B` 339°   | estetica, floreria, tienda                    |
+| `pal-cobalto-noche`    | oscura | urbano, energía           | `#5B8CFF` 222°   | gimnasio, despacho, tienda, dental            |
+| `pal-brasa-noche`      | oscura | urbano, cálido            | `#F0642D` 17°    | restaurante, tienda, estetica                 |
+| `pal-pizarra-plata`    | oscura | sobrio, urbano            | `#CDD3DA` neutro | barberia, despacho, clinica, gimnasio         |
+| `pal-jacaranda-noche`  | oscura | lujo, fresco              | `#A98BF0` 258°   | estetica, clinica, despacho                   |
+| `pal-salvia-tinta`     | teñida | natural, sobrio           | `#222A22` neutro | floreria, veterinaria, clinica, estetica      |
+| `pal-rosa-vino`        | teñida | lujo, suave               | `#7D2135` 347°   | estetica, floreria                            |
+| `pal-cielo-marino`     | teñida | clínico, fresco           | `#1D3F7A` 218°   | dental, clinica, veterinaria                  |
+| `pal-arcilla`          | teñida | rústico, cálido, mexicano | `#2C241F` neutro | restaurante, floreria, tienda, barberia       |
+| `pal-menta-esmeralda`  | teñida | fresco, clínico           | `#0F6B4C` 160°   | dental, veterinaria, estetica, clinica        |
+| `pal-mostaza`          | teñida | juguetón, cálido          | `#262319` neutro | tienda, gimnasio, restaurante, barberia       |
+| `pal-lavanda-ciruela`  | teñida | suave, lujo               | `#6B2D86` 282°   | estetica, floreria, clinica                   |
+| `pal-azul-maya`        | teñida | mexicano, fresco          | `#A63D24` 12°    | restaurante, tienda, floreria                 |
+| `pal-concreto-senal`   | teñida | urbano, energía           | `#C8441A` 14°    | gimnasio, barberia                            |
+| `pal-bugambilia`       | teñida | juguetón, mexicano        | `#A31F62` 330°   | estetica, floreria, tienda                    |
+| `pal-azulejo`          | teñida | mexicano, festivo         | `#F0BE3C` 43°    | restaurante, tienda, floreria                 |
+| `pal-turquesa-agua`    | teñida | clínico, fresco           | `#0B6873` 186°   | dental, clinica, veterinaria, estetica        |
+| `pal-indigo-papel`     | teñida | sobrio, editorial         | `#2E3192` 238°   | despacho, tienda                              |
+
+Paletas usables por giro (meta ≥ 10) y la pareja más parecida:
+
+| Giro        | Usables (giro + biblioteca) | Par más cercano (ΔE00 fondo + acento)                |
+| ----------- | --------------------------- | ---------------------------------------------------- |
+| barberia    | 22 (9 + 13)                 | `pal-tinta-hueso` ~ `pal-pizarra-plata` 15.5         |
+| clinica     | 18 (5 + 13)                 | `pal-papel-tinta` ~ `pal-salvia-tinta` 15.8          |
+| dental      | 15 (5 + 10)                 | `dental:nube` ~ `pal-niebla-grafito` 17.2            |
+| despacho    | 15 (5 + 10)                 | `pal-tinta-hueso` ~ `pal-pizarra-plata` 15.5         |
+| estetica    | 18 (5 + 13)                 | `estetica:malva` ~ `pal-lavanda-ciruela` 16.2        |
+| floreria    | 19 (5 + 14)                 | `floreria:lavanda` ~ `pal-orquidea` 15.1             |
+| gimnasio    | 16 (5 + 11)                 | `pal-tinta-hueso` ~ `pal-pizarra-plata` 15.5         |
+| restaurante | 20 (6 + 14)                 | `restaurante:nocturno` ~ `pal-medianoche-laton` 15.9 |
+| tienda      | 24 (5 + 19)                 | `tienda:ciruela` ~ `pal-granada` 16.4                |
+| veterinaria | 13 (5 + 8)                  | `pal-limon` ~ `pal-girasol` 16.1                     |
+
+Galería: `pnpm lattiz kit gallery --palettes` (cada paleta como mini página con sus contrastes).
+Crítica (ronda 1): las teñidas dan la variedad que faltaba (las legacy son casi todas blanco roto + un
+acento); `pal-limon` y `pal-girasol` se parecían en tres giros, `pal-girasol` se quedó con
+veterinaria, dental y despacho.

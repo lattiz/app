@@ -1,0 +1,138 @@
+/**
+ * Extended palette library: builds palettes/seeds.ts (AA by construction, refuses failures), reports
+ * accent hues and the closest pairs per giro (CIEDE2000), and with --write freezes the result in
+ * palettes/library.ts.
+ *
+ *   pnpm --filter @lattiz/template-kit kit:palettes [--write] [--json]
+ */
+import { writeFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import * as prettier from 'prettier';
+import { GIROS } from '../../giros';
+import { PALETTE_SEEDS } from '../../palettes/seeds';
+import { parseArgs, runCli } from '../lib/args';
+import { hueOf, parseColor } from '../lib/color';
+import { deltaE2000 } from '../lib/delta-e';
+import { KIT_ROOT, REPO_ROOT } from '../lib/paths';
+import { buildPalette } from '../spec/palette-builder';
+import type { GiroPalette } from '../spec/presets';
+import type { LibraryPalette } from '../../palettes';
+
+/** Two palettes of the same giro closer than this (ΔE00 of ground + ΔE00 of accent) read as one. */
+export const MIN_PALETTE_DISTANCE = 15;
+
+export function paletteDistance(a: GiroPalette, b: GiroPalette): number {
+  const c = (v: string) =>
+    parseColor(v) as NonNullable<ReturnType<typeof parseColor>>;
+  return (
+    deltaE2000(c(a.colors.bg), c(b.colors.bg)) +
+    deltaE2000(c(a.colors.accent), c(b.colors.accent))
+  );
+}
+
+const hueLabel = (p: GiroPalette) => {
+  const c = parseColor(p.colors.accent);
+  const h = c ? hueOf(c) : null;
+  return h && h.chroma > 0.08 ? `${Math.round(h.hue)}°` : 'neutro';
+};
+
+async function main(): Promise<void> {
+  const { flags } = parseArgs(process.argv.slice(2).filter((a) => a !== '--'));
+  const built: Record<string, LibraryPalette> = {};
+  const failures: string[] = [];
+  for (const [id, seed] of Object.entries(PALETTE_SEEDS)) {
+    const r = buildPalette(seed);
+    if (r.palette) built[id] = r.palette;
+    else failures.push(`${id}: ${r.problems.join('; ')}`);
+  }
+  const report = Object.values(GIROS).map((giro) => {
+    const pool: [string, GiroPalette][] = [
+      ...Object.entries(giro.palettes).map(
+        ([id, p]) => [`${giro.id}:${id}`, p] as [string, GiroPalette],
+      ),
+      ...Object.entries(built).filter(([, p]) => p.affinity.includes(giro.id)),
+    ];
+    const pairs: { a: string; b: string; d: number }[] = [];
+    for (let i = 0; i < pool.length; i += 1)
+      for (let j = i + 1; j < pool.length; j += 1)
+        if (pool[i][0].startsWith('pal-') || pool[j][0].startsWith('pal-'))
+          pairs.push({
+            a: pool[i][0],
+            b: pool[j][0],
+            d: Math.round(paletteDistance(pool[i][1], pool[j][1]) * 10) / 10,
+          });
+    pairs.sort((x, y) => x.d - y.d);
+    return {
+      giro: giro.id,
+      legacy: Object.keys(giro.palettes).length,
+      library: pool.length - Object.keys(giro.palettes).length,
+      usable: pool.length,
+      closest: pairs.slice(0, 3),
+      tooClose: pairs.filter((p) => p.d < MIN_PALETTE_DISTANCE),
+    };
+  });
+  const counts = { light: 0, dark: 0, tinted: 0 };
+  for (const p of Object.values(built)) counts[p.mode] += 1;
+  if (flags.has('json')) {
+    console.log(
+      JSON.stringify(
+        {
+          counts,
+          failures,
+          palettes: Object.fromEntries(
+            Object.entries(built).map(([id, p]) => [
+              id,
+              {
+                mode: p.mode,
+                mood: p.mood,
+                affinity: p.affinity,
+                accent: p.colors.accent,
+                hue: hueLabel(p),
+              },
+            ]),
+          ),
+          giros: report,
+        },
+        null,
+        2,
+      ),
+    );
+  } else {
+    console.log(
+      `Biblioteca: ${Object.keys(built).length} paletas (claras ${counts.light}, oscuras ${counts.dark}, teñidas ${counts.tinted})\n`,
+    );
+    for (const [id, p] of Object.entries(built))
+      console.log(
+        `  ✓ ${id.padEnd(24)} ${p.mode.padEnd(7)} acento ${p.colors.accent} ${hueLabel(p).padEnd(7)} veil ${p.colors.overlay === p.colors.bg ? 'bg ' : 'ink'}  ${p.affinity.join(', ')}`,
+      );
+    for (const f of failures) console.log(`  ✗ ${f}`);
+    console.log(
+      `\nPor giro (usable = del giro + biblioteca con afinidad; distancia = ΔE00 fondo + ΔE00 acento, mínimo ${MIN_PALETTE_DISTANCE}):`,
+    );
+    for (const g of report)
+      console.log(
+        `  ${g.giro.padEnd(12)} ${String(g.usable).padStart(2)} (${g.legacy} + ${g.library})  más cercanas: ${g.closest.map((c) => `${c.a}~${c.b} ${c.d}`).join(' · ')}${g.tooClose.length ? `  ✗ ${g.tooClose.length} par(es) < ${MIN_PALETTE_DISTANCE}` : ''}`,
+      );
+  }
+  const tooClose = report.flatMap((g) => g.tooClose);
+  if (flags.has('write')) {
+    if (failures.length || tooClose.length) {
+      console.error(
+        `\n✗ No se escribió library.ts: ${failures.length} paleta(s) sin AA, ${tooClose.length} par(es) demasiado parecidos.`,
+      );
+      process.exit(1);
+    }
+    const config = await prettier.resolveConfig(resolve(REPO_ROOT, 'x.ts'));
+    const text = await prettier.format(
+      `// GENERATED by kit:palettes from palettes/seeds.ts. Do not edit: change the seed and run \`pnpm --filter @lattiz/template-kit kit:palettes --write\`.\nimport type { LibraryPalette } from './index';\n\nexport const LIBRARY: Record<string, LibraryPalette> = ${JSON.stringify(built, null, 2)};\n`,
+      { ...(config ?? {}), parser: 'typescript' },
+    );
+    writeFileSync(resolve(KIT_ROOT, 'palettes/library.ts'), text);
+    console.log(
+      `\n✓ palettes/library.ts (${Object.keys(built).length} paletas)`,
+    );
+  }
+  if (failures.length || tooClose.length) process.exit(1);
+}
+
+if (process.argv[1]?.endsWith('palettes.ts')) runCli(main);
