@@ -3,7 +3,13 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-padding-top: var(--lz-header-h);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
@@ -81,7 +87,7 @@ a {
 }
 
 .lz-title--section {
-  font-size: calc(var(--lz-title-section) * var(--lz-display-scale));
+  font-size: calc(min(var(--lz-title-section), 10svh) * var(--lz-display-scale));
   max-width: 900px;
 }
 
@@ -249,6 +255,6 @@ a {
     width: 100%;
   }
   .lz-title--section {
-    font-size: calc(var(--lz-title-section-sm) * var(--lz-display-scale));
+    font-size: calc(min(var(--lz-title-section-sm), 9svh) * var(--lz-display-scale));
   }
 }

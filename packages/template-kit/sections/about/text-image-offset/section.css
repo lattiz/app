@@ -23,6 +23,7 @@
 
 .lz-media-frame__image {
   position: relative;
+  max-height: min(calc(var(--lz-fit) * 0.78), 40rem);
   aspect-ratio: 4 / 5;
   width: 100%;
   object-fit: cover;
@@ -82,6 +83,9 @@
   .lz-about__grid {
     grid-template-columns: 1fr;
   }
+  .lz-media-frame__image {
+    max-height: calc(var(--lz-fit) * 0.6);
+  }
   .lz-stats {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -90,5 +94,11 @@
 @media (max-width: 480px) {
   .lz-stats {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-height: 560px) {
+  .lz-media-frame__image {
+    max-height: none;
   }
 }

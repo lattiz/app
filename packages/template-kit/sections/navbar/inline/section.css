@@ -1,3 +1,7 @@
+:root {
+  --lz-header-h: 73px;
+}
+
 .lz-navbar {
   position: sticky;
   top: 0;
@@ -12,7 +16,7 @@
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 24px;
-  min-height: 84px;
+  height: 72px;
 }
 
 .lz-brand {
@@ -95,8 +99,11 @@
 }
 
 @media (max-width: 480px) {
+  :root {
+    --lz-header-h: 65px;
+  }
   .lz-navbar__inner {
-    min-height: 74px;
+    height: 64px;
   }
   .lz-brand__wordmark {
     font-size: 30px;

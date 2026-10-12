@@ -84,6 +84,114 @@ async function shootWidth(page: Page, width: number, url: string, file: string):
   return page.evaluate(audit, { minFont: MIN_FONT_PX, minTap: MIN_TAP_PX });
 }
 
+/** Viewports the fit report checks (width, height, phone emulation). */
+export const FIT_VIEWPORTS: readonly [number, number, boolean][] = [
+  [1440, 900, false],
+  [1366, 768, false],
+  [1280, 720, false],
+  [1920, 1080, false],
+  [390, 844, true],
+  [360, 640, true],
+  [844, 390, true],
+];
+
+export interface FitRow {
+  viewport: string;
+  slot: string;
+  header: number;
+  /** 0.9 × (window height − header height). */
+  fit: number;
+  content: number;
+  /** Eyebrow-to-CTA block of a hero, for stacked layouts where the image sits below it. */
+  text: number | null;
+  ctaVisible: boolean | null;
+  verdict: 'PASS' | 'PASS (text)' | 'FAIL' | 'n/a';
+}
+
+/** Runs in the page: content height of every [data-lz-fit] section, background media excluded. */
+function measureFit(): Omit<FitRow, 'viewport' | 'verdict'>[] {
+  const header = document.querySelector('header, [data-lz-slot="navbar"]');
+  const hh = header ? Math.round(header.getBoundingClientRect().height) : 0;
+  const fit = Math.round((innerHeight - hh) * 0.9);
+  const inFlow = (el: Element, section: Element): boolean => {
+    for (let p: Element | null = el; p && p !== section; p = p.parentElement) {
+      if (/absolute|fixed/.test(getComputedStyle(p).position)) return false;
+    }
+    return true;
+  };
+  const span = (els: Element[]): [number, number] => {
+    let top = Infinity;
+    let bottom = -Infinity;
+    for (const el of els) {
+      const b = el.getBoundingClientRect();
+      if (b.height < 1 || b.width < 2) continue;
+      top = Math.min(top, b.top);
+      bottom = Math.max(bottom, b.bottom);
+    }
+    return [top, bottom];
+  };
+  return Array.from(document.querySelectorAll('[data-lz-fit]')).map((section) => {
+    const all = Array.from(section.querySelectorAll('h1, h2, h3, p, a, button, img, figure, ul, ol')).filter((el) => inFlow(el, section));
+    const [top, bottom] = span(all);
+    const ctas = all.filter((el) => /button|btn/.test(el.getAttribute('class') ?? ''));
+    const text = all.filter((el) => el.tagName !== 'IMG' && el.tagName !== 'FIGURE' && !el.querySelector('img'));
+    const [tTop, tBottom] = span(text);
+    const media = all.filter((el) => el.tagName === 'IMG');
+    const [mTop] = span(media);
+    const isHero = section.getAttribute('data-lz-slot') === 'hero';
+    const lastCta = ctas[ctas.length - 1];
+    return {
+      slot: section.getAttribute('data-lz-slot') ?? '?',
+      header: hh,
+      fit,
+      content: Math.round(bottom - top),
+      // Only meaningful when the image is stacked below the text.
+      text: isHero && media.length && mTop >= tBottom - 1 ? Math.round(tBottom - tTop) : null,
+      ctaVisible: isHero && lastCta ? lastCta.getBoundingClientRect().bottom + scrollY <= innerHeight : null,
+    };
+  });
+}
+
+/** Fit report: [data-lz-fit] sections must use at most 90 % of the window under the header. */
+export async function fitReport(distDirPath: string, outDir: string): Promise<FitRow[]> {
+  mkdirSync(outDir, { recursive: true });
+  const url = pathToFileURL(resolve(distDirPath, 'index.html')).href;
+  const browser = await launch();
+  try {
+    const rows: FitRow[] = [];
+    for (const [width, height, phone] of FIT_VIEWPORTS) {
+      const context = await browser.newContext({
+        viewport: { width, height },
+        isMobile: phone,
+        hasTouch: phone,
+        deviceScaleFactor: phone ? 2 : 1,
+        reducedMotion: 'reduce',
+      });
+      const page = await context.newPage();
+      await open(page, url);
+      const viewport = `${width}x${height}`;
+      await page.screenshot({ path: resolve(outDir, `fit-${viewport}.png`) });
+      await page.evaluate('window.__name = (fn) => fn');
+      for (const m of await page.evaluate(measureFit)) {
+        const verdict: FitRow['verdict'] =
+          height <= 560
+            ? 'n/a'
+            : m.content <= m.fit
+              ? 'PASS'
+              : m.text !== null && m.text <= m.fit && m.ctaVisible
+                ? 'PASS (text)'
+                : 'FAIL';
+        rows.push({ viewport, ...m, verdict });
+      }
+      await context.close();
+    }
+    writeFileSync(resolve(outDir, 'fit.json'), `${JSON.stringify(rows, null, 2)}\n`);
+    return rows;
+  } finally {
+    await browser.close();
+  }
+}
+
 /** Full-page shots of dist/<id>/index.html at every width into `outDir`, plus a layout report. */
 export async function shootWidths(distDirPath: string, outDir: string): Promise<WidthReport[]> {
   mkdirSync(outDir, { recursive: true });

@@ -1,5 +1,7 @@
+/* Viewport fit: the hero uses at most 90 % of the window under the header (--lz-fit). */
 .lz-hero-split {
-  padding: calc(var(--lz-section-pad) * 0.5) 0 calc(var(--lz-section-pad) * 0.7);
+  padding: clamp(20px, 5svh, 64px) 0 clamp(24px, 7svh, 96px);
+  padding-bottom: max(clamp(24px, 7svh, 96px), env(safe-area-inset-bottom));
 }
 
 .lz-hero-split__grid {
@@ -7,7 +9,7 @@
   grid-template-columns: 1.1fr 0.9fr;
   gap: calc(clamp(32px, 6vw, 96px) * var(--lz-space));
   align-items: center;
-  min-height: calc(100vh - 180px);
+  min-height: min(var(--lz-fit), var(--lz-fit-max));
 }
 
 .lz-hero-split__eyebrow {
@@ -24,7 +26,7 @@
 
 .lz-hero-split__title {
   margin-bottom: calc(26px * var(--lz-space));
-  font-size: calc(var(--lz-title-hero) * var(--lz-display-scale));
+  font-size: calc(min(var(--lz-title-hero), 11svh) * var(--lz-display-scale));
 }
 
 .lz-hero-split__text {
@@ -46,6 +48,7 @@
 
 .lz-hero-split__image {
   width: 100%;
+  max-height: min(var(--lz-fit), var(--lz-fit-max));
   aspect-ratio: 4 / 5;
   object-fit: cover;
   border-radius: var(--lz-radius-card);
@@ -67,6 +70,7 @@
   }
   .lz-hero-split__image {
     aspect-ratio: 4 / 3;
+    max-height: calc(var(--lz-fit) * 0.42);
   }
   .lz-hero-split__sticker {
     left: 16px;
@@ -75,13 +79,29 @@
 
 @media (max-width: 480px) {
   .lz-hero-split__title {
-    font-size: calc(var(--lz-title-hero-sm) * var(--lz-display-scale));
+    font-size: calc(min(var(--lz-title-hero-sm), 8svh) * var(--lz-display-scale));
   }
   .lz-hero-split__text {
     font-size: calc(16px * var(--lz-text-scale));
   }
+  .lz-hero-split__image {
+    max-height: calc(var(--lz-fit) * 0.3);
+  }
   .lz-hero-split__actions {
     flex-direction: column;
     align-items: stretch;
+  }
+}
+
+/* Landscape phones and tiny windows: no fitting, natural flow. */
+@media (max-height: 560px) {
+  .lz-hero-split__grid {
+    min-height: 0;
+  }
+  .lz-hero-split__image {
+    max-height: none;
+  }
+  .lz-hero-split__title {
+    font-size: calc(var(--lz-title-hero) * var(--lz-display-scale));
   }
 }

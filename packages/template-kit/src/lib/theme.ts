@@ -103,6 +103,11 @@ export function themeVariables(theme: Theme): [string, string][] {
     ],
     ['--lz-stack', STACK[theme.density]],
     ['--lz-container', theme.container],
+    // Viewport fit: navbar variants redeclare --lz-header-h; svh avoids mobile URL-bar jumps.
+    ['--lz-header-h', '72px'],
+    ['--lz-avail', 'calc(100svh - var(--lz-header-h))'],
+    ['--lz-fit', 'calc(var(--lz-avail) * 0.9)'],
+    ['--lz-fit-max', '60rem'],
     ...(Object.keys(RHYTHM_DEFAULTS) as (keyof typeof RHYTHM_DEFAULTS)[]).map(
       (key): [string, string] => [
         RHYTHM_TOKENS[key],
