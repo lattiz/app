@@ -86,9 +86,12 @@ que cambiar de plantilla (pierde su contenido, que queda archivado) o hacerlo é
 
 ### Comandos
 
+`pnpm lattiz` (`docs/lattiz-cli.md`) junta estos comandos en un flujo guiado (`doctor`, `new`, `dev`,
+`motion`, `check`, `seed`, `deploy`, `publish`, `ship`).
+
 | Comando | Para qué |
 |---|---|
-| `pnpm template:dev <id>` | Servidor local en `http://localhost:4400` con recarga en vivo: recompila al guardar secciones, tema, textos o manifiesto. Barra: 360/390/768/1024/1440, Motion on/off, preset, «Reduced motion». No toca nada remoto. |
+| `pnpm template:dev <id>` (= `pnpm lattiz dev <id>`) | Servidor local en `http://localhost:4400` con recarga en vivo: recompila al guardar secciones, tema, textos o manifiesto. Renderiza con la misma composición que `route.ts` (Motion solo en Pro). Barra: 360/390/768/1024/1440, 1366×768 y 844×390, Motion on/off y preset, «Reduced motion», abrir sin marco. No toca nada remoto. |
 | `pnpm template:shots <id>` | Capturas a 360/390/768/1024/1440 en `packages/template-kit/dist/<id>/shots/` (no se commitean) + reporte: elementos más anchos que la pantalla, texto < 12 px, botones/enlaces < 44 px. |
 | `pnpm --filter @lattiz/template-kit kit:validate dist/<id>` | Reglas del kit (contraste, breakpoints 992/480, etc.). `template:seed` lo corre siempre. |
 | `pnpm template:seed -- --only <id> --dry-run` | Muestra la clasificación de secciones y los assets; no escribe nada. |
