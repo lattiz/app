@@ -50,3 +50,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [template-rhythm-tokens](template-rhythm-tokens.md) — ritmo global por tema (rhythm) con defaults = px originales; sin overrides.css
 - [viewport-fit-system](viewport-fit-system.md) — secciones data-lz-fit caben en 90 % de 100svh − header; reporte en template:shots
 - [font-metric-fallbacks](font-metric-fallbacks.md) — fallback local con métricas Capsize; mayúsculas con size-adjust medido; CLS ~0
+- [lattiz-template-cli](lattiz-template-cli.md) — pnpm lattiz; preview vía composeSiteHtml; seed sin deploy + deploy que finaliza

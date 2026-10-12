@@ -1,108 +1,14 @@
 import type { NextRequest } from 'next/server';
-import { composePublishedHtml, publishedSiteHeaders } from '@/lib/free-site';
+import { composeSiteHtml } from '@/lib/compose-site';
+import { publishedSiteHeaders } from '@/lib/free-site';
 import { loadPreviewConfig } from '@/lib/preview-config';
 import {
   expiredResponse,
   notFoundResponse,
   unavailableResponse,
 } from '@/lib/status-pages';
-import { buildLocalBusinessJsonLd, injectJsonLd } from '@/lib/json-ld';
-import { injectMotion } from '@/lib/lz-motion';
-import { bindSiteTokens, stripSiteTokens } from '@/lib/site-tokens';
 import { normalizeHostname, originFor } from '@/lib/tenant-host';
 import { resolveTenantSite } from '@/lib/tenant-data';
-
-function esc(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/"/g, '&quot;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-}
-
-interface SeoMeta {
-  title: string;
-  description: string;
-  ogSiteName: string | null;
-  canonicalUrl: string;
-  /** The preview address is a staging copy: crawlers must not index it. */
-  noindex: boolean;
-  ogImageUrl: string;
-  faviconLightUrl: string | null;
-  faviconDarkUrl: string | null;
-}
-
-// Tenant favicons are per-scheme. Browsers that ignore `media` on <link
-// rel="icon"> need an unconditional icon last, so one is always emitted.
-function buildFaviconTags(meta: {
-  faviconLightUrl: string | null;
-  faviconDarkUrl: string | null;
-}): string[] {
-  const { faviconLightUrl, faviconDarkUrl } = meta;
-  if (!faviconLightUrl && !faviconDarkUrl) {
-    return [
-      `<link rel="icon" href="/favicon.png" sizes="any">`,
-      `<link rel="apple-touch-icon" href="/apple-touch-icon.png">`,
-    ];
-  }
-
-  const tags: string[] = [];
-  if (faviconLightUrl) {
-    tags.push(
-      `<link rel="icon" href="${esc(faviconLightUrl)}" media="(prefers-color-scheme: light)">`,
-    );
-  }
-  if (faviconDarkUrl) {
-    tags.push(
-      `<link rel="icon" href="${esc(faviconDarkUrl)}" media="(prefers-color-scheme: dark)">`,
-    );
-  }
-
-  const fallback = esc(faviconLightUrl ?? faviconDarkUrl ?? '');
-  tags.push(`<link rel="icon" href="${fallback}">`);
-  tags.push(`<link rel="apple-touch-icon" href="${fallback}">`);
-  return tags;
-}
-
-/** A failing serve-time step logs and falls back to its input: it must never break the page. */
-function step(
-  name: string,
-  html: string,
-  fn: (html: string) => string,
-  fallback = html,
-): string {
-  try {
-    return fn(html);
-  } catch (error) {
-    console.error(`[tenant-sites] ${name} step failed:`, error);
-    return fallback;
-  }
-}
-
-// Inject SEO tags into GrapesJS's exported <head>. If the document has no
-// </head> (malformed), replace() leaves it untouched — no crash, no title.
-function injectSeo(html: string, meta: SeoMeta): string {
-  const tags = [
-    `<title>${esc(meta.title)}</title>`,
-    `<meta name="description" content="${esc(meta.description)}">`,
-    `<link rel="canonical" href="${meta.canonicalUrl}">`,
-    `<meta name="robots" content="${meta.noindex ? 'noindex, nofollow' : 'index, follow'}">`,
-    `<meta property="og:type" content="website">`,
-    `<meta property="og:url" content="${meta.canonicalUrl}">`,
-    `<meta property="og:site_name" content="${esc(meta.ogSiteName || meta.title)}">`,
-    `<meta property="og:title" content="${esc(meta.title)}">`,
-    `<meta property="og:description" content="${esc(meta.description)}">`,
-    `<meta property="og:image" content="${esc(meta.ogImageUrl)}">`,
-    `<meta name="twitter:card" content="summary_large_image">`,
-    `<meta name="twitter:title" content="${esc(meta.title)}">`,
-    `<meta name="twitter:image" content="${esc(meta.ogImageUrl)}">`,
-    ...buildFaviconTags(meta),
-  ].join('\n  ');
-
-  return html
-    .replace(/<title[^>]*>[\s\S]*?<\/title>/i, '')
-    .replace('</head>', `  ${tags}\n</head>`);
-}
 
 // Serve the GrapesJS document intact so the browser parses it top-to-bottom:
 // the head CSS-variable init script runs before paint (no FOUC) and plugin
@@ -145,48 +51,24 @@ export async function GET(request: NextRequest): Promise<Response> {
     site.socialPreviewUrl ??
     `${originFor(hostname)}/api/og?h=${encodeURIComponent(hostname)}`;
 
-  // Order matters: tokens → SEO → JSON-LD → analytics (composePublishedHtml) → motion.
-  const profile = site.businessProfile;
-  const displayName = profile.name || site.tenantName;
-  const tokenHtml = step(
-    'tokens',
-    site.exportedHtml,
-    (html) => bindSiteTokens(html, profile),
-    stripSiteTokens(site.exportedHtml),
-  );
-  const withSeo = step('seo', tokenHtml, (html) =>
-    injectSeo(html, {
-      title: site.seoTitle || displayName,
-      description:
-        site.seoDescription ||
-        profile.description ||
-        `Sitio web de ${displayName}`,
-      ogSiteName: site.ogSiteName || displayName,
-      canonicalUrl: canonicalOrigin,
-      noindex: isPreview || !site.isPaid,
-      ogImageUrl,
-      faviconLightUrl: site.faviconLightUrl,
-      faviconDarkUrl: site.faviconDarkUrl,
-    }),
-  );
-  const seoHtml = step('json-ld', withSeo, (html) =>
-    injectJsonLd(
-      html,
-      buildLocalBusinessJsonLd(profile, canonicalOrigin),
-      profile.timezone,
-    ),
-  );
   const preview = loadPreviewConfig();
-  const composed = composePublishedHtml({
-    seoHtml,
+  const html = composeSiteHtml({
+    exportedHtml: site.exportedHtml,
+    profile: site.businessProfile,
+    tenantName: site.tenantName,
+    seoTitle: site.seoTitle,
+    seoDescription: site.seoDescription,
+    ogSiteName: site.ogSiteName,
+    canonicalOrigin,
+    noindex: isPreview || !site.isPaid,
+    ogImageUrl,
+    faviconLightUrl: site.faviconLightUrl,
+    faviconDarkUrl: site.faviconDarkUrl,
     isPaid: site.isPaid,
+    isPro: site.isPro,
     analyticsMeasurementId: site.analyticsMeasurementId,
-    hardenEnabled: preview.hardenEnabled,
-    upgradeUrl: preview.upgradeUrl,
-    abuseReportUrl: preview.abuseReportUrl,
+    preview,
   });
-  // Lattiz Motion is a Pro feature; Básico serves the same HTML static and fully visible.
-  const html = site.isPro ? step('motion', composed, injectMotion) : composed;
 
   return new Response(html, {
     status: 200,
