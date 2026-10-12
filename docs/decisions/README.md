@@ -48,3 +48,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [lattiz-motion-runtime](lattiz-motion-runtime.md) — runtime propio solo Pro; v2 coreografía por sección, un solo observer
 - [editor-theme-presets-and-blocks](editor-theme-presets-and-blocks.md) — Tema reescribe --lz-* en :root; bloques/temas Pro según proIncluded
 - [template-rhythm-tokens](template-rhythm-tokens.md) — ritmo global por tema (rhythm) con defaults = px originales; sin overrides.css
+- [lattiz-template-cli](lattiz-template-cli.md) — pnpm lattiz; preview vía composeSiteHtml; seed sin deploy + deploy que finaliza
