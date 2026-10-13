@@ -1,0 +1,103 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-ceniza.spec.json (spec a89058674040, file e4a0c66efad5). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "6aadf4fe2961a28f8cf1f8d0d0f9c20dbcb95f68b9a8e880bd9aeff66221a463",
+      "url": "https://images.pexels.com/photos/15205259/pexels-photo-15205259.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/15205259/"
+    },
+    {
+      "file": "about.jpg",
+      "source": "url",
+      "sha256": "a0b1ece20e510113a8f8d5e0f99df5181a27fd4bdc42833cb8b2c7876eae34fb",
+      "url": "https://images.pexels.com/photos/36921559/pexels-photo-36921559.png",
+      "pageUrl": "https://www.pexels.com/photo/36921559/"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "url",
+      "sha256": "bf0ef9ebaf9c7b730d8016a3fedbcf30daa9c7759bad4f88f9515929354e115d",
+      "url": "https://images.pexels.com/photos/31992843/pexels-photo-31992843.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/31992843/"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "url",
+      "sha256": "1e00aa821696a065394848deaf40d52461f77f80e9fde18a32111de4fd8c73ed",
+      "url": "https://images.pexels.com/photos/17145038/pexels-photo-17145038.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/17145038/"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "url",
+      "sha256": "0049114c07281bc88d5930d766b5cb1b81b9031e03960709eae22c4c9a987068",
+      "url": "https://images.pexels.com/photos/10135119/pexels-photo-10135119.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/10135119/"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "url",
+      "sha256": "970c0bda0159e56f4650a9ae92e20e83377fd3daf1f4a69c05f845785799b716",
+      "url": "https://images.pexels.com/photos/36543125/pexels-photo-36543125.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/36543125/"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "url",
+      "sha256": "6c4ba3512caf65ab6b62a79d15ac67d81c3f84d954260e6d83828a8c869c4e35",
+      "url": "https://images.pexels.com/photos/8477063/pexels-photo-8477063.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/8477063/"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "url",
+      "sha256": "60701542bc412655dcc6503bfc58ec0dce5ce47c2871ba2343e5f628a3a3ce62",
+      "url": "https://images.pexels.com/photos/36798114/pexels-photo-36798114.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/36798114/"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "url",
+      "sha256": "31f74a18eccca2cf149e9ec0d0b16c3152f433879d1efbe049a56b29260ee12a",
+      "url": "https://images.pexels.com/photos/38082102/pexels-photo-38082102.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/38082102/"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "url",
+      "sha256": "09ec7c0f55c9473fdaf112cf488332408acb5c35d6905526b00074af6266c66e",
+      "url": "https://images.pexels.com/photos/6503517/pexels-photo-6503517.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/6503517/"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "url",
+      "sha256": "6c68384d93fcc7f808e1b62a90e0e3aa851f39fa3dde62de07eb6709c5e54179",
+      "url": "https://images.pexels.com/photos/36921555/pexels-photo-36921555.png",
+      "pageUrl": "https://www.pexels.com/photo/36921555/"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "url",
+      "sha256": "6ce609377f553c75313ffe977346509c87803091bf1ad1891b40bcb977c7a9b5",
+      "url": "https://images.pexels.com/photos/38401862/pexels-photo-38401862.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/38401862/"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "url",
+      "sha256": "9b047d42936d8dba643b78a4446459e64fd0d9c917c1dacc809e7eefd8b407f1",
+      "url": "https://images.pexels.com/photos/5093841/pexels-photo-5093841.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/5093841/"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "url",
+      "sha256": "78850c9219b290fe568d517e13f902c1a65b36a1b01f89e4e3cf7de24ffde429",
+      "url": "https://images.pexels.com/photos/19247570/pexels-photo-19247570.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/19247570/"
+    }
+  ]
+}

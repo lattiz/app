@@ -1,0 +1,12 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-margen.spec.json (spec 3cca43179fd7, file 1a700c42715f). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "4692a1f29603b938fb8a4d7404b785119da8ff8a889a787c9f8104cd843c688a",
+      "url": "https://images.pexels.com/photos/25560634/pexels-photo-25560634.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/25560634/"
+    }
+  ]
+}

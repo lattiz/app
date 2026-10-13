@@ -1,0 +1,12 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-ceniza.spec.json (spec a89058674040, file 5de6aece0462). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "05851484f24f35e2cef9b076f851b9f708c9cd8ef0ad8b6bc11565e593ad7b44",
+      "url": "https://images.pexels.com/photos/15205259/pexels-photo-15205259.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/15205259/"
+    }
+  ]
+}
