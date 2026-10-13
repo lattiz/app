@@ -1,0 +1,92 @@
+.lz-faq-grid {
+  padding: var(--lz-section-pad) 0;
+  border-top: var(--lz-divider, none);
+}
+
+.lz-faq-grid__head {
+  display: grid;
+  gap: calc(14px * var(--lz-space));
+  max-width: 760px;
+  margin-bottom: calc(36px * var(--lz-space));
+}
+
+.lz-faq-grid__title {
+  margin: 0;
+  letter-spacing: var(--lz-display-tracking, 0.01em);
+  text-wrap: balance;
+}
+
+.lz-faq-grid__intro {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--lz-color-muted);
+  font-size: calc(17px * var(--lz-text-scale));
+  line-height: 1.55;
+}
+
+.lz-faq-grid__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--lz-gap, 16px);
+}
+
+.lz-faq-grid__item {
+  padding: calc(clamp(18px, 2.4vw, 28px) * var(--lz-space));
+  border: var(
+    --lz-card-border,
+    var(--lz-border-width) solid var(--lz-color-line)
+  );
+  border-radius: var(--lz-radius-card);
+  background: var(--lz-color-surface);
+  box-shadow: var(--lz-card-shadow, none);
+}
+
+/* Always open: the marker is noise and the summary is not a toggle anyone needs. */
+.lz-faq-grid__question {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  margin: 0 0 calc(6px * var(--lz-space));
+  color: var(--lz-color-text);
+  font-size: calc(18px * var(--lz-text-scale));
+  font-weight: 700;
+  line-height: 1.35;
+  list-style: none;
+  cursor: default;
+}
+
+.lz-faq-grid__question::-webkit-details-marker {
+  display: none;
+}
+
+.lz-faq-grid__answer {
+  margin: 0;
+  color: var(--lz-color-muted);
+  font-size: calc(16px * var(--lz-text-scale));
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.lz-faq-grid__cta {
+  margin-top: calc(32px * var(--lz-space));
+  touch-action: manipulation;
+}
+
+.lz-faq-grid__cta:active {
+  transform: scale(var(--lz-press-scale, 0.97));
+  transition: transform var(--lz-dur-press, 120ms)
+    var(--lz-ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lz-faq-grid__cta:active {
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (max-width: 992px) {
+  .lz-faq-grid__list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
