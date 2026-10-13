@@ -1,0 +1,493 @@
+{
+  "$schema": "./spec.schema.json",
+  "specVersion": 1,
+  "idBase": "restaurante-fresca-nube",
+  "twin": true,
+  "giro": "restaurante",
+  "business": {
+    "name": "Fresca Nube",
+    "shortName": "Fresca Nube",
+    "tagline": "Fresas, crepas y postres",
+    "city": "CDMX",
+    "branch": "Narvarte",
+    "address": "Calle Pitágoras 1180, Narvarte Poniente, Benito Juárez, CDMX",
+    "hours": "Mar–Dom 12:00–21:00",
+    "phone": "+52 55 0000 0000",
+    "whatsapp": "5215500000000",
+    "whatsappMessage": "Hola, quiero hacer un pedido",
+    "email": "hola@frescanube.mx"
+  },
+  "brand": {
+    "catalog": "extended",
+    "palette": {
+      "custom": {
+        "bg": "#FFF6F2",
+        "accent": "#C23AB2",
+        "scheme": "light"
+      }
+    },
+    "fontPair": "fredoka+nunito",
+    "shape": "organico",
+    "style": {
+      "shape": "pill",
+      "surface": "tinted",
+      "density": "airy",
+      "divider": "none",
+      "imageTreatment": "plain",
+      "typeScale": "expressive"
+    }
+  },
+  "sections": {
+    "pro": [
+      {
+        "role": "header",
+        "variant": "notice-bar"
+      },
+      {
+        "role": "hero",
+        "variant": "duo-arch"
+      },
+      {
+        "role": "marquee"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog",
+        "variant": "menu-columns"
+      },
+      {
+        "role": "proof",
+        "variant": "bento"
+      },
+      {
+        "role": "testimonials",
+        "variant": "rating-wall"
+      },
+      {
+        "role": "faq",
+        "variant": "grid"
+      },
+      {
+        "role": "contact"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer"
+      }
+    ],
+    "basico": [
+      {
+        "role": "header"
+      },
+      {
+        "role": "hero",
+        "variant": "framed"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog"
+      },
+      {
+        "role": "faq"
+      },
+      {
+        "role": "contact"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer"
+      }
+    ]
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}} · Fresas con crema y crepas en {{branch}}",
+      "description": "{{name}} en {{branch}}, {{city}}: fresas con crema, crepas artesanales y snacks dulces para llevar o para quedarte un rato."
+    },
+    "navbar": {
+      "cta": "Hacer pedido",
+      "notice": "Martes a domingo, de 12:00 a 21:00",
+      "links": [
+        {
+          "label": "Nosotros",
+          "href": "#nosotros"
+        },
+        {
+          "label": "Menú",
+          "href": "#servicios"
+        },
+        {
+          "label": "Antojos",
+          "href": "#galeria"
+        },
+        {
+          "label": "Reseñas",
+          "href": "#resenas"
+        },
+        {
+          "label": "Preguntas",
+          "href": "#preguntas"
+        },
+        {
+          "label": "Visítanos",
+          "href": "#sucursales"
+        }
+      ]
+    },
+    "hero": {
+      "image": "hero.jpg",
+      "imageAlt": "Vaso de fresas con crema batida junto a una crepa con fresa sobre la barra",
+      "detailImage": "gallery-01.jpg",
+      "detailAlt": "Fresas con crema y granola vistas de cerca en un vaso transparente",
+      "eyebrow": "Fresas con crema · {{branch}}",
+      "title": "Fresas con crema, <span class=\"lz-title__serif\">recién</span> hechas.",
+      "text": "Fresa del día, crema batida en casa y crepas que doblamos al momento. Pide por WhatsApp o ven por tu vaso a la barra.",
+      "primaryCta": "Hacer pedido",
+      "secondaryCta": "Ver el menú",
+      "secondaryHref": "#servicios",
+      "sticker": ""
+    },
+    "marquee": {
+      "label": "Lo que más pedimos",
+      "items": [
+        "Fresas con crema",
+        "Crepas al momento",
+        "Crema batida en casa",
+        "Waffles y malteadas",
+        "Pedidos por WhatsApp"
+      ]
+    },
+    "about": {
+      "kicker": "{{index}} — Nosotros",
+      "title": "Una barra <span class=\"lz-title__serif\">dulce</span> en {{branch}}.",
+      "summary": "En {{shortName}} lavamos y cortamos fresa cada mañana, batimos la crema en casa y doblamos cada crepa cuando la pides.",
+      "statement": "Fresa del día, crema hecha aquí y crepas al momento: lo sencillo, bien hecho y para antojarse.",
+      "image": "about.jpg",
+      "imageAlt": "Barra de postres con vasos de fresas, crema y toppings en frascos de vidrio",
+      "sticker": "",
+      "paragraphs": [
+        "{{shortName}} empezó como un carrito de fresas con crema en el parque de la colonia. Hoy tenemos barra, seis mesas y una ventanilla para pedidos.",
+        "Compramos la fresa en la Central de Abasto tres veces por semana, batimos la crema sin conservadores y hacemos la masa de las crepas cada día.",
+        "Ven por un vaso para el camino o quédate con un café; el menú cambia un poco con la temporada."
+      ],
+      "stats": [
+        {
+          "value": "3 veces",
+          "label": "Fresa fresca por semana"
+        },
+        {
+          "value": "12 toppings",
+          "label": "Para armar tu vaso"
+        },
+        {
+          "value": "4.9 ★",
+          "label": "En Google"
+        }
+      ]
+    },
+    "services": {
+      "kicker": "{{index}} — Menú",
+      "title": "El <span class=\"lz-title__serif\">menú</span>",
+      "intro": "Precios en pesos mexicanos. Todos los vasos llevan crema batida en casa; cada topping extra cuesta $10.",
+      "prices": [
+        {
+          "name": "Fresas con crema chico",
+          "price": "$75",
+          "description": "Vaso de 12 oz con fresa picada y crema de vainilla."
+        },
+        {
+          "name": "Fresas con crema grande",
+          "price": "$110",
+          "description": "Vaso de 16 oz con dos toppings a elegir."
+        },
+        {
+          "name": "Crepa de avellana y fresa",
+          "price": "$95",
+          "description": "Untable de avellana, fresa fresca y azúcar glass."
+        },
+        {
+          "name": "Crepa de cajeta y nuez",
+          "price": "$90",
+          "description": "Cajeta de la casa, nuez tostada y un toque de canela."
+        },
+        {
+          "name": "Waffle con frutos rojos",
+          "price": "$105",
+          "description": "Waffle de mantequilla con fresa, zarzamora y crema."
+        },
+        {
+          "name": "Malteada de fresa",
+          "price": "$85",
+          "description": "Fresa natural, helado de vainilla y crema batida."
+        }
+      ],
+      "promos": [
+        {
+          "tag": "Para compartir",
+          "title": "Charola de fresas para cuatro",
+          "text": "Fresa, crema, chocolate y cuatro toppings por $320.",
+          "cta": "Pedir charola",
+          "href": "{{whatsappUrl:Hola, quiero una charola para compartir}}"
+        },
+        {
+          "tag": "Eventos",
+          "title": "Barra de fresas para fiestas",
+          "text": "Llevamos la barra a tu evento a partir de 30 personas.",
+          "cta": "Cotizar",
+          "href": "{{whatsappUrl:Hola, quiero cotizar la barra para un evento}}"
+        }
+      ]
+    },
+    "gallery": {
+      "kicker": "{{index}} — Platillos",
+      "title": "Recién <span class=\"lz-title__serif\">servido</span>",
+      "items": [
+        {
+          "image": "gallery-01.jpg",
+          "caption": "Fresas con crema",
+          "alt": "Vaso de fresas con crema batida y granola sobre una mesa blanca"
+        },
+        {
+          "image": "gallery-02.jpg",
+          "caption": "Crepa de cajeta",
+          "alt": "Crepa doblada con cajeta y nuez en un plato rosa"
+        },
+        {
+          "image": "gallery-03.jpg",
+          "caption": "La barra",
+          "alt": "Barra con frascos de toppings y vasos listos para servir"
+        },
+        {
+          "image": "gallery-04.jpg",
+          "caption": "Waffle de frutos rojos",
+          "alt": "Waffle con fresas, zarzamoras y crema batida"
+        },
+        {
+          "image": "gallery-05.jpg",
+          "caption": "Malteada de fresa",
+          "alt": "Malteada rosa con crema batida y una fresa encima"
+        },
+        {
+          "image": "gallery-06.jpg",
+          "caption": "Charola para compartir",
+          "alt": "Charola con fresas, crema y salsa de chocolate para varias personas"
+        },
+        {
+          "image": "gallery-07.jpg",
+          "caption": "Fresa del día",
+          "alt": "Caja de fresas recién lavadas sobre la mesa de trabajo"
+        },
+        {
+          "image": "gallery-08.jpg",
+          "caption": "Las mesas",
+          "alt": "Mesas pequeñas con sillas pastel junto a una ventana"
+        }
+      ]
+    },
+    "testimonials": {
+      "kicker": "{{index}} — Reseñas",
+      "score": "4.9",
+      "summary": "186 opiniones en Google",
+      "allReviewsCta": "Ver todas en Google",
+      "writeReviewCta": "Dejar reseña en Google",
+      "reviews": [
+        {
+          "text": "Pedimos la charola para el cumpleaños de mi hija y llegó a tiempo, con la crema bien fría. Las niñas no dejaron nada.",
+          "author": "Fernanda L."
+        },
+        {
+          "text": "La crepa de cajeta con nuez es mi antojo de los viernes. La hacen al momento, delgadita y bien dorada.",
+          "author": "Rodrigo M."
+        },
+        {
+          "text": "Vengo por un vaso chico después de la escuela con mi hermano. Siempre preguntan qué toppings queremos y no se equivocan.",
+          "author": "Valeria G."
+        }
+      ],
+      "scoreNote": "Calificación de ejemplo"
+    },
+    "faq": {
+      "kicker": "{{index}} — Preguntas",
+      "title": "Antes de tu <span class=\"lz-title__serif\">antojo</span>",
+      "intro": "Dudas de quien viene por primera vez. ¿Algo más? Mándanos un mensaje.",
+      "cta": "Preguntar por WhatsApp",
+      "items": [
+        {
+          "question": "¿Hacen pedidos para llevar?",
+          "answer": "Sí. Escríbenos por WhatsApp con tu pedido y te decimos a qué hora pasar; suele estar listo en 15 minutos."
+        },
+        {
+          "question": "¿Tienen opciones sin lácteos?",
+          "answer": "Sí: crema vegetal de coco por $10 extra y crepas hechas con bebida de avena."
+        },
+        {
+          "question": "¿Qué formas de pago aceptan?",
+          "answer": "Aceptamos efectivo, tarjeta y pagos por transferencia al recoger."
+        },
+        {
+          "question": "¿Hacen envíos a domicilio?",
+          "answer": "Entregamos en {{branch}} y colonias cercanas con apps de reparto; para pedidos grandes, pregúntanos por WhatsApp."
+        },
+        {
+          "question": "¿Pueden llevar la barra a una fiesta?",
+          "answer": "Sí, a partir de 30 personas. Mándanos la fecha y el número de invitados y te enviamos opciones."
+        },
+        {
+          "question": "¿Qué pasa si no hay fresa buena?",
+          "answer": "Si un día la fresa no llega con buena calidad, te avisamos y te ofrecemos mango o frutos rojos."
+        }
+      ]
+    },
+    "locations": {
+      "kicker": "{{index}} — Visítanos",
+      "title": "Pasa por tu <span class=\"lz-title__serif\">vaso</span>",
+      "contactText": "Pedidos por WhatsApp en horario de la barra. Para eventos, escríbenos con unos días de anticipación.",
+      "whatsappLabel": "WhatsApp",
+      "whatsappValue": "Hacer pedido",
+      "callLabel": "Teléfono",
+      "emailLabel": "Correo",
+      "directionsLabel": "Cómo llegar",
+      "hoursLabel": "Horario",
+      "whatsappCta": "Hacer pedido",
+      "callCta": "Llamar"
+    },
+    "floating-whatsapp": {
+      "label": "Hacer pedido por WhatsApp"
+    },
+    "footer": {
+      "about": "Fresas con crema, crepas y snacks dulces en {{branch}}, {{city}}. Pedidos por WhatsApp.",
+      "branchesTitle": "Dónde estamos",
+      "linksTitle": "Explorar",
+      "contactTitle": "Contacto",
+      "links": [
+        {
+          "label": "Nosotros",
+          "href": "#nosotros"
+        },
+        {
+          "label": "Menú",
+          "href": "#servicios"
+        },
+        {
+          "label": "Antojos",
+          "href": "#galeria"
+        },
+        {
+          "label": "Reseñas",
+          "href": "#resenas"
+        },
+        {
+          "label": "Preguntas",
+          "href": "#preguntas"
+        },
+        {
+          "label": "Visítanos",
+          "href": "#sucursales"
+        }
+      ]
+    }
+  },
+  "images": [
+    {
+      "key": "hero",
+      "source": {
+        "url": "https://images.pexels.com/photos/6463660/pexels-photo-6463660.jpeg"
+      }
+    },
+    {
+      "key": "about",
+      "source": {
+        "url": "https://images.pexels.com/photos/32397362/pexels-photo-32397362.jpeg"
+      }
+    },
+    {
+      "key": "gallery-01",
+      "source": {
+        "url": "https://images.pexels.com/photos/7363239/pexels-photo-7363239.jpeg"
+      }
+    },
+    {
+      "key": "gallery-02",
+      "source": {
+        "url": "https://images.pexels.com/photos/33731580/pexels-photo-33731580.jpeg"
+      }
+    },
+    {
+      "key": "gallery-03",
+      "source": {
+        "url": "https://images.pexels.com/photos/28594278/pexels-photo-28594278.jpeg"
+      }
+    },
+    {
+      "key": "gallery-04",
+      "source": {
+        "url": "https://images.pexels.com/photos/34618555/pexels-photo-34618555.jpeg"
+      }
+    },
+    {
+      "key": "gallery-05",
+      "source": {
+        "url": "https://images.pexels.com/photos/37501726/pexels-photo-37501726.jpeg"
+      }
+    },
+    {
+      "key": "gallery-06",
+      "source": {
+        "url": "https://images.pexels.com/photos/16825489/pexels-photo-16825489.jpeg"
+      }
+    },
+    {
+      "key": "gallery-07",
+      "source": {
+        "url": "https://images.pexels.com/photos/35727291/pexels-photo-35727291.jpeg"
+      }
+    },
+    {
+      "key": "gallery-08",
+      "source": {
+        "url": "https://images.pexels.com/photos/6463660/pexels-photo-6463660.jpeg"
+      }
+    }
+  ],
+  "motion": {
+    "preset": "calm",
+    "progress": false
+  },
+  "overrides": {
+    "basico": {
+      "brand": {
+        "palette": {
+          "custom": {
+            "bg": "#FFF0F2",
+            "accent": "#C4952E",
+            "scheme": "light"
+          }
+        },
+        "fontPair": "outfit+literata",
+        "shape": "suave",
+        "style": {
+          "shape": "round",
+          "surface": "elevated",
+          "density": "cozy",
+          "divider": "none",
+          "imageTreatment": "plain",
+          "typeScale": "normal"
+        }
+      },
+      "copy": {
+        "hero": {
+          "title": "Fresas, crepas y <span class=\"lz-title__serif\">antojo</span>.",
+          "text": "Fresas con crema desde $75, crepas al momento y snacks dulces. Pide por WhatsApp y pasa por tu vaso a la barra."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-fresca-nube.spec.json (spec ca4b32eadb34, file dbb5b392a832). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "7571cc0731f32b4fc7e220b40d28d0548308abf658c243a37af22bc449ded4c0",
+      "url": "https://images.pexels.com/photos/6463660/pexels-photo-6463660.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/6463660/"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "url",
+      "sha256": "1b9769fa2fc76a09414b25c597beeec91e36f48e26cabce62c4871d441889ded",
+      "url": "https://images.pexels.com/photos/7363239/pexels-photo-7363239.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/7363239/"
+    },
+    {
+      "file": "about.jpg",
+      "source": "url",
+      "sha256": "2f589ba6b4d0c54bc36f986b53936be1e7a110195e2c025ad3df1df2974eb72c",
+      "url": "https://images.pexels.com/photos/32397362/pexels-photo-32397362.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/32397362/"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "url",
+      "sha256": "cc8cc1934d8db9babb48d56b589e003a36813b5eea2d763bfb9997e2d1893f8a",
+      "url": "https://images.pexels.com/photos/33731580/pexels-photo-33731580.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/33731580/"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "url",
+      "sha256": "495f47ec99e4c8a76fd5a4ecd20518ebac75e21bb476211fc66b09e0da11af3c",
+      "url": "https://images.pexels.com/photos/28594278/pexels-photo-28594278.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/28594278/"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "url",
+      "sha256": "15f7abadc07cadbb20754432f79d617584b95eade80413478a920225e93d1965",
+      "url": "https://images.pexels.com/photos/34618555/pexels-photo-34618555.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/34618555/"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "url",
+      "sha256": "25b70eaa95fef4892cdd33b599c58093a3ddd0b9cad7c6ede1abbe33cc66cf65",
+      "url": "https://images.pexels.com/photos/37501726/pexels-photo-37501726.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/37501726/"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "url",
+      "sha256": "48bf77062f43b16ee50d40de9af111d825b2bab1362c81a87a9d4f9990c178ab",
+      "url": "https://images.pexels.com/photos/16825489/pexels-photo-16825489.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/16825489/"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "url",
+      "sha256": "a35db51d4a404db8e175361b16c762a72e637eac46ce9c6073674771ece5acc0",
+      "url": "https://images.pexels.com/photos/35727291/pexels-photo-35727291.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/35727291/"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "url",
+      "sha256": "703e4b53e2f5cff74abf305189e666e2e78bc57374c848e6acc71c4808d2d0c2",
+      "url": "https://images.pexels.com/photos/6463660/pexels-photo-6463660.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/6463660/"
+    }
+  ]
+}

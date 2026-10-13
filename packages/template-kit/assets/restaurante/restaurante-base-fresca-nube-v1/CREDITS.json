@@ -1,0 +1,12 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-fresca-nube.spec.json (spec ca4b32eadb34, file 74c29362e67d). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "cc3356047ebb1ba6d8eda6638066f8d22703a3f72f8fe3119f6951584fa4e406",
+      "url": "https://images.pexels.com/photos/6463660/pexels-photo-6463660.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/6463660/"
+    }
+  ]
+}

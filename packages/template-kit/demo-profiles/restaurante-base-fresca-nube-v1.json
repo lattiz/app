@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-fresca-nube.spec.json (spec ca4b32eadb34, file 192f00d221b3). Do not edit: use the spec, or freeze.",
+  "name": "Fresca Nube",
+  "category": "restaurant",
+  "phone": "+525500000000",
+  "whatsapp": "+5215500000000",
+  "email": "hola@frescanube.mx",
+  "address": {
+    "street": "Calle Pitágoras 1180, Narvarte Poniente, Benito Juárez",
+    "city": "CDMX",
+    "country": "MX"
+  },
+  "hours": {
+    "tue": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "sun": [
+      {
+        "open": "13:00",
+        "close": "18:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}
