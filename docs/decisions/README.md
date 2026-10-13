@@ -46,7 +46,7 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [image-optimizer-memory-model](image-optimizer-memory-model.md) — WebP ≤ 2000 px con sharp; cola acotada + disco temporal; 290 MiB pico
 - [business-profile-site-tokens](business-profile-site-tokens.md) — business_profile jsonb; tokens {{lz:*}} + JSON-LD al servir; is_pro en SQL
 - [lattiz-motion-runtime](lattiz-motion-runtime.md) — runtime propio solo Pro; v3 grupos de revelado, un observer, barrido + centinela final
-- [editor-theme-presets-and-blocks](editor-theme-presets-and-blocks.md) — Tema reescribe --lz-* en :root; bloques/temas Pro según proIncluded
+- [editor-theme-presets-and-blocks](editor-theme-presets-and-blocks.md) — Tema reescribe --lz-\* en :root; bloques/temas Pro según proIncluded
 - [template-rhythm-tokens](template-rhythm-tokens.md) — ritmo global por tema (rhythm) con defaults = px originales; sin overrides.css
 - [viewport-fit-system](viewport-fit-system.md) — secciones data-lz-fit caben en 90 % de 100svh − header; reporte en template:shots
 - [font-metric-fallbacks](font-metric-fallbacks.md) — fallback local con métricas Capsize; mayúsculas con size-adjust medido; CLS ~0
@@ -64,3 +64,5 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [vitest-hook-timeout-dist](vitest-hook-timeout-dist.md) — «2 skipped» en el kit con más carpetas en dist/; borrar dist y repetir
 - [template-palette-library](template-palette-library.md) — paletas extended desde semillas (kit:palettes); AA por construcción, ΔE00 ≥ 15 por giro
 - [font-pair-library-fallbacks](font-pair-library-fallbacks.md) — pares extended de 2 familias; size-adjust medido al peso del display; Arial ausente en Linux
+- [extended-section-variants](extended-section-variants.md) — contrato de variantes extended; compuerta `kit probe`; lo legacy queda WARN
+- [page-archetypes-data](page-archetypes-data.md) — 8 arquetipos y módulos por giro como datos; WP8 los conecta y registra `cta`

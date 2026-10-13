@@ -20,16 +20,18 @@ prueba de diversidad, docs y skill). Una sesión nueva retoma desde aquí. Estad
 | WP3   | Tokens de estilo                                 | hecho     | 7b66734          | presets en `brand.style.*` (shape/density ya existían)     |
 | WP4   | Biblioteca de paletas                            | hecho     | a48bfb8, f218ce5 | 39 paletas; 6 descartadas o rediseñadas por AA o duplicado |
 | WP5   | Biblioteca de pares tipográficos                 | hecho     | 72ab016          | 16 pares; size-adjust medido para displays pesados         |
-| WP6   | Variantes de sección                             | pendiente |                  |                                                            |
-| WP7   | Arquetipos de página y módulos verticales        | pendiente |                  |                                                            |
+| WP6   | Variantes de sección                             | hecho     | 9c5a022…51782c5  | 16 variantes + slot `cta`; el rol `cta` se registra en WP8 |
+| WP7   | Arquetipos de página y módulos verticales        | hecho     | fbc6d79          | datos en `archetypes/`; el compilador aún no los lee       |
 | WP8   | Registro, spec, compilador, CLI y skill          | pendiente |                  |                                                            |
 | WP9   | Prueba de diversidad (local)                     | pendiente |                  |                                                            |
 | WP10  | Documentación                                    | pendiente |                  |                                                            |
 
-**Parte 1 terminada (2026-10-12).** La siguiente sesión («Part 2») empieza en el WP6: las variantes
-nuevas son carpetas nuevas en `sections/` (quedan `extended` solas), leen los tokens de WP3 con
-respaldo y se revisan con `pnpm lattiz kit gallery --slot <slot>`; después de cada familia,
-`kit:verify-snapshot`.
+**Parte 1 terminada (2026-10-12).** **Parte 2 terminada (2026-10-12)** en la rama local
+`feat/kit-expansion-part-2` (sin push): WP6 y WP7, detalle en «Variantes nuevas (WP6)» y
+«Arquetipos y módulos verticales (WP7)». La siguiente sesión («Part 3») empieza en el WP8: registrar
+el rol `cta` y las variantes nuevas de `about`/`locations` en los blueprints, mover el copy de
+`archetypes/verticals.ts` y los `sample` de cada `meta.ts` a `giros/<giro>.ts`, y dejar que un spec
+`extended` elija arquetipo y módulos.
 
 **Diseño:** reglamento y diales por arquetipo en `docs/template-kit-design-principles.md` (taste-skill
 `d237dd3` y skills de Emil Kowalski `2d22863`, MIT, instaladas en `~/.claude/skills`, no en el repo).
@@ -553,3 +555,165 @@ La meta de **≥ 12 por giro** se cumple sin tocar umbrales. Los **pares Básico
 las portadas Pro (3 libres por giro, 0 en barbería): las 5 portadas nuevas de la Parte 2 (WP6) suben
 ese tope. Barbería depende de los acentos neutros: le quedan 4 ventanas de tono (≈ 43°, ≈ 110°,
 ≈ 188°, ≈ 300°).
+
+## Variantes nuevas (WP6)
+
+Carpetas nuevas en `sections/` (todas `extended`: un spec `legacy` nunca las ve; nombrarlas en
+`sections[].variant` funciona en cualquier catálogo). Contrato, que `test/extended-sections.test.ts`
+hace cumplir a toda variante fuera de `LEGACY_VARIANTS`:
+
+- `meta.ts` declara `tiers`, `intent` (una línea), `archetypes` y, si lee claves que ningún giro
+  escribe todavía, `sample` (la galería y `kit probe` lo fusionan sobre el copy del giro; WP8 lo mueve
+  a `giros/`).
+- Mismas claves de copy que sus hermanas legacy siempre que se pueda (las 5 portadas leen las de
+  `hero/split`), así que un spec existente puede nombrarlas sin copy nuevo. Claves nuevas con límite
+  en `COPY_LIMITS`: `navbar.notice` 40, `hero.note` 40, `hero.detailAlt` 125,
+  `testimonials.scoreNote` 32, `cta.title` 48, `cta.text` 140, `cta.primaryCta` 24,
+  `cta.secondaryCta` 18.
+- Texto ≥ 14 px (ninguna usa `lz-index`, `lz-chip`, `lz-sticker` ni `lz-label` de `core.css`),
+  táctiles ≥ 44 px, sin `<iframe>`, sin pastillas sobre fotos, sin antetítulo numerado; presión con
+  `:active` + `--lz-press-scale`, hover solo bajo `(hover: hover) and (pointer: fine)`, override de
+  `prefers-reduced-motion`; cada `var()` de WP3 con el look de hoy de respaldo.
+- Portadas con `data-lz-fit` y CTA principal visible sin scroll.
+
+| Variante                   | Tier         | Intención                                                                     | CSS crudo / min / gzip (B) | Revisión                                                                    |
+| -------------------------- | ------------ | ----------------------------------------------------------------------------- | -------------------------- | --------------------------------------------------------------------------- |
+| `hero/poster`              | Básico + Pro | Cartel: titular a todo el ancho, franja de foto a sangre que toma el resto    | 3562 / 2661 / 932          | 3 rondas: encaje con copy largo y bajo la barra alta (piso de franja 72 px) |
+| `hero/columns`             | Básico + Pro | Revista: antetítulo entre filetes, titular en dos tercios, foto angosta       | 3876 / 3115 / 1035         | 2 rondas: en móvil la foto va bajo el texto                                 |
+| `hero/duo-arch`            | Básico + Pro | Dos arcos encimados (`detailImage?` opcional)                                 | 3335 / 2559 / 901          | 1 ronda                                                                     |
+| `hero/framed`              | Básico + Pro | Foto enmarcada que llena la pantalla, texto en tarjeta opaca                  | 3419 / 2567 / 862          | 2 rondas: en móvil tarjeta primero, sin encimar                             |
+| `hero/panel`               | Básico + Pro | Foto cuadrada + panel teñido con nota de horario (`note?`)                    | 3920 / 3049 / 972          | 2 rondas: relleno vertical por alto de pantalla                             |
+| `navbar/notice-bar`        | Básico + Pro | Franja de aviso (horario, promo) sobre la barra; no cuenta como sección       | 3233 / 2528 / 815          | 3 rondas: franja de 44 px, `min-width` en marca y enlaces cortos            |
+| `services/menu-columns`    | Básico + Pro | Carta a dos columnas con líderes punteados, promos en fila                    | 4029 / 3462 / 1020         | 1 ronda                                                                     |
+| `gallery/bento`            | Pro          | 8 celdas exactas para 8 fotos, pie abajo; otro número cae a retícula pareja   | 2586 / 2005 / 703          | 1 ronda                                                                     |
+| `testimonials/rating-wall` | Pro          | Una calificación con «Calificación de ejemplo» + citas en dos columnas        | 2874 / 2454 / 793          | 1 ronda                                                                     |
+| `locations/map-link`       | Pro          | Libreta de direcciones; mapa solo como enlace, sin iframe                     | 4359 / 3706 / 1022         | 1 ronda                                                                     |
+| `locations/single-card`    | Básico       | Ficha de una sucursal en una tarjeta, sin iframe                              | 3430 / 2956 / 911          | 1 ronda                                                                     |
+| `about/portrait`           | Pro          | Doble página: título a lo ancho, retrato y texto en dos columnas              | 2531 / 2192 / 749          | 1 ronda                                                                     |
+| `team/spotlight`           | Pro          | La persona al frente en grande, el resto en lista con avatar                  | 3279 / 2639 / 784          | 2 rondas: retrato 1:1 en escritorio (hueco bajo la lista)                   |
+| `cta/band` (slot nuevo)    | Básico + Pro | Franja de cierre sobre `surface-2` (no invierte el tema); cuenta como sección | 1751 / 1386 / 562          | 1 ronda                                                                     |
+| `faq/grid`                 | Básico + Pro | Todas las preguntas abiertas en celdas de dos columnas                        | 2043 / 1662 / 683          | 2 rondas: `<summary>` de 44 px                                              |
+| `footer/ledger`            | Básico + Pro | Libreta: filas con filete, etiqueta a la izquierda y dato a la derecha        | 3898 / 3351 / 916          | 2 rondas: `min-width` en enlaces cortos                                     |
+
+Total: 12 → 13 slots, 31 → 47 variantes. El CSS de una variante solo entra en las plantillas que la
+usan; las cifras «min» son el CSS sin comentarios ni espacios (el `index.html` publicado lo lleva así
+de GrapesJS).
+
+**Slot nuevo `cta`** (decisión de producto: la franja de CTA cuenta dentro del rango). El clasificador
+de Motion ya mapea `cta` → tipo `cta`; falta el rol en `blueprints/` y `src/tiers.ts` (WP8), así que
+hoy solo se puede usar a través de `kit probe`/`kit archetypes`. En Básico, sumar `cta` exige quitar
+`about` para seguir en 7.
+
+**Decisiones de producto aplicadas:** el aviso de promo/horario vive en `navbar/notice-bar` (no es
+sección); la franja de CTA cuenta; las estrellas de `rating-wall` llevan la nota «Calificación de
+ejemplo» (`scoreNote`); `map-link` y `single-card` no embeben mapa (solo «cómo llegar»).
+
+### Cómo se revisan: `lattiz kit probe`
+
+`pnpm lattiz kit probe [slot/variante…] [--themes claro,oscuro,estilo] [--modes demo,largo,corto]`
+(`packages/lattiz-cli/src/lib/probe.ts`). Por defecto todas las variantes `extended`. Cada variante
+entra en una página completa Básico o Pro (según `meta.tiers`) armada con el compilador real (el
+blueprint sin listas de variantes y con un rol `cta`), con tres temas (`norte-atelier`, `oxido` y uno
+con todos los presets de WP3: `pal-cielo-marino` + `outfit+literata`) y copy demo y largo (cada texto
+al límite de `COPY_LIMITS`, nombre y correo largos). Corre `kit:validate` y, en una sola página de
+Chromium redimensionada a 360, 390, 768, 1024, 1440, 1366×768 y 844×390: overflow, texto < 14 px,
+táctiles < 44 px, contraste axe dentro de la sección, y en portadas encaje (`data-lz-fit`) y pliegue
+(CTA visible). Solo se juzga la sección probada. Un navbar se prueba sobre `hero/poster`, cuya altura
+es exactamente el encaje, para que un `--lz-header-h` mal sumado se vea. ~4.5 s por caso;
+`.lattiz/probe/report.json` + capturas de la sección a 390 y 1440.
+
+Calibración: con `hero/split` legacy reproduce el texto de 12 px de `lattiz check` y, con copy largo,
+que `hero/offset-card` deja el CTA bajo el pliegue a 1024, 1440 y 1366×768 (pendiente conocido).
+
+**Resultado final:** ver «Verificación de la Parte 2».
+
+## Arquetipos y módulos verticales (WP7)
+
+`packages/template-kit/archetypes/` (datos; el compilador todavía no los lee, así que ningún spec
+cambia):
+
+- `index.ts › ARCHETYPES`: los 8 arquetipos de los principios con sus diales, los presets de WP3,
+  formas legacy compatibles, preset de Motion Pro (`editorial` solo con movimiento ≥ 6), ánimos de
+  paleta/tipografía, afinidad por giro, la variante preferida por rol y tier (primero `extended`, al
+  final una legacy de respaldo), el arquetipo de blueprint al que equivale hasta WP8 y un espécimen
+  (giro + paleta + par de las bibliotecas).
+- `families.ts`: familia de composición de cada una de las 47 variantes (`media-text`, `full-media`,
+  `type`, `rows`, `cells`, `quote`, `figures`, `split-panel`, `band`, `chrome`).
+- `verticals.ts`: 10 módulos con nombre y, por giro, sus arquetipos y el copy es-MX de las claves
+  nuevas.
+
+| Arquetipo   | V/M/D | Estilo (shape · surface · density · divider · imagen · escala)           | Motion    | Giros (orden)                               | Portada Pro / Básico | Espécimen                                      |
+| ----------- | ----- | ------------------------------------------------------------------------ | --------- | ------------------------------------------- | -------------------- | ---------------------------------------------- |
+| `editorial` | 6/5/3 | sharp · flat · airy · hairline · offset · expressive (tracking tight)    | calm      | despacho, florería, restaurante, estética   | columns / columns    | despacho · pal-indigo-papel · newsreader       |
+| `showcase`  | 8/6/3 | soft · flat · airy · none · plain · normal                               | editorial | estética, florería, tienda, barbería, rest. | framed / framed      | estética · pal-rosa-vino · gloock+onest        |
+| `catalog`   | 5/4/6 | soft · outlined · cozy · hairline · plain · normal                       | calm      | restaurante, tienda, barbería, estética     | framed / framed      | restaurante · pal-azulejo · petrona+rubik      |
+| `booking`   | 4/4/5 | round · elevated · cozy · none · framed · normal                         | calm      | clínica, dental, veterinaria, estética, gym | panel / panel        | dental · pal-turquesa-agua · red-hat           |
+| `trust`     | 3/4/5 | soft · outlined · cozy · hairline · plain · tight                        | calm      | despacho, clínica, dental, veterinaria      | panel / panel        | clínica · pal-niebla-grafito · eb-garamond     |
+| `bold`      | 9/7/4 | sharp · flat · compact · rule · duotone-overlay · expressive, MAYÚSCULAS | editorial | barbería, gimnasio, tienda                  | poster / poster      | gimnasio · pal-carbon-lima · bebas-neue+barlow |
+| `soft`      | 5/5/3 | pill · tinted · airy · none · arch · normal                              | calm      | estética, florería, veterinaria, dental     | duo-arch / duo-arch  | veterinaria · pal-salvia-tinta · fredoka       |
+| `minimal`   | 5/4/2 | sharp · flat · airy · hairline · plain · tight                           | calm      | despacho, clínica, tienda                   | columns / columns    | tienda · pal-papel-tinta · schibsted           |
+
+Módulos: `aviso-del-dia` (notice-bar), `cita-con-nota` (hero/panel + nota), `carta`
+(menu-columns), `cierre` (cta/band), `quien-atiende` (team/spotlight), `calificacion`
+(rating-wall + nota de ejemplo), `ubicacion-ligera` (map-link / single-card), `galeria-bento`,
+`doble-arco` (duo-arch + foto de detalle) y `preguntas-a-la-vista` (faq/grid). Cada giro tiene 3–4,
+en orden de valor (p. ej. restaurante: aviso del día «Hoy: comida de 13:00 a 18:00», carta, galería
+bento, cierre «Reservar mesa»; clínica: cita con nota, quién atiende, calificación, ubicación ligera).
+
+`test/archetypes.test.ts` comprueba que cada variante exista y pueda llenar su rol en el tier, el
+rango de secciones contadas y los roles obligatorios, el orden (hero primero, WhatsApp antes del pie),
+≥ 4 familias por página y nunca tres «imagen + texto» seguidas, presets y especímenes válidos, copy de
+módulos dentro de los límites, familia para toda variante y que toda variante `extended` se use en
+algún arquetipo o módulo. (Tres Básicos tenían 3 familias: se cambió su FAQ, no la regla.)
+
+**Hoja:** `pnpm lattiz kit archetypes [id…]` compila una página Pro y una Básica por arquetipo con su
+espécimen y el copy de sus módulos, la pasa completa por `kit:validate` y por las reglas de la sonda
+(lo que ya hace una variante legacy, como los 12 px o los enlaces de 32 px de `footer/columns`, queda
+WARN, igual que en `lattiz check`) y escribe `.lattiz/gallery/archetypes.html` con la página entera a
+390 y 1440. 16/16 sin FAIL; encontró dos anchos < 44 px con etiquetas cortas, ya corregidos.
+
+## Capacidad después de WP6
+
+`pnpm lattiz kit capacity --catalog extended` (2026-10-12, ya con `restaurante-hoja-y-barro` en
+`main`):
+
+| Giro        | Portadas Pro libres | Pares Básico + Pro | Total | Lo limita ahora |
+| ----------- | ------------------- | ------------------ | ----- | --------------- |
+| barberia    | 0/4 → 5/9           | 0 → 5              | 12    | paletas (tonos) |
+| clinica     | 3/4 → 8/9           | 3 → 8              | 17    | paletas         |
+| dental      | 3/4 → 8/9           | 3 → 8              | 16    | paletas         |
+| despacho    | 3/4 → 8/9           | 3 → 8              | 17    | paletas         |
+| estetica    | 3/4 → 8/9           | 3 → 8              | 16    | paletas         |
+| floreria    | 3/4 → 8/9           | 3 → 8              | 16    | paletas         |
+| gimnasio    | 3/4 → 8/9           | 3 → 8              | 16    | paletas         |
+| restaurante | 2/4 → 7/9           | 2 → 7              | 14    | paletas         |
+| tienda      | 3/4 → 8/9           | 3 → 8              | 16    | paletas         |
+| veterinaria | 3/4 → 8/9           | 3 → 8              | 17    | paletas         |
+
+Las portadas ya no topan los pares; ahora los topan las paletas (tono a ≥ 30° y ΔE ≥ 15), sin tocar
+umbrales. Antes de la Parte 2, restaurante ya había bajado de 3 a 2 pares por `hoja-y-barro`.
+
+## Hallazgos de la Parte 2
+
+- **Snapshot tras el merge:** `main` trajo `restaurante-hoja-y-barro` en paralelo a la Parte 1; su
+  acento Básico (~154°) ocupa el de «agave», así que el fixture sin lock `restaurante-la-lumbre` pasó
+  a «talavera». Se creó `specs/restaurante-hoja-y-barro.lock.json` (reproduce sus 7 archivos) y se
+  re-baseó el snapshot (`2060205`). Los tamaños gzip del snapshot cambian entre Linux y macOS (zlib);
+  los hashes no, y `verify` no compara gzip.
+- **`hero/split` legacy con copy largo** se pasa del encaje y deja el CTA bajo el pliegue a 1024 y
+  1440 (lo mismo que la primera lectura de WP2 vio en la galería); `hero/offset-card` igual a 1024,
+  1440 y 1366×768. No se tocó (extender, nunca mutar): backlog de WP9.
+- **El copy de los giros trae `{{branch}}` crudo** (lo sustituye el compilador de specs); las
+  herramientas que arman páginas desde un giro deben reemplazarlo (`composePage` lo hace).
+
+## Verificación de la Parte 2 (2026-10-12, MacBook, Node 24.9)
+
+- `pnpm lattiz kit probe` (16 variantes, Básico/Pro según `meta.tiers`, 3 temas, copy demo y largo):
+  **156/156 casos sin FAIL**; con copy corto 78/78 después de dar `min-width: 44px` a la marca de
+  `notice-bar` («Jo»). `gallery/bento` con 3 fotos reparte el ancho (`auto-fit`).
+- `pnpm lattiz kit archetypes`: **16/16 páginas sin FAIL** (los WARN son de variantes legacy).
+- `pnpm lattiz kit gallery --extended`: 225 capturas (`.lattiz/gallery/sections/<slot>.html`).
+- `kit:verify-snapshot` idéntico después de cada familia (28 plantillas, 16 specs); `pnpm lint`,
+  `pnpm typecheck`, `pnpm build` y los tests del kit (189) pasan.
+- No se sembró, desplegó ni escribió nada remoto; tampoco se leyó Supabase (la Parte 2 no lo
+  necesitó).

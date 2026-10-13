@@ -12,7 +12,7 @@
 /* Any count: an even grid. Exactly eight: the bento, eight cells for eight photos and no holes. */
 .lz-gallery-bento__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
   grid-auto-rows: clamp(220px, 22vw, 300px);
   gap: var(--lz-gap, 16px);
   margin: 0;
