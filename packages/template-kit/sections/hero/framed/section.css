@@ -1,0 +1,134 @@
+/* Viewport fit: the frame is 90 % of the window under the header (--lz-fit), card included. */
+.lz-hero-framed {
+  padding: clamp(12px, 3svh, 32px) 0 clamp(16px, 4svh, 48px);
+}
+
+.lz-hero-framed__frame {
+  position: relative;
+  display: grid;
+  align-items: end;
+  min-height: min(var(--lz-fit), var(--lz-fit-max));
+  padding: calc(clamp(16px, 2.6vw, 40px) * var(--lz-space));
+}
+
+.lz-hero-framed__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--lz-img-shape, var(--lz-radius-card));
+  background: var(--lz-color-surface-2);
+  filter: var(--lz-hero-image-filter);
+}
+
+/* Opaque on purpose: the text never sits on the photo, so contrast is the theme's text/surface pair. */
+.lz-hero-framed__card {
+  position: relative;
+  width: min(100%, 600px);
+  padding: calc(clamp(22px, 3vw, 40px) * var(--lz-space));
+  border: var(--lz-border-width) solid var(--lz-color-line);
+  border-radius: var(--lz-radius-card);
+  background: var(--lz-color-surface);
+  box-shadow: var(--lz-card-shadow, var(--lz-shadow));
+  color: var(--lz-color-text);
+}
+
+.lz-hero-framed__eyebrow {
+  margin: 0 0 calc(12px * var(--lz-space));
+  color: var(--lz-color-muted);
+  font-family: var(--lz-font-body);
+  font-size: calc(15px * var(--lz-text-scale));
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.lz-hero-framed__title {
+  margin: 0 0 calc(16px * var(--lz-space));
+  font-size: calc(
+    min(clamp(38px, 4.2vw, 72px), 7.6svh) * var(--lz-display-scale)
+  );
+  letter-spacing: var(--lz-display-tracking, 0.01em);
+  text-wrap: balance;
+}
+
+.lz-hero-framed__text {
+  margin: 0 0 calc(24px * var(--lz-space));
+  color: var(--lz-color-text);
+  font-size: calc(17px * var(--lz-text-scale));
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.lz-hero-framed__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(12px * var(--lz-space));
+}
+
+.lz-hero-framed__cta {
+  touch-action: manipulation;
+}
+
+.lz-hero-framed__cta:active {
+  transform: scale(var(--lz-press-scale, 0.97));
+  transition: transform var(--lz-dur-press, 120ms)
+    var(--lz-ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lz-hero-framed__cta:active {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Tablets and phones: the card first (CTA in view), the photo below it in the same frame. */
+@media (max-width: 992px) {
+  .lz-hero-framed__frame {
+    display: flex;
+    flex-direction: column;
+    gap: calc(12px * var(--lz-space));
+    min-height: 0;
+    padding: 0;
+  }
+  .lz-hero-framed__image {
+    position: relative;
+    inset: auto;
+    order: 2;
+    aspect-ratio: 16 / 10;
+    height: auto;
+    max-height: calc(var(--lz-fit) * 0.42);
+  }
+  .lz-hero-framed__card {
+    width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .lz-hero-framed__card {
+    padding: calc(20px * var(--lz-space)) calc(18px * var(--lz-space));
+  }
+  .lz-hero-framed__title {
+    font-size: calc(
+      min(var(--lz-title-hero-sm), 7.6svh) * var(--lz-display-scale)
+    );
+  }
+  .lz-hero-framed__text {
+    font-size: calc(16px * var(--lz-text-scale));
+  }
+  .lz-hero-framed__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* Landscape phones and tiny windows: no fitting, natural flow. */
+@media (max-height: 560px) {
+  .lz-hero-framed__frame {
+    min-height: 0;
+  }
+  .lz-hero-framed__title {
+    font-size: calc(var(--lz-title-hero-sm) * var(--lz-display-scale));
+  }
+}
