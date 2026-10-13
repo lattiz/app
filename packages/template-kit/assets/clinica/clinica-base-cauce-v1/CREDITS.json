@@ -1,0 +1,12 @@
+{
+  "$lattiz": "GENERATED from specs/clinica-cauce.spec.json (spec b8561714764d, file 2a112e685c40). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "8c2faa70ff904a8b743630d9f4a2b10873a12822688c4d48734bd1d9afb2befb",
+      "url": "https://images.pexels.com/photos/29807423/pexels-photo-29807423.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/29807423/"
+    }
+  ]
+}

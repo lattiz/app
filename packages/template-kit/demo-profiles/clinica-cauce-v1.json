@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/clinica-cauce.spec.json (spec b8561714764d, file bc3f514d89c6). Do not edit: use the spec, or freeze.",
+  "name": "Cauce Fisioterapia",
+  "category": "medical",
+  "phone": "+525500000000",
+  "whatsapp": "+5215500000000",
+  "email": "hola@caucefisio.mx",
+  "address": {
+    "street": "Calle Encino 128, Col. Clavería, Azcapotzalco, 02080 CDMX",
+    "city": "CDMX",
+    "country": "MX"
+  },
+  "hours": {
+    "mon": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "tue": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "09:00",
+        "close": "14:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}
