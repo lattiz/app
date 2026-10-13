@@ -23,6 +23,8 @@
     "content/**/*",
     "blueprints/**/*",
     "giros/**/*",
+    "palettes/**/*",
+    "font-pairs/**/*",
     "templates/**/*",
     "vitest.config.ts"
   ],

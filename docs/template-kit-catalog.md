@@ -1,0 +1,555 @@
+# Catálogo del template kit
+
+Inventario del kit, capacidad por giro y la extensión del catálogo (más portadas, secciones, paletas,
+tipografías y estilos por giro) **sin cambiar nada de lo que ya existe**: extender, nunca mutar.
+Guía de principios de diseño: `docs/template-kit-design-principles.md`.
+
+## Estado de la extensión
+
+Se trabaja en tres partes (Parte 1: cimientos; Parte 2: secciones y arquetipos; Parte 3: integración,
+prueba de diversidad, docs y skill). Una sesión nueva retoma desde aquí. Estados: `pendiente` ·
+`en curso` · `hecho` · `bloqueado`.
+
+| WP    | Qué                                              | Estado    | Commits          | Desviaciones                                               |
+| ----- | ------------------------------------------------ | --------- | ---------------- | ---------------------------------------------------------- |
+| WP-1  | Línea base y snapshot dorado                     | hecho     | a151e30          | ver abajo                                                  |
+| WP0   | Inventario y modelo de capacidad                 | hecho     | 405ac7d          | Motion lo pone el seed, no el markup                       |
+| WP0.5 | Skills de diseño: instalar, leer, destilar       | hecho     | 95de8d4          | hover con `(hover: hover) and (pointer: fine)`             |
+| WP1   | Versionado del catálogo (legacy/extended) y lock | hecho     | a29eedd          | nombrar un id nuevo vale en legacy                         |
+| WP2   | Galería del kit y especímenes                    | hecho     | 1b2ec67          | sin GrapesJS: CSS real + fragmento renderizado             |
+| WP3   | Tokens de estilo                                 | hecho     | 7b66734          | presets en `brand.style.*` (shape/density ya existían)     |
+| WP4   | Biblioteca de paletas                            | hecho     | a48bfb8, f218ce5 | 39 paletas; 6 descartadas o rediseñadas por AA o duplicado |
+| WP5   | Biblioteca de pares tipográficos                 | hecho     | 72ab016          | 16 pares; size-adjust medido para displays pesados         |
+| WP6   | Variantes de sección                             | pendiente |                  |                                                            |
+| WP7   | Arquetipos de página y módulos verticales        | pendiente |                  |                                                            |
+| WP8   | Registro, spec, compilador, CLI y skill          | pendiente |                  |                                                            |
+| WP9   | Prueba de diversidad (local)                     | pendiente |                  |                                                            |
+| WP10  | Documentación                                    | pendiente |                  |                                                            |
+
+**Parte 1 terminada (2026-10-12).** La siguiente sesión («Part 2») empieza en el WP6: las variantes
+nuevas son carpetas nuevas en `sections/` (quedan `extended` solas), leen los tokens de WP3 con
+respaldo y se revisan con `pnpm lattiz kit gallery --slot <slot>`; después de cada familia,
+`kit:verify-snapshot`.
+
+**Diseño:** reglamento y diales por arquetipo en `docs/template-kit-design-principles.md` (taste-skill
+`d237dd3` y skills de Emil Kowalski `2d22863`, MIT, instaladas en `~/.claude/skills`, no en el repo).
+Diales V/M/D por defecto: editorial 6/5/3 · showcase 8/6/3 · catalog 5/4/6 · booking 4/4/5 · trust
+3/4/5 · bold 9/7/4 · soft 5/5/3 · minimal 5/4/2 (Básico siempre sin Motion).
+
+**Regla de cada WP:** `pnpm --filter @lattiz/template-kit kit:verify-snapshot` limpio, `pnpm lint`,
+`pnpm typecheck` y build antes del commit.
+
+### Línea base (WP-1, 2026-10-12)
+
+- **Repo:** rama `claude/awesome-keller-ss1s44` reiniciada desde `main` (`cdafdc5`); el PR #3 (CLI
+  Fase 1) ya está fusionado. Desde entonces `main` sumó la Fase 2–4: spec + compilador (`kit:spec`),
+  registro de giros (10), skill `lattiz-template`, `services/product-grid`, imágenes por URL.
+- **CodeGraph:** el índice `.codegraph/` está vacío y el ejecutable `codegraph` no existe en este
+  contenedor (el MCP no conecta); el descubrimiento se hizo leyendo el código.
+- **Comprobaciones:** `pnpm install` ok · `pnpm typecheck` ok (7/7) · `pnpm lint` ok · tests del kit
+  87/87 · `kit:validate` 26/26 sin hallazgos · `pnpm build` **falla solo en `@lattiz/tenant-sites`**
+  por falta de variables de Supabase en el contenedor (preexistente, no es de este trabajo); el resto
+  compila (`turbo run build --filter='!@lattiz/tenant-sites'`).
+- **Snapshot dorado:** `packages/template-kit/golden/snapshot.json` (`kit:snapshot`), verificado con
+  `kit:verify-snapshot` (~16 s). Compila las 26 plantillas en memoria contra una copia de `assets/` y
+  guarda un hash por salida (proyecto `.grapesjs`, `index.html`, CSS, `:root`, tema, pack de copy,
+  `template.meta.json`, imágenes) y el tamaño (CSS, HTML del editor, `index.html`; crudo y gzip).
+  También planea en memoria los 15 specs (`specs/`, `fixtures/spec/`, `fixtures/spec/skill-eval/`) y
+  guarda el hash de cada archivo que generarían y las elecciones del compilador: así detecta que un
+  pool que crece cambie la elección de un spec existente. Dos corridas seguidas dan lo mismo.
+- **Kit:** 12 slots, 31 variantes, 26 temas, 15 pares tipográficos, 7 formas. Plantillas y pools por
+  giro:
+
+| Giro        | Plantillas (Pro/Básico) | Paletas | Pares | Formas | Portadas Pro usadas                         | Tonos de acento usados              |
+| ----------- | ----------------------- | ------- | ----- | ------ | ------------------------------------------- | ----------------------------------- |
+| barberia    | 8 (4/4)                 | 9       | 9     | 6      | centered-arch, offset-card, split, image-bg | gris ×2, 13, 74, 150, 226, 262, 338 |
+| clinica     | 2 (1/1)                 | 5       | 5     | 5      | split                                       | 12, 167                             |
+| dental      | 2 (1/1)                 | 5       | 5     | 4      | split                                       | 41, 212                             |
+| despacho    | 2 (1/1)                 | 5       | 5     | 4      | image-bg                                    | 219, 350                            |
+| estetica    | 2 (1/1)                 | 5       | 5     | 4      | split                                       | 266, 336                            |
+| floreria    | 2 (1/1)                 | 5       | 5     | 5      | offset-card                                 | 292, 340                            |
+| gimnasio    | 2 (1/1)                 | 5       | 5     | 4      | image-bg                                    | 18, 76                              |
+| restaurante | 2 (1/1)                 | 6       | 5     | 6      | split                                       | 10, 338                             |
+| tienda      | 2 (1/1)                 | 5       | 5     | 5      | image-bg                                    | 102, 223                            |
+| veterinaria | 2 (1/1)                 | 5       | 5     | 4      | split                                       | 17, 169                             |
+
+## Inventario (WP0, sacado del código el 2026-10-12)
+
+Si algo de aquí ya no coincide, manda el código (`packages/template-kit`).
+
+### Slots, variantes y tier
+
+Un slot es un rol de la página resuelto por giro (`blueprints/service-landing.shared.ts › verticals`:
+catalog → `services`, proof → `gallery`, contact → `locations`, header → `navbar`, whatsapp →
+`floating-whatsapp`). El blueprint de cada tier dice qué roles caben; cuando un rol **no** lista
+variantes, vale cualquier carpeta de `sections/<slot>/` (el compilador las lee del disco).
+
+| Slot (rol)                   | Variantes                                                | Básico                 | Pro                                               | CSS crudo / gzip (B)                      |
+| ---------------------------- | -------------------------------------------------------- | ---------------------- | ------------------------------------------------- | ----------------------------------------- |
+| navbar (header)              | `inline`, `centered-logo`                                | ambas                  | ambas                                             | 2282/755 · 3026/906                       |
+| hero (hero)                  | `image-bg`\*, `split`\*, `centered-arch`, `offset-card`  | todas                  | todas, **única por giro**                         | 2582/926 · 2619/870 · 2167/760 · 2274/812 |
+| marquee (marquee)            | `ticker`                                                 | —                      | opcional, no cuenta                               | 1109/469                                  |
+| about (about)                | `brief`, `statement`, `stats-strip`, `text-image-offset` | `brief` (opcional)     | `text-image-offset` · `statement` · `stats-strip` | 1201/433 · 1472/524 · 1640/550 · 1855/672 |
+| services (catalog)           | `price-list`, `cards`, `editorial-table`, `product-grid` | todas                  | todas                                             | 2294/676 · 2465/704 · 3114/800 · 2681/773 |
+| gallery (proof)              | `grid`, `mosaic`, `strip`                                | —                      | todas                                             | 1272/553 · 1332/527 · 1134/461            |
+| team (team)                  | `grid`, `list`                                           | —                      | opcional                                          | 1814/620 · 2015/678                       |
+| testimonials (testimonials)  | `cards`, `quote-feature`                                 | —                      | ambas                                             | 2000/606 · 2035/639                       |
+| faq (faq)                    | `list`, `two-col`                                        | ambas                  | ambas                                             | 1737/652 · 2536/793                       |
+| locations (contact)          | `single`, `with-contact`, `cards`                        | `single`               | `with-contact`                                    | 1603/545 · 3872/983 · 1141/441            |
+| floating-whatsapp (whatsapp) | `bubble`                                                 | obligatorio, no cuenta | obligatorio, no cuenta                            | 1450/588                                  |
+| footer (footer)              | `big-wordmark`, `columns`, `minimal-centered`            | todas                  | todas                                             | 2718/830 · 3252/858 · 3235/794            |
+
+\* Con `data-lz-fit` (encaje al viewport). `locations/cards` no está en ningún blueprint. Total: 12
+slots, 31 variantes. `core.css` (11.3 KB, 2.6 KB gzip) va en todas las plantillas.
+
+**Claves de copy y límites.** Cada variante declara las claves que lee en `meta.ts › contentKeys`
+(`prices[].name`, `sticker?` = opcional); `src/spec/copy-lint.ts › COPY_LIMITS` fija el máximo de
+caracteres visibles por clave (≈ 20 % sobre el copy más largo que ya cabe a 1366×768 y 390×844), y
+`lattiz giro show <giro>` las imprime con el ejemplo del giro. Límites actuales: `hero.title` 56,
+`hero.text` 150, `hero.eyebrow` 48, CTAs 16–24, `about.paragraphs[]` 230, `about.stats[].value` 14,
+`services.prices[].name` 36 / `price` 12 / `description` 96, `gallery.items[].caption` 34,
+`team.members[].name` 24 / `role` 30, `testimonials.reviews[].text` 190, `faq.items[].question` 70 /
+`answer` 220, `footer.about` 160, `head.title` 60 / `description` 160 (lista completa en el código).
+
+### Cómo se registra y se empaqueta una variante
+
+- Carpeta `sections/<slot>/<variante>/` con `section.html` (fragmento con `data-lz-key|attr-*|if|each`
+  y raíz `data-lz-slot` + `data-lz-variant`), `section.css` y `meta.ts` (`label`, `region`,
+  `description`, `contentKeys`, `numbered?`, `placeholder` = tamaño de la imagen generada).
+- No hay registro central: el compilador encuentra la carpeta por nombre, y `allowedVariants` lista
+  las carpetas del slot cuando el blueprint no fija variantes. **Consecuencia:** agregar una carpeta
+  cambia el pool que ven los specs existentes (portada libre y pase de similitud); de ahí el WP1.
+- **CSS por plantilla = `:root` del tema + `core.css` + el CSS de las variantes usadas**
+  (`compileManifest`). El CSS de variantes no usadas **no** se incluye: no hace falta tree-shaking.
+  Una plantilla Pro pesa ~30–33 KB de CSS (5.4–5.9 KB gzip) y `index.html` ~57–62 KB (12–13.8 KB
+  gzip); una Básica ~24–25 KB de CSS (4.5–4.8 KB gzip) y ~41–44 KB de HTML (9.5–9.8 KB gzip). Las
+  cifras exactas por plantilla están en `golden/snapshot.json › size`.
+
+### Tema, paleta y tipografía
+
+- **Tema** (`themes/<nombre>.json`, tipo `Theme`): `tier`, `fontPair`, 14 `colors`, `fonts`
+  (familias, `googleFonts`, caja, interlínea, peso, `displayScale`, acento), `shape` (`radiusCard` ≤ 32
+  px, `radiusPill`, `border`, `shadow` none|soft|hard-offset), `density` (airy|regular|compact →
+  `--lz-section-pad` y `--lz-stack`), `photoTreatment`, `placeholder`, `accentWords`, `container`,
+  `effects`, `rhythm?`. `themeVariables` (`src/lib/theme.ts`) es el único lugar donde entran valores a
+  `:root`; todo token que emite va en **todas** las plantillas.
+- **Paleta curada** (`GiroPalette`, `src/spec/presets.ts › palette()`): 8 colores semilla + `scheme`
+  → los 14 tokens (líneas, overlay, navbar derivados con `color-mix()`), `accentWords`,
+  `photoTreatment`, `placeholder`, `effects`. Viven **por giro** en `giros/<giro>.ts › palettes`
+  (barbería deriva sus 6 primeras de los temas hechos a mano). `paletteFindings` corre las reglas de
+  contraste de `kit:validate` sobre una paleta sola; `kit:spec presets` las lista.
+- **Par tipográfico** (`FONT_PAIRS`): display, serif de acento, body, mono opcional, query `css2` de
+  Google Fonts y ajustes de display. `CUSTOM_FONTS` = familias permitidas en un par propio.
+- **Entrega de fuentes:** `<link>` a `fonts.googleapis.com/css2?…&display=swap` con `preconnect` a
+  `fonts.googleapis.com` y `fonts.gstatic.com`; sin auto-hospedaje ni `preload`. Google sirve los
+  subconjuntos por `unicode-range` (latin y latin-ext incluidos, así que el español completo llega sin
+  pedirlo). Para cada familia con métricas en `@capsizecss/metrics` el kit emite un `@font-face` local
+  con `size-adjust`/`ascent-override` (Times New Roman, Arial o Courier New) para que el cambio de
+  fuente no mueva el texto (CLS ≈ 0); `CAPS_SIZE_ADJUST` calibra Anton y Archivo Black en mayúsculas.
+
+### Reglas de unicidad y similitud (`kit:validate`)
+
+Dentro del giro (`vertical`, cualquier tier): tema único, `fontPair` único, titular del hero único
+(normalizado), **tono del acento a ≥ 30°** de cualquier otra plantilla (`MIN_ACCENT_HUE_DISTANCE`; un
+acento casi gris, croma ≤ 0.08, no cuenta) y, solo entre Pro, **variante de hero única**. Similitud
+contra el mismo giro **y** tier (`src/lib/similarity.ts`): Jaccard de pares slot:variante 0.25 +
+orden 0.05 + misma portada 0.15 + mismos servicios 0.10 + mismo tema 0.15 + mismo par 0.15 + misma
+forma (radios, borde, sombra) 0.15; límite Básico 0.85, Pro 0.5. Fuera de `kit:validate`:
+`kit:compare-visual` (distancia de la mitad superior ≥ 0.33 contra el giro).
+
+Consecuencia para la capacidad: con acentos a ≥ 30° caben como máximo 12 tonos por giro; las Pro de
+un giro están topadas por el número de portadas; el par tipográfico y el tema son uno por plantilla.
+
+### Cómo elige el compilador (`src/spec/compile.ts › planSpec`)
+
+Semilla = los primeros 8 hex del sha256 del id de la plantilla. Para cada tier:
+
+1. **Paleta:** la fijada en el spec (o la propia, derivada AA) va primero; luego las del giro rotadas
+   por la semilla; gana la primera con acento a ≥ 30° de todas las del giro. Una curada que choca se
+   cambia y se avisa; una propia que choca falla.
+2. **Par tipográfico:** igual, sobre `giro.fontPairs`; gana el primero que nadie del giro usa.
+3. **Forma:** la del spec, o la primera de `giro.shapes` (la Básica de un par rota con semilla + 1).
+4. **Portada:** si la variante está tomada (Pro: por otra Pro del giro; Básica de un par: por su Pro),
+   prueba la del giro y luego las permitidas rotadas por la semilla.
+5. **Titular:** el del spec, luego `copy.hero.alternates`, luego `giro.heroAlternates`.
+6. **Similitud:** mientras pase el límite, cambia la variante no fijada que más la baja, en el orden
+   services, about, footer, navbar, team, testimonials, gallery, faq (solo variantes cuyo copy cabe).
+7. **Arquetipo:** Básico `essential`; Pro el de la forma (`editorial-atelier`, `street-luxe`,
+   `neo-brutal`), y `street-luxe` si la forma es editorial con paleta oscura.
+
+Como los pools (paletas, pares, carpetas de variantes) se recorren rotados, **cualquier elemento nuevo
+en un pool cambia la elección de un spec existente al recompilar** → WP1.
+
+### Motion y encaje por slot
+
+- Las secciones del kit **no** llevan `data-lz-section`: el seed lo agrega
+  (`scripts/lib/motion-sections.ts`) por slot (`hero` → hero, `about` → about, `services` → cards,
+  `gallery` → gallery, `team` → team, `testimonials`, `faq`, `locations` → contact, `footer`; navbar,
+  marquee y floating-whatsapp se saltan) con el patrón por defecto del runtime (cards → converge,
+  gallery → wave, faq/testimonials → alternate, stats → center-out). `manifest.motion.sections`
+  corrige tipo y patrón. Solo los sitios Pro cargan el runtime; Básico no lleva JS.
+- **Encaje (`data-lz-fit`):** solo `hero/image-bg` y `hero/split`. `--lz-fit = 0.9 × (100svh −
+--lz-header-h)`; cada navbar redeclara `--lz-header-h` **sumando `--lz-border-width`** (el borde
+  inferior de 1–3 px del tema; olvidarlo hacía que la portada se pasara del pliegue).
+
+### Blueprint y giros
+
+`giros/<giro>.ts` da las secciones por defecto de cada tier (ver `lattiz giro show`), sus paletas,
+pares y formas en orden de preferencia, copy es-MX, alternativas de titular, imágenes y Motion. 10
+giros: barbería, clínica, dental, despacho, estética, florería, gimnasio, restaurante, tienda,
+veterinaria.
+
+## Capacidad por giro
+
+`pnpm lattiz kit capacity [--giro <g>] [--catalog legacy|extended] [--json]` (o
+`pnpm --filter @lattiz/template-kit kit:capacity`). Simula specs sintéticos con el compilador real,
+uno tras otro (cada uno con titular propio), hasta que una regla de unicidad lo detiene. Columnas:
+
+- **Paletas / pares / portadas Pro libres:** del pool del giro, cuántas no chocan hoy.
+- **Tonos libres:** acentos de color que aún caben a ≥ 30° de los del giro (cuenta voraz). Los
+  acentos casi grises no cuentan para la regla, así que no se agotan.
+- **Caben:** pares (Básico + Pro), solo Pro y solo Básico, cada uno desde el estado actual; **Total**
+  = pares hasta que se detienen, luego Básicos, luego Pros.
+- **Qué lo limita:** el primer error del compilador al detenerse.
+
+Antes de la extensión (catálogo `legacy`, 2026-10-12):
+
+| Giro        | Plantillas (Pro/Básico) | Paletas libres | Pares libres | Portadas Pro libres | Tonos libres | Caben: pares | +Pro | +Básico | Total | Lo limita            |
+| ----------- | ----------------------- | -------------- | ------------ | ------------------- | ------------ | ------------ | ---- | ------- | ----- | -------------------- |
+| barberia    | 8 (4/4)                 | 3/9            | 3/9          | 0/4                 | 4            | 0            | 0    | 3       | 3     | paletas (y portadas) |
+| clinica     | 2 (1/1)                 | 3/5            | 3/5          | 3/4                 | 9            | 1            | 3    | 3       | 3     | paletas              |
+| dental      | 2 (1/1)                 | 3/5            | 3/5          | 3/4                 | 9            | 1            | 3    | 3       | 3     | paletas              |
+| despacho    | 2 (1/1)                 | 3/5            | 3/5          | 3/4                 | 9            | 1            | 3    | 3       | 3     | paletas              |
+| estetica    | 2 (1/1)                 | 3/5            | 3/5          | 3/4                 | 9            | 1            | 3    | 3       | 3     | paletas              |
+| floreria    | 2 (1/1)                 | 3/5            | 3/5          | 3/4                 | 9            | 1            | 3    | 3       | 3     | paletas              |
+| gimnasio    | 2 (1/1)                 | 3/5            | 3/5          | 3/4                 | 9            | 1            | 3    | 3       | 3     | paletas              |
+| restaurante | 2 (1/1)                 | 4/6            | 3/5          | 3/4                 | 9            | 1            | 3    | 3       | 3     | pares tipográficos   |
+| tienda      | 2 (1/1)                 | 3/5            | 3/5          | 3/4                 | 9            | 1            | 3    | 3       | 3     | paletas              |
+| veterinaria | 2 (1/1)                 | 3/5            | 3/5          | 3/4                 | 9            | 1            | 3    | 3       | 3     | paletas              |
+
+Meta después de la extensión: **≥ 12 de holgura (Total) por giro principal sin tocar umbrales.** Lo
+que la topa, en orden: (1) paletas con tonos libres → WP4; (2) pares tipográficos libres → WP5; (3)
+portadas Pro (una por Pro del giro) → WP6 (+5); (4) el techo de 12 tonos de color por giro: barbería
+ya usa 6 tonos y le quedan **4**; el resto de su holgura solo puede venir de paletas de acento neutro
+(casi gris), que la regla existente no cuenta. Se reporta tal cual, sin bajar el umbral de 30°.
+
+## Versionado del catálogo y locks (WP1)
+
+**Por qué:** el compilador elige paleta, par tipográfico y variantes rotando pools con una semilla del
+id. Si un pool crece, la misma semilla cae en otro elemento y **recompilar un spec existente cambiaría
+su plantilla** sin que nadie lo pidiera.
+
+- **`brand.catalog`** (`legacy` | `extended`, opcional). **Sin el campo = `legacy`:** el compilador ve
+  solo los pools de antes de la extensión, en su orden original: las paletas de `giros/<giro>.ts`,
+  `giro.fontPairs` y las 31 variantes de `LEGACY_VARIANTS` (`src/spec/catalog.ts`; cualquier carpeta
+  nueva en `sections/` es `extended` sin tener que marcarla). `extended` suma la biblioteca global de
+  paletas (`packages/template-kit/palettes/`), la de pares (`packages/template-kit/font-pairs/`) y las
+  variantes nuevas, ordenadas por afinidad con el giro. `lattiz spec init` escribe `extended`; los specs
+  existentes siguen `legacy`.
+- **Nombrar un id nuevo funciona en cualquier catálogo** (`brand.palette.preset`, `brand.fontPair`,
+  `sections[].variant`): solo cambia el spec que lo nombra. Lo que depende del catálogo es lo que el
+  compilador elige solo.
+- **Lock** (`specs/<stem>.lock.json`, se commitea): por tier, la paleta, el par, la forma, el arquetipo
+  y la variante de cada rol que resolvió el compilador, más `catalog` y `catalogVersion`. `lattiz build`
+  lo lee y fija todo lo que el spec no fija; si algo del lock ya choca (por ejemplo, el spec ahora fija
+  una paleta igual a la de otra plantilla), el build **falla** en vez de moverse, y sugiere
+  `pnpm lattiz spec lock <stem> --refresh`. Un lock resuelto con otro catálogo se ignora. El build
+  escribe el lock si no existía o si cambiaron las elecciones.
+- **`pnpm lattiz spec lock <stem> | --all [--refresh]`:** planea el spec (con su lock, o desde cero con
+  `--refresh`), comprueba que reproduce **valor por valor** los archivos generados que hay en disco y
+  solo entonces escribe el lock. Código 1 si no reproduce.
+
+**Verificado (2026-10-12):** `spec lock --all` creó los 10 locks y los 10 reproducen sus 7 archivos;
+una segunda corrida dice «ya estaba al día»; `build clinica-alba --dry-run` usa el lock («paleta …
+(del lock)») y deja todo «sin cambios»; con `.lattiz/cache` borrado, `build restaurante-casa-comal`
+deja manifiestos, temas, packs y perfiles idénticos. Prueba de crecimiento: con una carpeta
+`sections/hero/aaa-probe` de más, `kit:verify-snapshot` sigue idéntico (los specs legacy no la ven);
+con seis paletas de prueba agregadas a la biblioteca con afinidad `restaurante`, un spec `extended` sin
+lock cambia de paleta y el mismo spec con lock da los mismos bytes.
+
+**Hallazgo (preexistente, no de este trabajo):** en este contenedor, un `lattiz build` real reescribe
+los JPEG de placeholder del spec (mismo resultado con `main` sin cambios): la imagen lleva texto SVG
+rasterizado y los bytes dependen de las fuentes del sistema. Las fuentes generadas no cambian; se
+restauraron las imágenes commiteadas. El snapshot dorado usa las imágenes del repo, así que no le
+afecta.
+
+## Galería del kit (WP2)
+
+`pnpm lattiz kit gallery [--slot hero,footer] [--palettes] [--fonts] [--themes a,b] [--sin-imagen]`
+(o `pnpm --filter @lattiz/template-kit kit:gallery`). Escribe `.lattiz/gallery/` (no se commitea):
+
+- `sections/<slot>.html`: cada variante del slot renderizada con su `section.html` + `core.css` + su
+  `section.css` + el `:root` del tema (sin pasar por GrapesJS: los selectores son de clase, se ve
+  igual), en un tema claro y uno oscuro (`norte-atelier`, `oxido`), con copy **demo** (el del giro),
+  **corto** (3 elementos, dos palabras por texto, negocio «Jo») y **largo** (8 elementos, cada texto
+  al límite de `COPY_LIMITS`, nombre «Peluquería y Barbería Hermanos Domínguez-Echeverría» y correo
+  largo), a 390 y 1440 px (página completa). `--sin-imagen` agrega un modo con fotos faltantes.
+- `palettes.html` + `.png`: cada paleta (las de cada giro y las de la biblioteca) como mini página con
+  los contrastes de `kit:validate` y PASS/FAIL.
+- `fonts.html` + `.png`: cada par con display, encabezado, cuerpo y acento a su escala real y la
+  prueba de glifos `ñ á é í ó ú ü ¿ ¡ “ ” « » — …`.
+- Un solo navegador, en serie, siempre cerrado (`finally`). Toda la galería: 374 capturas en ~4.6 min.
+  En este contenedor hace falta `LATTIZ_CHROMIUM_PATH=/opt/pw-browsers/chromium` (Playwright espera
+  otra versión de Chromium).
+
+Después de cualquier cambio visual, se abren las capturas y se critican con el pre-vuelo y las reglas
+anti-genérico de `docs/template-kit-design-principles.md` (máximo tres rondas por variante).
+
+**Primera lectura (variantes existentes, solo para el backlog de WP9, no se tocan):** con copy largo,
+el titular de 56 caracteres de `hero/split` ocupa 5 líneas a 1440 px y empuja los CTA bajo el pliegue
+de 900 px; con copy corto los CTA de dos palabras se cortan a «Reservar una» (es el modo de estrés,
+no un caso real).
+
+## Tokens de estilo (WP3)
+
+Presets **opt-in** del catálogo `extended`: un tema con `style` (`themes/<id>.json › style`, o
+`brand.style` en un spec con `brand.catalog: "extended"`) agrega tokens a `:root`; un tema sin `style`
+no emite ninguno, así que las plantillas legacy compilan byte a byte. Las **variantes nuevas** los leen
+con respaldo (`var(--lz-card-bg, var(--lz-color-surface))`), así que también funcionan bajo un tema
+legacy. **Las variantes existentes no se retroalimentan** (cambiaría su salida); hacerlo variante por
+variante es una opción futura, con su propio commit y snapshot. Definición: `src/lib/style.ts`;
+antes/después: `pnpm lattiz kit gallery --tokens` → `.lattiz/gallery/tokens.html`.
+
+| Preset (`style.*`) | Valores                                                    | Qué cambia                                                                                                                                                                                                                                                                         | Respaldo sin `style`                      |
+| ------------------ | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| `shape`            | `sharp` · `soft` · `round` · `pill`                        | `radiusCard`/`radiusPill` del tema (0/0, 12/10, 22/999, 32/999 px) + `--lz-radius-img` (0, 10, 18, 32) y `--lz-radius-inner` (0, 6, 12, 20)                                                                                                                                        | `--lz-radius-card`                        |
+| `surface`          | `flat` · `outlined` · `tinted` · `elevated`                | `--lz-card-bg`, `--lz-card-border`, `--lz-card-shadow`, `--lz-card-pad` (plano sin caja ni padding; con filete; `surface-2`; `surface` con sombra difusa)                                                                                                                          | `surface` + filete de `--lz-border-width` |
+| `density`          | `compact` · `cozy` · `airy`                                | `density` del tema (compact/regular/airy → `--lz-section-pad`, `--lz-stack`), contenedor 1120/1200/1280 px, `--lz-gap` 16/24/40 y `--lz-gap-lg` 32/48/72 px                                                                                                                        | `24px`                                    |
+| `divider`          | `none` · `hairline` · `rule`                               | `--lz-divider`: nada, `1px` en `line`, `2px` en `text` (borde superior de la sección)                                                                                                                                                                                              | `none`                                    |
+| `imageTreatment`   | `plain` · `framed` · `arch` · `offset` · `duotone-overlay` | `--lz-img-shape` (arco = `999px 999px r r`), `--lz-img-pad` + `--lz-img-frame` + `--lz-img-ring` (marco), `--lz-img-offset` + `--lz-img-offset-bg` (bloque de acento desplazado 14 px), `--lz-img-overlay` + `--lz-img-blend` (velo del acento en `multiply`, sin filtros pesados) | sin marco, sin velo                       |
+| `typeScale`        | `tight` · `normal` · `expressive`                          | multiplica `displayScale` del par (×0.88, ×1, ×1.15; un `brand.displayScale` explícito gana) y `--lz-heading-scale` (0.92, 1, 1.12)                                                                                                                                                | `1`                                       |
+| `displayCase`      | `none` · `upper`                                           | `displayTransform` del tema                                                                                                                                                                                                                                                        | el del par                                |
+| `tracking`         | `tight` · `normal` · `wide`                                | `--lz-display-tracking` (−0.02, 0, 0.04 em)                                                                                                                                                                                                                                        | `0em`                                     |
+
+**Interacción** (siempre que hay `style`; principios §4): `--lz-ease-out: cubic-bezier(0.23, 1, 0.32,
+1)`, `--lz-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1)`, `--lz-dur-press: 120ms`, `--lz-dur-ui:
+160ms`, `--lz-dur-reveal: 240ms`, `--lz-press-scale: 0.97`. Las variantes nuevas escriben el mismo
+valor como respaldo: `transition: transform var(--lz-dur-press, 120ms) var(--lz-ease-out,
+cubic-bezier(.23,1,.32,1))`, hover dentro de `@media (hover: hover) and (pointer: fine)`, `:active`
+con `scale(var(--lz-press-scale, .97))`, `:focus-visible` sin transición y su override de
+`prefers-reduced-motion`.
+
+**Contrato para variantes nuevas** (el bloque de demostración de `src/lib/gallery-style.ts ›
+TOKEN_DEMO_CSS` lo muestra funcionando): cada `var()` lleva el look de hoy como respaldo; una foto con
+`offset` reserva `--lz-img-offset` de margen (si no, se sale de la columna a 390 px); el `::before`
+del desplazamiento usa `--lz-img-offset-bg` (transparente salvo con `offset`, para que el marco no
+herede el acento).
+
+**Desviación de nombres:** el spec ya tenía `brand.shape` (filete, urbano…) y `brand.density`
+(airy|regular|compact), así que los presets van en `brand.style.{shape, surface, density, divider,
+imageTreatment, typeScale, displayCase, tracking}` en vez de `brand.shape|surface|…` sueltos. Un spec
+legacy con `brand.style` es error de `spec validate` («los estilos son del catálogo extended»).
+
+**Verificado:** `kit:verify-snapshot` idéntico; un spec `extended` de clínica con los ocho presets
+compila las dos gemelas y `kit:validate` no da hallazgos (radios 32/999, contenedor 1280, escala
+1.31, tokens en `:root`); la galería de tokens (31 capturas) pasó dos rondas de crítica: en la
+primera el marco heredaba el acento del desplazamiento y los separadores quedaban en el borde de la
+captura; corregido.
+
+**Hallazgo (preexistente):** el `beforeAll` de `test/validate.test.ts` compila seis plantillas con el
+`hookTimeout` por defecto de vitest (10 s) y queda al límite: con más carpetas en `dist/` (dos más de
+un `lattiz build`) se pasa del tiempo y vitest reporta «85 passed | 2 skipped». `main` sin cambios
+hace lo mismo con esas carpetas; sin ellas pasan las 87. No se tocó la configuración de pruebas.
+
+## Biblioteca de paletas (WP4)
+
+`packages/template-kit/palettes/`: las semillas a mano en `seeds.ts` (fondo, texto, acento y lo que
+se quiera fijar, más ánimo, tipo y afinidad por giro); `pnpm --filter @lattiz/template-kit kit:palettes
+--write` deriva el resto de los tokens (`src/spec/palette-builder.ts`: superficies por mezcla, el
+secundario más cercano al fondo que da AA en fondo y superficies, el texto sobre el acento más legible,
+el acento como texto oscurecido o aclarado hasta 3:1 sobre fondo, superficie y velo), corre las reglas
+de contraste de `kit:validate` y **rechaza** la que no pase, mide la distancia entre paletas y congela
+el resultado en `library.ts` (hex fijos; no se edita a mano). `kit:spec presets` las lista con el tono
+del acento. Ids estables `pal-<nombre>`: nunca se recolorea una publicada, se agrega otra.
+
+- **39 paletas:** 14 claras, 12 oscuras, 13 teñidas (fondo de color). 9 con **acento neutro** (tinta,
+  hueso, plata, piedra) que la regla de tono no cuenta: son las que más capacidad dan a barbería
+  (`pal-vino-hueso` y `pal-marino-hueso` se agregaron en el WP5 para llevarla a 12).
+- **Sin duplicados:** distancia = ΔE00 del fondo + ΔE00 del acento; dentro de un giro (sus paletas
+  legacy + las de la biblioteca con afinidad) ninguna pareja queda **por debajo de 15**. La primera
+  versión tenía 11 casi duplicados de paletas legacy (los nombres «talavera», «jamaica», «nopal»,
+  «lavanda» ya existían en los giros: `pal-jacaranda` contra `floreria:lavanda` daba 2.2); se
+  rediseñaron como fondos teñidos u oscuros, se quitaron tres y se recortaron afinidades.
+- **Descartadas:** `pal-coral` y `pal-mandarina` (el texto sobre el acento no llegaba a 4.5:1),
+  `pal-albahaca` (igual a `pal-nopal`, 2.0), `pal-uva-silvestre` (a < 11 de los morados de cinco
+  giros), `pal-terracota-pizarra` y `pal-agave-claro` (duplicaban las terracotas y verdes azulados
+  de casi todos los giros).
+- La afinidad solo ordena: con `brand.catalog: "extended"` el compilador prueba primero las paletas del
+  giro, luego las de la biblioteca que lo listan (en orden) y luego el resto; nombrar
+  `brand.palette.preset: "pal-…"` funciona en cualquier spec.
+
+| Id                     | Tipo   | Ánimo                     | Acento           | Afinidad (orden)                              |
+| ---------------------- | ------ | ------------------------- | ---------------- | --------------------------------------------- |
+| `pal-papel-tinta`      | clara  | editorial, sobrio         | `#1A1917` neutro | despacho, floreria, tienda, barberia, clinica |
+| `pal-nopal`            | clara  | natural, mexicano, fresco | `#3E7B2E` 108°   | veterinaria, barberia, clinica, dental        |
+| `pal-cempasuchil`      | clara  | festivo, cálido, mexicano | `#E8891C` 32°    | restaurante, tienda, estetica, gimnasio       |
+| `pal-navy-laton`       | clara  | lujo, sobrio              | `#C69B46` 40°    | despacho, barberia, clinica, restaurante      |
+| `pal-rubor-salvia`     | clara  | suave, natural            | `#4F7356` 132°   | estetica, clinica, dental                     |
+| `pal-cantera`          | clara  | rústico, sobrio, mexicano | `#4A4540` neutro | restaurante, despacho, barberia, tienda       |
+| `pal-limon`            | clara  | fresco, juguetón          | `#B5CB2A` 68°    | tienda, gimnasio, restaurante, veterinaria    |
+| `pal-granada`          | clara  | lujo, cálido              | `#8E1F3A` 345°   | restaurante, barberia, tienda                 |
+| `pal-orquidea`         | clara  | lujo, fresco              | `#9A2E8C` 308°   | floreria, dental, gimnasio                    |
+| `pal-girasol`          | clara  | juguetón, cálido          | `#F2CF2F` 49°    | veterinaria, dental, despacho                 |
+| `pal-cielo-abierto`    | clara  | fresco, juguetón          | `#1A72A8` 203°   | tienda, gimnasio, restaurante, floreria       |
+| `pal-niebla-grafito`   | clara  | sobrio, clínico           | `#59626B` neutro | clinica, dental, despacho, gimnasio           |
+| `pal-pistache`         | clara  | fresco, juguetón          | `#93B53C` 77°    | floreria, estetica, dental, clinica           |
+| `pal-turquesa-claro`   | clara  | fresco, mexicano          | `#0B7F7A` 177°   | tienda, floreria, restaurante, gimnasio       |
+| `pal-carbon-lima`      | oscura | urbano, energía           | `#C6F432` 74°    | barberia, tienda                              |
+| `pal-bosque-profundo`  | oscura | lujo, natural             | `#7FC8A0` 147°   | barberia, veterinaria, floreria               |
+| `pal-medianoche-laton` | oscura | lujo, sobrio              | `#D2A852` 40°    | barberia, restaurante, estetica               |
+| `pal-mezcal-humo`      | oscura | urbano, mexicano          | `#4FB3A9` 174°   | restaurante, tienda                           |
+| `pal-tinta-hueso`      | oscura | editorial, sobrio         | `#EDE8DF` neutro | barberia, despacho, tienda, gimnasio          |
+| `pal-jamaica-noche`    | oscura | festivo, mexicano         | `#E0457B` 339°   | estetica, floreria, tienda                    |
+| `pal-cobalto-noche`    | oscura | urbano, energía           | `#5B8CFF` 222°   | gimnasio, despacho, tienda, dental            |
+| `pal-brasa-noche`      | oscura | urbano, cálido            | `#F0642D` 17°    | restaurante, tienda, estetica                 |
+| `pal-pizarra-plata`    | oscura | sobrio, urbano            | `#CDD3DA` neutro | barberia, despacho, clinica, gimnasio         |
+| `pal-jacaranda-noche`  | oscura | lujo, fresco              | `#A98BF0` 258°   | estetica, clinica, despacho                   |
+| `pal-vino-hueso`       | oscura | lujo, sobrio              | `#E8DED8` neutro | barberia, restaurante, despacho               |
+| `pal-marino-hueso`     | oscura | sobrio, lujo              | `#E6E2D8` neutro | barberia, despacho, clinica                   |
+| `pal-salvia-tinta`     | teñida | natural, sobrio           | `#222A22` neutro | floreria, veterinaria, clinica, estetica      |
+| `pal-rosa-vino`        | teñida | lujo, suave               | `#7D2135` 347°   | estetica, floreria                            |
+| `pal-cielo-marino`     | teñida | clínico, fresco           | `#1D3F7A` 218°   | dental, clinica, veterinaria                  |
+| `pal-arcilla`          | teñida | rústico, cálido, mexicano | `#2C241F` neutro | restaurante, floreria, tienda, barberia       |
+| `pal-menta-esmeralda`  | teñida | fresco, clínico           | `#0F6B4C` 160°   | dental, veterinaria, estetica, clinica        |
+| `pal-mostaza`          | teñida | juguetón, cálido          | `#262319` neutro | tienda, gimnasio, restaurante, barberia       |
+| `pal-lavanda-ciruela`  | teñida | suave, lujo               | `#6B2D86` 282°   | estetica, floreria, clinica                   |
+| `pal-azul-maya`        | teñida | mexicano, fresco          | `#A63D24` 12°    | restaurante, tienda, floreria                 |
+| `pal-concreto-senal`   | teñida | urbano, energía           | `#C8441A` 14°    | gimnasio, barberia                            |
+| `pal-bugambilia`       | teñida | juguetón, mexicano        | `#A31F62` 330°   | estetica, floreria, tienda                    |
+| `pal-azulejo`          | teñida | mexicano, festivo         | `#F0BE3C` 43°    | restaurante, tienda, floreria                 |
+| `pal-turquesa-agua`    | teñida | clínico, fresco           | `#0B6873` 186°   | dental, clinica, veterinaria, estetica        |
+| `pal-indigo-papel`     | teñida | sobrio, editorial         | `#2E3192` 238°   | despacho, tienda                              |
+
+Paletas usables por giro (meta ≥ 10) y la pareja más parecida:
+
+| Giro        | Usables (giro + biblioteca) | Par más cercano (ΔE00 fondo + acento)                |
+| ----------- | --------------------------- | ---------------------------------------------------- |
+| barberia    | 24 (9 + 15)                 | `pal-tinta-hueso` ~ `pal-pizarra-plata` 15.5         |
+| clinica     | 19 (5 + 14)                 | `pal-papel-tinta` ~ `pal-salvia-tinta` 15.8          |
+| dental      | 15 (5 + 10)                 | `dental:nube` ~ `pal-niebla-grafito` 17.2            |
+| despacho    | 17 (5 + 12)                 | `pal-tinta-hueso` ~ `pal-pizarra-plata` 15.5         |
+| estetica    | 18 (5 + 13)                 | `estetica:malva` ~ `pal-lavanda-ciruela` 16.2        |
+| floreria    | 19 (5 + 14)                 | `floreria:lavanda` ~ `pal-orquidea` 15.1             |
+| gimnasio    | 16 (5 + 11)                 | `pal-tinta-hueso` ~ `pal-pizarra-plata` 15.5         |
+| restaurante | 21 (6 + 15)                 | `restaurante:nocturno` ~ `pal-medianoche-laton` 15.9 |
+| tienda      | 24 (5 + 19)                 | `tienda:ciruela` ~ `pal-granada` 16.4                |
+| veterinaria | 13 (5 + 8)                  | `pal-limon` ~ `pal-girasol` 16.1                     |
+
+Galería: `pnpm lattiz kit gallery --palettes` (cada paleta como mini página con sus contrastes).
+Crítica (ronda 1): las teñidas dan la variedad que faltaba (las legacy son casi todas blanco roto + un
+acento); `pal-limon` y `pal-girasol` se parecían en tres giros, `pal-girasol` se quedó con
+veterinaria, dental y despacho.
+
+## Biblioteca de pares tipográficos (WP5)
+
+`packages/template-kit/font-pairs/library.ts` (datos a mano): **16 pares nuevos**, cada uno con display
+(que también es el de encabezados: el kit usa la misma cara para todo título), cuerpo, acento (una de
+las dos familias: itálica, la misma display o la caligráfica), ánimo, afinidad por giro,
+`displayScale`, `case`/`tracking`/`typeScale` recomendados (presets de WP3) y licencia por familia.
+Misma entrega que los legacy: Google Fonts `css2` con `display=swap` (ningún origen nuevo) y fallback
+local con métricas de Capsize.
+
+- **Reglas (las verifica `pnpm --filter @lattiz/template-kit kit:fonts`, código 1 si un par nuevo las
+  rompe):** ≤ 2 familias y ≤ 4 archivos por página (subconjunto latin, que ya trae todo el español:
+  `ñ á é í ó ú ü ¿ ¡ “ ” — …`), latin-ext disponible, licencia abierta según `google/fonts`
+  (`ofl/<familia>/METADATA.pb`). Variables cuando la familia lo es (13 de 16 pares); el eje `opsz` se
+  fija en un valor (72 en display, 12–16 en texto) en vez de pedir el rango: Newsreader bajó de 151 a
+  74 KB, Source Serif 4 de 193 a 96, Literata de 144 a 72.
+- **Peso:** 33–96 KB por par (promedio 61 KB, 2–4 archivos) contra 77–322 KB (4–7 archivos) de los
+  legacy.
+- **Descartado:** Italiana (sin latin-ext) → Gilda Display; Big Shoulders Display (sin métricas en
+  Capsize, el fallback no se podría medir) → Oswald.
+- **Cubre:** serif editorial + sans limpia (Newsreader, EB Garamond), display de alto contraste
+  (Gloock, Libre Caslon Display, Gilda Display), geométrica (League Spartan, Outfit), humanista (Red
+  Hat), grotesca (Schibsted, Anybody), slab industrial (Zilla Slab), condensadas de cartel (Bebas Neue,
+  Oswald), redonda amable (Fredoka + Nunito) y caligrafía **solo de acento** (Jost en mayúsculas +
+  Pinyon Script en las palabras de acento).
+
+| Par                                      | Estilo                                              | Ánimo             | Afinidad                                  | Archivos | KB (latin) | Variable | CLS 390 / 1366 |
+| ---------------------------------------- | --------------------------------------------------- | ----------------- | ----------------------------------------- | -------- | ---------- | -------- | -------------- |
+| `newsreader+public-sans`                 | serif editorial y sans neutra                       | editorial, sobrio | despacho, clinica, floreria, restaurante  | 3        | 73.6       | 1/2      | 0.001 / 0.002  |
+| `gloock+onest`                           | display de alto contraste                           | lujo, editorial   | estetica, floreria, restaurante, barberia | 2        | 50.2       | 1/2      | 0.000 / 0.002  |
+| `libre-caslon-display+schibsted-grotesk` | didona clásica                                      | lujo, editorial   | estetica, despacho, tienda, floreria      | 2        | 61.5       | 1/2      | 0.000 / 0.000  |
+| `league-spartan+mulish`                  | geométrica pesada                                   | urbano, energía   | gimnasio, tienda, barberia                | 2        | 33.3       | 1/2      | 0.000 / 0.000  |
+| `red-hat-display+red-hat-text`           | humanista clara                                     | clínico, fresco   | clinica, dental, veterinaria, despacho    | 3        | 58.9       | 1/2      | 0.000 / 0.001  |
+| `schibsted-grotesk+source-serif-4`       | grotesca con texto serif                            | editorial, sobrio | despacho, tienda, restaurante             | 3        | 95.9       | 1/2      | 0.002 / 0.003  |
+| `zilla-slab+ibm-plex-sans`               | slab industrial                                     | urbano, rústico   | barberia, despacho, gimnasio, restaurante | 3        | 73.6       | 1/2      | 0.002 / 0.002  |
+| `bebas-neue+barlow`                      | condensada en mayúsculas                            | urbano, energía   | barberia, gimnasio, tienda                | 4        | 56.2       | 0/2      | 0.000 / 0.000  |
+| `oswald+source-sans-3`                   | condensada de cartel                                | urbano, energía   | gimnasio, barberia, restaurante           | 3        | 56         | 1/2      | 0.000 / 0.001  |
+| `fredoka+nunito`                         | redonda amable                                      | juguetón, suave   | veterinaria, tienda, dental, floreria     | 2        | 54.3       | 1/2      | 0.000 / 0.002  |
+| `jost+pinyon-script`                     | geométrica en mayúsculas, caligrafía solo de acento | lujo, suave       | estetica, floreria, tienda                | 2        | 53.4       | 1/2      | 0.001 / 0.003  |
+| `petrona+rubik`                          | serif cálida y sans redondeada                      | cálido, natural   | restaurante, floreria, veterinaria        | 3        | 67.4       | 1/2      | 0.001 / 0.002  |
+| `eb-garamond+albert-sans`                | garalda clásica                                     | sobrio, lujo      | despacho, estetica, clinica, floreria     | 3        | 82.3       | 1/2      | 0.001 / 0.001  |
+| `anybody+be-vietnam-pro`                 | grotesca expresiva                                  | energía, urbano   | gimnasio, tienda, barberia                | 3        | 38.2       | 0/2      | 0.002 / 0.004  |
+| `outfit+literata`                        | geométrica con texto serif                          | fresco, clínico   | clinica, dental, veterinaria, tienda      | 3        | 71.9       | 1/2      | 0.000 / 0.003  |
+| `gilda-display+hanken-grotesk`           | display fina y aireada                              | lujo, suave       | estetica, floreria, tienda, despacho      | 2        | 46.8       | 1/2      | 0.001 / 0.002  |
+
+Pares usables por giro (meta ≥ 8: los del giro + los de la biblioteca con afinidad; en `extended` el
+compilador además puede tomar los demás pares legacy como último recurso):
+
+| Giro        | Usables    | De la biblioteca                                                                                                                                                                                                                                |
+| ----------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| barberia    | 15 (9 + 6) | `gloock+onest`, `league-spartan+mulish`, `zilla-slab+ibm-plex-sans`, `bebas-neue+barlow`, `oswald+source-sans-3`, `anybody+be-vietnam-pro`                                                                                                      |
+| clinica     | 9 (5 + 4)  | `newsreader+public-sans`, `red-hat-display+red-hat-text`, `eb-garamond+albert-sans`, `outfit+literata`                                                                                                                                          |
+| dental      | 8 (5 + 3)  | `red-hat-display+red-hat-text`, `fredoka+nunito`, `outfit+literata`                                                                                                                                                                             |
+| despacho    | 12 (5 + 7) | `newsreader+public-sans`, `libre-caslon-display+schibsted-grotesk`, `red-hat-display+red-hat-text`, `schibsted-grotesk+source-serif-4`, `zilla-slab+ibm-plex-sans`, `eb-garamond+albert-sans`, `gilda-display+hanken-grotesk`                   |
+| estetica    | 10 (5 + 5) | `gloock+onest`, `libre-caslon-display+schibsted-grotesk`, `jost+pinyon-script`, `eb-garamond+albert-sans`, `gilda-display+hanken-grotesk`                                                                                                       |
+| floreria    | 13 (5 + 8) | `newsreader+public-sans`, `gloock+onest`, `libre-caslon-display+schibsted-grotesk`, `fredoka+nunito`, `jost+pinyon-script`, `petrona+rubik`, `eb-garamond+albert-sans`, `gilda-display+hanken-grotesk`                                          |
+| gimnasio    | 10 (5 + 5) | `league-spartan+mulish`, `zilla-slab+ibm-plex-sans`, `bebas-neue+barlow`, `oswald+source-sans-3`, `anybody+be-vietnam-pro`                                                                                                                      |
+| restaurante | 11 (5 + 6) | `newsreader+public-sans`, `gloock+onest`, `schibsted-grotesk+source-serif-4`, `zilla-slab+ibm-plex-sans`, `oswald+source-sans-3`, `petrona+rubik`                                                                                               |
+| tienda      | 14 (5 + 9) | `libre-caslon-display+schibsted-grotesk`, `league-spartan+mulish`, `schibsted-grotesk+source-serif-4`, `bebas-neue+barlow`, `fredoka+nunito`, `jost+pinyon-script`, `anybody+be-vietnam-pro`, `outfit+literata`, `gilda-display+hanken-grotesk` |
+| veterinaria | 9 (5 + 4)  | `red-hat-display+red-hat-text`, `fredoka+nunito`, `petrona+rubik`, `outfit+literata`                                                                                                                                                            |
+
+### CLS y LCP (`kit:fonts --cls`)
+
+Portada `navbar/inline` + `hero/split` con el CSS real del kit, las fuentes web retenidas 1.2 s para que
+el primer pintado use el fallback, a 390×844 y 1366×768, con y sin el fallback medido.
+
+- **Hallazgo del entorno:** el fallback del kit es `local('Arial')` / `local('Times New Roman')`, que
+  este contenedor (y Android) no tiene: ahí cae a la genérica y el fallback no sirve. La página de
+  prueba usa sus clones métricos (Liberation Sans/Serif) para medir lo que ve quien sí los tiene
+  (Windows, macOS, iOS). No cambia el CSS que se publica.
+- **Calibración nueva (solo caras nuevas, la salida legacy no cambia):** en los display de peso
+  alto, la fuente web es bastante más ancha que el Arial regular que Capsize toma de base, y el título
+  de la portada cambiaba de líneas al llegar la fuente (CLS 0.10–0.15 a 390 en cinco pares). Se midió
+  el `size-adjust` necesario en Chromium, al peso del display, con una muestra en español contra la
+  propia cara de fallback: `DISPLAY_SIZE_ADJUST` en `src/lib/theme.ts` (Newsreader 111.84 %, Gloock
+  112.6 %, League Spartan 98.87 %, Schibsted Grotesk 109.58 %, Petrona 110.53 %, EB Garamond 96.24 %,
+  Anybody 129.58 %, Red Hat Display 100.04 %) y `CAPS_SIZE_ADJUST` para los display en mayúsculas
+  (Bebas Neue 59.1 %, Oswald 79.02 %).
+- **Resultado:** los 16 pares nuevos con **CLS ≤ 0.004** en los dos anchos (sin el fallback: hasta
+  0.184); LCP 244–468 ms en local. Los tres representativos: `bebas-neue+barlow` 0.000/0.000,
+  `newsreader+public-sans` 0.001/0.002, `jost+pinyon-script` 0.001/0.003. Referencia legacy en la
+  misma página: `playfair-display+inter` 0.001/0.002; `anton+space-grotesk` **0.122** a 390 (preexistente;
+  calibrarlo cambiaría plantillas publicadas → backlog de la auditoría de WP9).
+
+Galería: `pnpm lattiz kit gallery --fonts`. Crítica: ronda 1 mostró las palabras de acento en
+mayúsculas (el espécimen no aplicaba `accentTransform`; Pinyon Script en mayúsculas no se lee);
+corregido el espécimen, ronda 2 limpia. Ojo de diseño: Libre Caslon Display y Gilda Display son de
+trazo fino: lucen en títulos grandes; en nombres de tarjeta pequeños se ven frágiles (preferir
+`typeScale: expressive`).
+
+## Capacidad después de la Parte 1
+
+`pnpm lattiz kit capacity --catalog extended` (2026-10-12). La regla de paleta del catálogo
+`extended` agrega una condición: además del tono a ≥ 30°, la paleta debe quedar a ≥ 15 (ΔE00 fondo +
+acento) de toda paleta ya usada en el giro. Sin eso, las paletas de acento neutro se repetían (la
+primera simulación dio 29 por giro reusando `pal-tinta-hueso` seis veces: un número falso).
+
+| Giro        | Antes (legacy) | Después (extended) | Pares | +Pro | +Básico | Lo limita ahora                                |
+| ----------- | -------------- | ------------------ | ----- | ---- | ------- | ---------------------------------------------- |
+| barberia    | 3              | **12**             | 0     | 0    | 12      | portadas Pro (0/4 libres) y tonos (4 ventanas) |
+| clinica     | 3              | **16**             | 3     | 3    | 16      | paletas (tonos + ΔE)                           |
+| dental      | 3              | **16**             | 3     | 3    | 17      | paletas                                        |
+| despacho    | 3              | **17**             | 3     | 3    | 17      | paletas                                        |
+| estetica    | 3              | **16**             | 3     | 3    | 15      | paletas                                        |
+| floreria    | 3              | **16**             | 3     | 3    | 16      | paletas                                        |
+| gimnasio    | 3              | **16**             | 3     | 3    | 16      | paletas                                        |
+| restaurante | 3              | **15**             | 3     | 3    | 17      | paletas                                        |
+| tienda      | 3              | **16**             | 3     | 3    | 17      | paletas                                        |
+| veterinaria | 3              | **17**             | 3     | 3    | 17      | paletas                                        |
+
+La meta de **≥ 12 por giro** se cumple sin tocar umbrales. Los **pares Básico + Pro** siguen topados por
+las portadas Pro (3 libres por giro, 0 en barbería): las 5 portadas nuevas de la Parte 2 (WP6) suben
+ese tope. Barbería depende de los acentos neutros: le quedan 4 ventanas de tono (≈ 43°, ≈ 110°,
+≈ 188°, ≈ 300°).

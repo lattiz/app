@@ -1,0 +1,1088 @@
+{
+  "$comment": "Golden snapshot (kit:snapshot). kit:verify-snapshot must stay clean: existing templates compile byte for byte and specs resolve to the same files. Regenerate only with an explicit, explained reason.",
+  "version": 1,
+  "templates": {
+    "barberia-abeto-v1": {
+      "manifest": "templates/barberia-abeto-v1.ts",
+      "hashes": {
+        "project": "1215afecc904eafc",
+        "html": "92650cb981d2d109",
+        "css": "df5ab5d1c55e1925",
+        "rootCss": "5e05adb8144a4d28",
+        "theme": "7af5a6b10c211264",
+        "pack": "4b7671b0a4eb2f61",
+        "meta": "3d91a4c82444e498",
+        "assets": "b9efc6b444331815"
+      },
+      "assets": 10,
+      "size": {
+        "css": {
+          "raw": 29342,
+          "gzip": 5465
+        },
+        "html": {
+          "raw": 25144,
+          "gzip": 6653
+        },
+        "index": {
+          "raw": 54502,
+          "gzip": 12026
+        }
+      }
+    },
+    "barberia-base-abeto-v1": {
+      "manifest": "templates/barberia-base-abeto-v1.ts",
+      "hashes": {
+        "project": "af0bf1fd72a5f5a6",
+        "html": "e65e8e0cd8463007",
+        "css": "76bcd166988338cd",
+        "rootCss": "1197a4e7dd5bbbf8",
+        "theme": "d35652c8e0628c24",
+        "pack": "4b7671b0a4eb2f61",
+        "meta": "602f325b11d1fb4e",
+        "assets": "fbe3288ce6a1a412"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 24086,
+          "gzip": 4729
+        },
+        "html": {
+          "raw": 18729,
+          "gzip": 5163
+        },
+        "index": {
+          "raw": 42831,
+          "gzip": 9788
+        }
+      }
+    },
+    "barberia-base-claro-v1": {
+      "manifest": "templates/barberia-base-claro-v1.ts",
+      "hashes": {
+        "project": "1a19cb820f67b4a9",
+        "html": "4757a2d4a7389545",
+        "css": "4c488e80e803d76d",
+        "rootCss": "5521cf71cfbd8172",
+        "theme": "b84fac458a8c6de7",
+        "pack": "77883432de66ec99",
+        "meta": "f8cb14a2261436f2",
+        "assets": "051353c7e07f17db"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 23981,
+          "gzip": 4665
+        },
+        "html": {
+          "raw": 18561,
+          "gzip": 5238
+        },
+        "index": {
+          "raw": 42558,
+          "gzip": 9791
+        }
+      }
+    },
+    "barberia-base-oscuro-v1": {
+      "manifest": "templates/barberia-base-oscuro-v1.ts",
+      "hashes": {
+        "project": "7505458c8c756fd4",
+        "html": "b9833617dffb02df",
+        "css": "40849e5d1d51635a",
+        "rootCss": "3b234250ff44d22f",
+        "theme": "448ea494751ecdd1",
+        "pack": "77883432de66ec99",
+        "meta": "dbf5873b35d140ec",
+        "assets": "d231167030d7e35f"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 25149,
+          "gzip": 4772
+        },
+        "html": {
+          "raw": 17755,
+          "gzip": 5122
+        },
+        "index": {
+          "raw": 42920,
+          "gzip": 9798
+        }
+      }
+    },
+    "barberia-base-solar-v1": {
+      "manifest": "templates/barberia-base-solar-v1.ts",
+      "hashes": {
+        "project": "99189474ea728ae3",
+        "html": "0f912440aef53ac6",
+        "css": "a15a476c9983d464",
+        "rootCss": "b030a116d9f2de19",
+        "theme": "b56d55aee353da47",
+        "pack": "77883432de66ec99",
+        "meta": "a6ffcdf671333e1c",
+        "assets": "b5795399a1bb3343"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 23729,
+          "gzip": 4596
+        },
+        "html": {
+          "raw": 17893,
+          "gzip": 5188
+        },
+        "index": {
+          "raw": 41638,
+          "gzip": 9697
+        }
+      }
+    },
+    "barberia-concreto-v1": {
+      "manifest": "templates/barberia-concreto-v1.ts",
+      "hashes": {
+        "project": "d34db02e428e26e7",
+        "html": "d8d4cb33d64a47f9",
+        "css": "c5bb0718e60b6b09",
+        "rootCss": "a13a1410131d2c71",
+        "theme": "c4f03c96f12a84be",
+        "pack": "91ebb74395ad2024",
+        "meta": "2f0b392f8ecf03b9",
+        "assets": "4eb258b6ff304249"
+      },
+      "assets": 13,
+      "size": {
+        "css": {
+          "raw": 31161,
+          "gzip": 5636
+        },
+        "html": {
+          "raw": 27733,
+          "gzip": 7129
+        },
+        "index": {
+          "raw": 58910,
+          "gzip": 12663
+        }
+      }
+    },
+    "barberia-norte-v1": {
+      "manifest": "templates/barberia-norte-v1.ts",
+      "hashes": {
+        "project": "6438e024d9d4cb51",
+        "html": "c4e2dea4d25daf7a",
+        "css": "fc72d9381efbe197",
+        "rootCss": "42dff7ea8be72597",
+        "theme": "ba8accee8256de4a",
+        "pack": "79533b402cdbe7eb",
+        "meta": "1241cbb8313ed108",
+        "assets": "34cc12820cbf76dc"
+      },
+      "assets": 14,
+      "size": {
+        "css": {
+          "raw": 32330,
+          "gzip": 5602
+        },
+        "html": {
+          "raw": 27164,
+          "gzip": 7182
+        },
+        "index": {
+          "raw": 59510,
+          "gzip": 12715
+        }
+      }
+    },
+    "barberia-oxido-v1": {
+      "manifest": "templates/barberia-oxido-v1.ts",
+      "hashes": {
+        "project": "fc1a42f45cd01925",
+        "html": "85668bc88d002f10",
+        "css": "200313b8de56682f",
+        "rootCss": "f99d0ec797203943",
+        "theme": "52c92645c3244c79",
+        "pack": "37aea40cb7aca084",
+        "meta": "96e55c148aaa9d11",
+        "assets": "e4a488791faa107c"
+      },
+      "assets": 14,
+      "size": {
+        "css": {
+          "raw": 31228,
+          "gzip": 5747
+        },
+        "html": {
+          "raw": 30544,
+          "gzip": 8147
+        },
+        "index": {
+          "raw": 61788,
+          "gzip": 13811
+        }
+      }
+    },
+    "clinica-alba-v1": {
+      "manifest": "templates/clinica-alba-v1.ts",
+      "hashes": {
+        "project": "7f76d3967b8e8514",
+        "html": "895df10c001fb7f7",
+        "css": "d6e8057f67e8de7a",
+        "rootCss": "80c6c27744d9d8be",
+        "theme": "13fc34cda7d57336",
+        "pack": "e32a1ae2d7fb6be1",
+        "meta": "2c3dc261f5379b00",
+        "assets": "e451dcf194c580d3"
+      },
+      "assets": 13,
+      "size": {
+        "css": {
+          "raw": 30882,
+          "gzip": 5439
+        },
+        "html": {
+          "raw": 26874,
+          "gzip": 6933
+        },
+        "index": {
+          "raw": 57772,
+          "gzip": 12268
+        }
+      }
+    },
+    "clinica-base-alba-v1": {
+      "manifest": "templates/clinica-base-alba-v1.ts",
+      "hashes": {
+        "project": "f2b09b14930bca71",
+        "html": "c20b9b55b7db6e3e",
+        "css": "0ee4748594ca93de",
+        "rootCss": "95de3418962e42a9",
+        "theme": "d404871ba8ef3db0",
+        "pack": "e32a1ae2d7fb6be1",
+        "meta": "4203eb717d6cfcd4",
+        "assets": "75c1ab2140d29d22"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 23619,
+          "gzip": 4527
+        },
+        "html": {
+          "raw": 17414,
+          "gzip": 5044
+        },
+        "index": {
+          "raw": 41049,
+          "gzip": 9493
+        }
+      }
+    },
+    "dental-arboleda-v1": {
+      "manifest": "templates/dental-arboleda-v1.ts",
+      "hashes": {
+        "project": "fa188ee6511e792d",
+        "html": "7dffe506ee95bc35",
+        "css": "57b0a7fd3b01eccf",
+        "rootCss": "7858484dc28d4108",
+        "theme": "5e1368af69df44bc",
+        "pack": "d171eb39ced3eefe",
+        "meta": "f1f98aa8978eda3c",
+        "assets": "3f888275e396002c"
+      },
+      "assets": 13,
+      "size": {
+        "css": {
+          "raw": 30854,
+          "gzip": 5446
+        },
+        "html": {
+          "raw": 26841,
+          "gzip": 6728
+        },
+        "index": {
+          "raw": 57711,
+          "gzip": 12091
+        }
+      }
+    },
+    "dental-base-arboleda-v1": {
+      "manifest": "templates/dental-base-arboleda-v1.ts",
+      "hashes": {
+        "project": "a00baa31f3592a0a",
+        "html": "907f1b4c72e2b61a",
+        "css": "b1d95bea37021b62",
+        "rootCss": "90ef33939e32aa15",
+        "theme": "94010ea66ae49ab0",
+        "pack": "d171eb39ced3eefe",
+        "meta": "0f279b83d84e39c4",
+        "assets": "0a90276eb3622483"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 23966,
+          "gzip": 4644
+        },
+        "html": {
+          "raw": 17491,
+          "gzip": 4967
+        },
+        "index": {
+          "raw": 41473,
+          "gzip": 9522
+        }
+      }
+    },
+    "despacho-base-cifra-clara-v1": {
+      "manifest": "templates/despacho-base-cifra-clara-v1.ts",
+      "hashes": {
+        "project": "d5596a4f899ef48d",
+        "html": "049d50c9af352d3e",
+        "css": "27cec3c5bb577b5f",
+        "rootCss": "bd64fdeece5af9fd",
+        "theme": "728f01faae035b94",
+        "pack": "927f2638d50873f4",
+        "meta": "4fc8d560ecc1f1f7",
+        "assets": "5ecbff3303f5f6c5"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 24483,
+          "gzip": 4688
+        },
+        "html": {
+          "raw": 18711,
+          "gzip": 5209
+        },
+        "index": {
+          "raw": 43210,
+          "gzip": 9819
+        }
+      }
+    },
+    "despacho-cifra-clara-v1": {
+      "manifest": "templates/despacho-cifra-clara-v1.ts",
+      "hashes": {
+        "project": "eab781c96e8f85c5",
+        "html": "a62162a3d3095e3d",
+        "css": "121fd1688525ea34",
+        "rootCss": "6dda2c3f7eaad8d6",
+        "theme": "b56827af41cb3e46",
+        "pack": "927f2638d50873f4",
+        "meta": "764276cc9542a816",
+        "assets": "f595f55ea35e3727"
+      },
+      "assets": 14,
+      "size": {
+        "css": {
+          "raw": 31618,
+          "gzip": 5692
+        },
+        "html": {
+          "raw": 26009,
+          "gzip": 6620
+        },
+        "index": {
+          "raw": 57643,
+          "gzip": 12222
+        }
+      }
+    },
+    "estetica-base-estudio-nacar-v1": {
+      "manifest": "templates/estetica-base-estudio-nacar-v1.ts",
+      "hashes": {
+        "project": "9d95a1c3c231d189",
+        "html": "e62e2645a1992d71",
+        "css": "35ef4306238952e1",
+        "rootCss": "30af74da80d5621b",
+        "theme": "a02d31e2b74cc9de",
+        "pack": "b6ad6b107939892e",
+        "meta": "f36b0def4aedd3e6",
+        "assets": "223c39a9a4dbb756"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 24549,
+          "gzip": 4695
+        },
+        "html": {
+          "raw": 17702,
+          "gzip": 5074
+        },
+        "index": {
+          "raw": 42267,
+          "gzip": 9685
+        }
+      }
+    },
+    "estetica-estudio-nacar-v1": {
+      "manifest": "templates/estetica-estudio-nacar-v1.ts",
+      "hashes": {
+        "project": "530ff1a54788c7e7",
+        "html": "54fd4798ff09bbb8",
+        "css": "e44af7569c732959",
+        "rootCss": "9b5d24fc15375246",
+        "theme": "8e183d6bd04511e3",
+        "pack": "b6ad6b107939892e",
+        "meta": "b099061f2f2d2dd9",
+        "assets": "a5a06a96a6060136"
+      },
+      "assets": 14,
+      "size": {
+        "css": {
+          "raw": 31939,
+          "gzip": 5783
+        },
+        "html": {
+          "raw": 26480,
+          "gzip": 6680
+        },
+        "index": {
+          "raw": 58435,
+          "gzip": 12364
+        }
+      }
+    },
+    "floreria-base-flores-lupita-v1": {
+      "manifest": "templates/floreria-base-flores-lupita-v1.ts",
+      "hashes": {
+        "project": "e3d141b16605553d",
+        "html": "04c2ab10a23f74e3",
+        "css": "3baa0409dab23a77",
+        "rootCss": "9d905a6d2c82bcd4",
+        "theme": "a6fcf45f82e5cb81",
+        "pack": "7bad28574ec87cdb",
+        "meta": "6f0a9759b9b5bf0c",
+        "assets": "606b1261f3828a3c"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 24928,
+          "gzip": 4724
+        },
+        "html": {
+          "raw": 18903,
+          "gzip": 5211
+        },
+        "index": {
+          "raw": 43847,
+          "gzip": 9840
+        }
+      }
+    },
+    "floreria-flores-lupita-v1": {
+      "manifest": "templates/floreria-flores-lupita-v1.ts",
+      "hashes": {
+        "project": "d874a113bfb3f77e",
+        "html": "1e4bc458ab4cf391",
+        "css": "1103781861614f61",
+        "rootCss": "a86ea933390eb067",
+        "theme": "9df4432e3058218b",
+        "pack": "7bad28574ec87cdb",
+        "meta": "37cd42649a659556",
+        "assets": "4dad283166f63b7d"
+      },
+      "assets": 14,
+      "size": {
+        "css": {
+          "raw": 31605,
+          "gzip": 5661
+        },
+        "html": {
+          "raw": 25646,
+          "gzip": 6454
+        },
+        "index": {
+          "raw": 57267,
+          "gzip": 11980
+        }
+      }
+    },
+    "gimnasio-base-nave-norte-v1": {
+      "manifest": "templates/gimnasio-base-nave-norte-v1.ts",
+      "hashes": {
+        "project": "d088da726b9bbb1c",
+        "html": "eafc3143e0ff4dd7",
+        "css": "505f785962c4f248",
+        "rootCss": "a83c6369a4209fda",
+        "theme": "168388fc0ae94d05",
+        "pack": "2227fddb4162c6f1",
+        "meta": "f6ddf0e11dfff1ba",
+        "assets": "9819ca117cd02bca"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 24113,
+          "gzip": 4587
+        },
+        "html": {
+          "raw": 17297,
+          "gzip": 4952
+        },
+        "index": {
+          "raw": 41426,
+          "gzip": 9452
+        }
+      }
+    },
+    "gimnasio-nave-norte-v1": {
+      "manifest": "templates/gimnasio-nave-norte-v1.ts",
+      "hashes": {
+        "project": "8a126a6ce05e52f9",
+        "html": "9829cd97666bcda5",
+        "css": "1e42becc01dbf66a",
+        "rootCss": "6b5771c413153c05",
+        "theme": "7fa2f5288e8e2ed4",
+        "pack": "2227fddb4162c6f1",
+        "meta": "a0f59c1bb7131219",
+        "assets": "f3057d0f2a1aade9"
+      },
+      "assets": 13,
+      "size": {
+        "css": {
+          "raw": 31975,
+          "gzip": 5771
+        },
+        "html": {
+          "raw": 26913,
+          "gzip": 6864
+        },
+        "index": {
+          "raw": 58904,
+          "gzip": 12530
+        }
+      }
+    },
+    "restaurante-base-casa-comal-v1": {
+      "manifest": "templates/restaurante-base-casa-comal-v1.ts",
+      "hashes": {
+        "project": "dc17527efcabebdd",
+        "html": "1690155aa7c6966e",
+        "css": "7c5e50a4aab9ae39",
+        "rootCss": "40f7a74486db497b",
+        "theme": "41a819414a19d1e0",
+        "pack": "66889f422349c040",
+        "meta": "e309c6a0d30fdbc1",
+        "assets": "5f556a9be38e31ef"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 24248,
+          "gzip": 4748
+        },
+        "html": {
+          "raw": 18658,
+          "gzip": 5201
+        },
+        "index": {
+          "raw": 42922,
+          "gzip": 9827
+        }
+      }
+    },
+    "restaurante-casa-comal-v1": {
+      "manifest": "templates/restaurante-casa-comal-v1.ts",
+      "hashes": {
+        "project": "9964f48c276481f8",
+        "html": "d7711169ccbfe2aa",
+        "css": "25661c2436ac052a",
+        "rootCss": "6f991d5d0fed4b74",
+        "theme": "09cea06730a1a45c",
+        "pack": "66889f422349c040",
+        "meta": "e842ad8ef85aed96",
+        "assets": "411c0abf948f7511"
+      },
+      "assets": 14,
+      "size": {
+        "css": {
+          "raw": 33258,
+          "gzip": 5901
+        },
+        "html": {
+          "raw": 27095,
+          "gzip": 6850
+        },
+        "index": {
+          "raw": 60369,
+          "gzip": 12644
+        }
+      }
+    },
+    "tienda-base-lote-doce-v1": {
+      "manifest": "templates/tienda-base-lote-doce-v1.ts",
+      "hashes": {
+        "project": "dadcfd94d5bafffa",
+        "html": "eada6690f7513cad",
+        "css": "c65360a35a7cf9d8",
+        "rootCss": "3abf4e204ba8123c",
+        "theme": "235d45a41755eeec",
+        "pack": "38704e53803bb29d",
+        "meta": "caccca0553d8536a",
+        "assets": "e078719953acc6f2"
+      },
+      "assets": 7,
+      "size": {
+        "css": {
+          "raw": 24186,
+          "gzip": 4603
+        },
+        "html": {
+          "raw": 19027,
+          "gzip": 5265
+        },
+        "index": {
+          "raw": 43229,
+          "gzip": 9786
+        }
+      }
+    },
+    "tienda-lote-doce-v1": {
+      "manifest": "templates/tienda-lote-doce-v1.ts",
+      "hashes": {
+        "project": "c178c067517be1db",
+        "html": "73435037a33ef1cd",
+        "css": "7b4ece42d897c0dc",
+        "rootCss": "8a35531af24f61c2",
+        "theme": "ce2cfd2ec2e0a2af",
+        "pack": "38704e53803bb29d",
+        "meta": "58d2c19fea9f32aa",
+        "assets": "13e7e688453ab320"
+      },
+      "assets": 16,
+      "size": {
+        "css": {
+          "raw": 30480,
+          "gzip": 5710
+        },
+        "html": {
+          "raw": 26920,
+          "gzip": 6880
+        },
+        "index": {
+          "raw": 57416,
+          "gzip": 12451
+        }
+      }
+    },
+    "veterinaria-base-clinica-nogal-v1": {
+      "manifest": "templates/veterinaria-base-clinica-nogal-v1.ts",
+      "hashes": {
+        "project": "b6bb25114259b84a",
+        "html": "c33376c0f4039ad8",
+        "css": "ee38f6c3ed27c14c",
+        "rootCss": "b965eed883773404",
+        "theme": "26aba90a41169e71",
+        "pack": "cabf5649431ff725",
+        "meta": "6ed3f3ba9f001d0b",
+        "assets": "fac83c0cb0e06300"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 24789,
+          "gzip": 4714
+        },
+        "html": {
+          "raw": 18019,
+          "gzip": 5145
+        },
+        "index": {
+          "raw": 42824,
+          "gzip": 9764
+        }
+      }
+    },
+    "veterinaria-clinica-nogal-v1": {
+      "manifest": "templates/veterinaria-clinica-nogal-v1.ts",
+      "hashes": {
+        "project": "06d0517fd8c8b2b3",
+        "html": "2584171aecf67b63",
+        "css": "a95ef89079ca11b6",
+        "rootCss": "7a8fafdadae65a7b",
+        "theme": "7f8925b77f751f3b",
+        "pack": "cabf5649431ff725",
+        "meta": "70cf73139b02025d",
+        "assets": "9f63d5ed6ed1b7e8"
+      },
+      "assets": 14,
+      "size": {
+        "css": {
+          "raw": 30392,
+          "gzip": 5442
+        },
+        "html": {
+          "raw": 26609,
+          "gzip": 6756
+        },
+        "index": {
+          "raw": 57017,
+          "gzip": 12101
+        }
+      }
+    }
+  },
+  "specs": {
+    "specs/barberia-abeto.spec.json": {
+      "ids": [
+        "barberia-abeto-v1",
+        "barberia-base-abeto-v1"
+      ],
+      "specHash": "0f4588fa7dff",
+      "files": {
+        "templates/barberia-abeto-v1.ts": "09cd68fdfdcf",
+        "themes/barberia-abeto-v1.json": "20352d2ffad7",
+        "demo-profiles/barberia-abeto-v1.json": "92360ffafee0",
+        "templates/barberia-base-abeto-v1.ts": "c5c1842b1480",
+        "themes/barberia-base-abeto-v1.json": "bf6ae7c1f67d",
+        "demo-profiles/barberia-base-abeto-v1.json": "92360ffafee0",
+        "content/barberia.abeto.es-MX.ts": "4b7671b0a4eb"
+      },
+      "choices": {
+        "barberia-abeto-v1": [
+          "portada: hero/image-bg → hero/centered-arch (única en el giro)"
+        ],
+        "barberia-base-abeto-v1": [
+          "portada: hero/centered-arch → hero/image-bg (única en el giro)"
+        ]
+      }
+    },
+    "specs/clinica-alba.spec.json": {
+      "ids": [
+        "clinica-alba-v1",
+        "clinica-base-alba-v1"
+      ],
+      "specHash": "e21639659c03",
+      "files": {
+        "templates/clinica-alba-v1.ts": "2cc794e4db0f",
+        "themes/clinica-alba-v1.json": "d2c9d2d49c43",
+        "demo-profiles/clinica-alba-v1.json": "1afca82f9c1a",
+        "templates/clinica-base-alba-v1.ts": "c5a7ecef0bab",
+        "themes/clinica-base-alba-v1.json": "e7c5ccd48b0e",
+        "demo-profiles/clinica-base-alba-v1.json": "1afca82f9c1a",
+        "content/clinica.alba.es-MX.ts": "e32a1ae2d7fb"
+      },
+      "choices": {
+        "clinica-alba-v1": [],
+        "clinica-base-alba-v1": [
+          "paleta: \"arena\" (elegida)",
+          "tipografía: \"fraunces+nunito-sans\" (elegida)",
+          "titular: alternativa para no repetir el de la Pro"
+        ]
+      }
+    },
+    "specs/dental-arboleda.spec.json": {
+      "ids": [
+        "dental-arboleda-v1",
+        "dental-base-arboleda-v1"
+      ],
+      "specHash": "0757763d1134",
+      "files": {
+        "templates/dental-arboleda-v1.ts": "eac25819ccd7",
+        "themes/dental-arboleda-v1.json": "cd619d80852e",
+        "demo-profiles/dental-arboleda-v1.json": "387295c906ea",
+        "templates/dental-base-arboleda-v1.ts": "d919ea1c303d",
+        "themes/dental-base-arboleda-v1.json": "c3e1ef712a93",
+        "demo-profiles/dental-base-arboleda-v1.json": "387295c906ea",
+        "content/dental.arboleda.es-MX.ts": "d171eb39ced3"
+      },
+      "choices": {
+        "dental-arboleda-v1": [],
+        "dental-base-arboleda-v1": [
+          "paleta: \"grafito\" (elegida)",
+          "tipografía: \"fraunces+nunito-sans\" (elegida)",
+          "titular: alternativa para no repetir el de la Pro"
+        ]
+      }
+    },
+    "specs/despacho-cifra-clara.spec.json": {
+      "ids": [
+        "despacho-cifra-clara-v1",
+        "despacho-base-cifra-clara-v1"
+      ],
+      "specHash": "5019d2696c43",
+      "files": {
+        "templates/despacho-cifra-clara-v1.ts": "dd0dff2ed1b8",
+        "themes/despacho-cifra-clara-v1.json": "e7ab69c640f4",
+        "demo-profiles/despacho-cifra-clara-v1.json": "fedc58c8d669",
+        "templates/despacho-base-cifra-clara-v1.ts": "12e8be437b73",
+        "themes/despacho-base-cifra-clara-v1.json": "137d0a1c4b57",
+        "demo-profiles/despacho-base-cifra-clara-v1.json": "fedc58c8d669",
+        "content/despacho.cifra-clara.es-MX.ts": "927f2638d508"
+      },
+      "choices": {
+        "despacho-cifra-clara-v1": [],
+        "despacho-base-cifra-clara-v1": [
+          "paleta: \"vino\" (elegida)",
+          "tipografía: \"instrument-serif+instrument-sans\" (elegida)",
+          "titular: alternativa para no repetir el de la Pro"
+        ]
+      }
+    },
+    "specs/estetica-estudio-nacar.spec.json": {
+      "ids": [
+        "estetica-estudio-nacar-v1",
+        "estetica-base-estudio-nacar-v1"
+      ],
+      "specHash": "b88261b2b3eb",
+      "files": {
+        "templates/estetica-estudio-nacar-v1.ts": "91a215655d22",
+        "themes/estetica-estudio-nacar-v1.json": "dd010171b008",
+        "demo-profiles/estetica-estudio-nacar-v1.json": "c415a1103c9c",
+        "templates/estetica-base-estudio-nacar-v1.ts": "26ff1bfa8682",
+        "themes/estetica-base-estudio-nacar-v1.json": "51c65cff3b81",
+        "demo-profiles/estetica-base-estudio-nacar-v1.json": "c415a1103c9c",
+        "content/estetica.estudio-nacar.es-MX.ts": "b6ad6b107939"
+      },
+      "choices": {
+        "estetica-estudio-nacar-v1": [],
+        "estetica-base-estudio-nacar-v1": [
+          "paleta: \"malva\" (elegida)",
+          "tipografía: \"instrument-serif+instrument-sans\" (elegida)",
+          "titular: alternativa para no repetir el de la Pro"
+        ]
+      }
+    },
+    "specs/floreria-flores-lupita.spec.json": {
+      "ids": [
+        "floreria-flores-lupita-v1",
+        "floreria-base-flores-lupita-v1"
+      ],
+      "specHash": "2ccbfca28d27",
+      "files": {
+        "templates/floreria-flores-lupita-v1.ts": "0c9cae7c9857",
+        "themes/floreria-flores-lupita-v1.json": "6724c6ec1e73",
+        "demo-profiles/floreria-flores-lupita-v1.json": "71f619f70ce6",
+        "templates/floreria-base-flores-lupita-v1.ts": "ec94695936d8",
+        "themes/floreria-base-flores-lupita-v1.json": "8eeef4dfd959",
+        "demo-profiles/floreria-base-flores-lupita-v1.json": "71f619f70ce6",
+        "content/floreria.flores-lupita.es-MX.ts": "7bad28574ec8"
+      },
+      "choices": {
+        "floreria-flores-lupita-v1": [],
+        "floreria-base-flores-lupita-v1": [
+          "paleta: \"bugambilia\" (elegida)",
+          "tipografía: \"fraunces+nunito-sans\" (elegida)",
+          "titular: alternativa para no repetir el de la Pro"
+        ]
+      }
+    },
+    "specs/gimnasio-nave-norte.spec.json": {
+      "ids": [
+        "gimnasio-nave-norte-v1",
+        "gimnasio-base-nave-norte-v1"
+      ],
+      "specHash": "2f28c4a23c7a",
+      "files": {
+        "templates/gimnasio-nave-norte-v1.ts": "4ef25e82a8bc",
+        "themes/gimnasio-nave-norte-v1.json": "5eded27dcc1b",
+        "demo-profiles/gimnasio-nave-norte-v1.json": "f760701129f8",
+        "templates/gimnasio-base-nave-norte-v1.ts": "8b5087a6c91b",
+        "themes/gimnasio-base-nave-norte-v1.json": "596a9d4b7c6a",
+        "demo-profiles/gimnasio-base-nave-norte-v1.json": "f760701129f8",
+        "content/gimnasio.nave-norte.es-MX.ts": "2227fddb4162"
+      },
+      "choices": {
+        "gimnasio-nave-norte-v1": [],
+        "gimnasio-base-nave-norte-v1": [
+          "paleta: \"brasa\" (elegida)",
+          "tipografía: \"archivo-black+space-grotesk\" (elegida)",
+          "titular: alternativa para no repetir el de la Pro"
+        ]
+      }
+    },
+    "specs/restaurante-casa-comal.spec.json": {
+      "ids": [
+        "restaurante-casa-comal-v1",
+        "restaurante-base-casa-comal-v1"
+      ],
+      "specHash": "0325fbce6706",
+      "files": {
+        "templates/restaurante-casa-comal-v1.ts": "df33c371024d",
+        "themes/restaurante-casa-comal-v1.json": "a9fb5e0c6887",
+        "demo-profiles/restaurante-casa-comal-v1.json": "b35cfeec967e",
+        "templates/restaurante-base-casa-comal-v1.ts": "c5c1eee8ce1a",
+        "themes/restaurante-base-casa-comal-v1.json": "da220c59aadb",
+        "demo-profiles/restaurante-base-casa-comal-v1.json": "b35cfeec967e",
+        "content/restaurante.casa-comal.es-MX.ts": "66889f422349"
+      },
+      "choices": {
+        "restaurante-casa-comal-v1": [],
+        "restaurante-base-casa-comal-v1": [
+          "paleta: \"jamaica\" (elegida)",
+          "tipografía: \"bricolage-grotesque+inter\" (elegida)",
+          "titular: alternativa para no repetir el de la Pro"
+        ]
+      }
+    },
+    "specs/tienda-lote-doce.spec.json": {
+      "ids": [
+        "tienda-lote-doce-v1",
+        "tienda-base-lote-doce-v1"
+      ],
+      "specHash": "3065d05f2254",
+      "files": {
+        "templates/tienda-lote-doce-v1.ts": "fa95b77d8704",
+        "themes/tienda-lote-doce-v1.json": "2b26c988eab8",
+        "demo-profiles/tienda-lote-doce-v1.json": "e2fb8d6add44",
+        "templates/tienda-base-lote-doce-v1.ts": "cd60fc22e929",
+        "themes/tienda-base-lote-doce-v1.json": "7a523f7b05e9",
+        "demo-profiles/tienda-base-lote-doce-v1.json": "e2fb8d6add44",
+        "content/tienda.lote-doce.es-MX.ts": "38704e53803b"
+      },
+      "choices": {
+        "tienda-lote-doce-v1": [],
+        "tienda-base-lote-doce-v1": [
+          "paleta: \"nopal\" (elegida)",
+          "tipografía: \"young-serif+figtree\" (elegida)",
+          "titular: alternativa para no repetir el de la Pro"
+        ]
+      }
+    },
+    "specs/veterinaria-clinica-nogal.spec.json": {
+      "ids": [
+        "veterinaria-clinica-nogal-v1",
+        "veterinaria-base-clinica-nogal-v1"
+      ],
+      "specHash": "62220a7fac35",
+      "files": {
+        "templates/veterinaria-clinica-nogal-v1.ts": "b68e1552ef9f",
+        "themes/veterinaria-clinica-nogal-v1.json": "670bbf719846",
+        "demo-profiles/veterinaria-clinica-nogal-v1.json": "b35e94126a5a",
+        "templates/veterinaria-base-clinica-nogal-v1.ts": "f3147e53990a",
+        "themes/veterinaria-base-clinica-nogal-v1.json": "4629686b168a",
+        "demo-profiles/veterinaria-base-clinica-nogal-v1.json": "b35e94126a5a",
+        "content/veterinaria.clinica-nogal.es-MX.ts": "cabf5649431f"
+      },
+      "choices": {
+        "veterinaria-clinica-nogal-v1": [],
+        "veterinaria-base-clinica-nogal-v1": [
+          "paleta: \"durazno\" (elegida)",
+          "tipografía: \"bricolage-grotesque+inter\" (elegida)",
+          "titular: alternativa para no repetir el de la Pro"
+        ]
+      }
+    },
+    "fixtures/spec/barberia-norte-v1.spec.json": {
+      "ids": [
+        "barberia-norte-v1"
+      ],
+      "specHash": "01794823ac31",
+      "files": {
+        "templates/barberia-norte-v1.ts": "679ad0105b19",
+        "themes/barberia-norte-v1.json": "1d6b8c82a383",
+        "demo-profiles/barberia-norte-v1.json": "bafe62cd1dfd",
+        "content/barberia.norte-v1.es-MX.ts": "f9046bfdd9d8"
+      },
+      "choices": {
+        "barberia-norte-v1": []
+      }
+    },
+    "fixtures/spec/skill-eval/despacho-balance-regio.spec.json": {
+      "ids": [
+        "despacho-balance-regio-v1",
+        "despacho-base-balance-regio-v1"
+      ],
+      "specHash": "2424ba3100ec",
+      "files": {
+        "templates/despacho-balance-regio-v1.ts": "6bbbbcb4737b",
+        "themes/despacho-balance-regio-v1.json": "045316fdd3b7",
+        "demo-profiles/despacho-balance-regio-v1.json": "afa3efff972c",
+        "templates/despacho-base-balance-regio-v1.ts": "8cb83bdef841",
+        "themes/despacho-base-balance-regio-v1.json": "26fe3a6b87ca",
+        "demo-profiles/despacho-base-balance-regio-v1.json": "afa3efff972c",
+        "content/despacho.balance-regio.es-MX.ts": "5060995f80bc"
+      },
+      "choices": {
+        "despacho-balance-regio-v1": [
+          "portada: hero/image-bg → hero/split (única en el giro)",
+          "similitud: services/editorial-table → cards"
+        ],
+        "despacho-base-balance-regio-v1": [
+          "portada: hero/split → hero/centered-arch (única en el giro)"
+        ]
+      }
+    },
+    "fixtures/spec/skill-eval/despacho-norma-contable.spec.json": {
+      "ids": [
+        "despacho-norma-contable-v1",
+        "despacho-base-norma-contable-v1"
+      ],
+      "specHash": "039920b5d3c2",
+      "files": {
+        "templates/despacho-norma-contable-v1.ts": "b439274950d2",
+        "themes/despacho-norma-contable-v1.json": "9eedbab184ee",
+        "demo-profiles/despacho-norma-contable-v1.json": "866183aa0fe0",
+        "templates/despacho-base-norma-contable-v1.ts": "e5a0ee8fc118",
+        "themes/despacho-base-norma-contable-v1.json": "42efbad32df4",
+        "demo-profiles/despacho-base-norma-contable-v1.json": "866183aa0fe0",
+        "content/despacho.norma-contable.es-MX.ts": "ceda8052e821"
+      },
+      "choices": {
+        "despacho-norma-contable-v1": [],
+        "despacho-base-norma-contable-v1": [
+          "paleta: \"berenjena\" (elegida)",
+          "tipografía: \"dm-serif-display+dm-sans\" (elegida)"
+        ]
+      }
+    },
+    "fixtures/spec/skill-eval/restaurante-la-lumbre.spec.json": {
+      "ids": [
+        "restaurante-la-lumbre-v1",
+        "restaurante-base-la-lumbre-v1"
+      ],
+      "specHash": "423dfd7324b2",
+      "files": {
+        "templates/restaurante-la-lumbre-v1.ts": "2b4cb4c78883",
+        "themes/restaurante-la-lumbre-v1.json": "551483bec716",
+        "demo-profiles/restaurante-la-lumbre-v1.json": "f7eacde55145",
+        "templates/restaurante-base-la-lumbre-v1.ts": "96f7623f7332",
+        "themes/restaurante-base-la-lumbre-v1.json": "25bbf868d291",
+        "demo-profiles/restaurante-base-la-lumbre-v1.json": "f7eacde55145",
+        "content/restaurante.la-lumbre.es-MX.ts": "1b3c6d1dd48b"
+      },
+      "choices": {
+        "restaurante-la-lumbre-v1": [
+          "portada: hero/split → hero/image-bg (única en el giro)"
+        ],
+        "restaurante-base-la-lumbre-v1": [
+          "paleta: \"agave\" (elegida)"
+        ]
+      }
+    },
+    "fixtures/spec/skill-eval/veterinaria-tejocote.spec.json": {
+      "ids": [
+        "veterinaria-tejocote-v1",
+        "veterinaria-base-tejocote-v1"
+      ],
+      "specHash": "766ebc36ec4f",
+      "files": {
+        "templates/veterinaria-tejocote-v1.ts": "376ebc3600b7",
+        "themes/veterinaria-tejocote-v1.json": "cb154d3e9425",
+        "demo-profiles/veterinaria-tejocote-v1.json": "b9cdad21d859",
+        "templates/veterinaria-base-tejocote-v1.ts": "66401adfd523",
+        "themes/veterinaria-base-tejocote-v1.json": "18bf6b9ff0ff",
+        "demo-profiles/veterinaria-base-tejocote-v1.json": "b9cdad21d859",
+        "content/veterinaria.tejocote.es-MX.ts": "2e8b8665dbb6"
+      },
+      "choices": {
+        "veterinaria-tejocote-v1": [
+          "portada: hero/split → hero/offset-card (única en el giro)"
+        ],
+        "veterinaria-base-tejocote-v1": [
+          "paleta: \"lila\" (elegida)",
+          "tipografía: \"lora+figtree\" (elegida)"
+        ]
+      }
+    }
+  }
+}

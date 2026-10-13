@@ -16,6 +16,13 @@ import { libraryFingerprints, targetFromCompiled } from '../lib/targets';
 import { validateTarget, type Finding } from '../lib/validate';
 import { planSpec, type SpecPlan } from './compile';
 import {
+  lockChoices,
+  lockFromPlan,
+  lockPathFor,
+  readLock,
+  renderLock,
+} from './lock';
+import {
   readExisting,
   renderFile,
   unifiedDiff,
@@ -92,6 +99,12 @@ export interface BuildReport {
   tiers: TierReport[];
   files: FileReport[];
   problems: SpecProblem[];
+  /** specs/<stem>.lock.json: whether the build reused it and what it did with it. */
+  lock?: {
+    path: string;
+    used: boolean;
+    action: 'create' | 'update' | 'unchanged' | 'skipped';
+  };
   message?: string;
   ms: number;
 }
@@ -222,7 +235,9 @@ export async function buildSpec(opts: BuildOptions): Promise<BuildReport> {
       `no pude leer las plantillas del kit: ${(error as Error).message}`,
     );
   }
-  const planned = await planSpec(spec, library);
+  const lockFile = lockPathFor(specPath);
+  const lock = readLock(lockFile);
+  const planned = await planSpec(spec, library, lock);
   report.problems.push(...planned.problems);
   if (
     !('tiers' in planned) ||
@@ -230,11 +245,25 @@ export async function buildSpec(opts: BuildOptions): Promise<BuildReport> {
   )
     return done(1, 'no se pudo resolver el spec sin chocar con el giro');
   const plan = planned;
+  const root = opts.out ? resolve(opts.out) : KIT_ROOT;
+  const lockTarget = opts.out
+    ? resolve(root, 'specs', lockFile.split('/').at(-1) as string)
+    : lockFile;
+  const nextLock = lockFromPlan(plan, specPath);
+  const lockAction = !lock
+    ? 'create'
+    : lockChoices(lock) === lockChoices(nextLock)
+      ? 'unchanged'
+      : 'update';
+  report.lock = {
+    path: relative(opts.out ? root : KIT_ROOT, lockTarget),
+    used: Boolean(lock && lock.catalog === plan.catalog),
+    action: 'skipped',
+  };
   report.hash = plan.hash;
   report.giro = plan.giro.id;
   report.ids = plan.tiers.map((t) => t.id);
 
-  const root = opts.out ? resolve(opts.out) : KIT_ROOT;
   const scratch = mkdtempSync(join(tmpdir(), 'lattiz-spec-'));
   try {
     const files = targets(plan, root);
@@ -404,6 +433,9 @@ export async function buildSpec(opts: BuildOptions): Promise<BuildReport> {
         await renderFile(creditsFile, marker(creditsFile)),
       );
     }
+    if (opts.out || lockAction !== 'unchanged')
+      writeAtomic(lockTarget, await renderLock(nextLock));
+    report.lock.action = opts.out ? 'create' : lockAction;
     report.written = true;
     if (opts.out) {
       for (const t of plan.tiers) {
@@ -436,4 +468,81 @@ export async function buildSpec(opts: BuildOptions): Promise<BuildReport> {
   } finally {
     rmSync(scratch, { recursive: true, force: true });
   }
+}
+
+export interface LockReport {
+  /** 0 lock written or already current · 1 the spec no longer reproduces its files · 2 unusable spec. */
+  code: 0 | 1 | 2;
+  spec: string;
+  ids: string[];
+  lock: string;
+  action: 'create' | 'update' | 'unchanged' | 'none';
+  /** Every generated file the spec owns, planned with the lock, equals what is on disk. */
+  reproduces: boolean;
+  files: { path: string; state: string; same: boolean }[];
+  problems: SpecProblem[];
+  message?: string;
+}
+
+/**
+ * Writes `<stem>.lock.json` for a spec after checking that planning it (with its current lock, or
+ * from scratch with `refresh`) reproduces the generated files on disk value for value.
+ */
+export async function lockSpec(
+  specFile: string,
+  opts: { refresh?: boolean; write?: boolean } = {},
+): Promise<LockReport> {
+  const specPath = resolve(specFile);
+  const lockFile = lockPathFor(specPath);
+  const report: LockReport = {
+    code: 2,
+    spec: relative(KIT_ROOT, specPath),
+    ids: [],
+    lock: relative(KIT_ROOT, lockFile),
+    action: 'none',
+    reproduces: false,
+    files: [],
+    problems: [],
+  };
+  const { spec, problems } = readSpecFile(specPath);
+  report.problems.push(...problems);
+  if (!spec) return { ...report, message: 'el spec no es válido' };
+  const current = readLock(lockFile);
+  const planned = await planSpec(
+    spec,
+    await libraryFingerprints(),
+    opts.refresh ? undefined : current,
+  );
+  report.problems.push(...planned.problems);
+  if (
+    !('tiers' in planned) ||
+    planned.problems.some((p) => p.level === 'error')
+  )
+    return { ...report, code: 1, message: 'el spec no se resuelve' };
+  report.ids = planned.tiers.map((t) => t.id);
+  for (const f of targets(planned, KIT_ROOT)) {
+    const existing = await readExisting(f.path, f.kind);
+    report.files.push({
+      path: relative(KIT_ROOT, f.path),
+      state: existing.state,
+      same: existing.actualHash === f.hash,
+    });
+  }
+  report.reproduces = report.files.every((f) => f.same);
+  if (!report.reproduces)
+    return {
+      ...report,
+      code: 1,
+      message:
+        'el spec ya no reproduce sus archivos generados (otro catálogo, una edición o un build pendiente): corre `lattiz build` primero; el lock no se escribió',
+    };
+  const next = lockFromPlan(planned, specPath);
+  report.action = !current
+    ? 'create'
+    : lockChoices(current) === lockChoices(next)
+      ? 'unchanged'
+      : 'update';
+  if (opts.write !== false && report.action !== 'unchanged')
+    writeAtomic(lockFile, await renderLock(next));
+  return { ...report, code: 0 };
 }

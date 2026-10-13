@@ -7,21 +7,28 @@ en error, el mensaje va a stderr.
 
 ## Lectura
 
-| Comando                   | Salida (`--json`)                                                                                                                                                                                                                                                                                                                                                                   |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `giro list --json`        | `[{ id, label, category, businessCategory, aliases[], palettes, palettesFree, fontPairs, templates[] }]`                                                                                                                                                                                                                                                                            |
-| `giro show <giro> --json` | `{ id, label, aliases, rules[], palettesList[{ id, label, mood, scheme, accent, free }], fontPairsList[{ id, label, mood, free }], shapes[{ id, label }], tiers.{basico,pro}{ id, counted, defaultSections[], roles[{ role, slot, required, variants[], purpose }] }, copy.<slot>{ keys[{ key, limit?, example? }], variants{} }, heroAlternates[], images{}, business{}, motion }` |
-| `list --offline --json`   | filas con `origin` (`generated`/`frozen`/`clone`/`manual`), `drift[]`, y `unbuilt`                                                                                                                                                                                                                                                                                                  |
-| `spec schema`             | JSON Schema del spec                                                                                                                                                                                                                                                                                                                                                                |
+| Comando                                                         | Salida (`--json`)                                                                                                                                                                                                                                                                                                                                                                   |
+| --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `giro list --json`                                              | `[{ id, label, category, businessCategory, aliases[], palettes, palettesFree, fontPairs, templates[] }]`                                                                                                                                                                                                                                                                            |
+| `giro show <giro> --json`                                       | `{ id, label, aliases, rules[], palettesList[{ id, label, mood, scheme, accent, free }], fontPairsList[{ id, label, mood, free }], shapes[{ id, label }], tiers.{basico,pro}{ id, counted, defaultSections[], roles[{ role, slot, required, variants[], purpose }] }, copy.<slot>{ keys[{ key, limit?, example? }], variants{} }, heroAlternates[], images{}, business{}, motion }` |
+| `list --offline --json`                                         | filas con `origin` (`generated`/`frozen`/`clone`/`manual`), `drift[]`, y `unbuilt`                                                                                                                                                                                                                                                                                                  |
+| `kit capacity [--giro <g>] [--catalog legacy\|extended] --json` | por giro: `{ giro, catalog, templates{pro,basico,total}, pools{palettes, palettesFree, fontPairs, fontPairsFree, heroVariants, heroFreePro, shapes}, hueSlots, headroom{twins,pro,basico,total}{added, stop} }`: cuántas plantillas más acepta el compilador                                                                                                                        |
+| `spec schema`                                                   | JSON Schema del spec                                                                                                                                                                                                                                                                                                                                                                |
 
 `usedAccentHues[]` y `freeHueRanges[]` (grados) dicen qué tonos de acento quedan para una paleta propia cuando ya no hay curadas libres. `free: true` = esa paleta/tipografía no choca con ninguna plantilla del giro: úsala tal cual. `otherFontPairs[]` (misma forma que `fontPairsList`) son los demás pares curados que `brand.fontPair` acepta: úsalos cuando el tono del negocio no está en los del giro (p. ej. una taquería urbana en un giro de restaurantes con serifas).
 
 ## Spec
 
-| Comando                                             | Qué hace                                                                                            |
-| --------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `spec init --giro <g> --nombre "<N>" --twin --json` | escribe `packages/template-kit/specs/<g>-<n>.spec.json` con el copy del giro; `{ file, ids, todo }` |
-| `spec validate <stem\|archivo> --strict --json`     | `{ file, ok, strict, ids, errors, warnings, problems[{ level, path, message, hint?, rule? }] }`     |
+| Comando                                             | Qué hace                                                                                                                                                                |
+| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `spec init --giro <g> --nombre "<N>" --twin --json` | escribe `packages/template-kit/specs/<g>-<n>.spec.json` con el copy del giro; `{ file, ids, todo }`                                                                     |
+| `spec validate <stem\|archivo> --strict --json`     | `{ file, ok, strict, ids, errors, warnings, problems[{ level, path, message, hint?, rule? }] }`                                                                         |
+| `spec lock <stem> \| --all [--refresh] --json`      | escribe `specs/<stem>.lock.json` si el spec reproduce sus archivos; `[{ code, spec, ids, lock, action, reproduces, files[{ path, state, same }], problems, message? }]` |
+
+`spec init` escribe `brand.catalog: "extended"` (paletas, tipografías y variantes nuevas además de las
+de siempre); un spec sin `catalog` es `legacy` y nunca ve lo nuevo al elegir solo (nombrar un id nuevo
+a mano sí funciona). `build` reusa el lock: lo que el spec no fija sale del lock, y si eso ya choca
+el build falla con `spec lock <stem> --refresh` como sugerencia; no lo uses sin que te lo pidan.
 
 Reglas de `--strict` (`rule`): `longitud`, `placeholder`, `promesa`, `contacto-literal`, `marca-real`
 (errores); `acentos`, `ortografia`, `repetido`, `generico`, `datos-ficticios` (avisos). `path` es la
@@ -60,6 +67,11 @@ ruta en el spec que hay que cambiar (`copy.hero.title`, `overrides.basico.copy.h
     }
   ],
   "problems": [],
+  "lock": {
+    "path": "specs/x.lock.json",
+    "used": true,
+    "action": "unchanged"
+  },
   "ms": 5000,
   "next": [
     "pnpm lattiz check … --json",

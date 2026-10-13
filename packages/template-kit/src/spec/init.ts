@@ -3,6 +3,7 @@ import { hueDistance, hueOf, parseColor } from '../lib/color';
 import type { Fingerprint } from '../lib/similarity';
 import { MIN_ACCENT_HUE_DISTANCE } from '../lib/validate';
 import type { ContentObject, ContentValue } from '../types';
+import { fontPairPool, palettePool } from './catalog';
 import { slug } from './presets';
 import { SPEC_VERSION, type Spec, type SpecTier } from './schema';
 
@@ -48,8 +49,9 @@ export function initSpec(opts: {
   const hues = peers
     .map((p) => p.accentHue)
     .filter((h): h is number => h !== null);
+  // New specs pick from the extended catalog (legacy pools first, then the libraries).
   const palette =
-    Object.entries(giro.palettes).find(([, p]) => {
+    palettePool(giro, 'extended').find(([, p]) => {
       const c = parseColor(p.colors.accent);
       const h = c ? hueOf(c) : null;
       return (
@@ -60,7 +62,8 @@ export function initSpec(opts: {
     })?.[0] ?? Object.keys(giro.palettes)[0];
   const fonts = new Set(peers.map((p) => p.fonts));
   const fontPair =
-    giro.fontPairs.find((f) => !fonts.has(f)) ?? giro.fontPairs[0];
+    fontPairPool(giro, 'extended').find((f) => !fonts.has(f)) ??
+    giro.fontPairs[0];
   const twin = opts.tier === 'ambos';
   const tiers: SpecTier[] = twin ? ['pro', 'basico'] : [opts.tier as SpecTier];
   const base = idBaseFor(giro.id, opts.nombre);
@@ -104,7 +107,12 @@ export function initSpec(opts: {
       whatsapp: giro.business.whatsapp,
       whatsappMessage: giro.business.whatsappMessage,
     },
-    brand: { palette: { preset: palette }, fontPair, shape: giro.shapes[0] },
+    brand: {
+      catalog: 'extended',
+      palette: { preset: palette },
+      fontPair,
+      shape: giro.shapes[0],
+    },
     sections: Object.fromEntries(
       tiers.map((t) => [t, giro.sections[t].map((s) => ({ role: s.role }))]),
     ),

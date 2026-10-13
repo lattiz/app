@@ -1,6 +1,6 @@
 import type { Tier } from '../tiers';
 import type { Manifest, Theme } from '../types';
-import { hueOf } from './color';
+import { hueOf, toHex } from './color';
 import { tokenColor } from './theme';
 
 export interface Fingerprint {
@@ -19,6 +19,9 @@ export interface Fingerprint {
   accentHue: number | null;
   /** Normalized hero headline (see normalizeHeadline). */
   headline: string;
+  /** Resolved ground and accent (hex): the extended picker keeps palettes of a giro ΔE-apart. */
+  bg?: string | null;
+  accent?: string | null;
 }
 
 /** Lowercase letters and digits only: "Corte de <b>lujo</b>.<br>Actitud" → "corte de lujo actitud". */
@@ -56,6 +59,11 @@ export function fingerprint(
     services: variantOf('services'),
     accentHue: hue && hue.chroma > 0.08 ? hue.hue : null,
     headline: normalizeHeadline(headlineHtml),
+    bg: (() => {
+      const bg = tokenColor(theme, 'bg');
+      return bg ? toHex(bg) : null;
+    })(),
+    accent: accent ? toHex(accent) : null,
   };
 }
 

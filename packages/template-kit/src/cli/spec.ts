@@ -11,6 +11,7 @@
 import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { GIROS } from '../../giros';
+import { EXTENDED_PALETTES } from '../../palettes';
 import { hueOf, parseColor } from '../lib/color';
 import { KIT_ROOT } from '../lib/paths';
 import { buildSpec, readSpecFile } from '../spec/build';
@@ -66,6 +67,18 @@ async function main(): Promise<number> {
       }
       console.log(`  tipografías: ${giro.fontPairs.join(', ')}`);
       console.log(`  formas: ${giro.shapes.join(', ')}`);
+    }
+    console.log(
+      '\nBiblioteca (catálogo extended; cualquier giro, por nombre o con brand.catalog: "extended")',
+    );
+    for (const [id, p] of Object.entries(EXTENDED_PALETTES)) {
+      const accent = parseColor(p.colors.accent);
+      const hue = accent ? hueOf(accent) : null;
+      const findings = paletteFindings(p);
+      bad += findings.length > 0 ? 1 : 0;
+      console.log(
+        `  ${findings.length ? '✗' : '✓'} ${id.padEnd(22)} ${p.mode.padEnd(6)} acento ${p.colors.accent} ${hue && hue.chroma > 0.08 ? `${Math.round(hue.hue)}°` : 'gris'}  ${p.affinity.join(', ')}${findings.length ? `  ${findings.join('; ')}` : ''}`,
+      );
     }
     return bad > 0 ? 1 : 0;
   }

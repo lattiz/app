@@ -12,3 +12,4 @@ apps/api/openapi.json
 packages/template-kit/sections/**/*.html
 packages/template-kit/fixtures
 packages/template-kit/extracted
+packages/template-kit/golden

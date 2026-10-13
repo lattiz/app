@@ -10,6 +10,7 @@ import { dev } from './commands/dev';
 import { doctor } from './commands/doctor';
 import { freeze, unfreeze } from './commands/freeze';
 import { giro } from './commands/giro';
+import { kit } from './commands/kit';
 import { list } from './commands/list';
 import { motion } from './commands/motion';
 import { newTemplate } from './commands/new';
@@ -26,6 +27,7 @@ const COMMANDS: Command[] = [
   doctor,
   list,
   giro,
+  kit,
   newTemplate,
   spec,
   build,
