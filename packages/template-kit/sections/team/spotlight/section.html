@@ -1,0 +1,17 @@
+<section id="equipo" data-lz-slot="team" data-lz-variant="spotlight" class="lz-section lz-team-spot">
+  <div class="lz-container">
+    <h2 class="lz-title lz-title--section lz-team-spot__title" data-lz-key="title"></h2>
+    <ul class="lz-team-spot__list">
+      <li class="lz-team-spot__member" data-lz-each="members">
+        <img loading="lazy" width="800" height="1000" class="lz-team-spot__photo" data-lz-attr-src="image" data-lz-attr-alt="imageAlt">
+        <div class="lz-team-spot__body">
+          <h3 class="lz-team-spot__name" data-lz-key="name"></h3>
+          <p class="lz-team-spot__role" data-lz-key="role"></p>
+          <ul class="lz-team-spot__tags" data-lz-if="tags">
+            <li class="lz-team-spot__tag" data-lz-each="tags" data-lz-key="."></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>

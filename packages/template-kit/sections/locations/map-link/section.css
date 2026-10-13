@@ -1,0 +1,174 @@
+.lz-locations-book {
+  padding: var(--lz-section-pad) 0;
+  border-top: var(--lz-divider, none);
+}
+
+.lz-locations-book__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: calc(clamp(32px, 6vw, 96px) * var(--lz-space));
+  align-items: start;
+}
+
+.lz-locations-book__title {
+  margin: 0 0 calc(16px * var(--lz-space));
+  letter-spacing: var(--lz-display-tracking, 0.01em);
+  text-wrap: balance;
+}
+
+.lz-locations-book__text {
+  max-width: 48ch;
+  margin: 0 0 calc(28px * var(--lz-space));
+  color: var(--lz-color-muted);
+  font-size: calc(17px * var(--lz-text-scale));
+  line-height: 1.55;
+}
+
+.lz-locations-book__channels {
+  display: grid;
+  gap: calc(10px * var(--lz-space));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lz-locations-book__channel {
+  display: grid;
+  gap: 2px;
+  min-height: 64px;
+  padding: calc(12px * var(--lz-space)) calc(18px * var(--lz-space));
+  border: var(--lz-border-width) solid var(--lz-color-line);
+  border-radius: var(--lz-radius-card);
+  background: var(--lz-card-bg, transparent);
+  color: var(--lz-color-text);
+  touch-action: manipulation;
+}
+
+.lz-locations-book__channel--primary {
+  border-color: var(--lz-color-accent);
+  background: var(--lz-color-accent);
+  color: var(--lz-color-on-accent);
+}
+
+.lz-locations-book__channel:active {
+  transform: scale(var(--lz-press-scale, 0.97));
+  transition: transform var(--lz-dur-press, 120ms)
+    var(--lz-ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+.lz-locations-book__channel:focus-visible {
+  outline: 2px solid var(--lz-color-accent-text);
+  outline-offset: 3px;
+}
+
+.lz-locations-book__label {
+  font-size: calc(14px * var(--lz-text-scale));
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.lz-locations-book__value {
+  font-size: calc(19px * var(--lz-text-scale));
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Long addresses break anywhere instead of pushing the page sideways. */
+.lz-locations-book__value--wrap {
+  overflow-wrap: anywhere;
+}
+
+.lz-locations-book__branches {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lz-locations-book__branch {
+  display: grid;
+  gap: calc(6px * var(--lz-space));
+  padding: calc(24px * var(--lz-space)) 0;
+  border-top: var(--lz-border-width) solid var(--lz-color-line);
+}
+
+.lz-locations-book__branch:last-child {
+  border-bottom: var(--lz-border-width) solid var(--lz-color-line);
+}
+
+.lz-locations-book__name {
+  margin: 0 0 calc(4px * var(--lz-space));
+  font-family: var(--lz-font-display);
+  font-size: calc(clamp(24px, 2.4vw, 32px) * var(--lz-heading-scale, 1));
+  font-weight: var(--lz-display-weight);
+  line-height: 1.15;
+  text-transform: var(--lz-display-transform);
+  letter-spacing: var(--lz-display-tracking, 0.01em);
+}
+
+.lz-locations-book__address {
+  margin: 0;
+  color: var(--lz-color-text);
+  font-size: calc(17px * var(--lz-text-scale));
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.lz-locations-book__hours {
+  margin: 0;
+  color: var(--lz-color-muted);
+  font-size: calc(16px * var(--lz-text-scale));
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+
+.lz-locations-book__directions {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: calc(4px * var(--lz-space));
+  color: var(--lz-color-text);
+  font-size: calc(15px * var(--lz-text-scale));
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--lz-color-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+  touch-action: manipulation;
+}
+
+.lz-locations-book__directions:focus-visible {
+  outline: 2px solid var(--lz-color-accent-text);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lz-locations-book__channel {
+    transition:
+      transform var(--lz-dur-press, 120ms)
+        var(--lz-ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+      border-color var(--lz-dur-ui, 160ms) ease;
+  }
+  .lz-locations-book__channel:hover {
+    border-color: var(--lz-color-accent-text);
+  }
+  .lz-locations-book__directions:hover {
+    color: var(--lz-color-accent-text);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lz-locations-book__channel,
+  .lz-locations-book__channel:active {
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (max-width: 992px) {
+  .lz-locations-book__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
