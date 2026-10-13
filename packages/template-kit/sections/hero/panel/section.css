@@ -1,0 +1,152 @@
+/* Viewport fit: the hero uses at most 90 % of the window under the header (--lz-fit). */
+.lz-hero-panel {
+  padding: clamp(16px, 4svh, 48px) 0 clamp(20px, 5svh, 64px);
+}
+
+.lz-hero-panel__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  align-items: stretch;
+  gap: calc(clamp(16px, 2.4vw, 32px) * var(--lz-space));
+  min-height: min(var(--lz-fit), var(--lz-fit-max));
+}
+
+.lz-hero-panel__media {
+  position: relative;
+  min-height: 0;
+  margin: 0;
+  padding: var(--lz-img-pad, 0px);
+  border: var(--lz-img-ring, none);
+  border-radius: var(--lz-img-shape, var(--lz-radius-card));
+  background: var(--lz-img-frame, transparent);
+}
+
+.lz-hero-panel__image {
+  width: 100%;
+  height: 100%;
+  max-height: min(var(--lz-fit), var(--lz-fit-max));
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--lz-img-shape, var(--lz-radius-card));
+  background: var(--lz-color-surface-2);
+  filter: var(--lz-photo-filter);
+}
+
+/* A tint of the theme (surface-2), never a new color: text keeps the theme's AA pairs. */
+.lz-hero-panel__panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: calc(clamp(20px, 4svh, 56px) * var(--lz-space))
+    calc(clamp(24px, 4vw, 64px) * var(--lz-space));
+  border-radius: var(--lz-radius-card);
+  background: var(--lz-color-surface-2);
+  color: var(--lz-color-text);
+}
+
+.lz-hero-panel__eyebrow {
+  margin: 0 0 calc(14px * var(--lz-space));
+  color: var(--lz-color-text);
+  font-family: var(--lz-font-body);
+  font-size: calc(15px * var(--lz-text-scale));
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.lz-hero-panel__title {
+  margin: 0 0 calc(18px * var(--lz-space));
+  font-size: calc(
+    min(clamp(40px, 4.6vw, 80px), 8svh) * var(--lz-display-scale)
+  );
+  letter-spacing: var(--lz-display-tracking, 0.01em);
+  text-wrap: balance;
+}
+
+.lz-hero-panel__text {
+  max-width: 50ch;
+  margin: 0 0 calc(26px * var(--lz-space));
+  color: var(--lz-color-text);
+  font-size: calc(17px * var(--lz-text-scale));
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.lz-hero-panel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(12px * var(--lz-space));
+}
+
+.lz-hero-panel__cta {
+  touch-action: manipulation;
+}
+
+.lz-hero-panel__cta:active {
+  transform: scale(var(--lz-press-scale, 0.97));
+  transition: transform var(--lz-dur-press, 120ms)
+    var(--lz-ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+.lz-hero-panel__note {
+  margin: calc(18px * var(--lz-space)) 0 0;
+  padding-top: calc(14px * var(--lz-space));
+  border-top: var(--lz-border-width) solid var(--lz-color-line);
+  color: var(--lz-color-text);
+  font-size: calc(15px * var(--lz-text-scale));
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lz-hero-panel__cta:active {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Tablets and phones: the panel first (CTA in view), the photo below it. */
+@media (max-width: 992px) {
+  .lz-hero-panel__grid {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+  .lz-hero-panel__media {
+    order: 2;
+  }
+  .lz-hero-panel__image {
+    aspect-ratio: 16 / 9;
+    height: auto;
+    max-height: calc(var(--lz-fit) * 0.4);
+  }
+}
+
+@media (max-width: 480px) {
+  .lz-hero-panel__panel {
+    padding: calc(22px * var(--lz-space)) calc(18px * var(--lz-space));
+  }
+  .lz-hero-panel__title {
+    font-size: calc(
+      min(var(--lz-title-hero-sm), 7.8svh) * var(--lz-display-scale)
+    );
+  }
+  .lz-hero-panel__text {
+    font-size: calc(16px * var(--lz-text-scale));
+  }
+  .lz-hero-panel__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* Landscape phones and tiny windows: no fitting, natural flow. */
+@media (max-height: 560px) {
+  .lz-hero-panel__grid {
+    min-height: 0;
+  }
+  .lz-hero-panel__image {
+    max-height: 420px;
+  }
+  .lz-hero-panel__title {
+    font-size: calc(var(--lz-title-hero-sm) * var(--lz-display-scale));
+  }
+}

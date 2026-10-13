@@ -247,6 +247,8 @@ export interface CompileSources {
   /** Root of `<vertical>/<theme>/` images; missing ones become placeholders there. */
   assetsRoot?: string;
   outDir?: string;
+  /** A blueprint other than blueprints/<family>.<tier>.ts (`kit probe` lifts the variant lists). */
+  blueprint?: Blueprint;
 }
 
 export async function compileManifest(
@@ -254,7 +256,8 @@ export async function compileManifest(
   manifestFile: string | null = null,
   sources: CompileSources = {},
 ): Promise<CompiledTemplate> {
-  const blueprint = await loadBlueprint(manifest.family, manifest.tier);
+  const blueprint =
+    sources.blueprint ?? (await loadBlueprint(manifest.family, manifest.tier));
   const theme = sources.theme ?? loadTheme(manifest.theme);
   const pack = sources.pack ?? (await loadContentPack(manifest.content));
   if (pack.vertical !== manifest.vertical) {

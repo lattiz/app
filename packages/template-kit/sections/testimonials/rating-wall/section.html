@@ -1,0 +1,21 @@
+<section id="resenas" data-lz-slot="testimonials" data-lz-variant="rating-wall" class="lz-section lz-reviews-wall">
+  <div class="lz-container lz-reviews-wall__grid">
+    <div class="lz-reviews-wall__aside">
+      <p class="lz-reviews-wall__score" data-lz-key="score"></p>
+      <p class="lz-reviews-wall__stars"><span aria-hidden="true">★★★★★</span> <span class="lz-reviews-wall__note" data-lz-key="scoreNote"></span></p>
+      <h2 class="lz-reviews-wall__summary" data-lz-key="summary"></h2>
+      <div class="lz-reviews-wall__actions">
+        <a href="{{googleReviewsUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--secondary lz-reviews-wall__cta" data-lz-key="allReviewsCta"></a>
+        <a href="{{googleReviewUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary lz-reviews-wall__cta" data-lz-if="writeReviewCta" data-lz-key="writeReviewCta"></a>
+      </div>
+    </div>
+    <ul class="lz-reviews-wall__list">
+      <li class="lz-reviews-wall__item" data-lz-each="reviews">
+        <blockquote class="lz-reviews-wall__quote">
+          <p class="lz-reviews-wall__text" data-lz-key="text"></p>
+        </blockquote>
+        <p class="lz-reviews-wall__author" data-lz-key="author"></p>
+      </li>
+    </ul>
+  </div>
+</section>

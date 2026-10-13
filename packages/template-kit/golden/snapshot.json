@@ -18,15 +18,15 @@
       "size": {
         "css": {
           "raw": 29342,
-          "gzip": 5465
+          "gzip": 5463
         },
         "html": {
           "raw": 25144,
-          "gzip": 6653
+          "gzip": 6622
         },
         "index": {
           "raw": 54502,
-          "gzip": 12026
+          "gzip": 11950
         }
       }
     },
@@ -50,11 +50,11 @@
         },
         "html": {
           "raw": 18729,
-          "gzip": 5163
+          "gzip": 5125
         },
         "index": {
           "raw": 42831,
-          "gzip": 9788
+          "gzip": 9720
         }
       }
     },
@@ -74,15 +74,15 @@
       "size": {
         "css": {
           "raw": 23981,
-          "gzip": 4665
+          "gzip": 4661
         },
         "html": {
           "raw": 18561,
-          "gzip": 5238
+          "gzip": 5196
         },
         "index": {
           "raw": 42558,
-          "gzip": 9791
+          "gzip": 9715
         }
       }
     },
@@ -102,15 +102,15 @@
       "size": {
         "css": {
           "raw": 25149,
-          "gzip": 4772
+          "gzip": 4775
         },
         "html": {
           "raw": 17755,
-          "gzip": 5122
+          "gzip": 5085
         },
         "index": {
           "raw": 42920,
-          "gzip": 9798
+          "gzip": 9736
         }
       }
     },
@@ -130,15 +130,15 @@
       "size": {
         "css": {
           "raw": 23729,
-          "gzip": 4596
+          "gzip": 4601
         },
         "html": {
           "raw": 17893,
-          "gzip": 5188
+          "gzip": 5153
         },
         "index": {
           "raw": 41638,
-          "gzip": 9697
+          "gzip": 9632
         }
       }
     },
@@ -158,15 +158,15 @@
       "size": {
         "css": {
           "raw": 31161,
-          "gzip": 5636
+          "gzip": 5634
         },
         "html": {
           "raw": 27733,
-          "gzip": 7129
+          "gzip": 7098
         },
         "index": {
           "raw": 58910,
-          "gzip": 12663
+          "gzip": 12591
         }
       }
     },
@@ -186,15 +186,15 @@
       "size": {
         "css": {
           "raw": 32330,
-          "gzip": 5602
+          "gzip": 5607
         },
         "html": {
           "raw": 27164,
-          "gzip": 7182
+          "gzip": 7141
         },
         "index": {
           "raw": 59510,
-          "gzip": 12715
+          "gzip": 12648
         }
       }
     },
@@ -214,15 +214,15 @@
       "size": {
         "css": {
           "raw": 31228,
-          "gzip": 5747
+          "gzip": 5741
         },
         "html": {
           "raw": 30544,
-          "gzip": 8147
+          "gzip": 8109
         },
         "index": {
           "raw": 61788,
-          "gzip": 13811
+          "gzip": 13729
         }
       }
     },
@@ -246,11 +246,11 @@
         },
         "html": {
           "raw": 26874,
-          "gzip": 6933
+          "gzip": 6910
         },
         "index": {
           "raw": 57772,
-          "gzip": 12268
+          "gzip": 12204
         }
       }
     },
@@ -274,11 +274,11 @@
         },
         "html": {
           "raw": 17414,
-          "gzip": 5044
+          "gzip": 5025
         },
         "index": {
           "raw": 41049,
-          "gzip": 9493
+          "gzip": 9434
         }
       }
     },
@@ -298,15 +298,15 @@
       "size": {
         "css": {
           "raw": 30854,
-          "gzip": 5446
+          "gzip": 5447
         },
         "html": {
           "raw": 26841,
-          "gzip": 6728
+          "gzip": 6698
         },
         "index": {
           "raw": 57711,
-          "gzip": 12091
+          "gzip": 12016
         }
       }
     },
@@ -326,15 +326,15 @@
       "size": {
         "css": {
           "raw": 23966,
-          "gzip": 4644
+          "gzip": 4646
         },
         "html": {
           "raw": 17491,
-          "gzip": 4967
+          "gzip": 4940
         },
         "index": {
           "raw": 41473,
-          "gzip": 9522
+          "gzip": 9451
         }
       }
     },
@@ -354,15 +354,15 @@
       "size": {
         "css": {
           "raw": 24483,
-          "gzip": 4688
+          "gzip": 4685
         },
         "html": {
           "raw": 18711,
-          "gzip": 5209
+          "gzip": 5185
         },
         "index": {
           "raw": 43210,
-          "gzip": 9819
+          "gzip": 9765
         }
       }
     },
@@ -382,15 +382,15 @@
       "size": {
         "css": {
           "raw": 31618,
-          "gzip": 5692
+          "gzip": 5689
         },
         "html": {
           "raw": 26009,
-          "gzip": 6620
+          "gzip": 6593
         },
         "index": {
           "raw": 57643,
-          "gzip": 12222
+          "gzip": 12154
         }
       }
     },
@@ -414,11 +414,11 @@
         },
         "html": {
           "raw": 17702,
-          "gzip": 5074
+          "gzip": 5046
         },
         "index": {
           "raw": 42267,
-          "gzip": 9685
+          "gzip": 9622
         }
       }
     },
@@ -438,15 +438,15 @@
       "size": {
         "css": {
           "raw": 31939,
-          "gzip": 5783
+          "gzip": 5775
         },
         "html": {
           "raw": 26480,
-          "gzip": 6680
+          "gzip": 6648
         },
         "index": {
           "raw": 58435,
-          "gzip": 12364
+          "gzip": 12292
         }
       }
     },
@@ -466,15 +466,15 @@
       "size": {
         "css": {
           "raw": 24928,
-          "gzip": 4724
+          "gzip": 4726
         },
         "html": {
           "raw": 18903,
-          "gzip": 5211
+          "gzip": 5184
         },
         "index": {
           "raw": 43847,
-          "gzip": 9840
+          "gzip": 9782
         }
       }
     },
@@ -494,15 +494,15 @@
       "size": {
         "css": {
           "raw": 31605,
-          "gzip": 5661
+          "gzip": 5655
         },
         "html": {
           "raw": 25646,
-          "gzip": 6454
+          "gzip": 6420
         },
         "index": {
           "raw": 57267,
-          "gzip": 11980
+          "gzip": 11906
         }
       }
     },
@@ -522,15 +522,15 @@
       "size": {
         "css": {
           "raw": 24113,
-          "gzip": 4587
+          "gzip": 4589
         },
         "html": {
           "raw": 17297,
-          "gzip": 4952
+          "gzip": 4916
         },
         "index": {
           "raw": 41426,
-          "gzip": 9452
+          "gzip": 9394
         }
       }
     },
@@ -550,15 +550,15 @@
       "size": {
         "css": {
           "raw": 31975,
-          "gzip": 5771
+          "gzip": 5773
         },
         "html": {
           "raw": 26913,
-          "gzip": 6864
+          "gzip": 6828
         },
         "index": {
           "raw": 58904,
-          "gzip": 12530
+          "gzip": 12467
         }
       }
     },
@@ -578,15 +578,43 @@
       "size": {
         "css": {
           "raw": 24248,
-          "gzip": 4748
+          "gzip": 4745
         },
         "html": {
           "raw": 18658,
-          "gzip": 5201
+          "gzip": 5156
         },
         "index": {
           "raw": 42922,
-          "gzip": 9827
+          "gzip": 9755
+        }
+      }
+    },
+    "restaurante-base-hoja-y-barro-v1": {
+      "manifest": "templates/restaurante-base-hoja-y-barro-v1.ts",
+      "hashes": {
+        "project": "24849ace83e35e5e",
+        "html": "a3c6c99a15ec785d",
+        "css": "6312f3f9a0f7d220",
+        "rootCss": "90189962d185121c",
+        "theme": "536c6aa4d312c28a",
+        "pack": "f52f579931561542",
+        "meta": "2f8a581c02e785d0",
+        "assets": "732fcd03e092141d"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 23598,
+          "gzip": 4527
+        },
+        "html": {
+          "raw": 18519,
+          "gzip": 5213
+        },
+        "index": {
+          "raw": 42133,
+          "gzip": 9621
         }
       }
     },
@@ -606,15 +634,43 @@
       "size": {
         "css": {
           "raw": 33258,
-          "gzip": 5901
+          "gzip": 5900
         },
         "html": {
           "raw": 27095,
-          "gzip": 6850
+          "gzip": 6815
         },
         "index": {
           "raw": 60369,
-          "gzip": 12644
+          "gzip": 12580
+        }
+      }
+    },
+    "restaurante-hoja-y-barro-v1": {
+      "manifest": "templates/restaurante-hoja-y-barro-v1.ts",
+      "hashes": {
+        "project": "4943648936ab6adc",
+        "html": "4983a4c47bf4304a",
+        "css": "13186223828aad96",
+        "rootCss": "715f1352c931621b",
+        "theme": "2f9db845173df9f5",
+        "pack": "f52f579931561542",
+        "meta": "ad10a58fb592f21c",
+        "assets": "705f5f2014722a5f"
+      },
+      "assets": 20,
+      "size": {
+        "css": {
+          "raw": 32464,
+          "gzip": 5850
+        },
+        "html": {
+          "raw": 29409,
+          "gzip": 7136
+        },
+        "index": {
+          "raw": 61889,
+          "gzip": 12880
         }
       }
     },
@@ -634,15 +690,15 @@
       "size": {
         "css": {
           "raw": 24186,
-          "gzip": 4603
+          "gzip": 4599
         },
         "html": {
           "raw": 19027,
-          "gzip": 5265
+          "gzip": 5237
         },
         "index": {
           "raw": 43229,
-          "gzip": 9786
+          "gzip": 9717
         }
       }
     },
@@ -662,15 +718,15 @@
       "size": {
         "css": {
           "raw": 30480,
-          "gzip": 5710
+          "gzip": 5703
         },
         "html": {
           "raw": 26920,
-          "gzip": 6880
+          "gzip": 6858
         },
         "index": {
           "raw": 57416,
-          "gzip": 12451
+          "gzip": 12389
         }
       }
     },
@@ -694,11 +750,11 @@
         },
         "html": {
           "raw": 18019,
-          "gzip": 5145
+          "gzip": 5116
         },
         "index": {
           "raw": 42824,
-          "gzip": 9764
+          "gzip": 9706
         }
       }
     },
@@ -718,15 +774,15 @@
       "size": {
         "css": {
           "raw": 30392,
-          "gzip": 5442
+          "gzip": 5436
         },
         "html": {
           "raw": 26609,
-          "gzip": 6756
+          "gzip": 6734
         },
         "index": {
           "raw": 57017,
-          "gzip": 12101
+          "gzip": 12040
         }
       }
     }
@@ -924,6 +980,26 @@
         ]
       }
     },
+    "specs/restaurante-hoja-y-barro.spec.json": {
+      "ids": [
+        "restaurante-hoja-y-barro-v1",
+        "restaurante-base-hoja-y-barro-v1"
+      ],
+      "specHash": "06adb9f20372",
+      "files": {
+        "templates/restaurante-hoja-y-barro-v1.ts": "ae829febc80d",
+        "themes/restaurante-hoja-y-barro-v1.json": "0df8f7001f09",
+        "demo-profiles/restaurante-hoja-y-barro-v1.json": "9d5047d65133",
+        "templates/restaurante-base-hoja-y-barro-v1.ts": "49c8c8aacb2a",
+        "themes/restaurante-base-hoja-y-barro-v1.json": "6ab577eb8737",
+        "demo-profiles/restaurante-base-hoja-y-barro-v1.json": "9d5047d65133",
+        "content/restaurante.hoja-y-barro.es-MX.ts": "f52f57993156"
+      },
+      "choices": {
+        "restaurante-hoja-y-barro-v1": [],
+        "restaurante-base-hoja-y-barro-v1": []
+      }
+    },
     "specs/tienda-lote-doce.spec.json": {
       "ids": [
         "tienda-lote-doce-v1",
@@ -1046,7 +1122,7 @@
         "themes/restaurante-la-lumbre-v1.json": "551483bec716",
         "demo-profiles/restaurante-la-lumbre-v1.json": "f7eacde55145",
         "templates/restaurante-base-la-lumbre-v1.ts": "96f7623f7332",
-        "themes/restaurante-base-la-lumbre-v1.json": "25bbf868d291",
+        "themes/restaurante-base-la-lumbre-v1.json": "6f046de05baf",
         "demo-profiles/restaurante-base-la-lumbre-v1.json": "f7eacde55145",
         "content/restaurante.la-lumbre.es-MX.ts": "1b3c6d1dd48b"
       },
@@ -1055,7 +1131,7 @@
           "portada: hero/split → hero/image-bg (única en el giro)"
         ],
         "restaurante-base-la-lumbre-v1": [
-          "paleta: \"agave\" (elegida)"
+          "paleta: \"talavera\" (elegida)"
         ]
       }
     },

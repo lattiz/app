@@ -1,0 +1,19 @@
+<section id="nosotros" data-lz-slot="about" data-lz-variant="portrait" class="lz-section lz-about-portrait">
+  <div class="lz-container">
+    <h2 class="lz-title lz-title--section lz-about-portrait__title" data-lz-key="title"></h2>
+    <div class="lz-about-portrait__spread">
+      <figure class="lz-about-portrait__media">
+        <img loading="lazy" width="900" height="1200" class="lz-about-portrait__image" data-lz-attr-src="image" data-lz-attr-alt="imageAlt">
+      </figure>
+      <div class="lz-about-portrait__text">
+        <p class="lz-about-portrait__paragraph" data-lz-each="paragraphs" data-lz-key="."></p>
+      </div>
+    </div>
+    <dl class="lz-about-portrait__stats" data-lz-if="stats">
+      <div class="lz-about-portrait__stat" data-lz-each="stats">
+        <dt class="lz-about-portrait__stat-label" data-lz-key="label"></dt>
+        <dd class="lz-about-portrait__stat-value" data-lz-key="value"></dd>
+      </div>
+    </dl>
+  </div>
+</section>

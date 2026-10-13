@@ -64,3 +64,5 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [vitest-hook-timeout-dist](vitest-hook-timeout-dist.md) — «2 skipped» en el kit con más carpetas en dist/; borrar dist y repetir
 - [template-palette-library](template-palette-library.md) — paletas extended desde semillas (kit:palettes); AA por construcción, ΔE00 ≥ 15 por giro
 - [font-pair-library-fallbacks](font-pair-library-fallbacks.md) — pares extended de 2 familias; size-adjust medido al peso del display; Arial ausente en Linux
+- [extended-section-variants](extended-section-variants.md) — contrato de variantes extended; compuerta `kit probe`; lo legacy queda WARN
+- [page-archetypes-data](page-archetypes-data.md) — 8 arquetipos y módulos por giro como datos; WP8 los conecta y registra `cta`
