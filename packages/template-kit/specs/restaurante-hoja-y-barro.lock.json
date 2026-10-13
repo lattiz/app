@@ -1,0 +1,59 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/restaurante-hoja-y-barro.spec.json",
+  "catalog": "legacy",
+  "catalogVersion": 1,
+  "tiers": {
+    "restaurante-hoja-y-barro-v1": {
+      "tier": "pro",
+      "palette": "custom",
+      "fontPair": "unbounded+manrope",
+      "shape": "organico",
+      "archetype": "editorial-atelier",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "centered-logo" },
+        { "role": "hero", "slot": "hero", "variant": "offset-card" },
+        { "role": "marquee", "slot": "marquee", "variant": "ticker" },
+        { "role": "about", "slot": "about", "variant": "text-image-offset" },
+        { "role": "catalog", "slot": "services", "variant": "product-grid" },
+        { "role": "proof", "slot": "gallery", "variant": "mosaic" },
+        { "role": "team", "slot": "team", "variant": "list" },
+        {
+          "role": "testimonials",
+          "slot": "testimonials",
+          "variant": "quote-feature"
+        },
+        { "role": "faq", "slot": "faq", "variant": "two-col" },
+        { "role": "contact", "slot": "locations", "variant": "with-contact" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "big-wordmark" }
+      ]
+    },
+    "restaurante-base-hoja-y-barro-v1": {
+      "tier": "basico",
+      "palette": "custom",
+      "fontPair": "syne+karla",
+      "shape": "redondo",
+      "archetype": "essential",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "centered-arch" },
+        { "role": "about", "slot": "about", "variant": "brief" },
+        { "role": "catalog", "slot": "services", "variant": "cards" },
+        { "role": "faq", "slot": "faq", "variant": "list" },
+        { "role": "contact", "slot": "locations", "variant": "single" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "columns" }
+      ]
+    }
+  }
+}
