@@ -1,0 +1,92 @@
+{
+  "$lattiz": "GENERATED from specs/clinica-cauce.spec.json (spec b8561714764d, file 3d0b83c78c5b). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "ae6d3a924203249c47cf116fd64abfce6865613c8ab65477a0241e376f5cfd6d",
+      "url": "https://images.pexels.com/photos/29807423/pexels-photo-29807423.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/29807423/"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "url",
+      "sha256": "cfef4a0405b38d77bfdbf53fb126604cbc0cb2792db7982a5f79861741f428de",
+      "url": "https://images.pexels.com/photos/5794059/pexels-photo-5794059.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/5794059/"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "url",
+      "sha256": "7d2e7cf0125db5b12935316a23a85e56f726a75f0291663dae641951c2dd13ec",
+      "url": "https://images.pexels.com/photos/20860586/pexels-photo-20860586.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/20860586/"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "url",
+      "sha256": "1327c4a5f1ab2b19cb21e06ee32d36eca1d524d5c89a802bbe9d8344f83ec040",
+      "url": "https://images.pexels.com/photos/20860585/pexels-photo-20860585.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/20860585/"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "url",
+      "sha256": "4ac40432c316b7cae0959f76c6a91e1f27be33cdacc550e7723e3994d7c21968",
+      "url": "https://images.pexels.com/photos/20860597/pexels-photo-20860597.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/20860597/"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "url",
+      "sha256": "58f706744a644af6910010223529cc766851b5efbfd5716637d0ed5666bbdcfe",
+      "url": "https://images.pexels.com/photos/4269206/pexels-photo-4269206.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/4269206/"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "url",
+      "sha256": "474f0ab87ab31bdf719c52c5c3aa342465e27d4106f1595b815700dc17132427",
+      "url": "https://images.pexels.com/photos/38055772/pexels-photo-38055772.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/38055772/"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "placeholder",
+      "sha256": "3f96091f90a296da42dc70705cb602acf04dc5ea233636076683b744f5b3ba6d"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "placeholder",
+      "sha256": "bd276965dbb13a9f9fb76347701741a22990da16e5c5193837fe72852a6d9823"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "url",
+      "sha256": "9be62f472c36183aeacb9ba9d78e940f8d3b920f6bd82006de705ab4929d46f9",
+      "url": "https://images.pexels.com/photos/6111585/pexels-photo-6111585.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/6111585/"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "url",
+      "sha256": "9b3fb12c17712911842d6b4fc8dd46f1d04106c3558a9013ab0e82dbc080b9cd",
+      "url": "https://images.pexels.com/photos/4047004/pexels-photo-4047004.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/4047004/"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "url",
+      "sha256": "739a56ffa2c9246f869690d721c7b9ce2d08008dd991ae123a86e7c09f7ba364",
+      "url": "https://images.pexels.com/photos/6111592/pexels-photo-6111592.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/6111592/"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "url",
+      "sha256": "dd6261b9340755347bc22abee727b35ef276581032b4f91ca4a6ac273616d0a1",
+      "url": "https://images.pexels.com/photos/20860620/pexels-photo-20860620.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/20860620/"
+    }
+  ]
+}
