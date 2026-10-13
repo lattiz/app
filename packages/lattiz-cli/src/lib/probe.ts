@@ -32,6 +32,7 @@ import { isLegacyVariant } from '../../../template-kit/src/spec/catalog';
 import { SHAPES } from '../../../template-kit/src/spec/presets';
 import {
   composeTheme,
+  customPalette,
   resolveFontPair,
 } from '../../../template-kit/src/spec/theme';
 import type { GiroDefinition } from '../../../template-kit/src/spec/giro';
@@ -154,8 +155,11 @@ export function extendedVariants(): string[] {
   return out.sort();
 }
 
-/** Light legacy theme, dark legacy theme, and one composed with every style preset (extended). */
-export const PROBE_THEMES = ['claro', 'oscuro', 'estilo'] as const;
+/**
+ * Light legacy theme, dark legacy theme, one composed with every style preset (extended), and one
+ * whose accent sits at the AA floor (accent-text only 3:1), so small text in the accent shows up.
+ */
+export const PROBE_THEMES = ['claro', 'oscuro', 'estilo', 'limite'] as const;
 
 function probeTheme(name: string, tier: Tier): Theme {
   if (name === 'claro') return { ...loadTheme('norte-atelier'), tier };
@@ -181,6 +185,24 @@ function probeTheme(name: string, tier: Tier): Theme {
           typeScale: 'expressive',
           tracking: 'tight',
         },
+      },
+    });
+  }
+  if (name === 'limite') {
+    const fontPair = resolveFontPair('fredoka+nunito');
+    const { palette } = customPalette({ bg: '#FFF6F2', accent: '#C23AB2' });
+    if (!fontPair || !palette)
+      throw new Error('falta el par fredoka+nunito o la paleta límite');
+    return composeTheme({
+      name: 'probe-limite',
+      label: 'Sonda con el acento al límite de AA',
+      tier,
+      palette,
+      fontPair,
+      shape: SHAPES.organico,
+      brand: {
+        catalog: 'extended',
+        style: { shape: 'pill', surface: 'tinted' },
       },
     });
   }

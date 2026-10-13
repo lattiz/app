@@ -147,12 +147,14 @@
 @media (hover: hover) and (pointer: fine) {
   .lz-footer-ledger__link,
   .lz-footer-ledger__social {
-    transition: color var(--lz-dur-ui, 160ms)
+    transition: opacity var(--lz-dur-ui, 160ms)
       var(--lz-ease-out, cubic-bezier(0.23, 1, 0.32, 1));
   }
-  .lz-footer-ledger__link:hover,
+  .lz-footer-ledger__link:hover {
+    text-decoration-color: var(--lz-color-accent);
+  }
   .lz-footer-ledger__social:hover {
-    color: var(--lz-color-accent-text);
+    opacity: 0.7;
   }
 }
 

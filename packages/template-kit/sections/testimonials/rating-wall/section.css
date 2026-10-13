@@ -32,7 +32,8 @@
   gap: calc(10px * var(--lz-space));
   margin: 0;
   color: var(--lz-color-accent-text);
-  font-size: calc(20px * var(--lz-text-scale));
+  /* 24 px is large text: accent-text's guaranteed 3:1 is enough. */
+  font-size: calc(24px * var(--lz-text-scale));
   letter-spacing: 0.08em;
 }
 

@@ -103,7 +103,6 @@
 }
 
 .lz-navbar-notice__link:focus-visible {
-  color: var(--lz-color-accent-text);
   outline: 2px solid var(--lz-color-accent-text);
   outline-offset: 3px;
 }
@@ -114,7 +113,10 @@
       var(--lz-ease-out, cubic-bezier(0.23, 1, 0.32, 1));
   }
   .lz-navbar-notice__link:hover {
-    color: var(--lz-color-accent-text);
+    text-decoration: underline;
+    text-decoration-color: var(--lz-color-accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
   }
 }
 

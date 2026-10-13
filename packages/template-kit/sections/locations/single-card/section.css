@@ -98,7 +98,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .lz-location-card__link:hover {
-    color: var(--lz-color-accent-text);
+    text-decoration-thickness: 3px;
   }
 }
 
