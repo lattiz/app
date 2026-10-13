@@ -210,7 +210,11 @@ function sectionsFor(
   slot: string,
   variant: string,
 ): [string, string][] {
-  const base = BASE[tier].map((s) => [...s] as [string, string]);
+  // Under a probed navbar, a portada whose height is exactly the fit tests --lz-header-h.
+  const base = BASE[tier].map(
+    ([s, v]) =>
+      [s, slot === 'navbar' && s === 'hero' ? 'poster' : v] as [string, string],
+  );
   const at = base.findIndex(([s]) => s === slot);
   if (at >= 0) {
     base[at][1] = variant;
@@ -367,7 +371,8 @@ async function inspect(
       await page.setViewportSize({ width: vp.width, height: vp.height });
       await page.evaluate(() => window.scrollTo(0, 0));
       await page.waitForTimeout(80);
-      if (slot === 'hero' && vp.height > 560) {
+      // A navbar sets --lz-header-h, so the portada under it must still fit.
+      if ((slot === 'hero' || slot === 'navbar') && vp.height > 560) {
         for (const m of await page.evaluate(measureFit)) {
           if (m.slot !== 'hero') continue;
           const fits =

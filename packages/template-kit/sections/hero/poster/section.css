@@ -113,9 +113,19 @@
 }
 
 @media (max-width: 480px) {
+  .lz-hero-poster {
+    grid-template-rows: auto minmax(72px, 1fr) auto;
+    padding: 12px 0 16px;
+  }
+  .lz-hero-poster__head {
+    padding-bottom: 14px;
+  }
+  .lz-hero-poster__foot {
+    padding-top: 16px;
+  }
   .lz-hero-poster__title {
     font-size: calc(
-      min(var(--lz-title-hero-sm), 8.5svh) * var(--lz-display-scale)
+      min(var(--lz-title-hero-sm), 7.6svh) * var(--lz-display-scale)
     );
   }
   .lz-hero-poster__text {

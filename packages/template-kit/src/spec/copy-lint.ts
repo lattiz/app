@@ -14,6 +14,10 @@ import { mergedCopy } from './validate';
  */
 export const COPY_LIMITS: Record<string, number> = {
   'navbar.cta': 16,
+  // Extended variants (WP6): keys only the new variants read.
+  'navbar.notice': 40,
+  'hero.note': 40,
+  'hero.detailAlt': 125,
   'hero.eyebrow': 48,
   'hero.title': 56,
   'hero.text': 150,
