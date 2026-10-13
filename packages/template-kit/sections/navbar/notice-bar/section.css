@@ -65,6 +65,7 @@
 .lz-navbar-notice__brand {
   display: inline-flex;
   align-items: center;
+  min-width: 44px;
   min-height: 44px;
   font-family: var(--lz-font-display);
   font-size: 30px;
@@ -92,6 +93,8 @@
 .lz-navbar-notice__link {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  min-width: 44px;
   min-height: 44px;
   color: var(--lz-color-text);
   font-size: 15px;

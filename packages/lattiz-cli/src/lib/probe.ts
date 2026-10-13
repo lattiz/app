@@ -34,6 +34,7 @@ import {
   composeTheme,
   resolveFontPair,
 } from '../../../template-kit/src/spec/theme';
+import type { GiroDefinition } from '../../../template-kit/src/spec/giro';
 import type { Tier } from '../../../template-kit/src/tiers';
 import type {
   Blueprint,
@@ -187,7 +188,7 @@ function probeTheme(name: string, tier: Tier): Theme {
 }
 
 /** The tier's real blueprint without variant lists, plus a `cta` role for the new CTA band. */
-async function probeBlueprint(tier: Tier): Promise<Blueprint> {
+export async function probeBlueprint(tier: Tier): Promise<Blueprint> {
   const real = await loadBlueprint('service-landing', tier);
   const roles: Record<string, BlueprintRole> = Object.fromEntries(
     Object.entries(real.roles).map(([role, spec]) => [
@@ -227,21 +228,34 @@ function sectionsFor(
   return list;
 }
 
-async function probePage(
-  tier: Tier,
-  slot: string,
-  variant: string,
-  meta: SectionMeta,
-  themeName: string,
-  mode: CopyMode,
-  dir: string,
-): Promise<{
-  manifest: Manifest;
-  compiled: Awaited<ReturnType<typeof compileManifest>>;
-}> {
-  const giro = copySource(slot, meta);
+/** `{{branch}}` (the colonia) is a spec-compiler variable; the giro copy carries it raw. */
+function withBranch(data: ContentObject, branch: string): ContentObject {
+  return JSON.parse(
+    JSON.stringify(data).replaceAll('{{branch}}', branch),
+  ) as ContentObject;
+}
+
+export interface PageInput {
+  id: string;
+  name: string;
+  tier: Tier;
+  /** [slot, variant] in page order. */
+  sections: [string, string][];
+  giro: GiroDefinition;
+  theme: Theme;
+  mode: CopyMode;
+  dir: string;
+  /** Copy merged over the giro's, by slot (variant samples, vertical module copy). */
+  extra?: Record<string, ContentObject>;
+  archetype?: string;
+}
+
+/** A whole page from the giro's copy, compiled by the real compiler into `dir` (kit probe, kit archetypes). */
+export async function composePage(
+  input: PageInput,
+): Promise<Awaited<ReturnType<typeof compileManifest>>> {
+  const { tier, sections, giro, mode } = input;
   const business = businessFor(giro, mode);
-  const sections = sectionsFor(tier, slot, variant);
   const present = new Set(sections.map(([s]) => s));
   const links = Object.entries(ANCHORS)
     .filter(([s]) => present.has(s))
@@ -254,46 +268,70 @@ async function probePage(
     ]);
   const packSections: Record<string, ContentObject> = {};
   for (const [s, v] of sections) {
-    const m = s === slot ? meta : await loadSectionMeta(s, v);
-    const data = sectionData(s, giro, business, mode, m.sample);
+    const m = await loadSectionMeta(s, v);
+    const data = sectionData(s, giro, business, mode, {
+      ...(m.sample ?? {}),
+      ...(input.extra?.[s] ?? {}),
+    });
     if (s === 'navbar' || s === 'footer') data.links = links;
-    packSections[s] = data;
+    packSections[s] = withBranch(data, giro.business.branch);
   }
   const pack: ContentPack = {
     vertical: giro.id,
     locale: 'es-MX',
     business,
     head: {
-      title: `${slot}/${variant} · sonda`,
-      description: `Sonda de la variante ${slot}/${variant} en una página ${tier}.`,
+      title: input.name,
+      description: `${input.name}: página local de prueba (${tier}).`,
     },
     sections: packSections,
   };
-  const id = `probe-${slot}-${variant}`.slice(0, 60);
   const manifest: Manifest = {
-    id,
-    name: `Sonda ${slot}/${variant}`,
+    id: input.id.slice(0, 60),
+    name: input.name,
     category: giro.category,
-    description: 'Sonda local de una variante',
+    description: 'Página local de prueba',
     family: 'service-landing',
     tier,
     vertical: giro.id,
-    archetype: tier === 'basic' ? 'essential' : 'editorial-atelier',
-    theme: 'probe',
+    archetype:
+      input.archetype ?? (tier === 'basic' ? 'essential' : 'editorial-atelier'),
+    theme: input.theme.name,
     content: 'probe',
     sections: sections.map(
       ([s, v]): ManifestSection => ({ slot: s, variant: v }),
     ),
   };
   const compiled = await compileManifest(manifest, null, {
-    theme: probeTheme(themeName, tier),
+    theme: input.theme,
     pack,
     blueprint: await probeBlueprint(tier),
     assetsRoot: resolve(PROBE_DIR, '_assets'),
-    outDir: dir,
+    outDir: input.dir,
   });
   writeCompiled(compiled);
-  return { manifest, compiled };
+  return compiled;
+}
+
+async function probePage(
+  tier: Tier,
+  slot: string,
+  variant: string,
+  meta: SectionMeta,
+  themeName: string,
+  mode: CopyMode,
+  dir: string,
+): Promise<Awaited<ReturnType<typeof compileManifest>>> {
+  return composePage({
+    id: `probe-${slot}-${variant}`,
+    name: `Sonda ${slot}/${variant}`,
+    tier,
+    sections: sectionsFor(tier, slot, variant),
+    giro: copySource(slot, meta),
+    theme: probeTheme(themeName, tier),
+    mode,
+    dir,
+  });
 }
 
 const axePath = createRequire(import.meta.url).resolve('axe-core/axe.min.js');
@@ -333,11 +371,11 @@ const MIN_TAP = 44;
 
 function layoutIssues(
   vp: string,
-  slot: string,
+  slot: string | null,
   found: LayoutIssue[],
 ): ProbeIssue[] {
   return found
-    .filter((i) => i.selector.startsWith(`${slot} ›`))
+    .filter((i) => !slot || i.selector.startsWith(`${slot} ›`))
     .map((i) => ({
       rule: i.kind,
       status: 'FAIL' as const,
@@ -346,14 +384,15 @@ function layoutIssues(
     }));
 }
 
-async function inspect(
+/** Chromium rules on one section (`slot`) or, with `slot` null, the whole page. */
+export async function inspect(
   browser: Browser,
   file: string,
-  slot: string,
+  slot: string | null,
   shotsDir: string,
 ): Promise<{ issues: ProbeIssue[]; shots: string[] }> {
   const url = pathToFileURL(file).href;
-  const selector = `[data-lz-slot="${slot}"]`;
+  const selector = slot ? `[data-lz-slot="${slot}"]` : 'body';
   const issues: ProbeIssue[] = [];
   const shots: string[] = [];
   // One page, resized per viewport: the layout and the svh units follow the window without a reload.
@@ -372,7 +411,7 @@ async function inspect(
       await page.evaluate(() => window.scrollTo(0, 0));
       await page.waitForTimeout(80);
       // A navbar sets --lz-header-h, so the portada under it must still fit.
-      if ((slot === 'hero' || slot === 'navbar') && vp.height > 560) {
+      if ((!slot || slot === 'hero' || slot === 'navbar') && vp.height > 560) {
         for (const m of await page.evaluate(measureFit)) {
           if (m.slot !== 'hero') continue;
           const fits =
@@ -421,7 +460,8 @@ async function inspect(
       if (vp.label === '390' || vp.label === '1440') {
         const png = resolve(shotsDir, `${vp.label}.png`);
         // Fixed or sticky blocks (navbar, floating button) are shot with the first screen.
-        if (slot === 'navbar' || slot === 'floating-whatsapp')
+        if (!slot) await page.screenshot({ path: png, fullPage: true });
+        else if (slot === 'navbar' || slot === 'floating-whatsapp')
           await page.screenshot({ path: png });
         else await page.locator(selector).first().screenshot({ path: png });
         shots.push(png);
@@ -433,7 +473,7 @@ async function inspect(
   return { issues, shots };
 }
 
-function dedupe(issues: ProbeIssue[]): ProbeIssue[] {
+export function dedupe(issues: ProbeIssue[]): ProbeIssue[] {
   const seen = new Map<string, ProbeIssue>();
   for (const i of issues) {
     const key = `${i.rule}|${i.detail}`;
@@ -484,7 +524,7 @@ export async function kitProbe(opts: ProbeOptions = {}): Promise<{
             const issues: ProbeIssue[] = [];
             let shots: string[] = [];
             try {
-              const { compiled } = await probePage(
+              const compiled = await probePage(
                 tier,
                 slot,
                 variant,

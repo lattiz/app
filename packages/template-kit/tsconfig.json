@@ -25,6 +25,7 @@
     "giros/**/*",
     "palettes/**/*",
     "font-pairs/**/*",
+    "archetypes/**/*",
     "templates/**/*",
     "vitest.config.ts"
   ],

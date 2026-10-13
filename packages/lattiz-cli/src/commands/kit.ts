@@ -8,6 +8,7 @@ import { browserPath } from '../lib/browser';
 import { bool, type Command, type Context, str } from '../lib/command';
 import { EXIT, type ExitCode, usage } from '../lib/errors';
 import { REPO_ROOT } from '../lib/paths';
+import { kitArchetypes } from '../lib/archetypes';
 import { kitProbe } from '../lib/probe';
 import { GIROS } from '../lib/spec';
 import { c, log, setQuiet, table } from '../lib/ui';
@@ -150,12 +151,37 @@ async function runProbe(ctx: Context): Promise<ExitCode> {
   return failed.length ? EXIT.GATE : EXIT.OK;
 }
 
+async function runArchetypes(ctx: Context): Promise<ExitCode> {
+  log.title('lattiz kit archetypes');
+  const { cases, sheet, ms } = await kitArchetypes({
+    only: ctx.positionals.slice(1),
+    log: (line) => log.plain(line),
+  });
+  const failed = cases.filter((x) => x.status === 'FAIL');
+  if (bool(ctx.flags, 'json')) {
+    console.log(
+      JSON.stringify({ sheet: relative(REPO_ROOT, sheet), cases }, null, 2),
+    );
+    return failed.length ? EXIT.GATE : EXIT.OK;
+  }
+  for (const f of failed) {
+    log.plain(`\n${c.bold(f.archetype)} · ${f.tier}`);
+    for (const i of f.issues.filter((x) => x.status === 'FAIL').slice(0, 12))
+      log.plain(`  ${i.status} ${i.rule} [${i.viewport}] ${i.detail}`);
+  }
+  log.plain('');
+  const summary = `${cases.length - failed.length}/${cases.length} páginas sin FAIL · ${relative(REPO_ROOT, sheet)} (${(ms / 1000).toFixed(1)} s)`;
+  if (failed.length) log.fail(summary);
+  else log.ok(summary);
+  return failed.length ? EXIT.GATE : EXIT.OK;
+}
+
 export const kit: Command = {
   name: 'kit',
   summary:
     'El kit por dentro: capacidad por giro y galería visual (secciones, paletas, tipografías)',
   usage:
-    'kit capacity|gallery|probe [--giro <g>] [--catalog legacy|extended] [--slot s] [--palettes] [--fonts] [--json]',
+    'kit capacity|gallery|probe|archetypes [--giro <g>] [--catalog legacy|extended] [--slot s] [--palettes] [--fonts] [--json]',
   help: [
     'kit capacity            por giro: plantillas, paletas, pares tipográficos y portadas Pro libres, tonos',
     '                        de acento que aún caben y cuántas plantillas más acepta el compilador (simula',
@@ -177,6 +203,9 @@ export const kit: Command = {
     '                        kit:validate + Chromium (overflow, texto < 14 px, táctiles < 44 px, contraste axe,',
     '                        encaje y pliegue en portadas). .lattiz/probe/; sale con 1 si hay FAIL.',
     '  --themes claro,oscuro,estilo   --modes demo,largo,corto',
+    'kit archetypes [id…]    una página Pro y una Básica por arquetipo (archetypes/: variantes, estilos y',
+    '                        espécimen), validada completa y auditada como kit probe;',
+    '                        .lattiz/gallery/archetypes.html. Sale con 1 si hay FAIL.',
   ],
   options: {
     json: { type: 'boolean' },
@@ -198,9 +227,10 @@ export const kit: Command = {
     if (sub === 'capacity') return runCapacity(ctx);
     if (sub === 'gallery') return runGallery(ctx);
     if (sub === 'probe') return runProbe(ctx);
+    if (sub === 'archetypes') return runArchetypes(ctx);
     throw usage(
       sub ? `Subcomando desconocido: ${sub}` : 'Falta el subcomando.',
-      'pnpm lattiz kit capacity|gallery|probe',
+      'pnpm lattiz kit capacity|gallery|probe|archetypes',
     );
   },
 };
