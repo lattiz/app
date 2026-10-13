@@ -1,0 +1,26 @@
+<section id="servicios" data-lz-slot="services" data-lz-variant="menu-columns" class="lz-section lz-services-menu">
+  <div class="lz-container">
+    <div class="lz-services-menu__head">
+      <h2 class="lz-title lz-title--section lz-services-menu__title" data-lz-key="title"></h2>
+      <p class="lz-services-menu__intro" data-lz-if="intro" data-lz-key="intro"></p>
+    </div>
+    <ul class="lz-services-menu__list">
+      <li class="lz-services-menu__item" data-lz-each="prices">
+        <div class="lz-services-menu__row">
+          <h3 class="lz-services-menu__name" data-lz-key="name"></h3>
+          <span aria-hidden="true" class="lz-services-menu__leader"></span>
+          <p class="lz-services-menu__price" data-lz-key="price"></p>
+        </div>
+        <p class="lz-services-menu__desc" data-lz-key="description"></p>
+      </li>
+    </ul>
+    <div class="lz-services-menu__promos" data-lz-if="promos">
+      <article class="lz-services-menu__promo" data-lz-each="promos">
+        <p class="lz-services-menu__tag" data-lz-if="tag" data-lz-key="tag"></p>
+        <h3 class="lz-services-menu__promo-title" data-lz-key="title"></h3>
+        <p class="lz-services-menu__promo-text" data-lz-if="text" data-lz-key="text"></p>
+        <a target="_blank" rel="noopener noreferrer" class="lz-services-menu__promo-cta" data-lz-attr-href="href" data-lz-key="cta"></a>
+      </article>
+    </div>
+  </div>
+</section>
