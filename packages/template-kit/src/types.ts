@@ -120,6 +120,14 @@ export interface SectionMeta {
   placeholder?: { width: number; height: number };
   /** Content keys the fragment reads, for authors and agents (`items[].name` for list fields). */
   contentKeys: string[];
+  /** Extended variants: the tiers it is designed for (legacy ones follow the blueprints). */
+  tiers?: Tier[];
+  /** Extended variants: one-line design intent (what sets it apart, for which business). */
+  intent?: string;
+  /** Extended variants: page archetypes (archetypes/) it suits, best first. */
+  archetypes?: string[];
+  /** Copy for keys no giro writes yet; the gallery and `kit probe` merge it over the giro's copy. */
+  sample?: ContentObject;
 }
 
 export type ContentValue =

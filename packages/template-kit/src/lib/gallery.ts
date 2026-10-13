@@ -13,6 +13,7 @@ import { GIROS } from '../../giros';
 import { EXTENDED_FONT_PAIRS } from '../../font-pairs';
 import { EXTENDED_PALETTES } from '../../palettes';
 import type { GiroDefinition } from '../spec/giro';
+import { isLegacyVariant } from '../spec/catalog';
 import { COPY_LIMITS } from '../spec/copy-lint';
 import { missingPaths } from '../spec/copy-keys';
 import {
@@ -56,6 +57,8 @@ export type CopyMode = 'demo' | 'corto' | 'largo' | 'sin-imagen';
 export interface GalleryOptions {
   /** Only these slots' section sheets (default: every slot). */
   slots?: string[];
+  /** Only the variants outside the legacy catalog (src/spec/catalog.ts). */
+  extendedOnly?: boolean;
   sections?: boolean;
   palettes?: boolean;
   fonts?: boolean;
@@ -125,7 +128,7 @@ const clone = <T>(v: T): T => JSON.parse(JSON.stringify(v)) as T;
 const isObject = (v: unknown): v is ContentObject =>
   typeof v === 'object' && v !== null && !Array.isArray(v);
 
-function businessFor(giro: GiroDefinition, mode: CopyMode): Business {
+export function businessFor(giro: GiroDefinition, mode: CopyMode): Business {
   const base: Business = {
     name: 'Casa Ejemplo',
     shortName: 'Ejemplo',
@@ -206,18 +209,15 @@ function derived(
   return {};
 }
 
-/** First giro (barbería first) whose copy has every key the variant reads. */
-function copySource(slot: string, meta: SectionMeta): GiroDefinition {
+/** First giro (barbería first) whose copy, plus the variant's sample, has every key it reads. */
+export function copySource(slot: string, meta: SectionMeta): GiroDefinition {
   const order = [
     'barberia',
     ...Object.keys(GIROS).filter((g) => g !== 'barberia'),
   ];
   for (const id of order) {
-    const data = GIROS[id].copy[slot];
-    if (
-      data &&
-      meta.contentKeys.every((k) => missingPaths(data, k).length === 0)
-    )
+    const data = { ...(GIROS[id].copy[slot] ?? {}), ...(meta.sample ?? {}) };
+    if (meta.contentKeys.every((k) => missingPaths(data, k).length === 0))
       return GIROS[id];
   }
   return GIROS.barberia;
@@ -272,13 +272,14 @@ function stress(
   return pad(value, limit);
 }
 
-function sectionData(
+export function sectionData(
   slot: string,
   giro: GiroDefinition,
   business: Business,
   mode: CopyMode,
+  sample: ContentObject = {},
 ): ContentObject {
-  const base = clone(giro.copy[slot] ?? {});
+  const base = clone({ ...(giro.copy[slot] ?? {}), ...sample });
   const data =
     mode === 'demo' || mode === 'sin-imagen'
       ? base
@@ -337,11 +338,12 @@ function sheet(title: string, intro: string, body: string): string {
   return `<!DOCTYPE html><html lang="es-MX"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escapeHtml(title)}</title><style>${SHEET_CSS}</style></head><body><header><h1>${escapeHtml(title)}</h1><a href="../index.html">← galería</a></header><p class="note">${intro}</p>${body}</body></html>\n`;
 }
 
-function variantsOf(slot: string): string[] {
+function variantsOf(slot: string, extendedOnly = false): string[] {
   const dir = resolve(paths.sections, slot);
   return readdirSync(dir, { withFileTypes: true })
     .filter((d) => d.isDirectory())
     .map((d) => d.name)
+    .filter((v) => !extendedOnly || !isLegacyVariant(slot, v))
     .sort();
 }
 
@@ -350,6 +352,7 @@ async function sectionSheets(
   out: string,
   opts: Required<Pick<GalleryOptions, 'themes' | 'noImage'>> & {
     slots: string[];
+    extendedOnly: boolean;
     log: (l: string) => void;
   },
 ): Promise<{ pages: string[]; shots: number }> {
@@ -365,7 +368,9 @@ async function sectionSheets(
   let shots = 0;
   for (const slot of opts.slots) {
     const rows: string[] = [];
-    for (const variant of variantsOf(slot)) {
+    const variants = variantsOf(slot, opts.extendedOnly);
+    if (variants.length === 0) continue;
+    for (const variant of variants) {
       const meta = await loadSectionMeta(slot, variant);
       const giro = copySource(slot, meta);
       const css = readFileSync(
@@ -379,7 +384,7 @@ async function sectionSheets(
       for (const theme of themes) {
         for (const mode of modes) {
           const business = businessFor(giro, mode);
-          const data = sectionData(slot, giro, business, mode);
+          const data = sectionData(slot, giro, business, mode, meta.sample);
           const dir = resolve(out, 'sections', slot, variant);
           mkdirSync(dir, { recursive: true });
           const root = renderSection(html, data, {
@@ -406,7 +411,13 @@ async function sectionSheets(
             );
             img.setAttribute('src', relative(dir, file));
           }
-          const tier = ['brief', 'single'].includes(variant) ? 'basic' : 'pro';
+          const tier = meta.tiers
+            ? meta.tiers.includes('pro')
+              ? 'pro'
+              : 'basic'
+            : ['brief', 'single'].includes(variant)
+              ? 'basic'
+              : 'pro';
           const section = root.outerHTML;
           const body =
             meta.region === 'main'
@@ -685,6 +696,7 @@ export async function kitGallery(
       log('Secciones');
       const r = await sectionSheets(page, out, {
         slots,
+        extendedOnly: Boolean(opts.extendedOnly),
         themes: opts.themes ?? DEFAULT_THEMES,
         noImage: Boolean(opts.noImage),
         log,

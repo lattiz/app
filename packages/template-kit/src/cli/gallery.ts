@@ -2,7 +2,7 @@
  * Visual QA gallery: section sheets, palette and font pair specimens in .lattiz/gallery/.
  *
  *   pnpm --filter @lattiz/template-kit kit:gallery [--slot hero[,footer]] [--palettes] [--fonts]
- *     [--themes norte-atelier,oxido] [--sin-imagen]
+ *     [--themes norte-atelier,oxido] [--sin-imagen] [--extended]
  */
 import { relative } from 'node:path';
 import { parseArgs, runCli } from '../lib/args';
@@ -19,6 +19,7 @@ async function main(): Promise<void> {
       : undefined;
   const result = await kitGallery({
     slots: list('slot'),
+    extendedOnly: flags.has('extended'),
     palettes: flags.has('palettes'),
     fonts: flags.has('fonts'),
     tokens: flags.has('tokens'),
