@@ -13,6 +13,7 @@ import {
 import { isTier, TIER_NAMES, type Tier } from '../tiers';
 import { KitError } from './args';
 import { paths, sectionDir } from './paths';
+import { styleProblems } from './style';
 
 type Rec = Record<string, unknown>;
 
@@ -118,6 +119,7 @@ export function parseTheme(raw: unknown, file: string): Theme {
   const effects = isRecord(raw.effects) ? raw.effects : {};
   problems.push(
     ...requireStrings(effects, ['mapFilter', 'heroImageFilter'], 'effects'),
+    ...styleProblems(raw.style),
   );
   if (problems.length > 0)
     throw new KitError(`${file}:\n  ${problems.join('\n  ')}`);

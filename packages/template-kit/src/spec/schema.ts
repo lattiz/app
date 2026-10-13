@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { ROLES } from '../tiers';
+import { STYLE_OPTIONS } from '../lib/style';
 import { RHYTHM_TOKENS, type RhythmToken } from '../types';
 
 /**
@@ -119,8 +120,49 @@ const RhythmSchema = z
     'Ajuste fino del ritmo del tema (docs/template-workflow.md §6): sectionPad, gutter, space, textScale, title*.',
   );
 
+const StyleSchema = z
+  .strictObject({
+    shape: z
+      .enum(STYLE_OPTIONS.shape)
+      .optional()
+      .describe('Radios de botones, tarjetas e imágenes.'),
+    surface: z
+      .enum(STYLE_OPTIONS.surface)
+      .optional()
+      .describe('Tarjetas y paneles: planos, con filete, teñidos o elevados.'),
+    density: z
+      .enum(STYLE_OPTIONS.density)
+      .optional()
+      .describe(
+        'Aire: padding de sección, separaciones y ancho del contenedor.',
+      ),
+    divider: z
+      .enum(STYLE_OPTIONS.divider)
+      .optional()
+      .describe('Separador entre secciones.'),
+    imageTreatment: z
+      .enum(STYLE_OPTIONS.imageTreatment)
+      .optional()
+      .describe('Marco o máscara de las fotos (solo CSS).'),
+    typeScale: z
+      .enum(STYLE_OPTIONS.typeScale)
+      .optional()
+      .describe('Tamaño de títulos respecto al par tipográfico.'),
+    displayCase: z.enum(STYLE_OPTIONS.displayCase).optional(),
+    tracking: z.enum(STYLE_OPTIONS.tracking).optional(),
+  })
+  .describe(
+    'Estilos opt-in del catálogo extended (docs/template-kit-catalog.md › Tokens de estilo). Solo con brand.catalog: extended.',
+  );
+
 export const BrandSchema = z
   .strictObject({
+    catalog: z
+      .enum(['legacy', 'extended'])
+      .optional()
+      .describe(
+        'Catálogo del que elige el compilador: legacy (por defecto, los pools de siempre) o extended (más paletas, tipografías, variantes y arquetipos). `lattiz spec init` escribe extended.',
+      ),
     palette: PaletteSchema.optional(),
     fontPair: FontPairSchema.optional(),
     shape: z
@@ -149,6 +191,7 @@ export const BrandSchema = z
       .optional()
       .describe('Multiplica el tamaño de los títulos (fuentes anchas < 1).'),
     rhythm: RhythmSchema.optional(),
+    style: StyleSchema.optional(),
   })
   .describe(
     'Identidad visual. Lo que falte lo elige el compilador entre lo curado del giro, sin chocar con el rubro.',
@@ -312,7 +355,7 @@ const TierOverrideSchema = z.strictObject({
     .optional()
     .describe('Nombre de la plantilla en la galería para este tier.'),
   description: z.string().optional(),
-  brand: BrandSchema.optional(),
+  brand: BrandSchema.omit({ catalog: true }).optional(),
   copy: CopySchema.optional(),
 });
 

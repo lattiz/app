@@ -1,0 +1,59 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/estetica-estudio-nacar.spec.json",
+  "catalog": "legacy",
+  "catalogVersion": 1,
+  "tiers": {
+    "estetica-estudio-nacar-v1": {
+      "tier": "pro",
+      "palette": "rubor",
+      "fontPair": "cormorant-garamond+work-sans",
+      "shape": "organico",
+      "archetype": "editorial-atelier",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "centered-logo" },
+        { "role": "hero", "slot": "hero", "variant": "split" },
+        { "role": "marquee", "slot": "marquee", "variant": "ticker" },
+        { "role": "about", "slot": "about", "variant": "text-image-offset" },
+        { "role": "catalog", "slot": "services", "variant": "price-list" },
+        { "role": "team", "slot": "team", "variant": "grid" },
+        { "role": "proof", "slot": "gallery", "variant": "mosaic" },
+        {
+          "role": "testimonials",
+          "slot": "testimonials",
+          "variant": "quote-feature"
+        },
+        { "role": "faq", "slot": "faq", "variant": "list" },
+        { "role": "contact", "slot": "locations", "variant": "with-contact" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "big-wordmark" }
+      ]
+    },
+    "estetica-base-estudio-nacar-v1": {
+      "tier": "basico",
+      "palette": "malva",
+      "fontPair": "instrument-serif+instrument-sans",
+      "shape": "organico",
+      "archetype": "essential",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "centered-logo" },
+        { "role": "hero", "slot": "hero", "variant": "centered-arch" },
+        { "role": "about", "slot": "about", "variant": "brief" },
+        { "role": "catalog", "slot": "services", "variant": "price-list" },
+        { "role": "faq", "slot": "faq", "variant": "list" },
+        { "role": "contact", "slot": "locations", "variant": "single" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "minimal-centered" }
+      ]
+    }
+  }
+}

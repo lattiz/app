@@ -3,6 +3,7 @@ import { existsSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { GIROS } from '../../giros';
 import { hueDistance, hueOf, parseColor } from '../lib/color';
+import { MIN_PALETTE_DISTANCE, paletteDistance } from '../lib/delta-e';
 import { interpolate, mapsEmbedUrl, mapsLinkUrl } from '../lib/content';
 import { loadBlueprint, loadSectionMeta } from '../lib/load';
 import { paths } from '../lib/paths';
@@ -28,14 +29,23 @@ import type {
 } from '../types';
 import type { DemoHours, GiroDefinition } from './giro';
 import {
-  FONT_PAIRS,
   SHAPES,
   type FontPairPreset,
   type GiroPalette,
   type ShapePreset,
 } from './presets';
 import type { Spec, SpecBrand, SpecProblem, SpecTier } from './schema';
+import {
+  catalogOf,
+  fontPairById,
+  fontPairPool,
+  isLegacyVariant,
+  paletteById,
+  palettePool,
+  type Catalog,
+} from './catalog';
 import { missingPaths } from './copy-keys';
+import type { SpecLock, TierLock } from './lock';
 import { composeTheme, customPalette, resolveFontPair } from './theme';
 
 /**
@@ -226,6 +236,8 @@ export interface ResolvedSection {
   slot: string;
   variant: string;
   pinned: boolean;
+  /** Pinned by the spec's lock (not by the spec): a conflict asks for `spec lock --refresh`. */
+  locked?: boolean;
 }
 
 export interface TierPlan {
@@ -238,11 +250,15 @@ export interface TierPlan {
   choices: string[];
   fingerprint: Fingerprint;
   imageKeys: string[];
+  /** Ids the lock records (palette `custom` for a spec's own palette). */
+  resolved: { palette: string; fontPair: string; shape: string };
+  sections: ResolvedSection[];
 }
 
 export interface SpecPlan {
   spec: Spec;
   giro: GiroDefinition;
+  catalog: Catalog;
   hash: string;
   contentName: string;
   pack: ContentPack;
@@ -255,6 +271,8 @@ function sectionsFor(
   giro: GiroDefinition,
   tier: SpecTier,
   blueprint: Blueprint,
+  catalog: Catalog,
+  locked?: TierLock,
 ): ResolvedSection[] {
   const slots = blueprint.verticals[giro.id]?.slots ?? {};
   const defaults = giro.sections[tier];
@@ -263,28 +281,44 @@ function sectionsFor(
   return entries.map((entry) => {
     const slot = slots[entry.role] ?? entry.slot ?? entry.role;
     const pinned = typeof entry.variant === 'string';
+    const fromLock = pinned
+      ? undefined
+      : locked?.sections.find((l) => l.role === entry.role && l.slot === slot)
+          ?.variant;
     const variant =
       entry.variant ??
+      fromLock ??
       defaults.find((d) => d.role === entry.role)?.variant ??
-      allowedVariants(blueprint, entry.role, slot)[0];
-    return { role: entry.role, slot, variant, pinned };
+      allowedVariants(blueprint, entry.role, slot, catalog)[0];
+    return fromLock
+      ? { role: entry.role, slot, variant, pinned: true, locked: true }
+      : { role: entry.role, slot, variant, pinned };
   });
 }
 
+/**
+ * Variants a role may take in a tier: the blueprint's list, else every folder of the slot. A legacy
+ * spec only sees the variants that existed before the extended catalog (LEGACY_VARIANTS).
+ */
 export function allowedVariants(
   blueprint: Blueprint,
   role: Role,
   slot: string,
+  catalog: Catalog = 'legacy',
 ): string[] {
   const listed = blueprint.roles[role]?.variants;
-  if (listed) return listed;
   const dir = resolve(paths.sections, slot);
-  return existsSync(dir)
-    ? readdirSync(dir, { withFileTypes: true })
-        .filter((d) => d.isDirectory())
-        .map((d) => d.name)
-        .sort()
-    : [];
+  const all =
+    listed ??
+    (existsSync(dir)
+      ? readdirSync(dir, { withFileTypes: true })
+          .filter((d) => d.isDirectory())
+          .map((d) => d.name)
+          .sort()
+      : []);
+  return catalog === 'legacy'
+    ? all.filter((v) => isLegacyVariant(slot, v))
+    : all;
 }
 
 function accentHue(p: GiroPalette): number | null {
@@ -302,7 +336,7 @@ function brandFor(spec: Spec, tier: SpecTier): SpecBrand {
 function pinnedBrand(
   spec: Spec,
   tier: SpecTier,
-  key: keyof SpecBrand,
+  key: Exclude<keyof SpecBrand, 'catalog'>,
   twin: boolean,
 ): boolean {
   if (spec.overrides?.[tier]?.brand?.[key] !== undefined) return true;
@@ -566,6 +600,7 @@ function headlineOf(html: string, business: Business): string {
 export async function planSpec(
   spec: Spec,
   library: Fingerprint[],
+  lock?: SpecLock,
 ): Promise<SpecPlan | { problems: SpecProblem[] }> {
   const giro = GIROS[spec.giro];
   if (!giro)
@@ -580,6 +615,10 @@ export async function planSpec(
       ],
     };
   const problems: SpecProblem[] = [];
+  const catalog = catalogOf(spec);
+  // A lock resolved against the other catalog no longer describes this spec.
+  const useLock = lock && lock.catalog === catalog ? lock : undefined;
+  const lockHint = `Si quieres que el compilador vuelva a elegir: \`pnpm lattiz spec lock ${specStem(spec)} --refresh\`.`;
   const targets = specTargets(spec);
   const twin = targets.length === 2;
   const ownIds = new Set(targets.map((t) => t.id));
@@ -597,7 +636,8 @@ export async function planSpec(
     const brand = brandFor(spec, tier);
     const seed = seedOf(id);
     const choices: string[] = [];
-    const sections = sectionsFor(spec, giro, tier, blueprint);
+    const locked = useLock?.tiers[id];
+    const sections = sectionsFor(spec, giro, tier, blueprint, catalog, locked);
 
     // Palette: accent hue ≥ 30° from every template of the giro.
     const custom =
@@ -624,14 +664,25 @@ export async function planSpec(
       brand.palette && 'preset' in brand.palette
         ? brand.palette.preset
         : undefined;
+    const presetValue = presetId ? paletteById(giro, presetId) : undefined;
+    const lockedPalette =
+      !palettePick &&
+      !pinnedBrand(spec, tier, 'palette', twin) &&
+      locked &&
+      paletteById(giro, locked.palette)
+        ? {
+            id: locked.palette,
+            value: paletteById(giro, locked.palette) as GiroPalette,
+            pinned: true,
+          }
+        : undefined;
     const pinnedPalette =
       palettePick ??
-      (presetId &&
-      giro.palettes[presetId] &&
-      pinnedBrand(spec, tier, 'palette', twin)
-        ? { id: presetId, value: giro.palettes[presetId], pinned: true }
+      lockedPalette ??
+      (presetId && presetValue && pinnedBrand(spec, tier, 'palette', twin)
+        ? { id: presetId, value: presetValue, pinned: true }
         : undefined);
-    if (presetId && !giro.palettes[presetId])
+    if (presetId && !presetValue)
       problems.push({
         level: 'error',
         path: 'brand.palette.preset',
@@ -643,25 +694,45 @@ export async function planSpec(
       .filter((h): h is number => h !== null);
     const freePalette = (p: GiroPalette) => {
       const hue = accentHue(p);
-      return (
+      const hueFree =
         hue === null ||
-        takenHues.every((h) => hueDistance(h, hue) >= MIN_ACCENT_HUE_DISTANCE)
+        takenHues.every((h) => hueDistance(h, hue) >= MIN_ACCENT_HUE_DISTANCE);
+      // Extended only: a neutral accent passes the hue rule, so also keep palettes ΔE-apart.
+      if (!hueFree || catalog === 'legacy') return hueFree;
+      const own = { bg: p.colors.bg, accent: p.colors.accent };
+      return peers.every(
+        (q) =>
+          !q.bg ||
+          !q.accent ||
+          !/^#/.test(own.bg) ||
+          !/^#/.test(own.accent) ||
+          paletteDistance(own, { bg: q.bg, accent: q.accent }) >=
+            MIN_PALETTE_DISTANCE,
       );
     };
-    const palettePool = Object.entries(giro.palettes).map(([pid, value]) => ({
-      id: pid,
-      value,
-      pinned: false,
-    }));
-    const paletteChoice = candidates(pinnedPalette, palettePool, seed).find(
-      (c) => freePalette(c.value),
+    const paletteCandidates = palettePool(giro, catalog).map(
+      ([pid, value]) => ({ id: pid, value, pinned: false }),
     );
+    const paletteChoice = candidates(
+      pinnedPalette,
+      paletteCandidates,
+      seed,
+    ).find((c) => freePalette(c.value));
     if (!paletteChoice) {
       problems.push({
         level: 'error',
         path: 'brand.palette',
         message: `no queda paleta libre en ${giro.label}: todos los acentos están a < ${MIN_ACCENT_HUE_DISTANCE}° de otra plantilla`,
         hint: 'Define una paleta propia ({ "custom": { "bg", "accent" } }) con un tono de acento distinto, o agrega paletas al giro.',
+      });
+      continue;
+    }
+    if (lockedPalette && paletteChoice.id !== lockedPalette.id) {
+      problems.push({
+        level: 'error',
+        path: 'brand.palette',
+        message: `el lock fija la paleta "${lockedPalette.id}" para ${id}, pero ya choca con otra plantilla del giro`,
+        hint: lockHint,
       });
       continue;
     }
@@ -680,6 +751,8 @@ export async function planSpec(
       );
     } else if (!paletteChoice.pinned)
       choices.push(`paleta: "${paletteChoice.id}" (elegida)`);
+    else if (lockedPalette)
+      choices.push(`paleta: "${paletteChoice.id}" (del lock)`);
 
     // Font pair: unique in the giro.
     const takenFonts = new Set(peers.map((p) => p.fonts));
@@ -691,13 +764,24 @@ export async function planSpec(
         message: `par tipográfico no permitido: ${JSON.stringify(brand.fontPair)}`,
         hint: `Pares curados: ${giro.fontPairs.join(', ')} (o { display, body } con fuentes de CUSTOM_FONTS)`,
       });
-    const pinnedFont =
-      requested && pinnedBrand(spec, tier, 'fontPair', twin)
-        ? { id: requested.id, value: requested.fonts, pinned: true }
+    const lockedFont =
+      !pinnedBrand(spec, tier, 'fontPair', twin) &&
+      locked &&
+      fontPairById(locked.fontPair)
+        ? {
+            id: locked.fontPair,
+            value: fontPairById(locked.fontPair) as FontPairPreset,
+            pinned: true,
+          }
         : undefined;
-    const fontPool = giro.fontPairs.map((fid) => ({
+    const pinnedFont =
+      lockedFont ??
+      (requested && pinnedBrand(spec, tier, 'fontPair', twin)
+        ? { id: requested.id, value: requested.fonts, pinned: true }
+        : undefined);
+    const fontPool = fontPairPool(giro, catalog).map((fid) => ({
       id: fid,
-      value: FONT_PAIRS[fid],
+      value: fontPairById(fid) as FontPairPreset,
       pinned: false,
     }));
     const fontChoice = candidates<FontPairPreset>(
@@ -714,12 +798,23 @@ export async function planSpec(
       });
       continue;
     }
+    if (lockedFont && fontChoice.id !== lockedFont.id) {
+      problems.push({
+        level: 'error',
+        path: 'brand.fontPair',
+        message: `el lock fija la tipografía "${lockedFont.id}" para ${id}, pero ya la usa otra plantilla del giro`,
+        hint: lockHint,
+      });
+      continue;
+    }
     if (pinnedFont && fontChoice.id !== pinnedFont.id)
       choices.push(
         `tipografía: "${pinnedFont.id}" ya la usa otra plantilla del giro; usé "${fontChoice.id}"`,
       );
     else if (!fontChoice.pinned)
       choices.push(`tipografía: "${fontChoice.id}" (elegida)`);
+    else if (lockedFont)
+      choices.push(`tipografía: "${fontChoice.id}" (del lock)`);
 
     // Shape: no hard rule; it weighs in similarity.
     const shapeId =
@@ -727,7 +822,9 @@ export async function planSpec(
       SHAPES[brand.shape] &&
       pinnedBrand(spec, tier, 'shape', twin)
         ? brand.shape
-        : rotate(giro.shapes, twin && tier === 'basico' ? seed + 1 : 0)[0];
+        : locked && SHAPES[locked.shape]
+          ? locked.shape
+          : rotate(giro.shapes, twin && tier === 'basico' ? seed + 1 : 0)[0];
     if (brand.shape && !SHAPES[brand.shape])
       problems.push({
         level: 'error',
@@ -740,7 +837,7 @@ export async function planSpec(
     // Hero variant: unique among Pro of the giro; a twin's Básico avoids its Pro's hero.
     const hero = sections.find((s) => s.slot === 'hero');
     if (hero) {
-      const heroVariants = allowedVariants(blueprint, 'hero', 'hero');
+      const heroVariants = allowedVariants(blueprint, 'hero', 'hero', catalog);
       const taken = new Set(
         peers
           .filter((p) => (tier === 'pro' ? p.tier === 'pro' : p.sibling))
@@ -755,10 +852,12 @@ export async function planSpec(
           problems.push({
             level: 'error',
             path: `sections.${tier}`,
-            message: `hero/${hero.variant} ya lo usa otra plantilla Pro de ${giro.label}`,
-            hint: free
-              ? `Usa hero/${free} o quita la variante para que la elija el compilador.`
-              : 'No quedan portadas libres.',
+            message: `hero/${hero.variant}${hero.locked ? ' (fijada por el lock)' : ''} ya lo usa otra plantilla Pro de ${giro.label}`,
+            hint: hero.locked
+              ? lockHint
+              : free
+                ? `Usa hero/${free} o quita la variante para que la elija el compilador.`
+                : 'No quedan portadas libres.',
           });
         } else if (free) {
           choices.push(
@@ -825,12 +924,13 @@ export async function planSpec(
       brand,
     });
     const archetype =
-      kitTier === 'basic'
+      locked?.archetype ??
+      (kitTier === 'basic'
         ? 'essential'
         : shape.archetype === 'editorial-atelier' &&
             paletteChoice.value.scheme === 'dark'
           ? 'street-luxe'
-          : shape.archetype;
+          : shape.archetype);
 
     const motion: ManifestMotion | undefined =
       tier === 'pro'
@@ -893,6 +993,7 @@ export async function planSpec(
           blueprint,
           sections[index].role,
           slot,
+          catalog,
         )) {
           if (variant === current) continue;
           // A variant whose copy the giro doesn't write (product-grid outside tienda) is never a candidate.
@@ -915,7 +1016,9 @@ export async function planSpec(
         level: 'error',
         path: `sections.${tier}`,
         message: `similitud ${worst()} con otra plantilla ${TIER_LABEL[tier]} del giro (límite ${limit})`,
-        hint: 'Quita variantes fijas en sections para que el compilador pueda cambiarlas, o cambia el orden.',
+        hint: sections.some((s) => s.locked)
+          ? lockHint
+          : 'Quita variantes fijas en sections para que el compilador pueda cambiarlas, o cambia el orden.',
       });
 
     // Links and branches depend on the final variants.
@@ -933,6 +1036,12 @@ export async function planSpec(
       choices,
       fingerprint: print,
       imageKeys: [],
+      resolved: {
+        palette: paletteChoice.id,
+        fontPair: fontChoice.id,
+        shape: shapeId,
+      },
+      sections,
     });
     peers.push({ ...print, sibling: true });
   }
@@ -968,6 +1077,7 @@ export async function planSpec(
   return {
     spec,
     giro,
+    catalog,
     hash: specHash(spec),
     contentName: contentName(spec),
     pack,
