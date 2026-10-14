@@ -1,75 +1,103 @@
 {
-  "$lattiz": "GENERATED from specs/floreria-cardamina.spec.json (spec d93a7fdbf48a, file 22cc55920c29). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/floreria-cardamina.spec.json (spec 2b263f80d11c, file ddea2bab157c). Do not edit: use the spec, or freeze.",
   "images": [
     {
       "file": "hero.jpg",
-      "source": "placeholder",
-      "sha256": "1db32470f30ba98ac3da5d534c386c37293e79645bb9b21b348a1dc13db92413"
+      "source": "url",
+      "sha256": "a1ad0e3a9ee8e4c836cffcca3ffaa48ec55dc460c9c83c1f01d9396fa192e9b0",
+      "url": "https://images.pexels.com/photos/12074473/pexels-photo-12074473.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/12074473/"
     },
     {
       "file": "about.jpg",
-      "source": "placeholder",
-      "sha256": "2e01af3acb0a8e2b7634df8e30de8972f60bdeda04d5fcc268d88f3b0ddb8c4c"
+      "source": "url",
+      "sha256": "502bc3d284211ffc8ae7132e801e280507e9e5d260c9746a183d2482c8ebc9e7",
+      "url": "https://images.pexels.com/photos/5409681/pexels-photo-5409681.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/5409681/"
     },
     {
       "file": "gallery-01.jpg",
-      "source": "placeholder",
-      "sha256": "63df8799003c46c5a2816cf860c54b0a98a12c15729ccdae8592465bdc13091d"
+      "source": "url",
+      "sha256": "9fd1e63d2e4f575f1fbb2d3ca81af9c39258f654b037bbbd743f559533e788a0",
+      "url": "https://images.pexels.com/photos/3932686/pexels-photo-3932686.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/3932686/"
     },
     {
       "file": "gallery-02.jpg",
-      "source": "placeholder",
-      "sha256": "9b97852dcc2ca0a6f3850cdcbbb19355586e004ed29215aa8555eb604d70102b"
+      "source": "url",
+      "sha256": "278239850add4224b4642ff1e1de2a176aa270248f6e6cfa3d94cd7397355d20",
+      "url": "https://images.pexels.com/photos/7859247/pexels-photo-7859247.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/7859247/"
     },
     {
       "file": "gallery-03.jpg",
-      "source": "placeholder",
-      "sha256": "4395b878dabd62d553f22bd56535fb611545e2c9910bb90a9ddaf41d3e9ddd10"
+      "source": "url",
+      "sha256": "75a6e6094329558380ead68007b7a932c7bb371bdbe7fd64bd8e1616515d1f87",
+      "url": "https://images.pexels.com/photos/4238353/pexels-photo-4238353.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/4238353/"
     },
     {
       "file": "gallery-04.jpg",
-      "source": "placeholder",
-      "sha256": "be8cf2816664485ca2e13358280eb870fb4377840f86846a2834e989b61de23e"
+      "source": "url",
+      "sha256": "75a41ec82cd2306197453babe52b3618ab608d18ba47e1e4a4d33d0a99d25152",
+      "url": "https://images.pexels.com/photos/4466380/pexels-photo-4466380.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/4466380/"
     },
     {
       "file": "gallery-05.jpg",
-      "source": "placeholder",
-      "sha256": "ae62c8ab75ce5b5e6053d415c48a5ccec739219ac71680b2f123b8a5f23d18af"
+      "source": "url",
+      "sha256": "b4c2747f362f1cce9137060491e7942eeafdf7ccfcd4d89be7a139fe65adbb20",
+      "url": "https://images.pexels.com/photos/4466296/pexels-photo-4466296.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/4466296/"
     },
     {
       "file": "gallery-06.jpg",
-      "source": "placeholder",
-      "sha256": "b937a00f8dc1efb41691b6ac7535a8df7bb0bd5f46af4ce5889a80cf55d3a151"
+      "source": "url",
+      "sha256": "9ad06e36a8ac6331be91920a6dc75bfe4778f9c03408454e77ad469f3db866e3",
+      "url": "https://images.pexels.com/photos/5927281/pexels-photo-5927281.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/5927281/"
     },
     {
       "file": "gallery-07.jpg",
-      "source": "placeholder",
-      "sha256": "4d613dfcad50251d04566f37c3789e54dfe67a2baa1e3ded10cbaa40434a376a"
+      "source": "url",
+      "sha256": "3ad913c97adc19f69d5eca35c7f69b4ccbecf2e7ebd3b63ac23049c079154697",
+      "url": "https://images.pexels.com/photos/4612189/pexels-photo-4612189.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/4612189/"
     },
     {
       "file": "gallery-08.jpg",
-      "source": "placeholder",
-      "sha256": "cf5669a8764868902147c6976ecc58b28ca409efcd197a0d7868451498d93358"
+      "source": "url",
+      "sha256": "18a8481b87aa2221e774eb915ef8c4496c33af019dfe799080924fc8d993b52e",
+      "url": "https://images.pexels.com/photos/5750139/pexels-photo-5750139.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/5750139/"
     },
     {
       "file": "team-1.jpg",
-      "source": "placeholder",
-      "sha256": "eedaa2c352319cbbcb1fb75de101f401a8abaf4ccf18259082dab2afa36bbc42"
+      "source": "url",
+      "sha256": "6666dff0434f6a28b59492d1094cf5e43e447c82f033297d46cc831f06e6384f",
+      "url": "https://images.pexels.com/photos/5750131/pexels-photo-5750131.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/5750131/"
     },
     {
       "file": "team-2.jpg",
-      "source": "placeholder",
-      "sha256": "f87f741cdc7fe75fd147cd7d1b1cf78d99ac93cfd60a94350a09914f36a2cfab"
+      "source": "url",
+      "sha256": "f0475ce346a2e1d5383f9d369833667b9e0deacb10bb27284a00438927966c18",
+      "url": "https://images.pexels.com/photos/4466560/pexels-photo-4466560.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/4466560/"
     },
     {
       "file": "team-3.jpg",
-      "source": "placeholder",
-      "sha256": "e13381d305a9d4367f41e072b7ad42efa84671fb6fb1bed510162a45b38ceb69"
+      "source": "url",
+      "sha256": "2678c72b58e76590f0d86ed76ffe76b045391e2c6aac6305b716313e62e3cd95",
+      "url": "https://images.pexels.com/photos/5409708/pexels-photo-5409708.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/5409708/"
     },
     {
       "file": "team-4.jpg",
-      "source": "placeholder",
-      "sha256": "fb5bae34786c67070c1b7fac6c41e07df9817128d296ca2e8ee38163d3e6753d"
+      "source": "url",
+      "sha256": "35249e5da20dab7a307f5eca7e18d7466946ba7ca770b57049ef2af451f58dae",
+      "url": "https://images.pexels.com/photos/12074468/pexels-photo-12074468.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/12074468/"
     }
   ]
 }

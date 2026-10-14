@@ -1,10 +1,12 @@
 {
-  "$lattiz": "GENERATED from specs/floreria-cardamina.spec.json (spec d93a7fdbf48a, file 61995637e6f1). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/floreria-cardamina.spec.json (spec 2b263f80d11c, file d638ada3aa58). Do not edit: use the spec, or freeze.",
   "images": [
     {
       "file": "hero.jpg",
-      "source": "placeholder",
-      "sha256": "6e67d1b3ac3215813feedf066f6c0d36366760bba903f01c2bdf9dd997592935"
+      "source": "url",
+      "sha256": "21eb61d5ac858a68d19e9d8e66d5cfc5dcc198cead83f2c78184814d7452185d",
+      "url": "https://images.pexels.com/photos/12074473/pexels-photo-12074473.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/12074473/"
     }
   ]
 }
