@@ -15,7 +15,7 @@ import { KIT_ROOT } from './paths';
 interface TierBudget {
   css: { raw: number; gzip: number };
   html: { raw: number; gzip: number };
-  images: { total: number; max: number };
+  images: { total: number; max: number; hero?: number };
   js: { gzip: number };
 }
 
@@ -39,6 +39,12 @@ export interface BudgetLine {
 const gzip = (text: string) => gzipSync(text, { level: 9 }).length;
 const kib = (n: number) => `${(n / 1024).toFixed(1)}`;
 
+/** Bytes of the hero photo (`hero.jpg`, the LCP image of every hero variant); 0 when absent. */
+function heroBytes(compiled: CompiledTemplate): number {
+  const hero = compiled.assets.find((a) => a.name === 'hero.jpg');
+  return hero && existsSync(hero.source) ? statSync(hero.source).size : 0;
+}
+
 /** Every budget of the template's tier, measured on the compiled output. */
 export function measureBudget(compiled: CompiledTemplate): BudgetLine[] {
   const budget = loadBudgets()[compiled.manifest.tier];
@@ -52,6 +58,13 @@ export function measureBudget(compiled: CompiledTemplate): BudgetLine[] {
     ['html gzip', gzip(compiled.previewHtml), budget.html.gzip],
     ['imágenes', images.reduce((n, s) => n + s, 0), budget.images.total],
     ['imagen mayor', Math.max(0, ...images), budget.images.max],
+    ...(budget.images.hero !== undefined
+      ? ([['imagen de portada', heroBytes(compiled), budget.images.hero]] as [
+          string,
+          number,
+          number,
+        ][])
+      : []),
     [
       'js gzip',
       compiled.manifest.tier === 'pro' ? gzip(LZ_MOTION_JS) : 0,

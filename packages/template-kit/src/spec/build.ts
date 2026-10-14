@@ -324,6 +324,10 @@ export async function buildSpec(opts: BuildOptions): Promise<BuildReport> {
           })),
           kitDir: resolve(root, 'assets', plan.giro.id, t.theme.name),
           tempDir,
+          // LCP policy for new work: an existing template keeps its image bytes.
+          ...(!existsSync(resolve(KIT_ROOT, 'templates', `${t.id}.ts`))
+            ? { hero: { maxWidth: 1200, quality: 72 } }
+            : {}),
         });
       } catch (error) {
         return done(2, `imágenes: ${(error as Error).message}`);

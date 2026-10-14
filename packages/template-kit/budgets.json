@@ -1,5 +1,5 @@
 {
-  "$comment": "Byte budgets per tier (kit:validate). Started 2026-10-14 from the maximum over the 42 templates + ~10% (rounded up to a whole KiB). css = compiled stylesheet; html = the preview index.html (inline CSS, what a site serves); images = local assets of one page (total and largest file); js = gzip of the Lattiz Motion runtime (Pro only; B\u00e1sico ships no JS). Over budget is WARN; --strict-budget and spec builds of a new template FAIL. Raise a number only with a written reason.",
+  "$comment": "Byte budgets per tier (kit:validate). Started 2026-10-14 from the maximum over the 42 templates + ~10% (rounded up to a whole KiB). css = compiled stylesheet; html = the preview index.html (inline CSS, what a site serves); images = local assets of one page (total and largest file); js = gzip of the Lattiz Motion runtime (Pro only; B\u00e1sico ships no JS). Over budget is WARN; --strict-budget and spec builds of a new template FAIL. Raise a number only with a written reason. images.hero = the hero photo (the LCP image on every template): 120 KiB is the A2 LCP policy for new work (spec builds encode it at most 1200 px wide, q72), not today's maximum; existing heavier heroes only warn.",
   "version": 1,
   "basic": {
     "css": {
@@ -12,7 +12,8 @@
     },
     "images": {
       "total": 179200,
-      "max": 179200
+      "max": 179200,
+      "hero": 122880
     },
     "js": {
       "gzip": 0
@@ -29,7 +30,8 @@
     },
     "images": {
       "total": 2895872,
-      "max": 330752
+      "max": 330752,
+      "hero": 122880
     },
     "js": {
       "gzip": 8192

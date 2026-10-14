@@ -1,5 +1,11 @@
 import { spawn, spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import { createRequire } from 'node:module';
 import { relative, resolve } from 'node:path';
 import type { Browser, Page } from 'playwright';
@@ -502,7 +508,7 @@ async function noJs(browser: Browser, url: string): Promise<RuleResult> {
  * Lighthouse (its default mobile emulation and simulated throttling) on the local static preview:
  * category scores plus LCP, CLS and TBT. Lab numbers, not field data: no CDN, local fonts.
  */
-function lighthouse(url: string): Promise<RuleResult[]> {
+function lighthouse(url: string, saveTo?: string): Promise<RuleResult[]> {
   return new Promise((done) => {
     const child = spawn(
       'npx',
@@ -532,6 +538,8 @@ function lighthouse(url: string): Promise<RuleResult[]> {
           categories: Record<string, { title: string; score: number | null }>;
           audits: Record<string, { numericValue?: number }>;
         };
+        // The full report (LCP element, phases, render-blocking requests) for diagnosis.
+        if (saveTo) writeFileSync(saveTo, out);
         const scores = Object.values(report.categories).map(
           (cat) => `${cat.title} ${Math.round((cat.score ?? 0) * 100)}`,
         );
@@ -718,7 +726,12 @@ export async function runCheck(
   } finally {
     await browser?.close();
     if (opts.lighthouse)
-      results.push(...(await lighthouse(`${server.url}/site`)));
+      results.push(
+        ...(await lighthouse(
+          `${server.url}/site`,
+          resolve(outDir, 'lighthouse.json'),
+        )),
+      );
     await server.close();
   }
   return withFindings(finish(tier), dist.meta);
