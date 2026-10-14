@@ -1,4 +1,11 @@
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import { relative, resolve } from 'node:path';
 import type { Browser } from 'playwright';
 import { open, primeLazyContent } from '../../../template-kit/src/lib/shoot';
@@ -6,9 +13,9 @@ import { specTargets } from '../../../template-kit/src/spec/compile';
 import { readSpecFile } from '../../../template-kit/src/spec/build';
 import { FONT_PAIRS } from '../../../template-kit/src/spec/presets';
 import { launchBrowser } from '../lib/browser';
-import { bool, type Command } from '../lib/command';
+import { bool, str, type Command } from '../lib/command';
 import { EXIT, gate, type ExitCode } from '../lib/errors';
-import { KIT, paths, REPO_ROOT } from '../lib/paths';
+import { externalRoot, KIT, paths, REPO_ROOT, themeFile } from '../lib/paths';
 import { renderPreview } from '../lib/preview';
 import { startPreviewServer } from '../lib/preview-server';
 import { GIROS, originOf } from '../lib/spec';
@@ -101,9 +108,7 @@ function sectionCopy(): { slot: string; variant: string; texts: string[] }[] {
 }
 
 function theme(name: string) {
-  return JSON.parse(
-    readFileSync(resolve(KIT, 'themes', `${name}.json`), 'utf8'),
-  ) as {
+  return JSON.parse(readFileSync(themeFile(name), 'utf8')) as {
     fontPair: string;
     colors: Record<string, string>;
     shape: Record<string, string>;
@@ -175,7 +180,9 @@ function twinSummary(id: string, other: string): string[] {
 
 export async function runReview(id: string): Promise<ReviewBundle> {
   const started = Date.now();
-  const built = await compile(id);
+  const root = externalRoot();
+  // A proof build (--root): already compiled and validated by `lattiz build --out`.
+  const built = root ? { code: 0, output: '' } : await compile(id);
   if (built.code !== 0)
     throw gate(
       `kit:compile falló para ${id}.`,
@@ -248,9 +255,13 @@ export async function runReview(id: string): Promise<ReviewBundle> {
     await server.close();
   }
 
-  const origin = await originOf(id);
+  const proof = root ? proofOrigin(root, id) : null;
+  const origin = proof ?? (await originOf(id));
   let twin: ReviewBundle['twin'] = null;
-  if (origin.spec) {
+  if (proof) {
+    if (proof.twin)
+      twin = { other: proof.twin, summary: twinSummary(id, proof.twin) };
+  } else if (origin.spec) {
     const { spec } = readSpecFile(resolve(KIT, origin.spec));
     const other = spec
       ? specTargets(spec).find((t) => t.id !== id)?.id
@@ -280,12 +291,34 @@ export async function runReview(id: string): Promise<ReviewBundle> {
   return bundle;
 }
 
+/** Spec and twin of a proof root: one spec in <root>/specs, its other build in <root>/dist. */
+function proofOrigin(
+  root: string,
+  id: string,
+): { spec?: string; twin?: string } {
+  const specs = existsSync(resolve(root, 'specs'))
+    ? readdirSync(resolve(root, 'specs')).filter((f) =>
+        f.endsWith('.spec.json'),
+      )
+    : [];
+  const others = readdirSync(resolve(root, 'dist')).filter(
+    (d) => d !== id && existsSync(resolve(root, 'dist', d, 'index.html')),
+  );
+  return {
+    spec:
+      specs.length === 1
+        ? relative(KIT, resolve(root, 'specs', specs[0]))
+        : undefined,
+    twin: others.length === 1 ? others[0] : undefined,
+  };
+}
+
 function markdown(b: ReviewBundle): string {
   const lines = [
     `# Revisión de ${b.id} (${tierLabel(b.tier)})`,
     '',
     b.spec
-      ? `Spec: \`packages/template-kit/${b.spec}\``
+      ? `Spec: \`${relative(REPO_ROOT, resolve(KIT, b.spec))}\``
       : 'Sin spec (plantilla a mano o clonada).',
     '',
     '## Capturas',
@@ -320,7 +353,7 @@ export const review: Command = {
   name: 'review',
   summary:
     'Paquete de revisión visual: capturas (390, 1366, 1440), copy por sección, elecciones y gemela',
-  usage: 'review <id> [--json]',
+  usage: 'review <id> [--root <dir>] [--json]',
   help: [
     'Compila y renderiza con el pipeline de producción (reduced motion: todo visible) y escribe en',
     '.lattiz/review/<id>/: movil-390x844.png y laptop-1366x768.png (lo que se ve sin scroll),',
@@ -328,11 +361,16 @@ export const review: Command = {
     '(secciones/NN-<slot>.png), review.md y review.json (paleta, tipografía, forma, variantes, copy',
     'visible por sección y, si sale de un spec gemelo, en qué difieren Básico y Pro).',
     'Un navegador, un contexto a la vez: corre las revisiones una tras otra, nunca en paralelo.',
+    '  --root <dir>   revisa una prueba construida fuera del kit (`lattiz build <spec> --out <dir>`)',
     '  --json   imprime review.json',
   ],
-  options: { json: { type: 'boolean' } },
+  options: { json: { type: 'boolean' }, root: { type: 'string' } },
   async run(ctx): Promise<ExitCode> {
-    const id = assertTemplate(ctx.positionals[0]);
+    const root = str(ctx.flags, 'root');
+    if (root) process.env.LATTIZ_BUILD_ROOT = resolve(root);
+    const id = root
+      ? (ctx.positionals[0] ?? '')
+      : assertTemplate(ctx.positionals[0]);
     const json = bool(ctx.flags, 'json');
     setQuiet(json);
     log.title(`lattiz review ${id}`);

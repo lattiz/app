@@ -32,5 +32,10 @@ export const stateFile = (id: string) =>
 export const shotsDir = (id: string) => resolve(paths.work, 'shots', id);
 export const demoProfileFile = (id: string) =>
   resolve(buildRoot(), 'demo-profiles', `${id}.json`);
+export const themeFile = (name: string) =>
+  resolve(buildRoot(), 'themes', `${name}.json`);
+/** The proof build root set by `--root`, or null for the kit. */
+export const externalRoot = () =>
+  process.env.LATTIZ_BUILD_ROOT ? buildRoot() : null;
 export const previewFile = (id: string) =>
   resolve(paths.previewsPublic, id, 'index.html');
