@@ -1,0 +1,3 @@
+.lz-rule--ornament{position:relative;height:12px;overflow:visible}
+.lz-rule--ornament::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px solid var(--lz-color-line)}
+.lz-rule--ornament::after{content:"";position:absolute;left:50%;top:50%;width:8px;height:8px;background:var(--lz-color-accent);box-shadow:0 0 0 10px var(--lz-color-bg);transform:translate(-50%,-50%) rotate(45deg)}

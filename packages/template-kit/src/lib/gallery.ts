@@ -31,6 +31,7 @@ import type {
 } from '../types';
 import { contrastRatio, hueOf, parseColor } from './color';
 import { styleSheet } from './gallery-style';
+import { primitiveSheet } from './gallery-primitives';
 import { mapsLinkUrl, renderSection } from './content';
 import { escapeHtml } from './dom';
 import { loadSectionMeta, loadTheme } from './load';
@@ -64,6 +65,8 @@ export interface GalleryOptions {
   fonts?: boolean;
   /** Style presets before/after (src/lib/style.ts). */
   tokens?: boolean;
+  /** Primitive styles (primitives/) in three themes at 390 and 1440. */
+  primitives?: boolean;
   /** Theme names under themes/ (default: one light, one dark). */
   themes?: string[];
   /** Adds a mode whose images point at missing files (the no-image fallback). */
@@ -667,12 +670,14 @@ export async function kitGallery(
     opts.palettes ||
     opts.fonts ||
     opts.tokens ||
+    opts.primitives ||
     (opts.slots?.length ?? 0) > 0;
   const want = {
     sections: any ? Boolean(opts.sections || opts.slots?.length) : true,
     palettes: any ? Boolean(opts.palettes) : true,
     fonts: any ? Boolean(opts.fonts) : true,
     tokens: any ? Boolean(opts.tokens) : true,
+    primitives: any ? Boolean(opts.primitives) : true,
   };
   const slots = opts.slots?.length
     ? opts.slots
@@ -716,6 +721,12 @@ export async function kitGallery(
       shots += r.shots;
       log('  ✓ tokens de estilo');
     }
+    if (want.primitives) {
+      const r = await primitiveSheet(page, out);
+      pages.push(r.page);
+      shots += r.shots;
+      log('  ✓ primitivos');
+    }
     if (want.fonts) {
       const r = await fontSheet(page, out);
       pages.push(r.page);
@@ -733,7 +744,7 @@ export async function kitGallery(
     : [];
   writeFileSync(
     index,
-    `<!DOCTYPE html><html lang="es-MX"><head><meta charset="UTF-8"><title>Galería del kit</title><style>${SHEET_CSS} li{margin:6px 0}</style></head><body><header><h1>Galería del kit</h1>${escapeHtml(relative(REPO_ROOT, out))} · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}</header><ul style="margin:24px 32px">${sheets.map((f) => `<li><a href="sections/${f}">Sección ${f.replace('.html', '')}</a></li>`).join('')}${existsSync(resolve(out, 'palettes.html')) ? '<li><a href="palettes.html">Paletas</a> · <a href="palettes.png">PNG</a></li>' : ''}${existsSync(resolve(out, 'fonts.html')) ? '<li><a href="fonts.html">Pares tipográficos</a> · <a href="fonts.png">PNG</a></li>' : ''}${existsSync(resolve(out, 'tokens.html')) ? '<li><a href="tokens.html">Tokens de estilo (antes / después)</a></li>' : ''}${existsSync(resolve(out, 'archetypes.html')) ? '<li><a href="archetypes.html">Arquetipos de página (lattiz kit archetypes)</a></li>' : ''}</ul><p class="note">Generada con <code>pnpm lattiz kit gallery</code> (o <code>kit:gallery</code>). Reglas para criticar: docs/template-kit-design-principles.md.</p></body></html>\n`,
+    `<!DOCTYPE html><html lang="es-MX"><head><meta charset="UTF-8"><title>Galería del kit</title><style>${SHEET_CSS} li{margin:6px 0}</style></head><body><header><h1>Galería del kit</h1>${escapeHtml(relative(REPO_ROOT, out))} · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}</header><ul style="margin:24px 32px">${sheets.map((f) => `<li><a href="sections/${f}">Sección ${f.replace('.html', '')}</a></li>`).join('')}${existsSync(resolve(out, 'palettes.html')) ? '<li><a href="palettes.html">Paletas</a> · <a href="palettes.png">PNG</a></li>' : ''}${existsSync(resolve(out, 'fonts.html')) ? '<li><a href="fonts.html">Pares tipográficos</a> · <a href="fonts.png">PNG</a></li>' : ''}${existsSync(resolve(out, 'tokens.html')) ? '<li><a href="tokens.html">Tokens de estilo (antes / después)</a></li>' : ''}${existsSync(resolve(out, 'primitives.html')) ? '<li><a href="primitives.html">Primitivos</a></li>' : ''}${existsSync(resolve(out, 'archetypes.html')) ? '<li><a href="archetypes.html">Arquetipos de página (lattiz kit archetypes)</a></li>' : ''}</ul><p class="note">Generada con <code>pnpm lattiz kit gallery</code> (o <code>kit:gallery</code>). Reglas para criticar: docs/template-kit-design-principles.md.</p></body></html>\n`,
   );
   return { out, index, pages, shots, ms: Date.now() - started };
 }

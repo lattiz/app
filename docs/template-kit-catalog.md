@@ -934,6 +934,57 @@ lleva 0.87 MiB y queda en 2.94 s): manda la imagen y el tipo de portada que pint
 paso (A2 o después): revisar la imagen LCP de cada portada (peso, tamaño, `fetchpriority`) y apretar
 el presupuesto de imágenes, sin tocar las plantillas existentes.
 
+## Primitivos (A2 · WP1)
+
+Piezas compartidas que las variantes **nuevas** componen, para que una sola elección de dirección de
+arte reestilice toda la página. Viven en `packages/template-kit/primitives/<familia>/` (`base.css` +
+un `<estilo>.css` por estilo) y se registran en `primitives/index.ts`. Solo catálogo `extended`.
+
+| Familia               | Bloque BEM     | Estilos (los marcados «contextual» se escriben a mano)                    | Por defecto          | base gzip (B) |
+| --------------------- | -------------- | ------------------------------------------------------------------------- | -------------------- | ------------- |
+| Botón                 | `lz-btn`       | solid, outline, pill, underline, icon (contextual), on-image (contextual) | solid                | 569           |
+| Tarjeta               | `lz-tile`      | flat, outlined, tinted, elevated                                          | tokens `--lz-card-*` | 450           |
+| Etiqueta / antetítulo | `lz-tag`       | pill, outlined, plain, numbered                                           | plain                | 242           |
+| Marco de imagen       | `lz-frame`     | arch, cut, offset, framed, duotone                                        | tokens `--lz-img-*`  | 422           |
+| Cifra grande          | `lz-bignum`    | plain, ruled                                                              | plain                | 321           |
+| Cita destacada        | `lz-pullquote` | rule, marks                                                               | rule                 | 340           |
+| Separador             | `lz-rule`      | hairline, rule, ornament                                                  | hairline             | 149           |
+
+Cada estilo cuesta 70–313 B gzip (cifras exactas en `catalog.manifest.json › primitives`). Un rol
+(`lz-btn--secondary`) no es un estilo: el elemento que lo lleva conserva su aspecto propio.
+
+**Cómo funciona.** La variante escribe el bloque (`class="lz-btn"`). El tema puede elegir un estilo
+por familia (`theme.primitives`, p. ej. `{ "button": "pill", "card": "tinted" }`; lo escribe una
+dirección de arte, WP2); al compilar, `applyPrimitiveStyles` agrega `lz-btn--pill` a cada elemento del
+bloque que no nombre ya un estilo o un rol. Después, `primitiveCss` lee las clases del HTML de las
+secciones y emite **solo** el `base.css` de las familias usadas y los estilos presentes, entre
+`core.css` y el CSS de las variantes. Las variantes existentes no usan ninguna clase de primitivo, así
+que su salida no cambia (`kit:verify-snapshot` idéntico, 42 plantillas); `kit:validate` revisa el CSS
+de los primitivos usados como el de cualquier sección (colores, cortes, reduced-motion).
+
+**Reglas que cumplen todos:** tokens con el look de hoy como respaldo; solo `transform`/`opacity`
+animados (más cambios de color con `--lz-dur-ui`); presión con `--lz-press-scale`; hover bajo
+`(hover: hover) and (pointer: fine)`; `:focus-visible` sin transición; override de
+`prefers-reduced-motion`; texto ≥ 14 px; táctiles ≥ 44 px. Los modificadores explícitos de marco
+(`offset`, `framed`, `duotone`) usan valores propios: si leyeran los tokens `--lz-img-*`, un tema con
+`imageTreatment` los anularía (se vio en la galería, ronda 1). El marco `offset` reserva su margen.
+
+**Galería:** `pnpm lattiz kit gallery --primitives` → `.lattiz/gallery/primitives.html`: cada familia
+en tres temas (claro sin `style`, oscuro sin `style`, teñido con presets) a 390 y 1440 (42 capturas,
+~25 s). Dos rondas de crítica: el `outline` principal se confundía con el secundario (ahora lleva un
+tinte del acento), la sombra de `elevated` hacía halo en temas oscuros (ahora usa `--lz-color-ink`),
+los marcos explícitos no se veían bajo un tema con presets y la cifra `plain` heredaba las mayúsculas
+del display.
+
+**Agregar un estilo:** archivo `primitives/<familia>/<estilo>.css` con selectores
+`.<bloque>--<estilo>`, entrada en `primitives/index.ts` (con `intent`; `contextual: true` si solo se
+escribe a mano), `pnpm lattiz kit gallery --primitives`, crítica y `kit:manifest`.
+
+**Adoptarlos en una variante existente (futuro, opt-in):** cambiar su markup a los bloques
+(`lz-button lz-button--primary` → `lz-btn`) cambia su salida, así que se hace variante por variante,
+con su propio commit, la comparación `kit:compare` antes/después y un re-baseline explicado del
+golden. A2 no lo hace.
+
 ## Hallazgos de la Parte 2
 
 - **Snapshot tras el merge:** `main` trajo `restaurante-hoja-y-barro` en paralelo a la Parte 1; su

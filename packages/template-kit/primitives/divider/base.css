@@ -1,0 +1,2 @@
+/* Primitive: divider (<hr class="lz-rule">). */
+.lz-rule{display:block;height:0;margin:calc(32px * var(--lz-space)) 0;border:0;color:var(--lz-color-line)}

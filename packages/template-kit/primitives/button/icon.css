@@ -1,0 +1,3 @@
+.lz-btn--icon svg{flex-shrink:0;width:20px;height:20px;fill:currentColor;transition:transform var(--lz-dur-ui,160ms) var(--lz-ease-out,cubic-bezier(.23,1,.32,1))}
+@media (hover:hover) and (pointer:fine){.lz-btn--icon:hover svg{transform:translateX(2px)}}
+@media (prefers-reduced-motion:reduce){.lz-btn--icon svg{transition:none}.lz-btn--icon:hover svg{transform:none}}

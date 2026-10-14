@@ -22,6 +22,7 @@ export function targetFromCompiled(c: CompiledTemplate): ValidationTarget {
     theme: c.theme,
     themeFile: themeFileFor(c.theme),
     coreFile: paths.core,
+    primitiveFiles: c.primitives.files.map((f) => resolve(KIT_ROOT, f)),
     sections: c.sections.map((s) => ({
       slot: s.slot,
       variant: s.variant,
@@ -70,6 +71,7 @@ export function targetFromDist(dir: string): ValidationTarget {
     theme,
     themeFile: existsSync(libraryTheme) ? libraryTheme : snapshotFile,
     coreFile: resolve(KIT_ROOT, raw.core),
+    primitiveFiles: (raw.primitives ?? []).map((f) => resolve(KIT_ROOT, f)),
     sections: raw.sections.map((s) => ({
       slot: s.slot,
       variant: s.variant,

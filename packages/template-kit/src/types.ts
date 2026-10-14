@@ -1,6 +1,7 @@
 /** Shared shapes for the template-kit source library (sections, themes, content packs, manifests). */
 
 import type { ThemeStyle } from './lib/style';
+import type { PrimitiveChoices } from '../primitives';
 import type { Role, Tier } from './tiers';
 
 export type Region = 'header' | 'main' | 'footer';
@@ -105,6 +106,8 @@ export interface Theme {
   rhythm?: Partial<Record<RhythmToken, string>>;
   /** Extended catalog only: opt-in style presets (src/lib/style.ts); absent = no extra tokens. */
   style?: ThemeStyle;
+  /** Extended catalog only: primitive style per family (primitives/); absent = family defaults. */
+  primitives?: PrimitiveChoices;
 }
 
 export interface SectionMeta {

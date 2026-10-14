@@ -1,0 +1,2 @@
+.lz-frame--framed{padding:10px;background:var(--lz-color-surface);border:var(--lz-border-width) solid var(--lz-color-line)}
+.lz-frame--framed::after{inset:10px}

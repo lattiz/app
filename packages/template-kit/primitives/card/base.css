@@ -1,0 +1,6 @@
+/* Primitive: card (.lz-tile). Without a style it follows the theme's surface preset (--lz-card-*). */
+.lz-tile{display:grid;align-content:start;gap:calc(10px * var(--lz-space));min-width:0;padding:var(--lz-card-pad,calc(24px * var(--lz-space)));background:var(--lz-card-bg,var(--lz-color-surface));border:var(--lz-card-border,var(--lz-border-width) solid var(--lz-color-line));border-radius:var(--lz-radius-card);box-shadow:var(--lz-card-shadow,none);color:var(--lz-color-text)}
+a.lz-tile{text-decoration:none;touch-action:manipulation;transition:transform var(--lz-dur-press,120ms) var(--lz-ease-out,cubic-bezier(.23,1,.32,1))}
+a.lz-tile:active{transform:scale(var(--lz-press-scale,.97))}
+a.lz-tile:focus-visible{outline:2px solid var(--lz-color-text);outline-offset:3px;transition:none}
+@media (prefers-reduced-motion:reduce){a.lz-tile{transition:none}a.lz-tile:active{transform:none}}

@@ -1,0 +1,1 @@
+.lz-frame--cut>img,.lz-frame--cut::after{border-radius:0;clip-path:polygon(0 0,calc(100% - 32px) 0,100% 32px,100% 100%,32px 100%,0 calc(100% - 32px))}

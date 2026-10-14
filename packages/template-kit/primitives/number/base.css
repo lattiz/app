@@ -1,0 +1,4 @@
+/* Primitive: big number (.lz-bignum with __value and __label). */
+.lz-bignum{display:grid;align-content:start;gap:calc(6px * var(--lz-space));min-width:0;margin:0}
+.lz-bignum__value{font-family:var(--lz-font-display);font-weight:var(--lz-display-weight);font-size:calc(clamp(40px,6vw,72px) * var(--lz-heading-scale,1));line-height:.95;letter-spacing:var(--lz-display-tracking,-.02em);font-variant-numeric:tabular-nums;color:var(--lz-color-text)}
+.lz-bignum__label{max-width:24ch;color:var(--lz-color-muted);font-size:calc(15px * var(--lz-text-scale));line-height:1.45}

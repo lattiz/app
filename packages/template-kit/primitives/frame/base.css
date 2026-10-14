@@ -1,0 +1,5 @@
+/* Primitive: image frame (.lz-frame around one <img>). Without a style it follows imageTreatment (--lz-img-*). */
+.lz-frame{position:relative;min-width:0;margin:0 var(--lz-img-offset,0px) var(--lz-img-offset,0px) 0;padding:var(--lz-img-pad,0px);background:var(--lz-img-frame,transparent);border:var(--lz-img-ring,none);border-radius:var(--lz-img-shape,var(--lz-radius-img,var(--lz-radius-card)))}
+.lz-frame::before{content:"";position:absolute;inset:0;border-radius:inherit;background:var(--lz-img-offset-bg,transparent);transform:translate(var(--lz-img-offset,0px),var(--lz-img-offset,0px))}
+.lz-frame>img{position:relative;display:block;width:100%;height:100%;object-fit:cover;border-radius:var(--lz-img-shape,var(--lz-radius-img,var(--lz-radius-card)));background:var(--lz-color-surface-2);filter:var(--lz-photo-filter)}
+.lz-frame::after{content:"";position:absolute;inset:var(--lz-img-pad,0px);border-radius:var(--lz-img-shape,var(--lz-radius-img,var(--lz-radius-card)));background:var(--lz-img-overlay,transparent);mix-blend-mode:var(--lz-img-blend,normal);pointer-events:none}

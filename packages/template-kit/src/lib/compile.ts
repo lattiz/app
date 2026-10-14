@@ -29,6 +29,7 @@ import type {
 } from '../types';
 import { KitError } from './args';
 import { interpolate, renderSection } from './content';
+import { applyPrimitiveStyles, primitiveCss } from './primitives';
 import { escapeHtml } from './dom';
 import { buildProject } from './grapes';
 import {
@@ -98,6 +99,8 @@ export interface CompiledTemplate {
   css: string;
   previewHtml: string;
   assets: CompiledAsset[];
+  /** Primitive CSS files the markup pulled in (kit-relative) and the styles used per family. */
+  primitives: { files: string[]; used: Record<string, string[]> };
   outDir: string;
 }
 
@@ -301,6 +304,7 @@ export async function compileManifest(
         `${relative(KIT_ROOT, htmlFile)}: root must carry data-lz-slot="${entry.slot}" data-lz-variant="${entry.variant}".`,
       );
     }
+    applyPrimitiveStyles(root, theme.primitives);
     await resolveImages(
       root,
       manifest.vertical,
@@ -349,7 +353,14 @@ export async function compileManifest(
 
   const core = readFileSync(paths.core, 'utf8');
   const rootCss = themeRootCss(theme);
-  const sourceCss = [rootCss, core, ...sections.map((s) => s.css)].join('\n');
+  // Primitives: only what the markup uses; legacy templates use none, so their CSS is unchanged.
+  const primitives = primitiveCss(sections.map((s) => s.tokenized));
+  const sourceCss = [
+    rootCss,
+    core,
+    ...(primitives.css ? [primitives.css] : []),
+    ...sections.map((s) => s.css),
+  ].join('\n');
 
   const build = await buildProject({
     documentHtml: sourceHtml,
@@ -382,6 +393,7 @@ export async function compileManifest(
     css: build.css,
     previewHtml: `${previewHtml}\n`,
     assets: [...assets.values()],
+    primitives: { files: primitives.files, used: primitives.used },
     outDir: sources.outDir ?? distDir(manifest.id),
   };
 }
@@ -404,6 +416,8 @@ export interface DistSnapshot {
     rendered: string;
   }[];
   core: string;
+  /** Kit-relative primitive CSS files (absent when the template uses none). */
+  primitives?: string[];
 }
 
 export function writeCompiled(t: CompiledTemplate): string[] {
@@ -430,6 +444,7 @@ export function writeCompiled(t: CompiledTemplate): string[] {
       rendered: s.rendered,
     })),
     core: relative(KIT_ROOT, paths.core),
+    ...(t.primitives.files.length ? { primitives: t.primitives.files } : {}),
   };
   out('manifest.json', `${JSON.stringify(snapshot, null, 2)}\n`);
   out('template.meta.json', `${JSON.stringify(t.meta, null, 2)}\n`);

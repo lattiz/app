@@ -83,6 +83,27 @@ export interface CatalogGiro {
   fontPairs: string[];
 }
 
+export interface CatalogPrimitiveStyle {
+  id: string;
+  intent: string;
+  /** Written explicitly in markup for a context; never a theme-wide choice. */
+  contextual: boolean;
+  /** CSS cost when a template uses it (raw / gzip level 9, bytes). */
+  bytes: { raw: number; gzip: number };
+}
+
+export interface CatalogPrimitive {
+  family: string;
+  label: string;
+  /** BEM block (`lz-btn`); a style is `<block>--<style>`. */
+  block: string;
+  defaultStyle: string | null;
+  roles: string[];
+  /** base.css, emitted once when any element of the family is used. */
+  base: { raw: number; gzip: number };
+  styles: CatalogPrimitiveStyle[];
+}
+
 export interface CatalogManifest {
   $comment: string;
   manifestVersion: 1;
@@ -91,6 +112,7 @@ export interface CatalogManifest {
   /** src/spec/catalog.ts CATALOG_VERSION. */
   catalogVersion: number;
   variants: CatalogVariant[];
+  primitives: CatalogPrimitive[];
   hooks: CatalogHook[];
   archetypes: CatalogArchetype[];
   palettes: {

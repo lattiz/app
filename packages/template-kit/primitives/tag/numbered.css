@@ -1,0 +1,3 @@
+.lz-tag--numbered{color:var(--lz-color-muted)}
+.lz-tag__num{color:var(--lz-color-text);font-variant-numeric:tabular-nums}
+.lz-tag__num::after{content:"";display:inline-block;width:20px;height:1px;margin-left:calc(8px * var(--lz-space));vertical-align:middle;background:currentColor}

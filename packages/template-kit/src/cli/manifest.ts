@@ -8,6 +8,7 @@
  *   pnpm --filter @lattiz/template-kit kit:manifest --check    (exit 1 when the file is stale)
  */
 import { createHash } from 'node:crypto';
+import { gzipSync } from 'node:zlib';
 import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { relative, resolve } from 'node:path';
 import * as prettier from 'prettier';
@@ -18,12 +19,18 @@ import type {
   CatalogFontPair,
   CatalogManifest,
   CatalogPalette,
+  CatalogPrimitive,
   CatalogTier,
   CatalogVariant,
 } from '../../catalog/types';
 import { EXTENDED_FONT_PAIRS } from '../../font-pairs';
 import { GIROS } from '../../giros';
 import { EXTENDED_PALETTES } from '../../palettes';
+import {
+  PRIMITIVE_FAMILIES,
+  PRIMITIVES,
+  type PrimitiveFamily,
+} from '../../primitives';
 import { parseArgs, runCli } from '../lib/args';
 import { hueOf, parseColor } from '../lib/color';
 import {
@@ -77,6 +84,34 @@ function accentHue(p: GiroPalette): number | null {
   const c = parseColor(p.colors.accent);
   const h = c ? hueOf(c) : null;
   return h && h.chroma > 0.08 ? Math.round(h.hue) : null;
+}
+
+const bytes = (file: string) => {
+  const text = readFileSync(file, 'utf8');
+  return {
+    raw: Buffer.byteLength(text),
+    gzip: gzipSync(text, { level: 9 }).length,
+  };
+};
+
+function primitives(): CatalogPrimitive[] {
+  return PRIMITIVE_FAMILIES.map((id) => {
+    const f: PrimitiveFamily = PRIMITIVES[id];
+    return {
+      family: id,
+      label: f.label,
+      block: f.block,
+      defaultStyle: f.defaultStyle,
+      roles: f.roles ?? [],
+      base: bytes(resolve(KIT_ROOT, 'primitives', id, 'base.css')),
+      styles: Object.entries(f.styles).map(([style, s]) => ({
+        id: style,
+        intent: s.intent,
+        contextual: s.contextual === true,
+        bytes: bytes(resolve(KIT_ROOT, 'primitives', id, `${style}.css`)),
+      })),
+    };
+  });
 }
 
 async function variants(): Promise<CatalogVariant[]> {
@@ -226,6 +261,7 @@ export async function buildManifest(): Promise<CatalogManifest> {
     manifestVersion: 1,
     catalogVersion: CATALOG_VERSION,
     variants: list,
+    primitives: primitives(),
     hooks: HOOKS.map((attribute) => ({ attribute, proOnly: true })),
     archetypes,
     palettes: {

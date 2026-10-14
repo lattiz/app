@@ -14,6 +14,7 @@ import { isTier, TIER_NAMES, type Tier } from '../tiers';
 import { KitError } from './args';
 import { paths, sectionDir } from './paths';
 import { styleProblems } from './style';
+import { primitiveChoiceProblems } from '../../primitives';
 
 type Rec = Record<string, unknown>;
 
@@ -120,6 +121,7 @@ export function parseTheme(raw: unknown, file: string): Theme {
   problems.push(
     ...requireStrings(effects, ['mapFilter', 'heroImageFilter'], 'effects'),
     ...styleProblems(raw.style),
+    ...primitiveChoiceProblems(raw.primitives),
   );
   if (problems.length > 0)
     throw new KitError(`${file}:\n  ${problems.join('\n  ')}`);
