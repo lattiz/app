@@ -1,0 +1,43 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "floreria-jardin-alto",
+  "twin": true,
+  "giro": "floreria",
+  "business": {
+    "name": "Jardín Alto",
+    "city": "Toluca",
+    "branch": "Universidad",
+    "address": "Av. Hidalgo 702, Universidad, Toluca",
+    "hours": "Lun a dom, 9:00 a 18:00",
+    "phone": "+52 722 000 0000",
+    "whatsapp": "527220000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "jardin-suave",
+    "archetype": "soft"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Florería en la colonia Universidad, Toluca: ramos, plantas y entrega con foto previa."
+    },
+    "hero": {
+      "title": "Flores y plantas para regalar esta tarde",
+      "text": "Ramos pequeños, macetas y tarjetas escritas a mano. Te mandamos foto antes de entregar."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Ramos y plantas en Toluca",
+          "text": "Arreglos y macetas con entrega en la ciudad. Escríbenos por WhatsApp."
+        }
+      }
+    }
+  }
+}

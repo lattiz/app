@@ -17,13 +17,25 @@ export const paths = {
   bases: resolve(CLI_ROOT, 'bases.json'),
 } as const;
 
+/**
+ * Where builds are read from: the kit, or the `--out` folder of a proof build (`lattiz check <id>
+ * --root <dir>` sets LATTIZ_BUILD_ROOT), so a template built outside the repo can be checked.
+ */
+const buildRoot = () =>
+  process.env.LATTIZ_BUILD_ROOT ? resolve(process.env.LATTIZ_BUILD_ROOT) : KIT;
+
 export const manifestFile = (id: string) =>
   resolve(paths.templates, `${id}.ts`);
-export const distDir = (id: string) => resolve(paths.dist, id);
+export const distDir = (id: string) => resolve(buildRoot(), 'dist', id);
 export const stateFile = (id: string) =>
   resolve(paths.work, 'state', `${id}.json`);
 export const shotsDir = (id: string) => resolve(paths.work, 'shots', id);
 export const demoProfileFile = (id: string) =>
-  resolve(paths.demoProfiles, `${id}.json`);
+  resolve(buildRoot(), 'demo-profiles', `${id}.json`);
+export const themeFile = (name: string) =>
+  resolve(buildRoot(), 'themes', `${name}.json`);
+/** The proof build root set by `--root`, or null for the kit. */
+export const externalRoot = () =>
+  process.env.LATTIZ_BUILD_ROOT ? buildRoot() : null;
 export const previewFile = (id: string) =>
   resolve(paths.previewsPublic, id, 'index.html');

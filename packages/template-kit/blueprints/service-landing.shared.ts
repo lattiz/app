@@ -52,6 +52,11 @@ export const roles = {
     purpose:
       'Dónde y cómo contactar: mapa, horario y botones de WhatsApp, teléfono, correo y cómo llegar. Nunca un <form>.',
   },
+  cta: {
+    region: 'main',
+    purpose:
+      'Franja de cierre con una invitación y el CTA principal (cta/band); cuenta como sección.',
+  },
   whatsapp: {
     region: 'main',
     position: 'last',
@@ -72,6 +77,7 @@ const commonSlots = {
   team: 'team',
   testimonials: 'testimonials',
   faq: 'faq',
+  cta: 'cta',
   whatsapp: 'floating-whatsapp',
   footer: 'footer',
 } satisfies Partial<Record<Role, string>>;

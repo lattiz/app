@@ -1,0 +1,43 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "gimnasio-yunque",
+  "twin": true,
+  "giro": "gimnasio",
+  "business": {
+    "name": "Gimnasio Yunque",
+    "city": "Tijuana",
+    "branch": "Zona Río",
+    "address": "Paseo de los Héroes 9320, Zona Río, Tijuana",
+    "hours": "Lun a sáb, 6:00 a 22:00",
+    "phone": "+52 664 000 0000",
+    "whatsapp": "526640000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "neon-nocturno",
+    "archetype": "bold"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Gimnasio en Zona Río, Tijuana: fuerza, box y funcional en grupos chicos."
+    },
+    "hero": {
+      "title": "Fuerza y box desde las seis",
+      "text": "Clases de 50 minutos, grupos chicos y coaches que corrigen cada repetición. Primera clase de prueba."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Entrena en Zona Río",
+          "text": "Pesas, box y funcional de lunes a sábado. Aparta tu clase de prueba."
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,11 @@
 import { spawn, spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import { createRequire } from 'node:module';
 import { relative, resolve } from 'node:path';
 import type { Browser, Page } from 'playwright';
@@ -20,7 +26,7 @@ import { browserPath, launchBrowser } from '../lib/browser';
 import { readSpecFile } from '../../../template-kit/src/spec/build';
 import { buildFindings, type Finding } from '../lib/findings';
 import { originOf, specFor } from '../lib/spec';
-import { bool, type Command } from '../lib/command';
+import { bool, str, type Command } from '../lib/command';
 import { EXIT, type ExitCode } from '../lib/errors';
 import { KIT, REPO_ROOT, shotsDir } from '../lib/paths';
 import { renderPreview } from '../lib/preview';
@@ -502,7 +508,7 @@ async function noJs(browser: Browser, url: string): Promise<RuleResult> {
  * Lighthouse (its default mobile emulation and simulated throttling) on the local static preview:
  * category scores plus LCP, CLS and TBT. Lab numbers, not field data: no CDN, local fonts.
  */
-function lighthouse(url: string): Promise<RuleResult[]> {
+function lighthouse(url: string, saveTo?: string): Promise<RuleResult[]> {
   return new Promise((done) => {
     const child = spawn(
       'npx',
@@ -532,6 +538,8 @@ function lighthouse(url: string): Promise<RuleResult[]> {
           categories: Record<string, { title: string; score: number | null }>;
           audits: Record<string, { numericValue?: number }>;
         };
+        // The full report (LCP element, phases, render-blocking requests) for diagnosis.
+        if (saveTo) writeFileSync(saveTo, out);
         const scores = Object.values(report.categories).map(
           (cat) => `${cat.title} ${Math.round((cat.score ?? 0) * 100)}`,
         );
@@ -623,7 +631,9 @@ export async function runCheck(
   rmSync(outDir, { recursive: true, force: true });
   mkdirSync(outDir, { recursive: true });
 
-  const built = await compile(id);
+  // A proof build (--root): already compiled and validated by `lattiz build --out`.
+  const external = Boolean(process.env.LATTIZ_BUILD_ROOT);
+  const built = external ? { code: 0, output: '' } : await compile(id);
   if (built.code !== 0) {
     results.push(
       result(
@@ -636,7 +646,7 @@ export async function runCheck(
     );
     return withFindings(finish(), null);
   }
-  const valid = await validate(id);
+  const valid = external ? { code: 0, output: '' } : await validate(id);
   const findings = cleanOutput(valid.output)
     .split('\n')
     .filter((l) => l.trim() && !/^\$ |^> /.test(l));
@@ -716,7 +726,12 @@ export async function runCheck(
   } finally {
     await browser?.close();
     if (opts.lighthouse)
-      results.push(...(await lighthouse(`${server.url}/site`)));
+      results.push(
+        ...(await lighthouse(
+          `${server.url}/site`,
+          resolve(outDir, 'lighthouse.json'),
+        )),
+      );
     await server.close();
   }
   return withFindings(finish(tier), dist.meta);
@@ -835,7 +850,7 @@ export const check: Command = {
   name: 'check',
   summary:
     'Revisión con Playwright en 7 tamaños: overflow, toques, letra, contraste, alt, SEO, tokens, imágenes, Motion',
-  usage: 'check <id> [--lighthouse] [--json]',
+  usage: 'check <id> [--lighthouse] [--json] [--root <dir>]',
   help: [
     `Viewports: ${CHECK_VIEWPORTS.map((v) => (v.label.includes('×') ? v.label : `${v.w}×${v.h}`)).join(', ')}.`,
     'Un solo navegador, un contexto a la vez, siempre cerrado al final. Renderiza con el mismo',
@@ -852,12 +867,22 @@ export const check: Command = {
     '',
     '  --lighthouse   además corre Lighthouse (npx lighthouse@12, se instala al vuelo; usa memoria):',
     '                 puntajes + LCP/CLS/TBT en móvil emulado (laboratorio, no datos de campo)',
+    '  --root <dir>   revisa una prueba construida fuera del kit (`lattiz build <spec> --out <dir>`):',
+    '                 lee <dir>/dist/<id> y <dir>/demo-profiles; no recompila ni repite kit:validate',
     '  --json         imprime solo el resultado en JSON; findings[] trae cada FAIL/WARN con sección,',
     '                 selector y, si la plantilla sale de un spec, specHint (qué campo del spec cambiar)',
   ],
-  options: { lighthouse: { type: 'boolean' }, json: { type: 'boolean' } },
+  options: {
+    lighthouse: { type: 'boolean' },
+    json: { type: 'boolean' },
+    root: { type: 'string' },
+  },
   async run(ctx): Promise<ExitCode> {
-    const id = assertTemplate(ctx.positionals[0]);
+    const root = str(ctx.flags, 'root');
+    if (root) process.env.LATTIZ_BUILD_ROOT = resolve(root);
+    const id = root
+      ? (ctx.positionals[0] ?? '')
+      : assertTemplate(ctx.positionals[0]);
     const json = bool(ctx.flags, 'json');
     setQuiet(json);
     log.title(`lattiz check ${id}`);

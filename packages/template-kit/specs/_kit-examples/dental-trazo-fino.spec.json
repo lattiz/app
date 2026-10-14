@@ -1,0 +1,43 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "dental-trazo-fino",
+  "twin": true,
+  "giro": "dental",
+  "business": {
+    "name": "Ortodoncia Trazo Fino",
+    "city": "Puebla",
+    "branch": "La Paz",
+    "address": "Calle 25 Poniente 3108, La Paz, Puebla",
+    "hours": "Lun a vie, 10:00 a 20:00",
+    "phone": "+52 222 000 0000",
+    "whatsapp": "522220000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "marmol-sobrio",
+    "archetype": "booking"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Ortodoncia en La Paz, Puebla: valoración, plan por escrito y citas puntuales."
+    },
+    "hero": {
+      "title": "Ortodoncia con un plan por escrito",
+      "text": "Valoración, radiografías y presupuesto en una sola visita. Cada ajuste queda en su expediente."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Ortodoncia en La Paz, Puebla",
+          "text": "Brackets y alineadores con valoración inicial y plan por escrito. Agende su valoración."
+        }
+      }
+    }
+  }
+}

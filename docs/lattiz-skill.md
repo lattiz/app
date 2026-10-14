@@ -109,6 +109,15 @@ negocios, marcas, personas o teléfonos reales; Pexels sin que lo pidas.
    `build`, `check` de cada id (en serie), `kit:compare-visual` (≥ 0.33).
 5. Agrega el giro a la tabla de `references/giro-mapping.md` y al catálogo de `docs/template-spec.md`.
 
+## Dirección de arte y diversidad (A2)
+
+Desde la Fase A2 la skill, después de mapear el giro, corre `giro show` (que ahora trae
+`directions[]` ordenadas por uso en el giro y afinidad, `archetypesUsed` y `freeProHeroes`) y
+`kit capacity --giro <g> --catalog extended`; elige una dirección y un arquetipo que el giro no use,
+crea el spec con `spec init --direccion <id>` y escribe el copy con la voz de `direccion show`. El
+linter `--strict` suma avisos de texto genérico (`muletilla`, `rayas`, `mayusculas`, `esqueleto`).
+La rúbrica agrega silueta propia y diversidad contra el giro. Sigue editando solo specs y no publica.
+
 ## Mantener la skill al día
 
 - La skill no lee código del kit: todo lo que necesita sale de `giro show`, `spec validate --strict`,

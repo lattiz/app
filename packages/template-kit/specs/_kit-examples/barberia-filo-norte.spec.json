@@ -1,0 +1,43 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "barberia-filo-norte",
+  "twin": true,
+  "giro": "barberia",
+  "business": {
+    "name": "Barbería Filo Norte",
+    "city": "Monterrey",
+    "branch": "Mitras",
+    "address": "Av. Simón Bolívar 412, Mitras Centro, Monterrey",
+    "hours": "Lun a sáb, 11:00 a 21:00",
+    "phone": "+52 81 0000 0000",
+    "whatsapp": "528100000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "neon-nocturno",
+    "archetype": "bold"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Barbería en Mitras, Monterrey: fades, barba a navaja y citas por WhatsApp hasta las 21:00."
+    },
+    "hero": {
+      "title": "Fade limpio, barba en orden",
+      "text": "Cortes a máquina y navaja, toalla caliente y cita por WhatsApp. Abrimos hasta las 9 de la noche."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Cortes de noche en Mitras",
+          "text": "Pasa después del trabajo: fade, barba y cejas. Aparta tu turno por WhatsApp."
+        }
+      }
+    }
+  }
+}

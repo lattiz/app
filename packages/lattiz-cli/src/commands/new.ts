@@ -212,12 +212,15 @@ export const newTemplate: Command = {
   name: 'new',
   summary:
     'Asistente: plantilla nueva desde un spec (recomendado) o clonando una base (legacy)',
-  usage: 'new [--spec archivo] [--modo spec|clon] [--giro g] [--nombre n]',
+  usage:
+    'new [--spec archivo] [--modo spec|clon] [--giro g] [--nombre n] [--direccion id]',
   help: [
     'Desde spec (recomendado): escribe packages/template-kit/specs/<giro>-<nombre>.spec.json con el',
     'copy del giro y lo compila con `lattiz build` (único en el giro, validado antes de escribir).',
     `  Giros con spec: ${Object.keys(GIROS).join(', ')}.`,
     '  --spec <archivo>          usa ese spec (si no existe, lo crea con --giro/--nombre/--tier)',
+    '  --direccion <id>          dirección de arte del spec nuevo (layout.direction; pnpm lattiz direccion list):',
+    '                            paleta, tipografía, forma y portada salen de ella en vez de fijarse',
     '  --modo spec|clon          sin terminal: spec solo con --spec o --modo spec',
     '  --twin                    el par Básico + Pro (igual que --tier ambos)',
     '  --images placeholder|none|pexels · --dry-run · --json (como en build)',
@@ -242,6 +245,7 @@ export const newTemplate: Command = {
   ],
   options: {
     spec: { type: 'string' },
+    direccion: { type: 'string' },
     modo: { type: 'string' },
     twin: { type: 'boolean' },
     images: { type: 'string' },

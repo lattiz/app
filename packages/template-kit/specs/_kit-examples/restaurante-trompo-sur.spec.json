@@ -1,0 +1,43 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "restaurante-trompo-sur",
+  "twin": true,
+  "giro": "restaurante",
+  "business": {
+    "name": "Taquería Trompo Sur",
+    "city": "Hermosillo",
+    "branch": "Pitic",
+    "address": "Blvd. Kino 1105, Pitic, Hermosillo",
+    "hours": "Mar a dom, 19:00 a 1:00",
+    "phone": "+52 662 000 0000",
+    "whatsapp": "526620000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "neon-nocturno",
+    "archetype": "bold"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Taquería en Pitic, Hermosillo: pastor al carbón, asada y pedidos por WhatsApp hasta la una."
+    },
+    "hero": {
+      "title": "Pastor al carbón hasta la una",
+      "text": "Trompo, tortilla de harina sonorense y salsas de la casa. Pide por WhatsApp y pasa por tu orden."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Tacos de noche en Pitic",
+          "text": "Pastor, asada y quesotacos hasta la una. Haz tu pedido."
+        }
+      }
+    }
+  }
+}

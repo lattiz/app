@@ -10,9 +10,12 @@ import {
 } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, relative, resolve } from 'node:path';
+import { DIRECTIONS } from '../../directions';
 import { measureBudget } from '../lib/budget';
+import { directionFindings } from './direction';
 import { compileManifest, writeCompiled } from '../lib/compile';
 import { KIT_ROOT } from '../lib/paths';
+import type { Fingerprint } from '../lib/similarity';
 import { libraryFingerprints, targetFromCompiled } from '../lib/targets';
 import { validateTarget, type Finding } from '../lib/validate';
 import { planSpec, type SpecPlan } from './compile';
@@ -52,6 +55,8 @@ export interface BuildOptions {
   force?: boolean;
   /** Write sources and dist under this folder instead of the kit (reproduction checks). */
   out?: string;
+  /** Proof builds: templates built outside the kit that this spec must also stay unique against. */
+  extraPeers?: Fingerprint[];
 }
 
 export type FileAction =
@@ -76,6 +81,8 @@ export interface FileReport {
 
 export interface TierReport {
   id: string;
+  /** What uniqueness compares (feed it to `extraPeers` of the next proof build). */
+  fingerprint?: Fingerprint;
   tier: 'pro' | 'basico';
   theme: string;
   choices: string[];
@@ -229,7 +236,7 @@ export async function buildSpec(opts: BuildOptions): Promise<BuildReport> {
 
   let library;
   try {
-    library = await libraryFingerprints();
+    library = [...(await libraryFingerprints()), ...(opts.extraPeers ?? [])];
   } catch (error) {
     return done(
       2,
@@ -322,6 +329,10 @@ export async function buildSpec(opts: BuildOptions): Promise<BuildReport> {
           })),
           kitDir: resolve(root, 'assets', plan.giro.id, t.theme.name),
           tempDir,
+          // LCP policy for new work: an existing template keeps its image bytes.
+          ...(!existsSync(resolve(KIT_ROOT, 'templates', `${t.id}.ts`))
+            ? { hero: { maxWidth: 1200, quality: 72 } }
+            : {}),
         });
       } catch (error) {
         return done(2, `imágenes: ${(error as Error).message}`);
@@ -334,6 +345,17 @@ export async function buildSpec(opts: BuildOptions): Promise<BuildReport> {
         ...others,
         ...siblings,
       ]);
+      // Layout specs: the art direction's taste rules are part of the gate.
+      const direction = t.layout?.direction
+        ? DIRECTIONS[t.layout.direction]
+        : undefined;
+      if (direction)
+        for (const f of directionFindings(compiled, direction))
+          validation.findings.push({
+            rule: 'direction',
+            file: t.id,
+            message: `${direction.id} › ${f.rule}: ${f.message}`,
+          });
       // Byte budgets: a template that doesn't exist yet must fit; an existing one only warns.
       const isNew = !existsSync(resolve(KIT_ROOT, 'templates', `${t.id}.ts`));
       for (const b of measureBudget(compiled).filter((l) => l.over)) {
@@ -350,6 +372,7 @@ export async function buildSpec(opts: BuildOptions): Promise<BuildReport> {
       compiledByTier.set(t.id, compiled);
       report.tiers.push({
         id: t.id,
+        fingerprint: t.fingerprint,
         tier: t.tier,
         theme: t.theme.name,
         choices: t.choices,

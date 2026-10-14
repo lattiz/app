@@ -1,0 +1,2 @@
+.lz-btn.lz-btn--on-image{background:color-mix(in srgb,var(--lz-color-overlay) 62%,transparent);color:var(--lz-color-on-overlay);border-color:var(--lz-color-on-overlay)}
+@media (hover:hover) and (pointer:fine){.lz-btn.lz-btn--on-image:hover{background:color-mix(in srgb,var(--lz-color-overlay) 80%,transparent)}}

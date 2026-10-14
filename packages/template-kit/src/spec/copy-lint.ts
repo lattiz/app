@@ -23,6 +23,11 @@ export const COPY_LIMITS: Record<string, number> = {
   'cta.text': 140,
   'cta.primaryCta': 24,
   'cta.secondaryCta': 18,
+  // A2 heroes: bento facts and rail details.
+  'hero.facts[].value': 10,
+  'hero.facts[].label': 40,
+  'hero.details[].label': 14,
+  'hero.details[].value': 32,
   'hero.eyebrow': 48,
   'hero.title': 56,
   'hero.text': 150,
@@ -119,6 +124,33 @@ const BANNED: [RegExp, string][] = [
   [
     /(avalad|certificad|aprobad)[oa]s? por (la )?(cofepris|sat|ssa|sep|profeco)/,
     'aval de autoridad',
+  ],
+];
+
+/** Generic AI-sounding phrasing (docs/template-kit-design-principles.md §3), on accent-folded text. WARN only. */
+const SLOP: [RegExp, string][] = [
+  [
+    /\b(eleva|elevamos|lleva|llevamos|llevara)\b.{0,40}\bsiguiente nivel\b|\bal siguiente nivel\b/,
+    '«al siguiente nivel»',
+  ],
+  [/\bsin complicaciones\b/, '«sin complicaciones»'],
+  [/\bdesata\b|\bdesatar\b/, '«desata»'],
+  [/\bde vanguardia\b/, '«de vanguardia»'],
+  [/\brevoluciona(mos|r)?\b/, '«revoluciona»'],
+  [/\b(sumergete|adentrate|sumérgete|adéntrate)\b/, '«sumérgete / adéntrate»'],
+  [/\bun tapiz de\b/, '«un tapiz de»'],
+  [/^en el mundo de\b/, 'apertura «En el mundo de…»'],
+  [
+    /\bexperiencia(s)? (unica|unicas|inigualable|inigualables|inolvidable)\b/,
+    '«experiencia única / inigualable»',
+  ],
+  [/\bmas que (un|una)\b/, '«más que un…»'],
+  [/\btu mejor version\b/, '«tu mejor versión»'],
+  [/\bcalidad premium\b/, '«calidad premium»'],
+  [/\btransforma (tu|tus)\b/, '«transforma tu…»'],
+  [
+    /\b(descubre|explora) (el|la|los|las|un|una|nuestro|nuestra)\b.{0,30}\b(mundo|universo|magia)\b/,
+    '«descubre el mundo / la magia…»',
   ],
 ];
 
@@ -350,6 +382,52 @@ export async function lintCopy(spec: Spec): Promise<SpecProblem[]> {
             `menciona la marca real «${brand}»`,
             'Solo negocios, productos y personas ficticios.',
           );
+      // Anti-slop (WARN): phrasing, dashes, shouting, title case.
+      for (const [re, what] of SLOP)
+        if (re.test(folded))
+          add(
+            'warn',
+            'muletilla',
+            at,
+            `muletilla de texto generado: ${what}`,
+            'Dilo con un dato concreto del negocio (qué, dónde, cuándo).',
+          );
+      if ((text.match(/—/g) ?? []).length > 1)
+        add(
+          'warn',
+          'rayas',
+          at,
+          'más de una raya (—) en el mismo texto',
+          'Un punto, coma, dos puntos o paréntesis casi siempre leen mejor.',
+        );
+      const shouted = (text.match(/\b[A-ZÁÉÍÓÚÑ]{5,}\b/g) ?? []).length;
+      if (shouted >= 2 && !/(kicker|eyebrow|label|tag)$/i.test(leaf.key))
+        add(
+          'warn',
+          'mayusculas',
+          at,
+          'palabras en mayúsculas sostenidas',
+          'Las mayúsculas las pone el estilo display; el copy va en mayúsculas de oración.',
+        );
+      // head.title carries the business's proper name: not a title-case check.
+      if (/(title|question)$/.test(leaf.key) && leaf.key !== 'head.title') {
+        const words = text.split(/\s+/).slice(1);
+        const capped = words.filter((w) =>
+          /^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]{3,}/.test(w),
+        );
+        if (
+          words.length >= 2 &&
+          capped.length >= 2 &&
+          capped.length >= words.length / 2
+        )
+          add(
+            'warn',
+            'mayusculas',
+            at,
+            'título en Mayúsculas De Título',
+            'Mayúsculas de oración: «Nuestros servicios», no «Nuestros Servicios».',
+          );
+      }
       for (const word of text.toLowerCase().match(/\p{L}+/gu) ?? []) {
         const fixed = ACCENTS[word];
         if (fixed)
@@ -376,6 +454,53 @@ export async function lintCopy(spec: Spec): Promise<SpecProblem[]> {
         else seenInPage.set(`${tier}|${s}`, leaf.path.split(/[.[]/)[0]);
       }
     }
+  }
+
+  // Repeated sentence skeletons: «Somos X. Somos Y. Somos Z.» inside one text, or four body
+  // sentences of a page opening with the same two words (alts, labels and titles don't count).
+  const BODY =
+    /(text|summary|statement|paragraphs\[\]|answer|intro|description|about)$/;
+  for (const tier of tiers) {
+    const openers = new Map<string, string[]>();
+    for (const leaf of leaves(copies[tier])) {
+      // Own split: the shared one drops sentences under five words, and «Somos sabor.» is short.
+      const short = fold(fill(leaf.raw))
+        .split(/[.!?¿¡:;]+/)
+        .map((x) =>
+          x
+            .replace(/[^a-z0-9ñ ]+/g, ' ')
+            .trim()
+            .split(/\s+/),
+        )
+        .filter((w) => w.length >= 2);
+      const list = sentences(fill(leaf.raw)).map((x) => fold(x).split(/\s+/));
+      const first = new Map<string, number>();
+      for (const w of short) first.set(w[0], (first.get(w[0]) ?? 0) + 1);
+      for (const [word, n] of first)
+        if (n >= 3)
+          add(
+            'warn',
+            'esqueleto',
+            where(tier, leaf.path),
+            `${n} frases seguidas empiezan con «${word}»`,
+            'Varía el arranque: una frase corta, una con dato, una con verbo.',
+          );
+      if (!BODY.test(leaf.key)) continue;
+      for (const w of list)
+        if (w.length >= 2) {
+          const key = w.slice(0, 2).join(' ');
+          openers.set(key, [...(openers.get(key) ?? []), leaf.path]);
+        }
+    }
+    for (const [key, paths] of openers)
+      if (paths.length >= 4)
+        add(
+          'warn',
+          'esqueleto',
+          where(tier, paths[0]),
+          `${paths.length} frases de la página empiezan igual («${key}…»): ${paths.slice(0, 3).join(', ')}`,
+          'Varía el arranque: una frase corta, una con dato, una con verbo.',
+        );
   }
 
   if (tiers.length === 2) {

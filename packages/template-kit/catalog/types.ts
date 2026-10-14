@@ -83,6 +83,54 @@ export interface CatalogGiro {
   fontPairs: string[];
 }
 
+export interface CatalogPrimitiveStyle {
+  id: string;
+  intent: string;
+  /** Written explicitly in markup for a context; never a theme-wide choice. */
+  contextual: boolean;
+  /** CSS cost when a template uses it (raw / gzip level 9, bytes). */
+  bytes: { raw: number; gzip: number };
+}
+
+export interface CatalogPrimitive {
+  family: string;
+  label: string;
+  /** BEM block (`lz-btn`); a style is `<block>--<style>`. */
+  block: string;
+  defaultStyle: string | null;
+  roles: string[];
+  /** base.css, emitted once when any element of the family is used. */
+  base: { raw: number; gzip: number };
+  styles: CatalogPrimitiveStyle[];
+}
+
+export interface CatalogDirection {
+  id: string;
+  name: string;
+  intent: string;
+  palettes: { default: string[]; byGiro: Record<string, string[]> };
+  fontPairs: { default: string[]; byGiro: Record<string, string[]> };
+  style: Record<string, string>;
+  primitives: Record<string, string>;
+  archetypes: string[];
+  heroes: Record<CatalogTier, string[]>;
+  motion: string;
+  dials: { variance: number; motion: number; density: number };
+  giros: string[];
+  rules: string[];
+  voice: { register: string; headline: string; cta: string };
+}
+
+export interface CatalogRole {
+  role: string;
+  /** Slot the role resolves to (same for every giro of service-landing). */
+  slot: string;
+  /** Per tier: required, optional, or absent from that tier's blueprint. */
+  tiers: Record<CatalogTier, 'required' | 'optional' | null>;
+  /** Counts toward the tier's section range (floating-whatsapp and marquee don't). */
+  counted: boolean;
+}
+
 export interface CatalogManifest {
   $comment: string;
   manifestVersion: 1;
@@ -90,7 +138,10 @@ export interface CatalogManifest {
   contentHash: string;
   /** src/spec/catalog.ts CATALOG_VERSION. */
   catalogVersion: number;
+  roles: CatalogRole[];
   variants: CatalogVariant[];
+  primitives: CatalogPrimitive[];
+  directions: CatalogDirection[];
   hooks: CatalogHook[];
   archetypes: CatalogArchetype[];
   palettes: {

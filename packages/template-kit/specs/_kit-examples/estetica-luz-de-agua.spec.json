@@ -1,0 +1,43 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "estetica-luz-de-agua",
+  "twin": true,
+  "giro": "estetica",
+  "business": {
+    "name": "Estética Luz de Agua",
+    "city": "Xalapa",
+    "branch": "Centro",
+    "address": "Calle Revolución 214, Centro, Xalapa",
+    "hours": "Mar a dom, 10:00 a 20:00",
+    "phone": "+52 228 000 0000",
+    "whatsapp": "522280000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "jardin-suave",
+    "archetype": "soft"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Salón de belleza en el Centro de Xalapa: color, corte y peinado con cita por WhatsApp."
+    },
+    "hero": {
+      "title": "Color y corte con calma, en Xalapa",
+      "text": "Asesoría de color, cortes y peinados en un salón tranquilo. Agenda por WhatsApp y llega a tu hora."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Tu salón en el Centro de Xalapa",
+          "text": "Corte, color y peinado con cita. Escríbenos para ver horarios."
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,8 @@
 import { createHash } from 'node:crypto';
-import { existsSync, readdirSync } from 'node:fs';
+import { existsSync, readdirSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { ARCHETYPES, type Archetype, type ArchetypeId } from '../../archetypes';
+import { DIRECTIONS, type ArtDirection } from '../../directions';
 import { GIROS } from '../../giros';
 import { hueDistance, hueOf, parseColor } from '../lib/color';
 import { MIN_PALETTE_DISTANCE, paletteDistance } from '../lib/delta-e';
@@ -34,7 +36,21 @@ import {
   type GiroPalette,
   type ShapePreset,
 } from './presets';
-import type { Spec, SpecBrand, SpecProblem, SpecTier } from './schema';
+import type {
+  Spec,
+  SpecBrand,
+  SpecLayout,
+  SpecProblem,
+  SpecTier,
+} from './schema';
+import {
+  densityFromDial,
+  directionAcceptsFont,
+  directionAcceptsPalette,
+  directionFontPairs,
+  directionPalettes,
+  motionFromDial,
+} from './direction';
 import {
   catalogOf,
   fontPairById,
@@ -252,6 +268,8 @@ export interface TierPlan {
   imageKeys: string[];
   /** Ids the lock records (palette `custom` for a spec's own palette). */
   resolved: { palette: string; fontPair: string; shape: string };
+  /** Layout specs: the art direction and page archetype that drove the picks. */
+  layout?: { direction?: string; archetype?: ArchetypeId };
   sections: ResolvedSection[];
 }
 
@@ -266,6 +284,12 @@ export interface SpecPlan {
   problems: SpecProblem[];
 }
 
+/** Layout preference for a role (extended specs with `layout`): an override pins, a preference doesn't. */
+type LayoutPick = (
+  role: Role,
+  slot: string,
+) => { variant: string; pinned: boolean } | undefined;
+
 function sectionsFor(
   spec: Spec,
   giro: GiroDefinition,
@@ -273,6 +297,7 @@ function sectionsFor(
   blueprint: Blueprint,
   catalog: Catalog,
   locked?: TierLock,
+  pick?: LayoutPick,
 ): ResolvedSection[] {
   const slots = blueprint.verticals[giro.id]?.slots ?? {};
   const defaults = giro.sections[tier];
@@ -285,14 +310,21 @@ function sectionsFor(
       ? undefined
       : locked?.sections.find((l) => l.role === entry.role && l.slot === slot)
           ?.variant;
+    const layout = pinned || fromLock ? undefined : pick?.(entry.role, slot);
     const variant =
       entry.variant ??
       fromLock ??
+      layout?.variant ??
       defaults.find((d) => d.role === entry.role)?.variant ??
       allowedVariants(blueprint, entry.role, slot, catalog)[0];
     return fromLock
       ? { role: entry.role, slot, variant, pinned: true, locked: true }
-      : { role: entry.role, slot, variant, pinned };
+      : {
+          role: entry.role,
+          slot,
+          variant,
+          pinned: pinned || Boolean(layout?.pinned),
+        };
   });
 }
 
@@ -585,6 +617,98 @@ function candidates<T>(
   return pinned ? [pinned, ...rest] : rest;
 }
 
+const CSS_BYTES = new Map<string, number>();
+/** Raw size of a variant's section.css (Básico layout picks prefer the lighter of equals). */
+function cssBytes(slot: string, variant: string): number {
+  const key = `${slot}/${variant}`;
+  if (!CSS_BYTES.has(key)) {
+    const file = resolve(paths.sections, slot, variant, 'section.css');
+    CSS_BYTES.set(key, existsSync(file) ? statSync(file).size : 0);
+  }
+  return CSS_BYTES.get(key) as number;
+}
+
+/** Hero composition on the variance dial (1 symmetric … 10 asymmetric); unknown heroes sit in the middle. */
+const HERO_VARIANCE: Record<string, number> = {
+  'centered-arch': 2,
+  panel: 3,
+  columns: 4,
+  split: 4,
+  rail: 5,
+  'image-bg': 5,
+  'offset-card': 6,
+  framed: 6,
+  'duo-arch': 6,
+  overlap: 7,
+  stack: 7,
+  bento: 8,
+  poster: 9,
+};
+
+/** The direction's heroes then the archetype's, the variance dial reordering the direction's by closeness. */
+function heroPreferences(
+  kitTier: Tier,
+  direction: ArtDirection | undefined,
+  archetype: Archetype | undefined,
+  variance: number | undefined,
+): string[] {
+  const own = [...(direction?.heroes[kitTier] ?? [])];
+  if (variance !== undefined)
+    own.sort(
+      (a, b) =>
+        Math.abs((HERO_VARIANCE[a] ?? 5) - variance) -
+        Math.abs((HERO_VARIANCE[b] ?? 5) - variance),
+    );
+  const fromArchetype =
+    archetype?.sections[kitTier].find((s) => s.role === 'hero')?.variants ?? [];
+  return [...new Set([...own, ...fromArchetype])];
+}
+
+/** Brand of a tier with the direction's taste under the spec's own choices (spec wins). */
+function brandWithLayout(
+  brand: SpecBrand,
+  direction: ArtDirection | undefined,
+  layout: SpecLayout | undefined,
+): SpecBrand {
+  const density = layout?.dials?.density;
+  if (!direction && density === undefined) return brand;
+  return {
+    ...brand,
+    style: {
+      ...(direction?.style ?? {}),
+      ...(density !== undefined ? { density: densityFromDial(density) } : {}),
+      ...(brand.style ?? {}),
+    },
+    ...(direction || brand.primitives
+      ? {
+          primitives: {
+            ...(direction?.primitives ?? {}),
+            ...(brand.primitives ?? {}),
+          },
+        }
+      : {}),
+  };
+}
+
+/** Pool ids reordered: the preferred ones first (rotated by the seed), then the rest (rotated). */
+function preferFirst<T extends { id: string }>(
+  pool: T[],
+  preferred: string[],
+  seed: number,
+): T[] {
+  const set = new Set(preferred);
+  const first = preferred
+    .map((id) => pool.find((p) => p.id === id))
+    .filter((p): p is T => Boolean(p));
+  return [
+    ...rotate(first, seed),
+    ...rotate(
+      pool.filter((p) => !set.has(p.id)),
+      seed,
+    ),
+  ];
+}
+
 function headlineOf(html: string, business: Business): string {
   try {
     return interpolate(html, { business, source: 'spec (hero title)' });
@@ -616,6 +740,29 @@ export async function planSpec(
     };
   const problems: SpecProblem[] = [];
   const catalog = catalogOf(spec);
+  // Extended specs only: art direction, archetype, variant overrides and dials.
+  const layout = catalog === 'extended' ? spec.layout : undefined;
+  const direction = layout?.direction
+    ? DIRECTIONS[layout.direction]
+    : undefined;
+  const archetypeId = layout?.archetype ?? direction?.archetypes[0];
+  const archetype = archetypeId
+    ? (ARCHETYPES as Record<string, Archetype | undefined>)[archetypeId]
+    : undefined;
+  const layoutProblems: SpecProblem[] = [];
+  if (layout?.direction && !direction)
+    layoutProblems.push({
+      level: 'error',
+      path: 'layout.direction',
+      message: `dirección de arte desconocida: "${layout.direction}"`,
+    });
+  if (layout?.archetype && !archetype)
+    layoutProblems.push({
+      level: 'error',
+      path: 'layout.archetype',
+      message: `arquetipo desconocido: "${layout.archetype}"`,
+    });
+  if (layoutProblems.length > 0) return { problems: layoutProblems };
   // A lock resolved against the other catalog no longer describes this spec.
   const useLock = lock && lock.catalog === catalog ? lock : undefined;
   const lockHint = `Si quieres que el compilador vuelva a elegir: \`pnpm lattiz spec lock ${specStem(spec)} --refresh\`.`;
@@ -633,11 +780,50 @@ export async function planSpec(
   for (const { tier, id } of targets) {
     const kitTier = KIT_TIER[tier];
     const blueprint = await loadBlueprint('service-landing', kitTier);
-    const brand = brandFor(spec, tier);
+    const brand = brandWithLayout(brandFor(spec, tier), direction, layout);
     const seed = seedOf(id);
     const choices: string[] = [];
     const locked = useLock?.tiers[id];
-    const sections = sectionsFor(spec, giro, tier, blueprint, catalog, locked);
+    const heroPrefs = heroPreferences(
+      kitTier,
+      direction,
+      archetype,
+      layout?.dials?.variance,
+    );
+    const pick: LayoutPick | undefined = layout
+      ? (role, slot) => {
+          const allowed = allowedVariants(blueprint, role, slot, catalog);
+          const override =
+            layout.variantOverrides?.[role] ?? layout.variantOverrides?.[slot];
+          if (override && allowed.includes(override))
+            return { variant: override, pinned: true };
+          const preferred =
+            role === 'hero'
+              ? heroPrefs
+              : (archetype?.sections[kitTier].find((s) => s.role === role)
+                  ?.variants ?? []);
+          const options = preferred.filter((v) => allowed.includes(v));
+          // Básico stays light (budgets.json): the lightest of the archetype's choices for a role.
+          const variant =
+            kitTier === 'basic' && role !== 'hero'
+              ? [...options].sort(
+                  (x, y) => cssBytes(slot, x) - cssBytes(slot, y),
+                )[0]
+              : options[0];
+          return variant ? { variant, pinned: false } : undefined;
+        }
+      : undefined;
+    const sections = sectionsFor(
+      spec,
+      giro,
+      tier,
+      blueprint,
+      catalog,
+      locked,
+      pick,
+    );
+    if (direction) choices.push(`dirección: ${direction.id}`);
+    if (archetype && layout) choices.push(`arquetipo: ${archetype.id}`);
 
     // Palette: accent hue ≥ 30° from every template of the giro.
     const custom =
@@ -713,16 +899,28 @@ export async function planSpec(
     const paletteCandidates = palettePool(giro, catalog).map(
       ([pid, value]) => ({ id: pid, value, pinned: false }),
     );
-    const paletteChoice = candidates(
-      pinnedPalette,
-      paletteCandidates,
-      seed,
-    ).find((c) => freePalette(c.value));
+    const paletteOrder = direction
+      ? ((pool: Pick<GiroPalette>[]) =>
+          pinnedPalette
+            ? [pinnedPalette, ...pool.filter((p) => p.id !== pinnedPalette.id)]
+            : pool)(
+          preferFirst(
+            paletteCandidates.filter((c) =>
+              directionAcceptsPalette(direction, c.value),
+            ),
+            directionPalettes(direction, giro.id),
+            seed,
+          ),
+        )
+      : candidates(pinnedPalette, paletteCandidates, seed);
+    const paletteChoice = paletteOrder.find((c) => freePalette(c.value));
     if (!paletteChoice) {
       problems.push({
         level: 'error',
         path: 'brand.palette',
-        message: `no queda paleta libre en ${giro.label}: todos los acentos están a < ${MIN_ACCENT_HUE_DISTANCE}° de otra plantilla`,
+        message: direction
+          ? `no queda paleta libre en ${giro.label} que respete la dirección ${direction.id} (${direction.rules.join(', ') || 'sin reglas de color'})`
+          : `no queda paleta libre en ${giro.label}: todos los acentos están a < ${MIN_ACCENT_HUE_DISTANCE}° de otra plantilla`,
         hint: 'Define una paleta propia ({ "custom": { "bg", "accent" } }) con un tono de acento distinto, o agrega paletas al giro.',
       });
       continue;
@@ -784,11 +982,29 @@ export async function planSpec(
       value: fontPairById(fid) as FontPairPreset,
       pinned: false,
     }));
-    const fontChoice = candidates<FontPairPreset>(
-      pinnedFont,
-      fontPool,
-      seed,
-    ).find((c) => !takenFonts.has(c.id));
+    const fontOrder = direction
+      ? ((pool: Pick<FontPairPreset>[]) =>
+          pinnedFont
+            ? [pinnedFont, ...pool.filter((p) => p.id !== pinnedFont.id)]
+            : pool)(
+          preferFirst(
+            [
+              ...fontPool,
+              ...directionFontPairs(direction, giro.id)
+                .filter((fid) => !fontPool.some((f) => f.id === fid))
+                .filter((fid) => fontPairById(fid))
+                .map((fid) => ({
+                  id: fid,
+                  value: fontPairById(fid) as FontPairPreset,
+                  pinned: false,
+                })),
+            ],
+            directionFontPairs(direction, giro.id),
+            seed,
+          ).filter((f) => directionAcceptsFont(direction, f.value)),
+        )
+      : candidates<FontPairPreset>(pinnedFont, fontPool, seed);
+    const fontChoice = fontOrder.find((c) => !takenFonts.has(c.id));
     if (!fontChoice) {
       problems.push({
         level: 'error',
@@ -845,6 +1061,7 @@ export async function planSpec(
       );
       if (taken.has(hero.variant)) {
         const free = [
+          ...heroPrefs.filter((v) => heroVariants.includes(v)),
           giro.sections[tier].find((d) => d.role === 'hero')?.variant,
           ...rotate(heroVariants, seed),
         ].find((v): v is string => Boolean(v) && !taken.has(v as string));
@@ -923,19 +1140,26 @@ export async function planSpec(
       shape,
       brand,
     });
-    const archetype =
+    const manifestArchetype =
       locked?.archetype ??
       (kitTier === 'basic'
         ? 'essential'
-        : shape.archetype === 'editorial-atelier' &&
-            paletteChoice.value.scheme === 'dark'
-          ? 'street-luxe'
-          : shape.archetype);
+        : archetype && layout
+          ? archetype.blueprintArchetype
+          : shape.archetype === 'editorial-atelier' &&
+              paletteChoice.value.scheme === 'dark'
+            ? 'street-luxe'
+            : shape.archetype);
 
     const motion: ManifestMotion | undefined =
       tier === 'pro'
         ? {
-            preset: spec.motion?.preset ?? giro.motion.preset,
+            preset:
+              spec.motion?.preset ??
+              (layout?.dials?.motion !== undefined
+                ? motionFromDial(layout.dials.motion)
+                : direction?.motion) ??
+              giro.motion.preset,
             ...((spec.motion?.progress ?? giro.motion.progress)
               ? { progress: true }
               : {}),
@@ -961,7 +1185,7 @@ export async function planSpec(
       family: 'service-landing',
       tier: kitTier,
       vertical: giro.id,
-      archetype,
+      archetype: manifestArchetype,
       theme: theme.name,
       content: contentName(spec),
       sections: sections.map((s) => ({ slot: s.slot, variant: s.variant })),
@@ -1024,6 +1248,16 @@ export async function planSpec(
     // Links and branches depend on the final variants.
     const finalCopy = tierCopy(spec, giro, tier, sections, branches);
     finalCopy.hero = { ...finalCopy.hero, title: copy.hero?.title ?? '' };
+    // Layout specs only: a variant's sample copy fills the keys no giro writes yet.
+    if (layout)
+      for (const s of sections) {
+        const sample = (await loadSectionMeta(s.slot, s.variant)).sample;
+        if (sample)
+          finalCopy[s.slot] = {
+            ...clone(sample),
+            ...(finalCopy[s.slot] ?? {}),
+          };
+      }
     copies.set(tier, finalCopy);
 
     const print = fp();
@@ -1042,6 +1276,14 @@ export async function planSpec(
         shape: shapeId,
       },
       sections,
+      ...(layout
+        ? {
+            layout: {
+              ...(direction ? { direction: direction.id } : {}),
+              ...(archetype ? { archetype: archetype.id } : {}),
+            },
+          }
+        : {}),
     });
     peers.push({ ...print, sibling: true });
   }

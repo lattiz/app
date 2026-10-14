@@ -208,6 +208,8 @@ export async function sourceImages(opts: {
   jobs: ImageJob[];
   kitDir: string;
   tempDir: string;
+  /** New templates only (A2 LCP policy): the hero photo at most this wide, at this JPEG quality. */
+  hero?: { maxWidth: number; quality: number };
 }): Promise<ImagePlanResult> {
   const { spec, giro, mode, jobs, kitDir, tempDir } = opts;
   const previous = new Map(readCredits(kitDir).images.map((c) => [c.file, c]));
@@ -225,11 +227,17 @@ export async function sourceImages(opts: {
     const tempFile = resolve(tempDir, job.name);
     const prior = previous.get(job.name);
     const specImage = spec.images?.find((i) => i.key === imageKey);
+    // The hero is the LCP image: new templates get it lighter (same crop, fewer pixels and bytes).
+    const lcp = job.name === 'hero.jpg' ? opts.hero : undefined;
+    const scale = lcp ? Math.min(1, lcp.maxWidth / job.width) : 1;
     const fit = async (input: Buffer | string) =>
       sharp(input)
         .rotate()
-        .resize(job.width, job.height, { fit: 'cover', position: 'attention' })
-        .jpeg({ quality: 80, mozjpeg: true })
+        .resize(Math.round(job.width * scale), Math.round(job.height * scale), {
+          fit: 'cover',
+          position: 'attention',
+        })
+        .jpeg({ quality: lcp?.quality ?? 80, mozjpeg: true })
         .toBuffer();
 
     // A file in the kit folder that the build didn't write is a real photo: keep it.

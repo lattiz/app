@@ -1,0 +1,4 @@
+.lz-btn--underline{position:relative;padding:0 2px;border-radius:0;color:var(--lz-color-text)}
+.lz-btn--underline::after{content:"";position:absolute;left:2px;right:2px;bottom:9px;height:2px;background:var(--lz-color-accent);transform:scaleX(.35);transform-origin:left center;transition:transform var(--lz-dur-reveal,240ms) var(--lz-ease-out,cubic-bezier(.23,1,.32,1))}
+@media (hover:hover) and (pointer:fine){.lz-btn--underline:hover::after{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){.lz-btn--underline::after{transform:scaleX(1);transition:none}}

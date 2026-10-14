@@ -1,0 +1,44 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "despacho-alcala-ibarra",
+  "twin": true,
+  "giro": "despacho",
+  "business": {
+    "name": "Alcalá Ibarra Asesores Fiscales",
+    "city": "León",
+    "branch": "Jardines del Moral",
+    "address": "Blvd. Campestre 1520, Jardines del Moral, León",
+    "hours": "Lun a vie, 9:00 a 19:00",
+    "phone": "+52 477 000 0000",
+    "whatsapp": "524770000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "tinta-papel",
+    "archetype": "trust"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Asesoría fiscal en Jardines del Moral, León: planeación de impuestos, auditoría interna y requerimientos."
+    },
+    "hero": {
+      "title": "Asesoría fiscal para empresas de León",
+      "text": "Planeación de impuestos, auditoría interna y respuesta a requerimientos del SAT, con reportes por escrito cada mes."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "brand": { "palette": { "preset": "pal-petroleo-hueso" } },
+      "copy": {
+        "hero": {
+          "title": "Asesores fiscales en Jardines del Moral",
+          "text": "Declaraciones, planeación fiscal y respuesta a requerimientos con cita previa. Agende una llamada."
+        }
+      }
+    }
+  }
+}

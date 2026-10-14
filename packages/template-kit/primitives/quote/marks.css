@@ -1,0 +1,2 @@
+.lz-pullquote--marks{padding-top:calc(40px * var(--lz-space))}
+.lz-pullquote--marks::before{content:"\201C";position:absolute;top:0;left:-4px;font:400 96px/1 var(--lz-font-serif,var(--lz-font-display));color:var(--lz-color-accent);pointer-events:none}

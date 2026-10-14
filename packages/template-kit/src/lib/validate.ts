@@ -48,7 +48,9 @@ export type RuleId =
   | 'unique-headline'
   | 'unique-hero'
   /** Byte budget (budgets.json); only a spec build of a new template raises it as a finding. */
-  | 'budget';
+  | 'budget'
+  /** A layout spec's art-direction rule (directions/ › rules); raised by the spec build. */
+  | 'direction';
 
 export interface Finding {
   rule: RuleId;
@@ -75,6 +77,8 @@ export interface ValidationTarget {
   theme: Theme;
   themeFile: string;
   coreFile: string;
+  /** Primitive CSS files the template uses (validated like section CSS). */
+  primitiveFiles?: string[];
   sections: ValidationSection[];
   /** Final preview page (what the editor exports, CSS inlined). */
   previewHtml: string;
@@ -143,6 +147,7 @@ function manifestRef(
 function cssSources(t: ValidationTarget): { file: string; root: Root }[] {
   const files = [
     t.coreFile,
+    ...(t.primitiveFiles ?? []),
     ...new Set(t.sections.map((s) => s.cssFile)),
   ].filter((f) => existsSync(f));
   return files.map((file) => ({

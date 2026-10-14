@@ -1,0 +1,2 @@
+.lz-frame--duotone>img{filter:grayscale(1) contrast(1.06)}
+.lz-frame--duotone::after{background:color-mix(in srgb,var(--lz-color-accent) 48%,transparent);mix-blend-mode:multiply}

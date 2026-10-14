@@ -1,0 +1,173 @@
+/* Text first: a narrow rail of facts on the left, the headline across, the photo as a wide band. */
+.lz-hero-rail {
+  padding: clamp(14px, 3svh, 40px) 0 clamp(18px, 4svh, 56px);
+}
+
+.lz-hero-rail__grid {
+  display: flex;
+  gap: calc(clamp(20px, 3.4vw, 56px) * var(--lz-space));
+  min-height: min(var(--lz-fit), var(--lz-fit-max));
+}
+
+/* The rail is optional (data-lz-if): without details the main column takes the width. */
+.lz-hero-rail__rail {
+  flex: 0 0 clamp(170px, 17vw, 240px);
+  align-self: start;
+  margin-top: calc(40px * var(--lz-space));
+  padding-right: calc(clamp(16px, 2vw, 28px) * var(--lz-space));
+  border-right: var(--lz-border-width) solid var(--lz-color-line);
+}
+
+.lz-hero-rail__details {
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+
+.lz-hero-rail__detail {
+  padding: calc(10px * var(--lz-space)) 0;
+  border-top: var(--lz-border-width) solid var(--lz-color-line);
+}
+
+.lz-hero-rail__term {
+  color: var(--lz-color-muted);
+  font-size: calc(14px * var(--lz-text-scale));
+  line-height: 1.4;
+}
+
+/* Three rows at most: the rail is a data sheet, not a list (rulebook §2). */
+.lz-hero-rail__detail:nth-child(n + 4) {
+  display: none;
+}
+
+.lz-hero-rail__value {
+  margin: 2px 0 0;
+  color: var(--lz-color-text);
+  font-size: calc(16px * var(--lz-text-scale));
+  font-weight: 600;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.lz-hero-rail__main {
+  flex: 1 1 0;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr);
+  column-gap: calc(clamp(20px, 3vw, 48px) * var(--lz-space));
+  row-gap: calc(clamp(14px, 2.4svh, 28px) * var(--lz-space));
+  min-width: 0;
+}
+
+.lz-hero-rail__eyebrow {
+  grid-column: 1 / -1;
+  margin-bottom: calc(-6px * var(--lz-space));
+}
+
+.lz-hero-rail__title {
+  grid-column: 1 / -1;
+  max-width: 24ch;
+  margin: 0;
+  font-size: calc(
+    min(clamp(40px, 4.8vw, 92px), 7.6svh) * var(--lz-display-scale)
+  );
+  letter-spacing: var(--lz-display-tracking, -0.01em);
+  text-wrap: balance;
+}
+
+.lz-hero-rail__lede {
+  grid-column: 2;
+  grid-row: 3;
+  align-self: start;
+}
+
+.lz-hero-rail__text {
+  max-width: 44ch;
+  margin: 0 0 calc(18px * var(--lz-space));
+  color: var(--lz-color-text);
+  font-size: calc(17px * var(--lz-text-scale));
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.lz-hero-rail__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(12px * var(--lz-space));
+}
+
+.lz-hero-rail__media {
+  grid-column: 1;
+  grid-row: 3;
+  /* Hug the capped photo: a stretched row cell would make a frame's backing block outgrow it. */
+  align-self: start;
+  min-height: 0;
+}
+
+.lz-hero-rail__image {
+  max-height: calc(min(var(--lz-fit), var(--lz-fit-max)) * 0.42);
+  aspect-ratio: 16 / 9;
+}
+
+/* Tablets and phones: the rail becomes a row of facts under the headline; the photo goes last. */
+@media (max-width: 992px) {
+  .lz-hero-rail__grid {
+    flex-direction: column;
+    min-height: 0;
+  }
+  .lz-hero-rail__rail {
+    flex: none;
+    order: 2;
+    align-self: stretch;
+    margin-top: 0;
+    padding-right: 0;
+    border-right: 0;
+  }
+  .lz-hero-rail__details {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    column-gap: calc(16px * var(--lz-space));
+  }
+  .lz-hero-rail__main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .lz-hero-rail__lede,
+  .lz-hero-rail__media {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .lz-hero-rail__media {
+    order: 3;
+  }
+  .lz-hero-rail__image {
+    max-height: calc(var(--lz-fit) * 0.42);
+  }
+}
+
+@media (max-width: 480px) {
+  .lz-hero-rail__title {
+    font-size: calc(
+      min(var(--lz-title-hero-sm), 7.8svh) * var(--lz-display-scale)
+    );
+  }
+  .lz-hero-rail__text {
+    font-size: calc(16px * var(--lz-text-scale));
+  }
+  .lz-hero-rail__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* Landscape phones and tiny windows: no fitting, natural flow. */
+@media (max-height: 560px) {
+  .lz-hero-rail__grid {
+    min-height: 0;
+  }
+  .lz-hero-rail__image {
+    max-height: 300px;
+  }
+  .lz-hero-rail__title {
+    font-size: calc(var(--lz-title-hero-sm) * var(--lz-display-scale));
+  }
+}

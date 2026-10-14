@@ -52,16 +52,27 @@ Comandos, flags y formas JSON: `references/commands.md`. Detalle de cada paso:
    (taquería → restaurante, etc.). `pnpm lattiz giro show <giro> --json` te da variantes por tier,
    paletas/tipografías libres con su tono, claves de copy con límite de caracteres y reglas del giro.
    Si ningún giro sirve, dilo y propone el más cercano o el camino «giro nuevo» (no escribas código).
-3. **Spec.** `pnpm lattiz spec init --giro <giro> --nombre "<Nombre>" --twin --json`. Luego edita
-   **solo ese archivo**:
+   2b. **Dirección y diversidad.** En la salida de `giro show` mira `directions` (ordenadas: primero las
+   menos usadas en el giro, luego por afinidad), `archetypesUsed` y `freeProHeroes`; corre
+   `pnpm lattiz kit capacity --giro <giro> --catalog extended --json`. Elige una **dirección** y un
+   **arquetipo** que el giro todavía no use y que vayan con el tono (`references/giro-mapping.md` ›
+   Dirección y arquetipo). `pnpm lattiz direccion show <id> --json` te da su voz: escribe todo el copy
+   con ella. Si la capacidad del giro está en 0 pares, dilo antes de seguir.
+3. **Spec.** `pnpm lattiz spec init --giro <giro> --nombre "<Nombre>" --twin --direccion <id> --json`.
+   Luego edita **solo ese archivo**:
    - `business`: ciudad, `branch` (colonia), dirección ficticia con calle y colonia, horario,
      teléfono/WhatsApp de demo con la lada de la ciudad, correo con el dominio del nombre. Borra `todo`.
-   - `brand`: paleta y tipografía **libres** (`free: true`) que vayan con el tono; forma del giro.
+   - `brand` y `layout`: con dirección, **no fijes** paleta, tipografía ni forma (las elige el
+     compilador dentro de la dirección); `layout.archetype` si quieres otro que el primero de la
+     dirección; `layout.dials` (1–10) solo para empujar variación/densidad/movimiento con motivo. Sin
+     dirección: paleta y tipografía **libres** (`free: true`) que vayan con el tono; forma del giro.
    - `copy`: reescribe para este negocio al menos hero (title ≤ 40 caracteres ideal, text), about,
      services (precios de ejemplo), testimonials, faq, footer.about y head.description, respetando
      los límites de `giro show`. Sabor local (colonia, ciudad, platillos o servicios típicos) sin
      clichés. `overrides.basico.copy.hero` con titular y texto propios para la Básica.
-   - `sections`: deja los roles del giro; fija una variante solo si tienes motivo.
+   - `sections`: deja los roles del giro; fija una variante solo si tienes motivo (mejor en
+     `layout.variantOverrides`, p. ej. `{ "hero": "bento" }`). El rol opcional `cta` (franja de cierre)
+     cuenta como sección: en Básico reemplaza a `about`.
    - `images`: deja las búsquedas del giro o ajústalas al negocio (en inglés funcionan mejor).
 4. **Validar y compilar** (bucle, máx. 4):
    `pnpm lattiz spec validate <stem> --strict --json` → corrige errores y los avisos de `generico`,

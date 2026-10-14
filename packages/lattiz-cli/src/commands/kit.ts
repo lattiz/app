@@ -1,4 +1,6 @@
-import { relative } from 'node:path';
+import { readFileSync } from 'node:fs';
+import { relative, resolve } from 'node:path';
+import type { CatalogManifest } from '../../../template-kit/catalog/types';
 import { kitGallery } from '../../../template-kit/src/lib/gallery';
 import {
   kitCapacity,
@@ -7,7 +9,7 @@ import {
 import { browserPath } from '../lib/browser';
 import { bool, type Command, type Context, str } from '../lib/command';
 import { EXIT, type ExitCode, usage } from '../lib/errors';
-import { REPO_ROOT } from '../lib/paths';
+import { KIT, REPO_ROOT } from '../lib/paths';
 import { kitArchetypes } from '../lib/archetypes';
 import { kitProbe } from '../lib/probe';
 import { GIROS } from '../lib/spec';
@@ -88,6 +90,8 @@ async function runGallery(ctx: Context): Promise<ExitCode> {
     palettes: bool(ctx.flags, 'palettes'),
     fonts: bool(ctx.flags, 'fonts'),
     tokens: bool(ctx.flags, 'tokens'),
+    primitives: bool(ctx.flags, 'primitives'),
+    directions: bool(ctx.flags, 'directions'),
     themes: list('themes'),
     noImage: bool(ctx.flags, 'sin-imagen'),
     log: (line) => log.plain(line),
@@ -176,13 +180,81 @@ async function runArchetypes(ctx: Context): Promise<ExitCode> {
   return failed.length ? EXIT.GATE : EXIT.OK;
 }
 
+/** Everything the catalog offers, from catalog.manifest.json (no compiler involved). */
+function runList(ctx: Context): ExitCode {
+  const manifest = JSON.parse(
+    readFileSync(resolve(KIT, 'catalog/catalog.manifest.json'), 'utf8'),
+  ) as CatalogManifest;
+  const slot = str(ctx.flags, 'slot');
+  const variants = manifest.variants.filter((v) => !slot || v.slot === slot);
+  if (slot && variants.length === 0)
+    throw usage(
+      `No hay variantes del slot "${slot}".`,
+      `Slots: ${[...new Set(manifest.variants.map((v) => v.slot))].join(', ')}`,
+    );
+  if (bool(ctx.flags, 'json')) {
+    console.log(
+      JSON.stringify(
+        slot
+          ? { manifestVersion: manifest.manifestVersion, variants }
+          : {
+              manifestVersion: manifest.manifestVersion,
+              contentHash: manifest.contentHash,
+              variants,
+              primitives: manifest.primitives,
+              palettes: manifest.palettes,
+              fontPairs: manifest.fontPairs,
+              archetypes: manifest.archetypes,
+              directions: manifest.directions,
+            },
+        null,
+        2,
+      ),
+    );
+    return EXIT.OK;
+  }
+  log.title(`lattiz kit list${slot ? ` --slot ${slot}` : ''}`);
+  log.plain(
+    table(
+      ['Variante', 'Tier', 'Catálogo', 'Fit', 'Arquetipos', 'Intención'],
+      variants.map((v) => [
+        v.key,
+        v.proOnly ? 'solo Pro' : v.tiers.join('+') || '—',
+        v.catalog,
+        v.fit ? 'sí' : '',
+        v.archetypes.join(', '),
+        (v.intent ?? '').slice(0, 60),
+      ]),
+    ),
+  );
+  if (slot) return EXIT.OK;
+  log.plain(
+    `\n${c.bold('Primitivos')} ${manifest.primitives.map((p) => `${p.block} (${p.styles.map((s) => s.id).join(', ')})`).join(' · ')}`,
+  );
+  log.plain(
+    `${c.bold('Direcciones')} ${manifest.directions.map((d) => d.id).join(', ')}`,
+  );
+  log.plain(
+    `${c.bold('Arquetipos')} ${manifest.archetypes.map((a) => a.id).join(', ')}`,
+  );
+  log.plain(
+    `${c.bold('Paletas')} ${manifest.palettes.extended.length} de biblioteca + las de cada giro · ${c.bold('Pares')} ${manifest.fontPairs.length}`,
+  );
+  log.plain(
+    c.gray('\n--json para todo (paletas y pares con etiquetas y afinidad).'),
+  );
+  return EXIT.OK;
+}
+
 export const kit: Command = {
   name: 'kit',
   summary:
     'El kit por dentro: capacidad por giro y galería visual (secciones, paletas, tipografías)',
   usage:
-    'kit capacity|gallery|probe|archetypes [--giro <g>] [--catalog legacy|extended] [--slot s] [--palettes] [--fonts] [--json]',
+    'kit capacity|list|gallery|probe|archetypes [--giro <g>] [--catalog legacy|extended] [--slot s] [--palettes] [--fonts] [--json]',
   help: [
+    'kit list                el catálogo (catalog.manifest.json): variantes con tier, catálogo, encaje y',
+    '                        arquetipos; primitivos, direcciones, arquetipos, paletas y pares. --slot s filtra.',
     'kit capacity            por giro: plantillas, paletas, pares tipográficos y portadas Pro libres, tonos',
     '                        de acento que aún caben y cuántas plantillas más acepta el compilador (simula',
     '                        specs una tras otra hasta que una regla de unicidad lo detiene). Solo lectura.',
@@ -194,7 +266,9 @@ export const kit: Command = {
     '                        paletas con contraste AA; pares tipográficos con glifos del español. Un solo',
     '                        navegador, en serie. Sin flags: todo.',
     '  --slot <s[,s]>        solo esas secciones',
-    '  --palettes, --fonts   solo esos especímenes; --tokens: estilos opt-in antes/después',
+    '  --palettes, --fonts   solo esos especímenes; --tokens: estilos opt-in antes/después; --primitives: primitivos',
+    '  --directions          pruebas de las direcciones de arte (gemelas en dos giros, desde specs; no entra',
+    '                        en «todo» porque construye 12 specs)',
     '  --themes <a,b>        temas de themes/ (por defecto norte-atelier,oxido)',
     '  --sin-imagen          agrega un modo con imágenes faltantes (respaldo sin foto)',
     '  --extended            solo las variantes del catálogo extended (las nuevas)',
@@ -215,6 +289,8 @@ export const kit: Command = {
     palettes: { type: 'boolean' },
     fonts: { type: 'boolean' },
     tokens: { type: 'boolean' },
+    primitives: { type: 'boolean' },
+    directions: { type: 'boolean' },
     themes: { type: 'string' },
     'sin-imagen': { type: 'boolean' },
     extended: { type: 'boolean' },
@@ -225,12 +301,13 @@ export const kit: Command = {
     setQuiet(bool(ctx.flags, 'json'));
     const sub = ctx.positionals[0];
     if (sub === 'capacity') return runCapacity(ctx);
+    if (sub === 'list') return runList(ctx);
     if (sub === 'gallery') return runGallery(ctx);
     if (sub === 'probe') return runProbe(ctx);
     if (sub === 'archetypes') return runArchetypes(ctx);
     throw usage(
       sub ? `Subcomando desconocido: ${sub}` : 'Falta el subcomando.',
-      'pnpm lattiz kit capacity|gallery|probe|archetypes',
+      'pnpm lattiz kit capacity|list|gallery|probe|archetypes',
     );
   },
 };

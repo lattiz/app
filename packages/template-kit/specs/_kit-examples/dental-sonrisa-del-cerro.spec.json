@@ -1,0 +1,43 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "dental-sonrisa-del-cerro",
+  "twin": true,
+  "giro": "dental",
+  "business": {
+    "name": "Dental Sonrisa del Cerro",
+    "city": "Morelia",
+    "branch": "Chapultepec Sur",
+    "address": "Av. Camelinas 2310, Chapultepec Sur, Morelia",
+    "hours": "Lun a sáb, 9:00 a 19:00",
+    "phone": "+52 443 000 0000",
+    "whatsapp": "524430000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "jardin-suave",
+    "archetype": "soft"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Consultorio dental en Chapultepec Sur, Morelia: limpiezas, resinas y odontopediatría con cita."
+    },
+    "hero": {
+      "title": "Limpiezas tranquilas para toda la familia",
+      "text": "Odontología general y para niños con explicaciones claras y citas sin espera. Escríbenos por WhatsApp."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Tu dentista en Chapultepec Sur",
+          "text": "Limpieza, resinas y revisión para niños con cita. Agenda por WhatsApp."
+        }
+      }
+    }
+  }
+}

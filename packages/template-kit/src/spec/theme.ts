@@ -3,6 +3,7 @@ import { DENSITY_PRESETS, SHAPE_RADII, TYPE_SCALES } from '../lib/style';
 import { fontPairById } from './catalog';
 import { contrastRatio, parseColor, toHex, type Rgba } from '../lib/color';
 import type { Tier } from '../tiers';
+import type { PrimitiveChoices } from '../../primitives';
 import type { Theme } from '../types';
 import {
   CUSTOM_FONTS,
@@ -73,6 +74,9 @@ export function composeTheme(input: {
       ? { rhythm: { ...brand.rhythm } }
       : {}),
     ...(style ? { style: { ...style } } : {}),
+    ...(brand.primitives && Object.keys(brand.primitives).length > 0
+      ? { primitives: { ...brand.primitives } as PrimitiveChoices }
+      : {}),
   };
 }
 

@@ -1,0 +1,43 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "estetica-atelier-musgo",
+  "twin": true,
+  "giro": "estetica",
+  "business": {
+    "name": "Atelier Musgo",
+    "city": "Ciudad de México",
+    "branch": "Condesa",
+    "address": "Calle Amsterdam 152, Condesa, Ciudad de México",
+    "hours": "Mar a sáb, 10:00 a 20:00",
+    "phone": "+52 55 0000 0000",
+    "whatsapp": "525500000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "cantera-editorial",
+    "archetype": "editorial"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Salón de autor en la Condesa: cortes, color y diagnóstico de cabello con cita."
+    },
+    "hero": {
+      "title": "Cortes de autor en la Condesa",
+      "text": "Un estilista por cita, diagnóstico de cabello y productos que se explican antes de usarse."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Corte y color en la Condesa",
+          "text": "Diagnóstico, corte y color con cita previa. Reserva tu horario."
+        }
+      }
+    }
+  }
+}

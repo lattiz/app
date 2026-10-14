@@ -70,3 +70,8 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [catalog-manifest](catalog-manifest.md) — catalog.manifest.json generado; --check en pnpm lint; la API no importa el kit
 - [schema-plan-guard](schema-plan-guard.md) — guard de secciones Pro en guardar/publicar; report por defecto; exime la plantilla
 - [template-byte-budgets](template-byte-budgets.md) — budgets.json por tier (WARN; FAIL estricto o plantilla nueva); CWV de laboratorio en lattiz check
+- [template-primitives](template-primitives.md) — primitivos lz-btn/lz-tile/…; estilo por familia en el tema; CSS solo si el markup lo usa
+- [spec-direction-archetype-wiring](spec-direction-archetype-wiring.md) — layout en specs extended: la dirección elige, sus reglas son compuerta
+- [cta-role](cta-role.md) — rol cta opcional en ambos tiers; cuenta; obligatorios y rangos sin cambio
+- [lcp-policy](lcp-policy.md) — LCP lo mueven la hoja de fuentes y la foto de portada; hero nuevo ≤ 1200 px q72 y ≤ 120 KiB
+- [template-art-directions](template-art-directions.md) — 6 direcciones como datos; ≥ 6 de 15 elecciones distintas; reglas = compuerta; deriva al gris

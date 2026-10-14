@@ -6,7 +6,7 @@
 - `apps/api` — NestJS 11 resource server, hexagonal architecture, Supabase JWT verification, Drizzle ORM over Supabase Postgres.
 - `apps/web` — React 19 + Vite 8 SPA, TanStack Query, Tailwind CSS v4 + shadcn/ui (`base-luma` style), Supabase Auth client.
 - `packages/api-client` — typed API client generated from `apps/api/openapi.json` via `@hey-api/openapi-ts`, with TanStack Query bindings.
-- `packages/template-kit` — templates as source (sections + themes + content packs) compiled into GrapesJS projects + previews; see its `CLAUDE.md`.
+- `packages/template-kit` — templates as source (sections + themes + content packs) compiled into GrapesJS projects + previews; see its `CLAUDE.md`. Extended catalog (art directions, primitives, archetypes, new heroes, budgets, LCP policy): `docs/template-kit-catalog.md`, `docs/template-kit-lcp.md`.
 - `packages/lattiz-cli` — `pnpm lattiz`: template → `templates.lattiz.app` pipeline over the kit, the seed and the previews deploy; see `docs/lattiz-cli.md`.
 - `.claude/skills/lattiz-template` — Claude Code skill (`/lattiz-template <negocio> en <ciudad>`): builds a Básico + Pro pair from a spec through the CLI and stops before anything remote; see `docs/lattiz-skill.md`.
 

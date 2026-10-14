@@ -1,0 +1,7 @@
+/* Primitive: button (.lz-btn). Shape from --lz-radius-pill; the theme's style adds one modifier. */
+.lz-btn{--lz-btn-e:var(--lz-ease-out,cubic-bezier(.23,1,.32,1));display:inline-flex;align-items:center;justify-content:center;gap:calc(8px * var(--lz-space));min-height:48px;min-width:44px;padding:0 calc(22px * var(--lz-space));border:var(--lz-border-width) solid transparent;border-radius:var(--lz-radius-pill);background:transparent;color:var(--lz-color-text);font:600 calc(16px * var(--lz-text-scale))/1.2 var(--lz-font-body);text-align:center;text-decoration:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:transform var(--lz-dur-press,120ms) var(--lz-btn-e),background-color var(--lz-dur-ui,160ms) var(--lz-btn-e),border-color var(--lz-dur-ui,160ms) var(--lz-btn-e)}
+.lz-btn:active{transform:scale(var(--lz-press-scale,.97))}
+.lz-btn:focus-visible{outline:2px solid var(--lz-color-text);outline-offset:3px;transition:none}
+.lz-btn.lz-btn--secondary{background:transparent;color:var(--lz-color-text);border-color:var(--lz-color-line-strong)}
+@media (hover:hover) and (pointer:fine){.lz-btn.lz-btn--secondary:hover{border-color:var(--lz-color-text)}}
+@media (prefers-reduced-motion:reduce){.lz-btn{transition:none}.lz-btn:active{transform:none}}

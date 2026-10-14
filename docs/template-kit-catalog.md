@@ -934,6 +934,473 @@ lleva 0.87 MiB y queda en 2.94 s): manda la imagen y el tipo de portada que pint
 paso (A2 o después): revisar la imagen LCP de cada portada (peso, tamaño, `fetchpriority`) y apretar
 el presupuesto de imágenes, sin tocar las plantillas existentes.
 
+### Fase A2: diseño nuevo (rama `feat/kit-phase-a2`, desde `main` con A1)
+
+Primitivos, direcciones de arte, portadas Pro nuevas e integración al compilador, todo `extended` y
+aditivo. Estado al 2026-10-14:
+
+| WP  | Qué                                                                            | Estado | Commits                                     | Desviaciones                                                                                                                                                                                  |
+| --- | ------------------------------------------------------------------------------ | ------ | ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| WP1 | Primitivos (7 familias), CSS solo si el markup los usa                         | hecho  | 6335862, 3c332d8                            | adoptarlos en variantes existentes queda fuera (cambia su salida)                                                                                                                             |
+| WP2 | 6 direcciones de arte: registro, pruebas y galería                             | hecho  | 3f314d3, 27f31b8, b4908ca, 34e8e5a, 46b5271 | WP en varios commits; 2 FAIL `nojs` de la revisión en `team/spotlight` (falso positivo, documentado, regla sin cambiar); deriva al gris corregida con 3 paletas, queda neón × barbería Básico |
+| WP3 | Portadas Pro nuevas: bento, rail, overlap, stack                               | hecho  | 266ed15, e35a13d                            | `bento` solo Pro (presupuesto Básico); copy de ejemplo en `meta.ts › sample`, no en `sample.es-MX.ts`                                                                                         |
+| WP4 | Compilador: `layout`, arquetipos, rol `cta`, sample, lint de copy, CLI y skill | hecho  | 69f6846, 8a0a2bd, 80d018a                   | estilo en `brand.style.*` (no `layout.style`); arquetipos como registro aparte; `meta.sample` solo con `layout`; `cta` cuenta como sección                                                    |
+| WP5 | LCP: diagnóstico y política para lo nuevo                                      | hecho  | 5460fb5, 34eb686                            | la causa principal (hoja de Google Fonts) se arregla en tenant-sites: propuesta, no aplicada; recodificar las 5 portadas pesadas pide re-baseline                                             |
+| WP6 | Prueba de diversidad: 20 specs de ejemplo, 40 plantillas                       | hecho  | e35a13d, d282f0d, e25929f                   | 1 ronda de ajuste (despacho); `rail` corregido (marco vacío); CLS > 0.1 en 3 Pro por cambio de renglones del titular al cargar la fuente (A3); `lattiz review --root` nuevo                   |
+| WP7 | Docs y decisiones                                                              | hecho  | 80d018a, (este)                             | decisiones: template-primitives, spec-direction-archetype-wiring, cta-role, lcp-policy, template-art-directions; template-palette-library actualizada                                         |
+
+**Cierre A2 (2026-10-14):**
+
+- `kit:verify-snapshot` idéntico (42 plantillas, 23 specs): ninguna plantilla existente se movió.
+- `pnpm lint` (con `kit:manifest --check`, hash `2296b41e14c10336`) y `pnpm typecheck` (7/7) ok.
+- Tests del kit: 201/201.
+- Nada remoto: sin seed, deploy, publish, Stripe, R2 ni Vercel, y sin escrituras en Supabase. Rama
+  local `feat/kit-phase-a2`, sin push.
+
+Desviación de catálogo heredada de A1 y vigente: `lzb-gallery-grid` es Básico en el editor aunque
+`gallery` es solo Pro en el kit (ver «Inventario: bloques del editor ↔ variantes del kit»).
+
+## Primitivos (A2 · WP1)
+
+Piezas compartidas que las variantes **nuevas** componen, para que una sola elección de dirección de
+arte reestilice toda la página. Viven en `packages/template-kit/primitives/<familia>/` (`base.css` +
+un `<estilo>.css` por estilo) y se registran en `primitives/index.ts`. Solo catálogo `extended`.
+
+| Familia               | Bloque BEM     | Estilos (los marcados «contextual» se escriben a mano)                    | Por defecto          | base gzip (B) |
+| --------------------- | -------------- | ------------------------------------------------------------------------- | -------------------- | ------------- |
+| Botón                 | `lz-btn`       | solid, outline, pill, underline, icon (contextual), on-image (contextual) | solid                | 569           |
+| Tarjeta               | `lz-tile`      | flat, outlined, tinted, elevated                                          | tokens `--lz-card-*` | 450           |
+| Etiqueta / antetítulo | `lz-tag`       | pill, outlined, plain, numbered                                           | plain                | 242           |
+| Marco de imagen       | `lz-frame`     | arch, cut, offset, framed, duotone                                        | tokens `--lz-img-*`  | 422           |
+| Cifra grande          | `lz-bignum`    | plain, ruled                                                              | plain                | 321           |
+| Cita destacada        | `lz-pullquote` | rule, marks                                                               | rule                 | 340           |
+| Separador             | `lz-rule`      | hairline, rule, ornament                                                  | hairline             | 149           |
+
+Cada estilo cuesta 70–313 B gzip (cifras exactas en `catalog.manifest.json › primitives`). Un rol
+(`lz-btn--secondary`) no es un estilo: el elemento que lo lleva conserva su aspecto propio.
+
+**Cómo funciona.** La variante escribe el bloque (`class="lz-btn"`). El tema puede elegir un estilo
+por familia (`theme.primitives`, p. ej. `{ "button": "pill", "card": "tinted" }`; lo escribe una
+dirección de arte, WP2); al compilar, `applyPrimitiveStyles` agrega `lz-btn--pill` a cada elemento del
+bloque que no nombre ya un estilo o un rol. Después, `primitiveCss` lee las clases del HTML de las
+secciones y emite **solo** el `base.css` de las familias usadas y los estilos presentes, entre
+`core.css` y el CSS de las variantes. Las variantes existentes no usan ninguna clase de primitivo, así
+que su salida no cambia (`kit:verify-snapshot` idéntico, 42 plantillas); `kit:validate` revisa el CSS
+de los primitivos usados como el de cualquier sección (colores, cortes, reduced-motion).
+
+**Reglas que cumplen todos:** tokens con el look de hoy como respaldo; solo `transform`/`opacity`
+animados (más cambios de color con `--lz-dur-ui`); presión con `--lz-press-scale`; hover bajo
+`(hover: hover) and (pointer: fine)`; `:focus-visible` sin transición; override de
+`prefers-reduced-motion`; texto ≥ 14 px; táctiles ≥ 44 px. Los modificadores explícitos de marco
+(`offset`, `framed`, `duotone`) usan valores propios: si leyeran los tokens `--lz-img-*`, un tema con
+`imageTreatment` los anularía (se vio en la galería, ronda 1). El marco `offset` reserva su margen.
+
+**Galería:** `pnpm lattiz kit gallery --primitives` → `.lattiz/gallery/primitives.html`: cada familia
+en tres temas (claro sin `style`, oscuro sin `style`, teñido con presets) a 390 y 1440 (42 capturas,
+~25 s). Dos rondas de crítica: el `outline` principal se confundía con el secundario (ahora lleva un
+tinte del acento), la sombra de `elevated` hacía halo en temas oscuros (ahora usa `--lz-color-ink`),
+los marcos explícitos no se veían bajo un tema con presets y la cifra `plain` heredaba las mayúsculas
+del display.
+
+**Agregar un estilo:** archivo `primitives/<familia>/<estilo>.css` con selectores
+`.<bloque>--<estilo>`, entrada en `primitives/index.ts` (con `intent`; `contextual: true` si solo se
+escribe a mano), `pnpm lattiz kit gallery --primitives`, crítica y `kit:manifest`.
+
+**Adoptarlos en una variante existente (futuro, opt-in):** cambiar su markup a los bloques
+(`lz-button lz-button--primary` → `lz-btn`) cambia su salida, así que se hace variante por variante,
+con su propio commit, la comparación `kit:compare` antes/después y un re-baseline explicado del
+golden. A2 no lo hace.
+
+## Direcciones de arte (A2 · WP2)
+
+Una dirección de arte fija de una vez lo que un spec elegía por separado. Es un dato en
+`packages/template-kit/directions/<id>.ts`, registrado en `directions/index.ts`, y lo validan
+`src/spec/direction.ts`, `kit:manifest` y `pnpm lint`. Solo catálogo `extended`; un spec la pide con
+`layout.direction`. Cada dirección incluye:
+
+- listas ordenadas de paletas y pares (con `byGiro` opcional);
+- los 8 presets de `style` y los 7 estilos de primitivos;
+- arquetipos y portadas por tier;
+- preset de Motion y diales V/M/D;
+- los giros donde encaja;
+- voz: registro, 3–5 reglas, palabras vetadas, titular y CTA de ejemplo;
+- reglas de gusto.
+
+| Dirección           | V/M/D | Motion    | Arquetipos         | Reglas                                          | Portadas Pro / Básico                        | Giros (los dos primeros se prueban)              |
+| ------------------- | ----- | --------- | ------------------ | ----------------------------------------------- | -------------------------------------------- | ------------------------------------------------ |
+| `cantera-editorial` | 6/5/3 | calm      | editorial, minimal | `scheme:light`, `display:serif`, `no-gradients` | rail, columns, split / columns, split        | despacho, restaurante, florería, estética        |
+| `neon-nocturno`     | 8/7/7 | editorial | bold, showcase     | `scheme:dark`, `display:upper`, `no-gradients`  | poster, bento, image-bg / poster, image-bg   | barbería, gimnasio, restaurante, tienda          |
+| `jardin-suave`      | 5/5/3 | calm      | soft, booking      | `scheme:light`, `no-gradients`                  | duo-arch, overlap, panel / duo-arch, overlap | estética, veterinaria, florería, dental, clínica |
+| `tinta-papel`       | 4/4/5 | calm      | minimal, trust     | `accent:neutral`, `no-gradients`                | split, panel, columns / split, columns       | despacho, tienda, clínica, barbería              |
+| `terracota-calida`  | 6/4/5 | calm      | catalog, showcase  | `scheme:light`, `no-gradients`                  | stack, framed, overlap / stack, framed       | restaurante, florería, tienda, estética          |
+| `marmol-sobrio`     | 3/4/5 | calm      | trust, booking     | `no-gradients`                                  | panel, bento, split / panel, split           | clínica, dental, despacho, veterinaria           |
+
+**Reglas del registro** (`registryProblems`):
+
+- Dos direcciones difieren en **≥ 6 de las 15 elecciones**: los 8 presets de estilo más los 7
+  primitivos.
+- Dos direcciones no empiezan con la misma paleta ni con el mismo par.
+- Las paletas y pares de cada lista cumplen las reglas de la dirección.
+- Cada portada existe y está hecha para su tier.
+- Ninguna portada centrada va con variación > 4.
+- `motion` y `style.density` coinciden con sus diales.
+
+**Compuerta al construir** (`directionFindings`, `rule: "direction"`):
+
+- Revisa la plantilla compilada: fondo claro u oscuro, display en mayúsculas o serif, acento neutro.
+- Busca `gradient(` en el CSS de los primitivos y de las variantes `extended`. Tres variantes legacy
+  quedan exentas porque sus degradados sirven de velo sobre la foto.
+- Con un hallazgo, `lattiz build` no escribe nada.
+- Las mismas reglas filtran el respaldo de paletas y pares cuando la lista propia se agota.
+
+### Pruebas: 24 plantillas, `lattiz check --lighthouse` (2026-10-14)
+
+`pnpm lattiz kit gallery --directions` construye un Básico y un Pro por dirección en sus dos primeros
+giros. Lo hace desde un spec real con `layout.direction`, fuera del kit: en
+`.lattiz/gallery/directions/<dirección>--<giro>/`, con la hoja en `directions.html`. Cada prueba se
+revisó con `lattiz check <id> --root <raíz> --lighthouse`, una a la vez (~40 s y ~2.2–2.7 GB de RSS
+pico con Chrome). El script reanudable está en `.lattiz/a2/check-proofs.sh`.
+
+**Números de laboratorio:** Lighthouse 12 con emulación móvil y throttling simulado, sobre la vista
+previa local estática de `lattiz check` (sin CDN). Usa los placeholders del kit en lugar de fotos y
+no son datos de campo. Se comparan con la línea base de A1 (abajo, «Web Vitals en `lattiz check
+--lighthouse`»), medida en la misma máquina, pero sobre plantillas con fotos reales en algunos casos.
+
+| Plantilla                              | Tier   | LCP    | CLS   | TBT  | HTML KiB | Total KiB | Veredicto |
+| -------------------------------------- | ------ | ------ | ----- | ---- | -------- | --------- | --------- |
+| `despacho-base-cantera-prueba-v1`      | Básico | 1.72 s | 0.001 | 0 ms | 44.4     | 148       | WARN      |
+| `estetica-base-jardin-prueba-v1`       | Básico | 2.78 s | 0.000 | 0 ms | 41.1     | 113       | WARN LCP  |
+| `estetica-jardin-prueba-v1`            | Pro    | 2.83 s | 0.002 | 0 ms | 60.1     | 236       | WARN LCP  |
+| `veterinaria-base-jardin-prueba-v1`    | Básico | 2.64 s | 0.001 | 0 ms | 44.1     | 156       | WARN LCP  |
+| `veterinaria-jardin-prueba-v1`         | Pro    | 2.93 s | 0.000 | 0 ms | 56.1     | 227       | WARN LCP  |
+| `clinica-base-marmol-prueba-v1`        | Básico | 2.78 s | 0.000 | 0 ms | 42.3     | 135       | WARN LCP  |
+| `clinica-marmol-prueba-v1`             | Pro    | 3.08 s | 0.000 | 0 ms | 59.2     | 293       | FAIL nojs |
+| `dental-base-marmol-prueba-v1`         | Básico | 2.79 s | 0.001 | 0 ms | 42.3     | 124       | WARN LCP  |
+| `dental-marmol-prueba-v1`              | Pro    | 2.78 s | 0.000 | 0 ms | 59.0     | 293       | FAIL nojs |
+| `barberia-base-neon-prueba-v1`         | Básico | 2.51 s | 0.000 | 0 ms | 43.3     | 178       | WARN LCP  |
+| `gimnasio-base-neon-prueba-v1`         | Básico | 2.79 s | 0.001 | 0 ms | 42.3     | 135       | WARN LCP  |
+| `despacho-base-tinta-prueba-v1`        | Básico | 1.71 s | 0.001 | 0 ms | 43.1     | 167       | WARN      |
+| `despacho-tinta-prueba-v1`             | Pro    | 2.06 s | 0.000 | 0 ms | 56.5     | 332       | WARN      |
+| `tienda-base-tinta-prueba-v1`          | Básico | 1.73 s | 0.000 | 0 ms | 42.9     | 146       | WARN      |
+| `tienda-tinta-prueba-v1`               | Pro    | 2.15 s | 0.000 | 0 ms | 54.6     | 399       | WARN      |
+| `restaurante-base-cantera-prueba-v1`   | Básico | 1.73 s | 0.001 | 0 ms | 44.2     | 163       | WARN      |
+| `barberia-neon-prueba-v1`              | Pro    | 2.97 s | 0.002 | 0 ms | 62.1     | 424       | WARN LCP  |
+| `gimnasio-neon-prueba-v1`              | Pro    | 2.86 s | 0.002 | 0 ms | 60.6     | 256       | WARN LCP  |
+| `floreria-base-terracota-prueba-v1`    | Básico | 2.64 s | 0.000 | 0 ms | 43.5     | 160       | WARN LCP  |
+| `floreria-terracota-prueba-v1`         | Pro    | 3.16 s | 0.001 | 0 ms | 63.6     | 271       | WARN LCP  |
+| `restaurante-base-terracota-prueba-v1` | Básico | 2.78 s | 0.001 | 0 ms | 43.5     | 120       | WARN LCP  |
+| `restaurante-terracota-prueba-v1`      | Pro    | 3.09 s | 0.000 | 0 ms | 63.6     | 238       | WARN LCP  |
+| `despacho-cantera-prueba-v1`           | Pro    | 1.98 s | 0.000 | 0 ms | 62.0     | 270       | WARN      |
+| `restaurante-cantera-prueba-v1`        | Pro    | 2.94 s | 0.001 | 0 ms | 63.7     | 230       | WARN LCP  |
+
+**Resumen:**
+
+- **FAIL: 2 de 24.** Las dos son la misma falla de la regla `nojs`, que es un falso positivo de la
+  revisión.
+- **LCP:** media 2.56 s; 17 de 24 pasan de 2.5 s. Antes de las paletas nuevas eran 2.45 s y 14 de
+  24 (ver «Deriva al gris»). Las siete pruebas que cambiaron, y las dos de `rail` tras su arreglo, se
+  revisaron de nuevo.
+- **CLS y TBT:** CLS ≤ 0.002 y TBT 0 ms en todas.
+- **HTML:** dentro del presupuesto (Básico ≤ 48 KiB, Pro ≤ 67 KiB).
+
+**Las tres FAIL de la primera corrida:**
+
+1. **`fit`, `restaurante-base-cantera-prueba-v1`:** la portada `hero/split` medía 747 px contra
+   744 px permitidos a 1440. Era un defecto real: el Básico de cantera tomaba la portada legacy
+   `split`, que con el titular serif expresivo de la dirección no cabía por 3 px. La Pro gemela
+   tomaba `columns` primero y al Básico solo le quedaba `split`. Se arregló reordenando las portadas
+   Pro de la dirección (`heroes.pro: ['rail', 'columns', 'split']`): la Pro toma `rail` y el Básico
+   `columns`. Ahora pasa. No se tocó la variante.
+2. **`nojs`, `clinica-marmol-prueba-v1` y `dental-marmol-prueba-v1`** (`team › li`): es un falso
+   positivo de la revisión.
+   - `team/spotlight` oculta con `display:none` la lista de etiquetas de cada miembro.
+   - El `<li>` hijo mide 0×0, pero su `display` calculado no es `none`, así que la regla lo cuenta
+     como «oculto sin JS».
+   - Sin JS no se oculta nada que con JS se vería: la lista no se muestra en ningún caso.
+   - Por decisión de Santi queda como **FAIL documentada**: no se cambia la regla ni los arquetipos.
+     Arreglarla (ignorar los descendientes de un ancestro con `display:none`) es un cambio de la
+     revisión y va en su propio PR.
+
+**Por qué el LCP:** en las 24 el elemento LCP es la imagen de la portada y el LCP ≈ FCP. La fase que
+pesa es el retraso de render (1.3–2.7 s, con tiempo de carga de imagen 0). La hoja de Google Fonts
+bloquea ~815 ms en todas. Es el mismo diagnóstico que `docs/template-kit-lcp.md` y no lo causan las
+direcciones: entre la más rápida (1.71 s) y la más lenta (3.16 s) cambia el retraso de render, no la
+carga de la imagen.
+
+La causa exacta de esa diferencia no se aisló. No la explica el par tipográfico (Zilla Slab + IBM
+Plex Sans da 1.71 y 2.64 s), ni los bytes de la foto (18–65 KiB), ni sus píxeles, ni la variante de
+portada (`rail` da 1.86 y 3.08 s). El único patrón firme: los cuatro Básicos con `hero/columns` dan
+1.71–1.73 s.
+
+El número es repetible para un mismo build: una prueba sin cambios, revisada otra vez, da lo mismo.
+Pero es muy sensible al layout. El arreglo de `rail` (WP6, solo el alto de la celda de la foto) movió
+las dos Pro de cantera en sentidos opuestos: despacho bajó de 3.08 a 1.98 s y restaurante subió de
+1.86 a 2.94 s. Así que la dispersión entre 1.7 y 3.1 s no habla de una dirección ni de una portada.
+El retrofit propuesto allí (sacar la hoja del camino crítico en tenant-sites) es lo que más las
+movería.
+
+**Avisos heredados:** los WARN de `font` (12 px en `lz-index`, `lz-about-brief__label`,
+`lz-location__label` y el título del pie) y los de `tap` (enlaces del pie de 32 px) vienen de
+variantes legacy que las pruebas comparten con las plantillas existentes. No los introduce ninguna
+dirección.
+
+### Deriva al gris (A2, 2026-10-14)
+
+**Medición.** `.lattiz/a2/drift.mts` lee el lock de cada prueba y marca, por tier:
+
+- la paleta elegida;
+- si es **propia** (de la lista de la dirección) o de **respaldo** (del pool filtrado por las reglas);
+- si comparte algún ánimo (`mood`) con las paletas de la dirección.
+
+En la primera corrida, 4 de 24 elecciones perdían el carácter de la dirección:
+
+| Dirección × giro        | Tier   | Antes                                      | Después                            |
+| ----------------------- | ------ | ------------------------------------------ | ---------------------------------- |
+| cantera × restaurante   | Básico | `pal-niebla-grafito` (propia, gris)        | `pal-papel-violeta` (propia, 256°) |
+| terracota × restaurante | Básico | `pal-niebla-grafito` (respaldo, sin ánimo) | `pal-coral-tinta` (propia, cálido) |
+| neón × barbería         | Pro    | `pal-bosque-hueso` (respaldo)              | `pal-neon-uva` (propia, 294°)      |
+| neón × barbería         | Básico | `petroleo` (respaldo legacy, 182°)         | igual: sigue en respaldo           |
+
+Mármol y tinta también usan `pal-niebla-grafito`, pero está en su propia lista y va con su ánimo
+(sobrio, clínico): no es deriva.
+
+**Causa.** En los giros con muchas plantillas (restaurante 10, barbería 8), las paletas de la lista
+chocan en tono (≥ 30°) o en distancia (ΔE00 ≥ 15) con las existentes o con la gemela Pro. El
+compilador baja entonces a la siguiente de la lista o al respaldo, y lo que queda libre casi siempre
+es neutro.
+
+**Corrección.** Fue aditiva: solo catálogo `extended`, sin quitar paletas ni relajar reglas.
+
+- **Paletas nuevas** en `palettes/seeds.ts`, bloque «A2». Pasan AA por construcción y quedan a
+  ΔE00 ≥ 15 de toda paleta de su giro; ninguna entra en las tres parejas más cercanas de su giro:
+  - `pal-neon-uva`: oscura, acento `#E04CF0` 294°; barbería, gimnasio, tienda.
+  - `pal-adobe-tinta`: teñida adobe, acento tinta; restaurante, florería, tienda.
+  - `pal-papel-violeta`: papel cálido, acento `#3F2A7A` 256°; restaurante, florería, estética.
+- **Listas de las direcciones:**
+  - neón suma `pal-neon-uva`;
+  - terracota suma `pal-adobe-tinta`;
+  - cantera cambia `pal-niebla-grafito` por `pal-papel-violeta`.
+- **Paletas descartadas:**
+  - `pal-neon-hielo`: 9.1 de `barberia:petroleo`;
+  - `pal-neon-verde`: 10.7 de `barberia:hoja`;
+  - `pal-papel-indigo`: 10.4 de `despacho:marino`. Se rediseñó como `pal-papel-violeta`, sin
+    afinidad con despacho.
+
+**Pruebas de que nada existente se movió:**
+
+- `kit:verify-snapshot` idéntico (42 plantillas, 23 specs).
+- `restaurante-margen` y `clinica-brote` se reconstruyeron con la caché de imágenes vacía y dieron
+  byte a byte los mismos archivos.
+- Ningún spec del repo usa `layout.direction`.
+- Al reconstruir las 24 pruebas, las de jardín, tinta y mármol dieron el mismo `index.html`. Siete
+  cambiaron, todas de las tres direcciones tocadas. Gimnasio × neón Pro también cambió (de
+  `pal-jamaica-noche` a `pal-neon-uva`) porque la rotación por semilla recorre una lista más larga.
+
+**Lo que queda.** Neón × barbería Básico sigue en respaldo. Barbería ya ocupa todas las paletas
+oscuras de neón, y la nueva se la lleva la gemela Pro. El respaldo es oscuro por la regla
+`scheme:dark`, pero sin el ánimo de neón. Arreglarlo pide otra paleta oscura con acento cálido y
+lejana de las 9 legacy de barbería. Las candidatas probadas (verde, cian) chocaban con
+`hoja`/`petroleo`, así que queda para cuando se agregue la siguiente.
+
+**Capacidad** (`kit capacity --catalog extended`, Total antes → después):
+
+- barbería 20 → 21
+- clínica 20 → 21
+- dental 24 → 27
+- despacho 23 → 26
+- estética 22 → 23
+- florería 24 → 24
+- gimnasio 25 → 25
+- restaurante 18 → 19
+- tienda 23 → 25
+- veterinaria 25 → 26
+
+Los pares Básico + Pro solo suben en despacho y tienda (11 → 12); los demás los siguen topando las
+portadas Pro.
+
+## Portadas nuevas (A2 · WP3)
+
+Cuatro portadas con siluetas que no existían (todas `extended`, Básico + Pro, `data-lz-fit`, sin JS,
+con primitivos: `lz-btn`, `lz-tag`, `lz-frame`, `lz-tile`, `lz-bignum`). Copy nuevo en
+`meta.sample` (convención del repo; no hay `sample.es-MX.ts` aparte), nunca en `giros/` ni `content/`.
+
+| Variante       | Silueta                                                                                            | Claves nuevas                                    | CSS crudo / gzip (B) | Revisión (`kit probe`, 16 casos)                                                                         |
+| -------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------ | -------------------- | -------------------------------------------------------------------------------------------------------- |
+| `hero/bento`   | Celdas: titular ancho, foto alta a la derecha, una celda por dato (≤ 3) debajo                     | `facts[].value?`, `facts[].label?`               | 3651 / 1191          | 3 rondas: gris secundario sin AA en celdas teñidas; en móvil no cabía → los datos son solo de escritorio |
+| `hero/rail`    | Texto primero: riel angosto con ficha de datos, titular a todo el ancho, foto en franja panorámica | `details[].label?`, `details[].value?`           | 3984 / 1239          | 3 rondas: encaje a 1024 con copy largo (columna de texto angosta); riel alineado arriba                  |
+| `hero/overlap` | Partida con una foto de detalle con paspartú encimada en el borde de la foto grande                | `detailImage?`, `detailAlt?` (las de `duo-arch`) | 2822 / 983           | 1 ronda                                                                                                  |
+| `hero/stack`   | Tarjeta elevada sobre una baraja de dos hojas; foto a sangre hasta el borde derecho de la ventana  | —                                                | 3562 / 1190          | 1 ronda                                                                                                  |
+
+Reglas del reglamento que fijaron la forma: la portada no lleva listas ni barras de confianza, así
+que `bento` muestra a lo sumo 3 datos y solo desde 993 px, y `rail` a lo sumo 3 filas; la foto
+principal lleva `fetchpriority="high"` y nunca `loading="lazy"`; la foto de detalle de `overlap` no
+compite por el LCP. Familias: `rail` → `type`, `bento` → `cells`, `overlap` → `media-text`, `stack`
+→ `split-panel`; cada una entró en las preferencias Pro de dos arquetipos (editorial/minimal,
+catalog/trust, soft, showcase).
+
+**Portadas Pro libres** (`kit capacity --catalog extended`, 9 → 13 variantes):
+
+| Giro        | Antes | Después | Pares Básico + Pro antes → después |
+| ----------- | ----- | ------- | ---------------------------------- |
+| barberia    | 5/9   | 9/13    | 5 → 9                              |
+| clinica     | 6/9   | 10/13   | 6 → 10                             |
+| dental      | 8/9   | 12/13   | 8 → 12                             |
+| despacho    | 8/9   | 12/13   | 8 → 11                             |
+| estetica    | 7/9   | 11/13   | 7 → 11                             |
+| floreria    | 7/9   | 11/13   | 7 → 11                             |
+| gimnasio    | 8/9   | 12/13   | 8 → 12                             |
+| restaurante | 4/9   | 8/13    | 4 → 8                              |
+| tienda      | 8/9   | 12/13   | 8 → 11                             |
+| veterinaria | 8/9   | 12/13   | 8 → 12                             |
+
+Meta (≥ 8 portadas Pro libres por giro): cumplida en los diez. El Total por giro no cambia (lo topan
+las paletas para los Básicos).
+
+**Agregar una portada:** carpeta `sections/hero/<nombre>/` (`section.html` con `data-lz-fit`,
+`fetchpriority="high"` en la foto principal; `section.css` con el encaje `min(var(--lz-fit),
+var(--lz-fit-max))`, título con tope en `svh`, texto primero bajo 992 y `max-height: 560px` sin
+encaje; `meta.ts` con `tiers`, `intent`, `archetypes` y `sample`), familia en
+`archetypes/families.ts`, preferencia en al menos un arquetipo, `pnpm lattiz kit probe hero/<nombre>`
+hasta 16/16 y `kit:manifest`.
+
+## Integración al compilador (A2 · WP4)
+
+Todo opcional y aditivo; `specVersion` sigue en 1 y un spec sin `layout` compila exactamente igual
+(`kit:verify-snapshot` idéntico). Campos nuevos (detalle y ejemplos en `docs/template-spec.md`):
+`layout.direction`, `layout.archetype`, `layout.variantOverrides`, `layout.dials` y
+`brand.primitives`, todos solo con `brand.catalog: "extended"`. Los presets de estilo siguen en
+`brand.style.*` (desviación ya registrada en WP3 de la Parte 1: `brand.shape` y `brand.density`
+existían con otro significado).
+
+**Cómo elige el compilador con `layout`** (`src/spec/compile.ts › planSpec`):
+
+1. **Dirección:** su `style` va debajo de `brand.style` (gana el spec); sus `primitives` debajo de
+   `brand.primitives`; su Motion es el preset Pro salvo `motion.preset` o el dial de movimiento.
+2. **Paleta y par:** primero las listas de la dirección (por giro si hay `byGiro`) rotadas con la
+   semilla del id; si se agotan, el resto del pool **filtrado por las reglas de la dirección**
+   (esquema claro/oscuro, acento neutro, display serif). La primera prueba mostró por qué: una Básica
+   de `terracota-calida` cayó en una paleta oscura y la compuerta de la dirección la rechazó.
+3. **Variantes por rol:** variante del spec > lock > `layout.variantOverrides` (fija) > la preferida
+   del arquetipo (`archetypes/`, la primera que el blueprint permite) > la del giro. La portada usa
+   primero las de la dirección (ordenadas por el dial de variación) y luego las del arquetipo; la
+   unicidad entre Pro del giro sigue igual.
+4. **Diales:** `density` → `style.density` (≤ 3 airy, 4–6 cozy, ≥ 7 compact) si el spec no lo fija;
+   `motion` → preset (≤ 3 none, 4–5 calm, 6–7 editorial); `variance` ordena las portadas.
+5. **Copy:** el `meta.sample` de cada variante elegida llena las claves que el giro no escribe (solo
+   specs con `layout`; los specs `extended` existentes no cambian). `spec validate` lo cuenta igual.
+6. **Lock:** guarda `layout { direction, archetype }` por tier (ausente en los demás specs).
+7. **Compuerta:** `lattiz build` agrega las reglas de la dirección (`rule: "direction"`) a
+   `kit:validate`; con un hallazgo no escribe nada.
+
+**Arquetipos:** registro aparte (`archetypes/`), no entradas nuevas en los blueprints: el compilador
+lo lee solo con `layout`, y `manifest.archetype` sigue siendo el arquetipo del blueprint
+(`blueprintArchetype` del registro en Pro, `essential` en Básico).
+
+**Rol `cta`:** opcional en Básico y Pro (`src/tiers.ts`, blueprints, `verticals` → slot `cta`),
+**cuenta** como sección (`marquee` y `floating-whatsapp` siguen fuera). Los roles obligatorios y los
+rangos (Básico 6–7, Pro 8–10) no cambian: en Básico, `cta` reemplaza a `about` para seguir en 7.
+
+**Motion:** no hay `meta.motion`; el tipo sale de `SLOT_TYPES` del seed (sin tocarlo). Las variantes
+nuevas usan el tipo de su slot (`hero` → hero, `cta` → cta), así que no necesitan corrección; si una
+variante futura lo pide, el spec (`motion.overrides`) o la dirección escriben `manifest.motion.sections`.
+
+**Texto genérico** (`spec validate --strict`, avisos): `muletilla` (aperturas y muletillas de IA del
+reglamento §3), `rayas` (más de una raya por texto), `mayusculas` (sostenidas, o Títulos En
+Mayúsculas), `esqueleto` (tres frases seguidas que arrancan igual, o cuatro de la página con el mismo
+arranque de dos palabras). Las promesas siguen siendo error. En los specs de `main`: 0 avisos salvo
+uno justo en `estetica-alheli` (cuatro frases que arrancan «manicura de…»).
+
+**CLI:** `lattiz direccion list|show <id> [--json]`, `lattiz kit list [--slot s] [--json]`,
+`lattiz giro show` con direcciones (menos usadas primero), arquetipos usados y portadas Pro libres,
+`lattiz spec init|new --direccion <id>` y `lattiz check <id> --root <dir>` (revisa una prueba
+construida con `lattiz build <spec> --out <dir>` sin tocar el kit). La skill `lattiz-template` tiene
+el paso 2b (dirección y diversidad) y sus referencias actualizadas.
+
+## Prueba de diversidad (A2 · WP6)
+
+Los 20 specs de `packages/template-kit/specs/_kit-examples/` (dos por giro, cada par con otra dirección
+y otro arquetipo) se construyeron como gemelas: 40 plantillas. Se hizo fuera del kit, en
+`.lattiz/a2/diversity/<stem>/`, con `.lattiz/a2/diversity-build.mts`. Cada spec queda único contra las
+plantillas del kit y contra el otro spec de su giro (`extraPeers`). Todo fue secuencial y reanudable;
+nada entró a `templates/`.
+
+**Resultados:**
+
+- **`kit:validate`:** 40 de 40 sin hallazgos.
+- **`lattiz review --root`:** 40 de 40. La opción `--root` es nueva en esta fase.
+- **`lattiz check --root --lighthouse`**, ~38 s y ~2.0–2.6 GB de RSS pico por plantilla:
+  - **FAIL: 5 de 40.** Las cinco son el mismo falso positivo `nojs` de `team/spotlight` (ver
+    «Direcciones de arte»).
+  - **LCP:** media 2.61 s, rango 1.72–3.09 s; 32 de 40 pasan de 2.5 s. Es la misma hoja de fuentes;
+    son números de laboratorio en la vista previa local.
+  - **HTML:** máximo 44.4 KiB en Básico y 63.5 KiB en Pro, dentro del presupuesto.
+- **CLS > 0.1 en 3 Pro** (WARN `cwv`):
+  - `estetica-atelier-musgo-v1`: 0.247 (Newsreader, `rail`);
+  - `veterinaria-especialidad-roble-v1`: 0.159 (Red Hat Display, `panel`);
+  - `tienda-mercado-ocre-v1`: 0.128 (Gloock, `stack`).
+
+  En los tres, Lighthouse atribuye el desplazamiento a la foto de portada al cargar la fuente web: el
+  titular, que va arriba de la foto, cambia de renglones entre el fallback métrico y la fuente. Las
+  pruebas de dirección con el mismo par y el mismo titular corto dieron ≤ 0.002. No se arregla con el
+  spec: va a A3, con dos opciones a medir:
+  - reservar el alto del titular en esas portadas;
+  - afinar el `size-adjust` de esos tres displays.
+
+**Comparación visual** (`kit:compare-visual`, 82 plantillas: las 42 del kit y las 40 nuevas, por
+giro). El par más parecido al pliegue que incluye al menos una plantilla nueva:
+
+| Giro        | Distancia mínima | Similitud máxima | Par                                                                       |
+| ----------- | ---------------- | ---------------- | ------------------------------------------------------------------------- |
+| barberia    | 0.343            | 0.657            | `barberia-base-solar-v1` ~ `barberia-base-taller-recto-v1`                |
+| clinica     | 0.355            | 0.645            | `clinica-base-brisa-norte-v1` ~ `clinica-brisa-norte-v1`                  |
+| dental      | 0.363            | 0.637            | `dental-base-sonrisa-del-cerro-v1` ~ `dental-sonrisa-del-cerro-v1`        |
+| despacho    | 0.434            | 0.566            | `despacho-base-cifra-clara-v1` ~ `despacho-base-mesura-v1`                |
+| estetica    | 0.394            | 0.606            | `estetica-base-alheli-v1` ~ `estetica-atelier-musgo-v1`                   |
+| floreria    | 0.375            | 0.625            | `floreria-flores-lupita-v1` ~ `floreria-patio-de-luna-v1`                 |
+| gimnasio    | 0.406            | 0.594            | `gimnasio-nave-norte-v1` ~ `gimnasio-base-yunque-v1`                      |
+| restaurante | 0.411            | 0.589            | `restaurante-base-ceniza-v1` ~ `restaurante-base-trompo-sur-v1`           |
+| tienda      | 0.344            | 0.656            | `tienda-base-lote-doce-v1` ~ `tienda-papel-y-nudo-v1`                     |
+| veterinaria | 0.346            | 0.654            | `veterinaria-clinica-nogal-v1` ~ `veterinaria-base-especialidad-roble-v1` |
+
+Ninguna nueva queda bajo 0.33. Cinco pares **del kit** ya estaban por debajo antes de A2, y no se
+tocan porque no se editan plantillas existentes:
+
+- `clinica-base-alba` ~ `brote` 0.241, `alba` ~ `cauce` 0.251 y `brote` ~ `cauce` 0.232;
+- `estetica-base-alheli` ~ `estudio-nacar` 0.199;
+- `restaurante-base-casa-comal` ~ `ceniza` 0.310.
+
+**Ajustes (1 ronda de 2 permitidas, solo specs):**
+
+- `despacho-base-alcala-ibarra` y `despacho-base-mesura` daban 0.227: los dos claros, con
+  `hero/columns` y serif. Con `overrides.basico.brand.palette.preset: "pal-petroleo-hueso"` en
+  `despacho-alcala-ibarra`, el par más cercano del giro queda en 0.434 (`e25929f`).
+- No hizo falta una segunda ronda.
+
+**Defecto encontrado en la hoja (no de spec):** en `hero/rail`, la celda de la foto se estiraba con la
+fila `1fr` y el marco `offset` dibujaba un bloque oscuro vacío bajo la foto. Ya estaba en las pruebas
+de cantera y la crítica de WP2 no lo vio. Se arregló con `align-self: start` en la celda (`e35a13d`;
+`kit probe hero/rail` 16/16, snapshot idéntico porque ninguna plantilla del kit usa `rail`).
+
+**Crítica** (completa por plantilla en la hoja):
+
+- Dentro de cada giro, las gemelas y los dos specs se separan bien.
+- Entre giros se repite la firma de cada dirección, y los placeholders la acentúan:
+  - jardín: pastel con arcos o panel punteado;
+  - mármol y tinta: panel oscuro de dos tarjetas;
+  - neón Pro: azul noche con franjas.
+- Queda la deriva al gris en barbería × neón Básico (`pal-pizarra-plata`).
+
+**Capacidad** (`kit capacity --catalog extended`): idéntica antes y después, porque los ejemplos no
+entran al kit. Los totales son los de «Deriva al gris».
+
+**Hoja:** `.lattiz/gallery/diversity.html` (capturas de `lattiz review`, elecciones, revisión,
+distancia más cercana y crítica por plantilla) y `.lattiz/gallery/diversity.png` (miniaturas,
+`kit:compare-visual --sheet`). Ninguna de las dos va en git. Para regenerarlas:
+
+```bash
+npx tsx .lattiz/a2/diversity-sheet.mts
+```
+
 ## Hallazgos de la Parte 2
 
 - **Snapshot tras el merge:** `main` trajo `restaurante-hoja-y-barro` en paralelo a la Parte 1; su

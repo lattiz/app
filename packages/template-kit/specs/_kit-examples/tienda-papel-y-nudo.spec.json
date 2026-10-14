@@ -1,0 +1,43 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "tienda-papel-y-nudo",
+  "twin": true,
+  "giro": "tienda",
+  "business": {
+    "name": "Papel y Nudo",
+    "city": "Puebla",
+    "branch": "Barrio del Artista",
+    "address": "Calle 8 Norte 402, Barrio del Artista, Puebla",
+    "hours": "Lun a sáb, 10:00 a 19:00",
+    "phone": "+52 222 000 0000",
+    "whatsapp": "522220000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "tinta-papel",
+    "archetype": "minimal"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Papelería de diseño en el Barrio del Artista, Puebla: libretas, papel y tintas."
+    },
+    "hero": {
+      "title": "Papelería de diseño en el Barrio del Artista",
+      "text": "Libretas cosidas a mano, papel de algodón y tintas. Aparte por WhatsApp y recoja en tienda."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Libretas y papel en Puebla",
+          "text": "Libretas, sobres y papel para regalo. Pida por WhatsApp."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "veterinaria-cola-feliz",
+  "twin": true,
+  "giro": "veterinaria",
+  "business": {
+    "name": "Veterinaria Cola Feliz",
+    "city": "Aguascalientes",
+    "branch": "Las Américas",
+    "address": "Av. Las Américas 1402, Las Américas, Aguascalientes",
+    "hours": "Lun a sáb, 9:00 a 20:00",
+    "phone": "+52 449 000 0000",
+    "whatsapp": "524490000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "jardin-suave",
+    "archetype": "soft"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Veterinaria en Las Américas, Aguascalientes: consultas, vacunas y baño con cita."
+    },
+    "hero": {
+      "title": "Consultas tranquilas para perros y gatos",
+      "text": "Vacunas, desparasitación y baño con citas espaciadas para que nadie espere. Agenda por WhatsApp."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Tu veterinaria en Las Américas",
+          "text": "Consultas, vacunas y baño con cita. Escríbenos."
+        }
+      }
+    }
+  }
+}

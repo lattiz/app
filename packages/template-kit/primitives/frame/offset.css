@@ -1,0 +1,2 @@
+.lz-frame--offset{margin:0 14px 14px 0}
+.lz-frame--offset::before{background:color-mix(in srgb,var(--lz-color-accent) 72%,var(--lz-color-bg));transform:translate(14px,14px)}

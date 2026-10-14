@@ -1,0 +1,43 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "veterinaria-especialidad-roble",
+  "twin": true,
+  "giro": "veterinaria",
+  "business": {
+    "name": "Hospital Veterinario Roble",
+    "city": "Culiacán",
+    "branch": "Chapultepec",
+    "address": "Blvd. Francisco I. Madero 870, Chapultepec, Culiacán",
+    "hours": "Lun a dom, 8:00 a 22:00",
+    "phone": "+52 667 000 0000",
+    "whatsapp": "526670000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "marmol-sobrio",
+    "archetype": "trust"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Hospital veterinario en Chapultepec, Culiacán: especialidades, estudios y cirugía."
+    },
+    "hero": {
+      "title": "Especialistas veterinarios con expediente en línea",
+      "text": "Cardiología, dermatología y cirugía con estudios en sitio y un médico responsable de cada caso."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Hospital veterinario en Chapultepec",
+          "text": "Consulta de especialidad y estudios en sitio. Agende su cita."
+        }
+      }
+    }
+  }
+}

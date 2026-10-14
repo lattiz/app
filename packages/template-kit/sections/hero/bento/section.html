@@ -1,0 +1,21 @@
+<section id="hero" data-lz-slot="hero" data-lz-variant="bento" data-lz-fit class="lz-section lz-hero-bento">
+  <div class="lz-container lz-hero-bento__grid">
+    <div class="lz-tile lz-hero-bento__lead" data-lz-name="Titular">
+      <p class="lz-tag lz-hero-bento__eyebrow" data-lz-key="eyebrow"></p>
+      <h1 class="lz-title lz-hero-bento__title" data-lz-key="title"></h1>
+      <p class="lz-hero-bento__text" data-lz-key="text"></p>
+      <div class="lz-hero-bento__actions">
+        <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-btn" data-lz-key="primaryCta"></a>
+        <a class="lz-btn lz-btn--secondary" data-lz-attr-href="secondaryHref" data-lz-key="secondaryCta"></a>
+      </div>
+    </div>
+    <figure class="lz-frame lz-hero-bento__media">
+      <img fetchpriority="high" width="1000" height="1250" class="lz-hero-bento__image" data-lz-attr-src="image" data-lz-attr-alt="imageAlt">
+    </figure>
+    <ul class="lz-hero-bento__facts" data-lz-if="facts" data-lz-name="Datos">
+      <li class="lz-tile lz-hero-bento__fact" data-lz-each="facts">
+        <p class="lz-bignum"><span class="lz-bignum__value" data-lz-key="value"></span><span class="lz-bignum__label" data-lz-key="label"></span></p>
+      </li>
+    </ul>
+  </div>
+</section>

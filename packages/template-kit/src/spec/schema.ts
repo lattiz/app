@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { ROLES } from '../tiers';
 import { STYLE_OPTIONS } from '../lib/style';
+import { PRIMITIVE_FAMILIES, PRIMITIVES, themeStyles } from '../../primitives';
 import { RHYTHM_TOKENS, type RhythmToken } from '../types';
 
 /**
@@ -155,6 +156,65 @@ const StyleSchema = z
     'Estilos opt-in del catálogo extended (docs/template-kit-catalog.md › Tokens de estilo). Solo con brand.catalog: extended.',
   );
 
+const PrimitivesSchema = z
+  .strictObject(
+    Object.fromEntries(
+      PRIMITIVE_FAMILIES.map((f) => [
+        f,
+        z
+          .enum(themeStyles(f) as [string, ...string[]])
+          .optional()
+          .describe(PRIMITIVES[f].label),
+      ]),
+    ),
+  )
+  .describe(
+    'Estilo de cada primitivo (botón, tarjeta, etiqueta, marco, cifra, cita, separador); gana sobre el de la dirección. Solo con brand.catalog: extended.',
+  );
+
+const Dial = z.number().int().min(1).max(10);
+
+export const LayoutSchema = z
+  .strictObject({
+    direction: z
+      .string()
+      .optional()
+      .describe(
+        'Dirección de arte (directions/): paletas, tipografías, estilos, primitivos, portadas y Motion con un gusto coherente. `pnpm lattiz direccion list`.',
+      ),
+    archetype: z
+      .string()
+      .optional()
+      .describe(
+        'Arquetipo de página (archetypes/): la variante preferida por rol. Sin él, el primero de la dirección.',
+      ),
+    variantOverrides: z
+      .record(z.string(), z.string())
+      .optional()
+      .describe(
+        'Variante por rol o slot (p. ej. { "hero": "bento", "faq": "grid" }); se valida contra el blueprint.',
+      ),
+    dials: z
+      .strictObject({
+        variance: Dial.optional().describe(
+          'Simetría (1) → asimetría (10): ordena las portadas de la dirección.',
+        ),
+        density: Dial.optional().describe(
+          'Aire (1) → compacto (10): fija style.density si el spec no lo fija.',
+        ),
+        motion: Dial.optional().describe(
+          'Estático (1) → movido (10): ≤ 3 none, 4–5 calm, 6–7 editorial (solo Pro).',
+        ),
+      })
+      .optional()
+      .describe(
+        'Diales de gusto 1–10 (docs/template-kit-design-principles.md §1).',
+      ),
+  })
+  .describe(
+    'Composición del catálogo extended: dirección de arte, arquetipo, variantes por rol y diales. Todo opcional; un spec sin layout compila como antes.',
+  );
+
 export const BrandSchema = z
   .strictObject({
     catalog: z
@@ -192,6 +252,7 @@ export const BrandSchema = z
       .describe('Multiplica el tamaño de los títulos (fuentes anchas < 1).'),
     rhythm: RhythmSchema.optional(),
     style: StyleSchema.optional(),
+    primitives: PrimitivesSchema.optional(),
   })
   .describe(
     'Identidad visual. Lo que falte lo elige el compilador entre lo curado del giro, sin chocar con el rubro.',
@@ -393,6 +454,7 @@ export const SpecSchema = z
       .describe('Descripción de la galería; por defecto la del giro.'),
     business: BusinessSchema,
     brand: BrandSchema.optional(),
+    layout: LayoutSchema.optional(),
     sections: z
       .strictObject({
         pro: z.array(SectionEntrySchema).optional(),
@@ -444,6 +506,7 @@ export const SpecSchema = z
 export type Spec = z.infer<typeof SpecSchema>;
 export type SpecSection = z.infer<typeof SectionEntrySchema>;
 export type SpecBrand = z.infer<typeof BrandSchema>;
+export type SpecLayout = z.infer<typeof LayoutSchema>;
 export type SpecBusiness = z.infer<typeof BusinessSchema>;
 export type SpecImage = z.infer<typeof ImageSchema>;
 export type SpecCopy = z.infer<typeof CopySchema>;

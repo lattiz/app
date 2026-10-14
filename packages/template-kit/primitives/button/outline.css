@@ -1,0 +1,2 @@
+.lz-btn--outline{background:color-mix(in srgb,var(--lz-color-accent) 10%,transparent);border:2px solid var(--lz-color-accent);color:var(--lz-color-text)}
+@media (hover:hover) and (pointer:fine){.lz-btn--outline:hover{background:color-mix(in srgb,var(--lz-color-accent) 20%,transparent)}}

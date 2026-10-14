@@ -29,6 +29,16 @@ que lo arregla. Una plantilla está lista cuando no queda ningún punto marcado 
 - Los precios son verosímiles para la ciudad y el giro.
 - El nombre del negocio y la colonia aparecen donde deben (navbar, hero/eyebrow, contacto, pie).
 
+## Silueta y diversidad (bloqueante)
+
+- **Silueta propia:** a 1440 y a 390, con los ojos entrecerrados, la portada y las dos primeras
+  secciones se distinguen de todas las plantillas del giro (otra retícula, otra proporción de foto,
+  otro tratamiento de imagen, otra jerarquía tipográfica). Un cambio de color no basta.
+- **Contra el giro:** compara con `pnpm lattiz giro show <giro>` (plantillas) y, si hay dudas,
+  `pnpm --filter @lattiz/template-kit kit:compare-visual`: distancia de la mitad superior ≥ 0.33.
+- **La dirección se nota:** botones, tarjetas, etiquetas y marcos siguen la dirección (`direccion
+show`); si una sección se ve de otra dirección, cambia su variante en `layout.variantOverrides`.
+
 ## «No genérico» (bloqueante para la Pro)
 
 - Al tapar el logo, ¿se adivina el giro y algo del carácter del lugar? Si podría ser cualquier

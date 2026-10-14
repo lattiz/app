@@ -1,0 +1,43 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "restaurante-comal-de-barro",
+  "twin": true,
+  "giro": "restaurante",
+  "business": {
+    "name": "Comal de Barro",
+    "city": "Tlaxcala",
+    "branch": "Centro",
+    "address": "Calle Juárez 46, Centro, Tlaxcala",
+    "hours": "Mar a dom, 9:00 a 18:00",
+    "phone": "+52 246 000 0000",
+    "whatsapp": "522460000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "terracota-calida",
+    "archetype": "catalog"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Cocina de antojitos en el Centro de Tlaxcala: tlacoyos, caldos y pedidos para llevar."
+    },
+    "hero": {
+      "title": "Tlacoyos y caldos del comal de barro",
+      "text": "Maíz nixtamalizado en casa, salsas de molcajete y el caldo del día. Pide para llevar por WhatsApp."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Antojitos en el Centro de Tlaxcala",
+          "text": "Tlacoyos, quesadillas y caldo del día. Haz tu pedido por WhatsApp."
+        }
+      }
+    }
+  }
+}

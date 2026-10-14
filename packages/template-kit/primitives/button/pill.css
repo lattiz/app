@@ -1,0 +1,2 @@
+.lz-btn--pill{padding:0 calc(28px * var(--lz-space));border-radius:999px;background:var(--lz-color-accent);color:var(--lz-color-on-accent);border-color:var(--lz-color-accent);letter-spacing:.01em}
+@media (hover:hover) and (pointer:fine){.lz-btn--pill:hover{background:color-mix(in srgb,var(--lz-color-accent) 86%,var(--lz-color-text))}}
