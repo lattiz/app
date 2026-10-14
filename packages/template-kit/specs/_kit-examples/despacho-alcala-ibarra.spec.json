@@ -32,6 +32,7 @@
   },
   "overrides": {
     "basico": {
+      "brand": { "palette": { "preset": "pal-petroleo-hueso" } },
       "copy": {
         "hero": {
           "title": "Asesores fiscales en Jardines del Moral",
