@@ -41,7 +41,7 @@ Antes de cualquier trabajo de diseño nuevo (Fase A2). Estado al 2026-10-14:
 
 | WP  | Qué                                                        | Estado    | Commits        | Desviaciones                                                                       |
 | --- | ---------------------------------------------------------- | --------- | -------------- | ---------------------------------------------------------------------------------- |
-| WP1 | Snapshot: clasificar y resolver las diferencias            | hecho     | c9ac184 + este | el fixture legacy no se arregla con paletas: se congelan las entradas del snapshot |
+| WP1 | Snapshot: clasificar y resolver las diferencias            | hecho     | 47ba2b8, 10dbb6e | el fixture legacy no se arregla con paletas: se congelan las entradas del snapshot |
 | WP2 | Capacidad: restaurante, clínica, barbería ≥ 14; resto ≥ 12 | pendiente |                |                                                                                    |
 | WP3 | Manifiesto del catálogo (`catalog.manifest.json`)          | pendiente |                |                                                                                    |
 | WP4 | Plan en el servidor (auditoría + `PlanGuard`)              | pendiente |                |                                                                                    |
@@ -114,7 +114,7 @@ era la herramienta: `kit:verify-snapshot` planeaba cada spec **sin su lock** y *
 viva**, así que cualquier plantilla nueva del giro movía un plan grabado (y las paletas nuevas de WP2
 habrían movido los 7 specs `extended`).
 
-**Arreglo (decisión de Santi: «congelar pares»):** cada entrada de spec del golden guarda sus
+**Arreglo (`47ba2b8`, decisión de Santi: «congelar pares»):** cada entrada de spec del golden guarda sus
 entradas: `peers` (las plantillas del giro contra las que se planeó, sin las suyas) y `locked` (se
 planeó con `<stem>.lock.json`, igual que `lattiz build`). `verify` las reproduce: comprueba «mismas
 entradas → mismo plan», que es lo que de verdad prueba que el kit no mutó. Una entrada sin `peers` se
