@@ -1,5 +1,7 @@
 import { existsSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
+import { ARCHETYPES } from '../../archetypes';
+import { DIRECTIONS } from '../../directions';
 import { GIROS } from '../../giros';
 import { loadBlueprint, loadSectionMeta } from '../lib/load';
 import { paths } from '../lib/paths';
@@ -130,6 +132,37 @@ export async function validateSpec(
           'los estilos (brand.style) son del catálogo extended',
           'Agrega "catalog": "extended" en brand, o quita style.',
         );
+  if (catalogOf(spec) === 'legacy') {
+    for (const [path, brand] of brands)
+      if (brand?.primitives)
+        err(
+          `${path}.primitives`,
+          'los primitivos (brand.primitives) son del catálogo extended',
+          'Agrega "catalog": "extended" en brand, o quita primitives.',
+        );
+    if (spec.layout)
+      err(
+        'layout',
+        'layout (dirección, arquetipo, variantes, diales) es del catálogo extended',
+        'Agrega "catalog": "extended" en brand, o quita layout.',
+      );
+  }
+  if (spec.layout?.direction && !DIRECTIONS[spec.layout.direction]) {
+    const guess = closest(spec.layout.direction, Object.keys(DIRECTIONS));
+    err(
+      'layout.direction',
+      `dirección de arte desconocida: "${spec.layout.direction}"`,
+      `${guess ? `¿Quisiste decir "${guess}"? ` : ''}Direcciones: ${Object.keys(DIRECTIONS).join(', ')}`,
+    );
+  }
+  if (spec.layout?.archetype && !(spec.layout.archetype in ARCHETYPES)) {
+    const guess = closest(spec.layout.archetype, Object.keys(ARCHETYPES));
+    err(
+      'layout.archetype',
+      `arquetipo desconocido: "${spec.layout.archetype}"`,
+      `${guess ? `¿Quisiste decir "${guess}"? ` : ''}Arquetipos: ${Object.keys(ARCHETYPES).join(', ')}`,
+    );
+  }
   if (spec.overrides) {
     for (const tier of Object.keys(spec.overrides) as SpecTier[])
       if (!targets.some((t) => t.tier === tier))
@@ -186,6 +219,35 @@ export async function validateSpec(
         );
       resolved.push({ slot, variant });
     });
+    for (const [key, variant] of Object.entries(
+      spec.layout?.variantOverrides ?? {},
+    )) {
+      const at = `layout.variantOverrides.${key}`;
+      const entry = entries.find(
+        (e) => e.role === key || slotsByRole[e.role] === key,
+      );
+      if (!entry) {
+        const keys = entries.flatMap((e) => [e.role, slotsByRole[e.role]]);
+        const guess = closest(key, keys.filter(Boolean) as string[]);
+        if (tier === targets[0].tier)
+          warn(
+            at,
+            `ninguna sección de ${TIER_LABEL[tier]} tiene el rol o slot "${key}"`,
+            guess ? `¿Quisiste decir "${guess}"?` : undefined,
+          );
+        continue;
+      }
+      const slot = slotsByRole[entry.role] as string;
+      const allowed = allowedVariants(blueprint, entry.role, slot, 'extended');
+      if (!allowed.includes(variant)) {
+        const guess = closest(variant, allowed);
+        err(
+          at,
+          `${TIER_LABEL[tier]} no permite ${slot}/${variant}`,
+          `${guess ? `¿Quisiste decir "${guess}"? ` : ''}Permitidas: ${allowed.join(', ')}`,
+        );
+      }
+    }
     for (const role of TIERS[KIT_TIER[tier]].requiredRoles)
       if (!seen.has(role as Role))
         err(
@@ -213,8 +275,13 @@ export async function validateSpec(
       if (!existsSync(resolve(paths.sections, slot, variant, 'meta.ts')))
         continue;
       const meta = await loadSectionMeta(slot, variant);
+      // Layout specs get the variant's sample copy under their own (as the compiler does).
+      const slotCopy =
+        spec.layout && meta.sample
+          ? { ...meta.sample, ...(copy[slot] ?? {}) }
+          : (copy[slot] ?? {});
       for (const key of meta.contentKeys)
-        for (const miss of missingPaths(copy[slot] ?? {}, key))
+        for (const miss of missingPaths(slotCopy, key))
           err(
             `copy.${slot}.${miss}`,
             `falta (lo pide ${slot}/${variant} en ${TIER_LABEL[tier]})`,

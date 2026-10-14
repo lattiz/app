@@ -58,7 +58,7 @@ export default {
     divider: 'rule',
   },
   archetypes: ['minimal', 'trust'],
-  heroes: { pro: ['split', 'columns', 'panel'], basic: ['split', 'columns'] },
+  heroes: { pro: ['split', 'panel', 'columns'], basic: ['split', 'columns'] },
   motion: 'calm',
   dials: { variance: 4, motion: 4, density: 5 },
   giros: ['despacho', 'tienda', 'clinica', 'barberia'],

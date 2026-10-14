@@ -1030,6 +1030,59 @@ encaje; `meta.ts` con `tiers`, `intent`, `archetypes` y `sample`), familia en
 `archetypes/families.ts`, preferencia en al menos un arquetipo, `pnpm lattiz kit probe hero/<nombre>`
 hasta 16/16 y `kit:manifest`.
 
+## Integración al compilador (A2 · WP4)
+
+Todo opcional y aditivo; `specVersion` sigue en 1 y un spec sin `layout` compila exactamente igual
+(`kit:verify-snapshot` idéntico). Campos nuevos (detalle y ejemplos en `docs/template-spec.md`):
+`layout.direction`, `layout.archetype`, `layout.variantOverrides`, `layout.dials` y
+`brand.primitives`, todos solo con `brand.catalog: "extended"`. Los presets de estilo siguen en
+`brand.style.*` (desviación ya registrada en WP3 de la Parte 1: `brand.shape` y `brand.density`
+existían con otro significado).
+
+**Cómo elige el compilador con `layout`** (`src/spec/compile.ts › planSpec`):
+
+1. **Dirección:** su `style` va debajo de `brand.style` (gana el spec); sus `primitives` debajo de
+   `brand.primitives`; su Motion es el preset Pro salvo `motion.preset` o el dial de movimiento.
+2. **Paleta y par:** primero las listas de la dirección (por giro si hay `byGiro`) rotadas con la
+   semilla del id; si se agotan, el resto del pool **filtrado por las reglas de la dirección**
+   (esquema claro/oscuro, acento neutro, display serif). La primera prueba mostró por qué: una Básica
+   de `terracota-calida` cayó en una paleta oscura y la compuerta de la dirección la rechazó.
+3. **Variantes por rol:** variante del spec > lock > `layout.variantOverrides` (fija) > la preferida
+   del arquetipo (`archetypes/`, la primera que el blueprint permite) > la del giro. La portada usa
+   primero las de la dirección (ordenadas por el dial de variación) y luego las del arquetipo; la
+   unicidad entre Pro del giro sigue igual.
+4. **Diales:** `density` → `style.density` (≤ 3 airy, 4–6 cozy, ≥ 7 compact) si el spec no lo fija;
+   `motion` → preset (≤ 3 none, 4–5 calm, 6–7 editorial); `variance` ordena las portadas.
+5. **Copy:** el `meta.sample` de cada variante elegida llena las claves que el giro no escribe (solo
+   specs con `layout`; los specs `extended` existentes no cambian). `spec validate` lo cuenta igual.
+6. **Lock:** guarda `layout { direction, archetype }` por tier (ausente en los demás specs).
+7. **Compuerta:** `lattiz build` agrega las reglas de la dirección (`rule: "direction"`) a
+   `kit:validate`; con un hallazgo no escribe nada.
+
+**Arquetipos:** registro aparte (`archetypes/`), no entradas nuevas en los blueprints: el compilador
+lo lee solo con `layout`, y `manifest.archetype` sigue siendo el arquetipo del blueprint
+(`blueprintArchetype` del registro en Pro, `essential` en Básico).
+
+**Rol `cta`:** opcional en Básico y Pro (`src/tiers.ts`, blueprints, `verticals` → slot `cta`),
+**cuenta** como sección (`marquee` y `floating-whatsapp` siguen fuera). Los roles obligatorios y los
+rangos (Básico 6–7, Pro 8–10) no cambian: en Básico, `cta` reemplaza a `about` para seguir en 7.
+
+**Motion:** no hay `meta.motion`; el tipo sale de `SLOT_TYPES` del seed (sin tocarlo). Las variantes
+nuevas usan el tipo de su slot (`hero` → hero, `cta` → cta), así que no necesitan corrección; si una
+variante futura lo pide, el spec (`motion.overrides`) o la dirección escriben `manifest.motion.sections`.
+
+**Texto genérico** (`spec validate --strict`, avisos): `muletilla` (aperturas y muletillas de IA del
+reglamento §3), `rayas` (más de una raya por texto), `mayusculas` (sostenidas, o Títulos En
+Mayúsculas), `esqueleto` (tres frases seguidas que arrancan igual, o cuatro de la página con el mismo
+arranque de dos palabras). Las promesas siguen siendo error. En los specs de `main`: 0 avisos salvo
+uno justo en `estetica-alheli` (cuatro frases que arrancan «manicura de…»).
+
+**CLI:** `lattiz direccion list|show <id> [--json]`, `lattiz kit list [--slot s] [--json]`,
+`lattiz giro show` con direcciones (menos usadas primero), arquetipos usados y portadas Pro libres,
+`lattiz spec init|new --direccion <id>` y `lattiz check <id> --root <dir>` (revisa una prueba
+construida con `lattiz build <spec> --out <dir>` sin tocar el kit). La skill `lattiz-template` tiene
+el paso 2b (dirección y diversidad) y sus referencias actualizadas.
+
 ## Hallazgos de la Parte 2
 
 - **Snapshot tras el merge:** `main` trajo `restaurante-hoja-y-barro` en paralelo a la Parte 1; su

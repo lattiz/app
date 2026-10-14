@@ -23,6 +23,8 @@ export interface TierLock {
   shape: string;
   archetype: string;
   sections: { role: Role; slot: string; variant: string }[];
+  /** Layout specs: the art direction and page archetype (absent for every other spec). */
+  layout?: { direction?: string; archetype?: string };
 }
 
 export interface SpecLock {
@@ -80,6 +82,7 @@ export function lockFromPlan(plan: SpecPlan, specPath: string): SpecLock {
             slot: s.slot,
             variant: s.variant,
           })),
+          ...(t.layout ? { layout: t.layout } : {}),
         },
       ]),
     ),

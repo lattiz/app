@@ -48,7 +48,9 @@ export type RuleId =
   | 'unique-headline'
   | 'unique-hero'
   /** Byte budget (budgets.json); only a spec build of a new template raises it as a finding. */
-  | 'budget';
+  | 'budget'
+  /** A layout spec's art-direction rule (directions/ › rules); raised by the spec build. */
+  | 'direction';
 
 export interface Finding {
   rule: RuleId;

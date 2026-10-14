@@ -21,6 +21,7 @@ export default {
     testimonials: roles.testimonials,
     faq: roles.faq,
     contact: { ...roles.contact, variants: ['with-contact'] },
+    cta: roles.cta,
     whatsapp: roles.whatsapp,
     footer: roles.footer,
   },

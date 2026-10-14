@@ -1,4 +1,5 @@
 import { GIROS } from '../../giros';
+import { DIRECTIONS } from '../../directions';
 import { hueDistance, hueOf, parseColor } from '../lib/color';
 import type { Fingerprint } from '../lib/similarity';
 import { MIN_ACCENT_HUE_DISTANCE } from '../lib/validate';
@@ -43,6 +44,8 @@ export function initSpec(opts: {
   tier: SpecTier | 'ambos';
   id?: string;
   library: Fingerprint[];
+  /** Art direction (directions/): the compiler picks palette, pair, shape and heroes within it. */
+  direction?: string;
 }): Spec {
   const giro = GIROS[opts.giro];
   const peers = opts.library.filter((f) => f.vertical === giro.id);
@@ -107,12 +110,15 @@ export function initSpec(opts: {
       whatsapp: giro.business.whatsapp,
       whatsappMessage: giro.business.whatsappMessage,
     },
-    brand: {
-      catalog: 'extended',
-      palette: { preset: palette },
-      fontPair,
-      shape: giro.shapes[0],
-    },
+    brand: opts.direction
+      ? { catalog: 'extended' }
+      : {
+          catalog: 'extended',
+          palette: { preset: palette },
+          fontPair,
+          shape: giro.shapes[0],
+        },
+    ...(opts.direction ? { layout: { direction: opts.direction } } : {}),
     sections: Object.fromEntries(
       tiers.map((t) => [t, giro.sections[t].map((s) => ({ role: s.role }))]),
     ),
@@ -124,7 +130,9 @@ export function initSpec(opts: {
     ...(tiers.includes('pro')
       ? {
           motion: {
-            preset: giro.motion.preset,
+            preset: opts.direction
+              ? DIRECTIONS[opts.direction].motion
+              : giro.motion.preset,
             progress: giro.motion.progress,
           },
         }

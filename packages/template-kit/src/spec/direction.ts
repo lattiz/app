@@ -167,6 +167,26 @@ export function registryProblems(
   return out;
 }
 
+/** A palette the direction's rules accept (the compiler's fallback when its own list runs out). */
+export function directionAcceptsPalette(
+  d: ArtDirection,
+  p: { scheme: string; colors: { accent: string } },
+): boolean {
+  if (d.rules.includes('scheme:light') && p.scheme !== 'light') return false;
+  if (d.rules.includes('scheme:dark') && p.scheme !== 'dark') return false;
+  if (d.rules.includes('accent:neutral') && !isNeutral(p.colors.accent))
+    return false;
+  return true;
+}
+
+/** A font pair the direction's rules accept. */
+export function directionAcceptsFont(
+  d: ArtDirection,
+  f: { display: string },
+): boolean {
+  return !d.rules.includes('display:serif') || isSerif(f.display);
+}
+
 /** Lists ordered for a giro: `byGiro` when present, else the default list. */
 export function directionPalettes(d: ArtDirection, giro: string): string[] {
   return d.palettes.byGiro?.[giro] ?? d.palettes.default;

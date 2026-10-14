@@ -3,6 +3,8 @@ import { dirname, resolve } from 'node:path';
 import { lockSpec, readSpecFile } from '../../../template-kit/src/spec/build';
 import { specStem } from '../../../template-kit/src/spec/compile';
 import { initSpec } from '../../../template-kit/src/spec/init';
+import { DIRECTIONS } from '../../../template-kit/directions';
+import { closest } from '../../../template-kit/src/spec/schema';
 import {
   specJsonSchema,
   type Spec,
@@ -79,12 +81,21 @@ export async function initFromFlags(
     throw usage(
       '--id es para un solo tier; con --twin los ids salen del nombre.',
     );
+  const direction = str(ctx.flags, 'direccion');
+  if (direction && !DIRECTIONS[direction]) {
+    const guess = closest(direction, Object.keys(DIRECTIONS));
+    throw usage(
+      `Dirección de arte desconocida: "${direction}".`,
+      `${guess ? `¿Quisiste decir "${guess}"? ` : ''}Direcciones: ${Object.keys(DIRECTIONS).join(', ')} (pnpm lattiz direccion list).`,
+    );
+  }
   const spec = initSpec({
     giro,
     nombre,
     tier: choice,
     id,
     library: await libraryFingerprints(),
+    ...(direction ? { direction } : {}),
   });
   const file = opts.file
     ? resolve(process.cwd(), opts.file)
@@ -204,7 +215,7 @@ export const spec: Command = {
     'Specs de plantilla: init (prellenado por giro), validate, lock, schema',
   usage: 'spec init|validate|lock|schema',
   help: [
-    'spec init --giro <giro> --nombre "<nombre>" [--twin | --tier pro|basico] [--id <id>] [--out archivo] [--force]',
+    'spec init --giro <giro> --nombre "<nombre>" [--twin | --tier pro|basico] [--id <id>] [--direccion <id>] [--out archivo] [--force]',
     '    Escribe packages/template-kit/specs/<giro>-<nombre>.spec.json con el copy del giro, la paleta',
     '    y la tipografía libres en el giro y una lista "todo" de lo que falta revisar.',
     'spec validate <archivo|id> [--strict]',
@@ -227,6 +238,7 @@ export const spec: Command = {
     twin: { type: 'boolean' },
     tier: { type: 'string' },
     id: { type: 'string' },
+    direccion: { type: 'string' },
     out: { type: 'string' },
     force: { type: 'boolean' },
     strict: { type: 'boolean' },

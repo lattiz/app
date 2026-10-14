@@ -21,7 +21,24 @@ dudosos y el ajuste que hay que hacer en el spec.
 | veterinaria, estética canina, hotel de mascotas                                                                                          | `veterinaria` | estética canina sola: servicios de baño/corte, quita consultas                                                                             |
 | hotel, escuela, taller mecánico, inmobiliaria, fotógrafo, tintorería…                                                                    | **ninguno**   | dilo; propone el más cercano (taller → `tienda` no sirve; mejor «giro nuevo») y no improvises                                              |
 
-## Tono → paleta y tipografía
+## Dirección y arquetipo (catálogo extended, `layout`)
+
+Una dirección fija paleta, tipografía, estilos, primitivos, portadas y voz. Prefiere la que el giro
+**todavía no usa** (`giro show` › `directions[].used`) y que va con el tono:
+
+| Tono pedido                        | Dirección           | Arquetipo       | Giros donde encaja                        |
+| ---------------------------------- | ------------------- | --------------- | ----------------------------------------- |
+| de autor, editorial, pausado       | `cantera-editorial` | editorial       | despacho, restaurante, florería, estética |
+| nocturno, urbano, con actitud      | `neon-nocturno`     | bold / showcase | barbería, gimnasio, taquería, tienda      |
+| amable, familiar, suave            | `jardin-suave`      | soft / booking  | estética, veterinaria, florería, dental   |
+| preciso, minimalista, monocromo    | `tinta-papel`       | minimal / trust | despacho, tienda, consultorio, barbería   |
+| cálido, de mostrador, hecho a mano | `terracota-calida`  | catalog         | fonda, florería, tienda, estética         |
+| confianza premium, clínico         | `marmol-sobrio`     | trust / booking | clínica, dental, despacho, veterinaria    |
+
+Dos plantillas del mismo giro no comparten dirección **y** arquetipo; si el giro ya usa la ideal,
+toma la siguiente con el mismo tono y dilo en la entrega.
+
+## Tono → paleta y tipografía (specs sin dirección)
 
 Lee `mood` en `giro show`. Guía rápida:
 

@@ -60,7 +60,7 @@ export default {
     divider: 'hairline',
   },
   archetypes: ['trust', 'booking'],
-  heroes: { pro: ['panel', 'split', 'columns'], basic: ['panel', 'split'] },
+  heroes: { pro: ['panel', 'bento', 'split'], basic: ['panel', 'bento'] },
   motion: 'calm',
   dials: { variance: 3, motion: 4, density: 5 },
   giros: ['clinica', 'dental', 'despacho', 'veterinaria'],

@@ -121,6 +121,16 @@ export interface CatalogDirection {
   voice: { register: string; headline: string; cta: string };
 }
 
+export interface CatalogRole {
+  role: string;
+  /** Slot the role resolves to (same for every giro of service-landing). */
+  slot: string;
+  /** Per tier: required, optional, or absent from that tier's blueprint. */
+  tiers: Record<CatalogTier, 'required' | 'optional' | null>;
+  /** Counts toward the tier's section range (floating-whatsapp and marquee don't). */
+  counted: boolean;
+}
+
 export interface CatalogManifest {
   $comment: string;
   manifestVersion: 1;
@@ -128,6 +138,7 @@ export interface CatalogManifest {
   contentHash: string;
   /** src/spec/catalog.ts CATALOG_VERSION. */
   catalogVersion: number;
+  roles: CatalogRole[];
   variants: CatalogVariant[];
   primitives: CatalogPrimitive[];
   directions: CatalogDirection[];

@@ -55,7 +55,7 @@ export default {
   },
   archetypes: ['bold', 'showcase'],
   heroes: {
-    pro: ['poster', 'image-bg', 'framed'],
+    pro: ['poster', 'bento', 'image-bg'],
     basic: ['poster', 'image-bg'],
   },
   motion: 'editorial',

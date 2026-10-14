@@ -58,6 +58,19 @@ async function runShow(ctx: Context): Promise<ExitCode> {
     c.gray(`Plantillas del giro: ${info.templates.join(', ') || 'ninguna'}`),
   );
   log.plain(
+    `\n${c.bold('Direcciones de arte')} (primero las menos usadas en el giro, luego por afinidad; layout.direction)`,
+  );
+  for (const d of info.directions)
+    log.plain(
+      `  ${d.id.padEnd(18)} ${d.name.padEnd(18)} ${c.gray(`usada ${d.used} · afinidad ${d.affinity === null ? '—' : d.affinity + 1}`)}`,
+    );
+  const archetypes = Object.entries(info.archetypesUsed);
+  log.plain(
+    c.gray(
+      `Arquetipos ya usados: ${archetypes.length ? archetypes.map(([a, n]) => `${a} ×${n}`).join(', ') : 'ninguno (specs con layout)'} · portadas Pro libres: ${info.freeProHeroes.length} (${info.freeProHeroes.join(', ')})`,
+    ),
+  );
+  log.plain(
     `\n${c.bold('Paletas')} (libre = acento a ≥ 30° de las plantillas del giro)`,
   );
   for (const p of info.palettesList)

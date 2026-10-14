@@ -56,8 +56,8 @@ export default {
   },
   archetypes: ['soft', 'booking'],
   heroes: {
-    pro: ['duo-arch', 'panel', 'offset-card'],
-    basic: ['duo-arch', 'offset-card'],
+    pro: ['duo-arch', 'overlap', 'panel'],
+    basic: ['duo-arch', 'overlap'],
   },
   motion: 'calm',
   dials: { variance: 5, motion: 5, density: 3 },

@@ -10,7 +10,9 @@ import {
 } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, relative, resolve } from 'node:path';
+import { DIRECTIONS } from '../../directions';
 import { measureBudget } from '../lib/budget';
+import { directionFindings } from './direction';
 import { compileManifest, writeCompiled } from '../lib/compile';
 import { KIT_ROOT } from '../lib/paths';
 import { libraryFingerprints, targetFromCompiled } from '../lib/targets';
@@ -334,6 +336,17 @@ export async function buildSpec(opts: BuildOptions): Promise<BuildReport> {
         ...others,
         ...siblings,
       ]);
+      // Layout specs: the art direction's taste rules are part of the gate.
+      const direction = t.layout?.direction
+        ? DIRECTIONS[t.layout.direction]
+        : undefined;
+      if (direction)
+        for (const f of directionFindings(compiled, direction))
+          validation.findings.push({
+            rule: 'direction',
+            file: t.id,
+            message: `${direction.id} › ${f.rule}: ${f.message}`,
+          });
       // Byte budgets: a template that doesn't exist yet must fit; an existing one only warns.
       const isNew = !existsSync(resolve(KIT_ROOT, 'templates', `${t.id}.ts`));
       for (const b of measureBudget(compiled).filter((l) => l.over)) {

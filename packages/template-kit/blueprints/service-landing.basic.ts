@@ -14,6 +14,7 @@ export default {
     catalog: roles.catalog,
     faq: roles.faq,
     contact: { ...roles.contact, variants: ['single'] },
+    cta: roles.cta,
     whatsapp: roles.whatsapp,
     footer: roles.footer,
   },

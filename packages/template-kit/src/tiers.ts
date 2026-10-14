@@ -17,6 +17,7 @@ export const ROLES = [
   'testimonials',
   'faq',
   'contact',
+  'cta',
   'whatsapp',
   'footer',
 ] as const;
@@ -68,7 +69,8 @@ export const TIERS = {
       'footer',
       'whatsapp',
     ],
-    optionalRoles: ['about'],
+    // `cta` (closing CTA band) counts like any section: in Básico it replaces `about` to stay in range.
+    optionalRoles: ['about', 'cta'],
     // Basic templates are skins of one shared structure on purpose.
     similarityLimit: 0.85,
     seoProfile: 'basic',
@@ -90,7 +92,7 @@ export const TIERS = {
       'footer',
       'whatsapp',
     ],
-    optionalRoles: ['team', 'marquee'],
+    optionalRoles: ['team', 'marquee', 'cta'],
     similarityLimit: 0.5,
     seoProfile: 'advanced',
     exclusive: false,

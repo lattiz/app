@@ -28,7 +28,11 @@
     "tier": {
       "description": "Con `id`: pro o basico. Con `twin`: ambos.",
       "type": "string",
-      "enum": ["pro", "basico", "ambos"]
+      "enum": [
+        "pro",
+        "basico",
+        "ambos"
+      ]
     },
     "giro": {
       "type": "string",
@@ -144,12 +148,18 @@
                 "type": "string"
               }
             },
-            "required": ["name", "address", "hours"],
+            "required": [
+              "name",
+              "address",
+              "hours"
+            ],
             "additionalProperties": false
           }
         }
       },
-      "required": ["name"],
+      "required": [
+        "name"
+      ],
       "additionalProperties": false,
       "description": "Datos del negocio; el copy los usa como {{name}}, {{phone}}, {{address}}, {{city}}."
     },
@@ -159,7 +169,10 @@
         "catalog": {
           "description": "Catálogo del que elige el compilador: legacy (por defecto, los pools de siempre) o extended (más paletas, tipografías, variantes y arquetipos). `lattiz spec init` escribe extended.",
           "type": "string",
-          "enum": ["legacy", "extended"]
+          "enum": [
+            "legacy",
+            "extended"
+          ]
         },
         "palette": {
           "anyOf": [
@@ -172,7 +185,9 @@
                   "description": "Paleta curada del giro (`pnpm lattiz spec init` las lista)."
                 }
               },
-              "required": ["preset"],
+              "required": [
+                "preset"
+              ],
               "additionalProperties": false
             },
             {
@@ -199,14 +214,22 @@
                     "scheme": {
                       "description": "Se deduce del fondo.",
                       "type": "string",
-                      "enum": ["light", "dark"]
+                      "enum": [
+                        "light",
+                        "dark"
+                      ]
                     }
                   },
-                  "required": ["bg", "accent"],
+                  "required": [
+                    "bg",
+                    "accent"
+                  ],
                   "additionalProperties": false
                 }
               },
-              "required": ["custom"],
+              "required": [
+                "custom"
+              ],
               "additionalProperties": false
             }
           ],
@@ -233,7 +256,10 @@
                   "description": "Familia para texto."
                 }
               },
-              "required": ["display", "body"],
+              "required": [
+                "display",
+                "body"
+              ],
               "additionalProperties": false
             }
           ],
@@ -247,15 +273,31 @@
         "density": {
           "description": "Aire entre secciones; por defecto el de la forma.",
           "type": "string",
-          "enum": ["airy", "regular", "compact"]
+          "enum": [
+            "airy",
+            "regular",
+            "compact"
+          ]
         },
         "photoTreatment": {
           "type": "string",
-          "enum": ["none", "duotone", "grayscale", "warm"]
+          "enum": [
+            "none",
+            "duotone",
+            "grayscale",
+            "warm"
+          ]
         },
         "placeholder": {
           "type": "string",
-          "enum": ["grain", "rules", "stripes", "blobs", "arches", "dots"]
+          "enum": [
+            "grain",
+            "rules",
+            "stripes",
+            "blobs",
+            "arches",
+            "dots"
+          ]
         },
         "container": {
           "description": "Ancho máximo, p. ej. 1200px.",
@@ -297,48 +339,206 @@
             "shape": {
               "description": "Radios de botones, tarjetas e imágenes.",
               "type": "string",
-              "enum": ["sharp", "soft", "round", "pill"]
+              "enum": [
+                "sharp",
+                "soft",
+                "round",
+                "pill"
+              ]
             },
             "surface": {
               "description": "Tarjetas y paneles: planos, con filete, teñidos o elevados.",
               "type": "string",
-              "enum": ["flat", "outlined", "tinted", "elevated"]
+              "enum": [
+                "flat",
+                "outlined",
+                "tinted",
+                "elevated"
+              ]
             },
             "density": {
               "description": "Aire: padding de sección, separaciones y ancho del contenedor.",
               "type": "string",
-              "enum": ["compact", "cozy", "airy"]
+              "enum": [
+                "compact",
+                "cozy",
+                "airy"
+              ]
             },
             "divider": {
               "description": "Separador entre secciones.",
               "type": "string",
-              "enum": ["none", "hairline", "rule"]
+              "enum": [
+                "none",
+                "hairline",
+                "rule"
+              ]
             },
             "imageTreatment": {
               "description": "Marco o máscara de las fotos (solo CSS).",
               "type": "string",
-              "enum": ["plain", "framed", "arch", "offset", "duotone-overlay"]
+              "enum": [
+                "plain",
+                "framed",
+                "arch",
+                "offset",
+                "duotone-overlay"
+              ]
             },
             "typeScale": {
               "description": "Tamaño de títulos respecto al par tipográfico.",
               "type": "string",
-              "enum": ["tight", "normal", "expressive"]
+              "enum": [
+                "tight",
+                "normal",
+                "expressive"
+              ]
             },
             "displayCase": {
               "type": "string",
-              "enum": ["none", "upper"]
+              "enum": [
+                "none",
+                "upper"
+              ]
             },
             "tracking": {
               "type": "string",
-              "enum": ["tight", "normal", "wide"]
+              "enum": [
+                "tight",
+                "normal",
+                "wide"
+              ]
             }
           },
           "additionalProperties": false,
           "description": "Estilos opt-in del catálogo extended (docs/template-kit-catalog.md › Tokens de estilo). Solo con brand.catalog: extended."
+        },
+        "primitives": {
+          "type": "object",
+          "properties": {
+            "button": {
+              "description": "Botón",
+              "type": "string",
+              "enum": [
+                "solid",
+                "outline",
+                "pill",
+                "underline"
+              ]
+            },
+            "card": {
+              "description": "Tarjeta",
+              "type": "string",
+              "enum": [
+                "flat",
+                "outlined",
+                "tinted",
+                "elevated"
+              ]
+            },
+            "tag": {
+              "description": "Etiqueta / antetítulo",
+              "type": "string",
+              "enum": [
+                "pill",
+                "outlined",
+                "plain",
+                "numbered"
+              ]
+            },
+            "frame": {
+              "description": "Marco de imagen",
+              "type": "string",
+              "enum": [
+                "arch",
+                "cut",
+                "offset",
+                "framed",
+                "duotone"
+              ]
+            },
+            "number": {
+              "description": "Cifra grande",
+              "type": "string",
+              "enum": [
+                "plain",
+                "ruled"
+              ]
+            },
+            "quote": {
+              "description": "Cita destacada",
+              "type": "string",
+              "enum": [
+                "rule",
+                "marks"
+              ]
+            },
+            "divider": {
+              "description": "Separador",
+              "type": "string",
+              "enum": [
+                "hairline",
+                "rule",
+                "ornament"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "description": "Estilo de cada primitivo (botón, tarjeta, etiqueta, marco, cifra, cita, separador); gana sobre el de la dirección. Solo con brand.catalog: extended."
         }
       },
       "additionalProperties": false,
       "description": "Identidad visual. Lo que falte lo elige el compilador entre lo curado del giro, sin chocar con el rubro."
+    },
+    "layout": {
+      "type": "object",
+      "properties": {
+        "direction": {
+          "description": "Dirección de arte (directions/): paletas, tipografías, estilos, primitivos, portadas y Motion con un gusto coherente. `pnpm lattiz direccion list`.",
+          "type": "string"
+        },
+        "archetype": {
+          "description": "Arquetipo de página (archetypes/): la variante preferida por rol. Sin él, el primero de la dirección.",
+          "type": "string"
+        },
+        "variantOverrides": {
+          "description": "Variante por rol o slot (p. ej. { \"hero\": \"bento\", \"faq\": \"grid\" }); se valida contra el blueprint.",
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "dials": {
+          "description": "Diales de gusto 1–10 (docs/template-kit-design-principles.md §1).",
+          "type": "object",
+          "properties": {
+            "variance": {
+              "description": "Simetría (1) → asimetría (10): ordena las portadas de la dirección.",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            },
+            "density": {
+              "description": "Aire (1) → compacto (10): fija style.density si el spec no lo fija.",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            },
+            "motion": {
+              "description": "Estático (1) → movido (10): ≤ 3 none, 4–5 calm, 6–7 editorial (solo Pro).",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "description": "Composición del catálogo extended: dirección de arte, arquetipo, variantes por rol y diales. Todo opcional; un spec sin layout compila como antes."
     },
     "sections": {
       "description": "Secciones por tier, en orden; sin ellas, las del giro.",
@@ -362,6 +562,7 @@
                   "testimonials",
                   "faq",
                   "contact",
+                  "cta",
                   "whatsapp",
                   "footer"
                 ],
@@ -376,7 +577,9 @@
                 "type": "string"
               }
             },
-            "required": ["role"],
+            "required": [
+              "role"
+            ],
             "additionalProperties": false,
             "description": "Una sección, en orden de página."
           }
@@ -399,6 +602,7 @@
                   "testimonials",
                   "faq",
                   "contact",
+                  "cta",
                   "whatsapp",
                   "footer"
                 ],
@@ -413,7 +617,9 @@
                 "type": "string"
               }
             },
-            "required": ["role"],
+            "required": [
+              "role"
+            ],
             "additionalProperties": false,
             "description": "Una sección, en orden de página."
           }
@@ -461,7 +667,9 @@
                     "description": "Búsqueda en Pexels."
                   }
                 },
-                "required": ["pexels"],
+                "required": [
+                  "pexels"
+                ],
                 "additionalProperties": false
               },
               {
@@ -473,7 +681,9 @@
                     "description": "Ruta local (relativa al spec)."
                   }
                 },
-                "required": ["file"],
+                "required": [
+                  "file"
+                ],
                 "additionalProperties": false
               },
               {
@@ -484,7 +694,9 @@
                     "description": "Foto pública que el build descarga, recorta y guarda en assets/ (sin API key)."
                   }
                 },
-                "required": ["url"],
+                "required": [
+                  "url"
+                ],
                 "additionalProperties": false
               }
             ]
@@ -496,10 +708,17 @@
           },
           "orientation": {
             "type": "string",
-            "enum": ["landscape", "portrait", "square"]
+            "enum": [
+              "landscape",
+              "portrait",
+              "square"
+            ]
           }
         },
-        "required": ["key", "source"],
+        "required": [
+          "key",
+          "source"
+        ],
         "additionalProperties": false
       }
     },
@@ -516,7 +735,11 @@
       "properties": {
         "preset": {
           "type": "string",
-          "enum": ["calm", "editorial", "none"]
+          "enum": [
+            "calm",
+            "editorial",
+            "none"
+          ]
         },
         "progress": {
           "description": "Barra de progreso de scroll.",
@@ -622,7 +845,9 @@
                           "description": "Paleta curada del giro (`pnpm lattiz spec init` las lista)."
                         }
                       },
-                      "required": ["preset"],
+                      "required": [
+                        "preset"
+                      ],
                       "additionalProperties": false
                     },
                     {
@@ -649,14 +874,22 @@
                             "scheme": {
                               "description": "Se deduce del fondo.",
                               "type": "string",
-                              "enum": ["light", "dark"]
+                              "enum": [
+                                "light",
+                                "dark"
+                              ]
                             }
                           },
-                          "required": ["bg", "accent"],
+                          "required": [
+                            "bg",
+                            "accent"
+                          ],
                           "additionalProperties": false
                         }
                       },
-                      "required": ["custom"],
+                      "required": [
+                        "custom"
+                      ],
                       "additionalProperties": false
                     }
                   ],
@@ -683,7 +916,10 @@
                           "description": "Familia para texto."
                         }
                       },
-                      "required": ["display", "body"],
+                      "required": [
+                        "display",
+                        "body"
+                      ],
                       "additionalProperties": false
                     }
                   ],
@@ -697,11 +933,20 @@
                 "density": {
                   "description": "Aire entre secciones; por defecto el de la forma.",
                   "type": "string",
-                  "enum": ["airy", "regular", "compact"]
+                  "enum": [
+                    "airy",
+                    "regular",
+                    "compact"
+                  ]
                 },
                 "photoTreatment": {
                   "type": "string",
-                  "enum": ["none", "duotone", "grayscale", "warm"]
+                  "enum": [
+                    "none",
+                    "duotone",
+                    "grayscale",
+                    "warm"
+                  ]
                 },
                 "placeholder": {
                   "type": "string",
@@ -754,22 +999,40 @@
                     "shape": {
                       "description": "Radios de botones, tarjetas e imágenes.",
                       "type": "string",
-                      "enum": ["sharp", "soft", "round", "pill"]
+                      "enum": [
+                        "sharp",
+                        "soft",
+                        "round",
+                        "pill"
+                      ]
                     },
                     "surface": {
                       "description": "Tarjetas y paneles: planos, con filete, teñidos o elevados.",
                       "type": "string",
-                      "enum": ["flat", "outlined", "tinted", "elevated"]
+                      "enum": [
+                        "flat",
+                        "outlined",
+                        "tinted",
+                        "elevated"
+                      ]
                     },
                     "density": {
                       "description": "Aire: padding de sección, separaciones y ancho del contenedor.",
                       "type": "string",
-                      "enum": ["compact", "cozy", "airy"]
+                      "enum": [
+                        "compact",
+                        "cozy",
+                        "airy"
+                      ]
                     },
                     "divider": {
                       "description": "Separador entre secciones.",
                       "type": "string",
-                      "enum": ["none", "hairline", "rule"]
+                      "enum": [
+                        "none",
+                        "hairline",
+                        "rule"
+                      ]
                     },
                     "imageTreatment": {
                       "description": "Marco o máscara de las fotos (solo CSS).",
@@ -785,19 +1048,103 @@
                     "typeScale": {
                       "description": "Tamaño de títulos respecto al par tipográfico.",
                       "type": "string",
-                      "enum": ["tight", "normal", "expressive"]
+                      "enum": [
+                        "tight",
+                        "normal",
+                        "expressive"
+                      ]
                     },
                     "displayCase": {
                       "type": "string",
-                      "enum": ["none", "upper"]
+                      "enum": [
+                        "none",
+                        "upper"
+                      ]
                     },
                     "tracking": {
                       "type": "string",
-                      "enum": ["tight", "normal", "wide"]
+                      "enum": [
+                        "tight",
+                        "normal",
+                        "wide"
+                      ]
                     }
                   },
                   "additionalProperties": false,
                   "description": "Estilos opt-in del catálogo extended (docs/template-kit-catalog.md › Tokens de estilo). Solo con brand.catalog: extended."
+                },
+                "primitives": {
+                  "type": "object",
+                  "properties": {
+                    "button": {
+                      "description": "Botón",
+                      "type": "string",
+                      "enum": [
+                        "solid",
+                        "outline",
+                        "pill",
+                        "underline"
+                      ]
+                    },
+                    "card": {
+                      "description": "Tarjeta",
+                      "type": "string",
+                      "enum": [
+                        "flat",
+                        "outlined",
+                        "tinted",
+                        "elevated"
+                      ]
+                    },
+                    "tag": {
+                      "description": "Etiqueta / antetítulo",
+                      "type": "string",
+                      "enum": [
+                        "pill",
+                        "outlined",
+                        "plain",
+                        "numbered"
+                      ]
+                    },
+                    "frame": {
+                      "description": "Marco de imagen",
+                      "type": "string",
+                      "enum": [
+                        "arch",
+                        "cut",
+                        "offset",
+                        "framed",
+                        "duotone"
+                      ]
+                    },
+                    "number": {
+                      "description": "Cifra grande",
+                      "type": "string",
+                      "enum": [
+                        "plain",
+                        "ruled"
+                      ]
+                    },
+                    "quote": {
+                      "description": "Cita destacada",
+                      "type": "string",
+                      "enum": [
+                        "rule",
+                        "marks"
+                      ]
+                    },
+                    "divider": {
+                      "description": "Separador",
+                      "type": "string",
+                      "enum": [
+                        "hairline",
+                        "rule",
+                        "ornament"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Estilo de cada primitivo (botón, tarjeta, etiqueta, marco, cifra, cita, separador); gana sobre el de la dirección. Solo con brand.catalog: extended."
                 }
               },
               "additionalProperties": false
@@ -845,7 +1192,9 @@
                           "description": "Paleta curada del giro (`pnpm lattiz spec init` las lista)."
                         }
                       },
-                      "required": ["preset"],
+                      "required": [
+                        "preset"
+                      ],
                       "additionalProperties": false
                     },
                     {
@@ -872,14 +1221,22 @@
                             "scheme": {
                               "description": "Se deduce del fondo.",
                               "type": "string",
-                              "enum": ["light", "dark"]
+                              "enum": [
+                                "light",
+                                "dark"
+                              ]
                             }
                           },
-                          "required": ["bg", "accent"],
+                          "required": [
+                            "bg",
+                            "accent"
+                          ],
                           "additionalProperties": false
                         }
                       },
-                      "required": ["custom"],
+                      "required": [
+                        "custom"
+                      ],
                       "additionalProperties": false
                     }
                   ],
@@ -906,7 +1263,10 @@
                           "description": "Familia para texto."
                         }
                       },
-                      "required": ["display", "body"],
+                      "required": [
+                        "display",
+                        "body"
+                      ],
                       "additionalProperties": false
                     }
                   ],
@@ -920,11 +1280,20 @@
                 "density": {
                   "description": "Aire entre secciones; por defecto el de la forma.",
                   "type": "string",
-                  "enum": ["airy", "regular", "compact"]
+                  "enum": [
+                    "airy",
+                    "regular",
+                    "compact"
+                  ]
                 },
                 "photoTreatment": {
                   "type": "string",
-                  "enum": ["none", "duotone", "grayscale", "warm"]
+                  "enum": [
+                    "none",
+                    "duotone",
+                    "grayscale",
+                    "warm"
+                  ]
                 },
                 "placeholder": {
                   "type": "string",
@@ -977,22 +1346,40 @@
                     "shape": {
                       "description": "Radios de botones, tarjetas e imágenes.",
                       "type": "string",
-                      "enum": ["sharp", "soft", "round", "pill"]
+                      "enum": [
+                        "sharp",
+                        "soft",
+                        "round",
+                        "pill"
+                      ]
                     },
                     "surface": {
                       "description": "Tarjetas y paneles: planos, con filete, teñidos o elevados.",
                       "type": "string",
-                      "enum": ["flat", "outlined", "tinted", "elevated"]
+                      "enum": [
+                        "flat",
+                        "outlined",
+                        "tinted",
+                        "elevated"
+                      ]
                     },
                     "density": {
                       "description": "Aire: padding de sección, separaciones y ancho del contenedor.",
                       "type": "string",
-                      "enum": ["compact", "cozy", "airy"]
+                      "enum": [
+                        "compact",
+                        "cozy",
+                        "airy"
+                      ]
                     },
                     "divider": {
                       "description": "Separador entre secciones.",
                       "type": "string",
-                      "enum": ["none", "hairline", "rule"]
+                      "enum": [
+                        "none",
+                        "hairline",
+                        "rule"
+                      ]
                     },
                     "imageTreatment": {
                       "description": "Marco o máscara de las fotos (solo CSS).",
@@ -1008,19 +1395,103 @@
                     "typeScale": {
                       "description": "Tamaño de títulos respecto al par tipográfico.",
                       "type": "string",
-                      "enum": ["tight", "normal", "expressive"]
+                      "enum": [
+                        "tight",
+                        "normal",
+                        "expressive"
+                      ]
                     },
                     "displayCase": {
                       "type": "string",
-                      "enum": ["none", "upper"]
+                      "enum": [
+                        "none",
+                        "upper"
+                      ]
                     },
                     "tracking": {
                       "type": "string",
-                      "enum": ["tight", "normal", "wide"]
+                      "enum": [
+                        "tight",
+                        "normal",
+                        "wide"
+                      ]
                     }
                   },
                   "additionalProperties": false,
                   "description": "Estilos opt-in del catálogo extended (docs/template-kit-catalog.md › Tokens de estilo). Solo con brand.catalog: extended."
+                },
+                "primitives": {
+                  "type": "object",
+                  "properties": {
+                    "button": {
+                      "description": "Botón",
+                      "type": "string",
+                      "enum": [
+                        "solid",
+                        "outline",
+                        "pill",
+                        "underline"
+                      ]
+                    },
+                    "card": {
+                      "description": "Tarjeta",
+                      "type": "string",
+                      "enum": [
+                        "flat",
+                        "outlined",
+                        "tinted",
+                        "elevated"
+                      ]
+                    },
+                    "tag": {
+                      "description": "Etiqueta / antetítulo",
+                      "type": "string",
+                      "enum": [
+                        "pill",
+                        "outlined",
+                        "plain",
+                        "numbered"
+                      ]
+                    },
+                    "frame": {
+                      "description": "Marco de imagen",
+                      "type": "string",
+                      "enum": [
+                        "arch",
+                        "cut",
+                        "offset",
+                        "framed",
+                        "duotone"
+                      ]
+                    },
+                    "number": {
+                      "description": "Cifra grande",
+                      "type": "string",
+                      "enum": [
+                        "plain",
+                        "ruled"
+                      ]
+                    },
+                    "quote": {
+                      "description": "Cita destacada",
+                      "type": "string",
+                      "enum": [
+                        "rule",
+                        "marks"
+                      ]
+                    },
+                    "divider": {
+                      "description": "Separador",
+                      "type": "string",
+                      "enum": [
+                        "hairline",
+                        "rule",
+                        "ornament"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Estilo de cada primitivo (botón, tarjeta, etiqueta, marco, cifra, cita, separador); gana sobre el de la dirección. Solo con brand.catalog: extended."
                 }
               },
               "additionalProperties": false
@@ -1055,7 +1526,11 @@
       }
     }
   },
-  "required": ["specVersion", "giro", "business"],
+  "required": [
+    "specVersion",
+    "giro",
+    "business"
+  ],
   "additionalProperties": false,
   "$defs": {
     "__schema0": {

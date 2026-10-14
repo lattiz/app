@@ -59,10 +59,7 @@ export default {
     divider: 'ornament',
   },
   archetypes: ['catalog', 'showcase'],
-  heroes: {
-    pro: ['framed', 'offset-card', 'panel'],
-    basic: ['framed', 'offset-card'],
-  },
+  heroes: { pro: ['stack', 'framed', 'overlap'], basic: ['stack', 'framed'] },
   motion: 'calm',
   dials: { variance: 6, motion: 4, density: 5 },
   giros: ['restaurante', 'floreria', 'tienda', 'estetica'],

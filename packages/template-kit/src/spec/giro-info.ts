@@ -1,4 +1,9 @@
+import { existsSync, readdirSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { DIRECTIONS } from '../../directions';
 import { GIROS } from '../../giros';
+import { KIT_ROOT } from '../lib/paths';
+import { readLock } from './lock';
 import { hueDistance, hueOf, parseColor } from '../lib/color';
 import { loadBlueprint, loadSectionMeta } from '../lib/load';
 import { libraryFingerprints } from '../lib/targets';
@@ -57,6 +62,19 @@ export interface GiroInfo extends GiroSummary {
       }[];
     }
   >;
+  /** Art directions in order of fit for the giro, with how many of its templates (spec locks) use each. */
+  directions: {
+    id: string;
+    name: string;
+    intent: string;
+    /** Position in the direction's `giros` (0 = best fit), or null when it doesn't list the giro. */
+    affinity: number | null;
+    used: number;
+  }[];
+  /** Archetypes the giro's layout specs already use (spec locks), with counts. */
+  archetypesUsed: Record<string, number>;
+  /** Pro hero variants no Pro template of the giro uses yet (extended catalog). */
+  freeProHeroes: string[];
   /** Accent hues already taken in the giro, and the hue ranges a custom palette can still use. */
   usedAccentHues: { id: string; hue: number }[];
   freeHueRanges: [number, number][];
@@ -72,6 +90,24 @@ export interface GiroInfo extends GiroSummary {
   images: Record<string, { query: string; orientation: string }>;
   business: Record<string, string>;
   motion: string;
+}
+
+/** Layout (direction, archetype) of every template of a giro, from the spec locks. */
+function giroLayouts(
+  giroId: string,
+): { direction?: string; archetype?: string }[] {
+  const dir = resolve(KIT_ROOT, 'specs');
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir)
+    .filter((f) => f.endsWith('.lock.json'))
+    .flatMap((f) => {
+      const lock = readLock(resolve(dir, f));
+      return lock
+        ? Object.entries(lock.tiers)
+            .filter(([id]) => id.startsWith(`${giroId}-`))
+            .map(([, t]) => t.layout ?? {})
+        : [];
+    });
 }
 
 async function freeness(giroId: string) {
@@ -209,7 +245,38 @@ export async function giroInfo(id: string): Promise<GiroInfo | null> {
     })),
     variants: {},
   };
+  const layouts = giroLayouts(g.id);
+  const proBlueprint = await loadBlueprint('service-landing', 'pro');
+  const usedHeroes = new Set(
+    (await libraryFingerprints())
+      .filter((p) => p.vertical === g.id && p.tier === 'pro')
+      .map((p) => p.hero),
+  );
   return {
+    directions: Object.values(DIRECTIONS)
+      .map((d) => ({
+        id: d.id,
+        name: d.name,
+        intent: d.intent,
+        affinity: d.giros.includes(g.id) ? d.giros.indexOf(g.id) : null,
+        used: layouts.filter((l) => l.direction === d.id).length,
+      }))
+      .sort(
+        (a, b) =>
+          a.used - b.used ||
+          (a.affinity ?? 99) - (b.affinity ?? 99) ||
+          a.id.localeCompare(b.id),
+      ),
+    archetypesUsed: layouts.reduce<Record<string, number>>((acc, l) => {
+      if (l.archetype) acc[l.archetype] = (acc[l.archetype] ?? 0) + 1;
+      return acc;
+    }, {}),
+    freeProHeroes: allowedVariants(
+      proBlueprint,
+      'hero',
+      'hero',
+      'extended',
+    ).filter((h) => !usedHeroes.has(h)),
     id: g.id,
     label: g.label,
     category: g.category,
