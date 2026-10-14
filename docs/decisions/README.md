@@ -66,3 +66,7 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [font-pair-library-fallbacks](font-pair-library-fallbacks.md) — pares extended de 2 familias; size-adjust medido al peso del display; Arial ausente en Linux
 - [extended-section-variants](extended-section-variants.md) — contrato de variantes extended; compuerta `kit probe`; lo legacy queda WARN
 - [page-archetypes-data](page-archetypes-data.md) — 8 arquetipos y módulos por giro como datos; WP8 los conecta y registra `cta`
+- [snapshot-recorded-inputs](snapshot-recorded-inputs.md) — el golden replanea specs con peers y lock grabados; entradas nuevas con kit:snapshot:add
+- [catalog-manifest](catalog-manifest.md) — catalog.manifest.json generado; --check en pnpm lint; la API no importa el kit
+- [schema-plan-guard](schema-plan-guard.md) — guard de secciones Pro en guardar/publicar; report por defecto; exime la plantilla
+- [template-byte-budgets](template-byte-budgets.md) — budgets.json por tier (WARN; FAIL estricto o plantilla nueva); CWV de laboratorio en lattiz check

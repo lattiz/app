@@ -46,7 +46,9 @@ export type RuleId =
   | 'unique-font-pair'
   | 'accent-hue'
   | 'unique-headline'
-  | 'unique-hero';
+  | 'unique-hero'
+  /** Byte budget (budgets.json); only a spec build of a new template raises it as a finding. */
+  | 'budget';
 
 export interface Finding {
   rule: RuleId;

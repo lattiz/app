@@ -6,6 +6,7 @@ import { StorageModule } from '../storage/storage.module';
 import { TemplatesModule } from '../templates/templates.module';
 import { HTML_SANITIZER } from './html-sanitizer.port';
 import { SanitizeHtmlSanitizer } from './sanitize-html.sanitizer';
+import { SchemaPlanGuard } from './schema-plan-guard.service';
 import { SitesController } from './sites.controller';
 import { SitesService } from './sites.service';
 
@@ -20,6 +21,7 @@ import { SitesService } from './sites.service';
   controllers: [SitesController],
   providers: [
     SitesService,
+    SchemaPlanGuard,
     { provide: HTML_SANITIZER, useClass: SanitizeHtmlSanitizer },
   ],
   exports: [SitesService],

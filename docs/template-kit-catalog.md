@@ -26,20 +26,46 @@ prueba de diversidad, docs y skill). Una sesión nueva retoma desde aquí. Estad
 | WP9   | Prueba de diversidad (local)                     | pendiente |                  |                                                            |
 | WP10  | Documentación                                    | pendiente |                  |                                                            |
 
-**Parte 1 terminada (2026-10-12).** **Parte 2 terminada (2026-10-12)** en la rama local
-`feat/kit-expansion-part-2` (sin push): WP6 y WP7, detalle en «Variantes nuevas (WP6)» y
-«Arquetipos y módulos verticales (WP7)». La siguiente sesión («Part 3») empieza en el WP8: registrar
-el rol `cta` y las variantes nuevas de `about`/`locations` en los blueprints, mover el copy de
-`archetypes/verticals.ts` y los `sample` de cada `meta.ts` a `giros/<giro>.ts`, y dejar que un spec
-`extended` elija arquetipo y módulos.
+**Parte 1 terminada (2026-10-12).** **Parte 2 terminada (2026-10-12)** y fusionada en `main` (PR #5,
+`107352b`): WP6 y WP7, detalle en «Variantes nuevas (WP6)» y «Arquetipos y módulos verticales
+(WP7)». Después, `main` sumó 14 plantillas por spec `extended` con lock (clínica `brote` y `cauce`,
+estética `alheli`, florería `cardamina`, restaurante `ceniza`, `fresca-nube` y `margen`; PR #6 y
+commits directos hasta `c2af6cb`) que todavía no estaban en el snapshot dorado. La Parte 3 (WP8–WP10)
+sigue pendiente: registrar el rol `cta` y las variantes nuevas de `about`/`locations` en los
+blueprints, mover el copy de `archetypes/verticals.ts` y los `sample` de cada `meta.ts` a
+`giros/<giro>.ts`, y dejar que un spec `extended` elija arquetipo y módulos.
+
+### Fase A1: estabilizar y habilitar (rama `feat/kit-phase-a1`, desde `c2af6cb`)
+
+Antes de cualquier trabajo de diseño nuevo (Fase A2). Estado al 2026-10-14:
+
+| WP  | Qué                                                        | Estado | Commits          | Desviaciones                                                                                                                           |
+| --- | ---------------------------------------------------------- | ------ | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| WP1 | Snapshot: clasificar y resolver las diferencias            | hecho  | 47ba2b8, 10dbb6e | el fixture legacy no se arregla con paletas: se congelan las entradas del snapshot                                                     |
+| WP2 | Capacidad: restaurante, clínica, barbería ≥ 14; resto ≥ 12 | hecho  | 0b133c4          | pares topados por portadas Pro (A2); 8 paletas neutras                                                                                 |
+| WP3 | Manifiesto del catálogo (`catalog.manifest.json`)          | hecho  | 176002c          | sin `meta.motion` en el kit: Motion se lee del seed; la API no importa el kit                                                          |
+| WP4 | Plan en el servidor (auditoría + `PlanGuard`)              | hecho  | 3c98c22          | exime lo que trae la plantilla del tenant; bloques `lzb-*` no se marcan (hueco); ver `docs/template-kit-plan-enforcement.md`           |
+| WP5 | Presupuesto de bytes y línea base de Core Web Vitals       | hecho  | 8039184          | CWV como WARN; LCP > 2.5 s en 4 de 6 (laboratorio)                                                                                     |
+| WP6 | Docs y decisiones                                          | hecho  | (este)           | decisiones: snapshot-recorded-inputs, catalog-manifest, schema-plan-guard, template-byte-budgets; template-palette-library actualizada |
+
+**Línea base A1 (MacBook, Node 24.9, pnpm 11.5.2):** `pnpm lint` ok · `pnpm typecheck` ok (7/7) ·
+`pnpm build` ok (4/4, desde la caché de turbo) · `lattiz doctor` ok · `kit:verify-snapshot` **falla
+con 8 diferencias**, todas del fixture `restaurante-la-lumbre`, más 14 plantillas y 7 specs nuevos que
+no están en el snapshot (notas, no fallas). Ningún hash de las 28 plantillas del snapshot cambió en
+macOS (sin bytes dependientes del host).
+
+**Cierre A1 (2026-10-14):** `kit:verify-snapshot` idéntico (42 plantillas, 23 specs) · `pnpm lint`
+(con `kit:manifest --check`), `pnpm typecheck` (7/7) y `pnpm build` (4/4) ok · tests del kit 189/189 ·
+API jest 200/200 y node 196/196. Nada remoto: sin seed, deploy, publish, Stripe, R2 ni Vercel; Supabase
+solo lectura (conteos). Rama local `feat/kit-phase-a1`, sin push.
 
 **Diseño:** reglamento y diales por arquetipo en `docs/template-kit-design-principles.md` (taste-skill
 `d237dd3` y skills de Emil Kowalski `2d22863`, MIT, instaladas en `~/.claude/skills`, no en el repo).
 Diales V/M/D por defecto: editorial 6/5/3 · showcase 8/6/3 · catalog 5/4/6 · booking 4/4/5 · trust
 3/4/5 · bold 9/7/4 · soft 5/5/3 · minimal 5/4/2 (Básico siempre sin Motion).
 
-**Regla de cada WP:** `pnpm --filter @lattiz/template-kit kit:verify-snapshot` limpio, `pnpm lint`,
-`pnpm typecheck` y build antes del commit.
+**Regla de cada WP:** `pnpm --filter @lattiz/template-kit kit:verify-snapshot` limpio, `pnpm lint`
+(incluye `kit:manifest --check`), `pnpm typecheck` y build antes del commit.
 
 ### Línea base (WP-1, 2026-10-12)
 
@@ -74,6 +100,56 @@ Diales V/M/D por defecto: editorial 6/5/3 · showcase 8/6/3 · catalog 5/4/6 · 
 | restaurante | 2 (1/1)                 | 6       | 5     | 6      | split                                       | 10, 338                             |
 | tienda      | 2 (1/1)                 | 5       | 5     | 5      | image-bg                                    | 102, 223                            |
 | veterinaria | 2 (1/1)                 | 5       | 5     | 4      | split                                       | 17, 169                             |
+
+## Snapshot dorado: diagnóstico y procedimiento (A1 · WP1)
+
+Clasificación de la línea base (2026-10-14, antes de cambiar nada):
+
+| Diferencia                                                              | Clase                        | Causa                                                                                                                                                                                                                                                                       |
+| ----------------------------------------------------------------------- | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 8 ✗ `fixtures/spec/skill-eval/restaurante-la-lumbre`                    | pool agotado por crecimiento | Spec `legacy` sin lock. La Pro fija `nocturno` (42°), que ahora choca con `restaurante-base-fresca-nube-v1` (41°); cae a `talavera`, el único tono legacy libre, y a la Básica no le queda ninguno. Contra las 28 plantillas con que se grabó el golden reproduce idéntico. |
+| 14 plantillas nuevas (clínica 4, restaurante 6, estética 2, florería 2) | nuevas                       | Llegaron a `main` sin entrar al golden.                                                                                                                                                                                                                                     |
+| 7 specs nuevos (todos `extended`, con lock)                             | nuevos                       | Ídem.                                                                                                                                                                                                                                                                       |
+| Bytes dependientes del host                                             | —                            | Ninguno: los 28 hashes coinciden en macOS.                                                                                                                                                                                                                                  |
+| Regresión real                                                          | —                            | Ninguna.                                                                                                                                                                                                                                                                    |
+
+**Por qué no se arregla con paletas (WP2):** el fixture es `legacy` y solo ve las 6 paletas de
+`giros/restaurante.ts`, que A1 no toca; la biblioteca `extended` no existe para él. El problema de fondo
+era la herramienta: `kit:verify-snapshot` planeaba cada spec **sin su lock** y **contra la biblioteca
+viva**, así que cualquier plantilla nueva del giro movía un plan grabado (y las paletas nuevas de WP2
+habrían movido los 7 specs `extended`).
+
+**Arreglo (`47ba2b8`, decisión de Santi: «congelar pares»):** cada entrada de spec del golden guarda sus
+entradas: `peers` (las plantillas del giro contra las que se planeó, sin las suyas) y `locked` (se
+planeó con `<stem>.lock.json`, igual que `lattiz build`). `verify` las reproduce: comprueba «mismas
+entradas → mismo plan», que es lo que de verdad prueba que el kit no mutó. Una entrada sin `peers` se
+planea contra las plantillas del golden. Si una plantilla de `peers` desaparece o falta el lock, es
+falla. El estado vivo (qué cabe hoy en cada giro) lo dice `lattiz kit capacity`, no el snapshot. Ojo:
+el fixture `restaurante-la-lumbre` **ya no se puede construir hoy** contra la biblioteca real (tampoco
+con `lattiz build`); para el snapshot sigue sirviendo.
+
+**Resultado:** `kit:verify-snapshot` idéntico con **42 plantillas y 23 specs**; ninguna entrada que ya
+existía cambió (las 16 de spec solo ganaron `peers`). Las 14 plantillas se revisaron antes de entrar:
+`kit:validate` sin hallazgos, `kit:shots` sin overflow a 360/390/768/1024/1440 y encaje `PASS` en toda
+portada con `data-lz-fit` (844×390 es `n/a` por diseño). Quedan avisos ya conocidos de variantes
+legacy: etiquetas de 10–11 px (`services/cards`, sub-marca del navbar) y enlaces de 32 px en
+`footer/columns`. Los 7 specs reproducen sus 7 archivos (`lattiz build <stem> --dry-run`: «sin
+cambios»). Costo: ~8 s y ~950 MB de RSS por corrida de `verify`; revisar las 14 plantillas
+(`kit:validate` + `kit:shots`, una a la vez) tomó 320 s.
+
+**Procedimiento: cómo entra una plantilla nueva al golden** (cada vez que sumes plantillas a `main`):
+
+1. `pnpm --filter @lattiz/template-kit kit:verify-snapshot`: solo deben salir notas «plantilla nueva» /
+   «spec nuevo»; cualquier `✗` se investiga antes (nunca se regenera para taparla).
+2. Revisa cada plantilla nueva: `pnpm --filter @lattiz/template-kit kit:validate templates/<id>.ts`
+   (sin hallazgos) y `pnpm --filter @lattiz/template-kit kit:shots <id>` (overflow 0 en todos los
+   anchos). Si viene de un spec: `pnpm lattiz build <stem> --dry-run` dice «sin cambios».
+3. `pnpm --filter @lattiz/template-kit kit:snapshot:add [id|stem…]` (sin argumentos agrega todo lo
+   nuevo). Verifica todo primero y **no agrega nada** si alguna entrada existente ya difiere; nunca
+   modifica entradas existentes.
+4. `kit:verify-snapshot` otra vez (idéntico) y commitea `golden/snapshot.json` junto con la plantilla.
+
+`kit:snapshot` (reescribir todo) queda solo para un re-baseline explicado en el commit.
 
 ## Inventario (WP0, sacado del código el 2026-10-12)
 
@@ -692,6 +768,171 @@ WARN, igual que en `lattiz check`) y escribe `.lattiz/gallery/archetypes.html` c
 
 Las portadas ya no topan los pares; ahora los topan las paletas (tono a ≥ 30° y ΔE ≥ 15), sin tocar
 umbrales. Antes de la Parte 2, restaurante ya había bajado de 3 a 2 pares por `hoja-y-barro`.
+
+## Capacidad en A1 (WP2, 2026-10-14)
+
+`pnpm lattiz kit capacity --catalog extended`, antes y después, con las 42 plantillas de `main`.
+Qué topa cada modo (salida completa de `giroCapacity`, no solo el Total):
+
+- **Pares Básico + Pro:** las **portadas Pro** (9 variantes; una por Pro del giro). Restaurante tiene
+  4 libres, barbería 5, clínica 6. Subir esto es diseño (portadas nuevas): Fase A2.
+- **Básicos después de los pares:** las **paletas**. Las ventanas de tono a ≥ 30° ya casi no existen
+  (restaurante 4, barbería 4, clínica 5) y los acentos neutros que quedaban chocaban por ΔE.
+- Pares tipográficos: no topan (21–29 libres por giro).
+
+Se agregaron **8 paletas de acento neutro sobre fondos distintos** (`palettes/seeds.ts`, bloque
+«A1 · WP2»; ids nuevos, solo `extended`; `library.ts` solo ganó entradas): cuatro teñidas con acento
+tinta (`pal-coral-tinta`, `pal-cielo-tinta`, `pal-lavanda-tinta`, `pal-menta-tinta`) y cuatro oscuras
+con acento claro (`pal-bosque-hueso`, `pal-ciruela-plata`, `pal-cacao-crema`, `pal-petroleo-hueso`).
+Todas AA por construcción (`kit:palettes`) y revisadas en `kit gallery --palettes`. La regla de
+30° no cuenta un acento casi gris (diferencia de canales ≤ 20/255), así que la capacidad crece por el
+fondo: cada una queda a ≥ 15 (ΔE00 fondo + acento) de toda paleta del giro. Se descartó un
+«durazno y tinta»: su acento salía en 44° y su fondo a 12.6 de `pal-mostaza`. `CATALOG_VERSION` 1 → 2.
+
+| Giro        | Total antes | Total después | Pares (antes = después) | Lo topa ahora                          |
+| ----------- | ----------- | ------------- | ----------------------- | -------------------------------------- |
+| barberia    | 12          | **20**        | 5                       | pares: portadas Pro · Básicos: paletas |
+| clinica     | 12          | **20**        | 6                       | ídem                                   |
+| dental      | 16          | **24**        | 8                       | ídem                                   |
+| despacho    | 17          | **23**        | 8                       | ídem                                   |
+| estetica    | 14          | **22**        | 7                       | ídem                                   |
+| floreria    | 14          | **24**        | 7                       | ídem                                   |
+| gimnasio    | 16          | **25**        | 8                       | ídem                                   |
+| restaurante | 9           | **18**        | 4                       | ídem                                   |
+| tienda      | 16          | **23**        | 8                       | ídem                                   |
+| veterinaria | 17          | **25**        | 8                       | ídem                                   |
+
+Meta (restaurante, clínica y barbería ≥ 14; resto ≥ 12): cumplida. Ojo: los **pares** de restaurante
+siguen en 4; si se siguen agregando pares, lo que se acaba primero son las portadas Pro.
+
+Pares más cercanos por giro después del cambio (ΔE00 fondo + acento, mínimo 15): restaurante
+`pal-arcilla`~`pal-coral-tinta` 15.7, clínica `pal-marino-hueso`~`pal-petroleo-hueso` 17.1 (el par más
+cercano del giro sigue siendo uno viejo: `pal-papel-tinta`~`pal-salvia-tinta` 15.8), barbería
+`pal-tinta-hueso`~`pal-vino-hueso` 16.3 (los nuevos quedan más lejos), florería y tienda
+`pal-arcilla`~`pal-coral-tinta` 15.7, veterinaria `pal-salvia-tinta`~`pal-menta-tinta` 18.
+
+**Ningún spec cambia:** `kit:verify-snapshot` idéntico (42 plantillas, 23 specs; los 7 `extended` se
+planean con su lock). Con `.lattiz/cache` vacía, `lattiz build restaurante-ceniza --out …` y
+`lattiz build clinica-cauce --out …` regeneran sus 7 archivos byte por byte; el lock solo difiere en
+`catalogVersion` (que `lockChoices` ignora a propósito). Sin lock, un spec `extended` sí podría
+moverse: por eso todo spec nuevo debe commitear su lock.
+
+## Manifiesto del catálogo (A1 · WP3)
+
+`packages/template-kit/catalog/catalog.manifest.json` (generado y commiteado; tipos en
+`catalog/types.ts`, sin imports). `pnpm --filter @lattiz/template-kit kit:manifest` lo escribe y
+`kit:manifest --check` falla si quedó viejo; **`pnpm lint` ya corre `--check`**: si cambias una
+sección, una paleta, un par, un arquetipo o un giro, regenera y commitea el manifiesto. Determinista
+(sin fechas): `contentHash` es el sha256 del manifiesto canónico; `manifestVersion` 1;
+`catalogVersion` = `CATALOG_VERSION`.
+
+Por variante (47): `key` (`slot/variant`, el par de `data-lz-slot`/`data-lz-variant`), etiqueta,
+región, descripción, `intent`, `catalog` (legacy/extended), `tiers` (de `meta.tiers` o, si la meta no
+lo dice, de los blueprints), `blueprintTiers` (dónde puede colocarla hoy el compilador), `proOnly`,
+roles que caen en el slot, `contentKeys`, anclas (`id="…"` literales), `fit` (`data-lz-fit`),
+`numbered`, arquetipos, familia y `motion` (tipo y patrón por defecto que el seed le pone al slot,
+leídos de `scripts/lib/motion-sections.ts`; Básico nunca carga Motion), más `hooks` (atributos del
+runtime de Motion escritos en el fragmento: hoy ninguna variante del kit trae alguno). Además: los 9
+`hooks` del runtime (todos solo Pro: `compose-site` inyecta Motion solo con `isPro`), arquetipos,
+paletas (biblioteca y las de cada giro, con tono de acento o `null` si es neutro), pares tipográficos
+y giros.
+
+**Solo Pro (17):** `about/{portrait,statement,stats-strip,text-image-offset}`,
+`gallery/{bento,grid,mosaic,strip}`, `locations/{map-link,with-contact}`, `marquee/ticker`,
+`team/{grid,list,spotlight}`, `testimonials/{cards,quote-feature,rating-wall}`. Una variante sin tier
+declarado ni blueprint (`locations/cards`, que ninguna plantilla usa) queda `tiers: []` y **no** es
+solo Pro. El generador falla si una plantilla Básica usa una variante marcada solo Pro.
+
+**Cómo se consume (sin importar el compilador):** `apps/web` (Vite) puede importar el JSON y los
+tipos por ruta del workspace cuando el editor lo necesite (A1 no cambia el editor). `apps/api` **no**
+depende del kit: su imagen se arma con `pnpm deploy --prod --legacy`, que hoy asume que la API no tiene
+dependencias del workspace, y sumar una (o un paquete compartido nuevo) exige probar el build de
+Docker, que no hay en esta máquina. Por eso WP4 genera desde el manifiesto un subconjunto mínimo
+dentro de la API (`*.generated.ts`, comprobado por el mismo `--check`). Un paquete compartido
+(`@lattiz/catalog`, solo JSON + tipos, sin dependencias) es lo correcto a mediano plazo, cuando se
+pueda validar el Dockerfile.
+
+### Inventario: bloques del editor ↔ variantes del kit
+
+Los bloques del editor (`apps/web/src/features/editor/blocks/`) están escritos a mano con clases
+`lzb-*`, **no** llevan `data-lz-slot`/`data-lz-variant` y no salen de `sections/`. `sectionBlocks`
+da los Básicos a todos y suma los Pro solo con `templateAccess.proIncluded` (filtro solo en el
+cliente). Equivalencias aproximadas (ninguna es el mismo markup):
+
+| Bloque del editor    | Kit `basic-blocks.ts` / `pro-blocks.ts` | Variante del kit más cercana               | Marcadores solo Pro que lleva                         |
+| -------------------- | --------------------------------------- | ------------------------------------------ | ----------------------------------------------------- |
+| `lzb-hero-simple`    | Básico (`.lzb-hero`)                    | `hero/split` (sin foto: ninguna)           | ninguno (`data-lz-section="hero"`, inerte sin Motion) |
+| `lzb-services-grid`  | Básico (`.lzb-services`)                | `services/cards`                           | ninguno                                               |
+| `lzb-gallery-grid`   | Básico (`.lzb-gallery`)                 | `gallery/grid` (**solo Pro** en el kit)    | ninguno: el editor da galería a Básico y el kit no    |
+| `lzb-contact-hours`  | Básico (`.lzb-contact`)                 | `locations/single-card`                    | ninguno                                               |
+| `lzb-hero-editorial` | Pro (`.lzb-hero-ed`)                    | `hero/columns`                             | `data-lz-words`, `data-lz-parallax`, `data-lz-reveal` |
+| `lzb-marquee`        | Pro (`.lzb-marquee`)                    | `marquee/ticker`                           | ninguno de Motion (animación CSS)                     |
+| `lzb-stacked-cards`  | Pro (`.lzb-stack`)                      | sin equivalente                            | `data-lz-reveal`                                      |
+| `lzb-snap-gallery`   | Pro (`.lzb-snap`)                       | `gallery/strip`                            | `data-lz-reveal`, `data-lz-lightbox`                  |
+| `lzb-before-after`   | Pro (`.lzb-compare-block`)              | sin equivalente                            | `data-lz-compare`                                     |
+| `lzb-stats`          | Pro (`.lzb-stats`)                      | `about/stats-strip`                        | `data-lz-counter`, `data-lz-stagger`                  |
+| `lzb-promo-bar`      | Pro (`.lzb-promo`)                      | `navbar/notice-bar` (sin cuenta regresiva) | `data-lz-countdown`                                   |
+| `lzb-open-now`       | Pro (`.lzb-open`)                       | sin equivalente                            | `data-lz-open-now`                                    |
+| `lzb-whatsapp-cards` | Pro (`.lzb-menu`)                       | `services/menu-columns`                    | `data-lz-reveal`, `data-lz-stagger`                   |
+
+Huecos para el trabajo del editor (no se cambian en A1): los bloques no se pueden identificar por
+`data-lz-slot`/`data-lz-variant` (solo por su clase raíz `lzb-*`); 3 bloques Pro sin variante en el kit
+(`stacked-cards`, `before-after`, `open-now`); la galería es Básica en el editor y solo Pro en el kit;
+20+ variantes del kit no tienen bloque.
+
+## Presupuesto de bytes y Web Vitals (A1 · WP5)
+
+### Presupuestos (`packages/template-kit/budgets.json`)
+
+Por tier, en bytes (aquí en KiB). Punto de partida: el máximo de las 42 plantillas el 2026-10-14
+(compiladas en memoria con las imágenes del repo) + ~10 %, redondeado a KiB entero. `html` es el
+`index.html` de vista previa (con el CSS en línea, lo que sirve un sitio); `imágenes` son las locales
+de una página (total y la mayor); `js` es el gzip del runtime de Motion (solo Pro; Básico no lleva JS).
+
+| Tier   | CSS (crudo / gzip) | HTML (crudo / gzip) | Imágenes (total / mayor) | JS gzip | Máximo de hoy (plantilla)                                                                                                                                            |
+| ------ | ------------------ | ------------------- | ------------------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Básico | 28 / 6             | 48 / 11             | 175 / 175                | 0       | CSS 24.7 (`estetica-base-alheli`), gzip 4.9; HTML 42.8 (`floreria-base-flores-lupita`), gzip 9.8; imagen 158.9 (`restaurante-base-ceniza`)                           |
+| Pro    | 38 / 7             | 67 / 15             | 2828 / 323               | 8       | CSS 33.7 y gzip 6.2 (`restaurante-margen`); HTML 60.8, gzip 13.4 (`barberia-oxido`); imágenes 2570.5 en 20 fotos, mayor 293 (`restaurante-hoja-y-barro`); Motion 7.1 |
+
+- `kit:validate` (sobre manifiestos) imprime una línea `budget` por plantilla; pasarse es **WARN**
+  y no cambia el código de salida. `kit:validate --strict-budget` lo vuelve **FAIL** (exit 1).
+- `lattiz build` de un spec: si la plantilla **todavía no existe** en `templates/`, pasarse es un
+  hallazgo `budget` y el build se niega (como cualquier hallazgo de `kit:validate`); si ya existe,
+  queda como aviso y construye igual. Ninguna plantilla de hoy se pasa (`--strict-budget` sobre las
+  42: 0 avisos, ~16 s).
+- Los gzip de zlib varían un poco entre macOS y Linux; el 10 % lo cubre. El peso de las imágenes Pro
+  lo dominan las fotos de la plantilla (hasta 20 por página): es el primer candidato a apretar.
+- Subir un número solo con una razón escrita en el commit.
+
+### Web Vitals en `lattiz check --lighthouse`
+
+Además de los puntajes, la regla `cwv` imprime **LCP, CLS y TBT** del mismo reporte de Lighthouse (su
+emulación móvil por defecto, con throttling simulado) contra LCP ≤ 2.5 s, CLS ≤ 0.1 y TBT ≤ 200 ms
+(TBT hace de INP en laboratorio). Por ahora es **WARN**, nunca FAIL. Son números **de laboratorio
+sobre la vista previa local estática** (sin CDN, fuentes servidas en local, imágenes del repo), **no
+datos de campo**: sirven para comparar plantillas entre sí y ver tendencias. El SEO sale 66 en todas
+porque la vista previa de `lattiz` se arma con `noindex` (artefacto local, no de la plantilla).
+
+Línea base (2026-10-14, MacBook, una plantilla a la vez, un navegador):
+
+| Plantilla                    | Tier   | Perf | LCP    | CLS   | TBT  | Veredicto | Tiempo | RSS pico\* |
+| ---------------------------- | ------ | ---- | ------ | ----- | ---- | --------- | ------ | ---------- |
+| `barberia-base-abeto-v1`     | Básico | 98   | 1.95 s | 0.002 | 0 ms | PASS      | 40 s   | 500 MB     |
+| `barberia-abeto-v1`          | Pro    | 98   | 1.98 s | 0.001 | 0 ms | PASS      | 40 s   | 542 MB     |
+| `restaurante-base-ceniza-v1` | Básico | 88   | 3.15 s | 0.002 | 0 ms | WARN LCP  | 40 s   | 539 MB     |
+| `restaurante-ceniza-v1`      | Pro    | 81   | 4.06 s | 0.006 | 0 ms | WARN LCP  | 52 s   | 671 MB     |
+| `clinica-base-cauce-v1`      | Básico | 90   | 2.93 s | 0.002 | 0 ms | WARN LCP  | 37 s   | 509 MB     |
+| `clinica-cauce-v1`           | Pro    | 89   | 2.94 s | 0.000 | 0 ms | WARN LCP  | 41 s   | 540 MB     |
+
+\* `/usr/bin/time -l` del proceso de `lattiz check` completo (las 7 medidas con Playwright más
+Lighthouse); Chromium corre en procesos aparte. Accesibilidad y buenas prácticas: 100 en las seis.
+
+Lectura: CLS y TBT están bien en todas (las métricas de fuente y la falta de JS en Básico se notan);
+lo que falla es **LCP**. No lo explica solo el peso total (`barberia-abeto-v1` lleva 1.25 MiB de
+fotos y pasa; `restaurante-ceniza-v1` lleva 2.05 MiB, la mayor de 265 KiB, y no; `clinica-cauce-v1`
+lleva 0.87 MiB y queda en 2.94 s): manda la imagen y el tipo de portada que pintan el LCP. Siguiente
+paso (A2 o después): revisar la imagen LCP de cada portada (peso, tamaño, `fetchpriority`) y apretar
+el presupuesto de imágenes, sin tocar las plantillas existentes.
 
 ## Hallazgos de la Parte 2
 

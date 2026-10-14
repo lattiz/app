@@ -390,85 +390,85 @@
     {
       "key": "hero",
       "source": {
-        "pexels": "designer floral arrangement green white"
+        "url": "https://images.pexels.com/photos/12074473/pexels-photo-12074473.jpeg"
       }
     },
     {
       "key": "about",
       "source": {
-        "pexels": "florist workshop table flowers scissors"
+        "url": "https://images.pexels.com/photos/5409681/pexels-photo-5409681.jpeg"
       }
     },
     {
       "key": "team-1",
       "source": {
-        "pexels": "female florist portrait"
+        "url": "https://images.pexels.com/photos/5750131/pexels-photo-5750131.jpeg"
       }
     },
     {
       "key": "team-2",
       "source": {
-        "pexels": "male florist portrait plants"
+        "url": "https://images.pexels.com/photos/4466560/pexels-photo-4466560.jpeg"
       }
     },
     {
       "key": "team-3",
       "source": {
-        "pexels": "woman portrait smiling flower shop"
+        "url": "https://images.pexels.com/photos/5409708/pexels-photo-5409708.jpeg"
       }
     },
     {
       "key": "team-4",
       "source": {
-        "pexels": "man portrait florist"
+        "url": "https://images.pexels.com/photos/12074468/pexels-photo-12074468.jpeg"
       }
     },
     {
       "key": "gallery-01",
       "source": {
-        "pexels": "low floral centerpiece white flowers"
+        "url": "https://images.pexels.com/photos/3932686/pexels-photo-3932686.jpeg"
       }
     },
     {
       "key": "gallery-02",
       "source": {
-        "pexels": "designer bouquet green white wrapped"
+        "url": "https://images.pexels.com/photos/7859247/pexels-photo-7859247.jpeg"
       }
     },
     {
       "key": "gallery-03",
       "source": {
-        "pexels": "wedding floral arch greenery"
+        "url": "https://images.pexels.com/photos/4238353/pexels-photo-4238353.jpeg"
       }
     },
     {
       "key": "gallery-04",
       "source": {
-        "pexels": "ceramic vase flowers branches"
+        "url": "https://images.pexels.com/photos/4466380/pexels-photo-4466380.jpeg"
       }
     },
     {
       "key": "gallery-05",
       "source": {
-        "pexels": "florist workshop table tools"
+        "url": "https://images.pexels.com/photos/4466296/pexels-photo-4466296.jpeg"
       }
     },
     {
       "key": "gallery-06",
       "source": {
-        "pexels": "houseplants ceramic pots shelf"
+        "url": "https://images.pexels.com/photos/5927281/pexels-photo-5927281.jpeg"
       }
     },
     {
       "key": "gallery-07",
       "source": {
-        "pexels": "event table floral decoration"
+        "url": "https://images.pexels.com/photos/4612189/pexels-photo-4612189.jpeg"
       }
     },
     {
       "key": "gallery-08",
       "source": {
-        "pexels": "flower shop entrance plants"
+        "url": "https://images.pexels.com/photos/5750139/pexels-photo-5750139.jpeg"
       }
     }
   ],

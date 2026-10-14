@@ -200,6 +200,7 @@ Tamaños: 360×780, 390×844, 768×1024, 1024×768, 1440×900 (página completa)
 | Pro: secciones sin tipo de Motion (preset `none` o tipo `none`) y número de grupos                                                                                                          | WARN         |
 | Plantillas de spec: créditos de fotos (`assets/<giro>/<tema>/CREDITS.json`)                                                                                                                 | INFO         |
 | `--lighthouse`: rendimiento, accesibilidad, buenas prácticas y SEO (`npx lighthouse@12`)                                                                                                    | WARN si < 80 |
+| `--lighthouse`: LCP ≤ 2.5 s, CLS ≤ 0.1 y TBT ≤ 200 ms (emulación móvil de Lighthouse). **Laboratorio** sobre la vista previa local estática (sin CDN, fuentes locales), no datos de campo   | WARN         |
 
 `--json` agrega `findings[]`: cada FAIL/WARN con regla, tamaño, sección, variante, selector y, si la
 plantilla sale de un spec, `specHint` (qué campo del spec cambiar; `null` si no se arregla desde el

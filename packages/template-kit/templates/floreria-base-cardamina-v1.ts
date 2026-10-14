@@ -1,4 +1,4 @@
-// GENERATED from specs/floreria-cardamina.spec.json (spec d93a7fdbf48a, file 48ef96796640). Do not edit: use the spec, or freeze.
+// GENERATED from specs/floreria-cardamina.spec.json (spec 2b263f80d11c, file 48ef96796640). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {

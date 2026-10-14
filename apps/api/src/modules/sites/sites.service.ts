@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger, Optional } from '@nestjs/common';
 import { sql, type SQL } from 'drizzle-orm';
 import { randomUUID } from 'node:crypto';
 import { open, rm } from 'node:fs/promises';
@@ -26,6 +26,7 @@ import {
 import { TemplateAccessService } from '../templates/template-access.service';
 import { assetMagic } from './asset-magic';
 import { HTML_SANITIZER, type HtmlSanitizerPort } from './html-sanitizer.port';
+import { SchemaPlanGuard } from './schema-plan-guard.service';
 import {
   ChangeTemplateResponseDto,
   PublishSiteResponseDto,
@@ -113,6 +114,7 @@ export class SitesService {
     @Inject(HTML_SANITIZER) private readonly htmlSanitizer: HtmlSanitizerPort,
     private readonly templateAccess: TemplateAccessService,
     private readonly images: ImageOptimizer,
+    @Optional() private readonly planGuard?: SchemaPlanGuard,
   ) {}
 
   /** Returns the editor project for a tenant, seeding it from a template on first load. */
@@ -157,6 +159,7 @@ export class SitesService {
   ): Promise<SaveSchemaResponseDto> {
     await this.assertTenantOwnership(tenantId, userSub);
     await this.templateAccess.assertNotLocked(tenantId);
+    await this.planGuard?.check(tenantId, 'save', project);
 
     const rows = await this.query<UpdatedAtRow>(
       sql`UPDATE public.site_schemas
@@ -179,6 +182,7 @@ export class SitesService {
   ): Promise<PublishSiteResponseDto> {
     await this.assertTenantOwnership(tenantId, userSub);
     await this.templateAccess.assertNotLocked(tenantId);
+    await this.planGuard?.check(tenantId, 'publish', project, exportedHtml);
 
     const row = await this.db.transaction(async (tx) => {
       const tenant = await this.loadTenantPreview(tx, tenantId);

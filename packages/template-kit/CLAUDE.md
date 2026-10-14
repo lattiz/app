@@ -106,4 +106,6 @@ Findings carry `file:line`; markup findings point at the `section.html` line the
 
 ## Commands
 
-`kit:extract <file.grapesjs|index.html [style.css]> --vertical v --variant n [--out dir] [--force]` · `kit:compile [manifest…]` · `kit:validate [dist/<id>|manifest…]` · `kit:shoot [dist/<id>…]` · `kit:shots <id>` (5 widths + overflow/small-text/tap-target report) · `kit:build [manifest…]` · `kit:compare [reference.html] [dist/<id>/index.html]` · `kit:compare-visual [dist/<id>…] [--sheet file]` · `test` (vitest) · `typecheck`.
+`kit:extract <file.grapesjs|index.html [style.css]> --vertical v --variant n [--out dir] [--force]` · `kit:compile [manifest…]` · `kit:validate [dist/<id>|manifest…]` · `kit:shoot [dist/<id>…]` · `kit:shots <id>` (5 widths + overflow/small-text/tap-target report) · `kit:build [manifest…]` · `kit:compare [reference.html] [dist/<id>/index.html]` · `kit:compare-visual [dist/<id>…] [--sheet file]` · `kit:verify-snapshot` · `kit:snapshot:add [id|stem…]` (append new templates/specs to `golden/snapshot.json`, never touching existing entries) · `kit:manifest [--check]` (`catalog/catalog.manifest.json` + the API's `plan-catalog.generated.ts`) · `kit:validate --strict-budget` (byte budgets in `budgets.json`; WARN by default) · `test` (vitest) · `typecheck`.
+
+**After any kit change, run `kit:verify-snapshot` and `kit:manifest --check`** (`pnpm lint` runs the second). Snapshot procedure and budgets: `docs/template-kit-catalog.md`.
