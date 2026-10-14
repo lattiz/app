@@ -143,3 +143,16 @@ export class ImageProcessingBusyException extends DomainException {
     this.headers = { 'Retry-After': String(retryAfterSeconds) };
   }
 }
+
+/** SCHEMA_PLAN_ENFORCEMENT=enforce: the schema adds Pro-only kit sections the tenant's plan doesn't include. */
+export class SectionsRequireProException extends DomainException {
+  readonly code = 'SECTIONS_REQUIRE_PRO';
+  readonly status = HttpStatus.FORBIDDEN;
+
+  constructor(sections: string[]) {
+    super(
+      'Tu plan no incluye algunas secciones Pro de este sitio. Quítalas o mejora a Pro para guardar y publicar.',
+      { sections, tier: 'pro' },
+    );
+  }
+}
