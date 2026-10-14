@@ -59,6 +59,7 @@
 - `generate:api` — `turbo run generate:openapi generate:client` (API writes `openapi.json`, then `api-client` regenerates)
 - `template:dev <id>` / `template:shots <id>` / `template:seed -- --only <id> [--dry-run]` — template tuning loop; see `docs/template-workflow.md`
 - `lattiz <command>` — guided template pipeline (`doctor`, `list`, `giro`, `new`, `spec`, `build`, `freeze`, `unfreeze`, `dev`, `motion`, `check`, `review`, `seed`, `deploy`, `publish`, `ship`) in `packages/lattiz-cli`; see `docs/lattiz-cli.md` and, for spec-driven templates, `docs/template-spec.md`
+- After any change to `packages/template-kit`: `pnpm --filter @lattiz/template-kit kit:verify-snapshot` and `kit:manifest --check` (the latter also runs in `pnpm lint`; regenerate with `kit:manifest`). New templates enter the golden with `kit:snapshot:add`; byte budgets live in `packages/template-kit/budgets.json` — see `docs/template-kit-catalog.md`. Server-side plan guard: `docs/template-kit-plan-enforcement.md`
 
 **`apps/api`** (`pnpm --filter @lattiz/api <script>`):
 - `dev` — `nest start --watch`

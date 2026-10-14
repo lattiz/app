@@ -39,14 +39,14 @@ blueprints, mover el copy de `archetypes/verticals.ts` y los `sample` de cada `m
 
 Antes de cualquier trabajo de diseño nuevo (Fase A2). Estado al 2026-10-14:
 
-| WP  | Qué                                                        | Estado    | Commits          | Desviaciones                                                                                                                 |
-| --- | ---------------------------------------------------------- | --------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| WP1 | Snapshot: clasificar y resolver las diferencias            | hecho     | 47ba2b8, 10dbb6e | el fixture legacy no se arregla con paletas: se congelan las entradas del snapshot                                           |
-| WP2 | Capacidad: restaurante, clínica, barbería ≥ 14; resto ≥ 12 | hecho     | 0b133c4          | pares topados por portadas Pro (A2); 8 paletas neutras                                                                       |
-| WP3 | Manifiesto del catálogo (`catalog.manifest.json`)          | hecho     | 176002c          | sin `meta.motion` en el kit: Motion se lee del seed; la API no importa el kit                                                |
-| WP4 | Plan en el servidor (auditoría + `PlanGuard`)              | hecho     | 3c98c22          | exime lo que trae la plantilla del tenant; bloques `lzb-*` no se marcan (hueco); ver `docs/template-kit-plan-enforcement.md` |
-| WP5 | Presupuesto de bytes y línea base de Core Web Vitals       | hecho     | (este)           | CWV como WARN; LCP > 2.5 s en 4 de 6 (laboratorio)                                                                           |
-| WP6 | Docs y decisiones                                          | pendiente |                  |                                                                                                                              |
+| WP  | Qué                                                        | Estado | Commits          | Desviaciones                                                                                                                           |
+| --- | ---------------------------------------------------------- | ------ | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| WP1 | Snapshot: clasificar y resolver las diferencias            | hecho  | 47ba2b8, 10dbb6e | el fixture legacy no se arregla con paletas: se congelan las entradas del snapshot                                                     |
+| WP2 | Capacidad: restaurante, clínica, barbería ≥ 14; resto ≥ 12 | hecho  | 0b133c4          | pares topados por portadas Pro (A2); 8 paletas neutras                                                                                 |
+| WP3 | Manifiesto del catálogo (`catalog.manifest.json`)          | hecho  | 176002c          | sin `meta.motion` en el kit: Motion se lee del seed; la API no importa el kit                                                          |
+| WP4 | Plan en el servidor (auditoría + `PlanGuard`)              | hecho  | 3c98c22          | exime lo que trae la plantilla del tenant; bloques `lzb-*` no se marcan (hueco); ver `docs/template-kit-plan-enforcement.md`           |
+| WP5 | Presupuesto de bytes y línea base de Core Web Vitals       | hecho  | 8039184          | CWV como WARN; LCP > 2.5 s en 4 de 6 (laboratorio)                                                                                     |
+| WP6 | Docs y decisiones                                          | hecho  | (este)           | decisiones: snapshot-recorded-inputs, catalog-manifest, schema-plan-guard, template-byte-budgets; template-palette-library actualizada |
 
 **Línea base A1 (MacBook, Node 24.9, pnpm 11.5.2):** `pnpm lint` ok · `pnpm typecheck` ok (7/7) ·
 `pnpm build` ok (4/4, desde la caché de turbo) · `lattiz doctor` ok · `kit:verify-snapshot` **falla
@@ -54,13 +54,18 @@ con 8 diferencias**, todas del fixture `restaurante-la-lumbre`, más 14 plantill
 no están en el snapshot (notas, no fallas). Ningún hash de las 28 plantillas del snapshot cambió en
 macOS (sin bytes dependientes del host).
 
+**Cierre A1 (2026-10-14):** `kit:verify-snapshot` idéntico (42 plantillas, 23 specs) · `pnpm lint`
+(con `kit:manifest --check`), `pnpm typecheck` (7/7) y `pnpm build` (4/4) ok · tests del kit 189/189 ·
+API jest 200/200 y node 196/196. Nada remoto: sin seed, deploy, publish, Stripe, R2 ni Vercel; Supabase
+solo lectura (conteos). Rama local `feat/kit-phase-a1`, sin push.
+
 **Diseño:** reglamento y diales por arquetipo en `docs/template-kit-design-principles.md` (taste-skill
 `d237dd3` y skills de Emil Kowalski `2d22863`, MIT, instaladas en `~/.claude/skills`, no en el repo).
 Diales V/M/D por defecto: editorial 6/5/3 · showcase 8/6/3 · catalog 5/4/6 · booking 4/4/5 · trust
 3/4/5 · bold 9/7/4 · soft 5/5/3 · minimal 5/4/2 (Básico siempre sin Motion).
 
-**Regla de cada WP:** `pnpm --filter @lattiz/template-kit kit:verify-snapshot` limpio, `pnpm lint`,
-`pnpm typecheck` y build antes del commit.
+**Regla de cada WP:** `pnpm --filter @lattiz/template-kit kit:verify-snapshot` limpio, `pnpm lint`
+(incluye `kit:manifest --check`), `pnpm typecheck` y build antes del commit.
 
 ### Línea base (WP-1, 2026-10-12)
 
