@@ -26,12 +26,33 @@ prueba de diversidad, docs y skill). Una sesión nueva retoma desde aquí. Estad
 | WP9   | Prueba de diversidad (local)                     | pendiente |                  |                                                            |
 | WP10  | Documentación                                    | pendiente |                  |                                                            |
 
-**Parte 1 terminada (2026-10-12).** **Parte 2 terminada (2026-10-12)** en la rama local
-`feat/kit-expansion-part-2` (sin push): WP6 y WP7, detalle en «Variantes nuevas (WP6)» y
-«Arquetipos y módulos verticales (WP7)». La siguiente sesión («Part 3») empieza en el WP8: registrar
-el rol `cta` y las variantes nuevas de `about`/`locations` en los blueprints, mover el copy de
-`archetypes/verticals.ts` y los `sample` de cada `meta.ts` a `giros/<giro>.ts`, y dejar que un spec
-`extended` elija arquetipo y módulos.
+**Parte 1 terminada (2026-10-12).** **Parte 2 terminada (2026-10-12)** y fusionada en `main` (PR #5,
+`107352b`): WP6 y WP7, detalle en «Variantes nuevas (WP6)» y «Arquetipos y módulos verticales
+(WP7)». Después, `main` sumó 14 plantillas por spec `extended` con lock (clínica `brote` y `cauce`,
+estética `alheli`, florería `cardamina`, restaurante `ceniza`, `fresca-nube` y `margen`; PR #6 y
+commits directos hasta `c2af6cb`) que todavía no estaban en el snapshot dorado. La Parte 3 (WP8–WP10)
+sigue pendiente: registrar el rol `cta` y las variantes nuevas de `about`/`locations` en los
+blueprints, mover el copy de `archetypes/verticals.ts` y los `sample` de cada `meta.ts` a
+`giros/<giro>.ts`, y dejar que un spec `extended` elija arquetipo y módulos.
+
+### Fase A1: estabilizar y habilitar (rama `feat/kit-phase-a1`, desde `c2af6cb`)
+
+Antes de cualquier trabajo de diseño nuevo (Fase A2). Estado al 2026-10-14:
+
+| WP  | Qué                                                        | Estado    | Commits        | Desviaciones                                                                       |
+| --- | ---------------------------------------------------------- | --------- | -------------- | ---------------------------------------------------------------------------------- |
+| WP1 | Snapshot: clasificar y resolver las diferencias            | hecho     | c9ac184 + este | el fixture legacy no se arregla con paletas: se congelan las entradas del snapshot |
+| WP2 | Capacidad: restaurante, clínica, barbería ≥ 14; resto ≥ 12 | pendiente |                |                                                                                    |
+| WP3 | Manifiesto del catálogo (`catalog.manifest.json`)          | pendiente |                |                                                                                    |
+| WP4 | Plan en el servidor (auditoría + `PlanGuard`)              | pendiente |                |                                                                                    |
+| WP5 | Presupuesto de bytes y línea base de Core Web Vitals       | pendiente |                |                                                                                    |
+| WP6 | Docs y decisiones                                          | pendiente |                |                                                                                    |
+
+**Línea base A1 (MacBook, Node 24.9, pnpm 11.5.2):** `pnpm lint` ok · `pnpm typecheck` ok (7/7) ·
+`pnpm build` ok (4/4, desde la caché de turbo) · `lattiz doctor` ok · `kit:verify-snapshot` **falla
+con 8 diferencias**, todas del fixture `restaurante-la-lumbre`, más 14 plantillas y 7 specs nuevos que
+no están en el snapshot (notas, no fallas). Ningún hash de las 28 plantillas del snapshot cambió en
+macOS (sin bytes dependientes del host).
 
 **Diseño:** reglamento y diales por arquetipo en `docs/template-kit-design-principles.md` (taste-skill
 `d237dd3` y skills de Emil Kowalski `2d22863`, MIT, instaladas en `~/.claude/skills`, no en el repo).
@@ -74,6 +95,56 @@ Diales V/M/D por defecto: editorial 6/5/3 · showcase 8/6/3 · catalog 5/4/6 · 
 | restaurante | 2 (1/1)                 | 6       | 5     | 6      | split                                       | 10, 338                             |
 | tienda      | 2 (1/1)                 | 5       | 5     | 5      | image-bg                                    | 102, 223                            |
 | veterinaria | 2 (1/1)                 | 5       | 5     | 4      | split                                       | 17, 169                             |
+
+## Snapshot dorado: diagnóstico y procedimiento (A1 · WP1)
+
+Clasificación de la línea base (2026-10-14, antes de cambiar nada):
+
+| Diferencia                                                              | Clase                        | Causa                                                                                                                                                                                                                                                                       |
+| ----------------------------------------------------------------------- | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 8 ✗ `fixtures/spec/skill-eval/restaurante-la-lumbre`                    | pool agotado por crecimiento | Spec `legacy` sin lock. La Pro fija `nocturno` (42°), que ahora choca con `restaurante-base-fresca-nube-v1` (41°); cae a `talavera`, el único tono legacy libre, y a la Básica no le queda ninguno. Contra las 28 plantillas con que se grabó el golden reproduce idéntico. |
+| 14 plantillas nuevas (clínica 4, restaurante 6, estética 2, florería 2) | nuevas                       | Llegaron a `main` sin entrar al golden.                                                                                                                                                                                                                                     |
+| 7 specs nuevos (todos `extended`, con lock)                             | nuevos                       | Ídem.                                                                                                                                                                                                                                                                       |
+| Bytes dependientes del host                                             | —                            | Ninguno: los 28 hashes coinciden en macOS.                                                                                                                                                                                                                                  |
+| Regresión real                                                          | —                            | Ninguna.                                                                                                                                                                                                                                                                    |
+
+**Por qué no se arregla con paletas (WP2):** el fixture es `legacy` y solo ve las 6 paletas de
+`giros/restaurante.ts`, que A1 no toca; la biblioteca `extended` no existe para él. El problema de fondo
+era la herramienta: `kit:verify-snapshot` planeaba cada spec **sin su lock** y **contra la biblioteca
+viva**, así que cualquier plantilla nueva del giro movía un plan grabado (y las paletas nuevas de WP2
+habrían movido los 7 specs `extended`).
+
+**Arreglo (decisión de Santi: «congelar pares»):** cada entrada de spec del golden guarda sus
+entradas: `peers` (las plantillas del giro contra las que se planeó, sin las suyas) y `locked` (se
+planeó con `<stem>.lock.json`, igual que `lattiz build`). `verify` las reproduce: comprueba «mismas
+entradas → mismo plan», que es lo que de verdad prueba que el kit no mutó. Una entrada sin `peers` se
+planea contra las plantillas del golden. Si una plantilla de `peers` desaparece o falta el lock, es
+falla. El estado vivo (qué cabe hoy en cada giro) lo dice `lattiz kit capacity`, no el snapshot. Ojo:
+el fixture `restaurante-la-lumbre` **ya no se puede construir hoy** contra la biblioteca real (tampoco
+con `lattiz build`); para el snapshot sigue sirviendo.
+
+**Resultado:** `kit:verify-snapshot` idéntico con **42 plantillas y 23 specs**; ninguna entrada que ya
+existía cambió (las 16 de spec solo ganaron `peers`). Las 14 plantillas se revisaron antes de entrar:
+`kit:validate` sin hallazgos, `kit:shots` sin overflow a 360/390/768/1024/1440 y encaje `PASS` en toda
+portada con `data-lz-fit` (844×390 es `n/a` por diseño). Quedan avisos ya conocidos de variantes
+legacy: etiquetas de 10–11 px (`services/cards`, sub-marca del navbar) y enlaces de 32 px en
+`footer/columns`. Los 7 specs reproducen sus 7 archivos (`lattiz build <stem> --dry-run`: «sin
+cambios»). Costo: ~8 s y ~950 MB de RSS por corrida de `verify`; revisar las 14 plantillas
+(`kit:validate` + `kit:shots`, una a la vez) tomó 320 s.
+
+**Procedimiento: cómo entra una plantilla nueva al golden** (cada vez que sumes plantillas a `main`):
+
+1. `pnpm --filter @lattiz/template-kit kit:verify-snapshot`: solo deben salir notas «plantilla nueva» /
+   «spec nuevo»; cualquier `✗` se investiga antes (nunca se regenera para taparla).
+2. Revisa cada plantilla nueva: `pnpm --filter @lattiz/template-kit kit:validate templates/<id>.ts`
+   (sin hallazgos) y `pnpm --filter @lattiz/template-kit kit:shots <id>` (overflow 0 en todos los
+   anchos). Si viene de un spec: `pnpm lattiz build <stem> --dry-run` dice «sin cambios».
+3. `pnpm --filter @lattiz/template-kit kit:snapshot:add [id|stem…]` (sin argumentos agrega todo lo
+   nuevo). Verifica todo primero y **no agrega nada** si alguna entrada existente ya difiere; nunca
+   modifica entradas existentes.
+4. `kit:verify-snapshot` otra vez (idéntico) y commitea `golden/snapshot.json` junto con la plantilla.
+
+`kit:snapshot` (reescribir todo) queda solo para un re-baseline explicado en el commit.
 
 ## Inventario (WP0, sacado del código el 2026-10-12)
 

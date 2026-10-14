@@ -1,5 +1,5 @@
 {
-  "$comment": "Golden snapshot (kit:snapshot). kit:verify-snapshot must stay clean: existing templates compile byte for byte and specs resolve to the same files. Regenerate only with an explicit, explained reason.",
+  "$comment": "Golden snapshot (kit:snapshot). kit:verify-snapshot must stay clean: existing templates compile byte for byte and specs resolve to the same files. New templates/specs enter with `kit:snapshot:add`; regenerate everything only with an explicit, explained reason.",
   "version": 1,
   "templates": {
     "barberia-abeto-v1": {
@@ -282,6 +282,118 @@
         }
       }
     },
+    "clinica-base-brote-v1": {
+      "manifest": "templates/clinica-base-brote-v1.ts",
+      "hashes": {
+        "project": "3c43a1fd6a0fb5ff",
+        "html": "6a4a62fe87f38dc5",
+        "css": "fa773d51c19abeff",
+        "rootCss": "f082e5def214cedd",
+        "theme": "750868699e1eb83d",
+        "pack": "ac8ab7962b5d6532",
+        "meta": "4c4729f665642a3f",
+        "assets": "1ff5f8839bd51b6b"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 24230,
+          "gzip": 4700
+        },
+        "html": {
+          "raw": 17924,
+          "gzip": 5050
+        },
+        "index": {
+          "raw": 42170,
+          "gzip": 9629
+        }
+      }
+    },
+    "clinica-base-cauce-v1": {
+      "manifest": "templates/clinica-base-cauce-v1.ts",
+      "hashes": {
+        "project": "32906d5ce540a8a4",
+        "html": "df5828a2f34f6770",
+        "css": "62fa61517af65878",
+        "rootCss": "b66d8101d15b987b",
+        "theme": "01de9d000e975b13",
+        "pack": "297f82bda3bfa4f5",
+        "meta": "e8d8e312e259ec89",
+        "assets": "a7619418f5b37169"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 24342,
+          "gzip": 4723
+        },
+        "html": {
+          "raw": 17999,
+          "gzip": 5149
+        },
+        "index": {
+          "raw": 42357,
+          "gzip": 9753
+        }
+      }
+    },
+    "clinica-brote-v1": {
+      "manifest": "templates/clinica-brote-v1.ts",
+      "hashes": {
+        "project": "5de634edf0c9dff2",
+        "html": "49fd4556daa69e3d",
+        "css": "a186f1aeab7cd243",
+        "rootCss": "8afb352685620056",
+        "theme": "ddf648e49e7b65f6",
+        "pack": "ac8ab7962b5d6532",
+        "meta": "658036ca7b03709f",
+        "assets": "7e271bb2891e6caf"
+      },
+      "assets": 13,
+      "size": {
+        "css": {
+          "raw": 31484,
+          "gzip": 5794
+        },
+        "html": {
+          "raw": 27557,
+          "gzip": 6991
+        },
+        "index": {
+          "raw": 59057,
+          "gzip": 12644
+        }
+      }
+    },
+    "clinica-cauce-v1": {
+      "manifest": "templates/clinica-cauce-v1.ts",
+      "hashes": {
+        "project": "824aa6c71be1cb19",
+        "html": "0848dcc0bb58ce67",
+        "css": "146ee689a08e4480",
+        "rootCss": "6a958a6a201a2cfa",
+        "theme": "75937f395863388d",
+        "pack": "297f82bda3bfa4f5",
+        "meta": "1afd5a066f732cfc",
+        "assets": "28c51e71f713f3f0"
+      },
+      "assets": 13,
+      "size": {
+        "css": {
+          "raw": 31366,
+          "gzip": 5745
+        },
+        "html": {
+          "raw": 27633,
+          "gzip": 7048
+        },
+        "index": {
+          "raw": 59015,
+          "gzip": 12653
+        }
+      }
+    },
     "dental-arboleda-v1": {
       "manifest": "templates/dental-arboleda-v1.ts",
       "hashes": {
@@ -394,6 +506,62 @@
         }
       }
     },
+    "estetica-alheli-v1": {
+      "manifest": "templates/estetica-alheli-v1.ts",
+      "hashes": {
+        "project": "5946912a66b099e0",
+        "html": "f1cbf72147957fda",
+        "css": "09d68f2756247b9a",
+        "rootCss": "99beec264b6bf948",
+        "theme": "e66530468f2a4ce7",
+        "pack": "32e7ebbe91ebf14c",
+        "meta": "b45ea41e292d07b3",
+        "assets": "ded128163a166981"
+      },
+      "assets": 14,
+      "size": {
+        "css": {
+          "raw": 32890,
+          "gzip": 6072
+        },
+        "html": {
+          "raw": 26875,
+          "gzip": 6707
+        },
+        "index": {
+          "raw": 59781,
+          "gzip": 12671
+        }
+      }
+    },
+    "estetica-base-alheli-v1": {
+      "manifest": "templates/estetica-base-alheli-v1.ts",
+      "hashes": {
+        "project": "0ee721263427f56b",
+        "html": "46a2300225c4b3d2",
+        "css": "f3deccf079bd52cf",
+        "rootCss": "c85cc614d7a27e48",
+        "theme": "463d1995fae74965",
+        "pack": "32e7ebbe91ebf14c",
+        "meta": "a7514f67b5729ed9",
+        "assets": "583f88fb3b033bb5"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 25312,
+          "gzip": 4928
+        },
+        "html": {
+          "raw": 18231,
+          "gzip": 5183
+        },
+        "index": {
+          "raw": 43559,
+          "gzip": 9988
+        }
+      }
+    },
     "estetica-base-estudio-nacar-v1": {
       "manifest": "templates/estetica-base-estudio-nacar-v1.ts",
       "hashes": {
@@ -450,6 +618,34 @@
         }
       }
     },
+    "floreria-base-cardamina-v1": {
+      "manifest": "templates/floreria-base-cardamina-v1.ts",
+      "hashes": {
+        "project": "870ae7e2a6fc4fd1",
+        "html": "bf6aa73ed455853d",
+        "css": "df25b444c05faa1a",
+        "rootCss": "2198cfd1dad8d493",
+        "theme": "852cdaf234e7cbfd",
+        "pack": "52a20013ecffe5bd",
+        "meta": "3bdbba1efed9dfe9",
+        "assets": "6b7015ad674bc634"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 25145,
+          "gzip": 4970
+        },
+        "html": {
+          "raw": 18421,
+          "gzip": 5236
+        },
+        "index": {
+          "raw": 43582,
+          "gzip": 10084
+        }
+      }
+    },
     "floreria-base-flores-lupita-v1": {
       "manifest": "templates/floreria-base-flores-lupita-v1.ts",
       "hashes": {
@@ -475,6 +671,34 @@
         "index": {
           "raw": 43847,
           "gzip": 9782
+        }
+      }
+    },
+    "floreria-cardamina-v1": {
+      "manifest": "templates/floreria-cardamina-v1.ts",
+      "hashes": {
+        "project": "056fec8247caface",
+        "html": "6690f9a582520ae2",
+        "css": "e7da49a12698b978",
+        "rootCss": "dd843d6cae962fa6",
+        "theme": "adaedf4a19790478",
+        "pack": "52a20013ecffe5bd",
+        "meta": "9146daf05c137384",
+        "assets": "9e40dd02c485a1e9"
+      },
+      "assets": 14,
+      "size": {
+        "css": {
+          "raw": 32100,
+          "gzip": 5959
+        },
+        "html": {
+          "raw": 27254,
+          "gzip": 7091
+        },
+        "index": {
+          "raw": 59370,
+          "gzip": 12950
         }
       }
     },
@@ -590,6 +814,62 @@
         }
       }
     },
+    "restaurante-base-ceniza-v1": {
+      "manifest": "templates/restaurante-base-ceniza-v1.ts",
+      "hashes": {
+        "project": "e53e88d9cc8d49ac",
+        "html": "81e1d5aff58159cb",
+        "css": "005b601d19f72269",
+        "rootCss": "18bd6b66bc3e9727",
+        "theme": "a378ba661fe75a11",
+        "pack": "55b7af942eef92ab",
+        "meta": "d2999ee20952c165",
+        "assets": "5c75950d230601a1"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 24028,
+          "gzip": 4668
+        },
+        "html": {
+          "raw": 19097,
+          "gzip": 5376
+        },
+        "index": {
+          "raw": 43141,
+          "gzip": 9907
+        }
+      }
+    },
+    "restaurante-base-fresca-nube-v1": {
+      "manifest": "templates/restaurante-base-fresca-nube-v1.ts",
+      "hashes": {
+        "project": "b219ba3e6d12244f",
+        "html": "5950bfc399b59d48",
+        "css": "2fcb9ee3072dd61d",
+        "rootCss": "9adce6c94f17142c",
+        "theme": "da4317aef27b49ca",
+        "pack": "8d4fff024fb3cfef",
+        "meta": "941fef97015ef855",
+        "assets": "754f9a747de83189"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 24887,
+          "gzip": 4985
+        },
+        "html": {
+          "raw": 18675,
+          "gzip": 5185
+        },
+        "index": {
+          "raw": 43578,
+          "gzip": 10036
+        }
+      }
+    },
     "restaurante-base-hoja-y-barro-v1": {
       "manifest": "templates/restaurante-base-hoja-y-barro-v1.ts",
       "hashes": {
@@ -615,6 +895,34 @@
         "index": {
           "raw": 42133,
           "gzip": 9621
+        }
+      }
+    },
+    "restaurante-base-margen-v1": {
+      "manifest": "templates/restaurante-base-margen-v1.ts",
+      "hashes": {
+        "project": "3989ca7e0c5d21ae",
+        "html": "1f89cea795d9db61",
+        "css": "88014a52295afe21",
+        "rootCss": "31431b426bd10db4",
+        "theme": "eb095a1231ae9d81",
+        "pack": "17335e2c26959fe4",
+        "meta": "58857d20703c28b7",
+        "assets": "89658ef6525afa1d"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 24795,
+          "gzip": 4871
+        },
+        "html": {
+          "raw": 18870,
+          "gzip": 5295
+        },
+        "index": {
+          "raw": 43681,
+          "gzip": 10032
         }
       }
     },
@@ -646,6 +954,62 @@
         }
       }
     },
+    "restaurante-ceniza-v1": {
+      "manifest": "templates/restaurante-ceniza-v1.ts",
+      "hashes": {
+        "project": "a58a8c7f6652c3e2",
+        "html": "5599e79f09b60923",
+        "css": "bd94b71536a33351",
+        "rootCss": "707741835e9013fd",
+        "theme": "0b8571e829fa6f66",
+        "pack": "55b7af942eef92ab",
+        "meta": "d9b2f7c5378920ee",
+        "assets": "983be6f9fe430b5e"
+      },
+      "assets": 14,
+      "size": {
+        "css": {
+          "raw": 33294,
+          "gzip": 6063
+        },
+        "html": {
+          "raw": 27949,
+          "gzip": 7256
+        },
+        "index": {
+          "raw": 61259,
+          "gzip": 13210
+        }
+      }
+    },
+    "restaurante-fresca-nube-v1": {
+      "manifest": "templates/restaurante-fresca-nube-v1.ts",
+      "hashes": {
+        "project": "c9c709a06d4d21c2",
+        "html": "bd2fdedb892190d4",
+        "css": "0f858ade0919948e",
+        "rootCss": "6427618200472c4b",
+        "theme": "186707c7c908a2d4",
+        "pack": "8d4fff024fb3cfef",
+        "meta": "4bf58f2002dfe6de",
+        "assets": "a095ee7a8d874e44"
+      },
+      "assets": 10,
+      "size": {
+        "css": {
+          "raw": 33951,
+          "gzip": 6239
+        },
+        "html": {
+          "raw": 25973,
+          "gzip": 6716
+        },
+        "index": {
+          "raw": 59940,
+          "gzip": 12822
+        }
+      }
+    },
     "restaurante-hoja-y-barro-v1": {
       "manifest": "templates/restaurante-hoja-y-barro-v1.ts",
       "hashes": {
@@ -671,6 +1035,34 @@
         "index": {
           "raw": 61889,
           "gzip": 12880
+        }
+      }
+    },
+    "restaurante-margen-v1": {
+      "manifest": "templates/restaurante-margen-v1.ts",
+      "hashes": {
+        "project": "c26599e9d1d1c8d1",
+        "html": "994dde6821b42ec4",
+        "css": "669ff22be42f6c05",
+        "rootCss": "a1c90dff52604651",
+        "theme": "053cb16ef354b198",
+        "pack": "17335e2c26959fe4",
+        "meta": "11f82d1e38457957",
+        "assets": "23c74a87e9d16cc8"
+      },
+      "assets": 14,
+      "size": {
+        "css": {
+          "raw": 34551,
+          "gzip": 6311
+        },
+        "html": {
+          "raw": 27690,
+          "gzip": 7098
+        },
+        "index": {
+          "raw": 62257,
+          "gzip": 13298
         }
       }
     },
@@ -810,7 +1202,15 @@
         "barberia-base-abeto-v1": [
           "portada: hero/centered-arch → hero/image-bg (única en el giro)"
         ]
-      }
+      },
+      "peers": [
+        "barberia-base-claro-v1",
+        "barberia-base-oscuro-v1",
+        "barberia-base-solar-v1",
+        "barberia-concreto-v1",
+        "barberia-norte-v1",
+        "barberia-oxido-v1"
+      ]
     },
     "specs/clinica-alba.spec.json": {
       "ids": [
@@ -834,7 +1234,62 @@
           "tipografía: \"fraunces+nunito-sans\" (elegida)",
           "titular: alternativa para no repetir el de la Pro"
         ]
-      }
+      },
+      "peers": []
+    },
+    "specs/clinica-brote.spec.json": {
+      "ids": [
+        "clinica-brote-v1",
+        "clinica-base-brote-v1"
+      ],
+      "specHash": "a6eaa7d33f37",
+      "files": {
+        "templates/clinica-brote-v1.ts": "76e0742711b5",
+        "themes/clinica-brote-v1.json": "08dd1790b1c4",
+        "demo-profiles/clinica-brote-v1.json": "a5a7a797ed97",
+        "templates/clinica-base-brote-v1.ts": "76efb90d9a12",
+        "themes/clinica-base-brote-v1.json": "1e473f251db5",
+        "demo-profiles/clinica-base-brote-v1.json": "a5a7a797ed97",
+        "content/clinica.brote.es-MX.ts": "ac8ab7962b5d"
+      },
+      "choices": {
+        "clinica-brote-v1": [],
+        "clinica-base-brote-v1": []
+      },
+      "peers": [
+        "clinica-alba-v1",
+        "clinica-base-alba-v1",
+        "clinica-base-cauce-v1",
+        "clinica-cauce-v1"
+      ],
+      "locked": true
+    },
+    "specs/clinica-cauce.spec.json": {
+      "ids": [
+        "clinica-cauce-v1",
+        "clinica-base-cauce-v1"
+      ],
+      "specHash": "b8561714764d",
+      "files": {
+        "templates/clinica-cauce-v1.ts": "1f708dec5b6d",
+        "themes/clinica-cauce-v1.json": "ba3719dddb28",
+        "demo-profiles/clinica-cauce-v1.json": "bc3f514d89c6",
+        "templates/clinica-base-cauce-v1.ts": "870006f699fd",
+        "themes/clinica-base-cauce-v1.json": "01751fac60ec",
+        "demo-profiles/clinica-base-cauce-v1.json": "bc3f514d89c6",
+        "content/clinica.cauce.es-MX.ts": "297f82bda3bf"
+      },
+      "choices": {
+        "clinica-cauce-v1": [],
+        "clinica-base-cauce-v1": []
+      },
+      "peers": [
+        "clinica-alba-v1",
+        "clinica-base-alba-v1",
+        "clinica-base-brote-v1",
+        "clinica-brote-v1"
+      ],
+      "locked": true
     },
     "specs/dental-arboleda.spec.json": {
       "ids": [
@@ -858,7 +1313,8 @@
           "tipografía: \"fraunces+nunito-sans\" (elegida)",
           "titular: alternativa para no repetir el de la Pro"
         ]
-      }
+      },
+      "peers": []
     },
     "specs/despacho-cifra-clara.spec.json": {
       "ids": [
@@ -882,7 +1338,33 @@
           "tipografía: \"instrument-serif+instrument-sans\" (elegida)",
           "titular: alternativa para no repetir el de la Pro"
         ]
-      }
+      },
+      "peers": []
+    },
+    "specs/estetica-alheli.spec.json": {
+      "ids": [
+        "estetica-alheli-v1",
+        "estetica-base-alheli-v1"
+      ],
+      "specHash": "c5b874c728ac",
+      "files": {
+        "templates/estetica-alheli-v1.ts": "eeb1762b53c5",
+        "themes/estetica-alheli-v1.json": "d5e4ae9fc54c",
+        "demo-profiles/estetica-alheli-v1.json": "2a94f7e72ef0",
+        "templates/estetica-base-alheli-v1.ts": "48de222d7fdb",
+        "themes/estetica-base-alheli-v1.json": "d24a24ca067e",
+        "demo-profiles/estetica-base-alheli-v1.json": "2a94f7e72ef0",
+        "content/estetica.alheli.es-MX.ts": "32e7ebbe91eb"
+      },
+      "choices": {
+        "estetica-alheli-v1": [],
+        "estetica-base-alheli-v1": []
+      },
+      "peers": [
+        "estetica-base-estudio-nacar-v1",
+        "estetica-estudio-nacar-v1"
+      ],
+      "locked": true
     },
     "specs/estetica-estudio-nacar.spec.json": {
       "ids": [
@@ -906,7 +1388,33 @@
           "tipografía: \"instrument-serif+instrument-sans\" (elegida)",
           "titular: alternativa para no repetir el de la Pro"
         ]
-      }
+      },
+      "peers": []
+    },
+    "specs/floreria-cardamina.spec.json": {
+      "ids": [
+        "floreria-cardamina-v1",
+        "floreria-base-cardamina-v1"
+      ],
+      "specHash": "2b263f80d11c",
+      "files": {
+        "templates/floreria-cardamina-v1.ts": "b6f73d2a1dc8",
+        "themes/floreria-cardamina-v1.json": "dad54c4cd108",
+        "demo-profiles/floreria-cardamina-v1.json": "ce3152821f17",
+        "templates/floreria-base-cardamina-v1.ts": "48ef96796640",
+        "themes/floreria-base-cardamina-v1.json": "87970c040f1a",
+        "demo-profiles/floreria-base-cardamina-v1.json": "ce3152821f17",
+        "content/floreria.cardamina.es-MX.ts": "52a20013ecff"
+      },
+      "choices": {
+        "floreria-cardamina-v1": [],
+        "floreria-base-cardamina-v1": []
+      },
+      "peers": [
+        "floreria-base-flores-lupita-v1",
+        "floreria-flores-lupita-v1"
+      ],
+      "locked": true
     },
     "specs/floreria-flores-lupita.spec.json": {
       "ids": [
@@ -930,7 +1438,8 @@
           "tipografía: \"fraunces+nunito-sans\" (elegida)",
           "titular: alternativa para no repetir el de la Pro"
         ]
-      }
+      },
+      "peers": []
     },
     "specs/gimnasio-nave-norte.spec.json": {
       "ids": [
@@ -954,7 +1463,8 @@
           "tipografía: \"archivo-black+space-grotesk\" (elegida)",
           "titular: alternativa para no repetir el de la Pro"
         ]
-      }
+      },
+      "peers": []
     },
     "specs/restaurante-casa-comal.spec.json": {
       "ids": [
@@ -978,7 +1488,73 @@
           "tipografía: \"bricolage-grotesque+inter\" (elegida)",
           "titular: alternativa para no repetir el de la Pro"
         ]
-      }
+      },
+      "peers": [
+        "restaurante-base-hoja-y-barro-v1",
+        "restaurante-hoja-y-barro-v1"
+      ]
+    },
+    "specs/restaurante-ceniza.spec.json": {
+      "ids": [
+        "restaurante-ceniza-v1",
+        "restaurante-base-ceniza-v1"
+      ],
+      "specHash": "a89058674040",
+      "files": {
+        "templates/restaurante-ceniza-v1.ts": "7b405ddc79f4",
+        "themes/restaurante-ceniza-v1.json": "6c140fd33af9",
+        "demo-profiles/restaurante-ceniza-v1.json": "155639a6768e",
+        "templates/restaurante-base-ceniza-v1.ts": "6c012a2f0c74",
+        "themes/restaurante-base-ceniza-v1.json": "2f3bb1fc2317",
+        "demo-profiles/restaurante-base-ceniza-v1.json": "155639a6768e",
+        "content/restaurante.ceniza.es-MX.ts": "55b7af942eef"
+      },
+      "choices": {
+        "restaurante-ceniza-v1": [],
+        "restaurante-base-ceniza-v1": []
+      },
+      "peers": [
+        "restaurante-base-casa-comal-v1",
+        "restaurante-base-fresca-nube-v1",
+        "restaurante-base-hoja-y-barro-v1",
+        "restaurante-base-margen-v1",
+        "restaurante-casa-comal-v1",
+        "restaurante-fresca-nube-v1",
+        "restaurante-hoja-y-barro-v1",
+        "restaurante-margen-v1"
+      ],
+      "locked": true
+    },
+    "specs/restaurante-fresca-nube.spec.json": {
+      "ids": [
+        "restaurante-fresca-nube-v1",
+        "restaurante-base-fresca-nube-v1"
+      ],
+      "specHash": "ca4b32eadb34",
+      "files": {
+        "templates/restaurante-fresca-nube-v1.ts": "c43a14e3573f",
+        "themes/restaurante-fresca-nube-v1.json": "307c14dbb723",
+        "demo-profiles/restaurante-fresca-nube-v1.json": "192f00d221b3",
+        "templates/restaurante-base-fresca-nube-v1.ts": "6678ac09e516",
+        "themes/restaurante-base-fresca-nube-v1.json": "8a9da39071d0",
+        "demo-profiles/restaurante-base-fresca-nube-v1.json": "192f00d221b3",
+        "content/restaurante.fresca-nube.es-MX.ts": "8d4fff024fb3"
+      },
+      "choices": {
+        "restaurante-fresca-nube-v1": [],
+        "restaurante-base-fresca-nube-v1": []
+      },
+      "peers": [
+        "restaurante-base-casa-comal-v1",
+        "restaurante-base-ceniza-v1",
+        "restaurante-base-hoja-y-barro-v1",
+        "restaurante-base-margen-v1",
+        "restaurante-casa-comal-v1",
+        "restaurante-ceniza-v1",
+        "restaurante-hoja-y-barro-v1",
+        "restaurante-margen-v1"
+      ],
+      "locked": true
     },
     "specs/restaurante-hoja-y-barro.spec.json": {
       "ids": [
@@ -998,7 +1574,42 @@
       "choices": {
         "restaurante-hoja-y-barro-v1": [],
         "restaurante-base-hoja-y-barro-v1": []
-      }
+      },
+      "peers": [
+        "restaurante-base-casa-comal-v1",
+        "restaurante-casa-comal-v1"
+      ]
+    },
+    "specs/restaurante-margen.spec.json": {
+      "ids": [
+        "restaurante-margen-v1",
+        "restaurante-base-margen-v1"
+      ],
+      "specHash": "3cca43179fd7",
+      "files": {
+        "templates/restaurante-margen-v1.ts": "dc6b49d235a6",
+        "themes/restaurante-margen-v1.json": "abee7638d937",
+        "demo-profiles/restaurante-margen-v1.json": "0d8d88691b15",
+        "templates/restaurante-base-margen-v1.ts": "22ebf8ee88a1",
+        "themes/restaurante-base-margen-v1.json": "b158aa705836",
+        "demo-profiles/restaurante-base-margen-v1.json": "0d8d88691b15",
+        "content/restaurante.margen.es-MX.ts": "17335e2c2695"
+      },
+      "choices": {
+        "restaurante-margen-v1": [],
+        "restaurante-base-margen-v1": []
+      },
+      "peers": [
+        "restaurante-base-casa-comal-v1",
+        "restaurante-base-ceniza-v1",
+        "restaurante-base-fresca-nube-v1",
+        "restaurante-base-hoja-y-barro-v1",
+        "restaurante-casa-comal-v1",
+        "restaurante-ceniza-v1",
+        "restaurante-fresca-nube-v1",
+        "restaurante-hoja-y-barro-v1"
+      ],
+      "locked": true
     },
     "specs/tienda-lote-doce.spec.json": {
       "ids": [
@@ -1022,7 +1633,8 @@
           "tipografía: \"young-serif+figtree\" (elegida)",
           "titular: alternativa para no repetir el de la Pro"
         ]
-      }
+      },
+      "peers": []
     },
     "specs/veterinaria-clinica-nogal.spec.json": {
       "ids": [
@@ -1046,7 +1658,8 @@
           "tipografía: \"bricolage-grotesque+inter\" (elegida)",
           "titular: alternativa para no repetir el de la Pro"
         ]
-      }
+      },
+      "peers": []
     },
     "fixtures/spec/barberia-norte-v1.spec.json": {
       "ids": [
@@ -1061,7 +1674,16 @@
       },
       "choices": {
         "barberia-norte-v1": []
-      }
+      },
+      "peers": [
+        "barberia-abeto-v1",
+        "barberia-base-abeto-v1",
+        "barberia-base-claro-v1",
+        "barberia-base-oscuro-v1",
+        "barberia-base-solar-v1",
+        "barberia-concreto-v1",
+        "barberia-oxido-v1"
+      ]
     },
     "fixtures/spec/skill-eval/despacho-balance-regio.spec.json": {
       "ids": [
@@ -1086,7 +1708,11 @@
         "despacho-base-balance-regio-v1": [
           "portada: hero/split → hero/centered-arch (única en el giro)"
         ]
-      }
+      },
+      "peers": [
+        "despacho-base-cifra-clara-v1",
+        "despacho-cifra-clara-v1"
+      ]
     },
     "fixtures/spec/skill-eval/despacho-norma-contable.spec.json": {
       "ids": [
@@ -1109,7 +1735,11 @@
           "paleta: \"berenjena\" (elegida)",
           "tipografía: \"dm-serif-display+dm-sans\" (elegida)"
         ]
-      }
+      },
+      "peers": [
+        "despacho-base-cifra-clara-v1",
+        "despacho-cifra-clara-v1"
+      ]
     },
     "fixtures/spec/skill-eval/restaurante-la-lumbre.spec.json": {
       "ids": [
@@ -1133,7 +1763,13 @@
         "restaurante-base-la-lumbre-v1": [
           "paleta: \"talavera\" (elegida)"
         ]
-      }
+      },
+      "peers": [
+        "restaurante-base-casa-comal-v1",
+        "restaurante-base-hoja-y-barro-v1",
+        "restaurante-casa-comal-v1",
+        "restaurante-hoja-y-barro-v1"
+      ]
     },
     "fixtures/spec/skill-eval/veterinaria-tejocote.spec.json": {
       "ids": [
@@ -1158,7 +1794,11 @@
           "paleta: \"lila\" (elegida)",
           "tipografía: \"lora+figtree\" (elegida)"
         ]
-      }
+      },
+      "peers": [
+        "veterinaria-base-clinica-nogal-v1",
+        "veterinaria-clinica-nogal-v1"
+      ]
     }
   }
 }
