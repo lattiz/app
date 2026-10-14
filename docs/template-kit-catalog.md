@@ -985,6 +985,126 @@ escribe a mano), `pnpm lattiz kit gallery --primitives`, crítica y `kit:manifes
 con su propio commit, la comparación `kit:compare` antes/después y un re-baseline explicado del
 golden. A2 no lo hace.
 
+## Direcciones de arte (A2 · WP2)
+
+Una dirección de arte fija de una vez lo que un spec elegía por separado. Es un dato en
+`packages/template-kit/directions/<id>.ts`, registrado en `directions/index.ts`, y lo validan
+`src/spec/direction.ts`, `kit:manifest` y `pnpm lint`. Solo catálogo `extended`; un spec la pide con
+`layout.direction`. Cada dirección incluye:
+
+- listas ordenadas de paletas y pares (con `byGiro` opcional);
+- los 8 presets de `style` y los 7 estilos de primitivos;
+- arquetipos y portadas por tier;
+- preset de Motion y diales V/M/D;
+- los giros donde encaja;
+- voz: registro, 3–5 reglas, palabras vetadas, titular y CTA de ejemplo;
+- reglas de gusto.
+
+| Dirección           | V/M/D | Motion    | Arquetipos         | Reglas                                          | Portadas Pro / Básico                        | Giros (los dos primeros se prueban)              |
+| ------------------- | ----- | --------- | ------------------ | ----------------------------------------------- | -------------------------------------------- | ------------------------------------------------ |
+| `cantera-editorial` | 6/5/3 | calm      | editorial, minimal | `scheme:light`, `display:serif`, `no-gradients` | rail, columns, split / columns, split        | despacho, restaurante, florería, estética        |
+| `neon-nocturno`     | 8/7/7 | editorial | bold, showcase     | `scheme:dark`, `display:upper`, `no-gradients`  | poster, bento, image-bg / poster, image-bg   | barbería, gimnasio, restaurante, tienda          |
+| `jardin-suave`      | 5/5/3 | calm      | soft, booking      | `scheme:light`, `no-gradients`                  | duo-arch, overlap, panel / duo-arch, overlap | estética, veterinaria, florería, dental, clínica |
+| `tinta-papel`       | 4/4/5 | calm      | minimal, trust     | `accent:neutral`, `no-gradients`                | split, panel, columns / split, columns       | despacho, tienda, clínica, barbería              |
+| `terracota-calida`  | 6/4/5 | calm      | catalog, showcase  | `scheme:light`, `no-gradients`                  | stack, framed, overlap / stack, framed       | florería, restaurante, tienda, estética          |
+| `marmol-sobrio`     | 3/4/5 | calm      | trust, booking     | `no-gradients`                                  | panel, bento, split / panel, split           | clínica, dental, despacho, veterinaria           |
+
+**Reglas del registro** (`registryProblems`):
+
+- Dos direcciones difieren en **≥ 6 de las 15 elecciones**: los 8 presets de estilo más los 7
+  primitivos.
+- Dos direcciones no empiezan con la misma paleta ni con el mismo par.
+- Las paletas y pares de cada lista cumplen las reglas de la dirección.
+- Cada portada existe y está hecha para su tier.
+- Ninguna portada centrada va con variación > 4.
+- `motion` y `style.density` coinciden con sus diales.
+
+**Compuerta al construir** (`directionFindings`, `rule: "direction"`):
+
+- Revisa la plantilla compilada: fondo claro u oscuro, display en mayúsculas o serif, acento neutro.
+- Busca `gradient(` en el CSS de los primitivos y de las variantes `extended`. Tres variantes legacy
+  quedan exentas porque sus degradados sirven de velo sobre la foto.
+- Con un hallazgo, `lattiz build` no escribe nada.
+- Las mismas reglas filtran el respaldo de paletas y pares cuando la lista propia se agota.
+
+### Pruebas: 24 plantillas, `lattiz check --lighthouse` (2026-10-14)
+
+`pnpm lattiz kit gallery --directions` construye un Básico y un Pro por dirección en sus dos primeros
+giros. Lo hace desde un spec real con `layout.direction`, fuera del kit: en
+`.lattiz/gallery/directions/<dirección>--<giro>/`, con la hoja en `directions.html`. Cada prueba se
+revisó con `lattiz check <id> --root <raíz> --lighthouse`, una a la vez (~40 s y ~2.2–2.7 GB de RSS
+pico con Chrome). El script reanudable está en `.lattiz/a2/check-proofs.sh`.
+
+**Números de laboratorio:** Lighthouse 12 con emulación móvil y throttling simulado, sobre la vista
+previa local estática de `lattiz check` (sin CDN). Usa los placeholders del kit en lugar de fotos y
+no son datos de campo. Se comparan con la línea base de A1 (abajo, «Web Vitals en `lattiz check
+--lighthouse`»), medida en la misma máquina, pero sobre plantillas con fotos reales en algunos casos.
+
+| Plantilla                              | Tier   | LCP    | CLS   | TBT  | HTML KiB | Total KiB | Veredicto |
+| -------------------------------------- | ------ | ------ | ----- | ---- | -------- | --------- | --------- |
+| `despacho-base-cantera-prueba-v1`      | Básico | 1.72 s | 0.001 | 0 ms | 44.4     | 148       | WARN      |
+| `despacho-cantera-prueba-v1`           | Pro    | 3.08 s | 0.000 | 0 ms | 61.9     | 270       | WARN LCP  |
+| `restaurante-base-cantera-prueba-v1`   | Básico | 1.72 s | 0.001 | 0 ms | 44.2     | 160       | WARN      |
+| `restaurante-cantera-prueba-v1`        | Pro    | 1.86 s | 0.001 | 0 ms | 63.7     | 230       | WARN      |
+| `estetica-base-jardin-prueba-v1`       | Básico | 2.78 s | 0.000 | 0 ms | 41.1     | 113       | WARN LCP  |
+| `estetica-jardin-prueba-v1`            | Pro    | 2.83 s | 0.002 | 0 ms | 60.1     | 236       | WARN LCP  |
+| `veterinaria-base-jardin-prueba-v1`    | Básico | 2.64 s | 0.001 | 0 ms | 44.1     | 156       | WARN LCP  |
+| `veterinaria-jardin-prueba-v1`         | Pro    | 2.93 s | 0.000 | 0 ms | 56.1     | 227       | WARN LCP  |
+| `clinica-base-marmol-prueba-v1`        | Básico | 2.78 s | 0.000 | 0 ms | 42.3     | 135       | WARN LCP  |
+| `clinica-marmol-prueba-v1`             | Pro    | 3.08 s | 0.000 | 0 ms | 59.2     | 293       | FAIL nojs |
+| `dental-base-marmol-prueba-v1`         | Básico | 2.79 s | 0.001 | 0 ms | 42.3     | 124       | WARN LCP  |
+| `dental-marmol-prueba-v1`              | Pro    | 2.78 s | 0.000 | 0 ms | 59.0     | 293       | FAIL nojs |
+| `barberia-base-neon-prueba-v1`         | Básico | 2.51 s | 0.000 | 0 ms | 43.3     | 178       | WARN LCP  |
+| `barberia-neon-prueba-v1`              | Pro    | 3.16 s | 0.002 | 0 ms | 62.1     | 397       | WARN LCP  |
+| `gimnasio-base-neon-prueba-v1`         | Básico | 2.79 s | 0.001 | 0 ms | 42.3     | 135       | WARN LCP  |
+| `gimnasio-neon-prueba-v1`              | Pro    | 1.88 s | 0.002 | 0 ms | 60.6     | 178       | WARN      |
+| `floreria-base-terracota-prueba-v1`    | Básico | 1.72 s | 0.000 | 0 ms | 43.5     | 142       | WARN      |
+| `floreria-terracota-prueba-v1`         | Pro    | 2.22 s | 0.001 | 0 ms | 63.6     | 392       | WARN      |
+| `restaurante-base-terracota-prueba-v1` | Básico | 2.77 s | 0.001 | 0 ms | 43.4     | 172       | WARN LCP  |
+| `restaurante-terracota-prueba-v1`      | Pro    | 3.09 s | 0.000 | 0 ms | 63.6     | 238       | WARN LCP  |
+| `despacho-base-tinta-prueba-v1`        | Básico | 1.71 s | 0.001 | 0 ms | 43.1     | 167       | WARN      |
+| `despacho-tinta-prueba-v1`             | Pro    | 2.06 s | 0.000 | 0 ms | 56.5     | 332       | WARN      |
+| `tienda-base-tinta-prueba-v1`          | Básico | 1.73 s | 0.000 | 0 ms | 42.9     | 146       | WARN      |
+| `tienda-tinta-prueba-v1`               | Pro    | 2.15 s | 0.000 | 0 ms | 54.6     | 399       | WARN      |
+
+**Resumen:**
+
+- **FAIL: 2 de 24.** Las dos son la misma falla de la regla `nojs`, que es un falso positivo de la
+  revisión.
+- **LCP:** media 2.45 s; 14 de 24 pasan de 2.5 s.
+- **CLS y TBT:** CLS ≤ 0.002 y TBT 0 ms en todas.
+- **HTML:** dentro del presupuesto (Básico ≤ 48 KiB, Pro ≤ 67 KiB).
+
+**Las tres FAIL de la primera corrida:**
+
+1. **`fit`, `restaurante-base-cantera-prueba-v1`:** la portada `hero/split` medía 747 px contra
+   744 px permitidos a 1440. Era un defecto real: el Básico de cantera tomaba la portada legacy
+   `split`, que con el titular serif expresivo de la dirección no cabía por 3 px. La Pro gemela
+   tomaba `columns` primero y al Básico solo le quedaba `split`. Se arregló reordenando las portadas
+   Pro de la dirección (`heroes.pro: ['rail', 'columns', 'split']`): la Pro toma `rail` y el Básico
+   `columns`. Ahora pasa. No se tocó la variante.
+2. **`nojs`, `clinica-marmol-prueba-v1` y `dental-marmol-prueba-v1`** (`team › li`): es un falso
+   positivo de la revisión.
+   - `team/spotlight` oculta con `display:none` la lista de etiquetas de cada miembro.
+   - El `<li>` hijo mide 0×0, pero su `display` calculado no es `none`, así que la regla lo cuenta
+     como «oculto sin JS».
+   - Sin JS no se oculta nada que con JS se vería: la lista no se muestra en ningún caso.
+   - Por decisión de Santi queda como **FAIL documentada**: no se cambia la regla ni los arquetipos.
+     Arreglarla (ignorar los descendientes de un ancestro con `display:none`) es un cambio de la
+     revisión y va en su propio PR.
+
+**Por qué el LCP:** en las 24 el elemento LCP es la imagen de la portada y el LCP ≈ FCP. La fase que
+pesa es el retraso de render (1.3–2.7 s, con tiempo de carga de imagen 0). La hoja de Google Fonts
+bloquea ~815 ms en todas. Es el mismo diagnóstico que `docs/template-kit-lcp.md` y no lo causan las
+direcciones: entre la más rápida (1.71 s) y la más lenta (3.16 s) cambia el retraso de render, no la
+imagen. La causa exacta de esa diferencia no se aisló. El retrofit propuesto allí (sacar la hoja del
+camino crítico en tenant-sites) es lo que más las movería.
+
+**Avisos heredados:** los WARN de `font` (12 px en `lz-index`, `lz-about-brief__label`,
+`lz-location__label` y el título del pie) y los de `tap` (enlaces del pie de 32 px) vienen de
+variantes legacy que las pruebas comparten con las plantillas existentes. No los introduce ninguna
+dirección.
+
 ## Portadas nuevas (A2 · WP3)
 
 Cuatro portadas con siluetas que no existían (todas `extended`, Básico + Pro, `data-lz-fit`, sin JS,
