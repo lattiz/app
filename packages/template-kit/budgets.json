@@ -1,0 +1,38 @@
+{
+  "$comment": "Byte budgets per tier (kit:validate). Started 2026-10-14 from the maximum over the 42 templates + ~10% (rounded up to a whole KiB). css = compiled stylesheet; html = the preview index.html (inline CSS, what a site serves); images = local assets of one page (total and largest file); js = gzip of the Lattiz Motion runtime (Pro only; B\u00e1sico ships no JS). Over budget is WARN; --strict-budget and spec builds of a new template FAIL. Raise a number only with a written reason.",
+  "version": 1,
+  "basic": {
+    "css": {
+      "raw": 28672,
+      "gzip": 6144
+    },
+    "html": {
+      "raw": 49152,
+      "gzip": 11264
+    },
+    "images": {
+      "total": 179200,
+      "max": 179200
+    },
+    "js": {
+      "gzip": 0
+    }
+  },
+  "pro": {
+    "css": {
+      "raw": 38912,
+      "gzip": 7168
+    },
+    "html": {
+      "raw": 68608,
+      "gzip": 15360
+    },
+    "images": {
+      "total": 2895872,
+      "max": 330752
+    },
+    "js": {
+      "gzip": 8192
+    }
+  }
+}

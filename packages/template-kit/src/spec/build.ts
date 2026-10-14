@@ -10,6 +10,7 @@ import {
 } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, relative, resolve } from 'node:path';
+import { measureBudget } from '../lib/budget';
 import { compileManifest, writeCompiled } from '../lib/compile';
 import { KIT_ROOT } from '../lib/paths';
 import { libraryFingerprints, targetFromCompiled } from '../lib/targets';
@@ -333,6 +334,19 @@ export async function buildSpec(opts: BuildOptions): Promise<BuildReport> {
         ...others,
         ...siblings,
       ]);
+      // Byte budgets: a template that doesn't exist yet must fit; an existing one only warns.
+      const isNew = !existsSync(resolve(KIT_ROOT, 'templates', `${t.id}.ts`));
+      for (const b of measureBudget(compiled).filter((l) => l.over)) {
+        const message = `presupuesto de bytes: ${b.metric} ${(b.value / 1024).toFixed(1)} KiB > ${(b.limit / 1024).toFixed(1)} KiB (budgets.json)`;
+        if (isNew)
+          validation.findings.push({ rule: 'budget', file: t.id, message });
+        else
+          report.problems.push({
+            level: 'warn',
+            path: `budget.${t.id}`,
+            message,
+          });
+      }
       compiledByTier.set(t.id, compiled);
       report.tiers.push({
         id: t.id,

@@ -42,10 +42,10 @@ Antes de cualquier trabajo de diseño nuevo (Fase A2). Estado al 2026-10-14:
 | WP  | Qué                                                        | Estado    | Commits          | Desviaciones                                                                                                                 |
 | --- | ---------------------------------------------------------- | --------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | WP1 | Snapshot: clasificar y resolver las diferencias            | hecho     | 47ba2b8, 10dbb6e | el fixture legacy no se arregla con paletas: se congelan las entradas del snapshot                                           |
-| WP2 | Capacidad: restaurante, clínica, barbería ≥ 14; resto ≥ 12 | hecho     | (este)           | pares topados por portadas Pro (A2); 8 paletas neutras                                                                       |
-| WP3 | Manifiesto del catálogo (`catalog.manifest.json`)          | hecho     | (este)           | sin `meta.motion` en el kit: Motion se lee del seed; la API no importa el kit                                                |
-| WP4 | Plan en el servidor (auditoría + `PlanGuard`)              | hecho     | (este)           | exime lo que trae la plantilla del tenant; bloques `lzb-*` no se marcan (hueco); ver `docs/template-kit-plan-enforcement.md` |
-| WP5 | Presupuesto de bytes y línea base de Core Web Vitals       | pendiente |                  |                                                                                                                              |
+| WP2 | Capacidad: restaurante, clínica, barbería ≥ 14; resto ≥ 12 | hecho     | 0b133c4          | pares topados por portadas Pro (A2); 8 paletas neutras                                                                       |
+| WP3 | Manifiesto del catálogo (`catalog.manifest.json`)          | hecho     | 176002c          | sin `meta.motion` en el kit: Motion se lee del seed; la API no importa el kit                                                |
+| WP4 | Plan en el servidor (auditoría + `PlanGuard`)              | hecho     | 3c98c22          | exime lo que trae la plantilla del tenant; bloques `lzb-*` no se marcan (hueco); ver `docs/template-kit-plan-enforcement.md` |
+| WP5 | Presupuesto de bytes y línea base de Core Web Vitals       | hecho     | (este)           | CWV como WARN; LCP > 2.5 s en 4 de 6 (laboratorio)                                                                           |
 | WP6 | Docs y decisiones                                          | pendiente |                  |                                                                                                                              |
 
 **Línea base A1 (MacBook, Node 24.9, pnpm 11.5.2):** `pnpm lint` ok · `pnpm typecheck` ok (7/7) ·
@@ -874,6 +874,60 @@ Huecos para el trabajo del editor (no se cambian en A1): los bloques no se puede
 `data-lz-slot`/`data-lz-variant` (solo por su clase raíz `lzb-*`); 3 bloques Pro sin variante en el kit
 (`stacked-cards`, `before-after`, `open-now`); la galería es Básica en el editor y solo Pro en el kit;
 20+ variantes del kit no tienen bloque.
+
+## Presupuesto de bytes y Web Vitals (A1 · WP5)
+
+### Presupuestos (`packages/template-kit/budgets.json`)
+
+Por tier, en bytes (aquí en KiB). Punto de partida: el máximo de las 42 plantillas el 2026-10-14
+(compiladas en memoria con las imágenes del repo) + ~10 %, redondeado a KiB entero. `html` es el
+`index.html` de vista previa (con el CSS en línea, lo que sirve un sitio); `imágenes` son las locales
+de una página (total y la mayor); `js` es el gzip del runtime de Motion (solo Pro; Básico no lleva JS).
+
+| Tier   | CSS (crudo / gzip) | HTML (crudo / gzip) | Imágenes (total / mayor) | JS gzip | Máximo de hoy (plantilla)                                                                                                                                            |
+| ------ | ------------------ | ------------------- | ------------------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Básico | 28 / 6             | 48 / 11             | 175 / 175                | 0       | CSS 24.7 (`estetica-base-alheli`), gzip 4.9; HTML 42.8 (`floreria-base-flores-lupita`), gzip 9.8; imagen 158.9 (`restaurante-base-ceniza`)                           |
+| Pro    | 38 / 7             | 67 / 15             | 2828 / 323               | 8       | CSS 33.7 y gzip 6.2 (`restaurante-margen`); HTML 60.8, gzip 13.4 (`barberia-oxido`); imágenes 2570.5 en 20 fotos, mayor 293 (`restaurante-hoja-y-barro`); Motion 7.1 |
+
+- `kit:validate` (sobre manifiestos) imprime una línea `budget` por plantilla; pasarse es **WARN**
+  y no cambia el código de salida. `kit:validate --strict-budget` lo vuelve **FAIL** (exit 1).
+- `lattiz build` de un spec: si la plantilla **todavía no existe** en `templates/`, pasarse es un
+  hallazgo `budget` y el build se niega (como cualquier hallazgo de `kit:validate`); si ya existe,
+  queda como aviso y construye igual. Ninguna plantilla de hoy se pasa (`--strict-budget` sobre las
+  42: 0 avisos, ~16 s).
+- Los gzip de zlib varían un poco entre macOS y Linux; el 10 % lo cubre. El peso de las imágenes Pro
+  lo dominan las fotos de la plantilla (hasta 20 por página): es el primer candidato a apretar.
+- Subir un número solo con una razón escrita en el commit.
+
+### Web Vitals en `lattiz check --lighthouse`
+
+Además de los puntajes, la regla `cwv` imprime **LCP, CLS y TBT** del mismo reporte de Lighthouse (su
+emulación móvil por defecto, con throttling simulado) contra LCP ≤ 2.5 s, CLS ≤ 0.1 y TBT ≤ 200 ms
+(TBT hace de INP en laboratorio). Por ahora es **WARN**, nunca FAIL. Son números **de laboratorio
+sobre la vista previa local estática** (sin CDN, fuentes servidas en local, imágenes del repo), **no
+datos de campo**: sirven para comparar plantillas entre sí y ver tendencias. El SEO sale 66 en todas
+porque la vista previa de `lattiz` se arma con `noindex` (artefacto local, no de la plantilla).
+
+Línea base (2026-10-14, MacBook, una plantilla a la vez, un navegador):
+
+| Plantilla                    | Tier   | Perf | LCP    | CLS   | TBT  | Veredicto | Tiempo | RSS pico\* |
+| ---------------------------- | ------ | ---- | ------ | ----- | ---- | --------- | ------ | ---------- |
+| `barberia-base-abeto-v1`     | Básico | 98   | 1.95 s | 0.002 | 0 ms | PASS      | 40 s   | 500 MB     |
+| `barberia-abeto-v1`          | Pro    | 98   | 1.98 s | 0.001 | 0 ms | PASS      | 40 s   | 542 MB     |
+| `restaurante-base-ceniza-v1` | Básico | 88   | 3.15 s | 0.002 | 0 ms | WARN LCP  | 40 s   | 539 MB     |
+| `restaurante-ceniza-v1`      | Pro    | 81   | 4.06 s | 0.006 | 0 ms | WARN LCP  | 52 s   | 671 MB     |
+| `clinica-base-cauce-v1`      | Básico | 90   | 2.93 s | 0.002 | 0 ms | WARN LCP  | 37 s   | 509 MB     |
+| `clinica-cauce-v1`           | Pro    | 89   | 2.94 s | 0.000 | 0 ms | WARN LCP  | 41 s   | 540 MB     |
+
+\* `/usr/bin/time -l` del proceso de `lattiz check` completo (las 7 medidas con Playwright más
+Lighthouse); Chromium corre en procesos aparte. Accesibilidad y buenas prácticas: 100 en las seis.
+
+Lectura: CLS y TBT están bien en todas (las métricas de fuente y la falta de JS en Básico se notan);
+lo que falla es **LCP**. No lo explica solo el peso total (`barberia-abeto-v1` lleva 1.25 MiB de
+fotos y pasa; `restaurante-ceniza-v1` lleva 2.05 MiB, la mayor de 265 KiB, y no; `clinica-cauce-v1`
+lleva 0.87 MiB y queda en 2.94 s): manda la imagen y el tipo de portada que pintan el LCP. Siguiente
+paso (A2 o después): revisar la imagen LCP de cada portada (peso, tamaño, `fetchpriority`) y apretar
+el presupuesto de imágenes, sin tocar las plantillas existentes.
 
 ## Hallazgos de la Parte 2
 

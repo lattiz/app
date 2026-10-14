@@ -66,6 +66,10 @@ const MAX_IMAGE_BYTES = 300 * 1024;
 const MAX_IMAGE_PX = 2000;
 /** kit:shots' rule: below this window height hero sections fall back to natural flow. */
 const FIT_MIN_HEIGHT = 560;
+/** Core Web Vitals «good» thresholds; TBT stands in for INP in a lab run. WARN only. */
+const LCP_MS = 2500;
+const CLS_MAX = 0.1;
+const TBT_MS = 200;
 
 const RULES = {
   kit: 'kit:validate',
@@ -82,6 +86,7 @@ const RULES = {
   motion: 'Motion: cobertura',
   nojs: 'sin JS: contenido visible',
   lighthouse: 'Lighthouse',
+  cwv: `Web Vitals lab (LCP ≤ ${LCP_MS / 1000} s, CLS ≤ ${CLS_MAX})`,
   credits: 'créditos de fotos',
 } as const;
 type RuleId = keyof typeof RULES;
@@ -493,7 +498,11 @@ async function noJs(browser: Browser, url: string): Promise<RuleResult> {
   }
 }
 
-function lighthouse(url: string): Promise<RuleResult> {
+/**
+ * Lighthouse (its default mobile emulation and simulated throttling) on the local static preview:
+ * category scores plus LCP, CLS and TBT. Lab numbers, not field data: no CDN, local fonts.
+ */
+function lighthouse(url: string): Promise<RuleResult[]> {
   return new Promise((done) => {
     const child = spawn(
       'npx',
@@ -521,6 +530,7 @@ function lighthouse(url: string): Promise<RuleResult> {
       try {
         const report = JSON.parse(out) as {
           categories: Record<string, { title: string; score: number | null }>;
+          audits: Record<string, { numericValue?: number }>;
         };
         const scores = Object.values(report.categories).map(
           (cat) => `${cat.title} ${Math.round((cat.score ?? 0) * 100)}`,
@@ -528,23 +538,40 @@ function lighthouse(url: string): Promise<RuleResult> {
         const low = Object.values(report.categories).some(
           (cat) => (cat.score ?? 0) < 0.8,
         );
-        done(
+        const metric = (id: string) => report.audits[id]?.numericValue;
+        const lcp = metric('largest-contentful-paint');
+        const cls = metric('cumulative-layout-shift');
+        const tbt = metric('total-blocking-time');
+        const over = [
+          lcp !== undefined && lcp > LCP_MS ? 'LCP' : null,
+          cls !== undefined && cls > CLS_MAX ? 'CLS' : null,
+          tbt !== undefined && tbt > TBT_MS ? 'TBT' : null,
+        ].filter((x): x is string => x !== null);
+        const fmt = (v: number | undefined, f: (n: number) => string) =>
+          v === undefined ? '—' : f(v);
+        done([
           result(
             'lighthouse',
             GLOBAL,
             low ? 'WARN' : 'PASS',
             scores.join(' · '),
           ),
-        );
+          result(
+            'cwv',
+            'móvil (lab)',
+            over.length > 0 ? 'WARN' : 'PASS',
+            `LCP ${fmt(lcp, (n) => `${(n / 1000).toFixed(2)} s`)} · CLS ${fmt(cls, (n) => n.toFixed(3))} · TBT ${fmt(tbt, (n) => `${Math.round(n)} ms`)}${over.length ? ` (sobre el umbral: ${over.join(', ')})` : ''}; laboratorio en vista previa local estática (sin CDN, fuentes locales), no datos de campo`,
+          ),
+        ]);
       } catch {
-        done(
+        done([
           result(
             'lighthouse',
             GLOBAL,
             'WARN',
             `no corrió (código ${code}): ${err.trim().split('\n').pop() ?? ''}`,
           ),
-        );
+        ]);
       }
     });
   });
@@ -688,7 +715,8 @@ export async function runCheck(
     }
   } finally {
     await browser?.close();
-    if (opts.lighthouse) results.push(await lighthouse(`${server.url}/site`));
+    if (opts.lighthouse)
+      results.push(...(await lighthouse(`${server.url}/site`)));
     await server.close();
   }
   return withFindings(finish(tier), dist.meta);
@@ -822,7 +850,8 @@ export const check: Command = {
     'Encaje (como kit:shots): una sección data-lz-fit cuyo contenido pasa de 0.9 × (alto − header)',
     'y cuyo bloque de texto + CTA tampoco cabe es FAIL; con alto ≤ 560 px no aplica.',
     '',
-    '  --lighthouse   además corre Lighthouse (npx lighthouse@12, se instala al vuelo; usa memoria)',
+    '  --lighthouse   además corre Lighthouse (npx lighthouse@12, se instala al vuelo; usa memoria):',
+    '                 puntajes + LCP/CLS/TBT en móvil emulado (laboratorio, no datos de campo)',
     '  --json         imprime solo el resultado en JSON; findings[] trae cada FAIL/WARN con sección,',
     '                 selector y, si la plantilla sale de un spec, specHint (qué campo del spec cambiar)',
   ],
