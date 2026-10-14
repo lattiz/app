@@ -73,3 +73,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [template-primitives](template-primitives.md) — primitivos lz-btn/lz-tile/…; estilo por familia en el tema; CSS solo si el markup lo usa
 - [spec-direction-archetype-wiring](spec-direction-archetype-wiring.md) — layout en specs extended: la dirección elige, sus reglas son compuerta
 - [cta-role](cta-role.md) — rol cta opcional en ambos tiers; cuenta; obligatorios y rangos sin cambio
+- [lcp-policy](lcp-policy.md) — LCP lo mueven la hoja de fuentes y la foto de portada; hero nuevo ≤ 1200 px q72 y ≤ 120 KiB
