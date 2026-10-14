@@ -71,3 +71,5 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [schema-plan-guard](schema-plan-guard.md) — guard de secciones Pro en guardar/publicar; report por defecto; exime la plantilla
 - [template-byte-budgets](template-byte-budgets.md) — budgets.json por tier (WARN; FAIL estricto o plantilla nueva); CWV de laboratorio en lattiz check
 - [template-primitives](template-primitives.md) — primitivos lz-btn/lz-tile/…; estilo por familia en el tema; CSS solo si el markup lo usa
+- [spec-direction-archetype-wiring](spec-direction-archetype-wiring.md) — layout en specs extended: la dirección elige, sus reglas son compuerta
+- [cta-role](cta-role.md) — rol cta opcional en ambos tiers; cuenta; obligatorios y rangos sin cambio
