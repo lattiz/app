@@ -70,3 +70,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [catalog-manifest](catalog-manifest.md) — catalog.manifest.json generado; --check en pnpm lint; la API no importa el kit
 - [schema-plan-guard](schema-plan-guard.md) — guard de secciones Pro en guardar/publicar; report por defecto; exime la plantilla
 - [template-byte-budgets](template-byte-budgets.md) — budgets.json por tier (WARN; FAIL estricto o plantilla nueva); CWV de laboratorio en lattiz check
+- [template-primitives](template-primitives.md) — primitivos lz-btn/lz-tile/…; estilo por familia en el tema; CSS solo si el markup lo usa
