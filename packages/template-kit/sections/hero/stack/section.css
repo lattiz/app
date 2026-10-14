@@ -1,0 +1,143 @@
+/* A content card on a fanned deck of two sheets; the photo bleeds to the window's right edge. */
+.lz-hero-stack {
+  padding: clamp(14px, 3svh, 40px) 0 clamp(18px, 4svh, 56px);
+  overflow: hidden;
+}
+
+.lz-hero-stack__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  align-items: center;
+  gap: calc(clamp(24px, 4vw, 64px) * var(--lz-space));
+  min-height: min(var(--lz-fit), var(--lz-fit-max));
+  padding-left: max(var(--lz-gutter), calc((100% - var(--lz-container)) / 2));
+}
+
+/* The two sheets are the deck's pseudo-elements; the deck reserves their offset so nothing overflows. */
+.lz-hero-stack__deck {
+  position: relative;
+  min-width: 0;
+  margin: 0 22px 22px 0;
+}
+
+.lz-hero-stack__deck::before,
+.lz-hero-stack__deck::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: var(--lz-border-width) solid var(--lz-color-line);
+  border-radius: var(--lz-radius-card);
+  background: var(--lz-color-surface-2);
+}
+
+.lz-hero-stack__deck::before {
+  transform: translate(22px, 22px);
+  opacity: 0.55;
+}
+
+.lz-hero-stack__deck::after {
+  transform: translate(11px, 11px);
+}
+
+.lz-hero-stack__card {
+  position: relative;
+  z-index: 1;
+  padding: calc(clamp(22px, 4svh, 52px) * var(--lz-space))
+    calc(clamp(22px, 3.2vw, 52px) * var(--lz-space));
+}
+
+.lz-hero-stack__title {
+  margin: calc(4px * var(--lz-space)) 0 calc(14px * var(--lz-space));
+  font-size: calc(
+    min(clamp(40px, 4.6vw, 80px), 8.2svh) * var(--lz-display-scale)
+  );
+  letter-spacing: var(--lz-display-tracking, 0.01em);
+  text-wrap: balance;
+}
+
+.lz-hero-stack__text {
+  max-width: 46ch;
+  margin: 0 0 calc(22px * var(--lz-space));
+  color: var(--lz-color-text);
+  font-size: calc(17px * var(--lz-text-scale));
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.lz-hero-stack__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(12px * var(--lz-space));
+}
+
+.lz-hero-stack__media {
+  align-self: stretch;
+  min-width: 0;
+  margin: 0;
+}
+
+.lz-hero-stack__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: min(var(--lz-fit), var(--lz-fit-max));
+  object-fit: cover;
+  border-radius: var(--lz-radius-card) 0 0 var(--lz-radius-card);
+  background: var(--lz-color-surface-2);
+  filter: var(--lz-photo-filter);
+}
+
+/* Tablets and phones: the card first (CTA in view), the photo below inside the gutters. */
+@media (max-width: 992px) {
+  .lz-hero-stack__grid {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    padding-right: var(--lz-gutter);
+  }
+  .lz-hero-stack__image {
+    aspect-ratio: 16 / 10;
+    height: auto;
+    max-height: calc(var(--lz-fit) * 0.42);
+    border-radius: var(--lz-radius-card);
+  }
+}
+
+@media (max-width: 480px) {
+  .lz-hero-stack__deck {
+    margin: 0 12px 12px 0;
+  }
+  .lz-hero-stack__deck::before {
+    transform: translate(12px, 12px);
+  }
+  .lz-hero-stack__deck::after {
+    transform: translate(6px, 6px);
+  }
+  .lz-hero-stack__card {
+    padding: calc(20px * var(--lz-space)) calc(18px * var(--lz-space));
+  }
+  .lz-hero-stack__title {
+    font-size: calc(
+      min(var(--lz-title-hero-sm), 7.6svh) * var(--lz-display-scale)
+    );
+  }
+  .lz-hero-stack__text {
+    font-size: calc(16px * var(--lz-text-scale));
+  }
+  .lz-hero-stack__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* Landscape phones and tiny windows: no fitting, natural flow. */
+@media (max-height: 560px) {
+  .lz-hero-stack__grid {
+    min-height: 0;
+  }
+  .lz-hero-stack__image {
+    max-height: 420px;
+  }
+  .lz-hero-stack__title {
+    font-size: calc(var(--lz-title-hero-sm) * var(--lz-display-scale));
+  }
+}

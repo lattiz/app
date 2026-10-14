@@ -1,0 +1,26 @@
+<section id="hero" data-lz-slot="hero" data-lz-variant="rail" data-lz-fit class="lz-section lz-hero-rail">
+  <div class="lz-container lz-hero-rail__grid">
+    <aside class="lz-hero-rail__rail" data-lz-if="details" data-lz-name="Riel">
+      <dl class="lz-hero-rail__details">
+        <div class="lz-hero-rail__detail" data-lz-each="details">
+          <dt class="lz-hero-rail__term" data-lz-key="label"></dt>
+          <dd class="lz-hero-rail__value" data-lz-key="value"></dd>
+        </div>
+      </dl>
+    </aside>
+    <div class="lz-hero-rail__main">
+      <p class="lz-tag lz-hero-rail__eyebrow" data-lz-key="eyebrow"></p>
+      <h1 class="lz-title lz-hero-rail__title" data-lz-key="title"></h1>
+      <div class="lz-hero-rail__lede">
+        <p class="lz-hero-rail__text" data-lz-key="text"></p>
+        <div class="lz-hero-rail__actions">
+          <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-btn" data-lz-key="primaryCta"></a>
+          <a class="lz-btn lz-btn--secondary" data-lz-attr-href="secondaryHref" data-lz-key="secondaryCta"></a>
+        </div>
+      </div>
+      <figure class="lz-frame lz-hero-rail__media">
+        <img fetchpriority="high" width="1600" height="700" class="lz-hero-rail__image" data-lz-attr-src="image" data-lz-attr-alt="imageAlt">
+      </figure>
+    </div>
+  </div>
+</section>

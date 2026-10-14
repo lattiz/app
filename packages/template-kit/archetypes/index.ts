@@ -81,7 +81,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     sections: {
       pro: [
         s('header', 'inline'),
-        s('hero', 'columns', 'centered-arch'),
+        s('hero', 'columns', 'rail', 'centered-arch'),
         s('about', 'portrait', 'statement'),
         s('catalog', 'menu-columns', 'editorial-table'),
         s('proof', 'mosaic'),
@@ -132,7 +132,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     sections: {
       pro: [
         s('header', 'centered-logo'),
-        s('hero', 'framed', 'image-bg'),
+        s('hero', 'framed', 'stack', 'image-bg'),
         s('marquee', 'ticker'),
         s('about', 'text-image-offset'),
         s('catalog', 'cards', 'product-grid'),
@@ -184,7 +184,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     sections: {
       pro: [
         s('header', 'notice-bar'),
-        s('hero', 'framed', 'split'),
+        s('hero', 'framed', 'bento', 'split'),
         s('about', 'stats-strip'),
         s('catalog', 'menu-columns', 'product-grid', 'price-list'),
         s('proof', 'grid'),
@@ -286,7 +286,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     sections: {
       pro: [
         s('header', 'inline'),
-        s('hero', 'panel', 'columns'),
+        s('hero', 'panel', 'bento', 'columns'),
         s('about', 'portrait', 'statement'),
         s('catalog', 'editorial-table', 'menu-columns'),
         s('team', 'spotlight', 'list'),
@@ -390,7 +390,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     sections: {
       pro: [
         s('header', 'centered-logo'),
-        s('hero', 'duo-arch', 'centered-arch'),
+        s('hero', 'duo-arch', 'overlap', 'centered-arch'),
         s('about', 'text-image-offset'),
         s('catalog', 'cards'),
         s('team', 'grid'),
@@ -441,7 +441,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     sections: {
       pro: [
         s('header', 'inline'),
-        s('hero', 'columns'),
+        s('hero', 'columns', 'rail'),
         s('about', 'statement'),
         s('catalog', 'editorial-table', 'menu-columns'),
         s('proof', 'strip'),

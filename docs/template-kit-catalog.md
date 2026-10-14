@@ -985,6 +985,51 @@ escribe a mano), `pnpm lattiz kit gallery --primitives`, crítica y `kit:manifes
 con su propio commit, la comparación `kit:compare` antes/después y un re-baseline explicado del
 golden. A2 no lo hace.
 
+## Portadas nuevas (A2 · WP3)
+
+Cuatro portadas con siluetas que no existían (todas `extended`, Básico + Pro, `data-lz-fit`, sin JS,
+con primitivos: `lz-btn`, `lz-tag`, `lz-frame`, `lz-tile`, `lz-bignum`). Copy nuevo en
+`meta.sample` (convención del repo; no hay `sample.es-MX.ts` aparte), nunca en `giros/` ni `content/`.
+
+| Variante       | Silueta                                                                                            | Claves nuevas                                    | CSS crudo / gzip (B) | Revisión (`kit probe`, 16 casos)                                                                         |
+| -------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------ | -------------------- | -------------------------------------------------------------------------------------------------------- |
+| `hero/bento`   | Celdas: titular ancho, foto alta a la derecha, una celda por dato (≤ 3) debajo                     | `facts[].value?`, `facts[].label?`               | 3651 / 1191          | 3 rondas: gris secundario sin AA en celdas teñidas; en móvil no cabía → los datos son solo de escritorio |
+| `hero/rail`    | Texto primero: riel angosto con ficha de datos, titular a todo el ancho, foto en franja panorámica | `details[].label?`, `details[].value?`           | 3984 / 1239          | 3 rondas: encaje a 1024 con copy largo (columna de texto angosta); riel alineado arriba                  |
+| `hero/overlap` | Partida con una foto de detalle con paspartú encimada en el borde de la foto grande                | `detailImage?`, `detailAlt?` (las de `duo-arch`) | 2822 / 983           | 1 ronda                                                                                                  |
+| `hero/stack`   | Tarjeta elevada sobre una baraja de dos hojas; foto a sangre hasta el borde derecho de la ventana  | —                                                | 3562 / 1190          | 1 ronda                                                                                                  |
+
+Reglas del reglamento que fijaron la forma: la portada no lleva listas ni barras de confianza, así
+que `bento` muestra a lo sumo 3 datos y solo desde 993 px, y `rail` a lo sumo 3 filas; la foto
+principal lleva `fetchpriority="high"` y nunca `loading="lazy"`; la foto de detalle de `overlap` no
+compite por el LCP. Familias: `rail` → `type`, `bento` → `cells`, `overlap` → `media-text`, `stack`
+→ `split-panel`; cada una entró en las preferencias Pro de dos arquetipos (editorial/minimal,
+catalog/trust, soft, showcase).
+
+**Portadas Pro libres** (`kit capacity --catalog extended`, 9 → 13 variantes):
+
+| Giro        | Antes | Después | Pares Básico + Pro antes → después |
+| ----------- | ----- | ------- | ---------------------------------- |
+| barberia    | 5/9   | 9/13    | 5 → 9                              |
+| clinica     | 6/9   | 10/13   | 6 → 10                             |
+| dental      | 8/9   | 12/13   | 8 → 12                             |
+| despacho    | 8/9   | 12/13   | 8 → 11                             |
+| estetica    | 7/9   | 11/13   | 7 → 11                             |
+| floreria    | 7/9   | 11/13   | 7 → 11                             |
+| gimnasio    | 8/9   | 12/13   | 8 → 12                             |
+| restaurante | 4/9   | 8/13    | 4 → 8                              |
+| tienda      | 8/9   | 12/13   | 8 → 11                             |
+| veterinaria | 8/9   | 12/13   | 8 → 12                             |
+
+Meta (≥ 8 portadas Pro libres por giro): cumplida en los diez. El Total por giro no cambia (lo topan
+las paletas para los Básicos).
+
+**Agregar una portada:** carpeta `sections/hero/<nombre>/` (`section.html` con `data-lz-fit`,
+`fetchpriority="high"` en la foto principal; `section.css` con el encaje `min(var(--lz-fit),
+var(--lz-fit-max))`, título con tope en `svh`, texto primero bajo 992 y `max-height: 560px` sin
+encaje; `meta.ts` con `tiers`, `intent`, `archetypes` y `sample`), familia en
+`archetypes/families.ts`, preferencia en al menos un arquetipo, `pnpm lattiz kit probe hero/<nombre>`
+hasta 16/16 y `kit:manifest`.
+
 ## Hallazgos de la Parte 2
 
 - **Snapshot tras el merge:** `main` trajo `restaurante-hoja-y-barro` en paralelo a la Parte 1; su

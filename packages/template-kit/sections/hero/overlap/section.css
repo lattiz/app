@@ -1,0 +1,125 @@
+/* Split with an overlapping second frame: the detail photo crosses from the photo into the text side. */
+.lz-hero-overlap {
+  padding: clamp(14px, 3svh, 40px) 0 clamp(18px, 4svh, 56px);
+}
+
+.lz-hero-overlap__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: calc(clamp(24px, 4vw, 72px) * var(--lz-space));
+  min-height: min(var(--lz-fit), var(--lz-fit-max));
+}
+
+.lz-hero-overlap__copy {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.lz-hero-overlap__eyebrow {
+  margin-bottom: calc(10px * var(--lz-space));
+}
+
+.lz-hero-overlap__title {
+  margin: 0 0 calc(16px * var(--lz-space));
+  font-size: calc(
+    min(clamp(42px, 5vw, 88px), 8.6svh) * var(--lz-display-scale)
+  );
+  letter-spacing: var(--lz-display-tracking, 0.01em);
+  text-wrap: balance;
+}
+
+.lz-hero-overlap__text {
+  max-width: 46ch;
+  margin: 0 0 calc(24px * var(--lz-space));
+  color: var(--lz-color-text);
+  font-size: calc(17px * var(--lz-text-scale));
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.lz-hero-overlap__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(12px * var(--lz-space));
+}
+
+.lz-hero-overlap__stage {
+  position: relative;
+  min-width: 0;
+  height: 100%;
+  padding-left: clamp(40px, 7vw, 120px);
+}
+
+.lz-hero-overlap__main {
+  height: 100%;
+}
+
+.lz-hero-overlap__image {
+  max-height: min(var(--lz-fit), var(--lz-fit-max));
+  aspect-ratio: 11 / 13;
+}
+
+/* The detail frame sits on the stage's left edge, half over the photo (never past the column). */
+.lz-hero-overlap__detail {
+  position: absolute;
+  left: 0;
+  bottom: 8%;
+  z-index: 2;
+  width: clamp(120px, 15vw, 230px);
+}
+
+.lz-hero-overlap__detail-image {
+  aspect-ratio: 1;
+}
+
+/* Tablets and phones: text first (CTA in view); the photo after, the detail in its corner. */
+@media (max-width: 992px) {
+  .lz-hero-overlap__grid {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+  .lz-hero-overlap__stage {
+    height: auto;
+    padding-left: 0;
+  }
+  .lz-hero-overlap__image {
+    aspect-ratio: 4 / 3;
+    max-height: calc(var(--lz-fit) * 0.5);
+  }
+  .lz-hero-overlap__detail {
+    left: auto;
+    right: 12px;
+    bottom: 12px;
+    width: clamp(96px, 26vw, 160px);
+  }
+}
+
+@media (max-width: 480px) {
+  .lz-hero-overlap__title {
+    font-size: calc(
+      min(var(--lz-title-hero-sm), 7.8svh) * var(--lz-display-scale)
+    );
+  }
+  .lz-hero-overlap__text {
+    font-size: calc(16px * var(--lz-text-scale));
+  }
+  .lz-hero-overlap__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* Landscape phones and tiny windows: no fitting, natural flow. */
+@media (max-height: 560px) {
+  .lz-hero-overlap__grid {
+    min-height: 0;
+  }
+  .lz-hero-overlap__image {
+    max-height: 420px;
+  }
+  .lz-hero-overlap__title {
+    font-size: calc(var(--lz-title-hero-sm) * var(--lz-display-scale));
+  }
+}

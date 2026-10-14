@@ -1,0 +1,148 @@
+/* Bento: the headline cell, a tall photo and one cell per fact (N cells for N facts, never empty). */
+.lz-hero-bento {
+  padding: clamp(14px, 3svh, 40px) 0 clamp(18px, 4svh, 56px);
+}
+
+.lz-hero-bento__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr) minmax(0, 0.9fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: var(--lz-gap, calc(16px * var(--lz-space)));
+  min-height: min(var(--lz-fit), var(--lz-fit-max));
+}
+
+.lz-hero-bento__lead {
+  grid-column: 1 / 3;
+  align-content: center;
+  padding: calc(clamp(20px, 4svh, 48px) * var(--lz-space))
+    calc(clamp(22px, 3.2vw, 52px) * var(--lz-space));
+}
+
+.lz-hero-bento__eyebrow {
+  margin-bottom: calc(6px * var(--lz-space));
+}
+
+/* Inside tinted cells secondary text keeps the text color: muted is only AA on the page ground. */
+.lz-hero-bento .lz-tag,
+.lz-hero-bento .lz-bignum__label {
+  color: var(--lz-color-text);
+}
+
+.lz-hero-bento__title {
+  margin: 0 0 calc(14px * var(--lz-space));
+  font-size: calc(
+    min(clamp(38px, 4.2vw, 76px), 7.4svh) * var(--lz-display-scale)
+  );
+  letter-spacing: var(--lz-display-tracking, 0.01em);
+  text-wrap: balance;
+}
+
+.lz-hero-bento__text {
+  max-width: 52ch;
+  margin: 0 0 calc(22px * var(--lz-space));
+  color: var(--lz-color-text);
+  font-size: calc(17px * var(--lz-text-scale));
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.lz-hero-bento__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(12px * var(--lz-space));
+}
+
+.lz-hero-bento__media {
+  grid-column: 3;
+  grid-row: 1 / 3;
+  min-height: 0;
+}
+
+.lz-hero-bento__image {
+  max-height: min(var(--lz-fit), var(--lz-fit-max));
+  aspect-ratio: 4 / 5;
+}
+
+.lz-hero-bento__facts {
+  display: grid;
+  grid-column: 1 / 3;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: var(--lz-gap, calc(16px * var(--lz-space)));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lz-hero-bento__fact {
+  padding: calc(12px * var(--lz-space)) calc(18px * var(--lz-space));
+}
+
+/* Three facts at most: a fourth would turn the hero into a trust bar (rulebook §2). */
+.lz-hero-bento__fact:nth-child(n + 4) {
+  display: none;
+}
+
+.lz-hero-bento__fact .lz-bignum__value {
+  font-size: calc(
+    min(clamp(28px, 2.6vw, 44px), 5svh) * var(--lz-heading-scale, 1)
+  );
+}
+
+.lz-hero-bento__fact .lz-bignum__label {
+  font-size: calc(14px * var(--lz-text-scale));
+}
+
+/* Tablets and phones: headline first (CTA in view), facts in a row, the photo last. */
+@media (max-width: 992px) {
+  .lz-hero-bento__grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    min-height: 0;
+  }
+  .lz-hero-bento__lead,
+  .lz-hero-bento__facts,
+  .lz-hero-bento__media {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .lz-hero-bento__image {
+    aspect-ratio: 16 / 10;
+    max-height: calc(var(--lz-fit) * 0.4);
+  }
+  /* Phones and tablets keep the hero to headline, CTAs and photo; the facts are a desktop cell. */
+  .lz-hero-bento__facts {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .lz-hero-bento__lead {
+    padding: calc(20px * var(--lz-space)) calc(18px * var(--lz-space));
+  }
+  .lz-hero-bento__title {
+    font-size: calc(
+      min(var(--lz-title-hero-sm), 7.6svh) * var(--lz-display-scale)
+    );
+  }
+  .lz-hero-bento__text {
+    font-size: calc(16px * var(--lz-text-scale));
+  }
+  .lz-hero-bento__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* Landscape phones and tiny windows: no fitting, natural flow. */
+@media (max-height: 560px) {
+  .lz-hero-bento__grid {
+    min-height: 0;
+  }
+  .lz-hero-bento__image {
+    max-height: 420px;
+  }
+  .lz-hero-bento__title {
+    font-size: calc(var(--lz-title-hero-sm) * var(--lz-display-scale));
+  }
+}
