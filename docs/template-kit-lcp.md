@@ -56,8 +56,13 @@ La foto solo importa cuando pesa; las fuentes importan siempre.
   Ninguna variante nueva oculta su contenido sin JS.
 - **`lattiz build` de una plantilla que todavía no existe** codifica `hero.jpg` a ≤ 1200 px de ancho
   y calidad 72 (mismo recorte); las existentes conservan sus bytes.
-- **Presupuesto** `images.hero` = 120 KiB en `budgets.json`: WARN para las existentes (hoy 5 lo pasan:
-  127–202 KiB), FAIL al construir una plantilla nueva.
+- **Presupuesto** `images.hero` = 120 KiB en `budgets.json`: WARN para las existentes y FAIL al
+  construir una plantilla nueva. Hoy 5 lo pasan, todas con foto real:
+  - `restaurante-ceniza-v1`: 202 KiB
+  - `floreria-cardamina-v1`: 174 KiB
+  - `restaurante-base-ceniza-v1`: 159 KiB
+  - `restaurante-base-fresca-nube-v1`: 147 KiB
+  - `floreria-base-cardamina-v1`: 127 KiB
 - **Fuentes:** sin JS en el kit no hay forma de cargar la hoja de Google sin bloquear; queda como
   propuesta (abajo). Lo que sí aplica a lo nuevo: los pares de la biblioteca piden un peso o un rango
   variable acotado (p. ej. `Onest:wght@400..600`), y el fallback métrico mantiene el CLS en ~0 si la
@@ -65,10 +70,9 @@ La foto solo importa cuando pesa; las fuentes importan siempre.
 
 ## Retrofit propuesto (no aplicado: requiere re-baseline deliberado)
 
-1. **Fotos de portada pesadas** (`restaurante-ceniza`, `restaurante-base-ceniza` y las otras tres
-   que avisan): recodificar `assets/<giro>/<id>/hero.jpg` a ≤ 1200 px, q72. Cambia el hash de
-   `assets` de esas plantillas en el golden (justificación: LCP −0.66 s medido) y requiere sembrarlas
-   de nuevo. Riesgo bajo: mismo recorte.
+1. **Fotos de portada pesadas** (las 5 de arriba): recodificar `assets/<giro>/<id>/hero.jpg` a
+   ≤ 1200 px, q72. Cambia el hash de `assets` de esas plantillas en el golden (justificación: LCP
+   −0.66 s medido) y requiere sembrarlas de nuevo. Riesgo bajo: mismo recorte.
 2. **Hoja de fuentes fuera del camino crítico** (el cambio que más mueve: −1 a −1.4 s). Opciones, de
    menos a más invasiva:
    - a. En tenant-sites (`compose-site.ts`, fuera de A2): reescribir la `<link>` de Google Fonts a
