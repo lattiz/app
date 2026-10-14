@@ -39,14 +39,14 @@ blueprints, mover el copy de `archetypes/verticals.ts` y los `sample` de cada `m
 
 Antes de cualquier trabajo de diseño nuevo (Fase A2). Estado al 2026-10-14:
 
-| WP  | Qué                                                        | Estado    | Commits        | Desviaciones                                                                       |
-| --- | ---------------------------------------------------------- | --------- | -------------- | ---------------------------------------------------------------------------------- |
+| WP  | Qué                                                        | Estado    | Commits          | Desviaciones                                                                       |
+| --- | ---------------------------------------------------------- | --------- | ---------------- | ---------------------------------------------------------------------------------- |
 | WP1 | Snapshot: clasificar y resolver las diferencias            | hecho     | 47ba2b8, 10dbb6e | el fixture legacy no se arregla con paletas: se congelan las entradas del snapshot |
-| WP2 | Capacidad: restaurante, clínica, barbería ≥ 14; resto ≥ 12 | pendiente |                |                                                                                    |
-| WP3 | Manifiesto del catálogo (`catalog.manifest.json`)          | pendiente |                |                                                                                    |
-| WP4 | Plan en el servidor (auditoría + `PlanGuard`)              | pendiente |                |                                                                                    |
-| WP5 | Presupuesto de bytes y línea base de Core Web Vitals       | pendiente |                |                                                                                    |
-| WP6 | Docs y decisiones                                          | pendiente |                |                                                                                    |
+| WP2 | Capacidad: restaurante, clínica, barbería ≥ 14; resto ≥ 12 | hecho     | (este)           | pares topados por portadas Pro (A2); 8 paletas neutras                             |
+| WP3 | Manifiesto del catálogo (`catalog.manifest.json`)          | pendiente |                  |                                                                                    |
+| WP4 | Plan en el servidor (auditoría + `PlanGuard`)              | pendiente |                  |                                                                                    |
+| WP5 | Presupuesto de bytes y línea base de Core Web Vitals       | pendiente |                  |                                                                                    |
+| WP6 | Docs y decisiones                                          | pendiente |                  |                                                                                    |
 
 **Línea base A1 (MacBook, Node 24.9, pnpm 11.5.2):** `pnpm lint` ok · `pnpm typecheck` ok (7/7) ·
 `pnpm build` ok (4/4, desde la caché de turbo) · `lattiz doctor` ok · `kit:verify-snapshot` **falla
@@ -763,6 +763,54 @@ WARN, igual que en `lattiz check`) y escribe `.lattiz/gallery/archetypes.html` c
 
 Las portadas ya no topan los pares; ahora los topan las paletas (tono a ≥ 30° y ΔE ≥ 15), sin tocar
 umbrales. Antes de la Parte 2, restaurante ya había bajado de 3 a 2 pares por `hoja-y-barro`.
+
+## Capacidad en A1 (WP2, 2026-10-14)
+
+`pnpm lattiz kit capacity --catalog extended`, antes y después, con las 42 plantillas de `main`.
+Qué topa cada modo (salida completa de `giroCapacity`, no solo el Total):
+
+- **Pares Básico + Pro:** las **portadas Pro** (9 variantes; una por Pro del giro). Restaurante tiene
+  4 libres, barbería 5, clínica 6. Subir esto es diseño (portadas nuevas): Fase A2.
+- **Básicos después de los pares:** las **paletas**. Las ventanas de tono a ≥ 30° ya casi no existen
+  (restaurante 4, barbería 4, clínica 5) y los acentos neutros que quedaban chocaban por ΔE.
+- Pares tipográficos: no topan (21–29 libres por giro).
+
+Se agregaron **8 paletas de acento neutro sobre fondos distintos** (`palettes/seeds.ts`, bloque
+«A1 · WP2»; ids nuevos, solo `extended`; `library.ts` solo ganó entradas): cuatro teñidas con acento
+tinta (`pal-coral-tinta`, `pal-cielo-tinta`, `pal-lavanda-tinta`, `pal-menta-tinta`) y cuatro oscuras
+con acento claro (`pal-bosque-hueso`, `pal-ciruela-plata`, `pal-cacao-crema`, `pal-petroleo-hueso`).
+Todas AA por construcción (`kit:palettes`) y revisadas en `kit gallery --palettes`. La regla de
+30° no cuenta un acento casi gris (diferencia de canales ≤ 20/255), así que la capacidad crece por el
+fondo: cada una queda a ≥ 15 (ΔE00 fondo + acento) de toda paleta del giro. Se descartó un
+«durazno y tinta»: su acento salía en 44° y su fondo a 12.6 de `pal-mostaza`. `CATALOG_VERSION` 1 → 2.
+
+| Giro        | Total antes | Total después | Pares (antes = después) | Lo topa ahora                          |
+| ----------- | ----------- | ------------- | ----------------------- | -------------------------------------- |
+| barberia    | 12          | **20**        | 5                       | pares: portadas Pro · Básicos: paletas |
+| clinica     | 12          | **20**        | 6                       | ídem                                   |
+| dental      | 16          | **24**        | 8                       | ídem                                   |
+| despacho    | 17          | **23**        | 8                       | ídem                                   |
+| estetica    | 14          | **22**        | 7                       | ídem                                   |
+| floreria    | 14          | **24**        | 7                       | ídem                                   |
+| gimnasio    | 16          | **25**        | 8                       | ídem                                   |
+| restaurante | 9           | **18**        | 4                       | ídem                                   |
+| tienda      | 16          | **23**        | 8                       | ídem                                   |
+| veterinaria | 17          | **25**        | 8                       | ídem                                   |
+
+Meta (restaurante, clínica y barbería ≥ 14; resto ≥ 12): cumplida. Ojo: los **pares** de restaurante
+siguen en 4; si se siguen agregando pares, lo que se acaba primero son las portadas Pro.
+
+Pares más cercanos por giro después del cambio (ΔE00 fondo + acento, mínimo 15): restaurante
+`pal-arcilla`~`pal-coral-tinta` 15.7, clínica `pal-marino-hueso`~`pal-petroleo-hueso` 17.1 (el par más
+cercano del giro sigue siendo uno viejo: `pal-papel-tinta`~`pal-salvia-tinta` 15.8), barbería
+`pal-tinta-hueso`~`pal-vino-hueso` 16.3 (los nuevos quedan más lejos), florería y tienda
+`pal-arcilla`~`pal-coral-tinta` 15.7, veterinaria `pal-salvia-tinta`~`pal-menta-tinta` 18.
+
+**Ningún spec cambia:** `kit:verify-snapshot` idéntico (42 plantillas, 23 specs; los 7 `extended` se
+planean con su lock). Con `.lattiz/cache` vacía, `lattiz build restaurante-ceniza --out …` y
+`lattiz build clinica-cauce --out …` regeneran sus 7 archivos byte por byte; el lock solo difiere en
+`catalogVersion` (que `lockChoices` ignora a propósito). Sin lock, un spec `extended` sí podría
+moverse: por eso todo spec nuevo debe commitear su lock.
 
 ## Hallazgos de la Parte 2
 

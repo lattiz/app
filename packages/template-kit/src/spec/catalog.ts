@@ -16,7 +16,7 @@ export type Catalog = 'legacy' | 'extended';
 export const CATALOGS: readonly Catalog[] = ['legacy', 'extended'];
 
 /** Bumped whenever an extended pool grows or reorders; recorded in every lock. */
-export const CATALOG_VERSION = 1;
+export const CATALOG_VERSION = 2;
 
 /** Section variants as of 2026-10-12 (31): everything else under sections/ is extended. */
 export const LEGACY_VARIANTS: Readonly<Record<string, readonly string[]>> = {
