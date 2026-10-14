@@ -1,0 +1,43 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "gimnasio-estudio-sereno",
+  "twin": true,
+  "giro": "gimnasio",
+  "business": {
+    "name": "Estudio Sereno",
+    "city": "San Miguel de Allende",
+    "branch": "Guadiana",
+    "address": "Calle Pila Seca 18, Guadiana, San Miguel de Allende",
+    "hours": "Lun a sáb, 7:00 a 20:00",
+    "phone": "+52 415 000 0000",
+    "whatsapp": "524150000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "jardin-suave",
+    "archetype": "soft"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Estudio de yoga y pilates en Guadiana, San Miguel de Allende: grupos pequeños y clase de prueba."
+    },
+    "hero": {
+      "title": "Yoga y pilates a tu ritmo",
+      "text": "Clases para principiantes y grupos de ocho personas en un estudio con luz natural. Agenda tu primera clase."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Yoga en Guadiana",
+          "text": "Clases de yoga y pilates con cupo limitado. Escríbenos y reserva tu lugar."
+        }
+      }
+    }
+  }
+}

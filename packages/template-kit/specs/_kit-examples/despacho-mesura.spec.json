@@ -1,0 +1,43 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "despacho-mesura",
+  "twin": true,
+  "giro": "despacho",
+  "business": {
+    "name": "Mesura Contadores",
+    "city": "Mérida",
+    "branch": "García Ginerés",
+    "address": "Calle 29 No. 486, García Ginerés, Mérida",
+    "hours": "Lun a vie, 9:00 a 18:00",
+    "phone": "+52 999 000 0000",
+    "whatsapp": "529990000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "cantera-editorial",
+    "archetype": "editorial"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Despacho contable en García Ginerés, Mérida: declaraciones, nómina y facturación para pequeñas empresas."
+    },
+    "hero": {
+      "title": "Contabilidad mensual para negocios de Mérida",
+      "text": "Declaraciones, nómina y facturación con un contador asignado que conoce sus números."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Su contador en García Ginerés",
+          "text": "Declaraciones mensuales y anuales para personas y pequeñas empresas. Agende una llamada."
+        }
+      }
+    }
+  }
+}

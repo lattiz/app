@@ -1,0 +1,43 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "tienda-mercado-ocre",
+  "twin": true,
+  "giro": "tienda",
+  "business": {
+    "name": "Mercado Ocre",
+    "city": "San Cristóbal de las Casas",
+    "branch": "Guadalupe",
+    "address": "Real de Guadalupe 61, Guadalupe, San Cristóbal",
+    "hours": "Lun a dom, 10:00 a 20:00",
+    "phone": "+52 967 000 0000",
+    "whatsapp": "529670000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "terracota-calida",
+    "archetype": "catalog"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Tienda de artesanía en el barrio de Guadalupe, San Cristóbal: textiles y barro de talleres locales."
+    },
+    "hero": {
+      "title": "Textiles y barro de los Altos de Chiapas",
+      "text": "Rebozos, cojines y loza de talleres de la región, con el nombre de quien los hizo. Pide por WhatsApp."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Artesanía en el barrio de Guadalupe",
+          "text": "Textiles y barro de talleres locales con envío. Escríbenos."
+        }
+      }
+    }
+  }
+}

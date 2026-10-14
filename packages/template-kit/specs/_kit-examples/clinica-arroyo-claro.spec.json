@@ -1,0 +1,43 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "clinica-arroyo-claro",
+  "twin": true,
+  "giro": "clinica",
+  "business": {
+    "name": "Clínica Arroyo Claro",
+    "city": "Querétaro",
+    "branch": "Juriquilla",
+    "address": "Blvd. Juriquilla 1180, Juriquilla, Querétaro",
+    "hours": "Lun a vie, 8:00 a 19:00",
+    "phone": "+52 442 000 0000",
+    "whatsapp": "524420000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "marmol-sobrio",
+    "archetype": "trust"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Clínica de medicina familiar en Juriquilla, Querétaro: consultas puntuales, estudios y seguimiento."
+    },
+    "hero": {
+      "title": "Medicina familiar con citas puntuales",
+      "text": "Consultas de 30 minutos, estudios en el mismo edificio y seguimiento por WhatsApp. Le explicamos cada paso."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Consulta general en Juriquilla",
+          "text": "Médicos familiares con cédula a la vista y horario extendido entre semana. Agende su consulta."
+        }
+      }
+    }
+  }
+}

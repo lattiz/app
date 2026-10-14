@@ -1,0 +1,43 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "barberia-taller-recto",
+  "twin": true,
+  "giro": "barberia",
+  "business": {
+    "name": "Taller Recto",
+    "city": "Guadalajara",
+    "branch": "Lafayette",
+    "address": "Calle Marsella 238, Lafayette, Guadalajara",
+    "hours": "Mar a sáb, 10:00 a 20:00",
+    "phone": "+52 33 0000 0000",
+    "whatsapp": "523300000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "tinta-papel",
+    "archetype": "minimal"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Barbería en Lafayette, Guadalajara: corte clásico y barba con cita, de martes a sábado."
+    },
+    "hero": {
+      "title": "Corte clásico, a la hora acordada",
+      "text": "Tijera, máquina y navaja en sesiones de 45 minutos. Usted elige la hora; nosotros respetamos el reloj."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Barbería clásica en Lafayette",
+          "text": "Corte y barba en 45 minutos, con cita previa. Agende por WhatsApp."
+        }
+      }
+    }
+  }
+}

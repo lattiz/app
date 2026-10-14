@@ -1,0 +1,43 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "floreria-patio-de-luna",
+  "twin": true,
+  "giro": "floreria",
+  "business": {
+    "name": "Florería Patio de Luna",
+    "city": "Oaxaca",
+    "branch": "Jalatlaco",
+    "address": "Calle Aldama 315, Jalatlaco, Oaxaca",
+    "hours": "Lun a sáb, 9:00 a 19:00",
+    "phone": "+52 951 000 0000",
+    "whatsapp": "529510000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "terracota-calida",
+    "archetype": "showcase"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Florería en Jalatlaco, Oaxaca: ramos de temporada, arreglos y entrega el mismo día."
+    },
+    "hero": {
+      "title": "Ramos de flor de temporada, armados a mano",
+      "text": "Cempasúchil en otoño, girasol en verano y lo que llegue del mercado cada mañana. Pide por WhatsApp."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Ramos en Jalatlaco",
+          "text": "Arreglos con flor de temporada y entrega el mismo día en Oaxaca. Haz tu pedido."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "../spec.schema.json",
+  "specVersion": 1,
+  "idBase": "clinica-brisa-norte",
+  "twin": true,
+  "giro": "clinica",
+  "business": {
+    "name": "Consultorio Brisa",
+    "city": "Saltillo",
+    "branch": "República",
+    "address": "Calle Allende 905, República, Saltillo",
+    "hours": "Lun a sáb, 9:00 a 18:00",
+    "phone": "+52 844 000 0000",
+    "whatsapp": "528440000000"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "jardin-suave",
+    "archetype": "booking"
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "Consultorio pediátrico en la colonia República, Saltillo: consultas, vacunas y seguimiento por WhatsApp."
+    },
+    "hero": {
+      "title": "Pediatría sin prisa para tu familia",
+      "text": "Consultas tranquilas, vacunas al día y una pediatra que te contesta los mensajes. Agenda en un minuto."
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Tu pediatra en República",
+          "text": "Consultas, vacunas y valoraciones de crecimiento con cita. Escríbenos y te damos horario."
+        }
+      }
+    }
+  }
+}
