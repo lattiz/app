@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { existsSync, readdirSync } from 'node:fs';
+import { existsSync, readdirSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { ARCHETYPES, type Archetype, type ArchetypeId } from '../../archetypes';
 import { DIRECTIONS, type ArtDirection } from '../../directions';
@@ -319,7 +319,12 @@ function sectionsFor(
       allowedVariants(blueprint, entry.role, slot, catalog)[0];
     return fromLock
       ? { role: entry.role, slot, variant, pinned: true, locked: true }
-      : { role: entry.role, slot, variant, pinned: pinned || Boolean(layout?.pinned) };
+      : {
+          role: entry.role,
+          slot,
+          variant,
+          pinned: pinned || Boolean(layout?.pinned),
+        };
   });
 }
 
@@ -612,6 +617,17 @@ function candidates<T>(
   return pinned ? [pinned, ...rest] : rest;
 }
 
+const CSS_BYTES = new Map<string, number>();
+/** Raw size of a variant's section.css (Básico layout picks prefer the lighter of equals). */
+function cssBytes(slot: string, variant: string): number {
+  const key = `${slot}/${variant}`;
+  if (!CSS_BYTES.has(key)) {
+    const file = resolve(paths.sections, slot, variant, 'section.css');
+    CSS_BYTES.set(key, existsSync(file) ? statSync(file).size : 0);
+  }
+  return CSS_BYTES.get(key) as number;
+}
+
 /** Hero composition on the variance dial (1 symmetric … 10 asymmetric); unknown heroes sit in the middle. */
 const HERO_VARIANCE: Record<string, number> = {
   'centered-arch': 2,
@@ -786,7 +802,14 @@ export async function planSpec(
               ? heroPrefs
               : (archetype?.sections[kitTier].find((s) => s.role === role)
                   ?.variants ?? []);
-          const variant = preferred.find((v) => allowed.includes(v));
+          const options = preferred.filter((v) => allowed.includes(v));
+          // Básico stays light (budgets.json): the lightest of the archetype's choices for a role.
+          const variant =
+            kitTier === 'basic' && role !== 'hero'
+              ? [...options].sort(
+                  (x, y) => cssBytes(slot, x) - cssBytes(slot, y),
+                )[0]
+              : options[0];
           return variant ? { variant, pinned: false } : undefined;
         }
       : undefined;

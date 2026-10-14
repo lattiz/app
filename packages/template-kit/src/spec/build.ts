@@ -15,6 +15,7 @@ import { measureBudget } from '../lib/budget';
 import { directionFindings } from './direction';
 import { compileManifest, writeCompiled } from '../lib/compile';
 import { KIT_ROOT } from '../lib/paths';
+import type { Fingerprint } from '../lib/similarity';
 import { libraryFingerprints, targetFromCompiled } from '../lib/targets';
 import { validateTarget, type Finding } from '../lib/validate';
 import { planSpec, type SpecPlan } from './compile';
@@ -54,6 +55,8 @@ export interface BuildOptions {
   force?: boolean;
   /** Write sources and dist under this folder instead of the kit (reproduction checks). */
   out?: string;
+  /** Proof builds: templates built outside the kit that this spec must also stay unique against. */
+  extraPeers?: Fingerprint[];
 }
 
 export type FileAction =
@@ -78,6 +81,8 @@ export interface FileReport {
 
 export interface TierReport {
   id: string;
+  /** What uniqueness compares (feed it to `extraPeers` of the next proof build). */
+  fingerprint?: Fingerprint;
   tier: 'pro' | 'basico';
   theme: string;
   choices: string[];
@@ -231,7 +236,7 @@ export async function buildSpec(opts: BuildOptions): Promise<BuildReport> {
 
   let library;
   try {
-    library = await libraryFingerprints();
+    library = [...(await libraryFingerprints()), ...(opts.extraPeers ?? [])];
   } catch (error) {
     return done(
       2,
@@ -367,6 +372,7 @@ export async function buildSpec(opts: BuildOptions): Promise<BuildReport> {
       compiledByTier.set(t.id, compiled);
       report.tiers.push({
         id: t.id,
+        fingerprint: t.fingerprint,
         tier: t.tier,
         theme: t.theme.name,
         choices: t.choices,

@@ -54,7 +54,7 @@ export default {
     divider: 'hairline',
   },
   archetypes: ['editorial', 'minimal'],
-  heroes: { pro: ['columns', 'rail', 'split'], basic: ['columns', 'rail'] },
+  heroes: { pro: ['columns', 'rail', 'split'], basic: ['columns', 'split'] },
   motion: 'calm',
   dials: { variance: 6, motion: 5, density: 3 },
   giros: ['despacho', 'restaurante', 'floreria', 'estetica'],
