@@ -1,0 +1,70 @@
+{
+  "$lattiz": "GENERATED from specs/clinica-brote.spec.json (spec a6eaa7d33f37, file 37a9b5e2ccb6). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "ca627d2d09e5e7864090365fb7b5d46b826cd7f8142f80dac63e3e8c5de063a5"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "placeholder",
+      "sha256": "f17d154ffa71244db537e70a7d77acd60be37c320fbaf343892af404a3025c27"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "placeholder",
+      "sha256": "b640ae3bec972fe43e7c4c1975cf3ede0d9b421913091207e1a5ff9861006ff4"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "placeholder",
+      "sha256": "ee474b38323e4bfcffe0cba220986d00e00d0b40593fc8ac2e8b2c8ba767cafe"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "placeholder",
+      "sha256": "7247ad7b42b8c92cb9acdbaaaa44726593b853d18937b886bf78c45239423ff1"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "placeholder",
+      "sha256": "a6c40b4f6c6b34f0432eb15da4267b2d1d84e6c004e32755abaed1846889460f"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "placeholder",
+      "sha256": "8a04f7ee51baf0a20e3623919d182106e1efbfb5bed7121f622806aa1fc32c62"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "placeholder",
+      "sha256": "4b84bf7325764a4fc7578ae1073ea2936e6782224a21756ede8adf6e5b894663"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "placeholder",
+      "sha256": "d4095ae83f6923147bfdb7402f0e46e35f5cff8542b1300a4165ec1e434e1051"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "placeholder",
+      "sha256": "4d05aa211576510e417e2fafe5efb43974de5c69899c9901304c7ce03efaeccd"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "placeholder",
+      "sha256": "bc2de209e466629eb5517948161a933b28d4d111c67ab9f4213489c316ed97cc"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "placeholder",
+      "sha256": "02663df76410a932f9cf40aa87051b978ad7cd8406be26a6cc75a7633f685efa"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "placeholder",
+      "sha256": "586b1b37b259891cfc9fd4cd613abe859ed9ba35219ccf53afec6e6e7fb421bb"
+    }
+  ]
+}

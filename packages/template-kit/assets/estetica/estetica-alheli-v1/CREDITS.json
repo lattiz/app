@@ -1,0 +1,103 @@
+{
+  "$lattiz": "GENERATED from specs/estetica-alheli.spec.json (spec c5b874c728ac, file 08fa576b5660). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "9fdea74af667ebb6aec67ab51f609ec5780057e589faac20655fc8f20e1759f9",
+      "url": "https://images.pexels.com/photos/6135686/pexels-photo-6135686.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/6135686/"
+    },
+    {
+      "file": "about.jpg",
+      "source": "url",
+      "sha256": "5427451dea2c20544cfe83ae503c35e6039a9a73a6d1b8f95120f69d8afe3ca6",
+      "url": "https://images.pexels.com/photos/18112333/pexels-photo-18112333.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/18112333/"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "url",
+      "sha256": "b0ad85cabd27513513df8ea99fe3230bb9967f9e1aafbf5010b620ca48f44909",
+      "url": "https://images.pexels.com/photos/12653044/pexels-photo-12653044.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/12653044/"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "url",
+      "sha256": "dc62a42d1d8c761a9a2ab033fcd8be6da55838395dd2885fb739dc2851e8fc66",
+      "url": "https://images.pexels.com/photos/3997392/pexels-photo-3997392.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/3997392/"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "url",
+      "sha256": "f2697e98e7b89d9dcd823e26a919b0d094d5269a65f6ad81bb9580715b25e512",
+      "url": "https://images.pexels.com/photos/15202934/pexels-photo-15202934.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/15202934/"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "url",
+      "sha256": "8be55305ede298d21d70514e8e764127df575d93bdd3e6b5d439cc3f27d69450",
+      "url": "https://images.pexels.com/photos/998405/pexels-photo-998405.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/998405/"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "url",
+      "sha256": "87938c1f15c5eedc8c9bdf9e4235c7db2bda0e885998e3caca70f03f6e2707bb",
+      "url": "https://images.pexels.com/photos/4677845/pexels-photo-4677845.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/4677845/"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "url",
+      "sha256": "6b8cdbd77f9c16c51b3d818c4d825ec40a97076d654033dab935f91f196311cc",
+      "url": "https://images.pexels.com/photos/3557600/pexels-photo-3557600.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/3557600/"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "url",
+      "sha256": "3c65b29786995198b0c178fcf4f2d8fe8367a8460b40c163b9978218f42ba55e",
+      "url": "https://images.pexels.com/photos/34885842/pexels-photo-34885842.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/34885842/"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "url",
+      "sha256": "ec933cc8ccfecf72f979eef11233c422d32edcba933ff6a229fefcc7628ef79e",
+      "url": "https://images.pexels.com/photos/5871915/pexels-photo-5871915.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/5871915/"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "url",
+      "sha256": "20be8764cc72709d9d5354234f7984f08df04b29b7c18b065103c1f90af8e817",
+      "url": "https://images.pexels.com/photos/18112338/pexels-photo-18112338.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/18112338/"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "url",
+      "sha256": "833845e5d043a886d414bfb713dcfb399e7305a2028719962df9ff2ad018b1a0",
+      "url": "https://images.pexels.com/photos/10609306/pexels-photo-10609306.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/10609306/"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "url",
+      "sha256": "e147eaff988268a05866d5d5d49bfa6fd94806659519ac604acd7439aa9d5f75",
+      "url": "https://images.pexels.com/photos/10609757/pexels-photo-10609757.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/10609757/"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "url",
+      "sha256": "2e15586c16ecaa2590fb5240b95bbb6faf8eb6aecde662f657aa827bb4dbb827",
+      "url": "https://images.pexels.com/photos/6954960/pexels-photo-6954960.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/6954960/"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "$lattiz": "GENERATED from specs/floreria-cardamina.spec.json (spec d93a7fdbf48a, file 61995637e6f1). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "6e67d1b3ac3215813feedf066f6c0d36366760bba903f01c2bdf9dd997592935"
+    }
+  ]
+}

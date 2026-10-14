@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/clinica-brote.spec.json (spec a6eaa7d33f37, file a5a7a797ed97). Do not edit: use the spec, or freeze.",
+  "name": "Brote Nutrición",
+  "category": "medical",
+  "phone": "+525500000000",
+  "whatsapp": "+5215500000000",
+  "email": "hola@brotenutricion.mx",
+  "address": {
+    "street": "Calle Aristóteles 220, Col. Polanco V Sección, Miguel Hidalgo, 11560 CDMX",
+    "city": "CDMX",
+    "country": "MX"
+  },
+  "hours": {
+    "mon": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "tue": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "09:00",
+        "close": "14:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}

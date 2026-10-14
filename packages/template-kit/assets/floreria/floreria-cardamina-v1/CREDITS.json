@@ -1,0 +1,75 @@
+{
+  "$lattiz": "GENERATED from specs/floreria-cardamina.spec.json (spec d93a7fdbf48a, file 22cc55920c29). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "1db32470f30ba98ac3da5d534c386c37293e79645bb9b21b348a1dc13db92413"
+    },
+    {
+      "file": "about.jpg",
+      "source": "placeholder",
+      "sha256": "2e01af3acb0a8e2b7634df8e30de8972f60bdeda04d5fcc268d88f3b0ddb8c4c"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "placeholder",
+      "sha256": "63df8799003c46c5a2816cf860c54b0a98a12c15729ccdae8592465bdc13091d"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "placeholder",
+      "sha256": "9b97852dcc2ca0a6f3850cdcbbb19355586e004ed29215aa8555eb604d70102b"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "placeholder",
+      "sha256": "4395b878dabd62d553f22bd56535fb611545e2c9910bb90a9ddaf41d3e9ddd10"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "placeholder",
+      "sha256": "be8cf2816664485ca2e13358280eb870fb4377840f86846a2834e989b61de23e"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "placeholder",
+      "sha256": "ae62c8ab75ce5b5e6053d415c48a5ccec739219ac71680b2f123b8a5f23d18af"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "placeholder",
+      "sha256": "b937a00f8dc1efb41691b6ac7535a8df7bb0bd5f46af4ce5889a80cf55d3a151"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "placeholder",
+      "sha256": "4d613dfcad50251d04566f37c3789e54dfe67a2baa1e3ded10cbaa40434a376a"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "placeholder",
+      "sha256": "cf5669a8764868902147c6976ecc58b28ca409efcd197a0d7868451498d93358"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "placeholder",
+      "sha256": "eedaa2c352319cbbcb1fb75de101f401a8abaf4ccf18259082dab2afa36bbc42"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "placeholder",
+      "sha256": "f87f741cdc7fe75fd147cd7d1b1cf78d99ac93cfd60a94350a09914f36a2cfab"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "placeholder",
+      "sha256": "e13381d305a9d4367f41e072b7ad42efa84671fb6fb1bed510162a45b38ceb69"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "placeholder",
+      "sha256": "fb5bae34786c67070c1b7fac6c41e07df9817128d296ca2e8ee38163d3e6753d"
+    }
+  ]
+}

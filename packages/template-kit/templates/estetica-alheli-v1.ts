@@ -1,0 +1,69 @@
+// GENERATED from specs/estetica-alheli.spec.json (spec c5b874c728ac, file eeb1762b53c5). Do not edit: use the spec, or freeze.
+import type { Manifest } from '../src/types';
+
+export default {
+  id: 'estetica-alheli-v1',
+  name: 'Alhelí Nail Atelier',
+  category: 'esteticas',
+  description:
+    'Salón con identidad propia: servicios y precios, el salón en fotos, equipo, reseñas, preguntas y citas',
+  family: 'service-landing',
+  tier: 'pro',
+  vertical: 'estetica',
+  archetype: 'editorial-atelier',
+  theme: 'estetica-alheli-v1',
+  content: 'estetica.alheli.es-MX',
+  sections: [
+    {
+      slot: 'navbar',
+      variant: 'centered-logo',
+    },
+    {
+      slot: 'hero',
+      variant: 'duo-arch',
+    },
+    {
+      slot: 'marquee',
+      variant: 'ticker',
+    },
+    {
+      slot: 'about',
+      variant: 'text-image-offset',
+    },
+    {
+      slot: 'services',
+      variant: 'cards',
+    },
+    {
+      slot: 'team',
+      variant: 'grid',
+    },
+    {
+      slot: 'gallery',
+      variant: 'mosaic',
+    },
+    {
+      slot: 'testimonials',
+      variant: 'quote-feature',
+    },
+    {
+      slot: 'faq',
+      variant: 'list',
+    },
+    {
+      slot: 'locations',
+      variant: 'with-contact',
+    },
+    {
+      slot: 'floating-whatsapp',
+      variant: 'bubble',
+    },
+    {
+      slot: 'footer',
+      variant: 'big-wordmark',
+    },
+  ],
+  motion: {
+    preset: 'calm',
+  },
+} satisfies Manifest;

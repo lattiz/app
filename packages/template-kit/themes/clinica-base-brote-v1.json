@@ -1,0 +1,55 @@
+{
+  "$lattiz": "GENERATED from specs/clinica-brote.spec.json (spec a6eaa7d33f37, file 1e473f251db5). Do not edit: use the spec, or freeze.",
+  "name": "clinica-base-brote-v1",
+  "label": "Brote Nutrición · Básico",
+  "tier": "basic",
+  "fontPair": "syne+karla",
+  "colors": {
+    "bg": "#FBF8F2",
+    "surface": "#FDFCFA",
+    "surface-2": "#ECE9E3",
+    "text": "#1E1E1D",
+    "muted": "#6B6A68",
+    "accent": "#4A4540",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#4A4540",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#FBF8F2",
+    "on-overlay": "#1E1E1D",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#1E1E1D"
+  },
+  "fonts": {
+    "display": "'Syne', sans-serif",
+    "serif": "'Syne', sans-serif",
+    "body": "'Karla', sans-serif",
+    "googleFonts": "family=Syne:wght@600;700;800&family=Karla:wght@400;500;600",
+    "displayTransform": "none",
+    "displayLeading": "1",
+    "displayWeight": "700",
+    "displayScale": "0.84",
+    "accentStyle": "normal",
+    "accentTransform": "none"
+  },
+  "shape": {
+    "radiusCard": "22px",
+    "radiusPill": "999px",
+    "border": "1px",
+    "shadow": "none"
+  },
+  "density": "airy",
+  "photoTreatment": "none",
+  "placeholder": "dots",
+  "accentWords": "color",
+  "container": "1280px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(1.08) saturate(.85)"
+  },
+  "style": {
+    "shape": "round",
+    "surface": "elevated",
+    "density": "airy"
+  }
+}

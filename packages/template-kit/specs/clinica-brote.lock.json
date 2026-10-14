@@ -1,0 +1,54 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/clinica-brote.spec.json",
+  "catalog": "extended",
+  "catalogVersion": 1,
+  "tiers": {
+    "clinica-brote-v1": {
+      "tier": "pro",
+      "palette": "custom",
+      "fontPair": "bricolage-grotesque+inter",
+      "shape": "suave",
+      "archetype": "editorial-atelier",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "duo-arch" },
+        { "role": "about", "slot": "about", "variant": "stats-strip" },
+        { "role": "catalog", "slot": "services", "variant": "cards" },
+        { "role": "team", "slot": "team", "variant": "grid" },
+        { "role": "proof", "slot": "gallery", "variant": "strip" },
+        { "role": "testimonials", "slot": "testimonials", "variant": "cards" },
+        { "role": "faq", "slot": "faq", "variant": "two-col" },
+        { "role": "contact", "slot": "locations", "variant": "with-contact" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "columns" }
+      ]
+    },
+    "clinica-base-brote-v1": {
+      "tier": "basico",
+      "palette": "custom",
+      "fontPair": "syne+karla",
+      "shape": "organico",
+      "archetype": "essential",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "centered-arch" },
+        { "role": "about", "slot": "about", "variant": "brief" },
+        { "role": "catalog", "slot": "services", "variant": "cards" },
+        { "role": "faq", "slot": "faq", "variant": "list" },
+        { "role": "contact", "slot": "locations", "variant": "single" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "minimal-centered" }
+      ]
+    }
+  }
+}

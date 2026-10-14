@@ -1,0 +1,12 @@
+{
+  "$lattiz": "GENERATED from specs/estetica-alheli.spec.json (spec c5b874c728ac, file 0bf80acde361). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "51d5d6f8da46eb7eef8e2f8cebfcfe6cbdfd0180b7804fcfcd73e2758240233e",
+      "url": "https://images.pexels.com/photos/6135686/pexels-photo-6135686.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/6135686/"
+    }
+  ]
+}

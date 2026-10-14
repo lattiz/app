@@ -1,0 +1,10 @@
+{
+  "$lattiz": "GENERATED from specs/clinica-brote.spec.json (spec a6eaa7d33f37, file 9dde35f34b42). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "a4dbf7024c81bd390c2198f58146e242bb64881b14103ce731d01e272645f761"
+    }
+  ]
+}
