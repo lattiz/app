@@ -16,6 +16,7 @@ import { ARCHETYPES, familyOf } from '../../archetypes';
 import { verticals } from '../../blueprints/service-landing.shared';
 import type {
   CatalogArchetype,
+  CatalogDirection,
   CatalogFontPair,
   CatalogManifest,
   CatalogPalette,
@@ -23,6 +24,7 @@ import type {
   CatalogTier,
   CatalogVariant,
 } from '../../catalog/types';
+import { DIRECTIONS } from '../../directions';
 import { EXTENDED_FONT_PAIRS } from '../../font-pairs';
 import { GIROS } from '../../giros';
 import { EXTENDED_PALETTES } from '../../palettes';
@@ -42,6 +44,7 @@ import {
 import { KIT_ROOT, paths, REPO_ROOT, sectionDir } from '../lib/paths';
 import { CATALOG_VERSION, isLegacyVariant } from '../spec/catalog';
 import { allowedVariants, canonicalJson } from '../spec/compile';
+import { registryProblems } from '../spec/direction';
 import { FONT_PAIRS, type GiroPalette } from '../spec/presets';
 import type { Role } from '../tiers';
 
@@ -112,6 +115,34 @@ function primitives(): CatalogPrimitive[] {
       })),
     };
   });
+}
+
+function directions(): CatalogDirection[] {
+  const problems = registryProblems();
+  if (problems.length > 0) throw new Error(problems.join('\n'));
+  return Object.values(DIRECTIONS).map((d) => ({
+    id: d.id,
+    name: d.name,
+    intent: d.intent,
+    palettes: { default: d.palettes.default, byGiro: d.palettes.byGiro ?? {} },
+    fontPairs: {
+      default: d.fontPairs.default,
+      byGiro: d.fontPairs.byGiro ?? {},
+    },
+    style: { ...d.style },
+    primitives: { ...d.primitives } as Record<string, string>,
+    archetypes: d.archetypes,
+    heroes: { basic: d.heroes.basic, pro: d.heroes.pro },
+    motion: d.motion,
+    dials: d.dials,
+    giros: d.giros,
+    rules: d.rules,
+    voice: {
+      register: d.voice.register,
+      headline: d.voice.headline,
+      cta: d.voice.cta,
+    },
+  }));
 }
 
 async function variants(): Promise<CatalogVariant[]> {
@@ -262,6 +293,7 @@ export async function buildManifest(): Promise<CatalogManifest> {
     catalogVersion: CATALOG_VERSION,
     variants: list,
     primitives: primitives(),
+    directions: directions(),
     hooks: HOOKS.map((attribute) => ({ attribute, proOnly: true })),
     archetypes,
     palettes: {

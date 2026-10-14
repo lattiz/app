@@ -104,6 +104,23 @@ export interface CatalogPrimitive {
   styles: CatalogPrimitiveStyle[];
 }
 
+export interface CatalogDirection {
+  id: string;
+  name: string;
+  intent: string;
+  palettes: { default: string[]; byGiro: Record<string, string[]> };
+  fontPairs: { default: string[]; byGiro: Record<string, string[]> };
+  style: Record<string, string>;
+  primitives: Record<string, string>;
+  archetypes: string[];
+  heroes: Record<CatalogTier, string[]>;
+  motion: string;
+  dials: { variance: number; motion: number; density: number };
+  giros: string[];
+  rules: string[];
+  voice: { register: string; headline: string; cta: string };
+}
+
 export interface CatalogManifest {
   $comment: string;
   manifestVersion: 1;
@@ -113,6 +130,7 @@ export interface CatalogManifest {
   catalogVersion: number;
   variants: CatalogVariant[];
   primitives: CatalogPrimitive[];
+  directions: CatalogDirection[];
   hooks: CatalogHook[];
   archetypes: CatalogArchetype[];
   palettes: {

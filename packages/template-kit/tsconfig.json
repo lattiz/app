@@ -27,6 +27,8 @@
     "font-pairs/**/*",
     "archetypes/**/*",
     "catalog/**/*",
+    "directions/**/*",
+    "primitives/**/*",
     "templates/**/*",
     "vitest.config.ts"
   ],
