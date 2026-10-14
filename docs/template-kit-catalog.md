@@ -43,7 +43,7 @@ Antes de cualquier trabajo de diseño nuevo (Fase A2). Estado al 2026-10-14:
 | --- | ---------------------------------------------------------- | --------- | ---------------- | ---------------------------------------------------------------------------------- |
 | WP1 | Snapshot: clasificar y resolver las diferencias            | hecho     | 47ba2b8, 10dbb6e | el fixture legacy no se arregla con paletas: se congelan las entradas del snapshot |
 | WP2 | Capacidad: restaurante, clínica, barbería ≥ 14; resto ≥ 12 | hecho     | (este)           | pares topados por portadas Pro (A2); 8 paletas neutras                             |
-| WP3 | Manifiesto del catálogo (`catalog.manifest.json`)          | pendiente |                  |                                                                                    |
+| WP3 | Manifiesto del catálogo (`catalog.manifest.json`)          | hecho     | (este)           | sin `meta.motion` en el kit: Motion se lee del seed; la API no importa el kit      |
 | WP4 | Plan en el servidor (auditoría + `PlanGuard`)              | pendiente |                  |                                                                                    |
 | WP5 | Presupuesto de bytes y línea base de Core Web Vitals       | pendiente |                  |                                                                                    |
 | WP6 | Docs y decisiones                                          | pendiente |                  |                                                                                    |
@@ -811,6 +811,69 @@ planean con su lock). Con `.lattiz/cache` vacía, `lattiz build restaurante-ceni
 `lattiz build clinica-cauce --out …` regeneran sus 7 archivos byte por byte; el lock solo difiere en
 `catalogVersion` (que `lockChoices` ignora a propósito). Sin lock, un spec `extended` sí podría
 moverse: por eso todo spec nuevo debe commitear su lock.
+
+## Manifiesto del catálogo (A1 · WP3)
+
+`packages/template-kit/catalog/catalog.manifest.json` (generado y commiteado; tipos en
+`catalog/types.ts`, sin imports). `pnpm --filter @lattiz/template-kit kit:manifest` lo escribe y
+`kit:manifest --check` falla si quedó viejo; **`pnpm lint` ya corre `--check`**: si cambias una
+sección, una paleta, un par, un arquetipo o un giro, regenera y commitea el manifiesto. Determinista
+(sin fechas): `contentHash` es el sha256 del manifiesto canónico; `manifestVersion` 1;
+`catalogVersion` = `CATALOG_VERSION`.
+
+Por variante (47): `key` (`slot/variant`, el par de `data-lz-slot`/`data-lz-variant`), etiqueta,
+región, descripción, `intent`, `catalog` (legacy/extended), `tiers` (de `meta.tiers` o, si la meta no
+lo dice, de los blueprints), `blueprintTiers` (dónde puede colocarla hoy el compilador), `proOnly`,
+roles que caen en el slot, `contentKeys`, anclas (`id="…"` literales), `fit` (`data-lz-fit`),
+`numbered`, arquetipos, familia y `motion` (tipo y patrón por defecto que el seed le pone al slot,
+leídos de `scripts/lib/motion-sections.ts`; Básico nunca carga Motion), más `hooks` (atributos del
+runtime de Motion escritos en el fragmento: hoy ninguna variante del kit trae alguno). Además: los 9
+`hooks` del runtime (todos solo Pro: `compose-site` inyecta Motion solo con `isPro`), arquetipos,
+paletas (biblioteca y las de cada giro, con tono de acento o `null` si es neutro), pares tipográficos
+y giros.
+
+**Solo Pro (17):** `about/{portrait,statement,stats-strip,text-image-offset}`,
+`gallery/{bento,grid,mosaic,strip}`, `locations/{map-link,with-contact}`, `marquee/ticker`,
+`team/{grid,list,spotlight}`, `testimonials/{cards,quote-feature,rating-wall}`. Una variante sin tier
+declarado ni blueprint (`locations/cards`, que ninguna plantilla usa) queda `tiers: []` y **no** es
+solo Pro. El generador falla si una plantilla Básica usa una variante marcada solo Pro.
+
+**Cómo se consume (sin importar el compilador):** `apps/web` (Vite) puede importar el JSON y los
+tipos por ruta del workspace cuando el editor lo necesite (A1 no cambia el editor). `apps/api` **no**
+depende del kit: su imagen se arma con `pnpm deploy --prod --legacy`, que hoy asume que la API no tiene
+dependencias del workspace, y sumar una (o un paquete compartido nuevo) exige probar el build de
+Docker, que no hay en esta máquina. Por eso WP4 genera desde el manifiesto un subconjunto mínimo
+dentro de la API (`*.generated.ts`, comprobado por el mismo `--check`). Un paquete compartido
+(`@lattiz/catalog`, solo JSON + tipos, sin dependencias) es lo correcto a mediano plazo, cuando se
+pueda validar el Dockerfile.
+
+### Inventario: bloques del editor ↔ variantes del kit
+
+Los bloques del editor (`apps/web/src/features/editor/blocks/`) están escritos a mano con clases
+`lzb-*`, **no** llevan `data-lz-slot`/`data-lz-variant` y no salen de `sections/`. `sectionBlocks`
+da los Básicos a todos y suma los Pro solo con `templateAccess.proIncluded` (filtro solo en el
+cliente). Equivalencias aproximadas (ninguna es el mismo markup):
+
+| Bloque del editor    | Kit `basic-blocks.ts` / `pro-blocks.ts` | Variante del kit más cercana               | Marcadores solo Pro que lleva                         |
+| -------------------- | --------------------------------------- | ------------------------------------------ | ----------------------------------------------------- |
+| `lzb-hero-simple`    | Básico (`.lzb-hero`)                    | `hero/split` (sin foto: ninguna)           | ninguno (`data-lz-section="hero"`, inerte sin Motion) |
+| `lzb-services-grid`  | Básico (`.lzb-services`)                | `services/cards`                           | ninguno                                               |
+| `lzb-gallery-grid`   | Básico (`.lzb-gallery`)                 | `gallery/grid` (**solo Pro** en el kit)    | ninguno: el editor da galería a Básico y el kit no    |
+| `lzb-contact-hours`  | Básico (`.lzb-contact`)                 | `locations/single-card`                    | ninguno                                               |
+| `lzb-hero-editorial` | Pro (`.lzb-hero-ed`)                    | `hero/columns`                             | `data-lz-words`, `data-lz-parallax`, `data-lz-reveal` |
+| `lzb-marquee`        | Pro (`.lzb-marquee`)                    | `marquee/ticker`                           | ninguno de Motion (animación CSS)                     |
+| `lzb-stacked-cards`  | Pro (`.lzb-stack`)                      | sin equivalente                            | `data-lz-reveal`                                      |
+| `lzb-snap-gallery`   | Pro (`.lzb-snap`)                       | `gallery/strip`                            | `data-lz-reveal`, `data-lz-lightbox`                  |
+| `lzb-before-after`   | Pro (`.lzb-compare-block`)              | sin equivalente                            | `data-lz-compare`                                     |
+| `lzb-stats`          | Pro (`.lzb-stats`)                      | `about/stats-strip`                        | `data-lz-counter`, `data-lz-stagger`                  |
+| `lzb-promo-bar`      | Pro (`.lzb-promo`)                      | `navbar/notice-bar` (sin cuenta regresiva) | `data-lz-countdown`                                   |
+| `lzb-open-now`       | Pro (`.lzb-open`)                       | sin equivalente                            | `data-lz-open-now`                                    |
+| `lzb-whatsapp-cards` | Pro (`.lzb-menu`)                       | `services/menu-columns`                    | `data-lz-reveal`, `data-lz-stagger`                   |
+
+Huecos para el trabajo del editor (no se cambian en A1): los bloques no se pueden identificar por
+`data-lz-slot`/`data-lz-variant` (solo por su clase raíz `lzb-*`); 3 bloques Pro sin variante en el kit
+(`stacked-cards`, `before-after`, `open-now`); la galería es Básica en el editor y solo Pro en el kit;
+20+ variantes del kit no tienen bloque.
 
 ## Hallazgos de la Parte 2
 

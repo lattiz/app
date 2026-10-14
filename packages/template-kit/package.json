@@ -20,6 +20,7 @@
     "kit:gallery": "tsx src/cli/gallery.ts",
     "kit:fonts": "tsx src/cli/fonts.ts",
     "kit:palettes": "tsx src/cli/palettes.ts",
+    "kit:manifest": "tsx src/cli/manifest.ts",
     "kit:snapshot": "tsx src/cli/snapshot.ts write",
     "kit:snapshot:add": "tsx src/cli/snapshot.ts add",
     "kit:verify-snapshot": "tsx src/cli/snapshot.ts verify"
