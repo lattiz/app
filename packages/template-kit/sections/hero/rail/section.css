@@ -100,6 +100,8 @@
 .lz-hero-rail__media {
   grid-column: 1;
   grid-row: 3;
+  /* Hug the capped photo: a stretched row cell would make a frame's backing block outgrow it. */
+  align-self: start;
   min-height: 0;
 }
 
