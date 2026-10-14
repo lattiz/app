@@ -29,6 +29,7 @@ export default {
       'pal-cempasuchil',
       'pal-granada',
       'pal-arcilla',
+      'pal-adobe-tinta',
     ],
   },
   fontPairs: {

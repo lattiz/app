@@ -556,4 +556,40 @@ export const PALETTE_SEEDS: Record<string, PaletteSeed> = {
     photoTreatment: 'none',
     placeholder: 'rules',
   },
+  // ── A2: palettes so a direction keeps its mood in crowded giros (gray drift) ───────────────
+  // Neón nocturno in barbería and Terracota / Cantera in restaurante had run out of palettes and
+  // fell back to neutral grays; these sit in the giros' free hue windows or carry a neutral accent.
+  'pal-neon-uva': {
+    label: 'Uva neón (oscuro, acento violeta eléctrico)',
+    mode: 'dark',
+    mood: ['urbano', 'energía', 'nocturno'],
+    affinity: ['barberia', 'gimnasio', 'tienda'],
+    bg: '#140F1E',
+    text: '#F1ECF7',
+    accent: '#E04CF0',
+    photoTreatment: 'none',
+    placeholder: 'grain',
+  },
+  'pal-adobe-tinta': {
+    label: 'Adobe y tinta (fondo adobe, acento tinta)',
+    mode: 'tinted',
+    mood: ['cálido', 'rústico', 'mexicano'],
+    affinity: ['restaurante', 'floreria', 'tienda'],
+    bg: '#D9906F',
+    text: '#1E120C',
+    accent: '#1E120C',
+    photoTreatment: 'warm',
+    placeholder: 'blobs',
+  },
+  'pal-papel-violeta': {
+    label: 'Papel y violeta (papel cálido, acento violeta tinta)',
+    mode: 'light',
+    mood: ['editorial', 'sobrio', 'cálido'],
+    affinity: ['restaurante', 'floreria', 'estetica'],
+    bg: '#EDE2CF',
+    text: '#1F1C18',
+    accent: '#3F2A7A',
+    photoTreatment: 'warm',
+    placeholder: 'rules',
+  },
 };

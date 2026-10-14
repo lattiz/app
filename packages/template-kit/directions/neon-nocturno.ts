@@ -24,6 +24,7 @@ export default {
       'pal-brasa-noche',
       'pal-jamaica-noche',
       'pal-medianoche-laton',
+      'pal-neon-uva',
     ],
   },
   fontPairs: {

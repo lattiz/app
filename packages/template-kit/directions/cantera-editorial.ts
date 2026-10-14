@@ -23,7 +23,7 @@ export default {
       'pal-papel-tinta',
       'pal-indigo-papel',
       'pal-arcilla',
-      'pal-niebla-grafito',
+      'pal-papel-violeta',
     ],
   },
   fontPairs: {

@@ -1006,7 +1006,7 @@ Una dirección de arte fija de una vez lo que un spec elegía por separado. Es u
 | `neon-nocturno`     | 8/7/7 | editorial | bold, showcase     | `scheme:dark`, `display:upper`, `no-gradients`  | poster, bento, image-bg / poster, image-bg   | barbería, gimnasio, restaurante, tienda          |
 | `jardin-suave`      | 5/5/3 | calm      | soft, booking      | `scheme:light`, `no-gradients`                  | duo-arch, overlap, panel / duo-arch, overlap | estética, veterinaria, florería, dental, clínica |
 | `tinta-papel`       | 4/4/5 | calm      | minimal, trust     | `accent:neutral`, `no-gradients`                | split, panel, columns / split, columns       | despacho, tienda, clínica, barbería              |
-| `terracota-calida`  | 6/4/5 | calm      | catalog, showcase  | `scheme:light`, `no-gradients`                  | stack, framed, overlap / stack, framed       | florería, restaurante, tienda, estética          |
+| `terracota-calida`  | 6/4/5 | calm      | catalog, showcase  | `scheme:light`, `no-gradients`                  | stack, framed, overlap / stack, framed       | restaurante, florería, tienda, estética          |
 | `marmol-sobrio`     | 3/4/5 | calm      | trust, booking     | `no-gradients`                                  | panel, bento, split / panel, split           | clínica, dental, despacho, veterinaria           |
 
 **Reglas del registro** (`registryProblems`):
@@ -1044,7 +1044,6 @@ no son datos de campo. Se comparan con la línea base de A1 (abajo, «Web Vitals
 | -------------------------------------- | ------ | ------ | ----- | ---- | -------- | --------- | --------- |
 | `despacho-base-cantera-prueba-v1`      | Básico | 1.72 s | 0.001 | 0 ms | 44.4     | 148       | WARN      |
 | `despacho-cantera-prueba-v1`           | Pro    | 3.08 s | 0.000 | 0 ms | 61.9     | 270       | WARN LCP  |
-| `restaurante-base-cantera-prueba-v1`   | Básico | 1.72 s | 0.001 | 0 ms | 44.2     | 160       | WARN      |
 | `restaurante-cantera-prueba-v1`        | Pro    | 1.86 s | 0.001 | 0 ms | 63.7     | 230       | WARN      |
 | `estetica-base-jardin-prueba-v1`       | Básico | 2.78 s | 0.000 | 0 ms | 41.1     | 113       | WARN LCP  |
 | `estetica-jardin-prueba-v1`            | Pro    | 2.83 s | 0.002 | 0 ms | 60.1     | 236       | WARN LCP  |
@@ -1055,23 +1054,25 @@ no son datos de campo. Se comparan con la línea base de A1 (abajo, «Web Vitals
 | `dental-base-marmol-prueba-v1`         | Básico | 2.79 s | 0.001 | 0 ms | 42.3     | 124       | WARN LCP  |
 | `dental-marmol-prueba-v1`              | Pro    | 2.78 s | 0.000 | 0 ms | 59.0     | 293       | FAIL nojs |
 | `barberia-base-neon-prueba-v1`         | Básico | 2.51 s | 0.000 | 0 ms | 43.3     | 178       | WARN LCP  |
-| `barberia-neon-prueba-v1`              | Pro    | 3.16 s | 0.002 | 0 ms | 62.1     | 397       | WARN LCP  |
 | `gimnasio-base-neon-prueba-v1`         | Básico | 2.79 s | 0.001 | 0 ms | 42.3     | 135       | WARN LCP  |
-| `gimnasio-neon-prueba-v1`              | Pro    | 1.88 s | 0.002 | 0 ms | 60.6     | 178       | WARN      |
-| `floreria-base-terracota-prueba-v1`    | Básico | 1.72 s | 0.000 | 0 ms | 43.5     | 142       | WARN      |
-| `floreria-terracota-prueba-v1`         | Pro    | 2.22 s | 0.001 | 0 ms | 63.6     | 392       | WARN      |
-| `restaurante-base-terracota-prueba-v1` | Básico | 2.77 s | 0.001 | 0 ms | 43.4     | 172       | WARN LCP  |
-| `restaurante-terracota-prueba-v1`      | Pro    | 3.09 s | 0.000 | 0 ms | 63.6     | 238       | WARN LCP  |
 | `despacho-base-tinta-prueba-v1`        | Básico | 1.71 s | 0.001 | 0 ms | 43.1     | 167       | WARN      |
 | `despacho-tinta-prueba-v1`             | Pro    | 2.06 s | 0.000 | 0 ms | 56.5     | 332       | WARN      |
 | `tienda-base-tinta-prueba-v1`          | Básico | 1.73 s | 0.000 | 0 ms | 42.9     | 146       | WARN      |
 | `tienda-tinta-prueba-v1`               | Pro    | 2.15 s | 0.000 | 0 ms | 54.6     | 399       | WARN      |
+| `restaurante-base-cantera-prueba-v1`   | Básico | 1.73 s | 0.001 | 0 ms | 44.2     | 163       | WARN      |
+| `barberia-neon-prueba-v1`              | Pro    | 2.97 s | 0.002 | 0 ms | 62.1     | 424       | WARN LCP  |
+| `gimnasio-neon-prueba-v1`              | Pro    | 2.86 s | 0.002 | 0 ms | 60.6     | 256       | WARN LCP  |
+| `floreria-base-terracota-prueba-v1`    | Básico | 2.64 s | 0.000 | 0 ms | 43.5     | 160       | WARN LCP  |
+| `floreria-terracota-prueba-v1`         | Pro    | 3.16 s | 0.001 | 0 ms | 63.6     | 271       | WARN LCP  |
+| `restaurante-base-terracota-prueba-v1` | Básico | 2.78 s | 0.001 | 0 ms | 43.5     | 120       | WARN LCP  |
+| `restaurante-terracota-prueba-v1`      | Pro    | 3.09 s | 0.000 | 0 ms | 63.6     | 238       | WARN LCP  |
 
 **Resumen:**
 
 - **FAIL: 2 de 24.** Las dos son la misma falla de la regla `nojs`, que es un falso positivo de la
   revisión.
-- **LCP:** media 2.45 s; 14 de 24 pasan de 2.5 s.
+- **LCP:** media 2.56 s; 17 de 24 pasan de 2.5 s. Antes de las paletas nuevas eran 2.45 s y 14 de
+  24 (ver «Deriva al gris»); las siete pruebas que cambiaron se revisaron de nuevo.
 - **CLS y TBT:** CLS ≤ 0.002 y TBT 0 ms en todas.
 - **HTML:** dentro del presupuesto (Básico ≤ 48 KiB, Pro ≤ 67 KiB).
 
@@ -1097,13 +1098,92 @@ no son datos de campo. Se comparan con la línea base de A1 (abajo, «Web Vitals
 pesa es el retraso de render (1.3–2.7 s, con tiempo de carga de imagen 0). La hoja de Google Fonts
 bloquea ~815 ms en todas. Es el mismo diagnóstico que `docs/template-kit-lcp.md` y no lo causan las
 direcciones: entre la más rápida (1.71 s) y la más lenta (3.16 s) cambia el retraso de render, no la
-imagen. La causa exacta de esa diferencia no se aisló. El retrofit propuesto allí (sacar la hoja del
+carga de la imagen.
+
+La causa exacta de esa diferencia no se aisló. No la explica el par tipográfico (Zilla Slab + IBM
+Plex Sans da 1.71 y 2.64 s), ni los bytes de la foto (18–65 KiB), ni sus píxeles, ni la variante de
+portada (`rail` da 1.86 y 3.08 s). El único patrón firme: los cuatro Básicos con `hero/columns` dan
+1.71–1.73 s. Los números son deterministas: la misma prueba revisada dos veces da lo mismo. El retrofit propuesto allí (sacar la hoja del
 camino crítico en tenant-sites) es lo que más las movería.
 
 **Avisos heredados:** los WARN de `font` (12 px en `lz-index`, `lz-about-brief__label`,
 `lz-location__label` y el título del pie) y los de `tap` (enlaces del pie de 32 px) vienen de
 variantes legacy que las pruebas comparten con las plantillas existentes. No los introduce ninguna
 dirección.
+
+### Deriva al gris (A2, 2026-10-14)
+
+**Medición.** `.lattiz/a2/drift.mts` lee el lock de cada prueba y marca, por tier:
+
+- la paleta elegida;
+- si es **propia** (de la lista de la dirección) o de **respaldo** (del pool filtrado por las reglas);
+- si comparte algún ánimo (`mood`) con las paletas de la dirección.
+
+En la primera corrida, 4 de 24 elecciones perdían el carácter de la dirección:
+
+| Dirección × giro        | Tier   | Antes                                      | Después                            |
+| ----------------------- | ------ | ------------------------------------------ | ---------------------------------- |
+| cantera × restaurante   | Básico | `pal-niebla-grafito` (propia, gris)        | `pal-papel-violeta` (propia, 256°) |
+| terracota × restaurante | Básico | `pal-niebla-grafito` (respaldo, sin ánimo) | `pal-coral-tinta` (propia, cálido) |
+| neón × barbería         | Pro    | `pal-bosque-hueso` (respaldo)              | `pal-neon-uva` (propia, 294°)      |
+| neón × barbería         | Básico | `petroleo` (respaldo legacy, 182°)         | igual: sigue en respaldo           |
+
+Mármol y tinta también usan `pal-niebla-grafito`, pero está en su propia lista y va con su ánimo
+(sobrio, clínico): no es deriva.
+
+**Causa.** En los giros con muchas plantillas (restaurante 10, barbería 8), las paletas de la lista
+chocan en tono (≥ 30°) o en distancia (ΔE00 ≥ 15) con las existentes o con la gemela Pro. El
+compilador baja entonces a la siguiente de la lista o al respaldo, y lo que queda libre casi siempre
+es neutro.
+
+**Corrección.** Fue aditiva: solo catálogo `extended`, sin quitar paletas ni relajar reglas.
+
+- **Paletas nuevas** en `palettes/seeds.ts`, bloque «A2». Pasan AA por construcción y quedan a
+  ΔE00 ≥ 15 de toda paleta de su giro; ninguna entra en las tres parejas más cercanas de su giro:
+  - `pal-neon-uva`: oscura, acento `#E04CF0` 294°; barbería, gimnasio, tienda.
+  - `pal-adobe-tinta`: teñida adobe, acento tinta; restaurante, florería, tienda.
+  - `pal-papel-violeta`: papel cálido, acento `#3F2A7A` 256°; restaurante, florería, estética.
+- **Listas de las direcciones:**
+  - neón suma `pal-neon-uva`;
+  - terracota suma `pal-adobe-tinta`;
+  - cantera cambia `pal-niebla-grafito` por `pal-papel-violeta`.
+- **Paletas descartadas:**
+  - `pal-neon-hielo`: 9.1 de `barberia:petroleo`;
+  - `pal-neon-verde`: 10.7 de `barberia:hoja`;
+  - `pal-papel-indigo`: 10.4 de `despacho:marino`. Se rediseñó como `pal-papel-violeta`, sin
+    afinidad con despacho.
+
+**Pruebas de que nada existente se movió:**
+
+- `kit:verify-snapshot` idéntico (42 plantillas, 23 specs).
+- `restaurante-margen` y `clinica-brote` se reconstruyeron con la caché de imágenes vacía y dieron
+  byte a byte los mismos archivos.
+- Ningún spec del repo usa `layout.direction`.
+- Al reconstruir las 24 pruebas, las de jardín, tinta y mármol dieron el mismo `index.html`. Siete
+  cambiaron, todas de las tres direcciones tocadas. Gimnasio × neón Pro también cambió (de
+  `pal-jamaica-noche` a `pal-neon-uva`) porque la rotación por semilla recorre una lista más larga.
+
+**Lo que queda.** Neón × barbería Básico sigue en respaldo. Barbería ya ocupa todas las paletas
+oscuras de neón, y la nueva se la lleva la gemela Pro. El respaldo es oscuro por la regla
+`scheme:dark`, pero sin el ánimo de neón. Arreglarlo pide otra paleta oscura con acento cálido y
+lejana de las 9 legacy de barbería. Las candidatas probadas (verde, cian) chocaban con
+`hoja`/`petroleo`, así que queda para cuando se agregue la siguiente.
+
+**Capacidad** (`kit capacity --catalog extended`, Total antes → después):
+
+- barbería 20 → 21
+- clínica 20 → 21
+- dental 24 → 27
+- despacho 23 → 26
+- estética 22 → 23
+- florería 24 → 24
+- gimnasio 25 → 25
+- restaurante 18 → 19
+- tienda 23 → 25
+- veterinaria 25 → 26
+
+Los pares Básico + Pro solo suben en despacho y tienda (11 → 12); los demás los siguen topando las
+portadas Pro.
 
 ## Portadas nuevas (A2 · WP3)
 
