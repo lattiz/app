@@ -1,0 +1,60 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/gimnasio-pulso-deportivo.spec.json",
+  "catalog": "extended",
+  "catalogVersion": 2,
+  "tiers": {
+    "gimnasio-pulso-deportivo-v1": {
+      "tier": "pro",
+      "palette": "custom",
+      "fontPair": "red-hat-display+red-hat-text",
+      "shape": "brutal",
+      "archetype": "editorial-atelier",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "bento" },
+        { "role": "about", "slot": "about", "variant": "statement" },
+        { "role": "catalog", "slot": "services", "variant": "editorial-table" },
+        { "role": "proof", "slot": "gallery", "variant": "strip" },
+        { "role": "team", "slot": "team", "variant": "grid" },
+        {
+          "role": "testimonials",
+          "slot": "testimonials",
+          "variant": "rating-wall"
+        },
+        { "role": "faq", "slot": "faq", "variant": "two-col" },
+        { "role": "contact", "slot": "locations", "variant": "with-contact" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "columns" }
+      ],
+      "layout": { "direction": "marmol-sobrio", "archetype": "trust" }
+    },
+    "gimnasio-base-pulso-deportivo-v1": {
+      "tier": "basico",
+      "palette": "custom",
+      "fontPair": "bricolage-grotesque+inter",
+      "shape": "urbano",
+      "archetype": "essential",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "split" },
+        { "role": "about", "slot": "about", "variant": "brief" },
+        { "role": "catalog", "slot": "services", "variant": "editorial-table" },
+        { "role": "faq", "slot": "faq", "variant": "grid" },
+        { "role": "contact", "slot": "locations", "variant": "single" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "ledger" }
+      ],
+      "layout": { "direction": "marmol-sobrio", "archetype": "trust" }
+    }
+  }
+}

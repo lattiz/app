@@ -1,0 +1,96 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-la-nota-azul.spec.json (spec c02e8c9d8f8c, file 2802fdb49e6a). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "f22d46072d3aad0ce1146d59348a9233eccacf8ad6f684278aa6b77bcda316f3",
+      "url": "https://images.pexels.com/photos/25217163/pexels-photo-25217163.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/25217163/"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "url",
+      "sha256": "80f2f3d5998d16aa50e22868114413320349b5c93c247c7185106a2e8536b094",
+      "url": "https://images.pexels.com/photos/9685264/pexels-photo-9685264.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/9685264/"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "url",
+      "sha256": "628e9ce098950625ae03ff9b30f54697bda8520fccdfc01093d6023d37314db7",
+      "url": "https://images.pexels.com/photos/27564591/pexels-photo-27564591.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/27564591/"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "url",
+      "sha256": "f7e8bbfe48f520374841d45598274621edcfeb8c94851d5a0a2068fec9602e5a",
+      "url": "https://images.pexels.com/photos/2295285/pexels-photo-2295285.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/2295285/"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "url",
+      "sha256": "31e7f3d2784350bdd3aa97b0fa34380a04ac7abc16f20c021aad51ca82953b43",
+      "url": "https://images.pexels.com/photos/8512643/pexels-photo-8512643.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/8512643/"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "url",
+      "sha256": "23f2a1c1924e244ebafdbb920a2380dd41203e0152429bd8659a09f8b295545e",
+      "url": "https://images.pexels.com/photos/13799703/pexels-photo-13799703.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/13799703/"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "url",
+      "sha256": "59f4add5e2099705c13ee27d74200b070167e270a616b72925c4c42c5215f880",
+      "url": "https://images.pexels.com/photos/37888518/pexels-photo-37888518.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/37888518/"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "url",
+      "sha256": "cbd3dd95bfc20331b84b940d8b39679e0d058023d41d01008319f50662678835",
+      "url": "https://images.pexels.com/photos/30682733/pexels-photo-30682733.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/30682733/"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "url",
+      "sha256": "88ec8936fd0f680d8096cbefc91e644e6555f112410023354b9af651c4825348",
+      "url": "https://images.pexels.com/photos/15015357/pexels-photo-15015357.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/15015357/"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "url",
+      "sha256": "02753fc11d98db3c6a74c75aa516eb195c28d00e6b35403e61d2e38495425396",
+      "url": "https://images.pexels.com/photos/905847/pexels-photo-905847.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/905847/"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "url",
+      "sha256": "df81cee2bbb4c8f8bf38fca911d4ccba64039a6bb27232bfd021a927253d7f54",
+      "url": "https://images.pexels.com/photos/30760367/pexels-photo-30760367.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/30760367/"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "url",
+      "sha256": "6ed0d2a88c0587169b997e5243deb6c1ccbd51b775132c40b003b4e7a323d1f0",
+      "url": "https://images.pexels.com/photos/5737830/pexels-photo-5737830.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/5737830/"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "url",
+      "sha256": "0794b95ae34e4c1692b580fe2c7b89d2302ef150107ad33462b4454c9f123022",
+      "url": "https://images.pexels.com/photos/30403324/pexels-photo-30403324.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/30403324/"
+    }
+  ]
+}

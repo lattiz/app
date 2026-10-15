@@ -1,0 +1,491 @@
+{
+  "$schema": "./spec.schema.json",
+  "specVersion": 1,
+  "idBase": "restaurante-trigo-y-brasa",
+  "twin": true,
+  "giro": "restaurante",
+  "business": {
+    "name": "Trigo y Brasa",
+    "shortName": "Trigo",
+    "tagline": "Panadería",
+    "city": "CDMX",
+    "branch": "Clavería",
+    "address": "Av. Cuitláhuac 000, Col. Clavería, CDMX",
+    "hours": "Mar–Dom 07:00–16:00 · Lun cerrado",
+    "phone": "+52 55 0000 0000",
+    "whatsapp": "5215500000000",
+    "whatsappMessage": "Hola, quiero hacer un encargo de pan"
+  },
+  "brand": {
+    "catalog": "extended",
+    "palette": {
+      "preset": "pal-mostaza"
+    },
+    "fontPair": "fraunces+nunito-sans"
+  },
+  "layout": {
+    "direction": "terracota-calida",
+    "dials": {
+      "density": 7
+    }
+  },
+  "sections": {
+    "pro": [
+      {
+        "role": "header",
+        "variant": "inline"
+      },
+      {
+        "role": "hero",
+        "variant": "overlap"
+      },
+      {
+        "role": "marquee"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog"
+      },
+      {
+        "role": "proof"
+      },
+      {
+        "role": "team"
+      },
+      {
+        "role": "testimonials"
+      },
+      {
+        "role": "faq"
+      },
+      {
+        "role": "contact"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer"
+      }
+    ],
+    "basico": [
+      {
+        "role": "header"
+      },
+      {
+        "role": "hero",
+        "variant": "framed"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog"
+      },
+      {
+        "role": "faq"
+      },
+      {
+        "role": "contact"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer"
+      }
+    ]
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "{{name}} en {{city}}: pan de masa madre, bollería y café. Encargos por WhatsApp."
+    },
+    "navbar": {
+      "cta": "Hacer encargo",
+      "notice": "Hoy horneamos 07:00–16:00 · Sin cita"
+    },
+    "hero": {
+      "image": "hero.jpg",
+      "imageAlt": "Hogazas de pan sobre una mesa de madera junto a una ventana con luz de mañana",
+      "detailImage": "gallery-07.jpg",
+      "detailAlt": "Rosca decorada con frutas cristalizadas sobre una mesa",
+      "eyebrow": "Pan de hoy · {{branch}}",
+      "title": "Pan de masa madre",
+      "text": "Harina, agua, sal y tiempo. Aparta tu pan.",
+      "primaryCta": "Haz tu encargo",
+      "secondaryCta": "Ver la vitrina",
+      "secondaryHref": "#servicios"
+    },
+    "marquee": {
+      "label": "Lo que sale del horno",
+      "items": [
+        "Masa madre",
+        "Pan dulce del día",
+        "Café de la casa",
+        "Encargos con anticipación",
+        "Tandas por la mañana"
+      ]
+    },
+    "about": {
+      "kicker": "{{index}} — Nosotros",
+      "title": "Masa con <span class=\"lz-title__serif\">calma</span>",
+      "summary": "En {{shortName}} trabajamos la masa con calma: fermentación lenta, horneado en tandas y pan que se termina el mismo día.",
+      "statement": "Pan hecho a mano, con la masa en su tiempo. Sin prisas en la mesa ni en el horno.",
+      "image": "about.jpg",
+      "imageAlt": "Panadero dando forma a una masa sobre una mesa de trabajo enharinada",
+      "sticker": "Hecho a mano",
+      "paragraphs": [
+        "{{shortName}} es una panadería de barrio con un horno, una mesa de trabajo y una barra de café.",
+        "Cada masa madre se alimenta a diario. La fermentación toma el tiempo que necesita y no el que nos conviene.",
+        "Ven temprano: lo que sale primero es lo que mejor se vende. El resto del día hay poco, y nunca de más."
+      ],
+      "stats": [
+        {
+          "value": "48 h",
+          "label": "Fermentación (muestra)"
+        },
+        {
+          "value": "7:00",
+          "label": "Primera tanda del día"
+        },
+        {
+          "value": "3 tandas",
+          "label": "Al horno cada mañana"
+        }
+      ]
+    },
+    "services": {
+      "kicker": "{{index}} — Vitrina",
+      "title": "La <span class=\"lz-title__serif\">vitrina</span>",
+      "intro": "Precios de ejemplo en pesos, IVA incluido. Pregunta por la tanda de hoy.",
+      "prices": [
+        {
+          "name": "Pan de masa madre",
+          "price": "$65",
+          "description": "Hogaza de 800 g, corteza crujiente y miga abierta."
+        },
+        {
+          "name": "Pan de centeno",
+          "price": "$85",
+          "description": "Hogaza de centeno con semillas, 900 g."
+        },
+        {
+          "name": "Pan dulce del día",
+          "price": "$25",
+          "description": "Concha, cuerno o rol, según la tanda."
+        },
+        {
+          "name": "Bollería de mantequilla",
+          "price": "$45",
+          "description": "Croissant de mantequilla, horneado al amanecer."
+        },
+        {
+          "name": "Rosca de temporada",
+          "price": "$290",
+          "description": "Rosca para 8 personas, por encargo."
+        },
+        {
+          "name": "Café de la casa",
+          "price": "$40",
+          "description": "Espresso o café de filtro, en taza."
+        }
+      ],
+      "promos": [
+        {
+          "tag": "Encargos",
+          "title": "Roscas y pasteles por encargo",
+          "text": "Pídelos con 48 horas de anticipación.",
+          "cta": "Haz tu encargo",
+          "href": "{{whatsappUrl:Hola, quiero hacer un encargo de pan}}"
+        },
+        {
+          "tag": "Eventos",
+          "title": "Mesas de pan para eventos",
+          "text": "Armamos mesas de pan para reuniones de hasta 40 personas.",
+          "cta": "Cotizar",
+          "href": "{{whatsappUrl:Hola, quiero cotizar una mesa de pan}}"
+        }
+      ]
+    },
+    "gallery": {
+      "kicker": "{{index}} — Del horno",
+      "title": "De la mesa de trabajo a <span class=\"lz-title__serif\">tu mesa</span>",
+      "items": [
+        {
+          "image": "gallery-01.jpg",
+          "caption": "Hogazas recién horneadas",
+          "alt": "Hogazas de masa madre con corteza dorada sobre una tabla de madera"
+        },
+        {
+          "image": "gallery-02.jpg",
+          "caption": "Pan dulce",
+          "alt": "Conchas y cuernos sobre una charola de metal"
+        },
+        {
+          "image": "gallery-03.jpg",
+          "caption": "Masa en reposo",
+          "alt": "Masa de pan cubierta con un paño sobre la mesa de trabajo"
+        },
+        {
+          "image": "gallery-04.jpg",
+          "caption": "Café de la casa",
+          "alt": "Taza de café con leche sobre una mesa de madera"
+        },
+        {
+          "image": "gallery-05.jpg",
+          "caption": "La vitrina",
+          "alt": "Vitrina con pan de la mañana"
+        },
+        {
+          "image": "gallery-06.jpg",
+          "caption": "El horno",
+          "alt": "Horno de panadería con pan en la pala"
+        },
+        {
+          "image": "gallery-07.jpg",
+          "caption": "Roscas por encargo",
+          "alt": "Rosca de temporada con fruta cristalizada, lista para recoger"
+        },
+        {
+          "image": "gallery-08.jpg",
+          "caption": "Mesa de pan",
+          "alt": "Mesa con variedad de panes para un evento"
+        }
+      ]
+    },
+    "team": {
+      "kicker": "{{index}} — Equipo",
+      "title": "Quién <span class=\"lz-title__serif\">amasa</span>",
+      "members": [
+        {
+          "name": "Carmen Ortiz",
+          "role": "Maestra panadera",
+          "tags": [
+            "Masa madre",
+            "Hogazas"
+          ],
+          "image": "team-1.jpg",
+          "imageAlt": "Retrato de Carmen Ortiz con delantal en la mesa de trabajo"
+        },
+        {
+          "name": "Luis Herrera",
+          "role": "Horno y producción",
+          "tags": [
+            "Tandas",
+            "Centeno"
+          ],
+          "image": "team-2.jpg",
+          "imageAlt": "Retrato de Luis Herrera junto al horno"
+        },
+        {
+          "name": "Ana Ruiz",
+          "role": "Bollería y pan dulce",
+          "tags": [
+            "Concha",
+            "Croissant"
+          ],
+          "image": "team-3.jpg",
+          "imageAlt": "Retrato de Ana Ruiz con una charola de pan dulce"
+        },
+        {
+          "name": "Jorge Méndez",
+          "role": "Café y atención",
+          "tags": [
+            "Espresso",
+            "Filtro"
+          ],
+          "image": "team-4.jpg",
+          "imageAlt": "Retrato de Jorge Méndez detrás de la barra de café"
+        }
+      ]
+    },
+    "testimonials": {
+      "kicker": "{{index}} — Clientes",
+      "allReviewsCta": "Ver reseñas en Google",
+      "writeReviewCta": "Dejar reseña en Google",
+      "reviews": [
+        {
+          "text": "La hogaza de centeno dura toda la semana. Vengo desde que abrieron.",
+          "author": "Daniela R."
+        },
+        {
+          "text": "Hice mi encargo de rosca por WhatsApp y llegó puntual, con la fruta cristalizada que pedí.",
+          "author": "Miguel A."
+        },
+        {
+          "text": "Desayunamos el pan dulce con café en la barra. Tranquilo y con buen pan.",
+          "author": "Paola S."
+        }
+      ]
+    },
+    "faq": {
+      "kicker": "{{index}} — Preguntas",
+      "title": "Antes de <span class=\"lz-title__serif\">venir</span>",
+      "intro": "Lo que más escriben nuestros clientes, en pocas líneas. Otra duda: escríbenos.",
+      "cta": "Preguntar por WhatsApp",
+      "items": [
+        {
+          "question": "¿A qué hora se acaba el pan?",
+          "answer": "Las primeras tandas salen a las 7:00. Después de las 14:00 queda poco, sobre todo de pan dulce."
+        },
+        {
+          "question": "¿Con cuánto tiempo debo hacer un encargo?",
+          "answer": "Roscas y pasteles con 48 horas de anticipación. Para mesas de pan, escríbenos con la fecha."
+        },
+        {
+          "question": "¿Tienen opciones sin lácteo?",
+          "answer": "Algunas hogazas no llevan lácteo. Pregunta en el mostrador por la tanda del día."
+        },
+        {
+          "question": "¿Hay lugar para sentarse?",
+          "answer": "Hay mesas junto a la barra. También puedes llevar tu café o pan."
+        },
+        {
+          "question": "¿Hacen pedidos para llevar?",
+          "answer": "Sí. Mándanos tu pedido por WhatsApp y te avisamos a qué hora pasar."
+        },
+        {
+          "question": "¿Hay estacionamiento?",
+          "answer": "No tenemos estacionamiento propio, pero hay uno público a una cuadra."
+        }
+      ]
+    },
+    "locations": {
+      "kicker": "{{index}} — Encargos",
+      "title": "Haz tu <span class=\"lz-title__serif\">encargo</span>",
+      "contactText": "Encargos y pedidos por WhatsApp en el horario de la panadería. Para mesas de pan de eventos, escribe con la fecha.",
+      "whatsappLabel": "WhatsApp",
+      "whatsappValue": "Hacer encargo",
+      "callLabel": "Teléfono",
+      "emailLabel": "Correo",
+      "directionsLabel": "Cómo llegar",
+      "hoursLabel": "Horario",
+      "whatsappCta": "Encargo por WhatsApp",
+      "callCta": "Llamar"
+    },
+    "floating-whatsapp": {
+      "label": "Hacer encargo por WhatsApp"
+    },
+    "footer": {
+      "about": "Panadería artesanal en {{branch}}, {{city}}. Encargos y pedidos por WhatsApp.",
+      "branchesTitle": "Dónde estamos",
+      "linksTitle": "Explorar",
+      "contactTitle": "Contacto"
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Pan recién horneado en {{branch}}",
+          "text": "Masa madre, harina y horno. Pide tu pan o tu café y pasa por él."
+        }
+      },
+      "brand": {
+        "palette": {
+          "preset": "pal-papel-tinta"
+        },
+        "fontPair": "lora+figtree"
+      }
+    }
+  },
+  "images": [
+    {
+      "key": "hero",
+      "source": {
+        "url": "https://images.pexels.com/photos/20552663/pexels-photo-20552663.jpeg"
+      }
+    },
+    {
+      "key": "about",
+      "source": {
+        "url": "https://images.pexels.com/photos/30918892/pexels-photo-30918892.jpeg"
+      }
+    },
+    {
+      "key": "team-1",
+      "source": {
+        "url": "https://images.pexels.com/photos/8918823/pexels-photo-8918823.jpeg"
+      }
+    },
+    {
+      "key": "team-2",
+      "source": {
+        "url": "https://images.pexels.com/photos/5834747/pexels-photo-5834747.jpeg"
+      }
+    },
+    {
+      "key": "team-3",
+      "source": {
+        "url": "https://images.pexels.com/photos/38151878/pexels-photo-38151878.jpeg"
+      }
+    },
+    {
+      "key": "team-4",
+      "source": {
+        "url": "https://images.pexels.com/photos/15736029/pexels-photo-15736029.jpeg"
+      }
+    },
+    {
+      "key": "gallery-01",
+      "source": {
+        "url": "https://images.pexels.com/photos/15318357/pexels-photo-15318357.jpeg"
+      }
+    },
+    {
+      "key": "gallery-02",
+      "source": {
+        "url": "https://images.pexels.com/photos/28965344/pexels-photo-28965344.jpeg"
+      }
+    },
+    {
+      "key": "gallery-03",
+      "source": {
+        "url": "https://images.pexels.com/photos/28826564/pexels-photo-28826564.jpeg"
+      }
+    },
+    {
+      "key": "gallery-04",
+      "source": {
+        "url": "https://images.pexels.com/photos/30918878/pexels-photo-30918878.jpeg"
+      }
+    },
+    {
+      "key": "gallery-05",
+      "source": {
+        "url": "https://images.pexels.com/photos/39524867/pexels-photo-39524867.jpeg"
+      }
+    },
+    {
+      "key": "gallery-06",
+      "source": {
+        "url": "https://images.pexels.com/photos/29388479/pexels-photo-29388479.jpeg"
+      }
+    },
+    {
+      "key": "gallery-07",
+      "source": {
+        "url": "https://images.pexels.com/photos/34819157/pexels-photo-34819157.jpeg"
+      }
+    },
+    {
+      "key": "gallery-08",
+      "source": {
+        "url": "https://images.pexels.com/photos/36445170/pexels-photo-36445170.jpeg"
+      }
+    }
+  ],
+  "motion": {
+    "preset": "calm",
+    "progress": false
+  },
+  "todo": [
+    "business: dirección, colonia, horario, teléfono y WhatsApp reales (hoy son de demostración)",
+    "copy: precios, equipo, reseñas, cifras y preguntas del negocio",
+    "images: fotos reales ({ \"file\": \"…\" }) o `pnpm lattiz build <id> --images pexels`",
+    "brand: paleta, tipografía y forma (spec schema → opciones; `kit:spec presets` las lista)"
+  ]
+}

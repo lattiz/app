@@ -1,0 +1,103 @@
+{
+  "$lattiz": "GENERATED from specs/gimnasio-pulso-deportivo.spec.json (spec a4484a2898ea, file 94522191d572). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "781fa5918ebd102a980f8f5021cb2355910a07825a48c3502901622893a4338d",
+      "url": "https://images.pexels.com/photos/30428668/pexels-photo-30428668.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/30428668/"
+    },
+    {
+      "file": "about.jpg",
+      "source": "url",
+      "sha256": "32b716b893afb5f85b5edb58bac083504332e3627d7309df6e57a5df6eb09198",
+      "url": "https://images.pexels.com/photos/29667299/pexels-photo-29667299.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/29667299/"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "url",
+      "sha256": "a28df64fe0730f649c9cfc600e52061bbdb8f0579b05cdcda54a7f450f367bed",
+      "url": "https://images.pexels.com/photos/36429456/pexels-photo-36429456.png",
+      "pageUrl": "https://www.pexels.com/photo/36429456/"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "url",
+      "sha256": "59716260d44faa84699f426f0a1b033a053b88775f31c5ac72f458060b0f40e5",
+      "url": "https://images.pexels.com/photos/2011383/pexels-photo-2011383.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/2011383/"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "url",
+      "sha256": "3db94eaa33d8d386162227a7fa0d5b95b9bef96e2e9bf3a3ee1c1c0ab15a79f3",
+      "url": "https://images.pexels.com/photos/39219674/pexels-photo-39219674.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/39219674/"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "url",
+      "sha256": "d401c68d564f3531a84ddc3e8dfce933a7f70cca4ed84c4237c8829b6a1d5e26",
+      "url": "https://images.pexels.com/photos/36327498/pexels-photo-36327498.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/36327498/"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "url",
+      "sha256": "6362dbc3fd8a459fd01fe531a59b16c15552a41979afeb68dd7a2ef7c5aa8a90",
+      "url": "https://images.pexels.com/photos/3931307/pexels-photo-3931307.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/3931307/"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "url",
+      "sha256": "e94a26926f0302f9b332280caac428a3e874c9f884c868396221f740e8796174",
+      "url": "https://images.pexels.com/photos/29526363/pexels-photo-29526363.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/29526363/"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "url",
+      "sha256": "a21d771277dc00b5dcc746766b151bcc614f36706d0d90833309a5f649220913",
+      "url": "https://images.pexels.com/photos/16513595/pexels-photo-16513595.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/16513595/"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "url",
+      "sha256": "56b358bc533c9f7f97da57444dbb6ebddbc1b09d45fb61be9d597b9ed15a3d8e",
+      "url": "https://images.pexels.com/photos/8844387/pexels-photo-8844387.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/8844387/"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "url",
+      "sha256": "31da5813b1217bdab7a395d6b982cc2abed1609628f899f594a5afd9205982a8",
+      "url": "https://images.pexels.com/photos/35986382/pexels-photo-35986382.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/35986382/"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "url",
+      "sha256": "995eb3febc150195a63403221c72733ed9aed234d3db8985e5e3fa1d801f8d87",
+      "url": "https://images.pexels.com/photos/15319021/pexels-photo-15319021.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/15319021/"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "url",
+      "sha256": "7d2e7cf0125db5b12935316a23a85e56f726a75f0291663dae641951c2dd13ec",
+      "url": "https://images.pexels.com/photos/20860586/pexels-photo-20860586.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/20860586/"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "url",
+      "sha256": "838d75c8f82b03073a188703f11409d9d4d3cd3eadbb1eb0bc9a0471118d82e2",
+      "url": "https://images.pexels.com/photos/4269271/pexels-photo-4269271.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/4269271/"
+    }
+  ]
+}
