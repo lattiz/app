@@ -898,6 +898,34 @@
         }
       }
     },
+    "restaurante-base-la-nota-azul-v1": {
+      "manifest": "templates/restaurante-base-la-nota-azul-v1.ts",
+      "hashes": {
+        "project": "7affde0fd066ea1f",
+        "html": "16a379810498196a",
+        "css": "81999319d80be5c0",
+        "rootCss": "82f49a1d0134793f",
+        "theme": "5837fb5046dff31e",
+        "pack": "a93bc9be6fffeb44",
+        "meta": "3768c8f77b1c2f9f",
+        "assets": "b0209098caa84b5a"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 24920,
+          "gzip": 4946
+        },
+        "html": {
+          "raw": 18244,
+          "gzip": 5041
+        },
+        "index": {
+          "raw": 43180,
+          "gzip": 9862
+        }
+      }
+    },
     "restaurante-base-margen-v1": {
       "manifest": "templates/restaurante-base-margen-v1.ts",
       "hashes": {
@@ -1035,6 +1063,34 @@
         "index": {
           "raw": 61889,
           "gzip": 12880
+        }
+      }
+    },
+    "restaurante-la-nota-azul-v1": {
+      "manifest": "templates/restaurante-la-nota-azul-v1.ts",
+      "hashes": {
+        "project": "bdcd903f60376e1f",
+        "html": "b4f512471bd395a6",
+        "css": "cd8fa1280f3af69a",
+        "rootCss": "f241dfee89917ccd",
+        "theme": "bd8c241ae5f6d5d7",
+        "pack": "a93bc9be6fffeb44",
+        "meta": "9c4a312379a6286b",
+        "assets": "106d57134542a49a"
+      },
+      "assets": 13,
+      "size": {
+        "css": {
+          "raw": 38988,
+          "gzip": 7135
+        },
+        "html": {
+          "raw": 28384,
+          "gzip": 7028
+        },
+        "index": {
+          "raw": 67388,
+          "gzip": 14035
         }
       }
     },
@@ -1579,6 +1635,47 @@
         "restaurante-base-casa-comal-v1",
         "restaurante-casa-comal-v1"
       ]
+    },
+    "specs/restaurante-la-nota-azul.spec.json": {
+      "ids": [
+        "restaurante-la-nota-azul-v1",
+        "restaurante-base-la-nota-azul-v1"
+      ],
+      "specHash": "c42ddb64df57",
+      "files": {
+        "templates/restaurante-la-nota-azul-v1.ts": "6a4e09871d37",
+        "themes/restaurante-la-nota-azul-v1.json": "cebda031d187",
+        "demo-profiles/restaurante-la-nota-azul-v1.json": "16838de17dd5",
+        "templates/restaurante-base-la-nota-azul-v1.ts": "c2fe0e51fe53",
+        "themes/restaurante-base-la-nota-azul-v1.json": "141a50796c33",
+        "demo-profiles/restaurante-base-la-nota-azul-v1.json": "16838de17dd5",
+        "content/restaurante.la-nota-azul.es-MX.ts": "a93bc9be6fff"
+      },
+      "choices": {
+        "restaurante-la-nota-azul-v1": [
+          "dirección: neon-nocturno",
+          "arquetipo: bold",
+          "tipografía: \"oswald+source-sans-3\" (del lock)"
+        ],
+        "restaurante-base-la-nota-azul-v1": [
+          "dirección: neon-nocturno",
+          "arquetipo: bold",
+          "tipografía: \"bebas-neue+barlow\" (del lock)"
+        ]
+      },
+      "peers": [
+        "restaurante-base-casa-comal-v1",
+        "restaurante-base-ceniza-v1",
+        "restaurante-base-fresca-nube-v1",
+        "restaurante-base-hoja-y-barro-v1",
+        "restaurante-base-margen-v1",
+        "restaurante-casa-comal-v1",
+        "restaurante-ceniza-v1",
+        "restaurante-fresca-nube-v1",
+        "restaurante-hoja-y-barro-v1",
+        "restaurante-margen-v1"
+      ],
+      "locked": true
     },
     "specs/restaurante-margen.spec.json": {
       "ids": [

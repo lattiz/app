@@ -1,0 +1,10 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-la-nota-azul.spec.json (spec c42ddb64df57, file 3f0f085e14bf). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "d0a4645cfc43fe47ddeaf263c7383509a88040fefa3216a636dd1a1fb89280d8"
+    }
+  ]
+}

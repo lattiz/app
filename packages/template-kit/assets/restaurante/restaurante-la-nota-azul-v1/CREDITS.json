@@ -1,0 +1,70 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-la-nota-azul.spec.json (spec c42ddb64df57, file 62718d194064). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "2d7bb107a60ca09c09954c80de4440ef662b6f8ce25e8d04dc03366b484b2bdd"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "placeholder",
+      "sha256": "e1b49b59b19f3e990eb96e73acf8b188f9f49522317f07c263af47d295fce7a5"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "placeholder",
+      "sha256": "b9a213659b7685e46a0be7f46ac85d868adb2e6aed2d6df94d3ec3ae35b07599"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "placeholder",
+      "sha256": "8e697d0a3863a3431bda686245aed2004bfc420bffe4adf8fe0a18bf684d8f49"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "placeholder",
+      "sha256": "3549a65bbff7b022e468ccf8f89b4937f43e073535173f550433860c8bc39712"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "placeholder",
+      "sha256": "6fe01509f625bdd25bea66c17f381327756869ba3572a79690aaffe3b1ea8d78"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "placeholder",
+      "sha256": "33150eb91855984268f64ef9bf51a1ccb7ed62accb88adec99e3ddd8fb094bba"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "placeholder",
+      "sha256": "234af382a5ea1f5882706481a17b9bb51033eb49848c8caf07f61ff91a47589c"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "placeholder",
+      "sha256": "6d30a7fe0dbea8561aeb8842adf81991a4426612084a7950b571193f2bd808ae"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "placeholder",
+      "sha256": "37ddc5c5f85ad559b30eaaff04d8b0a949ad86d50f1b1a4d63ca6df7c04d9bb3"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "placeholder",
+      "sha256": "a52823602d373756bb15bad873e8316f2b96a6b0a014f5593529b2e173988dde"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "placeholder",
+      "sha256": "ec2314759d62096189f75e73b13fcfd7b6dc2d7b873edcd93cef3065e56ac2f4"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "placeholder",
+      "sha256": "0ff827faa8d04f5dfdf69090eb01da35a022c4106a20f3ea5cfff62eac613cd7"
+    }
+  ]
+}
