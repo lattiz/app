@@ -1,0 +1,12 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-trigo-y-brasa.spec.json (spec bc3ab901f64d, file 28ad9e7acfae). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "81c1a6d9d9bf86cfb277c2f11c99e2fd0904cb8417fe14af2e7b0380cb31c981",
+      "url": "https://images.pexels.com/photos/20552663/pexels-photo-20552663.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/20552663/"
+    }
+  ]
+}

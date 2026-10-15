@@ -1,10 +1,12 @@
 {
-  "$lattiz": "GENERATED from specs/restaurante-la-nota-azul.spec.json (spec c42ddb64df57, file 3f0f085e14bf). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/restaurante-la-nota-azul.spec.json (spec c02e8c9d8f8c, file a500a205b3eb). Do not edit: use the spec, or freeze.",
   "images": [
     {
       "file": "hero.jpg",
-      "source": "placeholder",
-      "sha256": "d0a4645cfc43fe47ddeaf263c7383509a88040fefa3216a636dd1a1fb89280d8"
+      "source": "url",
+      "sha256": "d195420e8cef808afe25aecfb3333418c5e049d175c27bc310af6b9d63d46cc8",
+      "url": "https://images.pexels.com/photos/25217163/pexels-photo-25217163.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/25217163/"
     }
   ]
 }

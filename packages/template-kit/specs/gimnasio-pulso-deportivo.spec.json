@@ -1,0 +1,508 @@
+{
+  "$schema": "./spec.schema.json",
+  "specVersion": 1,
+  "idBase": "gimnasio-pulso-deportivo",
+  "twin": true,
+  "giro": "gimnasio",
+  "business": {
+    "name": "Pulso Deportivo",
+    "shortName": "Pulso",
+    "tagline": "Movimiento y nutrición",
+    "city": "CDMX",
+    "branch": "Clavería",
+    "address": "Calle Hilo 88, Col. Clavería, CDMX",
+    "hours": "Lun–Vie 07:00–21:00 · Sáb 08:00–14:00",
+    "phone": "+52 55 0000 0000",
+    "whatsapp": "5215500000000",
+    "whatsappMessage": "Hola, quiero agendar una consulta"
+  },
+  "brand": {
+    "catalog": "extended",
+    "fontPair": "red-hat-display+red-hat-text",
+    "palette": {
+      "custom": {
+        "bg": "#0E1726",
+        "accent": "#22C3E6"
+      }
+    }
+  },
+  "layout": {
+    "direction": "marmol-sobrio"
+  },
+  "sections": {
+    "pro": [
+      {
+        "role": "header",
+        "variant": "inline"
+      },
+      {
+        "role": "hero",
+        "variant": "bento"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog"
+      },
+      {
+        "role": "proof"
+      },
+      {
+        "role": "team",
+        "variant": "grid"
+      },
+      {
+        "role": "testimonials"
+      },
+      {
+        "role": "faq"
+      },
+      {
+        "role": "contact"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer",
+        "variant": "columns"
+      }
+    ],
+    "basico": [
+      {
+        "role": "header"
+      },
+      {
+        "role": "hero",
+        "variant": "split"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog"
+      },
+      {
+        "role": "faq"
+      },
+      {
+        "role": "contact"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer"
+      }
+    ]
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "{{name}} en {{city}}: suplementos seleccionados y consultas de coaching, nutrición y fisioterapia."
+    },
+    "navbar": {
+      "cta": "Agendar",
+      "notice": "Consultas de lun a sáb · Tienda"
+    },
+    "hero": {
+      "image": "hero.jpg",
+      "imageAlt": "Persona entrenando con pesas en un gimnasio luminoso y ordenado",
+      "eyebrow": "Tienda y consultorio · {{branch}}",
+      "title": "Entrena con método, come con criterio",
+      "text": "Suplementos seleccionados y consultas de coaching, nutrición y fisioterapia en un mismo lugar.",
+      "primaryCta": "Agenda una consulta",
+      "secondaryCta": "Ver suplementos",
+      "secondaryHref": "#servicios",
+      "facts": [
+        {
+          "value": "Tienda",
+          "label": "Proteínas, creatina y vitaminas"
+        },
+        {
+          "value": "Consultas",
+          "label": "Coaching, nutrición y fisioterapia"
+        }
+      ],
+      "sticker": "Valoración inicial"
+    },
+    "marquee": {
+      "label": "Lo que hacemos",
+      "items": [
+        "Coaching deportivo",
+        "Nutrición deportiva",
+        "Fisioterapia",
+        "Proteínas y creatina",
+        "Valoración inicial"
+      ]
+    },
+    "about": {
+      "kicker": "{{index}} — Nosotros",
+      "title": "Entrenar y comer bien se aprende",
+      "summary": "En {{shortName}} vendemos suplementos y damos consultas. Lo que compras y lo que haces en el gimnasio va en el mismo plan.",
+      "statement": "Un suplemento complementa; no sustituye una dieta ni un tratamiento.",
+      "image": "about.jpg",
+      "imageAlt": "Coach revisando una tabla de ejercicios con una persona en la sala de valoración",
+      "paragraphs": [
+        "{{shortName}} nace como tienda de suplementos y se convirtió en consultorio de coaching, nutrición y fisioterapia.",
+        "Empezamos con una valoración: revisamos tu historial, tus metas y tus molestias antes de proponer nada.",
+        "Si necesitas un suplemento, te explicamos para qué sirve, cómo se toma y cuándo no conviene."
+      ],
+      "stats": [
+        {
+          "value": "1 valoración",
+          "label": "Antes del primer plan"
+        },
+        {
+          "value": "3 áreas",
+          "label": "Entrenamiento y salud"
+        },
+        {
+          "value": "Lun–Sáb",
+          "label": "Con cita y en tienda"
+        }
+      ]
+    },
+    "services": {
+      "kicker": "{{index}} — Tienda",
+      "title": "Suplementos y <span class=\"lz-title__serif\">accesorios</span>",
+      "intro": "Categorías con precio de referencia, en pesos. Existencias y envíos se confirman por WhatsApp.",
+      "prices": [
+        {
+          "name": "Proteínas",
+          "price": "Desde $650",
+          "description": "Whey y vegetal, en presentaciones de 1 a 2 kg."
+        },
+        {
+          "name": "Creatina",
+          "price": "Desde $480",
+          "description": "Monohidrato en polvo, 300 g."
+        },
+        {
+          "name": "Vitaminas",
+          "price": "Desde $320",
+          "description": "Multivitamínicos y minerales para la rutina diaria."
+        },
+        {
+          "name": "Pre-entreno",
+          "price": "Desde $540",
+          "description": "Fórmulas con cafeína. Revisa la etiqueta y tu tolerancia."
+        },
+        {
+          "name": "Accesorios",
+          "price": "Desde $250",
+          "description": "Bandas, shaker y guantes para entrenar."
+        },
+        {
+          "name": "Hidratación",
+          "price": "Desde $180",
+          "description": "Electrolitos y bebidas isotónicas."
+        }
+      ],
+      "promos": [
+        {
+          "tag": "Coaching",
+          "title": "Coaching deportivo",
+          "text": "Plan de entrenamiento con seguimiento semanal.",
+          "cta": "Agendar",
+          "href": "{{whatsappUrl:Hola, quiero agendar coaching deportivo}}"
+        },
+        {
+          "tag": "Nutrición",
+          "title": "Nutrición deportiva",
+          "text": "Plan de alimentación según tu rutina y tus metas.",
+          "cta": "Agendar",
+          "href": "{{whatsappUrl:Hola, quiero agendar una consulta de nutrición}}"
+        },
+        {
+          "tag": "Fisioterapia",
+          "title": "Valoración y fisioterapia",
+          "text": "Valoramos la molestia y te proponemos un plan de trabajo.",
+          "cta": "Agendar",
+          "href": "{{whatsappUrl:Hola, quiero agendar una valoración de fisioterapia}}"
+        }
+      ]
+    },
+    "gallery": {
+      "kicker": "{{index}} — Espacios",
+      "title": "Dentro del <span class=\"lz-title__serif\">consultorio</span>",
+      "items": [
+        {
+          "image": "gallery-01.jpg",
+          "caption": "Área de pesas",
+          "alt": "Área de pesas con racks y luz natural"
+        },
+        {
+          "image": "gallery-02.jpg",
+          "caption": "Estante de suplementos",
+          "alt": "Estante con frascos de suplementos ordenados por categoría"
+        },
+        {
+          "image": "gallery-03.jpg",
+          "caption": "Sala de valoración",
+          "alt": "Sala de valoración con camilla y mesa de trabajo"
+        },
+        {
+          "image": "gallery-04.jpg",
+          "caption": "Accesorios",
+          "alt": "Bandas elásticas y mancuernas sobre un tapete"
+        },
+        {
+          "image": "gallery-05.jpg",
+          "caption": "Sesión de coaching",
+          "alt": "Coach corrigiendo la postura de una persona en sentadilla"
+        },
+        {
+          "image": "gallery-06.jpg",
+          "caption": "Mesa de nutrición",
+          "alt": "Mesa de consulta con un plato balanceado y una libreta"
+        },
+        {
+          "image": "gallery-07.jpg",
+          "caption": "Camilla de fisioterapia",
+          "alt": "Camilla de fisioterapia con banda de resistencia"
+        },
+        {
+          "image": "gallery-08.jpg",
+          "caption": "Recepción",
+          "alt": "Recepción con mostrador de madera y estantes de tienda"
+        }
+      ]
+    },
+    "team": {
+      "kicker": "{{index}} — Equipo",
+      "title": "Quién <span class=\"lz-title__serif\">atiende</span>",
+      "members": [
+        {
+          "name": "Diego Morales",
+          "role": "Coach deportivo",
+          "tags": [
+            "Fuerza",
+            "Movilidad"
+          ],
+          "image": "team-1.jpg",
+          "imageAlt": "Retrato de Diego Morales en el área de pesas"
+        },
+        {
+          "name": "Sofía Mendoza",
+          "role": "Nutrióloga deportiva",
+          "tags": [
+            "Cédula: pendiente",
+            "Plan de alimentación"
+          ],
+          "image": "team-2.jpg",
+          "imageAlt": "Retrato de Sofía Mendoza en su consultorio"
+        },
+        {
+          "name": "Andrés Vega",
+          "role": "Fisioterapeuta",
+          "tags": [
+            "Cédula: pendiente",
+            "Valoración"
+          ],
+          "image": "team-3.jpg",
+          "imageAlt": "Retrato de Andrés Vega en la sala de fisioterapia"
+        },
+        {
+          "name": "Paola Ruiz",
+          "role": "Tienda y atención",
+          "tags": [
+            "Pedidos",
+            "Asesoría"
+          ],
+          "image": "team-4.jpg",
+          "imageAlt": "Retrato de Paola Ruiz detrás del mostrador"
+        }
+      ]
+    },
+    "testimonials": {
+      "kicker": "{{index}} — Clientes",
+      "allReviewsCta": "Ver reseñas en Google",
+      "writeReviewCta": "Dejar reseña en Google",
+      "reviews": [
+        {
+          "text": "Me explicaron qué iba a hacer en cada sesión y por qué. Sin prisas.",
+          "author": "Daniela R."
+        },
+        {
+          "text": "Pedí mi proteína por WhatsApp y me dijeron la existencia y el tiempo de envío antes de pagar.",
+          "author": "Miguel A."
+        },
+        {
+          "text": "La valoración de fisioterapia fue clara: me dijeron qué podía hacer y qué no todavía.",
+          "author": "Paola S."
+        }
+      ]
+    },
+    "faq": {
+      "kicker": "{{index}} — Preguntas",
+      "title": "Antes de <span class=\"lz-title__serif\">agendar</span>",
+      "intro": "Respuestas cortas a lo que más nos preguntan.",
+      "cta": "Preguntar por WhatsApp",
+      "items": [
+        {
+          "question": "¿Un suplemento sustituye una dieta?",
+          "answer": "No. Es un complemento. Una dieta balanceada y el entrenamiento van primero."
+        },
+        {
+          "question": "¿Necesito receta para comprar?",
+          "answer": "No vendemos medicamentos. Si tomas medicamentos o tienes una condición de salud, consulta a tu médico antes."
+        },
+        {
+          "question": "¿Cuánto cuesta la primera consulta?",
+          "answer": "La valoración inicial tiene un precio de referencia que confirmamos por WhatsApp según el servicio."
+        },
+        {
+          "question": "¿Atienden lesiones?",
+          "answer": "Fisioterapia valora la molestia y propone un plan. Si hay dolor intenso o síntomas urgentes, acude a urgencias o marca 911."
+        },
+        {
+          "question": "¿Hacen envíos?",
+          "answer": "Sí. Los envíos y las existencias se confirman por WhatsApp antes de pagar."
+        },
+        {
+          "question": "¿Puedo comprar y agendar en la misma visita?",
+          "answer": "Sí. Pregunta en recepción y te ayudamos con las dos cosas."
+        }
+      ]
+    },
+    "locations": {
+      "kicker": "{{index}} — Agendar",
+      "title": "Agenda tu <span class=\"lz-title__serif\">consulta</span>",
+      "contactText": "Consultas y pedidos por WhatsApp en el horario del lugar. Facturación y compras al mayoreo, por correo.",
+      "whatsappLabel": "WhatsApp",
+      "whatsappValue": "Agendar consulta",
+      "callLabel": "Teléfono",
+      "emailLabel": "Correo",
+      "directionsLabel": "Cómo llegar",
+      "hoursLabel": "Horario",
+      "whatsappCta": "Agendar por WhatsApp",
+      "callCta": "Llamar"
+    },
+    "floating-whatsapp": {
+      "label": "Agendar por WhatsApp"
+    },
+    "footer": {
+      "about": "Tienda y consultorio de coaching, nutrición y fisioterapia en {{branch}}, {{city}}.",
+      "branchesTitle": "Dónde estamos",
+      "linksTitle": "Explorar",
+      "contactTitle": "Contacto"
+    }
+  },
+  "overrides": {
+    "basico": {
+      "brand": {
+        "palette": {
+          "custom": {
+            "bg": "#F3F5F7",
+            "accent": "#5B3DD6"
+          }
+        },
+        "fontPair": "bricolage-grotesque+inter"
+      },
+      "copy": {
+        "hero": {
+          "title": "Suplementos y consultas en {{branch}}",
+          "text": "Proteínas, creatina y vitaminas, con una valoración antes de tu primer plan."
+        }
+      }
+    }
+  },
+  "images": [
+    {
+      "key": "hero",
+      "source": {
+        "url": "https://images.pexels.com/photos/30428668/pexels-photo-30428668.jpeg"
+      }
+    },
+    {
+      "key": "about",
+      "source": {
+        "url": "https://images.pexels.com/photos/29667299/pexels-photo-29667299.jpeg"
+      }
+    },
+    {
+      "key": "team-1",
+      "source": {
+        "url": "https://images.pexels.com/photos/35986382/pexels-photo-35986382.jpeg"
+      }
+    },
+    {
+      "key": "team-2",
+      "source": {
+        "url": "https://images.pexels.com/photos/15319021/pexels-photo-15319021.jpeg"
+      }
+    },
+    {
+      "key": "team-3",
+      "source": {
+        "url": "https://images.pexels.com/photos/20860586/pexels-photo-20860586.jpeg"
+      }
+    },
+    {
+      "key": "team-4",
+      "source": {
+        "url": "https://images.pexels.com/photos/4269271/pexels-photo-4269271.jpeg"
+      }
+    },
+    {
+      "key": "gallery-01",
+      "source": {
+        "url": "https://images.pexels.com/photos/36429456/pexels-photo-36429456.png"
+      }
+    },
+    {
+      "key": "gallery-02",
+      "source": {
+        "url": "https://images.pexels.com/photos/2011383/pexels-photo-2011383.jpeg"
+      }
+    },
+    {
+      "key": "gallery-03",
+      "source": {
+        "url": "https://images.pexels.com/photos/39219674/pexels-photo-39219674.jpeg"
+      }
+    },
+    {
+      "key": "gallery-04",
+      "source": {
+        "url": "https://images.pexels.com/photos/36327498/pexels-photo-36327498.jpeg"
+      }
+    },
+    {
+      "key": "gallery-05",
+      "source": {
+        "url": "https://images.pexels.com/photos/3931307/pexels-photo-3931307.jpeg"
+      }
+    },
+    {
+      "key": "gallery-06",
+      "source": {
+        "url": "https://images.pexels.com/photos/29526363/pexels-photo-29526363.jpeg"
+      }
+    },
+    {
+      "key": "gallery-07",
+      "source": {
+        "url": "https://images.pexels.com/photos/16513595/pexels-photo-16513595.jpeg"
+      }
+    },
+    {
+      "key": "gallery-08",
+      "source": {
+        "url": "https://images.pexels.com/photos/8844387/pexels-photo-8844387.jpeg"
+      }
+    }
+  ],
+  "motion": {
+    "preset": "calm",
+    "progress": false
+  },
+  "todo": [
+    "business: dirección, colonia, horario, teléfono y WhatsApp reales (hoy son de demostración)",
+    "copy: precios, equipo, cédulas, reseñas, cifras y preguntas del negocio",
+    "images: fotos reales o `pnpm lattiz build <id> --images pexels`",
+    "brand: paleta, tipografía y forma (spec schema → opciones; `kit:spec presets` las lista)"
+  ]
+}

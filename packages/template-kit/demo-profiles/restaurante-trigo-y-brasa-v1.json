@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-trigo-y-brasa.spec.json (spec bc3ab901f64d, file 2bd1abc63383). Do not edit: use the spec, or freeze.",
+  "name": "Trigo y Brasa",
+  "category": "restaurant",
+  "phone": "+525500000000",
+  "whatsapp": "+5215500000000",
+  "email": "hola@trigoybrasa.mx",
+  "address": {
+    "street": "Av. Cuitláhuac 000, Col. Clavería",
+    "city": "CDMX",
+    "country": "MX"
+  },
+  "hours": {
+    "tue": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "sun": [
+      {
+        "open": "13:00",
+        "close": "18:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}

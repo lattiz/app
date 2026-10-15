@@ -1,0 +1,96 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-trigo-y-brasa.spec.json (spec bc3ab901f64d, file afeb5c73b1a8). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "02b336d86035cefeb5a9f0f92d40bf1605ff86c91d28a53183b45d6ee3df5826",
+      "url": "https://images.pexels.com/photos/20552663/pexels-photo-20552663.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/20552663/"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "url",
+      "sha256": "47acd30c53bfdf796df15229107d3c82a2b350d581f1aac06b427b8254a2f715",
+      "url": "https://images.pexels.com/photos/34819157/pexels-photo-34819157.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/34819157/"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "url",
+      "sha256": "e050e651814454892834fb487996fb70c04343819d8d7cb4ce814b2b84cd2bff",
+      "url": "https://images.pexels.com/photos/15318357/pexels-photo-15318357.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/15318357/"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "url",
+      "sha256": "5294263818250646dc3f4b57a28060dbb7ecb05e069fc66bd1dafb6aa66bb964",
+      "url": "https://images.pexels.com/photos/28965344/pexels-photo-28965344.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/28965344/"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "url",
+      "sha256": "dc3e29427d66a0eabf7ec369a69d700625235bca4f7a68606fd7efe9de579774",
+      "url": "https://images.pexels.com/photos/28826564/pexels-photo-28826564.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/28826564/"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "url",
+      "sha256": "a88fce2c0da605d37b65064b619999b0798b2bb2a2b4d06a57c1244e6fae2ebe",
+      "url": "https://images.pexels.com/photos/30918878/pexels-photo-30918878.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/30918878/"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "url",
+      "sha256": "e8ed52893ccfff7d40ca4dd46dfefe6cc3f3f5277c025a3dd2a53fcfe3528814",
+      "url": "https://images.pexels.com/photos/39524867/pexels-photo-39524867.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/39524867/"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "url",
+      "sha256": "5714700f514051377d8aefc858e4e2314c470a659a125127f43266dd429740ce",
+      "url": "https://images.pexels.com/photos/29388479/pexels-photo-29388479.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/29388479/"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "url",
+      "sha256": "fd0f285c46d6e7b604c95f3aedd6a8d55beea3eab9bf897d5cd2109ad0247fec",
+      "url": "https://images.pexels.com/photos/36445170/pexels-photo-36445170.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/36445170/"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "url",
+      "sha256": "0406505af9f9e3aff9958b3dda85a870b4dccc8c511695415e9173e94518b270",
+      "url": "https://images.pexels.com/photos/8918823/pexels-photo-8918823.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/8918823/"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "url",
+      "sha256": "f3321ca0e4f0bf7471a2255a02de57d52123d14e41074ffbd60059ab8d081d2c",
+      "url": "https://images.pexels.com/photos/5834747/pexels-photo-5834747.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/5834747/"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "url",
+      "sha256": "fa11f97aa4bfa6016b636527afe206d27b20f427515ddb47e4fd90615d6ffa71",
+      "url": "https://images.pexels.com/photos/38151878/pexels-photo-38151878.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/38151878/"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "url",
+      "sha256": "4b6cd9bfe5ca086e93f5a1a0acd7832873cab81682a04fc6e6f4df742a21dda3",
+      "url": "https://images.pexels.com/photos/15736029/pexels-photo-15736029.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/15736029/"
+    }
+  ]
+}

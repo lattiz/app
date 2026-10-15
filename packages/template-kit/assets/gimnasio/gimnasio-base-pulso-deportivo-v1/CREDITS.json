@@ -1,0 +1,12 @@
+{
+  "$lattiz": "GENERATED from specs/gimnasio-pulso-deportivo.spec.json (spec a4484a2898ea, file be7318ba97f7). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "781fa5918ebd102a980f8f5021cb2355910a07825a48c3502901622893a4338d",
+      "url": "https://images.pexels.com/photos/30428668/pexels-photo-30428668.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/30428668/"
+    }
+  ]
+}

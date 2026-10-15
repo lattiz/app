@@ -1,4 +1,4 @@
-// GENERATED from specs/restaurante-la-nota-azul.spec.json (spec c42ddb64df57, file c2fe0e51fe53). Do not edit: use the spec, or freeze.
+// GENERATED from specs/restaurante-la-nota-azul.spec.json (spec c02e8c9d8f8c, file c2fe0e51fe53). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {

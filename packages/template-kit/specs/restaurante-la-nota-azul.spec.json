@@ -402,85 +402,85 @@
     {
       "key": "hero",
       "source": {
-        "pexels": "neon lit jazz bar interior blue wall"
+        "url": "https://images.pexels.com/photos/25217163/pexels-photo-25217163.jpeg"
       }
     },
     {
       "key": "about",
       "source": {
-        "pexels": "pizza oven chef open kitchen"
+        "url": "https://images.pexels.com/photos/1082343/pexels-photo-1082343.jpeg"
       }
     },
     {
       "key": "team-1",
       "source": {
-        "pexels": "female chef portrait"
+        "url": "https://images.pexels.com/photos/905847/pexels-photo-905847.jpeg"
       }
     },
     {
       "key": "team-2",
       "source": {
-        "pexels": "pizza oven baker portrait"
+        "url": "https://images.pexels.com/photos/30760367/pexels-photo-30760367.jpeg"
       }
     },
     {
       "key": "team-3",
       "source": {
-        "pexels": "pastry chef portrait"
+        "url": "https://images.pexels.com/photos/5737830/pexels-photo-5737830.jpeg"
       }
     },
     {
       "key": "team-4",
       "source": {
-        "pexels": "bartender portrait"
+        "url": "https://images.pexels.com/photos/30403324/pexels-photo-30403324.jpeg"
       }
     },
     {
       "key": "gallery-01",
       "source": {
-        "pexels": "pizza fresh from wood oven"
+        "url": "https://images.pexels.com/photos/9685264/pexels-photo-9685264.jpeg"
       }
     },
     {
       "key": "gallery-02",
       "source": {
-        "pexels": "margherita pizza basil"
+        "url": "https://images.pexels.com/photos/27564591/pexels-photo-27564591.jpeg"
       }
     },
     {
       "key": "gallery-03",
       "source": {
-        "pexels": "hands stretching pizza dough flour"
+        "url": "https://images.pexels.com/photos/2295285/pexels-photo-2295285.jpeg"
       }
     },
     {
       "key": "gallery-04",
       "source": {
-        "pexels": "jazz pianist live club"
+        "url": "https://images.pexels.com/photos/8512643/pexels-photo-8512643.jpeg"
       }
     },
     {
       "key": "gallery-05",
       "source": {
-        "pexels": "restaurant blue wall neon sign"
+        "url": "https://images.pexels.com/photos/13799703/pexels-photo-13799703.jpeg"
       }
     },
     {
       "key": "gallery-06",
       "source": {
-        "pexels": "bar counter neon lights bottles"
+        "url": "https://images.pexels.com/photos/37888518/pexels-photo-37888518.jpeg"
       }
     },
     {
       "key": "gallery-07",
       "source": {
-        "pexels": "dessert calzone ice cream"
+        "url": "https://images.pexels.com/photos/30682733/pexels-photo-30682733.jpeg"
       }
     },
     {
       "key": "gallery-08",
       "source": {
-        "pexels": "saxophone on stage warm light"
+        "url": "https://images.pexels.com/photos/15015357/pexels-photo-15015357.jpeg"
       }
     }
   ],

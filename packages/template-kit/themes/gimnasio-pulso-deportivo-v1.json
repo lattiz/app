@@ -1,0 +1,78 @@
+{
+  "$lattiz": "GENERATED from specs/gimnasio-pulso-deportivo.spec.json (spec a4484a2898ea, file 462a9eb0c06c). Do not edit: use the spec, or freeze.",
+  "name": "gimnasio-pulso-deportivo-v1",
+  "label": "Pulso Deportivo · Pro",
+  "tier": "pro",
+  "fontPair": "red-hat-display+red-hat-text",
+  "colors": {
+    "bg": "#0E1726",
+    "surface": "#192230",
+    "surface-2": "#242C3A",
+    "text": "#ECECEE",
+    "muted": "#888C94",
+    "accent": "#22C3E6",
+    "on-accent": "#0E1726",
+    "accent-text": "#22C3E6",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#0E1726",
+    "on-overlay": "#ECECEE",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#0E1726"
+  },
+  "fonts": {
+    "display": "'Red Hat Display', sans-serif",
+    "serif": "'Red Hat Display', sans-serif",
+    "body": "'Red Hat Text', sans-serif",
+    "googleFonts": "family=Red+Hat+Display:ital,wght@0,600;1,600&family=Red+Hat+Text:wght@400..600",
+    "displayTransform": "none",
+    "displayLeading": "1.04",
+    "displayWeight": "600",
+    "displayScale": "0.81",
+    "accentStyle": "italic",
+    "accentTransform": "none",
+    "mood": ["clínico", "fresco"],
+    "affinity": ["clinica", "dental", "veterinaria", "despacho"],
+    "case": "none",
+    "tracking": "normal",
+    "typeScale": "tight",
+    "licenses": {
+      "Red Hat Display": "OFL-1.1",
+      "Red Hat Text": "OFL-1.1"
+    }
+  },
+  "shape": {
+    "radiusCard": "12px",
+    "radiusPill": "10px",
+    "border": "3px",
+    "shadow": "hard-offset"
+  },
+  "density": "regular",
+  "photoTreatment": "none",
+  "placeholder": "dots",
+  "accentWords": "color",
+  "container": "1200px",
+  "effects": {
+    "mapFilter": "grayscale(1) invert(.9) contrast(.9) brightness(.8)",
+    "heroImageFilter": "brightness(.45) saturate(.9)"
+  },
+  "style": {
+    "shape": "soft",
+    "surface": "outlined",
+    "density": "cozy",
+    "divider": "hairline",
+    "imageTreatment": "plain",
+    "typeScale": "tight",
+    "displayCase": "none",
+    "tracking": "normal"
+  },
+  "primitives": {
+    "button": "solid",
+    "card": "outlined",
+    "tag": "outlined",
+    "frame": "cut",
+    "number": "ruled",
+    "quote": "rule",
+    "divider": "hairline"
+  }
+}

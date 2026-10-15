@@ -1,5 +1,5 @@
 {
-  "$lattiz": "GENERATED from specs/restaurante-la-nota-azul.spec.json (spec c42ddb64df57, file 141a50796c33). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/restaurante-la-nota-azul.spec.json (spec c02e8c9d8f8c, file 141a50796c33). Do not edit: use the spec, or freeze.",
   "name": "restaurante-base-la-nota-azul-v1",
   "label": "La Nota Azul · Básico",
   "tier": "basic",
