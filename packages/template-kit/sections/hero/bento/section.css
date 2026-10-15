@@ -85,7 +85,7 @@
 
 .lz-hero-bento__fact .lz-bignum__value {
   font-size: calc(
-    min(clamp(28px, 2.6vw, 44px), 5svh) * var(--lz-heading-scale, 1)
+    min(clamp(22px, 2.6vw, 44px), 5svh) * var(--lz-heading-scale, 1)
   );
 }
 
@@ -110,27 +110,37 @@
     aspect-ratio: 16 / 10;
     max-height: calc(var(--lz-fit) * 0.4);
   }
-  /* Phones and tablets keep the hero to headline, CTAs and photo; the facts are a desktop cell. */
-  .lz-hero-bento__facts {
-    display: none;
-  }
 }
 
 @media (max-width: 480px) {
+  .lz-hero-bento {
+    padding: 12px 0 14px;
+  }
   .lz-hero-bento__lead {
-    padding: calc(20px * var(--lz-space)) calc(18px * var(--lz-space));
+    padding: calc(16px * var(--lz-space)) calc(18px * var(--lz-space));
+  }
+  /* Three fact cells share one phone row: tighter padding keeps labels to two lines. */
+  .lz-hero-bento__fact {
+    padding: calc(8px * var(--lz-space)) calc(10px * var(--lz-space));
   }
   .lz-hero-bento__title {
     font-size: calc(
-      min(var(--lz-title-hero-sm), 7.6svh) * var(--lz-display-scale)
+      min(var(--lz-title-hero-sm), 7.6svh) * var(--lz-display-scale) * 0.9
     );
   }
   .lz-hero-bento__text {
-    font-size: calc(16px * var(--lz-text-scale));
+    font-size: calc(15px * var(--lz-text-scale));
   }
+  /* Both CTAs share one row so the phone hero fits the fold. */
   .lz-hero-bento__actions {
-    flex-direction: column;
-    align-items: stretch;
+    flex-wrap: nowrap;
+  }
+  .lz-hero-bento__actions .lz-btn {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .lz-hero-bento__image {
+    aspect-ratio: 4 / 1;
   }
 }
 
