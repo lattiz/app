@@ -1,0 +1,12 @@
+{
+  "$lattiz": "GENERATED from specs/tienda-caramelo-pop.spec.json (spec abb4a47547e7, file abc9617936f2). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "d9c4f1ec76fcebf7e9ce777ea9136d24d2873425fd92343cde0fa8a1c7fb74c8",
+      "url": "https://images.pexels.com/photos/4514545/pexels-photo-4514545.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/4514545/"
+    }
+  ]
+}

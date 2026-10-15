@@ -1,0 +1,75 @@
+{
+  "$lattiz": "GENERATED from specs/tienda-caramelo-pop.spec.json (spec abb4a47547e7, file 226bf8df4519). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "a3cb141ef6bd0020b1f2af9b0a256cc563ccb9c4f30f2cf1fae0a14528fc9455",
+      "url": "https://images.pexels.com/photos/4514545/pexels-photo-4514545.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/4514545/"
+    },
+    {
+      "file": "about.jpg",
+      "source": "url",
+      "sha256": "c849f64b7a7c368f5984a79430b951b00824ba3680cc48377dec5bed1488e40a",
+      "url": "https://images.pexels.com/photos/36677740/pexels-photo-36677740.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/36677740/"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "url",
+      "sha256": "f20927dd2c1f44ef1d5859755087d1805e767449fc0abfb577ae2c00ee447624",
+      "url": "https://images.pexels.com/photos/33239/halloween-candy-chocolates-nuts-sweet.jpg",
+      "pageUrl": "https://www.pexels.com/photo/33239/"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "url",
+      "sha256": "54e684a192f5fa3dd7dc183792ac581bd3e4f199d7c6988228375aee81cba1fc",
+      "url": "https://images.pexels.com/photos/13763510/pexels-photo-13763510.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/13763510/"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "url",
+      "sha256": "d69601aa87db8e147d36e09b8a6731bf1967725e2841a7b2d59a9832e17814a5",
+      "url": "https://images.pexels.com/photos/34742776/pexels-photo-34742776.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/34742776/"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "url",
+      "sha256": "4b64232d33ca9bc8c6f75ff759798cf4a86671721af25d039713a341f8bb8bde",
+      "url": "https://images.pexels.com/photos/19602245/pexels-photo-19602245.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/19602245/"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "url",
+      "sha256": "c158f78853e33251f33a79c9210d6d320c70395633a5a7a61adb260cdb177d4d",
+      "url": "https://images.pexels.com/photos/36914976/pexels-photo-36914976.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/36914976/"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "url",
+      "sha256": "d9c795393b5f2f024631babe37c72af2aa2bad5df456c497582fe90b0b2afa9f",
+      "url": "https://images.pexels.com/photos/15225307/pexels-photo-15225307.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/15225307/"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "url",
+      "sha256": "0696af0c543978b4a8b9f2fd51f4d5e77706051fd2c55de6f79bec46d7326c4a",
+      "url": "https://images.pexels.com/photos/12034252/pexels-photo-12034252.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/12034252/"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "url",
+      "sha256": "6a5b295b72bfaa2a07ae451c6238aaa79faaeea9abf0e99c6c0e1040b3fd3043",
+      "url": "https://images.pexels.com/photos/15346745/pexels-photo-15346745.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/15346745/"
+    }
+  ]
+}
