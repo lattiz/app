@@ -1,0 +1,96 @@
+{
+  "$lattiz": "GENERATED from specs/floreria-casa-confeti.spec.json (spec e112920bb92f, file 4393373a8324). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "5cc26415005fb6413a58d961000c7741d07aa9f311989f2ca354516385a80e99",
+      "url": "https://images.pexels.com/photos/12689074/pexels-photo-12689074.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/12689074/"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "url",
+      "sha256": "2c8c0e1819f2b1a88f93141e63589f8065c03533d68cfe52f00a3bff5dbf36e3",
+      "url": "https://images.pexels.com/photos/11163639/pexels-photo-11163639.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/11163639/"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "url",
+      "sha256": "655a02ee8d0c1e97bd690ece71dba9245ab4d24da4e10146db74dbe62143d66b",
+      "url": "https://images.pexels.com/photos/27788076/pexels-photo-27788076.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/27788076/"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "url",
+      "sha256": "24429b993ffb8452787649ebb2420547bcfe1fb793e353066c30c64698ff4f7d",
+      "url": "https://images.pexels.com/photos/12489331/pexels-photo-12489331.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/12489331/"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "url",
+      "sha256": "d6c8ec8aa76db060822496006fd328e1bf7c43cc051009c0fa923affce167b7b",
+      "url": "https://images.pexels.com/photos/18809824/pexels-photo-18809824.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/18809824/"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "url",
+      "sha256": "3ad95cccbca1919d1bb8352a5ac5fd249731f01a7f6db94ee96219c91595a066",
+      "url": "https://images.pexels.com/photos/12689071/pexels-photo-12689071.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/12689071/"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "url",
+      "sha256": "d1e70c7aff5e32973a05d772ec665b713b9a0fb1b2682a98a4ec58d8900bbb65",
+      "url": "https://images.pexels.com/photos/7155959/pexels-photo-7155959.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/7155959/"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "url",
+      "sha256": "63af9946697dd947fc611679a6aab97cccf5be88da3d500822267d565e8827db",
+      "url": "https://images.pexels.com/photos/13633014/pexels-photo-13633014.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/13633014/"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "url",
+      "sha256": "a37f12d53254efea7161023f5bc8e2f56215e6ca98ae87a5279cc069101e6e48",
+      "url": "https://images.pexels.com/photos/12166409/pexels-photo-12166409.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/12166409/"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "url",
+      "sha256": "fcdd6a5f95204c18aa0cb71ee10e6de48229245356e1c0c641c1dcae3764ded5",
+      "url": "https://images.pexels.com/photos/27788078/pexels-photo-27788078.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/27788078/"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "url",
+      "sha256": "3a7c484dc1dcf33b0e6527159ce966e30fac676fdf5d1674b71c6fb02703557a",
+      "url": "https://images.pexels.com/photos/10252631/pexels-photo-10252631.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/10252631/"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "url",
+      "sha256": "7ba7cdc1b8624ba5e04ecb6ea096b25eeb24c6abbd50a8292ff1ebdba46bd27f",
+      "url": "https://images.pexels.com/photos/11163642/pexels-photo-11163642.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/11163642/"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "url",
+      "sha256": "c4e906891fb5d3df24df1277e24a5bc0b9ccdfeae65b17600b1ac093c6390ae2",
+      "url": "https://images.pexels.com/photos/8554895/pexels-photo-8554895.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/8554895/"
+    }
+  ]
+}
