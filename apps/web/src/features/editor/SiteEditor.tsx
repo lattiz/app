@@ -34,7 +34,6 @@ import {
   saveEditorProject,
   uploadAssets,
 } from './api';
-import { hideGrapesJsLicenseBanner } from './hide-license-banner';
 import { grapesjsCoreLocaleEs, studioSdkLocaleEs } from './i18n';
 import { SaveStatusBadge } from './SaveStatusBadge';
 import { sectionBlocks } from './blocks';
@@ -59,8 +58,6 @@ import type {
   SaveStatus,
   UploadedAsset,
 } from './types';
-
-hideGrapesJsLicenseBanner();
 
 interface SiteEditorProps {
   tenantId: string;
