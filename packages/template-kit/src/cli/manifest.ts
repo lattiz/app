@@ -28,6 +28,10 @@ import type {
 } from '../../catalog/types';
 import { DIRECTIONS } from '../../directions';
 import { renderKitBlocks, WEB_KIT_BLOCKS_FILE } from './editor-blocks';
+import {
+  renderTemplateIdentities,
+  WEB_TEMPLATE_IDENTITY_FILE,
+} from './template-identity';
 import { EXTENDED_FONT_PAIRS } from '../../font-pairs';
 import { GIROS } from '../../giros';
 import { EXTENDED_PALETTES } from '../../palettes';
@@ -397,6 +401,7 @@ async function main(): Promise<void> {
       await renderPlanCatalog(manifest, WEB_PLAN_CATALOG_FILE),
     ],
     [WEB_KIT_BLOCKS_FILE, await renderKitBlocks(manifest.contentHash)],
+    [WEB_TEMPLATE_IDENTITY_FILE, await renderTemplateIdentities(manifest)],
   ];
   const summary = `${manifest.variants.length} variantes (${manifest.variants.filter((v) => v.proOnly).length} solo Pro), hash ${manifest.contentHash}`;
   if (flags.has('check')) {

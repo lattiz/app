@@ -10,16 +10,27 @@ import { TemplateChangeModal } from '@/components/dashboard/templates/TemplateCh
 import { DashboardSkeleton } from '@/components/dashboard/DashboardSkeleton';
 import { NoSubscriptionGate } from '@/components/dashboard/home/NoSubscriptionGate';
 import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { isConflictWithConfirmation, useChangeTemplate } from '@/hooks/use-change-template';
 import { useSelectTemplate } from '@/hooks/use-select-template';
 import { useTemplates } from '@/hooks/use-templates';
-import {
-  filterByTier,
-  isTemplateLocked,
-  type TierFilter,
-} from '@/features/templates/template-access';
+import { isTemplateLocked } from '@/features/templates/template-access';
 import { templateAccessCopy } from '@/features/templates/template-access.copy';
+import {
+  ALL,
+  filterOptions,
+  filterTemplates,
+  NO_FILTERS,
+  type TemplateFilters,
+} from '@/features/templates/template-identity';
+import { UpgradeProDialog } from '@/features/templates/UpgradeProDialog';
 import { reportSiteActionError } from '@/lib/upload-errors';
 import { useDashboardStore } from '@/stores/dashboard.store';
 
@@ -33,7 +44,8 @@ export function TemplatesPage() {
   const canPublish = tenant.data?.canPublish !== false;
 
   const [pendingTemplateId, setPendingTemplateId] = useState<string | null>(null);
-  const [tierFilter, setTierFilter] = useState<TierFilter>('all');
+  const [filters, setFilters] = useState<TemplateFilters>(NO_FILTERS);
+  const [lockedFeature, setLockedFeature] = useState<string | null>(null);
   const siteLocked = isTemplateLocked(tenant.data);
 
   const tenantId = tenant.data?.tenantId ?? '';
@@ -46,6 +58,8 @@ export function TemplatesPage() {
   if (dashboardState === 'no-subscription') return <NoSubscriptionGate />;
 
   const isSelecting = selectMutation.isPending || changeMutation.isPending;
+  const options = filterOptions(templates.data ?? []);
+  const visible = filterTemplates(templates.data ?? [], filters);
 
   const goToCustomization = () => void navigate({ to: '/dashboard/customization' });
 
@@ -164,28 +178,83 @@ export function TemplatesPage() {
       )}
 
       {templates.data && templates.data.length > 0 && (
-        <div
-          role="group"
-          aria-label={templateAccessCopy.filterLabel}
-          className="flex flex-wrap gap-2"
-        >
-          {(['all', 'basic', 'pro'] as const).map((filter) => (
-            <Button
-              key={filter}
-              size="sm"
-              variant={tierFilter === filter ? 'default' : 'outline'}
-              aria-pressed={tierFilter === filter}
-              onClick={() => setTierFilter(filter)}
+        <div className="flex flex-wrap items-center gap-2">
+          <div
+            role="group"
+            aria-label={templateAccessCopy.filterLabel}
+            className="flex flex-wrap gap-2"
+          >
+            {(['all', 'basic', 'pro'] as const).map((filter) => (
+              <Button
+                key={filter}
+                size="sm"
+                variant={filters.tier === filter ? 'default' : 'outline'}
+                aria-pressed={filters.tier === filter}
+                onClick={() => setFilters({ ...filters, tier: filter })}
+              >
+                {templateAccessCopy.filters[filter]}
+              </Button>
+            ))}
+          </div>
+          {Object.keys(options.giros).length > 1 && (
+            <Select
+              value={filters.giro}
+              items={{ [ALL]: templateAccessCopy.giroFilter.all, ...options.giros }}
+              onValueChange={(giro) => setFilters({ ...filters, giro: giro ?? ALL })}
             >
-              {templateAccessCopy.filters[filter]}
-            </Button>
-          ))}
+              <SelectTrigger
+                size="sm"
+                aria-label={templateAccessCopy.giroFilter.label}
+                className="w-48"
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={ALL}>{templateAccessCopy.giroFilter.all}</SelectItem>
+                {Object.entries(options.giros).map(([value, label]) => (
+                  <SelectItem key={value} value={value}>
+                    {label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
+          {Object.keys(options.directions).length > 0 && (
+            <Select
+              value={filters.direction}
+              items={{
+                [ALL]: templateAccessCopy.directionFilter.all,
+                ...options.directions,
+              }}
+              onValueChange={(direction) =>
+                setFilters({ ...filters, direction: direction ?? ALL })
+              }
+            >
+              <SelectTrigger
+                size="sm"
+                aria-label={templateAccessCopy.directionFilter.label}
+                className="w-56"
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={ALL}>
+                  {templateAccessCopy.directionFilter.all}
+                </SelectItem>
+                {Object.entries(options.directions).map(([value, label]) => (
+                  <SelectItem key={value} value={value}>
+                    {label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
         </div>
       )}
 
       {templates.data &&
         templates.data.length > 0 &&
-        filterByTier(templates.data, tierFilter).length === 0 && (
+        visible.length === 0 && (
           <div className="rounded-2xl border border-dashed px-6 py-16 text-center text-sm text-muted-foreground">
             {templateAccessCopy.emptyFilter}
           </div>
@@ -196,7 +265,7 @@ export function TemplatesPage() {
           className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
           data-tour="template-gallery"
         >
-          {filterByTier(templates.data, tierFilter).map((template) => (
+          {visible.map((template) => (
             <TemplateCard
               key={template.id}
               template={template}
@@ -205,10 +274,16 @@ export function TemplatesPage() {
               changeLocked={!canPublish && currentTemplateId !== template.id}
               siteLocked={siteLocked}
               onSelect={(id) => void handleSelect(id)}
+              onLockedFeature={setLockedFeature}
             />
           ))}
         </div>
       )}
+
+      <UpgradeProDialog
+        feature={lockedFeature}
+        onClose={() => setLockedFeature(null)}
+      />
 
       <TemplateChangeModal
         open={pendingTemplateId !== null}
