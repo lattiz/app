@@ -81,3 +81,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [editor-kit-blocks](editor-kit-blocks.md) — bloques del kit en el editor; solo el CSS usado; tokens en :where(html)
 - [admin-architecture](admin-architecture.md) — admin = módulo /admin aditivo en la API + SPA apps/admin; esquema admin cerrado
 - [admin-auth-members-mfa](admin-auth-members-mfa.md) — AdminGuard: miembro activo + aal2 + rol; sin @AdminRoles solo owner; auditoría
+- [admin-kpi-definitions](admin-kpi-definitions.md) — MRR en vivo de Stripe, churn, en riesgo, embudo y kpi_daily; sin internos
