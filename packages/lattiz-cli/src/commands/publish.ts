@@ -21,7 +21,7 @@ interface Step {
 async function pipeline(
   ctx: Context,
   ids: string[],
-  opts: { force: boolean; lighthouse: boolean },
+  opts: { force: boolean; lighthouse: boolean; overwriteMeta: boolean },
 ): Promise<ExitCode> {
   if (new Set(ids).size !== ids.length)
     throw usage('Los ids deben ser distintos.');
@@ -83,7 +83,11 @@ async function pipeline(
       label: `seed ${id}`,
       resume: `pnpm lattiz seed ${id}`,
       async run() {
-        const code = await seedOne(ctx, id, { dryRun: false, deploy: false });
+        const code = await seedOne(ctx, id, {
+          dryRun: false,
+          deploy: false,
+          overwriteMeta: opts.overwriteMeta,
+        });
         if (code !== EXIT.OK)
           throw new CliError(`seed de ${id} no se completó.`, code);
       },
@@ -169,11 +173,13 @@ const shared = {
   options: {
     force: { type: 'boolean' },
     lighthouse: { type: 'boolean' },
+    'overwrite-meta': { type: 'boolean' },
   },
   help: [
-    '  --force        publica aunque check tenga FAIL (se avisa y queda registrado)',
-    '  --lighthouse   corre Lighthouse dentro de check',
-    '  --yes          confirma Motion, seed y deploy sin preguntar',
+    '  --force           publica aunque check tenga FAIL (se avisa y queda registrado)',
+    '  --lighthouse      corre Lighthouse dentro de check',
+    '  --overwrite-meta  pisa nombre, descripción, categoría, orden y la miniatura del admin',
+    '  --yes             confirma Motion, seed y deploy sin preguntar',
   ],
 } as const;
 
@@ -181,7 +187,7 @@ export const publish: Command = {
   name: 'publish',
   summary:
     'check → Motion (Pro) → seed → deploy → verifica https://templates.lattiz.app/<id>',
-  usage: 'publish <id> [--force] [--lighthouse]',
+  usage: 'publish <id> [--force] [--lighthouse] [--overwrite-meta]',
   help: [
     'Imprime los pasos antes de empezar; si uno falla dice qué comando re-ejecutar. Cada escritura',
     'remota (seed y deploy) pide confirmación.',
@@ -199,6 +205,7 @@ export const publish: Command = {
     return pipeline(ctx, [id], {
       force: bool(ctx.flags, 'force'),
       lighthouse: bool(ctx.flags, 'lighthouse'),
+      overwriteMeta: bool(ctx.flags, 'overwrite-meta'),
     });
   },
 };
@@ -207,7 +214,7 @@ export const ship: Command = {
   name: 'ship',
   summary:
     'publish de una o dos plantillas (el par Básico + Pro) con un solo deploy al final',
-  usage: 'ship <idA> [idB] [--force] [--lighthouse]',
+  usage: 'ship <idA> [idB] [--force] [--lighthouse] [--overwrite-meta]',
   help: [
     'Checks y seeds en orden, un solo deploy de previews al final, y las dos URLs.',
     '',
@@ -222,6 +229,7 @@ export const ship: Command = {
     return pipeline(ctx, ids, {
       force: bool(ctx.flags, 'force'),
       lighthouse: bool(ctx.flags, 'lighthouse'),
+      overwriteMeta: bool(ctx.flags, 'overwrite-meta'),
     });
   },
 };

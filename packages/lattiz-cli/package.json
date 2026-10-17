@@ -8,7 +8,8 @@
     "lattiz": "./src/main.ts"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "node --import tsx --test ../../scripts/lib/*.test.ts"
   },
   "dependencies": {
     "@clack/prompts": "^1.8.1",
