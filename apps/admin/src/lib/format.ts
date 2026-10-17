@@ -87,6 +87,15 @@ export function formatDateTime(iso: string): string {
   return dateTimeMedium.format(date);
 }
 
+/**
+ * Cierra una frase. Si ya termina en punto («a.m.», «p.m.»), no agrega otro.
+ */
+export function finishSentence(text: string): string {
+  const trimmed = text.trimEnd();
+  if (/[.!?…]$/.test(trimmed)) return trimmed;
+  return `${trimmed}.`;
+}
+
 /** Mes calendario `YYYY-MM`, sin correrlo al mes anterior. */
 export function formatMonth(yearMonth: string): string {
   const date = calendarNoon(yearMonth);

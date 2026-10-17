@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   formatBytes,
   formatCount,
+  finishSentence,
   formatDate,
   formatDateTime,
   formatDay,
@@ -62,6 +63,21 @@ describe('formatDate', () => {
 
   it('returns the input when it is not a date', () => {
     expect(formatDate('ayer')).toBe('ayer');
+  });
+
+  it('does not add a second period after a.m. or p.m.', () => {
+    const morning = formatDateTime('2026-10-17T17:31:00.000Z');
+    const noon = formatDateTime('2026-06-15T18:00:00.000Z');
+    expect(morning.endsWith('.')).toBe(true);
+    expect(finishSentence(`Lo pidió Ana el ${morning}`)).toBe(
+      `Lo pidió Ana el ${morning}`,
+    );
+    expect(finishSentence(`Lo cambió Luis el ${noon}`)).toBe(
+      `Lo cambió Luis el ${noon}`,
+    );
+    expect(finishSentence('Nadie lo ha cambiado desde aquí')).toBe(
+      'Nadie lo ha cambiado desde aquí.',
+    );
   });
 });
 

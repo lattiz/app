@@ -245,18 +245,7 @@ function TemplateCard({ item }: { item: AdminTemplateListItemDto }) {
         params={{ id: item.id }}
         className="block min-w-0"
       >
-        {item.thumbnailUrl ? (
-          <img
-            src={item.thumbnailUrl}
-            alt=""
-            loading="lazy"
-            className="aspect-[16/10] w-full object-cover"
-          />
-        ) : (
-          <div className="grid aspect-[16/10] w-full place-items-center bg-muted text-sm text-muted-foreground">
-            Sin miniatura
-          </div>
-        )}
+        <TemplateThumbnail url={item.thumbnailUrl} />
         <CardHeader className="pt-4 pb-0">
           <CardTitle className={textLinkClass}>{item.name}</CardTitle>
         </CardHeader>
@@ -277,6 +266,26 @@ function TemplateCard({ item }: { item: AdminTemplateListItemDto }) {
         </dl>
       </CardContent>
     </Card>
+  );
+}
+
+function TemplateThumbnail({ url }: { url: string | null }) {
+  const [failedUrl, setFailedUrl] = useState<string | null>(null);
+  if (!url || failedUrl === url) {
+    return (
+      <div className="grid aspect-[16/10] w-full place-items-center bg-muted text-sm text-muted-foreground">
+        Sin miniatura
+      </div>
+    );
+  }
+  return (
+    <img
+      src={url}
+      alt=""
+      loading="lazy"
+      className="aspect-[16/10] w-full object-cover"
+      onError={() => setFailedUrl(url)}
+    />
   );
 }
 

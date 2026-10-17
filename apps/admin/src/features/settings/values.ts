@@ -1,7 +1,25 @@
-import type { AdminSettingViewDto } from '@lattiz/api-client';
-import { formatCount } from '@/lib/format';
+import type { AdminSettingViewDto, AdminUpdateSettingDto } from '@lattiz/api-client';
+import { formatBytes, formatCount } from '@/lib/format';
 
 export type SettingType = AdminSettingViewDto['type'];
+export type SettingUpdateValue = AdminUpdateSettingDto['value'];
+
+export function isSettingUpdateValue(value: unknown): value is SettingUpdateValue {
+  if (typeof value === 'number' || typeof value === 'boolean' || typeof value === 'string') {
+    return true;
+  }
+  return (
+    Array.isArray(value) &&
+    value.every((item) => typeof item === 'string' || typeof item === 'number')
+  );
+}
+
+/** Claves `*_bytes`: equivalente legible junto al número, p. ej. "= 100.0 MB". */
+export function byteSettingHint(key: string, value: unknown): string | null {
+  if (!key.endsWith('_bytes')) return null;
+  if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) return null;
+  return `= ${formatBytes(value)}`;
+}
 
 export function formatSettingValue(value: unknown): string {
   if (value == null) return 'Sin valor';

@@ -15,10 +15,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { readApiErrorMessage } from '@/lib/admin-errors';
 import { groupSettings } from './labels';
-import { asSettingValue, SettingField } from './setting-field';
+import { SettingField } from './setting-field';
+import type { SettingUpdateValue } from './values';
 
 type PendingChange =
-  | { kind: 'update'; key: string; value: unknown }
+  | { kind: 'update'; key: string; value: SettingUpdateValue }
   | { kind: 'remove'; key: string };
 
 export function SettingsPage({ canEdit }: { canEdit: boolean }) {
@@ -57,7 +58,7 @@ export function SettingsPage({ canEdit }: { canEdit: boolean }) {
     if (pending.kind === 'update') {
       update.mutate({
         path: { key: pending.key },
-        body: { value: asSettingValue(pending.value), reason },
+        body: { value: pending.value, reason },
       });
       return;
     }

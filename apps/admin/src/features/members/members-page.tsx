@@ -9,7 +9,6 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { FilterChip } from '@/components/filter-select';
 import { PageHeader } from '@/components/layout/page-header';
 import { QueryAlert } from '@/components/query-alert';
 import {
@@ -43,6 +42,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Switch } from '@/components/ui/switch';
 import {
   Table,
   TableBody,
@@ -54,6 +54,7 @@ import {
 import { readApiErrorMessage } from '@/lib/admin-errors';
 import { formatDateTime } from '@/lib/format';
 import { ROLE_LABEL, type AdminRole } from '@/lib/navigation';
+import { grantorEmail } from './grantor';
 
 const ROLES = ['owner', 'operator', 'viewer'] as const;
 
@@ -114,9 +115,10 @@ export function MembersPage({ currentUserId }: { currentUserId: string }) {
           Agregar persona
         </Button>
       </div>
-      <FilterChip pressed={showRevoked} onClick={() => setShowRevoked((current) => !current)}>
+      <label className="flex w-fit items-center gap-2 self-start text-sm">
+        <Switch checked={showRevoked} onCheckedChange={setShowRevoked} />
         Mostrar revocados
-      </FilterChip>
+      </label>
 
       {query.isPending ? <Skeleton className="h-80" /> : null}
       {query.isError ? (
@@ -155,6 +157,7 @@ export function MembersPage({ currentUserId }: { currentUserId: string }) {
                     member={member}
                     self={member.userId === currentUserId}
                     rolePending={rolePendingId === member.userId}
+                    grantor={grantorEmail(member.createdBy, items)}
                     onRole={(role) =>
                       updateRole.mutate({
                         path: { userId: member.userId },
@@ -220,12 +223,14 @@ function MemberRow({
   member,
   self,
   rolePending,
+  grantor,
   onRole,
   onRevoke,
 }: {
   member: AdminMemberDto;
   self: boolean;
   rolePending: boolean;
+  grantor: string;
   onRole: (role: AdminRole) => void;
   onRevoke: () => void;
 }) {
@@ -243,7 +248,7 @@ function MemberRow({
         <Badge variant="secondary">{ROLE_LABEL[member.role]}</Badge>
       </TableCell>
       <TableCell>{formatDateTime(member.createdAt)}</TableCell>
-      <TableCell>{member.createdBy ?? '—'}</TableCell>
+      <TableCell>{grantor}</TableCell>
       <TableCell>
         {member.lastSignInAt ? formatDateTime(member.lastSignInAt) : 'Todavía no entra'}
       </TableCell>

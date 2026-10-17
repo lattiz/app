@@ -1,21 +1,20 @@
-import type { AdminSettingViewDto, AdminUpdateSettingDto } from '@lattiz/api-client';
+import type { AdminSettingViewDto } from '@lattiz/api-client';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
-import { formatDateTime } from '@/lib/format';
+import { finishSentence, formatDateTime } from '@/lib/format';
 import { SOURCE_LABEL, settingLabel } from './labels';
 import {
+  byteSettingHint,
   formatSettingValue,
+  isSettingUpdateValue,
   sameSettingValue,
   settingRangeLabel,
   settingValueError,
+  type SettingUpdateValue,
 } from './values';
-
-export function asSettingValue(value: unknown): AdminUpdateSettingDto['value'] {
-  return value as AdminUpdateSettingDto['value'];
-}
 
 export function SettingField({
   item,
@@ -27,7 +26,7 @@ export function SettingField({
   item: AdminSettingViewDto;
   canEdit: boolean;
   pending: boolean;
-  onSave: (value: unknown) => void;
+  onSave: (value: SettingUpdateValue) => void;
   onReset: () => void;
 }) {
   const label = settingLabel(item.key);
@@ -43,6 +42,7 @@ export function SettingField({
     : null;
   const dirty = !sameSettingValue(draft, item.effectiveValue);
   const range = settingRangeLabel(item.min, item.max);
+  const bytes = byteSettingHint(item.key, canEdit ? draft : item.effectiveValue);
 
   return (
     <div className="flex min-w-0 flex-col gap-3 py-4 first:pt-0 last:pb-0">
@@ -61,11 +61,12 @@ export function SettingField({
           item={item}
           label={label}
           draft={draft}
+          bytes={bytes}
           disabled={pending}
           onChange={setDraft}
         />
       ) : (
-        <ValueReadout value={item.effectiveValue} />
+        <ValueReadout value={item.effectiveValue} bytes={bytes} />
       )}
 
       {error && dirty ? <p className="text-sm text-destructive">{error}</p> : null}
@@ -79,7 +80,10 @@ export function SettingField({
               type="button"
               size="sm"
               disabled={pending || error != null}
-              onClick={() => onSave(draft)}
+              onClick={() => {
+                if (!isSettingUpdateValue(draft)) return;
+                onSave(draft);
+              }}
             >
               Guardar
             </Button>
@@ -105,12 +109,14 @@ function SettingControl({
   item,
   label,
   draft,
+  bytes,
   disabled,
   onChange,
 }: {
   item: AdminSettingViewDto;
   label: string;
   draft: unknown;
+  bytes: string | null;
   disabled: boolean;
   onChange: (value: unknown) => void;
 }) {
@@ -129,14 +135,17 @@ function SettingControl({
   }
   if (item.type === 'int') {
     return (
-      <IntControl
-        label={label}
-        value={draft}
-        min={item.min}
-        max={item.max}
-        disabled={disabled}
-        onChange={onChange}
-      />
+      <div className="flex min-w-0 flex-wrap items-center gap-2">
+        <IntControl
+          label={label}
+          value={draft}
+          min={item.min}
+          max={item.max}
+          disabled={disabled}
+          onChange={onChange}
+        />
+        {bytes ? <span className="text-sm text-muted-foreground">{bytes}</span> : null}
+      </div>
     );
   }
   if (item.type === 'string-list' || item.type === 'int-list') {
@@ -295,7 +304,7 @@ function ListControl({
   );
 }
 
-function ValueReadout({ value }: { value: unknown }) {
+function ValueReadout({ value, bytes }: { value: unknown; bytes: string | null }) {
   if (Array.isArray(value)) {
     if (value.length === 0) {
       return <p className="text-sm text-muted-foreground">Ninguno</p>;
@@ -313,13 +322,18 @@ function ValueReadout({ value }: { value: unknown }) {
       </ul>
     );
   }
-  return <p className="text-sm break-all">{formatSettingValue(value)}</p>;
+  return (
+    <p className="text-sm break-all">
+      {formatSettingValue(value)}
+      {bytes ? <span className="text-muted-foreground"> {bytes}</span> : null}
+    </p>
+  );
 }
 
 function changeLabel(item: AdminSettingViewDto): string {
   if (!item.updatedAt) return 'Nadie lo ha cambiado desde aquí.';
   const who = item.updatedBy?.trim() || 'Alguien del equipo';
-  return `Lo cambió ${who} el ${formatDateTime(item.updatedAt)}.`;
+  return finishSentence(`Lo cambió ${who} el ${formatDateTime(item.updatedAt)}`);
 }
 
 function intText(value: unknown): string {

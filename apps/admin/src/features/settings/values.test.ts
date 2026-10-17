@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { formatSettingValue, settingRangeLabel, settingValueError } from './values';
+import { formatBytes } from '@/lib/format';
+import {
+  byteSettingHint,
+  formatSettingValue,
+  isSettingUpdateValue,
+  settingRangeLabel,
+  settingValueError,
+} from './values';
 
 describe('setting values', () => {
   it('formats each kind of value', () => {
@@ -38,5 +45,21 @@ describe('setting values', () => {
     expect(settingValueError('int-list', [1.2], null, null)).toBe(
       'Cada elemento debe ser un número entero.',
     );
+  });
+
+  it('accepts the typed setting values and rejects null', () => {
+    expect(isSettingUpdateValue(100)).toBe(true);
+    expect(isSettingUpdateValue(false)).toBe(true);
+    expect(isSettingUpdateValue('hola')).toBe(true);
+    expect(isSettingUpdateValue(['a', 1])).toBe(true);
+    expect(isSettingUpdateValue(null)).toBe(false);
+  });
+
+  it('shows a readable size next to byte settings', () => {
+    expect(byteSettingHint('preview.max_asset_bytes', 100 * 1024 * 1024)).toBe(
+      `= ${formatBytes(100 * 1024 * 1024)}`,
+    );
+    expect(byteSettingHint('preview.trial_days', 14)).toBeNull();
+    expect(byteSettingHint('preview.max_asset_bytes', '100')).toBeNull();
   });
 });

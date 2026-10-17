@@ -25,7 +25,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
 import { isAdminNotFound, readApiErrorMessage } from '@/lib/admin-errors';
-import { formatDate, formatDateTime } from '@/lib/format';
+import { finishSentence, formatDate, formatDateTime } from '@/lib/format';
 import { cn } from '@/lib/utils';
 import {
   deletionRefetchInterval,
@@ -113,7 +113,9 @@ export function DeletionJobPage({ jobId }: { jobId: string }) {
       <BackLink />
       <PageHeader
         title={`Borrado de ${job.slug}`}
-        description={`Lo pidió ${actor} el ${formatDateTime(job.createdAt)}.`}
+        description={finishSentence(
+          `Lo pidió ${actor} el ${formatDateTime(job.createdAt)}`,
+        )}
       />
       {query.isError ? (
         <QueryAlert
