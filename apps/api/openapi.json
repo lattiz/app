@@ -3097,7 +3097,8 @@
               "incomplete",
               "incomplete_expired",
               "unpaid",
-              "paused"
+              "paused",
+              null
             ],
             "type": "string"
           },
@@ -3105,7 +3106,8 @@
             "nullable": true,
             "enum": [
               "basico",
-              "pro"
+              "pro",
+              null
             ],
             "type": "string"
           },
@@ -3113,7 +3115,8 @@
             "nullable": true,
             "enum": [
               "monthly",
-              "annual"
+              "annual",
+              null
             ],
             "type": "string"
           },
@@ -3145,7 +3148,8 @@
             "nullable": true,
             "enum": [
               "draft",
-              "published"
+              "published",
+              null
             ],
             "type": "string"
           },
@@ -3164,8 +3168,9 @@
           "domainSource": {
             "nullable": true,
             "enum": [
-              "godaddy_managed",
-              "user_provided"
+              "lattiz_managed",
+              "user_provided",
+              null
             ],
             "type": "string"
           },
@@ -3176,7 +3181,8 @@
               "configuring",
               "propagating",
               "active",
-              "error"
+              "error",
+              null
             ],
             "type": "string"
           },
@@ -3204,7 +3210,8 @@
               "over_cap",
               "lapsed",
               "refunded",
-              "void"
+              "void",
+              null
             ],
             "type": "string"
           },
@@ -3314,7 +3321,8 @@
             "nullable": true,
             "enum": [
               "draft",
-              "published"
+              "published",
+              null
             ],
             "type": "string"
           },
@@ -3446,6 +3454,108 @@
           "createdAt"
         ]
       },
+      "AnalyticsDailyPointDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "Calendar day in the GA property time zone, `YYYY-MM-DD`."
+          },
+          "sessions": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "date",
+          "sessions"
+        ]
+      },
+      "AnalyticsChannelDto": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "GA `sessionDefaultChannelGroup` value, untranslated."
+          },
+          "label": {
+            "type": "string",
+            "description": "Spanish display label."
+          },
+          "sessions": {
+            "type": "number"
+          },
+          "sharePct": {
+            "type": "number",
+            "description": "Share of all sessions in the window, 0–100."
+          }
+        },
+        "required": [
+          "key",
+          "label",
+          "sessions",
+          "sharePct"
+        ]
+      },
+      "AnalyticsReportDto": {
+        "type": "object",
+        "properties": {
+          "rangeDays": {
+            "type": "number"
+          },
+          "sessions": {
+            "type": "number"
+          },
+          "sessionsDeltaPct": {
+            "type": "number",
+            "nullable": true,
+            "description": "Null when the previous period had zero sessions."
+          },
+          "activeUsers": {
+            "type": "number"
+          },
+          "activeUsersDeltaPct": {
+            "type": "number",
+            "nullable": true
+          },
+          "daily": {
+            "description": "Exactly `rangeDays` points, oldest first, gap-filled with zeros.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AnalyticsDailyPointDto"
+            }
+          },
+          "channels": {
+            "description": "Top channels by sessions (at most 5).",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AnalyticsChannelDto"
+            }
+          },
+          "topChannel": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AnalyticsChannelDto"
+              }
+            ]
+          },
+          "hasData": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "rangeDays",
+          "sessions",
+          "sessionsDeltaPct",
+          "activeUsers",
+          "activeUsersDeltaPct",
+          "daily",
+          "channels",
+          "topChannel",
+          "hasData"
+        ]
+      },
       "AdminTenantAnalyticsDto": {
         "type": "object",
         "properties": {
@@ -3455,7 +3565,8 @@
               "pending",
               "provisioning",
               "ready",
-              "failed"
+              "failed",
+              null
             ],
             "type": "string"
           },
@@ -3468,10 +3579,14 @@
             "nullable": true
           },
           "report": {
+            "nullable": true,
+            "description": "Cached report jsonb, same shape as the tenant analytics report.",
             "type": "object",
-            "description": "Cached report jsonb, unchanged.",
-            "additionalProperties": true,
-            "nullable": true
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AnalyticsReportDto"
+              }
+            ]
           }
         },
         "required": [
@@ -3700,7 +3815,8 @@
             "nullable": true,
             "enum": [
               "cloudflare",
-              "openprovider"
+              "openprovider",
+              null
             ],
             "type": "string"
           },
@@ -4286,7 +4402,8 @@
               "day",
               "week",
               "month",
-              "year"
+              "year",
+              null
             ],
             "type": "string"
           },
@@ -4363,7 +4480,8 @@
             "nullable": true,
             "enum": [
               "basico",
-              "pro"
+              "pro",
+              null
             ],
             "type": "string"
           },
@@ -4427,7 +4545,8 @@
               "open",
               "paid",
               "uncollectible",
-              "void"
+              "void",
+              null
             ],
             "type": "string"
           },
@@ -4552,7 +4671,8 @@
             "type": "string",
             "nullable": true,
             "enum": [
-              "unavailable"
+              "unavailable",
+              null
             ]
           }
         },
@@ -5143,7 +5263,8 @@
             "type": "string",
             "nullable": true,
             "enum": [
-              "unavailable"
+              "unavailable",
+              null
             ]
           },
           "customers": {
@@ -5867,108 +5988,6 @@
           "provisioning",
           "failed",
           "ready"
-        ]
-      },
-      "AnalyticsDailyPointDto": {
-        "type": "object",
-        "properties": {
-          "date": {
-            "type": "string",
-            "description": "Calendar day in the GA property time zone, `YYYY-MM-DD`."
-          },
-          "sessions": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "date",
-          "sessions"
-        ]
-      },
-      "AnalyticsChannelDto": {
-        "type": "object",
-        "properties": {
-          "key": {
-            "type": "string",
-            "description": "GA `sessionDefaultChannelGroup` value, untranslated."
-          },
-          "label": {
-            "type": "string",
-            "description": "Spanish display label."
-          },
-          "sessions": {
-            "type": "number"
-          },
-          "sharePct": {
-            "type": "number",
-            "description": "Share of all sessions in the window, 0–100."
-          }
-        },
-        "required": [
-          "key",
-          "label",
-          "sessions",
-          "sharePct"
-        ]
-      },
-      "AnalyticsReportDto": {
-        "type": "object",
-        "properties": {
-          "rangeDays": {
-            "type": "number"
-          },
-          "sessions": {
-            "type": "number"
-          },
-          "sessionsDeltaPct": {
-            "type": "number",
-            "nullable": true,
-            "description": "Null when the previous period had zero sessions."
-          },
-          "activeUsers": {
-            "type": "number"
-          },
-          "activeUsersDeltaPct": {
-            "type": "number",
-            "nullable": true
-          },
-          "daily": {
-            "description": "Exactly `rangeDays` points, oldest first, gap-filled with zeros.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AnalyticsDailyPointDto"
-            }
-          },
-          "channels": {
-            "description": "Top channels by sessions (at most 5).",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AnalyticsChannelDto"
-            }
-          },
-          "topChannel": {
-            "nullable": true,
-            "type": "object",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/AnalyticsChannelDto"
-              }
-            ]
-          },
-          "hasData": {
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "rangeDays",
-          "sessions",
-          "sessionsDeltaPct",
-          "activeUsers",
-          "activeUsersDeltaPct",
-          "daily",
-          "channels",
-          "topChannel",
-          "hasData"
         ]
       },
       "AnalyticsOverviewDto": {

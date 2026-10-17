@@ -91,25 +91,25 @@ export type AdminTenantOverviewDto = {
     tags: Array<string>;
     entitled: boolean;
     subscriptionId: string | null;
-    subscriptionStatus: 'active' | 'trialing' | 'past_due' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'unpaid' | 'paused';
-    subscriptionPlan: 'basico' | 'pro';
-    billingPeriod: 'monthly' | 'annual';
+    subscriptionStatus: 'active' | 'trialing' | 'past_due' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'unpaid' | 'paused' | null;
+    subscriptionPlan: 'basico' | 'pro' | null;
+    billingPeriod: 'monthly' | 'annual' | null;
     currentPeriodEnd: string | null;
     cancelAtPeriodEnd: boolean | null;
     cancelAt: string | null;
     paymentAttempts: number | null;
     subscriptionCreatedAt: string | null;
     templateId: string | null;
-    siteStatus: 'draft' | 'published';
+    siteStatus: 'draft' | 'published' | null;
     publishedAt: string | null;
     siteUpdatedAt: string | null;
     domain: string | null;
-    domainSource: 'godaddy_managed' | 'user_provided';
-    dnsStatus: 'pending' | 'configuring' | 'propagating' | 'active' | 'error';
+    domainSource: 'lattiz_managed' | 'user_provided' | null;
+    dnsStatus: 'pending' | 'configuring' | 'propagating' | 'active' | 'error' | null;
     domainExpiresAt: string | null;
     domainSuspendedAt: string | null;
     dnsProvider: string | null;
-    renewalStatus: 'pricing_pending' | 'open' | 'overdue' | 'paid' | 'renewed' | 'renewal_failed' | 'over_cap' | 'lapsed' | 'refunded' | 'void';
+    renewalStatus: 'pricing_pending' | 'open' | 'overdue' | 'paid' | 'renewed' | 'renewal_failed' | 'over_cap' | 'lapsed' | 'refunded' | 'void' | null;
     renewalLateDeadlineAt: string | null;
     storageBytes: number | null;
     storageMeasuredAt: string | null;
@@ -131,7 +131,7 @@ export type AdminTenantIdentityDto = {
 
 export type AdminTenantSiteDto = {
     template: AdminTenantTemplateRefDto | null;
-    status: 'draft' | 'published';
+    status: 'draft' | 'published' | null;
     published: boolean;
     publishedAt: string | null;
     updatedAt: string | null;
@@ -166,16 +166,59 @@ export type AdminTenantSubscriptionDto = {
     createdAt: string;
 };
 
+export type AnalyticsDailyPointDto = {
+    /**
+     * Calendar day in the GA property time zone, `YYYY-MM-DD`.
+     */
+    date: string;
+    sessions: number;
+};
+
+export type AnalyticsChannelDto = {
+    /**
+     * GA `sessionDefaultChannelGroup` value, untranslated.
+     */
+    key: string;
+    /**
+     * Spanish display label.
+     */
+    label: string;
+    sessions: number;
+    /**
+     * Share of all sessions in the window, 0–100.
+     */
+    sharePct: number;
+};
+
+export type AnalyticsReportDto = {
+    rangeDays: number;
+    sessions: number;
+    /**
+     * Null when the previous period had zero sessions.
+     */
+    sessionsDeltaPct: number | null;
+    activeUsers: number;
+    activeUsersDeltaPct: number | null;
+    /**
+     * Exactly `rangeDays` points, oldest first, gap-filled with zeros.
+     */
+    daily: Array<AnalyticsDailyPointDto>;
+    /**
+     * Top channels by sessions (at most 5).
+     */
+    channels: Array<AnalyticsChannelDto>;
+    topChannel: AnalyticsChannelDto | null;
+    hasData: boolean;
+};
+
 export type AdminTenantAnalyticsDto = {
-    provisioningStatus: 'pending' | 'provisioning' | 'ready' | 'failed';
+    provisioningStatus: 'pending' | 'provisioning' | 'ready' | 'failed' | null;
     isMock: boolean | null;
     fetchedAt: string | null;
     /**
-     * Cached report jsonb, unchanged.
+     * Cached report jsonb, same shape as the tenant analytics report.
      */
-    report: {
-        [key: string]: unknown;
-    } | null;
+    report: AnalyticsReportDto | null;
 };
 
 export type AdminStorageUsageDto = {
@@ -242,7 +285,7 @@ export type AdminDomainRecordDto = {
     source: 'lattiz_managed' | 'user_provided';
     expiresAt: string | null;
     dnsStatus: 'pending' | 'configuring' | 'propagating' | 'active' | 'error';
-    dnsProvider: 'cloudflare' | 'openprovider';
+    dnsProvider: 'cloudflare' | 'openprovider' | null;
     dnsActivationCheckedAt: string | null;
     vercelMapped: boolean;
     sslActive: boolean;
@@ -386,7 +429,7 @@ export type AdminSubscriptionDiscountDto = {
 export type AdminSubscriptionPriceDto = {
     unitAmount: number | null;
     currency: string;
-    interval: 'day' | 'week' | 'month' | 'year';
+    interval: 'day' | 'week' | 'month' | 'year' | null;
     intervalCount: number | null;
     discount: AdminSubscriptionDiscountDto | null;
 };
@@ -408,7 +451,7 @@ export type AdminSubscriptionUpcomingInvoiceDto = {
 };
 
 export type AdminSubscriptionSchedulePhaseDto = {
-    plan: 'basico' | 'pro';
+    plan: 'basico' | 'pro' | null;
     priceId: string;
     start: string;
     end: string;
@@ -422,7 +465,7 @@ export type AdminSubscriptionScheduleDto = {
 
 export type AdminSubscriptionInvoiceDto = {
     number: string | null;
-    status: 'draft' | 'open' | 'paid' | 'uncollectible' | 'void';
+    status: 'draft' | 'open' | 'paid' | 'uncollectible' | 'void' | null;
     total: number;
     currency: string;
     createdAt: string;
@@ -446,7 +489,7 @@ export type AdminSubscriptionStripeDto = {
 export type AdminSubscriptionDetailDto = {
     local: AdminSubscriptionListItemDto;
     stripe: AdminSubscriptionStripeDto | null;
-    stripeError: 'unavailable';
+    stripeError: 'unavailable' | null;
 };
 
 export type AdminTemplateUsageDto = {
@@ -611,7 +654,7 @@ export type MetricsOverviewDto = {
     mrrByPlan: Array<MetricsMrrPlanDto>;
     mrrByPeriod: Array<MetricsMrrPeriodDto>;
     mrrByCurrency: Array<MetricsMrrCurrencyDto>;
-    revenueError: 'unavailable';
+    revenueError: 'unavailable' | null;
     customers: MetricsCustomersDto;
     trials: MetricsTrialsDto;
     product: MetricsProductDto;
@@ -883,51 +926,6 @@ export type DomainStatusResponseDto = {
 };
 
 export type AnalyticsStatus = 'not_eligible' | 'unavailable' | 'provisioning' | 'failed' | 'ready';
-
-export type AnalyticsDailyPointDto = {
-    /**
-     * Calendar day in the GA property time zone, `YYYY-MM-DD`.
-     */
-    date: string;
-    sessions: number;
-};
-
-export type AnalyticsChannelDto = {
-    /**
-     * GA `sessionDefaultChannelGroup` value, untranslated.
-     */
-    key: string;
-    /**
-     * Spanish display label.
-     */
-    label: string;
-    sessions: number;
-    /**
-     * Share of all sessions in the window, 0–100.
-     */
-    sharePct: number;
-};
-
-export type AnalyticsReportDto = {
-    rangeDays: number;
-    sessions: number;
-    /**
-     * Null when the previous period had zero sessions.
-     */
-    sessionsDeltaPct: number | null;
-    activeUsers: number;
-    activeUsersDeltaPct: number | null;
-    /**
-     * Exactly `rangeDays` points, oldest first, gap-filled with zeros.
-     */
-    daily: Array<AnalyticsDailyPointDto>;
-    /**
-     * Top channels by sessions (at most 5).
-     */
-    channels: Array<AnalyticsChannelDto>;
-    topChannel: AnalyticsChannelDto | null;
-    hasData: boolean;
-};
 
 export type AnalyticsOverviewDto = {
     status: AnalyticsStatus;
