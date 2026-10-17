@@ -154,7 +154,7 @@ export function TemplateListPage({ search }: { search: TemplateListSearch }) {
 function TemplateCard({ item }: { item: AdminTemplateListItemDto }) {
   const usage = item.usage;
   return (
-    <Card className="min-w-0 pt-0">
+    <Card className="min-w-0 gap-2 pt-0">
       <Link to="/plantillas/$id" params={{ id: item.id }} className="block min-w-0">
         {item.thumbnailUrl ? (
           <img
@@ -168,11 +168,11 @@ function TemplateCard({ item }: { item: AdminTemplateListItemDto }) {
             Sin miniatura
           </div>
         )}
-        <CardHeader>
+        <CardHeader className="pt-4 pb-0">
           <CardTitle className={textLinkClass}>{item.name}</CardTitle>
         </CardHeader>
       </Link>
-      <CardContent className="flex flex-col gap-3">
+      <CardContent className="flex flex-col gap-3 pt-0">
         <div className="flex flex-wrap gap-1">
           <StatusBadgeView badge={templateTierBadge(item.tier)} />
           <StatusBadgeView badge={templateStatusBadge(item.status)} />

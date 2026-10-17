@@ -43,11 +43,13 @@ export function FilterSelect<T extends string>({
   onChange: (value: T | undefined) => void;
 }) {
   const items = [{ value: 'all', label: allLabel }, ...options];
+  const current = value ?? 'all';
+  const selectedLabel = items.find((item) => item.value === current)?.label ?? allLabel;
 
   return (
     <Select
       items={items}
-      value={value ?? 'all'}
+      value={current}
       onValueChange={(next) => {
         if (next == null || next === 'all') {
           onChange(undefined);
@@ -57,7 +59,7 @@ export function FilterSelect<T extends string>({
       }}
     >
       <SelectTrigger aria-label={label} className="min-w-36">
-        <SelectValue />
+        <SelectValue>{selectedLabel}</SelectValue>
       </SelectTrigger>
       <SelectContent>
         {items.map((option) => (

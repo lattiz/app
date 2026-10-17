@@ -33,6 +33,7 @@ import {
 } from '@/components/ui/table';
 import { readApiErrorMessage } from '@/lib/admin-errors';
 import { formatDate, formatMoney } from '@/lib/format';
+import { absentVercelHosts, dnsIssueText, dnsRowIssues } from './dns-match';
 import {
   autoRenewLabel,
   daysRemainingText,
@@ -145,10 +146,6 @@ function DomainCards({ panel }: { panel: AdminDomainInspectionDto }) {
       {panel.domain.isMock ? (
         <p className="text-sm text-muted-foreground">Estos datos del dominio son de prueba.</p>
       ) : null}
-      <RenewalCard renewal={panel.renewal} />
-      <RegistrarCard registrar={panel.registrar} />
-      <DnsCard dns={panel.dns} />
-      <VercelCard vercel={panel.vercel} sslActive={panel.domain.sslActive} />
       <Card>
         <CardHeader>
           <CardTitle>{panel.domain.name}</CardTitle>
@@ -177,6 +174,10 @@ function DomainCards({ panel }: { panel: AdminDomainInspectionDto }) {
           />
         </CardContent>
       </Card>
+      <RenewalCard renewal={panel.renewal} />
+      <RegistrarCard registrar={panel.registrar} />
+      <DnsCard dns={panel.dns} domainName={panel.domain.name} />
+      <VercelCard vercel={panel.vercel} sslActive={panel.domain.sslActive} />
     </div>
   );
 }
@@ -358,7 +359,17 @@ function RegistrarCard({ registrar }: { registrar: AdminDomainRegistrarDto | nul
   );
 }
 
-function DnsCard({ dns }: { dns: AdminDomainDnsDto | null }) {
+function DnsCard({
+  dns,
+  domainName,
+}: {
+  dns: AdminDomainDnsDto | null;
+  domainName: string;
+}) {
+  const flagRows = dns?.recordsMatchVercel === false;
+  const records = dns?.records ?? [];
+  const missing = flagRows ? absentVercelHosts(records, domainName) : [];
+
   return (
     <Card className="min-w-0">
       <CardHeader>
@@ -378,6 +389,16 @@ function DnsCard({ dns }: { dns: AdminDomainDnsDto | null }) {
           <>
             <NameList title="Nameservers" values={dns.nameservers ?? []} />
             <RecordsMatch matches={dns.recordsMatchVercel} />
+            {missing.includes('apex') ? (
+              <p className="text-sm text-destructive">
+                Falta el registro A 76.76.21.21 en el dominio.
+              </p>
+            ) : null}
+            {missing.includes('www') ? (
+              <p className="text-sm text-destructive">
+                Falta el CNAME cname.vercel-dns.com en www.
+              </p>
+            ) : null}
             <Table>
               <TableHeader>
                 <TableRow>
@@ -385,24 +406,38 @@ function DnsCard({ dns }: { dns: AdminDomainDnsDto | null }) {
                   <TableHead>Nombre</TableHead>
                   <TableHead>Valor</TableHead>
                   <TableHead>Proxy</TableHead>
+                  {flagRows ? <TableHead>Revisar</TableHead> : null}
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {(dns.records ?? []).length === 0 ? (
+                {records.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={4} className="text-muted-foreground">
+                    <TableCell colSpan={flagRows ? 5 : 4} className="text-muted-foreground">
                       No hay registros.
                     </TableCell>
                   </TableRow>
                 ) : (
-                  (dns.records ?? []).map((record) => (
-                    <TableRow key={`${record.type}-${record.name}-${record.content}`}>
-                      <TableCell>{record.type}</TableCell>
-                      <TableCell>{record.name}</TableCell>
-                      <TableCell className="max-w-64 whitespace-normal">{record.content}</TableCell>
-                      <TableCell>{record.proxied == null ? '—' : record.proxied ? 'Sí' : 'No'}</TableCell>
-                    </TableRow>
-                  ))
+                  records.map((record) => {
+                    const issues = flagRows ? dnsRowIssues(record, domainName) : [];
+                    return (
+                      <TableRow
+                        key={`${record.type}-${record.name}-${record.content}`}
+                        className={issues.length > 0 ? 'bg-destructive/10' : undefined}
+                      >
+                        <TableCell>{record.type}</TableCell>
+                        <TableCell>{record.name}</TableCell>
+                        <TableCell className="max-w-64 whitespace-normal">{record.content}</TableCell>
+                        <TableCell>
+                          {record.proxied == null ? '—' : record.proxied ? 'Sí' : 'No'}
+                        </TableCell>
+                        {flagRows ? (
+                          <TableCell className="whitespace-normal text-destructive">
+                            {issues.length > 0 ? dnsIssueText(issues) : '—'}
+                          </TableCell>
+                        ) : null}
+                      </TableRow>
+                    );
+                  })
                 )}
               </TableBody>
             </Table>

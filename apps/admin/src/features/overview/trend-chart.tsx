@@ -26,8 +26,8 @@ import {
 } from './series';
 
 const chartConfig = {
-  mrrCents: { label: 'Ingreso mensual', color: 'var(--chart-1)' },
-  payingTenants: { label: 'Clientes que pagan', color: 'var(--chart-2)' },
+  mrrCents: { label: 'Ingreso mensual', color: 'var(--chart-2)' },
+  payingTenants: { label: 'Clientes que pagan', color: 'var(--chart-5)' },
 } satisfies ChartConfig;
 
 const EARLY_HISTORY =

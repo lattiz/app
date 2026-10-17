@@ -42,10 +42,16 @@ const byteFormat = new Intl.NumberFormat(LOCALE, {
 });
 
 const moneyFormatters = new Map<string, Intl.NumberFormat>();
+const wholeMoneyFormatters = new Map<string, Intl.NumberFormat>();
 
 /** Centavos → moneda. `currency` puede llegar en minúsculas (Stripe). */
 export function formatMoney(cents: number, currency: string): string {
-  return moneyFormatter(currency).format(cents / 100);
+  return moneyFormatter(currency, moneyFormatters, undefined).format(cents / 100);
+}
+
+/** Centavos → moneda sin decimales, para cifras grandes del resumen. */
+export function formatMoneyWhole(cents: number, currency: string): string {
+  return moneyFormatter(currency, wholeMoneyFormatters, 0).format(cents / 100);
 }
 
 /** Fracción 0–1 → porcentaje entero, p. ej. 0.256 → "26%". */
@@ -102,19 +108,29 @@ export function formatDay(isoDay: string): string {
   return dayShort.format(date);
 }
 
-function moneyFormatter(currency: string): Intl.NumberFormat {
+function moneyFormatter(
+  currency: string,
+  cache: Map<string, Intl.NumberFormat>,
+  maximumFractionDigits: number | undefined,
+): Intl.NumberFormat {
   const code = currency.trim().toUpperCase() || 'MXN';
-  const cached = moneyFormatters.get(code);
+  const cached = cache.get(code);
   if (cached) return cached;
   try {
     const formatter = new Intl.NumberFormat(LOCALE, {
       style: 'currency',
       currency: code,
+      ...(maximumFractionDigits == null
+        ? {}
+        : {
+            minimumFractionDigits: maximumFractionDigits,
+            maximumFractionDigits,
+          }),
     });
-    moneyFormatters.set(code, formatter);
+    cache.set(code, formatter);
     return formatter;
   } catch {
-    return moneyFormatter('MXN');
+    return moneyFormatter('MXN', cache, maximumFractionDigits);
   }
 }
 

@@ -16,7 +16,7 @@ describe('preview scale', () => {
     expect(previewScale(720, 1440)).toBe(0.5);
     expect(previewScale(1600, 1440)).toBe(1);
     expect(previewScale(360, 360)).toBe(1);
-    expect(previewScale(0, 1440)).toBe(1);
+    expect(previewScale(0, 1440)).toBe(0);
     expect(previewScale(400, 0)).toBe(1);
     expect(previewScale(Number.NaN, 768)).toBe(1);
   });

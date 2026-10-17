@@ -6,6 +6,7 @@ import {
   formatDateTime,
   formatDay,
   formatMoney,
+  formatMoneyWhole,
   formatMonth,
   formatMonthShort,
   formatPercent,
@@ -19,6 +20,13 @@ describe('formatMoney', () => {
 
   it('falls back to MXN when the code is not a currency', () => {
     expect(formatMoney(100, 'no-es-moneda')).toBe('$1.00');
+  });
+});
+
+describe('formatMoneyWhole', () => {
+  it('drops cents on large summary amounts', () => {
+    expect(formatMoneyWhole(123_456, 'mxn')).toBe('$1,235');
+    expect(formatMoneyWhole(100, 'MXN')).toBe('$1');
   });
 });
 

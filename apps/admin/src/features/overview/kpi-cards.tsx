@@ -2,7 +2,7 @@ import { adminMetricsControllerOverviewOptions } from '@lattiz/api-client';
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { formatCount, formatMoney } from '@/lib/format';
+import { formatCount, formatMoneyWhole } from '@/lib/format';
 import { cn } from '@/lib/utils';
 import { HelpTip } from '@/components/help-tip';
 import { QueryAlert } from '@/components/query-alert';
@@ -37,7 +37,7 @@ export function KpiCards() {
 
   if (query.isPending) {
     return (
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
         {CARDS.map((card) => (
           <Skeleton key={card.title} className="h-36" />
         ))}
@@ -59,10 +59,12 @@ export function KpiCards() {
   const currency = overview.currency ?? 'mxn';
   const stripeDown = stripeRevenueFailed(overview.revenueError);
   const mrr =
-    overview.mrrCents == null ? null : formatMoney(overview.mrrCents, currency);
+    overview.mrrCents == null
+      ? null
+      : formatMoneyWhole(overview.mrrCents, currency);
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
       <KpiCard
         title={CARDS[0].title}
         help={CARDS[0].help}
@@ -93,6 +95,7 @@ export function KpiCards() {
         title={CARDS[3].title}
         help={CARDS[3].help}
         value={formatCount(overview.customers.atRisk)}
+        detail="Pagos fallidos o cancelaciones programadas"
         danger={overview.customers.atRisk > 0}
       />
     </div>
@@ -126,7 +129,7 @@ function KpiCard({
             'font-semibold tracking-tight',
             muted
               ? 'text-base text-balance text-muted-foreground'
-              : 'text-3xl tabular-nums',
+              : 'text-2xl tabular-nums sm:text-3xl',
             danger && !muted && 'text-destructive',
           )}
         >

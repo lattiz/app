@@ -142,13 +142,13 @@ function PreviewFrame({
           ))}
         </div>
         {previewUrl ? (
-          <div ref={frameRef} className="w-full min-w-0 overflow-hidden rounded-2xl bg-muted">
-            <div style={{ height: PREVIEW_FRAME_HEIGHT * scale, width: width * scale }}>
+          <div ref={frameRef} className="relative w-full min-w-0 overflow-hidden rounded-2xl bg-muted">
+            <div className="relative w-full" style={{ height: PREVIEW_FRAME_HEIGHT * scale }}>
               <iframe
                 src={previewUrl}
                 title={`Vista previa de ${name}`}
                 sandbox="allow-scripts allow-same-origin"
-                className="border-0 bg-background"
+                className="absolute top-0 left-0 border-0 bg-background"
                 style={{
                   width,
                   height: PREVIEW_FRAME_HEIGHT,

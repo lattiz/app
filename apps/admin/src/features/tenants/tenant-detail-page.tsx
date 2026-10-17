@@ -115,7 +115,11 @@ export function TenantDetailPage({ tenantId }: { tenantId: string }) {
           <AnalyticsPanel analytics={detail.analytics} plan={overview.plan} />
         </TabsContent>
         <TabsContent value="almacenamiento">
-          <StoragePanel tenantId={tenantId} storage={detail.storage} />
+          <StoragePanel
+            tenantId={tenantId}
+            storage={detail.storage}
+            previewState={detail.previewState}
+          />
         </TabsContent>
         <TabsContent value="correos">
           <EmailsPanel emails={detail.emails} />

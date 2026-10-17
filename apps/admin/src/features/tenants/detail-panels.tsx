@@ -38,13 +38,13 @@ import {
 } from '@/components/ui/table';
 import { readApiErrorMessage } from '@/lib/admin-errors';
 import { formatBytes, formatCount, formatDate, formatDateTime, formatDay } from '@/lib/format';
-import { parseGaSnapshot } from './ga-report';
 import {
   billingPeriodLabel,
   emailKindLabel,
   emailStatusBadge,
   planBadge,
   previewBadge,
+  showTrialStorageQuota,
   siteStatusLabel,
   subscriptionBadge,
 } from './labels';
@@ -243,8 +243,8 @@ export function AnalyticsPanel({
   analytics: AdminTenantAnalyticsDto | null;
   plan: string;
 }) {
-  const snapshot = parseGaSnapshot(analytics?.report ?? null);
-  if (!snapshot) {
+  const report = analytics?.report ?? null;
+  if (!report) {
     return (
       <Card>
         <CardHeader>
@@ -265,10 +265,10 @@ export function AnalyticsPanel({
         <p className="text-sm text-muted-foreground">Estas cifras son de demostración.</p>
       ) : null}
       <div className="grid gap-4 sm:grid-cols-2">
-        <Metric label="Visitas en 28 días" value={formatCount(snapshot.sessions)} />
-        <Metric label="Personas en 28 días" value={formatCount(snapshot.activeUsers)} />
+        <Metric label="Visitas en 28 días" value={formatCount(report.sessions)} />
+        <Metric label="Personas en 28 días" value={formatCount(report.activeUsers)} />
       </div>
-      {snapshot.daily.length > 0 ? (
+      {report.daily.length > 0 ? (
         <Card className="min-w-0">
           <CardHeader>
             <CardTitle>Visitas por día</CardTitle>
@@ -282,7 +282,7 @@ export function AnalyticsPanel({
             <ChartContainer config={visitsChart} className="aspect-auto h-56 w-full min-w-0">
               <AreaChart
                 accessibilityLayer
-                data={snapshot.daily}
+                data={report.daily}
                 margin={{ left: 0, right: 8, top: 8 }}
               >
                 <CartesianGrid vertical={false} />
@@ -333,9 +333,11 @@ export function AnalyticsPanel({
 export function StoragePanel({
   tenantId,
   storage,
+  previewState,
 }: {
   tenantId: string;
   storage: AdminTenantStorageDto;
+  previewState: string;
 }) {
   const queryClient = useQueryClient();
   const refresh = useMutation({
@@ -355,6 +357,7 @@ export function StoragePanel({
   });
   const usage = storage.usage;
   const limit = storage.assetByteLimit;
+  const showQuota = showTrialStorageQuota(previewState);
 
   return (
     <Card>
@@ -373,13 +376,14 @@ export function StoragePanel({
             { label: 'Marca', value: usage ? formatBytes(usage.brandingBytes) : 'Sin medir' },
           ]}
         />
-        {limit != null && limit > 0 ? (
+        {showQuota && limit != null && limit > 0 ? (
           <QuotaBar used={usage?.assetsBytes ?? 0} limit={limit} />
-        ) : (
+        ) : null}
+        {showQuota && (limit == null || limit <= 0) ? (
           <p className="text-sm text-muted-foreground">
             Esta cuenta no tiene tope de prueba.
           </p>
-        )}
+        ) : null}
         <Button
           type="button"
           variant="outline"

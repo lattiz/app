@@ -147,6 +147,28 @@ export function previewBadge(state: string | null | undefined): StatusBadge {
   return lookup(state, PREVIEW);
 }
 
+/**
+ * List column under the trial badge.
+ * Paid and not-started trials have no expiry to show, so the line stays hidden.
+ */
+export function previewExpiryNote(
+  previewState: string | null | undefined,
+  expiresAt: string | null | undefined,
+): 'date' | 'missing' | null {
+  if (expiresAt) return 'date';
+  if (previewState === 'paid' || previewState === 'trial_unstarted') return null;
+  return 'missing';
+}
+
+/** The trial byte cap only applies while the account is still in a trial. */
+export function showTrialStorageQuota(previewState: string | null | undefined): boolean {
+  return (
+    previewState === 'trial_unstarted' ||
+    previewState === 'trial_active' ||
+    previewState === 'trial_expired'
+  );
+}
+
 export function subscriptionBadge(status: string | null | undefined): StatusBadge {
   return lookup(status, SUBSCRIPTION);
 }

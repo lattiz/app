@@ -8,6 +8,8 @@ import {
   domainExpiryListText,
   planBadge,
   previewBadge,
+  previewExpiryNote,
+  showTrialStorageQuota,
   renewalBadge,
   subscriptionBadge,
   tenantStatusBadge,
@@ -59,5 +61,25 @@ describe('days remaining', () => {
     expect(domainExpiryIsUrgent(30)).toBe(true);
     expect(domainExpiryIsUrgent(31)).toBe(false);
     expect(domainExpiryIsUrgent(null)).toBe(false);
+  });
+});
+
+describe('preview expiry note', () => {
+  it('hides the missing-date line for paying and not-started trials', () => {
+    expect(previewExpiryNote('paid', null)).toBeNull();
+    expect(previewExpiryNote('trial_unstarted', null)).toBeNull();
+    expect(previewExpiryNote('trial_active', null)).toBe('missing');
+    expect(previewExpiryNote('paid', '2026-11-01T00:00:00.000Z')).toBe('date');
+  });
+});
+
+describe('trial storage quota', () => {
+  it('shows the trial cap only while the account is in a trial', () => {
+    expect(showTrialStorageQuota('paid')).toBe(false);
+    expect(showTrialStorageQuota('lapsed')).toBe(false);
+    expect(showTrialStorageQuota('trial_unstarted')).toBe(true);
+    expect(showTrialStorageQuota('trial_active')).toBe(true);
+    expect(showTrialStorageQuota('trial_expired')).toBe(true);
+    expect(showTrialStorageQuota(null)).toBe(false);
   });
 });

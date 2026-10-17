@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { formatCount, formatMoney } from '@/lib/format';
+import { formatCount, formatMoneyWhole } from '@/lib/format';
 import { cn } from '@/lib/utils';
 import { QueryAlert } from '@/components/query-alert';
 
@@ -46,7 +46,7 @@ export function DomainsCard() {
             <Stat
               label="Próximos 30 días"
               value={renewalCountLabel(product.renewalsNext30Days.count)}
-              detail={`Ingreso esperado ${formatMoney(
+              detail={`Ingreso esperado ${formatMoneyWhole(
                 product.renewalsNext30Days.expectedRevenueCents,
                 product.renewalsNext30Days.currency,
               )}`}

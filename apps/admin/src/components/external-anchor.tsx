@@ -2,7 +2,7 @@ import { ExternalLink } from 'lucide-react';
 import type { ReactNode } from 'react';
 
 export const textLinkClass =
-  'font-medium text-primary underline-offset-4 hover:underline';
+  'font-medium text-primary underline underline-offset-4';
 
 export function ExternalAnchor({
   href,
@@ -16,7 +16,7 @@ export function ExternalAnchor({
       href={href}
       target="_blank"
       rel="noreferrer"
-      className="inline-flex items-center gap-1 text-primary underline-offset-4 hover:underline"
+      className="inline-flex items-center gap-1 font-medium text-primary underline underline-offset-4"
     >
       {children}
       <ExternalLink className="size-3.5" aria-hidden />

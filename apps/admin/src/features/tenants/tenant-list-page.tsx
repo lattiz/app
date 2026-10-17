@@ -6,18 +6,12 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 import { ArrowDown, ArrowUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { FilterSelect } from '@/components/filter-select';
 import { PageHeader } from '@/components/layout/page-header';
 import { QueryAlert } from '@/components/query-alert';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   Table,
@@ -38,6 +32,7 @@ import {
   domainExpiryListText,
   planBadge,
   previewBadge,
+  previewExpiryNote,
   publishedLabel,
   subscriptionBadge,
   tenantStatusBadge,
@@ -127,12 +122,14 @@ export function TenantListPage({ search }: { search: ClientListSearch }) {
         <div className="flex min-w-0 flex-wrap items-center gap-2">
           <FilterSelect
             label="Plan"
+            allLabel="Todos los planes"
             value={search.plan}
             options={PLANS}
             onChange={(plan) => updateSearch({ plan })}
           />
           <FilterSelect
             label="Estado de pago"
+            allLabel="Todos los estados"
             value={search.status}
             options={PAYMENT_STATUSES}
             onChange={(status) => updateSearch({ status })}
@@ -242,14 +239,7 @@ export function TenantListPage({ search }: { search: ClientListSearch }) {
                       </div>
                     </TableCell>
                     <TableCell className="whitespace-normal">
-                      <div className="flex flex-col items-start gap-1">
-                        <StatusBadgeView badge={previewBadge(item.previewState)} />
-                        <span className="text-xs text-muted-foreground">
-                          {item.previewExpiresAt
-                            ? `Vence ${formatDate(item.previewExpiresAt)}`
-                            : 'Sin fecha de prueba'}
-                        </span>
-                      </div>
+                      <TrialCell item={item} />
                     </TableCell>
                     <TableCell>{item.template?.name ?? 'Sin plantilla'}</TableCell>
                     <TableCell>{publishedLabel(item.published)}</TableCell>
@@ -294,6 +284,23 @@ export function TenantListPage({ search }: { search: ClientListSearch }) {
             </div>
           </div>
         </Card>
+      ) : null}
+    </div>
+  );
+}
+
+function TrialCell({ item }: { item: AdminTenantListItemDto }) {
+  const note = previewExpiryNote(item.previewState, item.previewExpiresAt);
+  return (
+    <div className="flex flex-col items-start gap-1">
+      <StatusBadgeView badge={previewBadge(item.previewState)} />
+      {note === 'date' && item.previewExpiresAt ? (
+        <span className="text-xs text-muted-foreground">
+          Vence {formatDate(item.previewExpiresAt)}
+        </span>
+      ) : null}
+      {note === 'missing' ? (
+        <span className="text-xs text-muted-foreground">Sin fecha de prueba</span>
       ) : null}
     </div>
   );
@@ -384,45 +391,6 @@ function FilterChip({
     >
       {children}
     </Button>
-  );
-}
-
-function FilterSelect<T extends string>({
-  label,
-  value,
-  options,
-  onChange,
-}: {
-  label: string;
-  value: T | undefined;
-  options: readonly { value: T; label: string }[];
-  onChange: (value: T | undefined) => void;
-}) {
-  const items = [{ value: 'all', label: `${label}: todos` }, ...options];
-
-  return (
-    <Select
-      items={items}
-      value={value ?? 'all'}
-      onValueChange={(next) => {
-        if (next == null || next === 'all') {
-          onChange(undefined);
-          return;
-        }
-        onChange(next as T);
-      }}
-    >
-      <SelectTrigger aria-label={label} className="min-w-36">
-        <SelectValue placeholder={label} />
-      </SelectTrigger>
-      <SelectContent>
-        {items.map((option) => (
-          <SelectItem key={option.value} value={option.value}>
-            {option.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
   );
 }
 
