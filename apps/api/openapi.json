@@ -34,6 +34,445 @@
         ]
       }
     },
+    "/admin/settings": {
+      "get": {
+        "operationId": "AdminSettingsController_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSettingsResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List business settings",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/settings/{key}": {
+      "patch": {
+        "operationId": "AdminSettingsController_update",
+        "parameters": [
+          {
+            "name": "key",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminUpdateSettingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSettingViewDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Value failed the registry parser (SETTING_VALUE_INVALID)."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Key is not in the registry (SETTING_UNKNOWN)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update a business setting",
+        "tags": [
+          "admin"
+        ]
+      },
+      "delete": {
+        "operationId": "AdminSettingsController_remove",
+        "parameters": [
+          {
+            "name": "key",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminDeleteSettingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSettingViewDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Key is not in the registry (SETTING_UNKNOWN)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Reset a business setting",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/members": {
+      "get": {
+        "operationId": "AdminMembersController_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminMemberListResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List admin members",
+        "tags": [
+          "admin"
+        ]
+      },
+      "post": {
+        "operationId": "AdminMembersController_grant",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminGrantMemberDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminMemberDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "The email is not registered yet (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "Already active, ambiguous email, or self-grant (ADMIN_MEMBER_CONFLICT)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Grant admin access",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/members/{userId}": {
+      "patch": {
+        "operationId": "AdminMembersController_updateRole",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminUpdateMemberDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminMemberDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown member (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "Self-change or last owner (ADMIN_MEMBER_CONFLICT)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Change an admin member role",
+        "tags": [
+          "admin"
+        ]
+      },
+      "delete": {
+        "operationId": "AdminMembersController_revoke",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminMemberDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown member (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "Self-revoke or last owner (ADMIN_MEMBER_CONFLICT)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Revoke admin access",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/audit": {
+      "get": {
+        "operationId": "AdminAuditController_list",
+        "parameters": [
+          {
+            "name": "actor",
+            "required": false,
+            "in": "query",
+            "description": "Email or user id of the actor.",
+            "schema": {
+              "maxLength": 320,
+              "type": "string"
+            }
+          },
+          {
+            "name": "action",
+            "required": false,
+            "in": "query",
+            "description": "Action prefix, for example `template.`.",
+            "schema": {
+              "maxLength": 200,
+              "type": "string"
+            }
+          },
+          {
+            "name": "targetType",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "maxLength": 100,
+              "type": "string"
+            }
+          },
+          {
+            "name": "targetId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "maxLength": 200,
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100000,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "Values above 100 are clipped.",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminAuditListResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List admin audit events",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/admin/tenants": {
       "get": {
         "operationId": "AdminTenantsController_list",
@@ -285,6 +724,173 @@
           }
         ],
         "summary": "Refresh stored object usage for a tenant",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/tenants/{id}/suspend": {
+      "post": {
+        "operationId": "AdminTenantsController_suspend",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSuspendTenantDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTenantDetailDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown tenant (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "The site is not active (TENANT_STATUS_CONFLICT)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Suspend a tenant site",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/tenants/{id}/reactivate": {
+      "post": {
+        "operationId": "AdminTenantsController_reactivate",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTenantDetailDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown tenant (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "The site is not suspended (TENANT_STATUS_CONFLICT)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Reactivate a suspended tenant site",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/tenants/{id}/flags": {
+      "patch": {
+        "operationId": "AdminTenantsController_updateFlags",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTenantFlagsPatchDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTenantDetailDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown tenant (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update internal flags for a tenant",
         "tags": [
           "admin"
         ]
@@ -576,6 +1182,121 @@
         ]
       }
     },
+    "/admin/subscriptions/{id}/cancel": {
+      "post": {
+        "operationId": "AdminSubscriptionsController_cancel",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminCancelSubscriptionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSubscriptionDetailDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown subscription (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "Already ended (SUBSCRIPTION_NOT_CANCELABLE) or an active schedule (SUBSCRIPTION_SCHEDULE_ACTIVE)."
+          },
+          "502": {
+            "description": "Stripe did not respond (ADMIN_STRIPE_UNAVAILABLE)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Cancel a subscription in Stripe",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/subscriptions/{id}/resume": {
+      "post": {
+        "operationId": "AdminSubscriptionsController_resume",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSubscriptionDetailDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown subscription (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "Nothing scheduled to undo (SUBSCRIPTION_NOT_RESUMABLE)."
+          },
+          "502": {
+            "description": "Stripe did not respond (ADMIN_STRIPE_UNAVAILABLE)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Undo a scheduled subscription cancellation",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/admin/templates": {
       "get": {
         "operationId": "AdminTemplatesController_list",
@@ -605,12 +1326,13 @@
             "name": "status",
             "required": false,
             "in": "query",
-            "description": "Inactive templates are pending until a later phase adds retired_at.",
+            "description": "`pending` is inactive and not retired.",
             "schema": {
               "type": "string",
               "enum": [
                 "pending",
-                "active"
+                "active",
+                "retired"
               ]
             }
           },
@@ -621,6 +1343,16 @@
             "description": "Case-insensitive match on template id or name.",
             "schema": {
               "maxLength": 200,
+              "type": "string"
+            }
+          },
+          {
+            "name": "tag",
+            "required": false,
+            "in": "query",
+            "description": "Exact tag. Tags are stored in lowercase.",
+            "schema": {
+              "maxLength": 24,
               "type": "string"
             }
           }
@@ -649,6 +1381,52 @@
           }
         ],
         "summary": "List templates",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/templates/order": {
+      "put": {
+        "operationId": "AdminTemplatesController_reorder",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTemplateReorderDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTemplateReorderResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unknown or repeated ids (TEMPLATE_ORDER_INVALID)."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Reorder templates",
         "tags": [
           "admin"
         ]
@@ -694,6 +1472,287 @@
           }
         ],
         "summary": "Get a template",
+        "tags": [
+          "admin"
+        ]
+      },
+      "patch": {
+        "operationId": "AdminTemplatesController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTemplateUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTemplateDetailDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown template (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update template catalog fields",
+        "tags": [
+          "admin"
+        ]
+      },
+      "delete": {
+        "operationId": "AdminTemplatesController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTemplateDeleteDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The template row was deleted."
+          },
+          "400": {
+            "description": "confirmId does not match (TEMPLATE_DELETE_CONFIRM)."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown template (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "Sites or archives still reference it (TEMPLATE_IN_USE)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete an unused template",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/templates/{id}/activate": {
+      "post": {
+        "operationId": "AdminTemplatesController_activate",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTemplateDetailDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown template (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "Missing preview_url or thumbnail_url (TEMPLATE_NOT_READY)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Activate a template",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/templates/{id}/retire": {
+      "post": {
+        "operationId": "AdminTemplatesController_retire",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTemplateRetireDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTemplateDetailDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "reason must be 3–300 characters."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown template (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Retire a template",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/templates/{id}/thumbnail": {
+      "post": {
+        "operationId": "AdminTemplatesController_replaceThumbnail",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "file"
+                ],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTemplateDetailDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing file or magic bytes do not match (TEMPLATE_THUMBNAIL_REJECTED)."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown template (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Replace a template thumbnail",
         "tags": [
           "admin"
         ]
@@ -2768,6 +3827,319 @@
           "role"
         ]
       },
+      "AdminSettingViewDto": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string",
+            "description": "Prefix before the first dot."
+          },
+          "type": {
+            "enum": [
+              "bool",
+              "int",
+              "string",
+              "string-list",
+              "int-list"
+            ],
+            "type": "string"
+          },
+          "min": {
+            "type": "number",
+            "nullable": true
+          },
+          "max": {
+            "type": "number",
+            "nullable": true
+          },
+          "default": {
+            "type": "object",
+            "nullable": true
+          },
+          "envValue": {
+            "type": "string",
+            "nullable": true,
+            "description": "Raw env string when the variable is set. Omitted for secret-like names."
+          },
+          "dbValue": {
+            "type": "object",
+            "nullable": true
+          },
+          "effectiveValue": {
+            "type": "object",
+            "nullable": true
+          },
+          "source": {
+            "enum": [
+              "db",
+              "env",
+              "default"
+            ],
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "key",
+          "group",
+          "type",
+          "min",
+          "max",
+          "default",
+          "envValue",
+          "dbValue",
+          "effectiveValue",
+          "source",
+          "description",
+          "updatedAt",
+          "updatedBy"
+        ]
+      },
+      "AdminSettingsResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminSettingViewDto"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "AdminUpdateSettingDto": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "object",
+            "description": "JSON value. The registry parser checks the type and the range."
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "value",
+          "reason"
+        ]
+      },
+      "AdminDeleteSettingDto": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "reason"
+        ]
+      },
+      "AdminMemberDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "owner",
+              "operator",
+              "viewer"
+            ],
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true,
+            "description": "Email of the member who granted access, when it is still known."
+          },
+          "revokedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastSignInAt": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "userId",
+          "email",
+          "role",
+          "createdAt",
+          "createdBy",
+          "revokedAt",
+          "lastSignInAt"
+        ]
+      },
+      "AdminMemberListResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminMemberDto"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "AdminGrantMemberDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 320,
+            "format": "email"
+          },
+          "role": {
+            "enum": [
+              "owner",
+              "operator",
+              "viewer"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "role"
+        ]
+      },
+      "AdminUpdateMemberDto": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "enum": [
+              "owner",
+              "operator",
+              "viewer"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "role"
+        ]
+      },
+      "AdminAuditEntryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "actorUserId": {
+            "type": "string"
+          },
+          "actorEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "action": {
+            "type": "string"
+          },
+          "targetType": {
+            "type": "string",
+            "nullable": true
+          },
+          "targetId": {
+            "type": "string",
+            "nullable": true
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "before": {
+            "type": "object",
+            "nullable": true
+          },
+          "after": {
+            "type": "object",
+            "nullable": true
+          },
+          "ip": {
+            "type": "string",
+            "nullable": true
+          },
+          "userAgent": {
+            "type": "string",
+            "nullable": true,
+            "description": "`user_agent` clipped to 200 characters."
+          },
+          "createdAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "actorUserId",
+          "actorEmail",
+          "action",
+          "targetType",
+          "targetId",
+          "reason",
+          "before",
+          "after",
+          "ip",
+          "userAgent",
+          "createdAt"
+        ]
+      },
+      "AdminAuditListResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminAuditEntryDto"
+            }
+          },
+          "total": {
+            "type": "number"
+          },
+          "page": {
+            "type": "number"
+          },
+          "pageSize": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
       "AdminTenantSubscriptionSummaryDto": {
         "type": "object",
         "properties": {
@@ -3784,6 +5156,43 @@
           "flags"
         ]
       },
+      "AdminSuspendTenantDto": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "reason"
+        ]
+      },
+      "AdminTenantFlagsPatchDto": {
+        "type": "object",
+        "properties": {
+          "isInternal": {
+            "type": "boolean"
+          },
+          "tags": {
+            "description": "Hasta 10 marcas de 24 caracteres. Reemplaza la lista entera.",
+            "maxItems": 10,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 24,
+              "minLength": 1
+            }
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true,
+            "description": "`null` borra la nota.",
+            "maxLength": 2000
+          }
+        }
+      },
       "AdminDomainRecordDto": {
         "type": "object",
         "properties": {
@@ -4682,6 +6091,28 @@
           "stripeError"
         ]
       },
+      "AdminCancelSubscriptionDto": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "enum": [
+              "period_end",
+              "now"
+            ],
+            "type": "string"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Motivo que queda en la auditoría y en la metadata de Stripe.",
+            "minLength": 3,
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "mode",
+          "reason"
+        ]
+      },
       "AdminTemplateUsageDto": {
         "type": "object",
         "properties": {
@@ -4736,7 +6167,8 @@
           "status": {
             "enum": [
               "pending",
-              "active"
+              "active",
+              "retired"
             ],
             "type": "string"
           },
@@ -4754,6 +6186,27 @@
           "createdAt": {
             "type": "string"
           },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "featured": {
+            "type": "boolean"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "retiredAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "kitMeta": {
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": true
+          },
           "usage": {
             "$ref": "#/components/schemas/AdminTemplateUsageDto"
           }
@@ -4769,6 +6222,11 @@
           "previewUrl",
           "sortOrder",
           "createdAt",
+          "tags",
+          "featured",
+          "updatedAt",
+          "retiredAt",
+          "kitMeta",
           "usage"
         ]
       },
@@ -4784,6 +6242,37 @@
         },
         "required": [
           "items"
+        ]
+      },
+      "AdminTemplateReorderDto": {
+        "type": "object",
+        "properties": {
+          "ids": {
+            "minItems": 1,
+            "maxItems": 500,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 120
+            }
+          }
+        },
+        "required": [
+          "ids"
+        ]
+      },
+      "AdminTemplateReorderResponseDto": {
+        "type": "object",
+        "properties": {
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "ids"
         ]
       },
       "AdminTemplateTenantDto": {
@@ -4850,7 +6339,8 @@
           "status": {
             "enum": [
               "pending",
-              "active"
+              "active",
+              "retired"
             ],
             "type": "string"
           },
@@ -4867,6 +6357,27 @@
           },
           "createdAt": {
             "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "featured": {
+            "type": "boolean"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "retiredAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "kitMeta": {
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": true
           },
           "usage": {
             "$ref": "#/components/schemas/AdminTemplateUsageDto"
@@ -4893,9 +6404,72 @@
           "previewUrl",
           "sortOrder",
           "createdAt",
+          "tags",
+          "featured",
+          "updatedAt",
+          "retiredAt",
+          "kitMeta",
           "usage",
           "sectionCount",
           "tenants"
+        ]
+      },
+      "AdminTemplateUpdateDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 500
+          },
+          "category": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "tags": {
+            "uniqueItems": true,
+            "maxItems": 10,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 24
+            }
+          },
+          "featured": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AdminTemplateRetireDto": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "reason"
+        ]
+      },
+      "AdminTemplateDeleteDto": {
+        "type": "object",
+        "properties": {
+          "confirmId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          }
+        },
+        "required": [
+          "confirmId"
         ]
       },
       "AdminTrialSummaryDto": {

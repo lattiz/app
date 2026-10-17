@@ -19,6 +19,107 @@ export type AdminMeResponseDto = {
     role: 'owner' | 'operator' | 'viewer';
 };
 
+export type AdminSettingViewDto = {
+    key: string;
+    /**
+     * Prefix before the first dot.
+     */
+    group: string;
+    type: 'bool' | 'int' | 'string' | 'string-list' | 'int-list';
+    min: number | null;
+    max: number | null;
+    default: {
+        [key: string]: unknown;
+    } | null;
+    /**
+     * Raw env string when the variable is set. Omitted for secret-like names.
+     */
+    envValue: string | null;
+    dbValue: {
+        [key: string]: unknown;
+    } | null;
+    effectiveValue: {
+        [key: string]: unknown;
+    } | null;
+    source: 'db' | 'env' | 'default';
+    description: string | null;
+    updatedAt: string | null;
+    updatedBy: string | null;
+};
+
+export type AdminSettingsResponseDto = {
+    items: Array<AdminSettingViewDto>;
+};
+
+export type AdminUpdateSettingDto = {
+    /**
+     * JSON value. The registry parser checks the type and the range.
+     */
+    value: {
+        [key: string]: unknown;
+    };
+    reason: string;
+};
+
+export type AdminDeleteSettingDto = {
+    reason: string;
+};
+
+export type AdminMemberDto = {
+    userId: string;
+    email: string;
+    role: 'owner' | 'operator' | 'viewer';
+    createdAt: string;
+    /**
+     * Email of the member who granted access, when it is still known.
+     */
+    createdBy: string | null;
+    revokedAt: string | null;
+    lastSignInAt: string | null;
+};
+
+export type AdminMemberListResponseDto = {
+    items: Array<AdminMemberDto>;
+};
+
+export type AdminGrantMemberDto = {
+    email: string;
+    role: 'owner' | 'operator' | 'viewer';
+};
+
+export type AdminUpdateMemberDto = {
+    role: 'owner' | 'operator' | 'viewer';
+};
+
+export type AdminAuditEntryDto = {
+    id: string;
+    actorUserId: string;
+    actorEmail: string | null;
+    action: string;
+    targetType: string | null;
+    targetId: string | null;
+    reason: string | null;
+    before: {
+        [key: string]: unknown;
+    } | null;
+    after: {
+        [key: string]: unknown;
+    } | null;
+    ip: string | null;
+    /**
+     * `user_agent` clipped to 200 characters.
+     */
+    userAgent: string | null;
+    createdAt: string;
+};
+
+export type AdminAuditListResponseDto = {
+    items: Array<AdminAuditEntryDto>;
+    total: number;
+    page: number;
+    pageSize: number;
+};
+
 export type AdminTenantSubscriptionSummaryDto = {
     status: 'active' | 'trialing' | 'past_due' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'unpaid' | 'paused';
     plan: 'basico' | 'pro';
@@ -280,6 +381,22 @@ export type AdminTenantDetailDto = {
     flags: AdminTenantFlagsDto;
 };
 
+export type AdminSuspendTenantDto = {
+    reason: string;
+};
+
+export type AdminTenantFlagsPatchDto = {
+    isInternal?: boolean;
+    /**
+     * Hasta 10 marcas de 24 caracteres. Reemplaza la lista entera.
+     */
+    tags?: Array<string>;
+    /**
+     * `null` borra la nota.
+     */
+    notes?: string | null;
+};
+
 export type AdminDomainRecordDto = {
     name: string;
     source: 'lattiz_managed' | 'user_provided';
@@ -492,6 +609,14 @@ export type AdminSubscriptionDetailDto = {
     stripeError: 'unavailable' | null;
 };
 
+export type AdminCancelSubscriptionDto = {
+    mode: 'period_end' | 'now';
+    /**
+     * Motivo que queda en la auditoría y en la metadata de Stripe.
+     */
+    reason: string;
+};
+
 export type AdminTemplateUsageDto = {
     tenantsUsing: number;
     sitesPublished: number;
@@ -506,16 +631,31 @@ export type AdminTemplateListItemDto = {
     description: string | null;
     category: string | null;
     tier: 'basic' | 'pro';
-    status: 'pending' | 'active';
+    status: 'pending' | 'active' | 'retired';
     thumbnailUrl: string | null;
     previewUrl: string | null;
     sortOrder: number;
     createdAt: string;
+    tags: Array<string>;
+    featured: boolean;
+    updatedAt: string;
+    retiredAt: string | null;
+    kitMeta: {
+        [key: string]: unknown;
+    } | null;
     usage: AdminTemplateUsageDto;
 };
 
 export type AdminTemplateListResponseDto = {
     items: Array<AdminTemplateListItemDto>;
+};
+
+export type AdminTemplateReorderDto = {
+    ids: Array<string>;
+};
+
+export type AdminTemplateReorderResponseDto = {
+    ids: Array<string>;
 };
 
 export type AdminTemplateTenantDto = {
@@ -533,17 +673,40 @@ export type AdminTemplateDetailDto = {
     description: string | null;
     category: string | null;
     tier: 'basic' | 'pro';
-    status: 'pending' | 'active';
+    status: 'pending' | 'active' | 'retired';
     thumbnailUrl: string | null;
     previewUrl: string | null;
     sortOrder: number;
     createdAt: string;
+    tags: Array<string>;
+    featured: boolean;
+    updatedAt: string;
+    retiredAt: string | null;
+    kitMeta: {
+        [key: string]: unknown;
+    } | null;
     usage: AdminTemplateUsageDto;
     /**
      * Sections on the first GrapesJS page. The project JSON is not returned.
      */
     sectionCount: number;
     tenants: Array<AdminTemplateTenantDto>;
+};
+
+export type AdminTemplateUpdateDto = {
+    name?: string;
+    description?: string | null;
+    category?: string;
+    tags?: Array<string>;
+    featured?: boolean;
+};
+
+export type AdminTemplateRetireDto = {
+    reason: string;
+};
+
+export type AdminTemplateDeleteDto = {
+    confirmId: string;
 };
 
 export type AdminTrialSummaryDto = {
@@ -1622,6 +1785,260 @@ export type AdminMeControllerMeResponses = {
 
 export type AdminMeControllerMeResponse = AdminMeControllerMeResponses[keyof AdminMeControllerMeResponses];
 
+export type AdminSettingsControllerListData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/admin/settings';
+};
+
+export type AdminSettingsControllerListErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+};
+
+export type AdminSettingsControllerListResponses = {
+    200: AdminSettingsResponseDto;
+};
+
+export type AdminSettingsControllerListResponse = AdminSettingsControllerListResponses[keyof AdminSettingsControllerListResponses];
+
+export type AdminSettingsControllerRemoveData = {
+    body: AdminDeleteSettingDto;
+    path: {
+        key: string;
+    };
+    query?: never;
+    url: '/admin/settings/{key}';
+};
+
+export type AdminSettingsControllerRemoveErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Key is not in the registry (SETTING_UNKNOWN).
+     */
+    404: unknown;
+};
+
+export type AdminSettingsControllerRemoveResponses = {
+    200: AdminSettingViewDto;
+};
+
+export type AdminSettingsControllerRemoveResponse = AdminSettingsControllerRemoveResponses[keyof AdminSettingsControllerRemoveResponses];
+
+export type AdminSettingsControllerUpdateData = {
+    body: AdminUpdateSettingDto;
+    path: {
+        key: string;
+    };
+    query?: never;
+    url: '/admin/settings/{key}';
+};
+
+export type AdminSettingsControllerUpdateErrors = {
+    /**
+     * Value failed the registry parser (SETTING_VALUE_INVALID).
+     */
+    400: unknown;
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Key is not in the registry (SETTING_UNKNOWN).
+     */
+    404: unknown;
+};
+
+export type AdminSettingsControllerUpdateResponses = {
+    200: AdminSettingViewDto;
+};
+
+export type AdminSettingsControllerUpdateResponse = AdminSettingsControllerUpdateResponses[keyof AdminSettingsControllerUpdateResponses];
+
+export type AdminMembersControllerListData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/admin/members';
+};
+
+export type AdminMembersControllerListErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+};
+
+export type AdminMembersControllerListResponses = {
+    200: AdminMemberListResponseDto;
+};
+
+export type AdminMembersControllerListResponse = AdminMembersControllerListResponses[keyof AdminMembersControllerListResponses];
+
+export type AdminMembersControllerGrantData = {
+    body: AdminGrantMemberDto;
+    path?: never;
+    query?: never;
+    url: '/admin/members';
+};
+
+export type AdminMembersControllerGrantErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * The email is not registered yet (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+    /**
+     * Already active, ambiguous email, or self-grant (ADMIN_MEMBER_CONFLICT).
+     */
+    409: unknown;
+};
+
+export type AdminMembersControllerGrantResponses = {
+    200: AdminMemberDto;
+};
+
+export type AdminMembersControllerGrantResponse = AdminMembersControllerGrantResponses[keyof AdminMembersControllerGrantResponses];
+
+export type AdminMembersControllerRevokeData = {
+    body?: never;
+    path: {
+        userId: string;
+    };
+    query?: never;
+    url: '/admin/members/{userId}';
+};
+
+export type AdminMembersControllerRevokeErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown member (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+    /**
+     * Self-revoke or last owner (ADMIN_MEMBER_CONFLICT).
+     */
+    409: unknown;
+};
+
+export type AdminMembersControllerRevokeResponses = {
+    200: AdminMemberDto;
+};
+
+export type AdminMembersControllerRevokeResponse = AdminMembersControllerRevokeResponses[keyof AdminMembersControllerRevokeResponses];
+
+export type AdminMembersControllerUpdateRoleData = {
+    body: AdminUpdateMemberDto;
+    path: {
+        userId: string;
+    };
+    query?: never;
+    url: '/admin/members/{userId}';
+};
+
+export type AdminMembersControllerUpdateRoleErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown member (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+    /**
+     * Self-change or last owner (ADMIN_MEMBER_CONFLICT).
+     */
+    409: unknown;
+};
+
+export type AdminMembersControllerUpdateRoleResponses = {
+    200: AdminMemberDto;
+};
+
+export type AdminMembersControllerUpdateRoleResponse = AdminMembersControllerUpdateRoleResponses[keyof AdminMembersControllerUpdateRoleResponses];
+
+export type AdminAuditControllerListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Email or user id of the actor.
+         */
+        actor?: string;
+        /**
+         * Action prefix, for example `template.`.
+         */
+        action?: string;
+        targetType?: string;
+        targetId?: string;
+        from?: string;
+        to?: string;
+        page?: number;
+        /**
+         * Values above 100 are clipped.
+         */
+        pageSize?: number;
+    };
+    url: '/admin/audit';
+};
+
+export type AdminAuditControllerListErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+};
+
+export type AdminAuditControllerListResponses = {
+    200: AdminAuditListResponseDto;
+};
+
+export type AdminAuditControllerListResponse = AdminAuditControllerListResponses[keyof AdminAuditControllerListResponses];
+
 export type AdminTenantsControllerListData = {
     body?: never;
     path?: never;
@@ -1733,6 +2150,112 @@ export type AdminTenantsControllerRefreshResponses = {
 };
 
 export type AdminTenantsControllerRefreshResponse = AdminTenantsControllerRefreshResponses[keyof AdminTenantsControllerRefreshResponses];
+
+export type AdminTenantsControllerSuspendData = {
+    body: AdminSuspendTenantDto;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/tenants/{id}/suspend';
+};
+
+export type AdminTenantsControllerSuspendErrors = {
+    /**
+     * Validation failed.
+     */
+    400: unknown;
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown tenant (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+    /**
+     * The site is not active (TENANT_STATUS_CONFLICT).
+     */
+    409: unknown;
+};
+
+export type AdminTenantsControllerSuspendResponses = {
+    200: AdminTenantDetailDto;
+};
+
+export type AdminTenantsControllerSuspendResponse = AdminTenantsControllerSuspendResponses[keyof AdminTenantsControllerSuspendResponses];
+
+export type AdminTenantsControllerReactivateData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/tenants/{id}/reactivate';
+};
+
+export type AdminTenantsControllerReactivateErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown tenant (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+    /**
+     * The site is not suspended (TENANT_STATUS_CONFLICT).
+     */
+    409: unknown;
+};
+
+export type AdminTenantsControllerReactivateResponses = {
+    200: AdminTenantDetailDto;
+};
+
+export type AdminTenantsControllerReactivateResponse = AdminTenantsControllerReactivateResponses[keyof AdminTenantsControllerReactivateResponses];
+
+export type AdminTenantsControllerUpdateFlagsData = {
+    body: AdminTenantFlagsPatchDto;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/tenants/{id}/flags';
+};
+
+export type AdminTenantsControllerUpdateFlagsErrors = {
+    /**
+     * Validation failed.
+     */
+    400: unknown;
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown tenant (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+};
+
+export type AdminTenantsControllerUpdateFlagsResponses = {
+    200: AdminTenantDetailDto;
+};
+
+export type AdminTenantsControllerUpdateFlagsResponse = AdminTenantsControllerUpdateFlagsResponses[keyof AdminTenantsControllerUpdateFlagsResponses];
 
 export type AdminDomainControllerInspectData = {
     body?: never;
@@ -1879,6 +2402,86 @@ export type AdminSubscriptionsControllerGetResponses = {
 
 export type AdminSubscriptionsControllerGetResponse = AdminSubscriptionsControllerGetResponses[keyof AdminSubscriptionsControllerGetResponses];
 
+export type AdminSubscriptionsControllerCancelData = {
+    body: AdminCancelSubscriptionDto;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/subscriptions/{id}/cancel';
+};
+
+export type AdminSubscriptionsControllerCancelErrors = {
+    /**
+     * Validation failed.
+     */
+    400: unknown;
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown subscription (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+    /**
+     * Already ended (SUBSCRIPTION_NOT_CANCELABLE) or an active schedule (SUBSCRIPTION_SCHEDULE_ACTIVE).
+     */
+    409: unknown;
+    /**
+     * Stripe did not respond (ADMIN_STRIPE_UNAVAILABLE).
+     */
+    502: unknown;
+};
+
+export type AdminSubscriptionsControllerCancelResponses = {
+    200: AdminSubscriptionDetailDto;
+};
+
+export type AdminSubscriptionsControllerCancelResponse = AdminSubscriptionsControllerCancelResponses[keyof AdminSubscriptionsControllerCancelResponses];
+
+export type AdminSubscriptionsControllerResumeData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/subscriptions/{id}/resume';
+};
+
+export type AdminSubscriptionsControllerResumeErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown subscription (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+    /**
+     * Nothing scheduled to undo (SUBSCRIPTION_NOT_RESUMABLE).
+     */
+    409: unknown;
+    /**
+     * Stripe did not respond (ADMIN_STRIPE_UNAVAILABLE).
+     */
+    502: unknown;
+};
+
+export type AdminSubscriptionsControllerResumeResponses = {
+    200: AdminSubscriptionDetailDto;
+};
+
+export type AdminSubscriptionsControllerResumeResponse = AdminSubscriptionsControllerResumeResponses[keyof AdminSubscriptionsControllerResumeResponses];
+
 export type AdminTemplatesControllerListData = {
     body?: never;
     path?: never;
@@ -1886,13 +2489,17 @@ export type AdminTemplatesControllerListData = {
         tier?: 'basic' | 'pro';
         category?: string;
         /**
-         * Inactive templates are pending until a later phase adds retired_at.
+         * `pending` is inactive and not retired.
          */
-        status?: 'pending' | 'active';
+        status?: 'pending' | 'active' | 'retired';
         /**
          * Case-insensitive match on template id or name.
          */
         q?: string;
+        /**
+         * Exact tag. Tags are stored in lowercase.
+         */
+        tag?: string;
     };
     url: '/admin/templates';
 };
@@ -1913,6 +2520,75 @@ export type AdminTemplatesControllerListResponses = {
 };
 
 export type AdminTemplatesControllerListResponse = AdminTemplatesControllerListResponses[keyof AdminTemplatesControllerListResponses];
+
+export type AdminTemplatesControllerReorderData = {
+    body: AdminTemplateReorderDto;
+    path?: never;
+    query?: never;
+    url: '/admin/templates/order';
+};
+
+export type AdminTemplatesControllerReorderErrors = {
+    /**
+     * Unknown or repeated ids (TEMPLATE_ORDER_INVALID).
+     */
+    400: unknown;
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+};
+
+export type AdminTemplatesControllerReorderResponses = {
+    200: AdminTemplateReorderResponseDto;
+};
+
+export type AdminTemplatesControllerReorderResponse = AdminTemplatesControllerReorderResponses[keyof AdminTemplatesControllerReorderResponses];
+
+export type AdminTemplatesControllerRemoveData = {
+    body: AdminTemplateDeleteDto;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/templates/{id}';
+};
+
+export type AdminTemplatesControllerRemoveErrors = {
+    /**
+     * confirmId does not match (TEMPLATE_DELETE_CONFIRM).
+     */
+    400: unknown;
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown template (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+    /**
+     * Sites or archives still reference it (TEMPLATE_IN_USE).
+     */
+    409: unknown;
+};
+
+export type AdminTemplatesControllerRemoveResponses = {
+    /**
+     * The template row was deleted.
+     */
+    204: void;
+};
+
+export type AdminTemplatesControllerRemoveResponse = AdminTemplatesControllerRemoveResponses[keyof AdminTemplatesControllerRemoveResponses];
 
 export type AdminTemplatesControllerGetData = {
     body?: never;
@@ -1943,6 +2619,144 @@ export type AdminTemplatesControllerGetResponses = {
 };
 
 export type AdminTemplatesControllerGetResponse = AdminTemplatesControllerGetResponses[keyof AdminTemplatesControllerGetResponses];
+
+export type AdminTemplatesControllerUpdateData = {
+    body: AdminTemplateUpdateDto;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/templates/{id}';
+};
+
+export type AdminTemplatesControllerUpdateErrors = {
+    /**
+     * Validation failed.
+     */
+    400: unknown;
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown template (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+};
+
+export type AdminTemplatesControllerUpdateResponses = {
+    200: AdminTemplateDetailDto;
+};
+
+export type AdminTemplatesControllerUpdateResponse = AdminTemplatesControllerUpdateResponses[keyof AdminTemplatesControllerUpdateResponses];
+
+export type AdminTemplatesControllerActivateData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/templates/{id}/activate';
+};
+
+export type AdminTemplatesControllerActivateErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown template (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+    /**
+     * Missing preview_url or thumbnail_url (TEMPLATE_NOT_READY).
+     */
+    409: unknown;
+};
+
+export type AdminTemplatesControllerActivateResponses = {
+    200: AdminTemplateDetailDto;
+};
+
+export type AdminTemplatesControllerActivateResponse = AdminTemplatesControllerActivateResponses[keyof AdminTemplatesControllerActivateResponses];
+
+export type AdminTemplatesControllerRetireData = {
+    body: AdminTemplateRetireDto;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/templates/{id}/retire';
+};
+
+export type AdminTemplatesControllerRetireErrors = {
+    /**
+     * reason must be 3–300 characters.
+     */
+    400: unknown;
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown template (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+};
+
+export type AdminTemplatesControllerRetireResponses = {
+    200: AdminTemplateDetailDto;
+};
+
+export type AdminTemplatesControllerRetireResponse = AdminTemplatesControllerRetireResponses[keyof AdminTemplatesControllerRetireResponses];
+
+export type AdminTemplatesControllerReplaceThumbnailData = {
+    body: {
+        file: Blob | File;
+    };
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/templates/{id}/thumbnail';
+};
+
+export type AdminTemplatesControllerReplaceThumbnailErrors = {
+    /**
+     * Missing file or magic bytes do not match (TEMPLATE_THUMBNAIL_REJECTED).
+     */
+    400: unknown;
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown template (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+};
+
+export type AdminTemplatesControllerReplaceThumbnailResponses = {
+    200: AdminTemplateDetailDto;
+};
+
+export type AdminTemplatesControllerReplaceThumbnailResponse = AdminTemplatesControllerReplaceThumbnailResponses[keyof AdminTemplatesControllerReplaceThumbnailResponses];
 
 export type AdminTrialsControllerSummaryData = {
     body?: never;

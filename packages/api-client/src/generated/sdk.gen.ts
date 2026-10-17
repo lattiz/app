@@ -2,7 +2,7 @@
 
 import { type Client, type ClientMeta, formDataBodySerializer, type Options as Options2, type RequestResult, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { AdminDomainControllerActivationCheckData, AdminDomainControllerActivationCheckErrors, AdminDomainControllerActivationCheckResponses, AdminDomainControllerInspectData, AdminDomainControllerInspectErrors, AdminDomainControllerInspectResponses, AdminMeControllerMeData, AdminMeControllerMeErrors, AdminMeControllerMeResponses, AdminMetricsControllerFunnelData, AdminMetricsControllerFunnelErrors, AdminMetricsControllerFunnelResponses, AdminMetricsControllerHistoryData, AdminMetricsControllerHistoryErrors, AdminMetricsControllerHistoryResponses, AdminMetricsControllerOverviewData, AdminMetricsControllerOverviewErrors, AdminMetricsControllerOverviewResponses, AdminMetricsControllerRevenueData, AdminMetricsControllerRevenueErrors, AdminMetricsControllerRevenueResponses, AdminMetricsControllerTemplatesData, AdminMetricsControllerTemplatesErrors, AdminMetricsControllerTemplatesResponses, AdminSubscriptionsControllerGetData, AdminSubscriptionsControllerGetErrors, AdminSubscriptionsControllerGetResponses, AdminSubscriptionsControllerListData, AdminSubscriptionsControllerListErrors, AdminSubscriptionsControllerListResponses, AdminTemplatesControllerGetData, AdminTemplatesControllerGetErrors, AdminTemplatesControllerGetResponses, AdminTemplatesControllerListData, AdminTemplatesControllerListErrors, AdminTemplatesControllerListResponses, AdminTenantsControllerGetData, AdminTenantsControllerGetErrors, AdminTenantsControllerGetResponses, AdminTenantsControllerListData, AdminTenantsControllerListErrors, AdminTenantsControllerListResponses, AdminTenantsControllerRefreshData, AdminTenantsControllerRefreshErrors, AdminTenantsControllerRefreshResponses, AdminTrialsControllerListData, AdminTrialsControllerListErrors, AdminTrialsControllerListResponses, AdminTrialsControllerSummaryData, AdminTrialsControllerSummaryErrors, AdminTrialsControllerSummaryResponses, AnalyticsControllerOverviewData, AnalyticsControllerOverviewResponses, AnalyticsControllerRealtimeData, AnalyticsControllerRealtimeResponses, AnalyticsControllerRetryData, AnalyticsControllerRetryResponses, BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionErrors, BillingControllerCreateCheckoutSessionResponses, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponses, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponses, BillingControllerGetPlanChangeData, BillingControllerGetPlanChangeResponses, BillingControllerGetPlansData, BillingControllerGetPlansResponses, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionPriceData, BillingControllerGetSubscriptionPriceResponses, BillingControllerGetSubscriptionResponses, BillingControllerReleasePendingPlanChangeData, BillingControllerReleasePendingPlanChangeResponses, BillingControllerRequestPlanChangeData, BillingControllerRequestPlanChangeErrors, BillingControllerRequestPlanChangeResponses, DomainsControllerConnectData, DomainsControllerConnectResponses, DomainsControllerCreateRenewalCheckoutData, DomainsControllerCreateRenewalCheckoutResponses, DomainsControllerGetDomainData, DomainsControllerGetDomainResponses, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponses, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponses, DomainsControllerGetRenewalData, DomainsControllerGetRenewalResponses, DomainsControllerPurchaseData, DomainsControllerPurchaseResponses, DomainsControllerRelaunchData, DomainsControllerRelaunchResponses, DomainsControllerSearchData, DomainsControllerSearchResponses, HealthControllerHealthData, HealthControllerHealthResponses, MeControllerDeleteMeData, MeControllerDeleteMeErrors, MeControllerDeleteMeResponses, MeControllerMeData, MeControllerMeErrors, MeControllerMeResponses, PlanChangeImpactControllerGetImpactData, PlanChangeImpactControllerGetImpactErrors, PlanChangeImpactControllerGetImpactResponses, PublicTemplatesControllerFindPublishedData, PublicTemplatesControllerFindPublishedResponses, SitesControllerChangeTemplateData, SitesControllerChangeTemplateErrors, SitesControllerChangeTemplateResponses, SitesControllerGetSchemaData, SitesControllerGetSchemaErrors, SitesControllerGetSchemaResponses, SitesControllerPublishData, SitesControllerPublishErrors, SitesControllerPublishResponses, SitesControllerSaveSchemaData, SitesControllerSaveSchemaErrors, SitesControllerSaveSchemaResponses, SitesControllerSelectTemplateData, SitesControllerSelectTemplateErrors, SitesControllerSelectTemplateResponses, SitesControllerUploadAssetsData, SitesControllerUploadAssetsErrors, SitesControllerUploadAssetsResponses, SiteStockAssetsControllerImportPhotoData, SiteStockAssetsControllerImportPhotoErrors, SiteStockAssetsControllerImportPhotoResponses, StockControllerSearchData, StockControllerSearchErrors, StockControllerSearchResponses, StockControllerStatusData, StockControllerStatusErrors, StockControllerStatusResponses, TemplatesControllerFindAllData, TemplatesControllerFindAllErrors, TemplatesControllerFindAllResponses, TenantsControllerMeData, TenantsControllerMeErrors, TenantsControllerMeResponses, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingErrors, TenantsControllerRemoveBrandingResponses, TenantsControllerSlugAvailabilityData, TenantsControllerSlugAvailabilityErrors, TenantsControllerSlugAvailabilityResponses, TenantsControllerSlugSuggestionData, TenantsControllerSlugSuggestionErrors, TenantsControllerSlugSuggestionResponses, TenantsControllerUpdateBusinessProfileData, TenantsControllerUpdateBusinessProfileErrors, TenantsControllerUpdateBusinessProfileResponses, TenantsControllerUpdateSiteSettingsData, TenantsControllerUpdateSiteSettingsErrors, TenantsControllerUpdateSiteSettingsResponses, TenantsControllerUpdateSlugData, TenantsControllerUpdateSlugErrors, TenantsControllerUpdateSlugResponses, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingErrors, TenantsControllerUploadBrandingResponses } from './types.gen';
+import type { AdminAuditControllerListData, AdminAuditControllerListErrors, AdminAuditControllerListResponses, AdminDomainControllerActivationCheckData, AdminDomainControllerActivationCheckErrors, AdminDomainControllerActivationCheckResponses, AdminDomainControllerInspectData, AdminDomainControllerInspectErrors, AdminDomainControllerInspectResponses, AdminMeControllerMeData, AdminMeControllerMeErrors, AdminMeControllerMeResponses, AdminMembersControllerGrantData, AdminMembersControllerGrantErrors, AdminMembersControllerGrantResponses, AdminMembersControllerListData, AdminMembersControllerListErrors, AdminMembersControllerListResponses, AdminMembersControllerRevokeData, AdminMembersControllerRevokeErrors, AdminMembersControllerRevokeResponses, AdminMembersControllerUpdateRoleData, AdminMembersControllerUpdateRoleErrors, AdminMembersControllerUpdateRoleResponses, AdminMetricsControllerFunnelData, AdminMetricsControllerFunnelErrors, AdminMetricsControllerFunnelResponses, AdminMetricsControllerHistoryData, AdminMetricsControllerHistoryErrors, AdminMetricsControllerHistoryResponses, AdminMetricsControllerOverviewData, AdminMetricsControllerOverviewErrors, AdminMetricsControllerOverviewResponses, AdminMetricsControllerRevenueData, AdminMetricsControllerRevenueErrors, AdminMetricsControllerRevenueResponses, AdminMetricsControllerTemplatesData, AdminMetricsControllerTemplatesErrors, AdminMetricsControllerTemplatesResponses, AdminSettingsControllerListData, AdminSettingsControllerListErrors, AdminSettingsControllerListResponses, AdminSettingsControllerRemoveData, AdminSettingsControllerRemoveErrors, AdminSettingsControllerRemoveResponses, AdminSettingsControllerUpdateData, AdminSettingsControllerUpdateErrors, AdminSettingsControllerUpdateResponses, AdminSubscriptionsControllerCancelData, AdminSubscriptionsControllerCancelErrors, AdminSubscriptionsControllerCancelResponses, AdminSubscriptionsControllerGetData, AdminSubscriptionsControllerGetErrors, AdminSubscriptionsControllerGetResponses, AdminSubscriptionsControllerListData, AdminSubscriptionsControllerListErrors, AdminSubscriptionsControllerListResponses, AdminSubscriptionsControllerResumeData, AdminSubscriptionsControllerResumeErrors, AdminSubscriptionsControllerResumeResponses, AdminTemplatesControllerActivateData, AdminTemplatesControllerActivateErrors, AdminTemplatesControllerActivateResponses, AdminTemplatesControllerGetData, AdminTemplatesControllerGetErrors, AdminTemplatesControllerGetResponses, AdminTemplatesControllerListData, AdminTemplatesControllerListErrors, AdminTemplatesControllerListResponses, AdminTemplatesControllerRemoveData, AdminTemplatesControllerRemoveErrors, AdminTemplatesControllerRemoveResponses, AdminTemplatesControllerReorderData, AdminTemplatesControllerReorderErrors, AdminTemplatesControllerReorderResponses, AdminTemplatesControllerReplaceThumbnailData, AdminTemplatesControllerReplaceThumbnailErrors, AdminTemplatesControllerReplaceThumbnailResponses, AdminTemplatesControllerRetireData, AdminTemplatesControllerRetireErrors, AdminTemplatesControllerRetireResponses, AdminTemplatesControllerUpdateData, AdminTemplatesControllerUpdateErrors, AdminTemplatesControllerUpdateResponses, AdminTenantsControllerGetData, AdminTenantsControllerGetErrors, AdminTenantsControllerGetResponses, AdminTenantsControllerListData, AdminTenantsControllerListErrors, AdminTenantsControllerListResponses, AdminTenantsControllerReactivateData, AdminTenantsControllerReactivateErrors, AdminTenantsControllerReactivateResponses, AdminTenantsControllerRefreshData, AdminTenantsControllerRefreshErrors, AdminTenantsControllerRefreshResponses, AdminTenantsControllerSuspendData, AdminTenantsControllerSuspendErrors, AdminTenantsControllerSuspendResponses, AdminTenantsControllerUpdateFlagsData, AdminTenantsControllerUpdateFlagsErrors, AdminTenantsControllerUpdateFlagsResponses, AdminTrialsControllerListData, AdminTrialsControllerListErrors, AdminTrialsControllerListResponses, AdminTrialsControllerSummaryData, AdminTrialsControllerSummaryErrors, AdminTrialsControllerSummaryResponses, AnalyticsControllerOverviewData, AnalyticsControllerOverviewResponses, AnalyticsControllerRealtimeData, AnalyticsControllerRealtimeResponses, AnalyticsControllerRetryData, AnalyticsControllerRetryResponses, BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionErrors, BillingControllerCreateCheckoutSessionResponses, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponses, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponses, BillingControllerGetPlanChangeData, BillingControllerGetPlanChangeResponses, BillingControllerGetPlansData, BillingControllerGetPlansResponses, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionPriceData, BillingControllerGetSubscriptionPriceResponses, BillingControllerGetSubscriptionResponses, BillingControllerReleasePendingPlanChangeData, BillingControllerReleasePendingPlanChangeResponses, BillingControllerRequestPlanChangeData, BillingControllerRequestPlanChangeErrors, BillingControllerRequestPlanChangeResponses, DomainsControllerConnectData, DomainsControllerConnectResponses, DomainsControllerCreateRenewalCheckoutData, DomainsControllerCreateRenewalCheckoutResponses, DomainsControllerGetDomainData, DomainsControllerGetDomainResponses, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponses, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponses, DomainsControllerGetRenewalData, DomainsControllerGetRenewalResponses, DomainsControllerPurchaseData, DomainsControllerPurchaseResponses, DomainsControllerRelaunchData, DomainsControllerRelaunchResponses, DomainsControllerSearchData, DomainsControllerSearchResponses, HealthControllerHealthData, HealthControllerHealthResponses, MeControllerDeleteMeData, MeControllerDeleteMeErrors, MeControllerDeleteMeResponses, MeControllerMeData, MeControllerMeErrors, MeControllerMeResponses, PlanChangeImpactControllerGetImpactData, PlanChangeImpactControllerGetImpactErrors, PlanChangeImpactControllerGetImpactResponses, PublicTemplatesControllerFindPublishedData, PublicTemplatesControllerFindPublishedResponses, SitesControllerChangeTemplateData, SitesControllerChangeTemplateErrors, SitesControllerChangeTemplateResponses, SitesControllerGetSchemaData, SitesControllerGetSchemaErrors, SitesControllerGetSchemaResponses, SitesControllerPublishData, SitesControllerPublishErrors, SitesControllerPublishResponses, SitesControllerSaveSchemaData, SitesControllerSaveSchemaErrors, SitesControllerSaveSchemaResponses, SitesControllerSelectTemplateData, SitesControllerSelectTemplateErrors, SitesControllerSelectTemplateResponses, SitesControllerUploadAssetsData, SitesControllerUploadAssetsErrors, SitesControllerUploadAssetsResponses, SiteStockAssetsControllerImportPhotoData, SiteStockAssetsControllerImportPhotoErrors, SiteStockAssetsControllerImportPhotoResponses, StockControllerSearchData, StockControllerSearchErrors, StockControllerSearchResponses, StockControllerStatusData, StockControllerStatusErrors, StockControllerStatusResponses, TemplatesControllerFindAllData, TemplatesControllerFindAllErrors, TemplatesControllerFindAllResponses, TenantsControllerMeData, TenantsControllerMeErrors, TenantsControllerMeResponses, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingErrors, TenantsControllerRemoveBrandingResponses, TenantsControllerSlugAvailabilityData, TenantsControllerSlugAvailabilityErrors, TenantsControllerSlugAvailabilityResponses, TenantsControllerSlugSuggestionData, TenantsControllerSlugSuggestionErrors, TenantsControllerSlugSuggestionResponses, TenantsControllerUpdateBusinessProfileData, TenantsControllerUpdateBusinessProfileErrors, TenantsControllerUpdateBusinessProfileResponses, TenantsControllerUpdateSiteSettingsData, TenantsControllerUpdateSiteSettingsErrors, TenantsControllerUpdateSiteSettingsResponses, TenantsControllerUpdateSlugData, TenantsControllerUpdateSlugErrors, TenantsControllerUpdateSlugResponses, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingErrors, TenantsControllerUploadBrandingResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -24,6 +24,94 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 export const adminMeControllerMe = <ThrowOnError extends boolean = false>(options?: Options<AdminMeControllerMeData, ThrowOnError>): RequestResult<AdminMeControllerMeResponses, AdminMeControllerMeErrors, ThrowOnError> => (options?.client ?? client).get<AdminMeControllerMeResponses, AdminMeControllerMeErrors, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/admin/me',
+    ...options
+});
+
+/**
+ * List business settings
+ */
+export const adminSettingsControllerList = <ThrowOnError extends boolean = false>(options?: Options<AdminSettingsControllerListData, ThrowOnError>): RequestResult<AdminSettingsControllerListResponses, AdminSettingsControllerListErrors, ThrowOnError> => (options?.client ?? client).get<AdminSettingsControllerListResponses, AdminSettingsControllerListErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/settings',
+    ...options
+});
+
+/**
+ * Reset a business setting
+ */
+export const adminSettingsControllerRemove = <ThrowOnError extends boolean = false>(options: Options<AdminSettingsControllerRemoveData, ThrowOnError>): RequestResult<AdminSettingsControllerRemoveResponses, AdminSettingsControllerRemoveErrors, ThrowOnError> => (options.client ?? client).delete<AdminSettingsControllerRemoveResponses, AdminSettingsControllerRemoveErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/settings/{key}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Update a business setting
+ */
+export const adminSettingsControllerUpdate = <ThrowOnError extends boolean = false>(options: Options<AdminSettingsControllerUpdateData, ThrowOnError>): RequestResult<AdminSettingsControllerUpdateResponses, AdminSettingsControllerUpdateErrors, ThrowOnError> => (options.client ?? client).patch<AdminSettingsControllerUpdateResponses, AdminSettingsControllerUpdateErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/settings/{key}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * List admin members
+ */
+export const adminMembersControllerList = <ThrowOnError extends boolean = false>(options?: Options<AdminMembersControllerListData, ThrowOnError>): RequestResult<AdminMembersControllerListResponses, AdminMembersControllerListErrors, ThrowOnError> => (options?.client ?? client).get<AdminMembersControllerListResponses, AdminMembersControllerListErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/members',
+    ...options
+});
+
+/**
+ * Grant admin access
+ */
+export const adminMembersControllerGrant = <ThrowOnError extends boolean = false>(options: Options<AdminMembersControllerGrantData, ThrowOnError>): RequestResult<AdminMembersControllerGrantResponses, AdminMembersControllerGrantErrors, ThrowOnError> => (options.client ?? client).post<AdminMembersControllerGrantResponses, AdminMembersControllerGrantErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/members',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Revoke admin access
+ */
+export const adminMembersControllerRevoke = <ThrowOnError extends boolean = false>(options: Options<AdminMembersControllerRevokeData, ThrowOnError>): RequestResult<AdminMembersControllerRevokeResponses, AdminMembersControllerRevokeErrors, ThrowOnError> => (options.client ?? client).delete<AdminMembersControllerRevokeResponses, AdminMembersControllerRevokeErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/members/{userId}',
+    ...options
+});
+
+/**
+ * Change an admin member role
+ */
+export const adminMembersControllerUpdateRole = <ThrowOnError extends boolean = false>(options: Options<AdminMembersControllerUpdateRoleData, ThrowOnError>): RequestResult<AdminMembersControllerUpdateRoleResponses, AdminMembersControllerUpdateRoleErrors, ThrowOnError> => (options.client ?? client).patch<AdminMembersControllerUpdateRoleResponses, AdminMembersControllerUpdateRoleErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/members/{userId}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * List admin audit events
+ */
+export const adminAuditControllerList = <ThrowOnError extends boolean = false>(options?: Options<AdminAuditControllerListData, ThrowOnError>): RequestResult<AdminAuditControllerListResponses, AdminAuditControllerListErrors, ThrowOnError> => (options?.client ?? client).get<AdminAuditControllerListResponses, AdminAuditControllerListErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/audit',
     ...options
 });
 
@@ -52,6 +140,41 @@ export const adminTenantsControllerRefresh = <ThrowOnError extends boolean = fal
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/admin/tenants/{id}/storage/refresh',
     ...options
+});
+
+/**
+ * Suspend a tenant site
+ */
+export const adminTenantsControllerSuspend = <ThrowOnError extends boolean = false>(options: Options<AdminTenantsControllerSuspendData, ThrowOnError>): RequestResult<AdminTenantsControllerSuspendResponses, AdminTenantsControllerSuspendErrors, ThrowOnError> => (options.client ?? client).post<AdminTenantsControllerSuspendResponses, AdminTenantsControllerSuspendErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/tenants/{id}/suspend',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Reactivate a suspended tenant site
+ */
+export const adminTenantsControllerReactivate = <ThrowOnError extends boolean = false>(options: Options<AdminTenantsControllerReactivateData, ThrowOnError>): RequestResult<AdminTenantsControllerReactivateResponses, AdminTenantsControllerReactivateErrors, ThrowOnError> => (options.client ?? client).post<AdminTenantsControllerReactivateResponses, AdminTenantsControllerReactivateErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/tenants/{id}/reactivate',
+    ...options
+});
+
+/**
+ * Update internal flags for a tenant
+ */
+export const adminTenantsControllerUpdateFlags = <ThrowOnError extends boolean = false>(options: Options<AdminTenantsControllerUpdateFlagsData, ThrowOnError>): RequestResult<AdminTenantsControllerUpdateFlagsResponses, AdminTenantsControllerUpdateFlagsErrors, ThrowOnError> => (options.client ?? client).patch<AdminTenantsControllerUpdateFlagsResponses, AdminTenantsControllerUpdateFlagsErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/tenants/{id}/flags',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
 });
 
 /**
@@ -91,6 +214,28 @@ export const adminSubscriptionsControllerGet = <ThrowOnError extends boolean = f
 });
 
 /**
+ * Cancel a subscription in Stripe
+ */
+export const adminSubscriptionsControllerCancel = <ThrowOnError extends boolean = false>(options: Options<AdminSubscriptionsControllerCancelData, ThrowOnError>): RequestResult<AdminSubscriptionsControllerCancelResponses, AdminSubscriptionsControllerCancelErrors, ThrowOnError> => (options.client ?? client).post<AdminSubscriptionsControllerCancelResponses, AdminSubscriptionsControllerCancelErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/subscriptions/{id}/cancel',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Undo a scheduled subscription cancellation
+ */
+export const adminSubscriptionsControllerResume = <ThrowOnError extends boolean = false>(options: Options<AdminSubscriptionsControllerResumeData, ThrowOnError>): RequestResult<AdminSubscriptionsControllerResumeResponses, AdminSubscriptionsControllerResumeErrors, ThrowOnError> => (options.client ?? client).post<AdminSubscriptionsControllerResumeResponses, AdminSubscriptionsControllerResumeErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/subscriptions/{id}/resume',
+    ...options
+});
+
+/**
  * List templates
  */
 export const adminTemplatesControllerList = <ThrowOnError extends boolean = false>(options?: Options<AdminTemplatesControllerListData, ThrowOnError>): RequestResult<AdminTemplatesControllerListResponses, AdminTemplatesControllerListErrors, ThrowOnError> => (options?.client ?? client).get<AdminTemplatesControllerListResponses, AdminTemplatesControllerListErrors, ThrowOnError>({
@@ -100,12 +245,87 @@ export const adminTemplatesControllerList = <ThrowOnError extends boolean = fals
 });
 
 /**
+ * Reorder templates
+ */
+export const adminTemplatesControllerReorder = <ThrowOnError extends boolean = false>(options: Options<AdminTemplatesControllerReorderData, ThrowOnError>): RequestResult<AdminTemplatesControllerReorderResponses, AdminTemplatesControllerReorderErrors, ThrowOnError> => (options.client ?? client).put<AdminTemplatesControllerReorderResponses, AdminTemplatesControllerReorderErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/templates/order',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Delete an unused template
+ */
+export const adminTemplatesControllerRemove = <ThrowOnError extends boolean = false>(options: Options<AdminTemplatesControllerRemoveData, ThrowOnError>): RequestResult<AdminTemplatesControllerRemoveResponses, AdminTemplatesControllerRemoveErrors, ThrowOnError> => (options.client ?? client).delete<AdminTemplatesControllerRemoveResponses, AdminTemplatesControllerRemoveErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/templates/{id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
  * Get a template
  */
 export const adminTemplatesControllerGet = <ThrowOnError extends boolean = false>(options: Options<AdminTemplatesControllerGetData, ThrowOnError>): RequestResult<AdminTemplatesControllerGetResponses, AdminTemplatesControllerGetErrors, ThrowOnError> => (options.client ?? client).get<AdminTemplatesControllerGetResponses, AdminTemplatesControllerGetErrors, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/admin/templates/{id}',
     ...options
+});
+
+/**
+ * Update template catalog fields
+ */
+export const adminTemplatesControllerUpdate = <ThrowOnError extends boolean = false>(options: Options<AdminTemplatesControllerUpdateData, ThrowOnError>): RequestResult<AdminTemplatesControllerUpdateResponses, AdminTemplatesControllerUpdateErrors, ThrowOnError> => (options.client ?? client).patch<AdminTemplatesControllerUpdateResponses, AdminTemplatesControllerUpdateErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/templates/{id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Activate a template
+ */
+export const adminTemplatesControllerActivate = <ThrowOnError extends boolean = false>(options: Options<AdminTemplatesControllerActivateData, ThrowOnError>): RequestResult<AdminTemplatesControllerActivateResponses, AdminTemplatesControllerActivateErrors, ThrowOnError> => (options.client ?? client).post<AdminTemplatesControllerActivateResponses, AdminTemplatesControllerActivateErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/templates/{id}/activate',
+    ...options
+});
+
+/**
+ * Retire a template
+ */
+export const adminTemplatesControllerRetire = <ThrowOnError extends boolean = false>(options: Options<AdminTemplatesControllerRetireData, ThrowOnError>): RequestResult<AdminTemplatesControllerRetireResponses, AdminTemplatesControllerRetireErrors, ThrowOnError> => (options.client ?? client).post<AdminTemplatesControllerRetireResponses, AdminTemplatesControllerRetireErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/templates/{id}/retire',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Replace a template thumbnail
+ */
+export const adminTemplatesControllerReplaceThumbnail = <ThrowOnError extends boolean = false>(options: Options<AdminTemplatesControllerReplaceThumbnailData, ThrowOnError>): RequestResult<AdminTemplatesControllerReplaceThumbnailResponses, AdminTemplatesControllerReplaceThumbnailErrors, ThrowOnError> => (options.client ?? client).post<AdminTemplatesControllerReplaceThumbnailResponses, AdminTemplatesControllerReplaceThumbnailErrors, ThrowOnError>({
+    ...formDataBodySerializer,
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/templates/{id}/thumbnail',
+    ...options,
+    headers: {
+        'Content-Type': null,
+        ...options.headers
+    }
 });
 
 /**
