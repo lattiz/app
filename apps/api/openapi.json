@@ -1,6 +1,39 @@
 {
   "openapi": "3.0.0",
   "paths": {
+    "/admin/me": {
+      "get": {
+        "operationId": "AdminMeController_me",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminMeResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Current admin member",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/analytics/overview": {
       "get": {
         "operationId": "AnalyticsController_overview",
@@ -1735,6 +1768,34 @@
       }
     },
     "schemas": {
+      "AdminMeResponseDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "Supabase user id (`sub`) of the active admin member."
+          },
+          "email": {
+            "type": "string",
+            "nullable": true,
+            "description": "Email claim, or null when the token has none."
+          },
+          "role": {
+            "description": "Active role stored in admin.members.",
+            "enum": [
+              "owner",
+              "operator",
+              "viewer"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "userId",
+          "email",
+          "role"
+        ]
+      },
       "AnalyticsStatus": {
         "type": "string",
         "enum": [

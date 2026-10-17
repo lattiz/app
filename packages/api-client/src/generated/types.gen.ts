@@ -4,6 +4,21 @@ export type ClientOptions = {
     baseUrl: string;
 };
 
+export type AdminMeResponseDto = {
+    /**
+     * Supabase user id (`sub`) of the active admin member.
+     */
+    userId: string;
+    /**
+     * Email claim, or null when the token has none.
+     */
+    email: string | null;
+    /**
+     * Active role stored in admin.members.
+     */
+    role: 'owner' | 'operator' | 'viewer';
+};
+
 export type AnalyticsStatus = 'not_eligible' | 'unavailable' | 'provisioning' | 'failed' | 'ready';
 
 export type AnalyticsDailyPointDto = {
@@ -927,6 +942,30 @@ export type UpdateSiteSettingsDto = {
     description?: string;
     ogSiteName?: string;
 };
+
+export type AdminMeControllerMeData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/admin/me';
+};
+
+export type AdminMeControllerMeErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+};
+
+export type AdminMeControllerMeResponses = {
+    200: AdminMeResponseDto;
+};
+
+export type AdminMeControllerMeResponse = AdminMeControllerMeResponses[keyof AdminMeControllerMeResponses];
 
 export type AnalyticsControllerOverviewData = {
     body?: never;
