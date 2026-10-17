@@ -99,6 +99,7 @@ function serviceFor(fixture: TenantFixture, env: Record<string, string> = {}) {
     publicUrl: () => '',
     pathFromPublicUrl: () => null,
     usageBytes: async () => 0,
+    removePrefix: async () => ({ deletedObjects: 0, deletedBytes: 0 }),
   } as ObjectStoragePort;
 
   return {

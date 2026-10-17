@@ -51,6 +51,11 @@ export interface Ga4Gateway {
   runOverviewReport(propertyId: string): Promise<RawOverview>;
   /** Last 30 minutes (the Realtime API default window). Rejects only if the total fails. */
   runRealtimeReport(propertyId: string): Promise<RawRealtime>;
+  /**
+   * Soft-deletes the property. GA trashes it and purges it after 35 days.
+   * NOT_FOUND resolves `{ deleted: false }` so a second delete is a no-op.
+   */
+  deleteProperty(propertyId: string): Promise<{ deleted: boolean }>;
 }
 
 export const GA4_GATEWAY = Symbol('GA4_GATEWAY');
@@ -58,6 +63,10 @@ export const GA4_GATEWAY = Symbol('GA4_GATEWAY');
 const CURRENT_RANGE = { startDate: '27daysAgo', endDate: 'today' };
 const PREVIOUS_RANGE = { startDate: '55daysAgo', endDate: '28daysAgo' };
 const REALTIME_TIMEOUT_MS = 5000;
+const NOT_FOUND = 5;
+const PERMISSION_DENIED = 7;
+const EDITOR_ROLE_MESSAGE =
+  'La cuenta de servicio necesita rol de editor en la cuenta de GA4';
 
 /** Google Analytics Admin API (v1beta) + Data API (v1beta) with Lattiz's service account. */
 export class RealGa4Gateway implements Ga4Gateway {
@@ -201,7 +210,20 @@ export class RealGa4Gateway implements Ga4Gateway {
     };
   }
 
-  private adminClient(): adminV1beta.AnalyticsAdminServiceClient {
+  async deleteProperty(propertyId: string): Promise<{ deleted: boolean }> {
+    try {
+      await this.adminClient().deleteProperty({ name: `properties/${propertyId}` });
+    } catch (error) {
+      const code = grpcStatusCode(error);
+      if (code === NOT_FOUND) return { deleted: false };
+      if (code === PERMISSION_DENIED) throw new Error(EDITOR_ROLE_MESSAGE);
+      throw error;
+    }
+    return { deleted: true };
+  }
+
+  /** Overridable so tests can inject a fake admin client without touching Google. */
+  protected adminClient(): adminV1beta.AnalyticsAdminServiceClient {
     this.admin ??= new adminV1beta.AnalyticsAdminServiceClient({
       credentials: this.requireCredentials(),
     });
@@ -355,6 +377,13 @@ export class MockGa4Gateway implements Ga4Gateway {
     return Promise.resolve();
   }
 
+  deleteProperty(propertyId: string): Promise<{ deleted: boolean }> {
+    if (!/^mock-[A-Za-z0-9]+$/.test(propertyId)) {
+      return rejectInvalid('name', 'must be a mock property id');
+    }
+    return Promise.resolve({ deleted: true });
+  }
+
   runOverviewReport(propertyId: string): Promise<RawOverview> {
     const rand = seededRandom(propertyId);
     const base = 18 + Math.floor(rand() * 40);
@@ -430,6 +459,12 @@ export function addDays(isoDate: string, days: number): string {
   const d = new Date(`${isoDate}T00:00:00Z`);
   d.setUTCDate(d.getUTCDate() + days);
   return d.toISOString().slice(0, 10);
+}
+
+function grpcStatusCode(error: unknown): number | null {
+  if (typeof error !== 'object' || error === null) return null;
+  const code = (error as { code?: unknown }).code;
+  return typeof code === 'number' ? code : null;
 }
 
 /** Shaped like a google-gax error so the service classifies it identically. */

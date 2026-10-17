@@ -8,6 +8,7 @@ import {
   ObjectStorageException,
 } from '../domain/object-storage.exceptions';
 import {
+  assertRemovableTenantPrefix,
   assertSafePath,
   assertSafePrefix,
   encodePath,
@@ -16,6 +17,9 @@ import {
 
 /** Public bucket already used for template assets; tenant uploads live under their own prefix. */
 export const SUPABASE_ASSETS_BUCKET = 'template-assets';
+
+const LIST_PAGE = 1000;
+const REMOVE_BATCH = 1000;
 
 export interface SupabaseStorageConfig {
   url?: string;
@@ -31,7 +35,12 @@ export interface SupabaseStorageConfig {
 export class SupabaseStorageAdapter implements ObjectStoragePort {
   private client?: SupabaseClient;
 
-  constructor(private readonly config: SupabaseStorageConfig) {}
+  constructor(
+    private readonly config: SupabaseStorageConfig,
+    client?: SupabaseClient,
+  ) {
+    if (client) this.client = client;
+  }
 
   async uploadPublic(
     path: string,
@@ -86,6 +95,74 @@ export class SupabaseStorageAdapter implements ObjectStoragePort {
         }
       }
       if (entries.length < limit) return total;
+      offset += entries.length;
+    }
+  }
+
+  async removePrefix(
+    prefix: string,
+  ): Promise<{ deletedObjects: number; deletedBytes: number }> {
+    assertRemovableTenantPrefix(prefix);
+    const folder = prefix.slice(0, -1);
+    const files = await this.collectFiles(folder);
+    let deletedObjects = 0;
+    let deletedBytes = 0;
+    for (let i = 0; i < files.length; i += REMOVE_BATCH) {
+      const batch = files.slice(i, i + REMOVE_BATCH);
+      const { error } = await this.admin()
+        .storage.from(SUPABASE_ASSETS_BUCKET)
+        .remove(batch.map((file) => file.path));
+      if (error) throw toException('removePrefix', error);
+      deletedObjects += batch.length;
+      for (const file of batch) deletedBytes += file.bytes;
+    }
+    const leftover = await this.collectFiles(folder);
+    if (leftover.length > 0) {
+      throw new ObjectStorageException(
+        'removePrefix',
+        'rejected',
+        `Prefix "${prefix.slice(0, 80)}" still has objects after delete.`,
+      );
+    }
+    return { deletedObjects, deletedBytes };
+  }
+
+  /** `list` is one folder at a time; folders (`id === null`) are walked before the next page. */
+  private async collectFiles(
+    folder: string,
+    seen: Set<string> = new Set(),
+  ): Promise<{ path: string; bytes: number }[]> {
+    if (seen.has(folder)) {
+      throw new ObjectStorageException(
+        'removePrefix',
+        'rejected',
+        `Storage listing cycled at "${folder.slice(0, 80)}".`,
+      );
+    }
+    seen.add(folder);
+    const files: { path: string; bytes: number }[] = [];
+    let offset = 0;
+    for (;;) {
+      const { data, error } = await this.admin()
+        .storage.from(SUPABASE_ASSETS_BUCKET)
+        .list(folder, { limit: LIST_PAGE, offset });
+      if (error) throw toException('removePrefix', error);
+      const entries = data ?? [];
+      for (const entry of entries) {
+        if (!entry.name || entry.name === '.' || entry.name === '..') continue;
+        if (entry.id === null) {
+          const nested = await this.collectFiles(`${folder}/${entry.name}`, seen);
+          for (const file of nested) files.push(file);
+          continue;
+        }
+        const size = entry.metadata?.size;
+        files.push({
+          path: `${folder}/${entry.name}`,
+          bytes:
+            typeof size === 'number' && Number.isFinite(size) && size > 0 ? size : 0,
+        });
+      }
+      if (entries.length < LIST_PAGE) return files;
       offset += entries.length;
     }
   }
