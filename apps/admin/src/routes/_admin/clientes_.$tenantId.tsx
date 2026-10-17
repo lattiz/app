@@ -10,9 +10,8 @@ export const Route = createFileRoute('/_admin/clientes_/$tenantId')({
 function ClienteDetailRoute() {
   const { me } = Route.useRouteContext();
   const { tenantId } = Route.useParams();
-  const allowed = !!me && canAccess(me.role, '/clientes');
-  if (!allowed) {
+  if (!me || !canAccess(me.role, '/clientes')) {
     return <SectionPlaceholder title="Cliente" allowed={false} />;
   }
-  return <TenantDetailPage tenantId={tenantId} />;
+  return <TenantDetailPage tenantId={tenantId} role={me.role} />;
 }

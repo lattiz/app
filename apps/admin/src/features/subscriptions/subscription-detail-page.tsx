@@ -30,9 +30,16 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { isAdminNotFound } from '@/lib/admin-errors';
-import { formatCount, formatDate, formatDateTime, formatMoney } from '@/lib/format';
+import {
+  formatCount,
+  formatDate,
+  formatDateTime,
+  formatMoney,
+} from '@/lib/format';
+import type { AdminRole } from '@/lib/navigation';
 import { billingPeriodLabel, planBadge } from '@/features/tenants/labels';
 import { StatusBadgeView } from '@/features/tenants/status-badge';
+import { SubscriptionActions } from './subscription-actions';
 import {
   cancellationLabel,
   cardBrandLabel,
@@ -42,8 +49,16 @@ import {
   subscriptionBadge,
 } from './labels';
 
-export function SubscriptionDetailPage({ id }: { id: string }) {
-  const query = useQuery(adminSubscriptionsControllerGetOptions({ path: { id } }));
+export function SubscriptionDetailPage({
+  id,
+  role,
+}: {
+  id: string;
+  role: AdminRole;
+}) {
+  const query = useQuery(
+    adminSubscriptionsControllerGetOptions({ path: { id } }),
+  );
 
   if (query.isPending) {
     return (
@@ -60,7 +75,10 @@ export function SubscriptionDetailPage({ id }: { id: string }) {
       <div className="flex w-full min-w-0 flex-col gap-4">
         <BackLink />
         {isAdminNotFound(query.error) ? (
-          <PageHeader title="Suscripción" description="No encontramos esta suscripción." />
+          <PageHeader
+            title="Suscripción"
+            description="No encontramos esta suscripción."
+          />
         ) : (
           <QueryAlert
             error={query.error}
@@ -91,6 +109,7 @@ export function SubscriptionDetailPage({ id }: { id: string }) {
           <ExternalLink />
         </a>
       </div>
+      <SubscriptionActions id={id} role={role} local={local} />
 
       {detail.stripeError ? (
         <Alert>
@@ -108,7 +127,9 @@ export function SubscriptionDetailPage({ id }: { id: string }) {
         <Card className="min-w-0">
           <CardHeader>
             <CardTitle>En Lattiz</CardTitle>
-            <CardDescription>Lo que tenemos guardado de este cobro.</CardDescription>
+            <CardDescription>
+              Lo que tenemos guardado de este cobro.
+            </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <div className="flex flex-wrap gap-1">
@@ -120,9 +141,14 @@ export function SubscriptionDetailPage({ id }: { id: string }) {
                 { label: 'Periodo', value: billingPeriodLabel(local.period) },
                 {
                   label: 'Próximo cobro o vencimiento',
-                  value: local.currentPeriodEnd ? formatDate(local.currentPeriodEnd) : 'Sin fecha',
+                  value: local.currentPeriodEnd
+                    ? formatDate(local.currentPeriodEnd)
+                    : 'Sin fecha',
                 },
-                { label: 'Cancelación programada', value: cancellationLabel(local) },
+                {
+                  label: 'Cancelación programada',
+                  value: cancellationLabel(local),
+                },
                 {
                   label: 'Intentos de pago fallidos',
                   value: formatCount(local.paymentAttempts),
@@ -152,7 +178,9 @@ export function SubscriptionDetailPage({ id }: { id: string }) {
           <StripeCard stripe={null} />
         )}
       </div>
-      {detail.stripe ? <InvoicesTable invoices={detail.stripe.invoices} /> : null}
+      {detail.stripe ? (
+        <InvoicesTable invoices={detail.stripe.invoices} />
+      ) : null}
     </div>
   );
 }
@@ -163,7 +191,9 @@ function StripeCard({ stripe }: { stripe: AdminSubscriptionStripeDto | null }) {
       <Card className="min-w-0">
         <CardHeader>
           <CardTitle>En Stripe</CardTitle>
-          <CardDescription>No hay datos de Stripe para mostrar.</CardDescription>
+          <CardDescription>
+            No hay datos de Stripe para mostrar.
+          </CardDescription>
         </CardHeader>
       </Card>
     );
@@ -174,10 +204,10 @@ function StripeCard({ stripe }: { stripe: AdminSubscriptionStripeDto | null }) {
 
   return (
     <Card className="min-w-0">
-        <CardHeader>
-          <CardTitle>En Stripe</CardTitle>
-          <CardDescription>Precio, tarjeta y el siguiente cobro.</CardDescription>
-        </CardHeader>
+      <CardHeader>
+        <CardTitle>En Stripe</CardTitle>
+        <CardDescription>Precio, tarjeta y el siguiente cobro.</CardDescription>
+      </CardHeader>
       <CardContent className="flex flex-col gap-4">
         <StatusBadgeView badge={subscriptionBadge(stripe.status)} />
         <FactList
@@ -205,7 +235,11 @@ function StripeCard({ stripe }: { stripe: AdminSubscriptionStripeDto | null }) {
   );
 }
 
-function InvoicesTable({ invoices }: { invoices: AdminSubscriptionInvoiceDto[] }) {
+function InvoicesTable({
+  invoices,
+}: {
+  invoices: AdminSubscriptionInvoiceDto[];
+}) {
   return (
     <Card className="min-w-0">
       <CardHeader>
@@ -213,7 +247,9 @@ function InvoicesTable({ invoices }: { invoices: AdminSubscriptionInvoiceDto[] }
       </CardHeader>
       {invoices.length === 0 ? (
         <CardContent>
-          <p className="text-sm text-muted-foreground">Todavía no hay facturas.</p>
+          <p className="text-sm text-muted-foreground">
+            Todavía no hay facturas.
+          </p>
         </CardContent>
       ) : (
         <Table>
@@ -229,23 +265,33 @@ function InvoicesTable({ invoices }: { invoices: AdminSubscriptionInvoiceDto[] }
           </TableHeader>
           <TableBody>
             {invoices.map((invoice, index) => (
-              <TableRow key={`${invoice.number ?? 'sin-numero'}-${invoice.createdAt}-${index}`}>
+              <TableRow
+                key={`${invoice.number ?? 'sin-numero'}-${invoice.createdAt}-${index}`}
+              >
                 <TableCell>{invoice.number ?? 'Sin número'}</TableCell>
                 <TableCell>
                   <StatusBadgeView badge={invoiceBadge(invoice.status)} />
                 </TableCell>
-                <TableCell>{formatMoney(invoice.total, invoice.currency)}</TableCell>
+                <TableCell>
+                  {formatMoney(invoice.total, invoice.currency)}
+                </TableCell>
                 <TableCell>{formatDateTime(invoice.createdAt)}</TableCell>
-                <TableCell>{invoice.paidAt ? formatDate(invoice.paidAt) : 'No'}</TableCell>
+                <TableCell>
+                  {invoice.paidAt ? formatDate(invoice.paidAt) : 'No'}
+                </TableCell>
                 <TableCell>
                   <div className="flex gap-3">
                     {invoice.hostedInvoiceUrl ? (
-                      <ExternalAnchor href={invoice.hostedInvoiceUrl}>Ver</ExternalAnchor>
+                      <ExternalAnchor href={invoice.hostedInvoiceUrl}>
+                        Ver
+                      </ExternalAnchor>
                     ) : (
                       <span className="text-muted-foreground">Sin enlace</span>
                     )}
                     {invoice.invoicePdf ? (
-                      <ExternalAnchor href={invoice.invoicePdf}>PDF</ExternalAnchor>
+                      <ExternalAnchor href={invoice.invoicePdf}>
+                        PDF
+                      </ExternalAnchor>
                     ) : null}
                   </div>
                 </TableCell>
@@ -272,7 +318,10 @@ function scheduleText(stripe: AdminSubscriptionStripeDto): string {
 
 function BackLink() {
   return (
-    <Link to="/suscripciones" className="text-sm text-muted-foreground hover:text-foreground">
+    <Link
+      to="/suscripciones"
+      className="text-sm text-muted-foreground hover:text-foreground"
+    >
       Suscripciones
     </Link>
   );

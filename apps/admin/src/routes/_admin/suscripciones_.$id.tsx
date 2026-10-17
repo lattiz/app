@@ -10,9 +10,8 @@ export const Route = createFileRoute('/_admin/suscripciones_/$id')({
 function SuscripcionDetailRoute() {
   const { me } = Route.useRouteContext();
   const { id } = Route.useParams();
-  const allowed = !!me && canAccess(me.role, '/suscripciones');
-  if (!allowed) {
+  if (!me || !canAccess(me.role, '/suscripciones')) {
     return <SectionPlaceholder title="Suscripción" allowed={false} />;
   }
-  return <SubscriptionDetailPage id={id} />;
+  return <SubscriptionDetailPage id={id} role={me.role} />;
 }

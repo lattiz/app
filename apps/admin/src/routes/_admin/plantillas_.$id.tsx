@@ -10,9 +10,8 @@ export const Route = createFileRoute('/_admin/plantillas_/$id')({
 function PlantillaDetailRoute() {
   const { me } = Route.useRouteContext();
   const { id } = Route.useParams();
-  const allowed = !!me && canAccess(me.role, '/plantillas');
-  if (!allowed) {
+  if (!me || !canAccess(me.role, '/plantillas')) {
     return <SectionPlaceholder title="Plantilla" allowed={false} />;
   }
-  return <TemplateDetailPage id={id} />;
+  return <TemplateDetailPage id={id} role={me.role} />;
 }

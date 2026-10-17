@@ -29,9 +29,12 @@ import {
 } from '@/components/ui/table';
 import { isAdminNotFound } from '@/lib/admin-errors';
 import { formatCount, formatDate } from '@/lib/format';
+import type { AdminRole } from '@/lib/navigation';
 import { planBadge, publishedLabel } from '@/features/tenants/labels';
 import { StatusBadgeView } from '@/features/tenants/status-badge';
 import { templateStatusBadge, templateTierBadge } from './labels';
+import { TemplateControls } from './template-controls';
+import { TemplateKitCard } from './template-kit-card';
 import {
   PREVIEW_FRAME_HEIGHT,
   PREVIEW_WIDTH_LABEL,
@@ -40,7 +43,13 @@ import {
   type PreviewWidth,
 } from './preview-scale';
 
-export function TemplateDetailPage({ id }: { id: string }) {
+export function TemplateDetailPage({
+  id,
+  role,
+}: {
+  id: string;
+  role: AdminRole;
+}) {
   const query = useQuery(adminTemplatesControllerGetOptions({ path: { id } }));
 
   if (query.isPending) {
@@ -57,7 +66,10 @@ export function TemplateDetailPage({ id }: { id: string }) {
       <div className="flex w-full min-w-0 flex-col gap-4">
         <BackLink />
         {isAdminNotFound(query.error) ? (
-          <PageHeader title="Plantilla" description="No encontramos esta plantilla." />
+          <PageHeader
+            title="Plantilla"
+            description="No encontramos esta plantilla."
+          />
         ) : (
           <QueryAlert
             error={query.error}
@@ -76,19 +88,26 @@ export function TemplateDetailPage({ id }: { id: string }) {
       <PageCrumb label={detail.name} />
       <BackLink />
       <div className="flex min-w-0 flex-col gap-3">
-        <PageHeader title={detail.name} description={detail.description ?? undefined} />
+        <PageHeader
+          title={detail.name}
+          description={detail.description ?? undefined}
+        />
         <div className="flex flex-wrap gap-1">
           <StatusBadgeView badge={templateTierBadge(detail.tier)} />
           <StatusBadgeView badge={templateStatusBadge(detail.status)} />
+          {detail.featured ? (
+            <StatusBadgeView badge={{ label: 'Destacada', tone: 'info' }} />
+          ) : null}
         </div>
+        <TemplateControls detail={detail} role={role} />
       </div>
       <PreviewFrame name={detail.name} previewUrl={detail.previewUrl} />
       <Card className="min-w-0">
         <CardHeader>
           <CardTitle>Datos</CardTitle>
           <CardDescription>
-            Los clientes que ya usan esta plantilla tienen su propia copia; cambiarla no altera
-            sus sitios.
+            Los clientes que ya usan esta plantilla tienen su propia copia;
+            cambiarla no altera sus sitios.
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
@@ -101,6 +120,7 @@ export function TemplateDetailPage({ id }: { id: string }) {
           </dl>
         </CardContent>
       </Card>
+      <TemplateKitCard meta={detail.kitMeta} />
       <TenantsTable detail={detail} />
     </div>
   );
@@ -127,7 +147,11 @@ function PreviewFrame({
         </CardDescription>
       </CardHeader>
       <CardContent className="flex min-w-0 flex-col gap-3">
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Ancho de la vista previa">
+        <div
+          className="flex flex-wrap gap-2"
+          role="group"
+          aria-label="Ancho de la vista previa"
+        >
           {PREVIEW_WIDTHS.map((option) => (
             <Button
               key={option}
@@ -142,8 +166,14 @@ function PreviewFrame({
           ))}
         </div>
         {previewUrl ? (
-          <div ref={frameRef} className="relative w-full min-w-0 overflow-hidden rounded-2xl bg-muted">
-            <div className="relative w-full" style={{ height: PREVIEW_FRAME_HEIGHT * scale }}>
+          <div
+            ref={frameRef}
+            className="relative w-full min-w-0 overflow-hidden rounded-2xl bg-muted"
+          >
+            <div
+              className="relative w-full"
+              style={{ height: PREVIEW_FRAME_HEIGHT * scale }}
+            >
               <iframe
                 src={previewUrl}
                 title={`Vista previa de ${name}`}
@@ -159,7 +189,9 @@ function PreviewFrame({
             </div>
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground">Esta plantilla no tiene vista previa.</p>
+          <p className="text-sm text-muted-foreground">
+            Esta plantilla no tiene vista previa.
+          </p>
         )}
       </CardContent>
     </Card>
@@ -174,7 +206,9 @@ function TenantsTable({ detail }: { detail: AdminTemplateDetailDto }) {
       </CardHeader>
       {detail.tenants.length === 0 ? (
         <CardContent>
-          <p className="text-sm text-muted-foreground">Nadie está usando esta plantilla.</p>
+          <p className="text-sm text-muted-foreground">
+            Nadie está usando esta plantilla.
+          </p>
         </CardContent>
       ) : (
         <Table>
@@ -213,10 +247,20 @@ function TenantsTable({ detail }: { detail: AdminTemplateDetailDto }) {
   );
 }
 
-function metadata(detail: AdminTemplateDetailDto): { label: string; value: string }[] {
+function metadata(
+  detail: AdminTemplateDetailDto,
+): { label: string; value: string }[] {
   return [
     { label: 'Categoría', value: detail.category?.trim() || 'Sin categoría' },
+    {
+      label: 'Etiquetas',
+      value: detail.tags.length > 0 ? detail.tags.join(', ') : 'Sin etiquetas',
+    },
     { label: 'Secciones', value: formatCount(detail.sectionCount) },
+    {
+      label: 'Retirada',
+      value: detail.retiredAt ? formatDate(detail.retiredAt) : 'No',
+    },
     { label: 'Alta', value: formatDate(detail.createdAt) },
     {
       label: 'Archivadas',
@@ -236,7 +280,10 @@ function Count({ label, value }: { label: string; value: number }) {
 
 function BackLink() {
   return (
-    <Link to="/plantillas" className="text-sm text-muted-foreground hover:text-foreground">
+    <Link
+      to="/plantillas"
+      className="text-sm text-muted-foreground hover:text-foreground"
+    >
       Plantillas
     </Link>
   );

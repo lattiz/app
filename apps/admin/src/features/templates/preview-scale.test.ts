@@ -4,10 +4,23 @@ import { previewScale } from './preview-scale';
 
 describe('template badges', () => {
   it('names the tier and the catalog status', () => {
-    expect(templateTierBadge('basic')).toEqual({ label: 'Básico', tone: 'neutral' });
+    expect(templateTierBadge('basic')).toEqual({
+      label: 'Básico',
+      tone: 'neutral',
+    });
     expect(templateTierBadge('pro')).toEqual({ label: 'Pro', tone: 'info' });
-    expect(templateStatusBadge('active')).toEqual({ label: 'Activa', tone: 'good' });
-    expect(templateStatusBadge('pending')).toEqual({ label: 'Pendiente', tone: 'warn' });
+    expect(templateStatusBadge('active')).toEqual({
+      label: 'Activa',
+      tone: 'good',
+    });
+    expect(templateStatusBadge('pending')).toEqual({
+      label: 'Pendiente',
+      tone: 'warn',
+    });
+    expect(templateStatusBadge('retired')).toEqual({
+      label: 'Retirada',
+      tone: 'neutral',
+    });
   });
 });
 

@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { isAdminNotFound } from '@/lib/admin-errors';
+import type { AdminRole } from '@/lib/navigation';
 import {
   AnalyticsPanel,
   BillingPanel,
@@ -21,6 +22,8 @@ import {
 import { DomainPanel } from './domain-panel';
 import { planBadge, subscriptionBadge, tenantStatusBadge } from './labels';
 import { StatusBadgeView } from './status-badge';
+import { NotesPanel, TenantHeaderActions } from './tenant-actions';
+import { tenantActionSet } from './actions';
 
 const TABS = [
   { id: 'resumen', label: 'Resumen' },
@@ -29,14 +32,23 @@ const TABS = [
   { id: 'analiticas', label: 'Analíticas' },
   { id: 'almacenamiento', label: 'Almacenamiento' },
   { id: 'correos', label: 'Correos' },
+  { id: 'notas', label: 'Notas' },
   { id: 'historial', label: 'Historial de plantillas' },
 ] as const;
 
 type TabId = (typeof TABS)[number]['id'];
 
-export function TenantDetailPage({ tenantId }: { tenantId: string }) {
+export function TenantDetailPage({
+  tenantId,
+  role,
+}: {
+  tenantId: string;
+  role: AdminRole;
+}) {
   const [tab, setTab] = useState<TabId>('resumen');
-  const query = useQuery(adminTenantsControllerGetOptions({ path: { id: tenantId } }));
+  const query = useQuery(
+    adminTenantsControllerGetOptions({ path: { id: tenantId } }),
+  );
 
   if (query.isPending) {
     return (
@@ -53,7 +65,10 @@ export function TenantDetailPage({ tenantId }: { tenantId: string }) {
       <div className="flex w-full min-w-0 flex-col gap-4">
         <BackLink />
         {isAdminNotFound(query.error) ? (
-          <PageHeader title="Cliente" description="No encontramos este cliente." />
+          <PageHeader
+            title="Cliente"
+            description="No encontramos este cliente."
+          />
         ) : (
           <QueryAlert
             error={query.error}
@@ -68,9 +83,16 @@ export function TenantDetailPage({ tenantId }: { tenantId: string }) {
   const detail = query.data;
   const { overview, site } = detail;
   const publicHref = site.customDomainUrl ?? site.previewUrl;
+  const suspended = overview.status === 'inactive';
   const payment = overview.subscriptionId
     ? subscriptionBadge(overview.subscriptionStatus)
-    : tenantStatusBadge(overview.status);
+    : suspended
+      ? null
+      : tenantStatusBadge(overview.status);
+  const actions = tenantActionSet(role, overview.status);
+  const tabs = actions.notes
+    ? TABS
+    : TABS.filter((item) => item.id !== 'notas');
 
   return (
     <div className="flex w-full min-w-0 flex-col gap-6">
@@ -80,10 +102,20 @@ export function TenantDetailPage({ tenantId }: { tenantId: string }) {
         <PageHeader title={overview.name} description={overview.slug} />
         <div className="flex flex-wrap items-center gap-2">
           <StatusBadgeView badge={planBadge(overview.plan)} />
-          <StatusBadgeView badge={payment} />
-          {overview.isInternal ? <Badge variant="outline">Interno</Badge> : null}
+          {payment ? <StatusBadgeView badge={payment} /> : null}
+          {suspended ? (
+            <StatusBadgeView badge={{ label: 'Suspendido', tone: 'warn' }} />
+          ) : null}
+          {overview.isInternal ? (
+            <Badge variant="outline">Interno</Badge>
+          ) : null}
           <ExternalAnchor href={publicHref}>Ver sitio público</ExternalAnchor>
         </div>
+        <TenantHeaderActions
+          tenantId={tenantId}
+          role={role}
+          status={overview.status}
+        />
       </div>
       <Tabs
         value={tab}
@@ -93,7 +125,7 @@ export function TenantDetailPage({ tenantId }: { tenantId: string }) {
       >
         <div className="max-w-full overflow-x-auto">
           <TabsList className="w-max">
-            {TABS.map((item) => (
+            {tabs.map((item) => (
               <TabsTrigger key={item.id} value={item.id}>
                 {item.label}
               </TabsTrigger>
@@ -124,6 +156,9 @@ export function TenantDetailPage({ tenantId }: { tenantId: string }) {
         <TabsContent value="correos">
           <EmailsPanel emails={detail.emails} />
         </TabsContent>
+        <TabsContent value="notas">
+          <NotesPanel tenantId={tenantId} flags={detail.flags} />
+        </TabsContent>
         <TabsContent value="historial">
           <TemplateHistoryPanel history={detail.templateHistory} />
         </TabsContent>
@@ -134,7 +169,10 @@ export function TenantDetailPage({ tenantId }: { tenantId: string }) {
 
 function BackLink() {
   return (
-    <Link to="/clientes" className="text-sm text-muted-foreground hover:text-foreground">
+    <Link
+      to="/clientes"
+      className="text-sm text-muted-foreground hover:text-foreground"
+    >
       Clientes
     </Link>
   );

@@ -32,23 +32,38 @@ export function isAdminNotFound(error: unknown): boolean {
   return readErrorCode(error) === 'ADMIN_NOT_FOUND';
 }
 
-function readErrorCode(error: unknown): string | undefined {
-  if (!error || typeof error !== 'object') return undefined;
-  const record = error as { code?: unknown; error?: unknown };
+export type ApiErrorBody = {
+  code?: string;
+  message?: string;
+  details?: unknown;
+};
+
+/** Reads `{ error: { code, message, details } }` or a flat body that already has `code`. */
+export function readApiErrorBody(error: unknown): ApiErrorBody {
+  if (!error || typeof error !== 'object') return {};
+  const record = error as Record<string, unknown>;
   const nested = record.error;
-  if (nested && typeof nested === 'object') {
-    const nestedCode = (nested as { code?: unknown }).code;
-    if (typeof nestedCode === 'string') return nestedCode;
-  }
-  return typeof record.code === 'string' ? record.code : undefined;
+  if (nested && typeof nested === 'object')
+    return pickBody(nested as Record<string, unknown>);
+  if (typeof record.code === 'string') return pickBody(record);
+  return {};
+}
+
+function readErrorCode(error: unknown): string | undefined {
+  return readApiErrorBody(error).code;
 }
 
 function readErrorMessage(error: unknown): string | undefined {
-  if (!error || typeof error !== 'object') return undefined;
-  const nested = (error as { error?: unknown }).error;
-  if (!nested || typeof nested !== 'object') return undefined;
-  const message = (nested as { message?: unknown }).message;
-  if (typeof message !== 'string') return undefined;
-  const trimmed = message.trim();
-  return trimmed.length > 0 ? trimmed : undefined;
+  return readApiErrorBody(error).message;
+}
+
+function pickBody(record: Record<string, unknown>): ApiErrorBody {
+  const code = typeof record.code === 'string' ? record.code : undefined;
+  const rawMessage =
+    typeof record.message === 'string' ? record.message.trim() : '';
+  return {
+    code,
+    message: rawMessage.length > 0 ? rawMessage : undefined,
+    details: record.details,
+  };
 }
