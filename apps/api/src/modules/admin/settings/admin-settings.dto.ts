@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, type ApiPropertyOptions } from '@nestjs/swagger';
 import {
   Allow,
   IsDefined,
@@ -6,6 +6,23 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+
+export type SettingValue = number | boolean | string | (string | number)[];
+
+function settingValueProperty(nullable = false): ApiPropertyOptions {
+  return {
+    ...(nullable ? { nullable: true as const } : {}),
+    oneOf: [
+      { type: 'number' },
+      { type: 'boolean' },
+      { type: 'string' },
+      {
+        type: 'array',
+        items: { oneOf: [{ type: 'string' }, { type: 'number' }] },
+      },
+    ],
+  };
+}
 
 export class AdminSettingViewDto {
   @ApiProperty()
@@ -26,18 +43,18 @@ export class AdminSettingViewDto {
   @ApiProperty({ type: Number, nullable: true })
   max!: number | null;
 
-  @ApiProperty({ nullable: true })
-  default!: unknown;
+  @ApiProperty(settingValueProperty(true))
+  default!: SettingValue | null;
 
   /** Raw env string when the variable is set. Omitted for secret-like names. */
   @ApiProperty({ type: String, nullable: true })
   envValue!: string | null;
 
-  @ApiProperty({ nullable: true })
-  dbValue!: unknown;
+  @ApiProperty(settingValueProperty(true))
+  dbValue!: SettingValue | null;
 
-  @ApiProperty({ nullable: true })
-  effectiveValue!: unknown;
+  @ApiProperty(settingValueProperty(true))
+  effectiveValue!: SettingValue | null;
 
   @ApiProperty({ enum: ['db', 'env', 'default'] })
   source!: 'db' | 'env' | 'default';
@@ -59,10 +76,10 @@ export class AdminSettingsResponseDto {
 
 export class AdminUpdateSettingDto {
   /** JSON value. The registry parser checks the type and the range. */
-  @ApiProperty()
+  @ApiProperty(settingValueProperty())
   @Allow()
   @IsDefined()
-  value!: unknown;
+  value!: SettingValue;
 
   @ApiProperty({ minLength: 3, maxLength: 300 })
   @IsString()

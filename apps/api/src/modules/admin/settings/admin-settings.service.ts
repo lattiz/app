@@ -15,10 +15,11 @@ import {
   type SettingRow,
   type SettingView,
 } from './admin-settings.describe';
+import type { SettingValue } from './admin-settings.dto';
 
 interface SettingDbRow {
   key: string;
-  value: unknown;
+  value: SettingValue;
   updated_by: string | null;
   updated_at: string | Date | null;
 }

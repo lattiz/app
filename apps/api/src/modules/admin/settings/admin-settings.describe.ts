@@ -15,6 +15,7 @@ import {
   type SettingDefinition,
   type SettingKey,
 } from '../../../common/settings/settings.registry';
+import type { SettingValue } from './admin-settings.dto';
 
 const NO_CONTEXT: ResolveContext = { trialDays: 0 };
 const SECRET_PATTERN =
@@ -23,7 +24,7 @@ const SECRET_PATTERN =
 export type SettingSource = 'db' | 'env' | 'default';
 
 export interface SettingRow {
-  value: unknown;
+  value: SettingValue;
   updatedBy: string | null;
   updatedAt: string | null;
 }
@@ -34,10 +35,10 @@ export interface SettingView {
   type: SettingDefinition['type'];
   min: number | null;
   max: number | null;
-  default: unknown;
+  default: SettingValue | null;
   envValue: string | null;
-  dbValue: unknown;
-  effectiveValue: unknown;
+  dbValue: SettingValue | null;
+  effectiveValue: SettingValue | null;
   source: SettingSource;
   description: string | null;
   updatedAt: string | null;
@@ -45,7 +46,7 @@ export interface SettingView {
 }
 
 export type ParsedSetting =
-  | { ok: true; value: unknown }
+  | { ok: true; value: SettingValue }
   | { ok: false; message: string };
 
 export function isSettingKey(key: string): key is SettingKey {
@@ -173,7 +174,7 @@ export function trialContext(
   };
 }
 
-function registryDefault(def: SettingDefinition): unknown {
+function registryDefault(def: SettingDefinition): SettingValue | null {
   if (def.type === 'int' && def.required) return null;
   if (def.type === 'string-list' || def.type === 'int-list') {
     return [...def.default];
@@ -181,7 +182,10 @@ function registryDefault(def: SettingDefinition): unknown {
   return def.default;
 }
 
-function fallbackValue(def: SettingDefinition, ctx: ResolveContext): unknown {
+function fallbackValue(
+  def: SettingDefinition,
+  ctx: ResolveContext,
+): SettingValue | null {
   if (def.type === 'int' && def.deriveFromTrial && 'default' in def) {
     return derivedWarningDay(ctx.trialDays, def.default);
   }
@@ -192,7 +196,7 @@ function acceptDb(
   def: SettingDefinition,
   value: unknown,
   ctx: ResolveContext,
-): unknown {
+): SettingValue | undefined {
   const parsed = parseSettingValue(def, value, ctx);
   return parsed.ok ? parsed.value : undefined;
 }
@@ -201,7 +205,7 @@ function acceptEnv(
   def: SettingDefinition,
   raw: string | undefined,
   ctx: ResolveContext,
-): unknown {
+): SettingValue | undefined {
   if (raw === undefined || raw.trim() === '') return undefined;
   try {
     if (def.type === 'bool') {
@@ -224,7 +228,7 @@ function acceptEnv(
 function acceptedIntList(
   def: IntListSetting,
   raw: string,
-): readonly number[] | undefined {
+): number[] | undefined {
   const trimmed = raw.trim();
   const values: number[] = [];
   if (trimmed !== '') {

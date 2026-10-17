@@ -4126,8 +4126,31 @@
             "nullable": true
           },
           "default": {
-            "type": "object",
-            "nullable": true
+            "nullable": true,
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                }
+              }
+            ]
           },
           "envValue": {
             "type": "string",
@@ -4135,12 +4158,58 @@
             "description": "Raw env string when the variable is set. Omitted for secret-like names."
           },
           "dbValue": {
-            "type": "object",
-            "nullable": true
+            "nullable": true,
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                }
+              }
+            ]
           },
           "effectiveValue": {
-            "type": "object",
-            "nullable": true
+            "nullable": true,
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                }
+              }
+            ]
           },
           "source": {
             "enum": [
@@ -4197,8 +4266,31 @@
         "type": "object",
         "properties": {
           "value": {
-            "type": "object",
-            "description": "JSON value. The registry parser checks the type and the range."
+            "description": "JSON value. The registry parser checks the type and the range.",
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                }
+              }
+            ]
           },
           "reason": {
             "type": "string",

@@ -1,4 +1,5 @@
 import { SETTINGS } from '../../../common/settings/settings.registry';
+import type { SettingValue } from './admin-settings.dto';
 import {
   describeSetting,
   describeSettings,
@@ -9,7 +10,7 @@ import {
 
 const TRIAL = SETTINGS['preview.trial_days'];
 
-function row(value: unknown): SettingRow {
+function row(value: SettingValue): SettingRow {
   return {
     value,
     updatedBy: 'ana@lattiz.test',
