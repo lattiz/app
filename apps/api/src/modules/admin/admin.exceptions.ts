@@ -130,6 +130,36 @@ export class TemplateOrderInvalidException extends DomainException {
   }
 }
 
+/** La clave no está en el registro de configuración. */
+export class SettingUnknownException extends DomainException {
+  readonly code = 'SETTING_UNKNOWN';
+  readonly status = HttpStatus.NOT_FOUND;
+
+  constructor(key: string) {
+    super(`No existe la clave de configuración ${key}.`);
+  }
+}
+
+/** El valor no pasa el tipo o el rango del registro. */
+export class SettingValueInvalidException extends DomainException {
+  readonly code = 'SETTING_VALUE_INVALID';
+  readonly status = HttpStatus.BAD_REQUEST;
+
+  constructor(message: string) {
+    super(message);
+  }
+}
+
+/** Alta, rol o revocación que dejaría el equipo en un estado inválido. */
+export class AdminMemberConflictException extends DomainException {
+  readonly code = 'ADMIN_MEMBER_CONFLICT';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor(message: string) {
+    super(message);
+  }
+}
+
 /** confirmId no es el id de la ruta. */
 export class TemplateDeleteConfirmException extends DomainException {
   readonly code = 'TEMPLATE_DELETE_CONFIRM';

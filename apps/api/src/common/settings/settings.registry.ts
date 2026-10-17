@@ -7,6 +7,7 @@ export interface BoolSetting {
   readonly type: 'bool';
   readonly envVar: string;
   readonly default: boolean;
+  readonly description?: string;
   readonly validate: (value: boolean, ctx: ResolveContext) => boolean;
 }
 
@@ -15,6 +16,9 @@ interface IntSettingBase {
   readonly type: 'int';
   readonly envVar: string;
   readonly expectation: string;
+  readonly description?: string;
+  readonly min?: number;
+  readonly max?: number;
   readonly validate: (value: number, ctx: ResolveContext) => boolean;
   /** Unset env uses min(default, trialDays - 1), or 0 when the trial is one day. */
   readonly deriveFromTrial?: boolean;
@@ -38,6 +42,7 @@ export interface StringListSetting {
   readonly envVar: string;
   readonly default: readonly string[];
   readonly kind: 'mime' | 'zone';
+  readonly description?: string;
   readonly validate: (value: readonly string[], ctx: ResolveContext) => boolean;
 }
 
@@ -46,6 +51,7 @@ export interface IntListSetting {
   readonly type: 'int-list';
   readonly envVar: string;
   readonly default: readonly number[];
+  readonly description?: string;
   readonly validate: (value: readonly number[], ctx: ResolveContext) => boolean;
 }
 
@@ -54,6 +60,7 @@ export interface StringSetting {
   readonly type: 'string';
   readonly envVar: string;
   readonly default: string;
+  readonly description?: string;
   readonly validate: (value: string, ctx: ResolveContext) => boolean;
 }
 
@@ -84,6 +91,7 @@ function boolSetting(
     key: def.key,
     envVar: def.envVar,
     default: def.default,
+    description: def.description,
   };
 }
 
@@ -140,19 +148,26 @@ export const SETTINGS = {
     key: 'preview.enabled',
     envVar: 'PREVIEW_ENABLED',
     default: true,
+    description: 'Activa la ventana de prueba gratuita en el sitio público.',
   }),
   'preview.trial_days': intSetting({
     key: 'preview.trial_days',
     envVar: 'PREVIEW_TRIAL_DAYS',
     default: 14,
+    min: 1,
+    max: 365,
     expectation: 'from 1 to 365',
+    description:
+      'Días de la prueba gratuita cuando la llamada no indica otro valor.',
     validate: (value) => value >= 1 && value <= 365,
   }),
   'preview.warning_day': intSetting({
     key: 'preview.warning_day',
     envVar: 'PREVIEW_WARNING_DAY',
     default: 10,
+    min: 1,
     expectation: 'at least 1 and less than the trial length',
+    description: 'Día de la prueba en el que se avisa que está por terminar.',
     deriveFromTrial: true,
     validate: (value, ctx) => value >= 1 && value < ctx.trialDays,
   }),
@@ -160,57 +175,74 @@ export const SETTINGS = {
     key: 'preview.max_asset_bytes',
     envVar: 'PREVIEW_MAX_ASSET_BYTES',
     default: 26_214_400,
+    min: 0,
     expectation: '0 or greater (0 disables the unpaid cap)',
+    description:
+      'Tamaño máximo, en bytes, de un archivo subido durante la prueba.',
     validate: (value) => value >= 0,
   }),
   'preview.sanitize_enabled': boolSetting({
     key: 'preview.sanitize_enabled',
     envVar: 'PREVIEW_SANITIZE_ENABLED',
     default: true,
+    description: 'Sanitiza el HTML publicado durante la prueba.',
   }),
   'preview.require_verified_email': boolSetting({
     key: 'preview.require_verified_email',
     envVar: 'PREVIEW_REQUIRE_VERIFIED_EMAIL',
     default: true,
+    description: 'Exige un correo verificado para publicar durante la prueba.',
   }),
   'preview.allowed_asset_mime': stringListSetting({
     key: 'preview.allowed_asset_mime',
     envVar: 'PREVIEW_ALLOWED_ASSET_MIME',
     default: DEFAULT_MIME,
     kind: 'mime',
+    description: 'Tipos MIME permitidos para los archivos de la prueba.',
     validate: (value) => value.every((mime) => MIME_PATTERN.test(mime)),
   }),
   'preview.publish_rate_limit_per_min': intSetting({
     key: 'preview.publish_rate_limit_per_min',
     envVar: 'PREVIEW_PUBLISH_RATE_LIMIT_PER_MIN',
     default: 6,
+    min: 0,
     expectation: '0 or greater (0 disables the extra limit)',
+    description: 'Publicaciones permitidas por minuto durante la prueba.',
     validate: (value) => value >= 0,
   }),
   'preview.asset_rate_limit_per_min': intSetting({
     key: 'preview.asset_rate_limit_per_min',
     envVar: 'PREVIEW_ASSET_RATE_LIMIT_PER_MIN',
     default: 20,
+    min: 0,
     expectation: '0 or greater (0 disables the extra limit)',
+    description: 'Subidas de archivos permitidas por minuto durante la prueba.',
     validate: (value) => value >= 0,
   }),
   'preview.notify_enabled': boolSetting({
     key: 'preview.notify_enabled',
     envVar: 'PREVIEW_NOTIFY_ENABLED',
     default: true,
+    description: 'Envía avisos de que la prueba está por terminar.',
   }),
   'preview.notify_interval_minutes': intSetting({
     key: 'preview.notify_interval_minutes',
     envVar: 'PREVIEW_NOTIFY_INTERVAL_MINUTES',
     default: 60,
+    min: 1,
     expectation: 'at least 1',
+    description:
+      'Minutos de espera entre cada lote de avisos de fin de prueba.',
     validate: (value) => value >= 1,
   }),
   'preview.notify_batch': intSetting({
     key: 'preview.notify_batch',
     envVar: 'PREVIEW_NOTIFY_BATCH',
     default: 50,
+    min: 1,
     expectation: 'at least 1',
+    description:
+      'Cantidad de avisos de fin de prueba que se envían en cada lote.',
     validate: (value) => value >= 1,
   }),
   'email.sending_enabled': boolSetting({
@@ -222,6 +254,7 @@ export const SETTINGS = {
     key: 'email.max_per_run',
     envVar: 'EMAIL_MAX_PER_RUN',
     default: 20,
+    min: 1,
     expectation: 'at least 1',
     validate: (value) => value >= 1,
   }),
@@ -234,6 +267,7 @@ export const SETTINGS = {
     key: 'dns.reconcile.grace_minutes',
     envVar: 'DNS_RECONCILE_GRACE_MINUTES',
     default: 120,
+    min: 1,
     expectation: 'at least 1',
     validate: (value) => value >= 1,
   }),
@@ -241,6 +275,7 @@ export const SETTINGS = {
     key: 'dns.reconcile.max_deletes',
     envVar: 'DNS_RECONCILE_MAX_DELETES',
     default: 5,
+    min: 1,
     expectation: 'at least 1',
     validate: (value) => value >= 1,
   }),
@@ -256,6 +291,7 @@ export const SETTINGS = {
     key: 'domain.max_cost_usd_cents',
     envVar: 'DOMAIN_MAX_COST_USD_CENTS',
     required: true,
+    min: 1,
     expectation: 'a positive integer (USD cents)',
     validate: (value) => value >= 1,
   }),
@@ -263,6 +299,7 @@ export const SETTINGS = {
     key: 'domain.basic_renewal_max_cost_usd_cents',
     envVar: 'BASIC_DOMAIN_MAX_COST_USD_CENTS',
     required: true,
+    min: 1,
     expectation: 'a positive integer (USD cents)',
     validate: (value) => value >= 1,
   }),
@@ -270,6 +307,7 @@ export const SETTINGS = {
     key: 'domain.pro_renewal_max_cost_usd_cents',
     envVar: 'PRO_DOMAIN_MAX_COST_USD_CENTS',
     required: true,
+    min: 1,
     expectation: 'a positive integer (USD cents)',
     validate: (value) => value >= 1,
   }),
@@ -288,6 +326,7 @@ export const SETTINGS = {
     key: 'domain.renewal.fee_basic_mxn_cents',
     envVar: 'DOMAIN_RENEWAL_FEE_BASIC_MXN_CENTS',
     default: 59900,
+    min: 1,
     expectation: 'at least 1 (MXN cents)',
     validate: (value) => value >= 1,
   }),
@@ -295,6 +334,7 @@ export const SETTINGS = {
     key: 'domain.renewal.fee_pro_mxn_cents',
     envVar: 'DOMAIN_RENEWAL_FEE_PRO_MXN_CENTS',
     default: 59900,
+    min: 1,
     expectation: 'at least 1 (MXN cents)',
     validate: (value) => value >= 1,
   }),
@@ -302,6 +342,8 @@ export const SETTINGS = {
     key: 'domain.renewal.tax_rate_bps',
     envVar: 'DOMAIN_RENEWAL_TAX_RATE_BPS',
     default: 1600,
+    min: 0,
+    max: 10_000,
     expectation: 'from 0 to 10000 basis points',
     validate: (value) => value >= 0 && value <= 10_000,
   }),
@@ -309,6 +351,8 @@ export const SETTINGS = {
     key: 'domain.renewal.open_days_before',
     envVar: 'DOMAIN_RENEWAL_OPEN_DAYS_BEFORE',
     default: 28,
+    min: 1,
+    max: 28,
     expectation:
       'from 1 to 28 (Openprovider renews only inside the previous 4 weeks)',
     validate: (value) => value >= 1 && value <= 28,
@@ -323,6 +367,8 @@ export const SETTINGS = {
     key: 'domain.renewal.late_days',
     envVar: 'DOMAIN_RENEWAL_LATE_DAYS',
     default: 15,
+    min: 0,
+    max: 30,
     expectation: 'from 0 to 30',
     validate: (value) => value >= 0 && value <= 30,
   }),
@@ -336,6 +382,8 @@ export const SETTINGS = {
     key: 'domain.renewal.max_registrar_attempts',
     envVar: 'DOMAIN_RENEWAL_MAX_REGISTRAR_ATTEMPTS',
     default: 5,
+    min: 1,
+    max: 20,
     expectation: 'from 1 to 20',
     validate: (value) => value >= 1 && value <= 20,
   }),
@@ -343,6 +391,8 @@ export const SETTINGS = {
     key: 'domain.renewal.balance_alert_days',
     envVar: 'DOMAIN_RENEWAL_BALANCE_ALERT_DAYS',
     default: 30,
+    min: 1,
+    max: 90,
     expectation: 'from 1 to 90',
     validate: (value) => value >= 1 && value <= 90,
   }),

@@ -5,7 +5,9 @@ import { DatabaseModule } from '../../database/database.module';
 import { BillingCoreModule } from '../billing/billing-core.module';
 import { DomainsModule } from '../domains/domains.module';
 import { StorageModule } from '../storage/storage.module';
+import { AdminAuditController } from './audit/admin-audit.controller';
 import { AdminAuditInterceptor } from './audit/admin-audit.interceptor';
+import { AdminAuditLogService } from './audit/admin-audit-log.service';
 import { AdminAuditService } from './audit/admin-audit.service';
 import { AdminGuard } from './auth/admin.guard';
 import { AdminMembersService } from './auth/admin-members.service';
@@ -13,7 +15,11 @@ import { AdminSubscriptionsController } from './billing/admin-subscriptions.cont
 import { AdminSubscriptionsService } from './billing/admin-subscriptions.service';
 import { AdminDomainController } from './domains/admin-domain.controller';
 import { AdminDomainService } from './domains/admin-domain.service';
+import { AdminMembersController } from './members/admin-members.controller';
+import { AdminMembershipService } from './members/admin-membership.service';
 import { AdminMeController } from './me/admin-me.controller';
+import { AdminSettingsController } from './settings/admin-settings.controller';
+import { AdminSettingsService } from './settings/admin-settings.service';
 import { AdminMetricsController } from './metrics/admin-metrics.controller';
 import { AdminMetricsService } from './metrics/admin-metrics.service';
 import { KpiSnapshotCron } from './metrics/kpi-snapshot.cron';
@@ -37,6 +43,9 @@ import { AdminTrialsService } from './trials/admin-trials.service';
   ],
   controllers: [
     AdminMeController,
+    AdminSettingsController,
+    AdminMembersController,
+    AdminAuditController,
     AdminTenantsController,
     AdminDomainController,
     AdminSubscriptionsController,
@@ -46,6 +55,9 @@ import { AdminTrialsService } from './trials/admin-trials.service';
   ],
   providers: [
     AdminMembersService,
+    AdminMembershipService,
+    AdminSettingsService,
+    AdminAuditLogService,
     AdminGuard,
     AdminAuditService,
     AdminAuditInterceptor,

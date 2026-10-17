@@ -8,6 +8,10 @@ import path from 'node:path';
 import { createInterface } from 'node:readline/promises';
 import { parseEnv } from 'node:util';
 import postgres, { type Sql, type TransactionSql } from 'postgres';
+import {
+  findAuthUsersByEmail,
+  type AuthUserRow,
+} from '../src/modules/admin/auth/auth-user-lookup';
 
 export const LOCAL_DATABASE_URL =
   'postgresql://postgres:postgres@127.0.0.1:54322/postgres';
@@ -330,27 +334,25 @@ function formatTimestamp(value: Date | string): string {
   return date.toISOString();
 }
 
-interface UserRow {
-  id: string;
-  email: string;
-}
-
 async function findUsers(
   sql: TransactionSql,
   email: string,
-): Promise<UserRow[]> {
-  return sql<UserRow[]>`
-    SELECT id::text AS id, email
-    FROM auth.users
-    WHERE email IS NOT NULL AND lower(email) = lower(${email})
-  `;
+): Promise<AuthUserRow[]> {
+  return findAuthUsersByEmail(
+    (strings, ...values) =>
+      sql<AuthUserRow[]>(
+        strings,
+        ...(values as [string]),
+      ) as unknown as Promise<AuthUserRow[]>,
+    email,
+  );
 }
 
 async function requireUser(
   sql: TransactionSql,
   email: string,
   label: string,
-): Promise<UserRow> {
+): Promise<AuthUserRow> {
   const users = await findUsers(sql, email);
   if (users.length === 0) {
     throw new OperationError(
