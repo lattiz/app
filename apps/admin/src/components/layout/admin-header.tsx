@@ -23,6 +23,7 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Spinner } from '@/components/ui/spinner';
+import { usePageCrumb } from '@/components/layout/page-crumb';
 import { ROLE_LABEL, sectionForPath } from '@/lib/navigation';
 import { signOutAdmin } from '@/lib/sign-out';
 
@@ -34,6 +35,7 @@ export function AdminHeader() {
   const section = sectionForPath(pathname);
   const isHome = section?.to === '/';
   const currentLabel = section?.label ?? 'Panel';
+  const crumb = usePageCrumb();
 
   return (
     <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4">
@@ -55,8 +57,22 @@ export function AdminHeader() {
             <>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>{currentLabel}</BreadcrumbPage>
+                {crumb && section ? (
+                  <BreadcrumbLink render={<Link to={section.to} />}>
+                    {section.label}
+                  </BreadcrumbLink>
+                ) : (
+                  <BreadcrumbPage>{currentLabel}</BreadcrumbPage>
+                )}
               </BreadcrumbItem>
+              {crumb ? (
+                <>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>{crumb}</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </>
+              ) : null}
             </>
           )}
         </BreadcrumbList>

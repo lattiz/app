@@ -20,6 +20,8 @@ import { Route as AdminEquipoRouteImport } from './routes/_admin/equipo'
 import { Route as AdminConfiguracionRouteImport } from './routes/_admin/configuracion'
 import { Route as AdminClientesRouteImport } from './routes/_admin/clientes'
 import { Route as AdminAuditoriaRouteImport } from './routes/_admin/auditoria'
+import { Route as AdminSuscripcionesIdRouteImport } from './routes/_admin/suscripciones_.$id'
+import { Route as AdminPlantillasIdRouteImport } from './routes/_admin/plantillas_.$id'
 import { Route as AdminClientesTenantIdRouteImport } from './routes/_admin/clientes_.$tenantId'
 
 const MfaRoute = MfaRouteImport.update({
@@ -76,6 +78,16 @@ const AdminAuditoriaRoute = AdminAuditoriaRouteImport.update({
   path: '/auditoria',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminSuscripcionesIdRoute = AdminSuscripcionesIdRouteImport.update({
+  id: '/suscripciones_/$id',
+  path: '/suscripciones/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPlantillasIdRoute = AdminPlantillasIdRouteImport.update({
+  id: '/plantillas_/$id',
+  path: '/plantillas/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminClientesTenantIdRoute = AdminClientesTenantIdRouteImport.update({
   id: '/clientes_/$tenantId',
   path: '/clientes/$tenantId',
@@ -94,6 +106,8 @@ export interface FileRoutesByFullPath {
   '/pruebas': typeof AdminPruebasRoute
   '/suscripciones': typeof AdminSuscripcionesRoute
   '/clientes/$tenantId': typeof AdminClientesTenantIdRoute
+  '/plantillas/$id': typeof AdminPlantillasIdRoute
+  '/suscripciones/$id': typeof AdminSuscripcionesIdRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
@@ -107,6 +121,8 @@ export interface FileRoutesByTo {
   '/suscripciones': typeof AdminSuscripcionesRoute
   '/': typeof AdminIndexRoute
   '/clientes/$tenantId': typeof AdminClientesTenantIdRoute
+  '/plantillas/$id': typeof AdminPlantillasIdRoute
+  '/suscripciones/$id': typeof AdminSuscripcionesIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -122,6 +138,8 @@ export interface FileRoutesById {
   '/_admin/suscripciones': typeof AdminSuscripcionesRoute
   '/_admin/': typeof AdminIndexRoute
   '/_admin/clientes_/$tenantId': typeof AdminClientesTenantIdRoute
+  '/_admin/plantillas_/$id': typeof AdminPlantillasIdRoute
+  '/_admin/suscripciones_/$id': typeof AdminSuscripcionesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -137,6 +155,8 @@ export interface FileRouteTypes {
     | '/pruebas'
     | '/suscripciones'
     | '/clientes/$tenantId'
+    | '/plantillas/$id'
+    | '/suscripciones/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -150,6 +170,8 @@ export interface FileRouteTypes {
     | '/suscripciones'
     | '/'
     | '/clientes/$tenantId'
+    | '/plantillas/$id'
+    | '/suscripciones/$id'
   id:
     | '__root__'
     | '/_admin'
@@ -164,6 +186,8 @@ export interface FileRouteTypes {
     | '/_admin/suscripciones'
     | '/_admin/'
     | '/_admin/clientes_/$tenantId'
+    | '/_admin/plantillas_/$id'
+    | '/_admin/suscripciones_/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -251,6 +275,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAuditoriaRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/_admin/suscripciones_/$id': {
+      id: '/_admin/suscripciones_/$id'
+      path: '/suscripciones/$id'
+      fullPath: '/suscripciones/$id'
+      preLoaderRoute: typeof AdminSuscripcionesIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/plantillas_/$id': {
+      id: '/_admin/plantillas_/$id'
+      path: '/plantillas/$id'
+      fullPath: '/plantillas/$id'
+      preLoaderRoute: typeof AdminPlantillasIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/_admin/clientes_/$tenantId': {
       id: '/_admin/clientes_/$tenantId'
       path: '/clientes/$tenantId'
@@ -271,6 +309,8 @@ interface AdminRouteChildren {
   AdminSuscripcionesRoute: typeof AdminSuscripcionesRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminClientesTenantIdRoute: typeof AdminClientesTenantIdRoute
+  AdminPlantillasIdRoute: typeof AdminPlantillasIdRoute
+  AdminSuscripcionesIdRoute: typeof AdminSuscripcionesIdRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
@@ -283,6 +323,8 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminSuscripcionesRoute: AdminSuscripcionesRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminClientesTenantIdRoute: AdminClientesTenantIdRoute,
+  AdminPlantillasIdRoute: AdminPlantillasIdRoute,
+  AdminSuscripcionesIdRoute: AdminSuscripcionesIdRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)

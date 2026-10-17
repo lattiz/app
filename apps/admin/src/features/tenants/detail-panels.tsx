@@ -10,9 +10,10 @@ import {
   type AdminTenantSubscriptionDto,
 } from '@lattiz/api-client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import type { ReactNode } from 'react';
+import { Link } from '@tanstack/react-router';
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 import { toast } from 'sonner';
+import { ExternalAnchor, textLinkClass } from '@/components/external-anchor';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -92,9 +93,13 @@ export function SummaryPanel({ detail }: { detail: AdminTenantDetailDto }) {
           <p>
             Plantilla:{' '}
             {site.template ? (
-              <SectionLink href={`/plantillas/${site.template.id}`}>
+              <Link
+                to="/plantillas/$id"
+                params={{ id: site.template.id }}
+                className={textLinkClass}
+              >
                 {site.template.name ?? 'Sin nombre'}
-              </SectionLink>
+              </Link>
             ) : (
               'Sin plantilla'
             )}
@@ -112,14 +117,7 @@ export function SummaryPanel({ detail }: { detail: AdminTenantDetailDto }) {
               },
             ]}
           />
-          <a
-            href={publicHref}
-            target="_blank"
-            rel="noreferrer"
-            className="text-sm underline-offset-4 hover:underline"
-          >
-            Ver sitio público
-          </a>
+          <ExternalAnchor href={publicHref}>Ver sitio público</ExternalAnchor>
         </CardContent>
       </Card>
       <Card>
@@ -152,9 +150,13 @@ export function SummaryPanel({ detail }: { detail: AdminTenantDetailDto }) {
                   },
                 ]}
               />
-              <SectionLink href={`/suscripciones/${overview.subscriptionId}`}>
+              <Link
+                to="/suscripciones/$id"
+                params={{ id: overview.subscriptionId }}
+                className={textLinkClass}
+              >
                 Ver el cobro
-              </SectionLink>
+              </Link>
             </div>
           ) : (
             <p className="text-muted-foreground">Este cliente no tiene una suscripción.</p>
@@ -209,9 +211,13 @@ export function BillingPanel({ subscriptions }: { subscriptions: AdminTenantSubs
           {subscriptions.map((item) => (
             <TableRow key={item.id}>
               <TableCell>
-                <SectionLink href={`/suscripciones/${item.id}`}>
+                <Link
+                  to="/suscripciones/$id"
+                  params={{ id: item.id }}
+                  className={textLinkClass}
+                >
                   {planBadge(item.plan).label}
-                </SectionLink>
+                </Link>
               </TableCell>
               <TableCell>
                 <StatusBadgeView badge={subscriptionBadge(item.status)} />
@@ -460,9 +466,13 @@ export function TemplateHistoryPanel({ history }: { history: AdminTemplateArchiv
             <li key={`${item.archivedAt}-${index}`} className="min-w-0">
               <p className="text-sm font-medium">
                 {item.templateId ? (
-                  <SectionLink href={`/plantillas/${item.templateId}`}>
+                  <Link
+                    to="/plantillas/$id"
+                    params={{ id: item.templateId }}
+                    className={textLinkClass}
+                  >
                     {item.templateId}
-                  </SectionLink>
+                  </Link>
                 ) : (
                   'Plantilla quitada'
                 )}
@@ -513,13 +523,5 @@ function FactList({ items }: { items: { label: string; value: string }[] }) {
         </div>
       ))}
     </dl>
-  );
-}
-
-function SectionLink({ href, children }: { href: string; children: ReactNode }) {
-  return (
-    <a href={href} className="font-medium underline-offset-4 hover:underline">
-      {children}
-    </a>
   );
 }

@@ -2,11 +2,14 @@ import { adminTenantsControllerGetOptions } from '@lattiz/api-client';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 import { useState } from 'react';
+import { ExternalAnchor } from '@/components/external-anchor';
+import { PageCrumb } from '@/components/layout/page-crumb';
 import { PageHeader } from '@/components/layout/page-header';
 import { QueryAlert } from '@/components/query-alert';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { isAdminNotFound } from '@/lib/admin-errors';
 import {
   AnalyticsPanel,
   BillingPanel,
@@ -49,7 +52,7 @@ export function TenantDetailPage({ tenantId }: { tenantId: string }) {
     return (
       <div className="flex w-full min-w-0 flex-col gap-4">
         <BackLink />
-        {isNotFound(query.error) ? (
+        {isAdminNotFound(query.error) ? (
           <PageHeader title="Cliente" description="No encontramos este cliente." />
         ) : (
           <QueryAlert
@@ -71,6 +74,7 @@ export function TenantDetailPage({ tenantId }: { tenantId: string }) {
 
   return (
     <div className="flex w-full min-w-0 flex-col gap-6">
+      <PageCrumb label={overview.name} />
       <BackLink />
       <div className="flex min-w-0 flex-col gap-3">
         <PageHeader title={overview.name} description={overview.slug} />
@@ -78,14 +82,7 @@ export function TenantDetailPage({ tenantId }: { tenantId: string }) {
           <StatusBadgeView badge={planBadge(overview.plan)} />
           <StatusBadgeView badge={payment} />
           {overview.isInternal ? <Badge variant="outline">Interno</Badge> : null}
-          <a
-            href={publicHref}
-            target="_blank"
-            rel="noreferrer"
-            className="text-sm underline-offset-4 hover:underline"
-          >
-            Ver sitio público
-          </a>
+          <ExternalAnchor href={publicHref}>Ver sitio público</ExternalAnchor>
         </div>
       </div>
       <Tabs
@@ -141,11 +138,4 @@ function BackLink() {
 
 function isTab(value: string | number | null | undefined): value is TabId {
   return TABS.some((item) => item.id === value);
-}
-
-function isNotFound(error: unknown): boolean {
-  if (!error || typeof error !== 'object') return false;
-  const nested = (error as { error?: unknown }).error;
-  if (!nested || typeof nested !== 'object') return false;
-  return (nested as { code?: unknown }).code === 'ADMIN_NOT_FOUND';
 }

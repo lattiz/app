@@ -28,6 +28,10 @@ export function readApiErrorMessage(error: unknown): string {
   return message;
 }
 
+export function isAdminNotFound(error: unknown): boolean {
+  return readErrorCode(error) === 'ADMIN_NOT_FOUND';
+}
+
 function readErrorCode(error: unknown): string | undefined {
   if (!error || typeof error !== 'object') return undefined;
   const record = error as { code?: unknown; error?: unknown };

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { classifyAdminError, readApiErrorMessage } from './admin-errors';
+import { classifyAdminError, isAdminNotFound, readApiErrorMessage } from './admin-errors';
 
 function body(code: string) {
   return { error: { code, message: 'detalle' } };
@@ -36,6 +36,8 @@ describe('classifyAdminError', () => {
       'unknown',
     );
     expect(classifyAdminError({})).toBe('unknown');
+    expect(isAdminNotFound(body('ADMIN_NOT_FOUND'))).toBe(true);
+    expect(isAdminNotFound(body('INTERNAL_ERROR'))).toBe(false);
   });
 });
 

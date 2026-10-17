@@ -398,8 +398,11 @@ function FilterSelect<T extends string>({
   options: readonly { value: T; label: string }[];
   onChange: (value: T | undefined) => void;
 }) {
+  const items = [{ value: 'all', label: `${label}: todos` }, ...options];
+
   return (
     <Select
+      items={items}
       value={value ?? 'all'}
       onValueChange={(next) => {
         if (next == null || next === 'all') {
@@ -413,8 +416,7 @@ function FilterSelect<T extends string>({
         <SelectValue placeholder={label} />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="all">{label}: todos</SelectItem>
-        {options.map((option) => (
+        {items.map((option) => (
           <SelectItem key={option.value} value={option.value}>
             {option.label}
           </SelectItem>
