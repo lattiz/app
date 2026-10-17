@@ -6,6 +6,8 @@
 
 `templates_classification.sql` comprueba el trigger de `updated_at`, que `retired_at` no convive con `is_active = true` (sí con una plantilla inactiva, retirada o solo pendiente), que `admin.template_usage` expone las columnas nuevas al final, y que `anon` y `authenticated` siguen sin poder leer esa vista.
 
+`tenant_deletions.sql` comprueba que la fila de `admin.tenant_deletions` sobrevive al borrar el tenant y el usuario, que el índice único deja un solo trabajo vivo (`pending`, `running` o `failed`) y admite otro tras `completed`, que el estado y la longitud de `reason` se rechazan fuera de rango, y que `anon` y `authenticated` no pueden leer la tabla.
+
 Cada archivo abre una transacción y termina en `ROLLBACK`.
 
 `psql` no está en el host; hay que ejecutarlo dentro del contenedor de la base local, desde la raíz del repo:
@@ -15,4 +17,5 @@ supabase db reset --local
 docker exec -i supabase_db_lattiz psql -U postgres -d postgres -v ON_ERROR_STOP=1 < supabase/tests/admin/admin_schema.sql
 docker exec -i supabase_db_lattiz psql -U postgres -d postgres -v ON_ERROR_STOP=1 < supabase/tests/admin/admin_read_models.sql
 docker exec -i supabase_db_lattiz psql -U postgres -d postgres -v ON_ERROR_STOP=1 < supabase/tests/admin/templates_classification.sql
+docker exec -i supabase_db_lattiz psql -U postgres -d postgres -v ON_ERROR_STOP=1 < supabase/tests/admin/tenant_deletions.sql
 ```
