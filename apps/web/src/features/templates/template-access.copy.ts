@@ -22,6 +22,12 @@ export const templateAccessCopy = {
     chooseBasic: 'Elegir plantilla Básica',
     reactivatePro: 'Reactivar Pro',
   },
+  proFeature: {
+    title: (feature: string) => `«${feature}» es del plan Pro`,
+    body: 'Mejora a Pro para agregar esta sección y usar galerías, portadas con cifras y animaciones. Lo que ya tienes en tu sitio sigue igual.',
+    later: 'Ahora no',
+    lockedLabel: 'Incluido en Pro',
+  },
   downgradeLoss: {
     title: 'Vas a perder el acceso a tu plantilla',
     body: (name: string | null, date: string) =>

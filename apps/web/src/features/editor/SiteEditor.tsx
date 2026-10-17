@@ -36,7 +36,9 @@ import {
 } from './api';
 import { grapesjsCoreLocaleEs, studioSdkLocaleEs } from './i18n';
 import { SaveStatusBadge } from './SaveStatusBadge';
+import { UpgradeProDialog } from '@/features/templates/UpgradeProDialog';
 import { sectionBlocks } from './blocks';
+import type { SectionBlock } from './blocks/shared';
 import { DeviceSwitcher, editorDevices } from './DeviceSwitcher';
 import { StockPhotosDialog } from './StockPhotosDialog';
 import { applyFontLink, applyRootTokens } from './theme-apply';
@@ -108,6 +110,7 @@ function buildOptions(
   onUploadError: (err: unknown) => void,
   proIncluded: boolean,
   theme: ResolvedTheme,
+  onLockedBlock: (block: SectionBlock) => void,
 ): StudioOptions {
   const plugins = [
     // Sidebar de botones con layouts propios para tablet y móvil (el layout por defecto no es usable < 1000px).
@@ -167,9 +170,9 @@ function buildOptions(
           a.id !== 'clearCanvas',
       ),
 
-    // ── Bloques: kit de secciones Lattiz, filtrado por plan (templateAccess.proIncluded) ──
+    // ── Bloques: kit de secciones Lattiz; sin Pro, los Pro se ven con candado (templateAccess.proIncluded) ──
     blocks: {
-      default: sectionBlocks(proIncluded) as unknown as NonNullable<
+      default: sectionBlocks(proIncluded, onLockedBlock) as unknown as NonNullable<
         StudioOptions['blocks']
       >['default'],
     },
@@ -225,6 +228,7 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
   const [headerHidden, setHeaderHidden] = useState(false);
   const [stockOpen, setStockOpen] = useState(false);
   const [themeOpen, setThemeOpen] = useState(false);
+  const [lockedFeature, setLockedFeature] = useState<string | null>(null);
   const stockStatus = useQuery({
     ...stockControllerStatusOptions(),
     staleTime: Infinity,
@@ -374,6 +378,7 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
     (err) => reportActionError(err, 'upload'),
     proIncluded,
     resolvedTheme,
+    (block) => setLockedFeature(block.label),
   );
   const isPublishing = publishMutation.isPending;
 
@@ -580,6 +585,10 @@ export function SiteEditor({ tenantId }: SiteEditorProps) {
           }}
         />
       </main>
+      <UpgradeProDialog
+        feature={lockedFeature}
+        onClose={() => setLockedFeature(null)}
+      />
       <ThemeDialog
         open={themeOpen}
         onOpenChange={setThemeOpen}

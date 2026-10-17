@@ -5,6 +5,13 @@ export interface SectionBlock {
   category: string;
   media: string;
   content: Record<string, unknown>;
+  /** Kit `slot/variant` this block stands for; its plan follows that variant (see plan.ts). */
+  kitVariant?: string;
+  /** No kit counterpart on purpose: lives only in the editor (docs/template-kit-catalog.md). */
+  editorOnly?: true;
+  /** Studio: shown but not draggable (a Pro block for a plan without Pro). */
+  disable?: boolean;
+  onClick?: () => void;
 }
 
 /**
@@ -68,3 +75,6 @@ export const ICONS = {
   whatsapp:
     '<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 5 5.1-1.3A10 10 0 1 0 12 2m5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7a11 11 0 0 1-4.3-3.8c-.4-.6-1-1.7-1-2.9s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l1.8.9c.3.1.5.2.5.3.1.2.1.7-.1 1.4"/></svg>',
 };
+
+/** Appended to a locked block's media; styled in grapesjs-sdk.css (editor UI, never the canvas). */
+export const PRO_BADGE = '<span class="lzb-pro-badge">Pro</span>';

@@ -190,3 +190,18 @@
   background-color: hsl(210 75% 38%);
   color: #fff;
 }
+
+/* Bloque Pro bloqueado (plan sin Pro): insignia sobre el ícono; el clic abre el aviso para mejorar. */
+.lzb-pro-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background-color: var(--gs-theme-cl-prm-bg1);
+  color: var(--gs-theme-cl-prm-txt);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  vertical-align: middle;
+}
