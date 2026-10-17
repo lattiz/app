@@ -191,17 +191,21 @@
   color: #fff;
 }
 
-/* Bloque Pro bloqueado (plan sin Pro): insignia sobre el ícono; el clic abre el aviso para mejorar. */
+/* Bloque Pro bloqueado (plan sin Pro): insignia en la esquina del ícono; el clic abre el aviso para mejorar. */
+.gs-block-item__media:has(.lzb-pro-badge) {
+  position: relative;
+  overflow: visible;
+}
 .lzb-pro-badge {
-  display: inline-block;
-  margin-left: 6px;
-  padding: 1px 6px;
+  position: absolute;
+  top: -6px;
+  right: -16px;
+  padding: 0 5px;
   border-radius: 999px;
   background-color: var(--gs-theme-cl-prm-bg1);
   color: var(--gs-theme-cl-prm-txt);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
-  line-height: 16px;
+  line-height: 14px;
   letter-spacing: 0.04em;
-  vertical-align: middle;
 }

@@ -37,7 +37,7 @@ import {
 import { grapesjsCoreLocaleEs, studioSdkLocaleEs } from './i18n';
 import { SaveStatusBadge } from './SaveStatusBadge';
 import { UpgradeProDialog } from '@/features/templates/UpgradeProDialog';
-import { sectionBlocks } from './blocks';
+import { blocksConfig } from './blocks';
 import type { SectionBlock } from './blocks/shared';
 import { DeviceSwitcher, editorDevices } from './DeviceSwitcher';
 import { StockPhotosDialog } from './StockPhotosDialog';
@@ -171,11 +171,9 @@ function buildOptions(
       ),
 
     // ── Bloques: kit de secciones Lattiz; sin Pro, los Pro se ven con candado (templateAccess.proIncluded) ──
-    blocks: {
-      default: sectionBlocks(proIncluded, onLockedBlock) as unknown as NonNullable<
-        StudioOptions['blocks']
-      >['default'],
-    },
+    blocks: blocksConfig(proIncluded, onLockedBlock) as unknown as NonNullable<
+      StudioOptions['blocks']
+    >,
 
     // ── Assets ─────────────────────────────────────────────────────────────
     // Sin onUpload el SDK deja URLs `blob:`/`data:` de la sesión del editor en

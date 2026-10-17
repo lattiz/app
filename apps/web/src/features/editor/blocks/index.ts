@@ -12,8 +12,8 @@ export const ALL_BLOCKS: readonly SectionBlock[] = [
 
 /**
  * Every block, with its plan derived from the kit catalog (plan.ts). Without Pro
- * (templateAccess.proIncluded) Pro blocks stay visible but locked: a «Pro» badge, no drag,
- * and a click calls onLockedClick (the upgrade prompt). Saved content is never touched.
+ * (templateAccess.proIncluded) Pro blocks stay visible but locked: a «Pro» badge and no drag.
+ * Saved content is never touched.
  */
 export function sectionBlocks(
   proIncluded: boolean,
@@ -29,4 +29,32 @@ export function sectionBlocks(
       onClick: () => onLockedClick(block),
     };
   });
+}
+
+/**
+ * Studio's block options. Studio 1.1.1 click-inserts even a disabled block and ignores its
+ * onClick, so appendOnClick refuses locked blocks and opens the upgrade prompt instead.
+ */
+export function blocksConfig(
+  proIncluded: boolean,
+  onLockedClick: (block: SectionBlock) => void = () => {},
+): {
+  default: SectionBlock[];
+  appendOnClick: (ctx: { block: { getId: () => string } }) => boolean;
+} {
+  const blocks = sectionBlocks(proIncluded, onLockedClick);
+  const locked = new Map(
+    ALL_BLOCKS.filter((b) => !proIncluded && blockPlan(b) === 'pro').map(
+      (b) => [b.id, b],
+    ),
+  );
+  return {
+    default: blocks,
+    appendOnClick: ({ block }) => {
+      const hit = locked.get(block.getId());
+      if (!hit) return true;
+      onLockedClick(hit);
+      return false;
+    },
+  };
 }

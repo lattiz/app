@@ -54,7 +54,7 @@ describe('kit blocks (generated from the kit)', () => {
     }
   });
 
-  it('ship only CSS for classes their markup uses (plus the :root fallback)', () => {
+  it('ship only CSS for classes their markup uses (plus the token fallback)', () => {
     for (const b of KIT_BLOCKS) {
       const markup = `class="${b.content.classes.join(' ')}" ${b.content.components}`;
       const used = new Set(
@@ -62,7 +62,7 @@ describe('kit blocks (generated from the kit)', () => {
           m[1].split(/\s+/),
         ),
       );
-      const css = b.content.styles.replace(/^:root\{[^}]*\}/, '');
+      const css = b.content.styles.replace(/^:where\(html\)\{[^}]*\}/, '');
       const classes = new Set(
         [...css.matchAll(/\.(lz-[A-Za-z0-9_-]+)/g)].map((m) => m[1]),
       );
@@ -74,7 +74,7 @@ describe('kit blocks (generated from the kit)', () => {
           !/^lz-(t|go|in|px|zoom)$/.test(c),
       );
       expect(foreign, b.id).toEqual([]);
-      expect(b.content.styles.startsWith(':root{'), b.id).toBe(true);
+      expect(b.content.styles.startsWith(':where(html){'), b.id).toBe(true);
     }
   });
 

@@ -256,7 +256,7 @@ export function usedCoreCss(core: string, used: Set<string>): string {
   return root.toString();
 }
 
-/** Tokens for projects that have no `:root` rule yet (Studio's avoidUpdateStyle keeps an existing one). */
+/** Token fallback per variable: `:where(html)` has no specificity, so any token the project sets on `:root` wins. */
 function fallbackRoot(): string {
   const theme = composeTheme({
     name: 'editor-fallback',
@@ -274,7 +274,7 @@ function fallbackRoot(): string {
   const vars = themeVariables(theme)
     .filter(([k]) => !k.startsWith('--lz-font-'))
     .map(([k, v]): [string, string] => [k, /-filter$/.test(k) ? 'none' : v]);
-  return `:root{${vars.map(([k, v]) => `${k}:${v}`).join(';')}}`;
+  return `:where(html){${vars.map(([k, v]) => `${k}:${v}`).join(';')}}`;
 }
 
 const minify = (css: string) =>

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import manifest from '../../../../../../packages/template-kit/catalog/catalog.manifest.json';
 import { PLAN_CATALOG as API_PLAN_CATALOG } from '../../../../../api/src/modules/sites/plan-catalog.generated';
-import { ALL_BLOCKS, sectionBlocks } from './index';
+import { ALL_BLOCKS, blocksConfig, sectionBlocks } from './index';
 import { blockPlan, blockProHooks } from './plan';
 import { PLAN_CATALOG } from './plan-catalog.generated';
 
@@ -124,5 +124,27 @@ describe('sectionBlocks', () => {
     const open = new Map(sectionBlocks(true).map((b) => [b.id, b.content]));
     for (const b of sectionBlocks(false))
       expect(b.content).toBe(open.get(b.id));
+  });
+});
+
+describe('blocksConfig', () => {
+  const click = (cfg: ReturnType<typeof blocksConfig>, id: string) =>
+    cfg.appendOnClick({ block: { getId: () => id } });
+
+  it('without Pro, a click on a locked block inserts nothing and asks to upgrade', () => {
+    const asked: string[] = [];
+    const cfg = blocksConfig(false, (b) => asked.push(b.id));
+    expect(click(cfg, 'lzb-gallery-grid')).toBe(false);
+    expect(click(cfg, 'lzb-hero-bento')).toBe(false);
+    expect(click(cfg, 'lzb-hero-rail')).toBe(true);
+    expect(click(cfg, 'lzb-hero-simple')).toBe(true);
+    expect(asked).toEqual(['lzb-gallery-grid', 'lzb-hero-bento']);
+  });
+
+  it('with Pro every click inserts', () => {
+    const cfg = blocksConfig(true, () => {
+      throw new Error('no prompt with Pro');
+    });
+    for (const b of ALL_BLOCKS) expect(click(cfg, b.id), b.id).toBe(true);
   });
 });
