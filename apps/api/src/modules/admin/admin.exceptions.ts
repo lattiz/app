@@ -40,3 +40,13 @@ export class AdminRoleForbiddenException extends DomainException {
     super('Tu rol no permite esta operación.');
   }
 }
+
+/** Stripe no respondió al calcular ingresos. El overview no usa este error. */
+export class AdminStripeUnavailableException extends DomainException {
+  readonly code = 'ADMIN_STRIPE_UNAVAILABLE';
+  readonly status = HttpStatus.BAD_GATEWAY;
+
+  constructor() {
+    super('Stripe no está disponible para calcular los ingresos.');
+  }
+}

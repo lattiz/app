@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PreviewModule } from '../../common/billing/preview.module';
+import { SettingsModule } from '../../common/settings/settings.module';
 import { DatabaseModule } from '../../database/database.module';
 import { BillingCoreModule } from '../billing/billing-core.module';
 import { StorageModule } from '../storage/storage.module';
@@ -10,6 +11,10 @@ import { AdminMembersService } from './auth/admin-members.service';
 import { AdminSubscriptionsController } from './billing/admin-subscriptions.controller';
 import { AdminSubscriptionsService } from './billing/admin-subscriptions.service';
 import { AdminMeController } from './me/admin-me.controller';
+import { AdminMetricsController } from './metrics/admin-metrics.controller';
+import { AdminMetricsService } from './metrics/admin-metrics.service';
+import { KpiSnapshotCron } from './metrics/kpi-snapshot.cron';
+import { StorageUsageCron } from './storage/storage-usage.cron';
 import { StorageUsageService } from './storage/storage-usage.service';
 import { AdminTemplatesController } from './templates/admin-templates.controller';
 import { AdminTemplatesService } from './templates/admin-templates.service';
@@ -19,13 +24,20 @@ import { AdminTrialsController } from './trials/admin-trials.controller';
 import { AdminTrialsService } from './trials/admin-trials.service';
 
 @Module({
-  imports: [DatabaseModule, BillingCoreModule, PreviewModule, StorageModule],
+  imports: [
+    DatabaseModule,
+    BillingCoreModule,
+    PreviewModule,
+    SettingsModule,
+    StorageModule,
+  ],
   controllers: [
     AdminMeController,
     AdminTenantsController,
     AdminSubscriptionsController,
     AdminTemplatesController,
     AdminTrialsController,
+    AdminMetricsController,
   ],
   providers: [
     AdminMembersService,
@@ -33,10 +45,13 @@ import { AdminTrialsService } from './trials/admin-trials.service';
     AdminAuditService,
     AdminAuditInterceptor,
     StorageUsageService,
+    StorageUsageCron,
     AdminTenantsService,
     AdminSubscriptionsService,
     AdminTemplatesService,
     AdminTrialsService,
+    AdminMetricsService,
+    KpiSnapshotCron,
   ],
   exports: [
     AdminMembersService,
