@@ -1,12 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { SignOutButton } from '@/components/auth/sign-out-button';
+import { PageHeader } from '@/components/layout/page-header';
 import { Badge } from '@/components/ui/badge';
-
-const ROLE_LABEL = {
-  owner: 'Propietario',
-  operator: 'Operador',
-  viewer: 'Lectura',
-} as const;
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { ROLE_LABEL } from '@/lib/navigation';
 
 export const Route = createFileRoute('/_admin/')({
   component: AdminHomePage,
@@ -18,13 +20,21 @@ function AdminHomePage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-semibold tracking-tight">
-          {me.email ? `Hola, ${me.email}` : 'Hola'}
-        </h1>
-        <Badge variant="secondary">{ROLE_LABEL[me.role]}</Badge>
-      </div>
-      <SignOutButton className="w-fit" />
+      <PageHeader
+        title="Resumen"
+        description="Vista general de la operación."
+      />
+      <Card>
+        <CardHeader>
+          <CardTitle>Bienvenido</CardTitle>
+          <CardDescription>
+            {me.email ?? 'Tu cuenta no tiene correo en la sesión.'}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Badge variant="secondary">{ROLE_LABEL[me.role]}</Badge>
+        </CardContent>
+      </Card>
     </div>
   );
 }

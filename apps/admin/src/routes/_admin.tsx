@@ -1,8 +1,9 @@
 import { adminMeControllerMeOptions } from '@lattiz/api-client';
-import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
+import { createFileRoute, redirect } from '@tanstack/react-router';
 import { AuthCard } from '@/components/auth/auth-card';
 import { AuthShell } from '@/components/auth/auth-shell';
 import { SignOutButton } from '@/components/auth/sign-out-button';
+import { AdminShell } from '@/components/layout/admin-shell';
 import { Spinner } from '@/components/ui/spinner';
 import { classifyAdminError } from '@/lib/admin-errors';
 import { useAuthStore } from '@/stores/auth.store';
@@ -60,11 +61,7 @@ function AdminLayout() {
   const { me } = Route.useRouteContext();
   if (!me) return <NoAccess />;
 
-  return (
-    <main className="mx-auto flex min-h-svh w-full max-w-3xl flex-col p-6">
-      <Outlet />
-    </main>
-  );
+  return <AdminShell />;
 }
 
 function NoAccess() {

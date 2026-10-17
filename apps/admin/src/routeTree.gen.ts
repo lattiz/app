@@ -13,6 +13,13 @@ import { Route as MfaRouteImport } from './routes/mfa'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as AdminIndexRouteImport } from './routes/_admin/index'
+import { Route as AdminSuscripcionesRouteImport } from './routes/_admin/suscripciones'
+import { Route as AdminPruebasRouteImport } from './routes/_admin/pruebas'
+import { Route as AdminPlantillasRouteImport } from './routes/_admin/plantillas'
+import { Route as AdminEquipoRouteImport } from './routes/_admin/equipo'
+import { Route as AdminConfiguracionRouteImport } from './routes/_admin/configuracion'
+import { Route as AdminClientesRouteImport } from './routes/_admin/clientes'
+import { Route as AdminAuditoriaRouteImport } from './routes/_admin/auditoria'
 
 const MfaRoute = MfaRouteImport.update({
   id: '/mfa',
@@ -33,15 +40,64 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminSuscripcionesRoute = AdminSuscripcionesRouteImport.update({
+  id: '/suscripciones',
+  path: '/suscripciones',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPruebasRoute = AdminPruebasRouteImport.update({
+  id: '/pruebas',
+  path: '/pruebas',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPlantillasRoute = AdminPlantillasRouteImport.update({
+  id: '/plantillas',
+  path: '/plantillas',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEquipoRoute = AdminEquipoRouteImport.update({
+  id: '/equipo',
+  path: '/equipo',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminConfiguracionRoute = AdminConfiguracionRouteImport.update({
+  id: '/configuracion',
+  path: '/configuracion',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminClientesRoute = AdminClientesRouteImport.update({
+  id: '/clientes',
+  path: '/clientes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAuditoriaRoute = AdminAuditoriaRouteImport.update({
+  id: '/auditoria',
+  path: '/auditoria',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AdminIndexRoute
   '/login': typeof LoginRoute
   '/mfa': typeof MfaRoute
+  '/auditoria': typeof AdminAuditoriaRoute
+  '/clientes': typeof AdminClientesRoute
+  '/configuracion': typeof AdminConfiguracionRoute
+  '/equipo': typeof AdminEquipoRoute
+  '/plantillas': typeof AdminPlantillasRoute
+  '/pruebas': typeof AdminPruebasRoute
+  '/suscripciones': typeof AdminSuscripcionesRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/mfa': typeof MfaRoute
+  '/auditoria': typeof AdminAuditoriaRoute
+  '/clientes': typeof AdminClientesRoute
+  '/configuracion': typeof AdminConfiguracionRoute
+  '/equipo': typeof AdminEquipoRoute
+  '/plantillas': typeof AdminPlantillasRoute
+  '/pruebas': typeof AdminPruebasRoute
+  '/suscripciones': typeof AdminSuscripcionesRoute
   '/': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
@@ -49,14 +105,53 @@ export interface FileRoutesById {
   '/_admin': typeof AdminRouteWithChildren
   '/login': typeof LoginRoute
   '/mfa': typeof MfaRoute
+  '/_admin/auditoria': typeof AdminAuditoriaRoute
+  '/_admin/clientes': typeof AdminClientesRoute
+  '/_admin/configuracion': typeof AdminConfiguracionRoute
+  '/_admin/equipo': typeof AdminEquipoRoute
+  '/_admin/plantillas': typeof AdminPlantillasRoute
+  '/_admin/pruebas': typeof AdminPruebasRoute
+  '/_admin/suscripciones': typeof AdminSuscripcionesRoute
   '/_admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/mfa'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/mfa'
+    | '/auditoria'
+    | '/clientes'
+    | '/configuracion'
+    | '/equipo'
+    | '/plantillas'
+    | '/pruebas'
+    | '/suscripciones'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/mfa' | '/'
-  id: '__root__' | '/_admin' | '/login' | '/mfa' | '/_admin/'
+  to:
+    | '/login'
+    | '/mfa'
+    | '/auditoria'
+    | '/clientes'
+    | '/configuracion'
+    | '/equipo'
+    | '/plantillas'
+    | '/pruebas'
+    | '/suscripciones'
+    | '/'
+  id:
+    | '__root__'
+    | '/_admin'
+    | '/login'
+    | '/mfa'
+    | '/_admin/auditoria'
+    | '/_admin/clientes'
+    | '/_admin/configuracion'
+    | '/_admin/equipo'
+    | '/_admin/plantillas'
+    | '/_admin/pruebas'
+    | '/_admin/suscripciones'
+    | '/_admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -95,14 +190,77 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/_admin/suscripciones': {
+      id: '/_admin/suscripciones'
+      path: '/suscripciones'
+      fullPath: '/suscripciones'
+      preLoaderRoute: typeof AdminSuscripcionesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/pruebas': {
+      id: '/_admin/pruebas'
+      path: '/pruebas'
+      fullPath: '/pruebas'
+      preLoaderRoute: typeof AdminPruebasRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/plantillas': {
+      id: '/_admin/plantillas'
+      path: '/plantillas'
+      fullPath: '/plantillas'
+      preLoaderRoute: typeof AdminPlantillasRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/equipo': {
+      id: '/_admin/equipo'
+      path: '/equipo'
+      fullPath: '/equipo'
+      preLoaderRoute: typeof AdminEquipoRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/configuracion': {
+      id: '/_admin/configuracion'
+      path: '/configuracion'
+      fullPath: '/configuracion'
+      preLoaderRoute: typeof AdminConfiguracionRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/clientes': {
+      id: '/_admin/clientes'
+      path: '/clientes'
+      fullPath: '/clientes'
+      preLoaderRoute: typeof AdminClientesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/auditoria': {
+      id: '/_admin/auditoria'
+      path: '/auditoria'
+      fullPath: '/auditoria'
+      preLoaderRoute: typeof AdminAuditoriaRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
 interface AdminRouteChildren {
+  AdminAuditoriaRoute: typeof AdminAuditoriaRoute
+  AdminClientesRoute: typeof AdminClientesRoute
+  AdminConfiguracionRoute: typeof AdminConfiguracionRoute
+  AdminEquipoRoute: typeof AdminEquipoRoute
+  AdminPlantillasRoute: typeof AdminPlantillasRoute
+  AdminPruebasRoute: typeof AdminPruebasRoute
+  AdminSuscripcionesRoute: typeof AdminSuscripcionesRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAuditoriaRoute: AdminAuditoriaRoute,
+  AdminClientesRoute: AdminClientesRoute,
+  AdminConfiguracionRoute: AdminConfiguracionRoute,
+  AdminEquipoRoute: AdminEquipoRoute,
+  AdminPlantillasRoute: AdminPlantillasRoute,
+  AdminPruebasRoute: AdminPruebasRoute,
+  AdminSuscripcionesRoute: AdminSuscripcionesRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 

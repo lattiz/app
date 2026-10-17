@@ -1,10 +1,9 @@
-import { adminMeControllerMeQueryKey } from '@lattiz/api-client';
 import { queryClient } from './query-client';
 import { supabase } from './supabase';
 
-/** Drops the cached admin profile before the session, so the next account refetches. */
+/** Clears every cached query before the session ends, so the next account cannot see the previous one's clients. */
 export async function signOutAdmin(): Promise<void> {
-  queryClient.removeQueries({ queryKey: adminMeControllerMeQueryKey() });
+  queryClient.clear();
   const { error } = await supabase.auth.signOut();
   if (error) throw error;
 }
