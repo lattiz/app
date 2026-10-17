@@ -5,6 +5,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { PreviewModule } from './common/billing/preview.module';
 import { DEFAULT_RATE_LIMIT } from './common/throttling/rate-limits';
+import { AdminModule } from './modules/admin/admin.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
 import { BillingModule } from './modules/billing/billing.module';
 import { DomainsModule } from './modules/domains/domains.module';
@@ -25,6 +26,7 @@ import { TenantsModule } from './modules/tenants/tenants.module';
     ThrottlerModule.forRoot({
       throttlers: [{ name: 'default', ...DEFAULT_RATE_LIMIT }],
     }),
+    AdminModule,
     AnalyticsModule,
     BillingModule,
     DomainsModule,
