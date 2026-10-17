@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatCount, formatPercent } from '@/lib/format';
-import { QueryAlert } from './query-alert';
+import { QueryAlert } from '@/components/query-alert';
 
 const SHORT_LIST = 5;
 

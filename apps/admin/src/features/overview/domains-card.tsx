@@ -10,7 +10,7 @@ import {
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatCount, formatMoney } from '@/lib/format';
 import { cn } from '@/lib/utils';
-import { QueryAlert } from './query-alert';
+import { QueryAlert } from '@/components/query-alert';
 
 export function DomainsCard() {
   const query = useQuery(adminMetricsControllerOverviewOptions());

@@ -20,6 +20,7 @@ import { Route as AdminEquipoRouteImport } from './routes/_admin/equipo'
 import { Route as AdminConfiguracionRouteImport } from './routes/_admin/configuracion'
 import { Route as AdminClientesRouteImport } from './routes/_admin/clientes'
 import { Route as AdminAuditoriaRouteImport } from './routes/_admin/auditoria'
+import { Route as AdminClientesTenantIdRouteImport } from './routes/_admin/clientes_.$tenantId'
 
 const MfaRoute = MfaRouteImport.update({
   id: '/mfa',
@@ -75,6 +76,11 @@ const AdminAuditoriaRoute = AdminAuditoriaRouteImport.update({
   path: '/auditoria',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminClientesTenantIdRoute = AdminClientesTenantIdRouteImport.update({
+  id: '/clientes_/$tenantId',
+  path: '/clientes/$tenantId',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AdminIndexRoute
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/plantillas': typeof AdminPlantillasRoute
   '/pruebas': typeof AdminPruebasRoute
   '/suscripciones': typeof AdminSuscripcionesRoute
+  '/clientes/$tenantId': typeof AdminClientesTenantIdRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
@@ -99,6 +106,7 @@ export interface FileRoutesByTo {
   '/pruebas': typeof AdminPruebasRoute
   '/suscripciones': typeof AdminSuscripcionesRoute
   '/': typeof AdminIndexRoute
+  '/clientes/$tenantId': typeof AdminClientesTenantIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -113,6 +121,7 @@ export interface FileRoutesById {
   '/_admin/pruebas': typeof AdminPruebasRoute
   '/_admin/suscripciones': typeof AdminSuscripcionesRoute
   '/_admin/': typeof AdminIndexRoute
+  '/_admin/clientes_/$tenantId': typeof AdminClientesTenantIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -127,6 +136,7 @@ export interface FileRouteTypes {
     | '/plantillas'
     | '/pruebas'
     | '/suscripciones'
+    | '/clientes/$tenantId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -139,6 +149,7 @@ export interface FileRouteTypes {
     | '/pruebas'
     | '/suscripciones'
     | '/'
+    | '/clientes/$tenantId'
   id:
     | '__root__'
     | '/_admin'
@@ -152,6 +163,7 @@ export interface FileRouteTypes {
     | '/_admin/pruebas'
     | '/_admin/suscripciones'
     | '/_admin/'
+    | '/_admin/clientes_/$tenantId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -239,6 +251,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAuditoriaRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/_admin/clientes_/$tenantId': {
+      id: '/_admin/clientes_/$tenantId'
+      path: '/clientes/$tenantId'
+      fullPath: '/clientes/$tenantId'
+      preLoaderRoute: typeof AdminClientesTenantIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
@@ -251,6 +270,7 @@ interface AdminRouteChildren {
   AdminPruebasRoute: typeof AdminPruebasRoute
   AdminSuscripcionesRoute: typeof AdminSuscripcionesRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminClientesTenantIdRoute: typeof AdminClientesTenantIdRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
@@ -262,6 +282,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminPruebasRoute: AdminPruebasRoute,
   AdminSuscripcionesRoute: AdminSuscripcionesRoute,
   AdminIndexRoute: AdminIndexRoute,
+  AdminClientesTenantIdRoute: AdminClientesTenantIdRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)

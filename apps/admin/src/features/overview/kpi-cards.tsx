@@ -4,8 +4,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatCount, formatMoney } from '@/lib/format';
 import { cn } from '@/lib/utils';
-import { HelpTip } from './help-tip';
-import { QueryAlert } from './query-alert';
+import { HelpTip } from '@/components/help-tip';
+import { QueryAlert } from '@/components/query-alert';
 import {
   expiringTrialsLabel,
   payingMovementLabel,

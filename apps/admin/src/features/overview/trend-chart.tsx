@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/chart';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatCount, formatMoney } from '@/lib/format';
-import { QueryAlert } from './query-alert';
+import { QueryAlert } from '@/components/query-alert';
 import {
   toTrendSeries,
   trendCurrency,

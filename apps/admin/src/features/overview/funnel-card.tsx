@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatCount, formatPercent } from '@/lib/format';
-import { QueryAlert } from './query-alert';
+import { QueryAlert } from '@/components/query-alert';
 import { funnelBarWidth, medianPayPhrase, toFunnelSteps } from './series';
 
 const RANGES = [30, 90, 365] as const;
