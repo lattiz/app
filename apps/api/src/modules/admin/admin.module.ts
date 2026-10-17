@@ -2,8 +2,12 @@ import { Module } from '@nestjs/common';
 import { PreviewModule } from '../../common/billing/preview.module';
 import { SettingsModule } from '../../common/settings/settings.module';
 import { DatabaseModule } from '../../database/database.module';
+import { AnalyticsModule } from '../analytics/analytics.module';
 import { BillingCoreModule } from '../billing/billing-core.module';
+import { BillingModule } from '../billing/billing.module';
 import { DomainsModule } from '../domains/domains.module';
+import { EmailModule } from '../email/email.module';
+import { MeModule } from '../me/me.module';
 import { StorageModule } from '../storage/storage.module';
 import { AdminAuditController } from './audit/admin-audit.controller';
 import { AdminAuditInterceptor } from './audit/admin-audit.interceptor';
@@ -31,12 +35,23 @@ import { AdminTenantsController } from './tenants/admin-tenants.controller';
 import { AdminTenantsService } from './tenants/admin-tenants.service';
 import { AdminTrialsController } from './trials/admin-trials.controller';
 import { AdminTrialsService } from './trials/admin-trials.service';
+import {
+  AdminDeletionsController,
+  AdminTenantDeletionController,
+} from './deletions/tenant-deletion.controller';
+import { TenantDeletionRepository } from './deletions/tenant-deletion.repository';
+import { TenantDeletionRunner } from './deletions/tenant-deletion.runner';
+import { TenantDeletionService } from './deletions/tenant-deletion.service';
 
 @Module({
   imports: [
     DatabaseModule,
+    AnalyticsModule,
     BillingCoreModule,
+    BillingModule,
     DomainsModule,
+    EmailModule,
+    MeModule,
     PreviewModule,
     SettingsModule,
     StorageModule,
@@ -52,6 +67,8 @@ import { AdminTrialsService } from './trials/admin-trials.service';
     AdminTemplatesController,
     AdminTrialsController,
     AdminMetricsController,
+    AdminTenantDeletionController,
+    AdminDeletionsController,
   ],
   providers: [
     AdminMembersService,
@@ -70,6 +87,9 @@ import { AdminTrialsService } from './trials/admin-trials.service';
     AdminTrialsService,
     AdminMetricsService,
     KpiSnapshotCron,
+    TenantDeletionRepository,
+    TenantDeletionRunner,
+    TenantDeletionService,
   ],
   exports: [
     AdminMembersService,

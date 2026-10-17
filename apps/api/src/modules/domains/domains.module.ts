@@ -148,6 +148,8 @@ async function createDnsProvider(
     DomainRenewalConfig,
     DomainRenewalService,
     DomainRenewalPaymentService,
+    DNS_PROVIDER_PORT,
+    DNS_ZONE_INSPECTION_PORT,
   ],
 })
 export class DomainsModule {}

@@ -182,6 +182,46 @@ export class TemplateThumbnailRejectedException extends DomainException {
   }
 }
 
+/** confirmSlug no es el slug del cliente. */
+export class TenantDeleteConfirmException extends DomainException {
+  readonly code = 'TENANT_DELETE_CONFIRM';
+  readonly status = HttpStatus.BAD_REQUEST;
+
+  constructor() {
+    super('confirmSlug tiene que ser el slug del cliente.');
+  }
+}
+
+/** Sigue en admin.members. Hay que revocarlo antes de borrar la cuenta. */
+export class AdminMemberNotDeletableException extends DomainException {
+  readonly code = 'ADMIN_MEMBER_NOT_DELETABLE';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor() {
+    super('Revócalo del equipo primero');
+  }
+}
+
+/** Ya hay un trabajo pending, running o failed para ese cliente. */
+export class TenantDeletionActiveException extends DomainException {
+  readonly code = 'TENANT_DELETION_ACTIVE';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor() {
+    super('Ya hay un borrado en curso para este cliente.');
+  }
+}
+
+/** El trabajo no está failed ni running vencido. */
+export class TenantDeletionNotRetryableException extends DomainException {
+  readonly code = 'TENANT_DELETION_NOT_RETRYABLE';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor() {
+    super('Solo se puede reintentar un borrado fallido o detenido.');
+  }
+}
+
 /** Por encima del límite de 2 MB. */
 export class TemplateThumbnailTooLargeException extends DomainException {
   readonly code = 'TEMPLATE_THUMBNAIL_TOO_LARGE';
