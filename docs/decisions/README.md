@@ -83,3 +83,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [admin-auth-members-mfa](admin-auth-members-mfa.md) — AdminGuard: miembro activo + aal2 + rol; sin @AdminRoles solo owner; auditoría
 - [admin-kpi-definitions](admin-kpi-definitions.md) — MRR en vivo de Stripe, churn, en riesgo, embudo y kpi_daily; sin internos
 - [openapi-nullable-enums](openapi-nullable-enums.md) — enum nulo en un DTO: null dentro del array enum; nullable:true solo no llega al cliente
+- [admin-layout-min-w-0](admin-layout-min-w-0.md) — SidebarInset de shadcn necesita min-w-0 o una tabla ancha desborda toda la página
