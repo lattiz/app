@@ -3,11 +3,16 @@ import type { SQL } from 'drizzle-orm';
 import type { PreviewPolicyConfig } from '../../../common/billing/preview-capability';
 import { PreviewConfig } from '../../../common/billing/preview.config';
 import { type Database, DATABASE } from '../../../database/database.module';
-import { AdminNotFoundException } from '../admin.exceptions';
+import {
+  AdminNotFoundException,
+  TenantStatusConflictException,
+} from '../admin.exceptions';
+import { AdminMetricsService } from '../metrics/admin-metrics.service';
 import { StorageUsageService } from '../storage/storage-usage.service';
 import type { AdminStorageUsageDto } from '../storage/storage-usage.dto';
 import type {
   AdminTenantDetailDto,
+  AdminTenantFlagsPatchDto,
   AdminTenantListQueryDto,
   AdminTenantListResponseDto,
 } from './admin-tenants.dto';
@@ -27,9 +32,13 @@ import {
   tenantArchivesStatement,
   tenantEmailsStatement,
   tenantExistsStatement,
+  tenantFlagsStatement,
+  tenantFlagsUpsertStatement,
   tenantIdentityStatement,
   tenantListStatements,
   tenantOverviewStatement,
+  tenantSetStatusStatement,
+  tenantStatusStatement,
   tenantSubscriptionsStatement,
 } from './admin-tenants.queries';
 
@@ -38,12 +47,38 @@ export interface StorageRefreshResult {
   usage: AdminStorageUsageDto;
 }
 
+export interface TenantFlagsState {
+  isInternal: boolean;
+  tags: string[];
+  notes: string | null;
+}
+
+export interface TenantStatusResult {
+  reason?: string;
+  before: { status: string };
+  after: { status: string };
+  detail: AdminTenantDetailDto;
+}
+
+export interface TenantFlagsResult {
+  before: TenantFlagsState;
+  after: TenantFlagsState;
+  detail: AdminTenantDetailDto;
+}
+
+interface FlagRow {
+  is_internal: boolean | string | null;
+  tags: unknown;
+  notes: string | null;
+}
+
 @Injectable()
 export class AdminTenantsService {
   constructor(
     @Inject(DATABASE) private readonly db: Database,
     private readonly preview: PreviewConfig,
     private readonly storageUsage: StorageUsageService,
+    private readonly metrics: AdminMetricsService,
   ) {}
 
   async list(
@@ -95,6 +130,71 @@ export class AdminTenantsService {
     });
   }
 
+  async suspend(tenantId: string, reason: string): Promise<TenantStatusResult> {
+    const current = await this.readStatus(tenantId);
+    if (current !== 'active') {
+      throw new TenantStatusConflictException(suspendConflict(current));
+    }
+    const updated = await this.query<{ status: string }>(
+      tenantSetStatusStatement(tenantId, 'inactive', 'active'),
+    );
+    if (!updated[0]) {
+      throw new TenantStatusConflictException(
+        suspendConflict(await this.readStatus(tenantId)),
+      );
+    }
+    return {
+      reason,
+      before: { status: 'active' },
+      after: { status: 'inactive' },
+      detail: await this.get(tenantId),
+    };
+  }
+
+  async reactivate(tenantId: string): Promise<TenantStatusResult> {
+    const current = await this.readStatus(tenantId);
+    if (current !== 'inactive') {
+      throw new TenantStatusConflictException(reactivateConflict(current));
+    }
+    const updated = await this.query<{ status: string }>(
+      tenantSetStatusStatement(tenantId, 'active', 'inactive'),
+    );
+    if (!updated[0]) {
+      throw new TenantStatusConflictException(
+        reactivateConflict(await this.readStatus(tenantId)),
+      );
+    }
+    return {
+      before: { status: 'inactive' },
+      after: { status: 'active' },
+      detail: await this.get(tenantId),
+    };
+  }
+
+  async updateFlags(
+    tenantId: string,
+    patch: AdminTenantFlagsPatchDto,
+    actorUserId: string,
+  ): Promise<TenantFlagsResult> {
+    const found = await this.query<{ ok: number }>(
+      tenantExistsStatement(tenantId),
+    );
+    if (!found[0]) throw new AdminNotFoundException();
+
+    const before = await this.readFlags(tenantId);
+    const next: TenantFlagsState = {
+      isInternal: patch.isInternal ?? before.isInternal,
+      tags: patch.tags ?? before.tags,
+      notes: patch.notes === undefined ? before.notes : patch.notes,
+    };
+    const rows = await this.query<FlagRow>(
+      tenantFlagsUpsertStatement(tenantId, next, actorUserId),
+    );
+    const after = rows[0] ? mapFlags(rows[0]) : next;
+    if (before.isInternal !== after.isInternal) this.metrics.invalidate();
+    return { before, after, detail: await this.get(tenantId) };
+  }
+
   async refreshStorage(tenantId: string): Promise<StorageRefreshResult> {
     const found = await this.query<{ ok: number }>(
       tenantExistsStatement(tenantId),
@@ -103,6 +203,22 @@ export class AdminTenantsService {
     const before = await this.storageUsage.find(tenantId);
     const usage = await this.storageUsage.measure(tenantId);
     return { before, usage };
+  }
+
+  private async readStatus(tenantId: string): Promise<string> {
+    const rows = await this.query<{ status: string }>(
+      tenantStatusStatement(tenantId),
+    );
+    const status = rows[0]?.status;
+    if (!status) throw new AdminNotFoundException();
+    return status;
+  }
+
+  private async readFlags(tenantId: string): Promise<TenantFlagsState> {
+    const rows = await this.query<FlagRow>(tenantFlagsStatement(tenantId));
+    const row = rows[0];
+    if (!row) return { isInternal: false, tags: [], notes: null };
+    return mapFlags(row);
   }
 
   private previewPolicy(): PreviewPolicyConfig {
@@ -116,4 +232,27 @@ export class AdminTenantsService {
     const rows = await this.db.execute(statement);
     return rows as unknown as T[];
   }
+}
+
+function mapFlags(row: FlagRow): TenantFlagsState {
+  return {
+    isInternal: row.is_internal === true || row.is_internal === 'true',
+    tags: Array.isArray(row.tags)
+      ? row.tags.filter((item): item is string => typeof item === 'string')
+      : [],
+    notes: row.notes,
+  };
+}
+
+function suspendConflict(status: string): string {
+  if (status === 'inactive') return 'El sitio ya está suspendido.';
+  if (status === 'cancelled') {
+    return 'El sitio está cancelado y no se puede suspender.';
+  }
+  return 'El sitio no se puede suspender en su estado actual.';
+}
+
+function reactivateConflict(status: string): string {
+  if (status === 'active') return 'El sitio ya está activo.';
+  return 'Solo se puede reactivar un sitio suspendido.';
 }

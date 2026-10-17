@@ -142,6 +142,12 @@ export class AdminMetricsService {
     private readonly preview: PreviewConfig,
   ) {}
 
+  /** Marcar un tenant interno lo saca de los KPI; la siguiente lectura vuelve a Stripe. */
+  invalidate(): void {
+    this.mrrCache = null;
+    this.revenueCache.clear();
+  }
+
   async overview(now = new Date()): Promise<MetricsOverviewDto> {
     const [subscriptions, trials, product, mrr] = await Promise.all([
       this.customerFacts(),

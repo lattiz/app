@@ -6,7 +6,10 @@ import {
 import type { Reflector } from '@nestjs/core';
 import type { Request } from 'express';
 import { firstValueFrom, of, throwError } from 'rxjs';
-import { AdminAccessDeniedException } from '../admin.exceptions';
+import {
+  AdminAccessDeniedException,
+  AdminStripeUnavailableException,
+} from '../admin.exceptions';
 import type { AdminAuditMetadata } from './admin-audit.decorator';
 import { AdminAuditInterceptor } from './admin-audit.interceptor';
 import type { AdminAuditService } from './admin-audit.service';
@@ -135,6 +138,42 @@ describe('AdminAuditInterceptor', () => {
       expect.objectContaining({
         action: 'member.revoke.failed',
         after: { error: 'ADMIN_ACCESS_DENIED' },
+      }),
+    );
+  });
+
+  it('records subscription.cancel.failed and rethrows that same error', async () => {
+    getAllAndOverride.mockReturnValue({
+      action: 'subscription.cancel',
+      targetType: 'subscription',
+      targetParam: 'id',
+    });
+    const error = new AdminStripeUnavailableException(
+      'Stripe no está disponible para cambiar la suscripción.',
+    );
+    const request: Partial<Request> = {
+      method: 'POST',
+      ip: '127.0.0.1',
+      headers: {},
+      params: { id: 'sub-row' },
+      admin: { userId: 'user-1', role: 'owner', email: 'owner@example.com' },
+      route: { path: '/admin/subscriptions/:id/cancel' },
+      baseUrl: '',
+    };
+
+    await expect(
+      firstValueFrom(
+        interceptor.intercept(contextFor(request), {
+          handle: () => throwError(() => error),
+        }),
+      ),
+    ).rejects.toBe(error);
+
+    expect(record).toHaveBeenCalledWith(
+      expect.objectContaining({
+        action: 'subscription.cancel.failed',
+        targetId: 'sub-row',
+        after: { error: 'ADMIN_STRIPE_UNAVAILABLE' },
       }),
     );
   });

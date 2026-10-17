@@ -325,3 +325,66 @@ function isOneOf<T extends string>(
 ): value is T {
   return (allowed as readonly string[]).includes(value);
 }
+
+export function tenantStatusStatement(tenantId: string): SQL {
+  return sql`
+    SELECT status
+    FROM public.tenants
+    WHERE id = ${tenantId}::uuid
+  `;
+}
+
+export function tenantSetStatusStatement(
+  tenantId: string,
+  status: 'active' | 'inactive',
+  expected: 'active' | 'inactive',
+): SQL {
+  return sql`
+    UPDATE public.tenants
+    SET status = ${status}
+    WHERE id = ${tenantId}::uuid
+      AND status = ${expected}
+    RETURNING status
+  `;
+}
+
+export function tenantFlagsStatement(tenantId: string): SQL {
+  return sql`
+    SELECT is_internal, tags, notes
+    FROM admin.tenant_flags
+    WHERE tenant_id = ${tenantId}::uuid
+  `;
+}
+
+export function tenantFlagsUpsertStatement(
+  tenantId: string,
+  flags: { isInternal: boolean; tags: readonly string[]; notes: string | null },
+  actorUserId: string,
+): SQL {
+  return sql`
+    INSERT INTO admin.tenant_flags (
+      tenant_id, is_internal, tags, notes, updated_by
+    )
+    VALUES (
+      ${tenantId}::uuid,
+      ${flags.isInternal},
+      ${textArray(flags.tags)},
+      ${flags.notes},
+      ${actorUserId}::uuid
+    )
+    ON CONFLICT (tenant_id) DO UPDATE
+    SET is_internal = EXCLUDED.is_internal,
+        tags = EXCLUDED.tags,
+        notes = EXCLUDED.notes,
+        updated_by = EXCLUDED.updated_by
+    RETURNING is_internal, tags, notes
+  `;
+}
+
+function textArray(values: readonly string[]): SQL {
+  if (values.length === 0) return sql`'{}'::text[]`;
+  return sql`ARRAY[${sql.join(
+    values.map((value) => sql`${value}`),
+    sql`, `,
+  )}]::text[]`;
+}

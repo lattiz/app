@@ -47,4 +47,28 @@ describe('AdminMetricsService stripe failures', () => {
       AdminStripeUnavailableException,
     );
   });
+
+  it('forgets cached MRR after invalidate', async () => {
+    const list = jest.fn(() => ({
+      autoPagingEach: async () => undefined,
+    }));
+    const metrics = new AdminMetricsService(
+      { execute: async () => [] } as unknown as Database,
+      {
+        subscriptions: { list },
+        balanceTransactions: { list: () => ({ autoPagingEach: async () => undefined }) },
+      } as unknown as Stripe,
+      { getInt: () => 1600 } as unknown as SettingsService,
+      { enabled: true, trialDays: 7 } as unknown as PreviewConfig,
+    );
+    const now = new Date('2026-10-17T12:00:00.000Z');
+
+    await metrics.overview(now);
+    await metrics.overview(now);
+    expect(list).toHaveBeenCalledTimes(1);
+
+    metrics.invalidate();
+    await metrics.overview(now);
+    expect(list).toHaveBeenCalledTimes(2);
+  });
 });

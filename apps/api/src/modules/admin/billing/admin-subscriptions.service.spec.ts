@@ -2,7 +2,13 @@ import type { SQL } from 'drizzle-orm';
 import { PgDialect } from 'drizzle-orm/pg-core';
 import type Stripe from 'stripe';
 import type { Database } from '../../../database/database.module';
-import { AdminNotFoundException } from '../admin.exceptions';
+import {
+  AdminNotFoundException,
+  AdminStripeUnavailableException,
+  SubscriptionNotCancelableException,
+  SubscriptionNotResumableException,
+  SubscriptionScheduleActiveException,
+} from '../admin.exceptions';
 import type { SubscriptionOverviewRow } from './admin-subscriptions.mapper';
 import {
   AdminSubscriptionsService,
@@ -135,7 +141,11 @@ function upcoming(): Stripe.Invoice {
 function setup() {
   const execute: jest.Mock = jest.fn(async () => [ROW]);
   const stripe = {
-    subscriptions: { retrieve: jest.fn().mockResolvedValue(subscription()) },
+    subscriptions: {
+      retrieve: jest.fn().mockResolvedValue(subscription()),
+      update: jest.fn(),
+      cancel: jest.fn(),
+    },
     invoices: {
       list: jest.fn().mockResolvedValue({ data: [invoice()] }),
       createPreview: jest.fn().mockResolvedValue(upcoming()),
@@ -350,5 +360,248 @@ describe('AdminSubscriptionsService', () => {
       AdminNotFoundException,
     );
     expect(stripe.subscriptions.retrieve).not.toHaveBeenCalled();
+  });
+});
+
+const ACTOR = '11111111-1111-4111-8111-111111111111';
+const REASON = 'Fraude reportado por soporte';
+
+function live(overrides: Record<string, unknown> = {}): Stripe.Subscription {
+  return subscription({
+    schedule: null,
+    status: 'active',
+    cancel_at: null,
+    cancel_at_period_end: false,
+    ...overrides,
+  });
+}
+
+function sqlText(execute: jest.Mock): string {
+  return execute.mock.calls
+    .map((call) => dialect.sqlToQuery(call[0] as SQL).sql)
+    .join('\n');
+}
+
+function idempotencyKeysFrom(mocks: jest.Mock[]): string[] {
+  return mocks.flatMap((mock) =>
+    mock.mock.calls.flatMap((call) =>
+      call.flatMap((arg: unknown) => {
+        if (
+          arg !== null &&
+          typeof arg === 'object' &&
+          'idempotencyKey' in arg &&
+          typeof arg.idempotencyKey === 'string'
+        ) {
+          return [arg.idempotencyKey];
+        }
+        return [];
+      }),
+    ),
+  );
+}
+
+describe('AdminSubscriptionsService support actions', () => {
+  const input = {
+    mode: 'period_end' as const,
+    reason: REASON,
+    actorUserId: ACTOR,
+    auditRequestId: 'req-1',
+  };
+
+  it('schedules cancel_at_period_end with metadata and an idempotency key', async () => {
+    const { service, execute, stripe } = setup();
+    await service.get(ID, 0);
+    stripe.subscriptions.retrieve.mockResolvedValue(live());
+    stripe.subscriptions.update.mockResolvedValue(
+      live({ cancel_at_period_end: true }),
+    );
+
+    const result = await service.cancel(ID, input);
+
+    expect(stripe.subscriptions.update).toHaveBeenCalledWith(
+      'sub_123',
+      {
+        cancel_at_period_end: true,
+        metadata: { admin_actor: ACTOR, admin_reason: REASON },
+      },
+      { idempotencyKey: 'admin-cancel:sub_123:period_end:req-1:period_end' },
+    );
+    expect(stripe.subscriptions.cancel).not.toHaveBeenCalled();
+    expect(stripe.subscriptions.retrieve).toHaveBeenCalledTimes(3);
+    expect(result.before).toEqual({
+      status: 'active',
+      cancelAtPeriodEnd: false,
+      cancelAt: null,
+    });
+    expect(result.after).toMatchObject({
+      status: 'active',
+      cancelAtPeriodEnd: true,
+      mode: 'period_end',
+      reason: REASON,
+    });
+    expect(sqlText(execute)).not.toMatch(/\b(insert|update|delete)\b/i);
+    expect(sqlText(execute)).not.toContain('public.subscriptions');
+    expect(sqlText(execute)).not.toContain('subscriptions');
+  });
+
+  it('writes metadata and then cancels immediately without proration', async () => {
+    const { service, execute, stripe } = setup();
+    const order: string[] = [];
+    stripe.subscriptions.retrieve.mockResolvedValue(live());
+    stripe.subscriptions.update.mockImplementation(async () => {
+      order.push('update');
+      return live();
+    });
+    stripe.subscriptions.cancel.mockImplementation(async () => {
+      order.push('cancel');
+      return live({ status: 'canceled' });
+    });
+
+    const result = await service.cancel(ID, { ...input, mode: 'now' });
+
+    expect(order).toEqual(['update', 'cancel']);
+    expect(stripe.subscriptions.update).toHaveBeenCalledWith(
+      'sub_123',
+      { metadata: { admin_actor: ACTOR, admin_reason: REASON } },
+      { idempotencyKey: 'admin-cancel:sub_123:now:req-1:meta' },
+    );
+    expect(stripe.subscriptions.cancel).toHaveBeenCalledWith(
+      'sub_123',
+      { prorate: false },
+      { idempotencyKey: 'admin-cancel:sub_123:now:req-1:cancel' },
+    );
+    expect(result.after.status).toBe('canceled');
+    expect(sqlText(execute)).not.toContain('subscriptions');
+  });
+
+  it('uses a distinct idempotency key for every Stripe call in the same action', async () => {
+    const { service, stripe } = setup();
+    stripe.subscriptions.retrieve.mockResolvedValue(live());
+    stripe.subscriptions.update.mockResolvedValue(live());
+    stripe.subscriptions.cancel.mockResolvedValue(
+      live({ status: 'canceled' }),
+    );
+
+    await service.cancel(ID, { ...input, mode: 'now' });
+
+    const keys = idempotencyKeysFrom([
+      stripe.subscriptions.retrieve,
+      stripe.subscriptions.update,
+      stripe.subscriptions.cancel,
+      stripe.invoices.list,
+      stripe.invoices.createPreview,
+      stripe.subscriptionSchedules.retrieve,
+    ]);
+    expect(keys).toEqual([
+      'admin-cancel:sub_123:now:req-1:meta',
+      'admin-cancel:sub_123:now:req-1:cancel',
+    ]);
+    expect(new Set(keys).size).toBe(keys.length);
+  });
+
+  it.each(['canceled', 'incomplete_expired'])(
+    'rejects a %s subscription',
+    async (status) => {
+      const { service, stripe } = setup();
+      stripe.subscriptions.retrieve.mockResolvedValue(
+        live({ status, schedule: null }),
+      );
+
+      await expect(service.cancel(ID, input)).rejects.toBeInstanceOf(
+        SubscriptionNotCancelableException,
+      );
+      expect(stripe.subscriptions.update).not.toHaveBeenCalled();
+      expect(stripe.subscriptions.cancel).not.toHaveBeenCalled();
+    },
+  );
+
+  it('rejects a subscription that already has a schedule', async () => {
+    const { service, stripe } = setup();
+    stripe.subscriptions.retrieve.mockResolvedValue(
+      live({ schedule: 'sub_sched_1' }),
+    );
+
+    await expect(service.cancel(ID, input)).rejects.toBeInstanceOf(
+      SubscriptionScheduleActiveException,
+    );
+    await expect(service.cancel(ID, input)).rejects.toMatchObject({
+      status: 409,
+    });
+    expect(stripe.subscriptions.update).not.toHaveBeenCalled();
+    expect(stripe.subscriptions.cancel).not.toHaveBeenCalled();
+  });
+
+  it('turns a Stripe failure into ADMIN_STRIPE_UNAVAILABLE and does not wrap it further', async () => {
+    const { service, stripe } = setup();
+    const boom = new Error('stripe down');
+    stripe.subscriptions.retrieve.mockResolvedValue(live());
+    stripe.subscriptions.update.mockRejectedValue(boom);
+
+    const error = await service.cancel(ID, input).then(
+      () => {
+        throw new Error('expected cancel to fail');
+      },
+      (err: unknown) => err,
+    );
+
+    expect(error).toBeInstanceOf(AdminStripeUnavailableException);
+    expect(error).not.toBe(boom);
+    expect(error).toMatchObject({
+      code: 'ADMIN_STRIPE_UNAVAILABLE',
+      status: 502,
+    });
+    expect(stripe.subscriptions.cancel).not.toHaveBeenCalled();
+  });
+
+  it('clears cancel_at_period_end when that is how the cancel was scheduled', async () => {
+    const { service, stripe } = setup();
+    stripe.subscriptions.retrieve.mockResolvedValue(
+      live({ cancel_at_period_end: true, cancel_at: null }),
+    );
+    stripe.subscriptions.update.mockResolvedValue(live());
+
+    const result = await service.resume(ID, 'req-1');
+
+    expect(stripe.subscriptions.update).toHaveBeenCalledWith(
+      'sub_123',
+      { cancel_at_period_end: false },
+      { idempotencyKey: 'admin-resume:sub_123:req-1' },
+    );
+    expect(result.before.cancelAtPeriodEnd).toBe(true);
+    expect(result.after.cancelAtPeriodEnd).toBe(false);
+  });
+
+  it('clears cancel_at when the cancel was scheduled by date', async () => {
+    const { service, stripe } = setup();
+    stripe.subscriptions.retrieve.mockResolvedValue(
+      live({ cancel_at: 1_800_000_000, cancel_at_period_end: false }),
+    );
+    stripe.subscriptions.update.mockResolvedValue(live());
+
+    const result = await service.resume(ID, 'req-1');
+
+    expect(stripe.subscriptions.update).toHaveBeenCalledWith(
+      'sub_123',
+      { cancel_at: null },
+      { idempotencyKey: 'admin-resume:sub_123:req-1' },
+    );
+    expect(result.before.cancelAt).toBe(1_800_000_000);
+    expect(result.after.cancelAt).toBeNull();
+  });
+
+  it('rejects resume when nothing is scheduled or the subscription has ended', async () => {
+    const { service, stripe } = setup();
+    stripe.subscriptions.retrieve.mockResolvedValue(live());
+    await expect(service.resume(ID, 'req-1')).rejects.toBeInstanceOf(
+      SubscriptionNotResumableException,
+    );
+
+    stripe.subscriptions.retrieve.mockResolvedValue(
+      live({ status: 'canceled', cancel_at_period_end: true }),
+    );
+    await expect(service.resume(ID, 'req-1')).rejects.toMatchObject({
+      status: 409,
+    });
+    expect(stripe.subscriptions.update).not.toHaveBeenCalled();
   });
 });

@@ -41,13 +41,57 @@ export class AdminRoleForbiddenException extends DomainException {
   }
 }
 
-/** Stripe no respondió al calcular ingresos. El overview no usa este error. */
+/** Stripe no respondió. El overview de métricas conserva el mensaje por defecto. */
 export class AdminStripeUnavailableException extends DomainException {
   readonly code = 'ADMIN_STRIPE_UNAVAILABLE';
   readonly status = HttpStatus.BAD_GATEWAY;
 
+  constructor(
+    message = 'Stripe no está disponible para calcular los ingresos.',
+  ) {
+    super(message);
+  }
+}
+
+/** La suscripción ya está en un estado terminal y no admite cancelación. */
+export class SubscriptionNotCancelableException extends DomainException {
+  readonly code = 'SUBSCRIPTION_NOT_CANCELABLE';
+  readonly status = HttpStatus.CONFLICT;
+
   constructor() {
-    super('Stripe no está disponible para calcular los ingresos.');
+    super('La suscripción ya terminó y no se puede cancelar.');
+  }
+}
+
+/** Un schedule activo (el downgrade) no se mezcla con una cancelación de soporte. */
+export class SubscriptionScheduleActiveException extends DomainException {
+  readonly code = 'SUBSCRIPTION_SCHEDULE_ACTIVE';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor() {
+    super(
+      'La suscripción tiene un schedule activo. Cancelarla aquí se mezclaría con el cambio de plan.',
+    );
+  }
+}
+
+/** No hay una cancelación programada que se pueda deshacer, o ya terminó. */
+export class SubscriptionNotResumableException extends DomainException {
+  readonly code = 'SUBSCRIPTION_NOT_RESUMABLE';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor(message: string) {
+    super(message);
+  }
+}
+
+/** El status del tenant no permite suspender o reactivar. */
+export class TenantStatusConflictException extends DomainException {
+  readonly code = 'TENANT_STATUS_CONFLICT';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor(message: string) {
+    super(message);
   }
 }
 

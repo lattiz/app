@@ -11,6 +11,7 @@ import {
   Max,
   MaxLength,
   Min,
+  MinLength,
 } from 'class-validator';
 
 /** Matches the CHECK on public.subscriptions.status. */
@@ -344,6 +345,27 @@ export class AdminSubscriptionStripeDto {
 
   @ApiProperty({ type: [AdminSubscriptionInvoiceDto] })
   invoices!: AdminSubscriptionInvoiceDto[];
+}
+
+export const CANCEL_MODES = ['period_end', 'now'] as const;
+export type CancelMode = (typeof CANCEL_MODES)[number];
+
+function trimString({ value }: { value: unknown }): unknown {
+  return typeof value === 'string' ? value.trim() : value;
+}
+
+export class AdminCancelSubscriptionDto {
+  @ApiProperty({ enum: CANCEL_MODES })
+  @IsIn(CANCEL_MODES)
+  mode!: CancelMode;
+
+  /** Motivo que queda en la auditoría y en la metadata de Stripe. */
+  @ApiProperty({ minLength: 3, maxLength: 300 })
+  @Transform(trimString)
+  @IsString()
+  @MinLength(3)
+  @MaxLength(300)
+  reason!: string;
 }
 
 export class AdminSubscriptionDetailDto {

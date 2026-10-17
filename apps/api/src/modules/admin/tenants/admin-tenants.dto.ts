@@ -1,6 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
+  ArrayMaxSize,
+  IsArray,
   IsBoolean,
   IsIn,
   IsInt,
@@ -9,6 +11,7 @@ import {
   Max,
   MaxLength,
   Min,
+  MinLength,
 } from 'class-validator';
 import type { PreviewState } from '../../../common/billing/preview-capability';
 import { AnalyticsReportDto } from '../../analytics/dto/analytics.response.dto';
@@ -541,6 +544,50 @@ export class AdminTenantEmailDto {
   /** `last_error` clipped to 200 characters. */
   @ApiProperty({ type: String, nullable: true })
   lastError!: string | null;
+}
+
+function trimString({ value }: { value: unknown }): unknown {
+  return typeof value === 'string' ? value.trim() : value;
+}
+
+function trimTags({ value }: { value: unknown }): unknown {
+  if (!Array.isArray(value)) return value;
+  return value.map((item) => (typeof item === 'string' ? item.trim() : item));
+}
+
+export class AdminSuspendTenantDto {
+  @ApiProperty({ minLength: 3, maxLength: 300 })
+  @Transform(trimString)
+  @IsString()
+  @MinLength(3)
+  @MaxLength(300)
+  reason!: string;
+}
+
+export class AdminTenantFlagsPatchDto {
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsBoolean()
+  isInternal?: boolean;
+
+  /** Hasta 10 marcas de 24 caracteres. Reemplaza la lista entera. */
+  @ApiPropertyOptional({ type: [String], maxItems: 10 })
+  @IsOptional()
+  @Transform(trimTags)
+  @IsArray()
+  @ArrayMaxSize(10)
+  @IsString({ each: true })
+  @MinLength(1, { each: true })
+  @MaxLength(24, { each: true })
+  tags?: string[];
+
+  /** `null` borra la nota. */
+  @ApiPropertyOptional({ type: String, nullable: true, maxLength: 2000 })
+  @IsOptional()
+  @Transform(trimString)
+  @IsString()
+  @MaxLength(2000)
+  notes?: string | null;
 }
 
 export class AdminTenantFlagsDto {
