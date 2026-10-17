@@ -27,6 +27,11 @@ export function tenantAssetsPrefix(tenantId: string): string {
   return `tenant-assets/${tenantId}/`;
 }
 
+/** Logos and favicons for one tenant. Same trailing-slash rule as {@link tenantAssetsPrefix}. */
+export function tenantBrandingPrefix(tenantId: string): string {
+  return `tenant-branding/${tenantId}/`;
+}
+
 /** Same rules as {@link assertSafePath}, but a listing prefix may end with `/`. */
 export function assertSafePrefix(operation: string, prefix: string): void {
   const normalized = prefix.endsWith('/') ? prefix.slice(0, -1) : prefix;

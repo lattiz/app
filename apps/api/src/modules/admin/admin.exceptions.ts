@@ -21,6 +21,16 @@ export class AdminMfaRequiredException extends DomainException {
   }
 }
 
+/** El cliente no existe. */
+export class AdminNotFoundException extends DomainException {
+  readonly code = 'ADMIN_NOT_FOUND';
+  readonly status = HttpStatus.NOT_FOUND;
+
+  constructor() {
+    super('No se encontró el cliente.');
+  }
+}
+
 /** El rol activo no está en la lista que exige la ruta. */
 export class AdminRoleForbiddenException extends DomainException {
   readonly code = 'ADMIN_ROLE_FORBIDDEN';

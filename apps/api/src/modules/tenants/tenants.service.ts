@@ -13,6 +13,7 @@ import {
   OBJECT_STORAGE_PORT,
   type ObjectStoragePort,
 } from '../storage/domain/object-storage.port';
+import { tenantBrandingPrefix } from '../storage/domain/storage-path';
 import {
   BrandingUploadResponseDto,
   TenantBrandingDto,
@@ -286,7 +287,7 @@ export class TenantsService {
     }
 
     // Unique key per upload (immutable at the CDN, so no cache-busting); the old object is deleted below.
-    const storagePath = `${brandingPrefix(tenantId)}${type}-${randomUUID()}.${BRANDING_EXTENSIONS[file.mimetype]}`;
+    const storagePath = `${tenantBrandingPrefix(tenantId)}${type}-${randomUUID()}.${BRANDING_EXTENSIONS[file.mimetype]}`;
     const previousUrl =
       (await this.getBrandingColumn(tenantId, rule.column)) ?? null;
 
@@ -424,7 +425,7 @@ export class TenantsService {
   /** Only objects under this tenant's own branding prefix are ever deleted, whatever the stored URL says. */
   private ownedPath(tenantId: string, url: string | null): string | null {
     const path = this.storage.pathFromPublicUrl(url);
-    return path?.startsWith(brandingPrefix(tenantId)) ? path : null;
+    return path?.startsWith(tenantBrandingPrefix(tenantId)) ? path : null;
   }
 
   /** A stale object left behind must not fail an otherwise successful request. */
@@ -460,8 +461,4 @@ function toIso(value: string | Date): string {
   return value instanceof Date
     ? value.toISOString()
     : new Date(value).toISOString();
-}
-
-function brandingPrefix(tenantId: string): string {
-  return `tenant-branding/${tenantId}/`;
 }
