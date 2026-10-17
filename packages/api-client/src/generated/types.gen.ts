@@ -28,19 +28,13 @@ export type AdminSettingViewDto = {
     type: 'bool' | 'int' | 'string' | 'string-list' | 'int-list';
     min: number | null;
     max: number | null;
-    default: {
-        [key: string]: unknown;
-    } | null;
+    default: number | boolean | string | Array<string | number> | null;
     /**
      * Raw env string when the variable is set. Omitted for secret-like names.
      */
     envValue: string | null;
-    dbValue: {
-        [key: string]: unknown;
-    } | null;
-    effectiveValue: {
-        [key: string]: unknown;
-    } | null;
+    dbValue: number | boolean | string | Array<string | number> | null;
+    effectiveValue: number | boolean | string | Array<string | number> | null;
     source: 'db' | 'env' | 'default';
     description: string | null;
     updatedAt: string | null;
@@ -55,9 +49,7 @@ export type AdminUpdateSettingDto = {
     /**
      * JSON value. The registry parser checks the type and the range.
      */
-    value: {
-        [key: string]: unknown;
-    };
+    value: number | boolean | string | Array<string | number>;
     reason: string;
 };
 
