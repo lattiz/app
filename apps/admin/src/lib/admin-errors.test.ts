@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { classifyAdminError } from './admin-errors';
+import { classifyAdminError, readApiErrorMessage } from './admin-errors';
 
 function body(code: string) {
   return { error: { code, message: 'detalle' } };
@@ -36,5 +36,30 @@ describe('classifyAdminError', () => {
       'unknown',
     );
     expect(classifyAdminError({})).toBe('unknown');
+  });
+});
+
+describe('readApiErrorMessage', () => {
+  it('returns the API message', () => {
+    expect(
+      readApiErrorMessage({
+        error: {
+          code: 'ADMIN_STRIPE_UNAVAILABLE',
+          message: 'Stripe no respondió',
+        },
+      }),
+    ).toBe('Stripe no respondió');
+  });
+
+  it('falls back when the body has no message', () => {
+    expect(readApiErrorMessage(null)).toBe(
+      'No se pudo cargar esta información.',
+    );
+    expect(readApiErrorMessage({ error: { code: 'X' } })).toBe(
+      'No se pudo cargar esta información.',
+    );
+    expect(readApiErrorMessage({ error: { message: '   ' } })).toBe(
+      'No se pudo cargar esta información.',
+    );
   });
 });

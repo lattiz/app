@@ -19,6 +19,15 @@ export function classifyAdminError(error: unknown): AdminErrorKind {
   return KIND_BY_CODE[code] ?? 'unknown';
 }
 
+const FALLBACK_MESSAGE = 'No se pudo cargar esta información.';
+
+/** Reads `{ error: { message } }` from the body the generated client throws. */
+export function readApiErrorMessage(error: unknown): string {
+  const message = readErrorMessage(error);
+  if (!message) return FALLBACK_MESSAGE;
+  return message;
+}
+
 function readErrorCode(error: unknown): string | undefined {
   if (!error || typeof error !== 'object') return undefined;
   const record = error as { code?: unknown; error?: unknown };
@@ -28,4 +37,14 @@ function readErrorCode(error: unknown): string | undefined {
     if (typeof nestedCode === 'string') return nestedCode;
   }
   return typeof record.code === 'string' ? record.code : undefined;
+}
+
+function readErrorMessage(error: unknown): string | undefined {
+  if (!error || typeof error !== 'object') return undefined;
+  const nested = (error as { error?: unknown }).error;
+  if (!nested || typeof nested !== 'object') return undefined;
+  const message = (nested as { message?: unknown }).message;
+  if (typeof message !== 'string') return undefined;
+  const trimmed = message.trim();
+  return trimmed.length > 0 ? trimmed : undefined;
 }
