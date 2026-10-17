@@ -11,8 +11,12 @@ import { AdminSubscriptionsController } from './billing/admin-subscriptions.cont
 import { AdminSubscriptionsService } from './billing/admin-subscriptions.service';
 import { AdminMeController } from './me/admin-me.controller';
 import { StorageUsageService } from './storage/storage-usage.service';
+import { AdminTemplatesController } from './templates/admin-templates.controller';
+import { AdminTemplatesService } from './templates/admin-templates.service';
 import { AdminTenantsController } from './tenants/admin-tenants.controller';
 import { AdminTenantsService } from './tenants/admin-tenants.service';
+import { AdminTrialsController } from './trials/admin-trials.controller';
+import { AdminTrialsService } from './trials/admin-trials.service';
 
 @Module({
   imports: [DatabaseModule, BillingCoreModule, PreviewModule, StorageModule],
@@ -20,6 +24,8 @@ import { AdminTenantsService } from './tenants/admin-tenants.service';
     AdminMeController,
     AdminTenantsController,
     AdminSubscriptionsController,
+    AdminTemplatesController,
+    AdminTrialsController,
   ],
   providers: [
     AdminMembersService,
@@ -29,6 +35,8 @@ import { AdminTenantsService } from './tenants/admin-tenants.service';
     StorageUsageService,
     AdminTenantsService,
     AdminSubscriptionsService,
+    AdminTemplatesService,
+    AdminTrialsService,
   ],
   exports: [
     AdminMembersService,
