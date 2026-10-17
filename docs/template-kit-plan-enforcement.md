@@ -115,9 +115,10 @@ escritura.
 
 ## Huecos conocidos
 
-- **Bloques del editor** (`lzb-*`): escritos a mano, sin `data-lz-slot`/`data-lz-variant`; no se marcan.
-  `lzb-gallery-grid` es Básico en el editor aunque la galería es solo Pro en el kit. Cerrarlo pide
-  que el editor salga del manifiesto (trabajo posterior).
+- **Bloques del editor escritos a mano** (`lzb-*` anteriores a la Fase C): sin `data-lz-slot`/`data-lz-variant`;
+  solo se marcan sus hooks de Motion. Desde la Fase C su plan en el editor sale del mismo catálogo que
+  el guard (`apps/web/src/features/editor/blocks/plan.ts`) y `lzb-gallery-grid` es Pro. Los bloques
+  generados del kit (portadas nuevas, `cta`, piezas) sí llevan slot/variante y se marcan.
 - **Variantes desconocidas** (plantillas legacy anteriores al kit, como `urban-luxe`): no se marcan.
 - **HTML ya publicado:** el guard no revisa sitios existentes; actúa en el próximo guardado o
   publicación.
