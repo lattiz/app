@@ -33,7 +33,7 @@ describe('navItemsFor', () => {
 
   it('gives the owner every section, in table order', () => {
     expect(pathsFor('owner')).toEqual(ALL_PATHS);
-    expect(navItemsFor('owner')).toHaveLength(8);
+    expect(navItemsFor('owner')).toHaveLength(9);
   });
 });
 
@@ -51,11 +51,14 @@ describe('canAccess', () => {
     }
   });
 
-  it('lets the operator open Configuración and blocks Auditoría and Equipo', () => {
+  it('lets the operator open Configuración and blocks Auditoría, Borrados and Equipo', () => {
     expect(canAccess('operator', '/configuracion')).toBe(true);
     expect(canAccess('operator', '/equipo')).toBe(false);
     expect(canAccess('operator', '/auditoria')).toBe(false);
+    expect(canAccess('operator', '/borrados')).toBe(false);
+    expect(canAccess('operator', '/borrados/job-1')).toBe(false);
     expect(canAccess('operator', '/clientes')).toBe(true);
+    expect(canAccess('operator', '/clientes/abc/borrar')).toBe(false);
   });
 
   it('lets the owner open every section', () => {
@@ -69,6 +72,10 @@ describe('canAccess', () => {
     expect(canAccess('operator', '/plantillas/abc')).toBe(true);
     expect(canAccess('viewer', '/plantillas/abc')).toBe(false);
     expect(canAccess('owner', '/equipo?tab=1')).toBe(true);
+    expect(canAccess('owner', '/clientes/abc/borrar')).toBe(true);
+    expect(canAccess('owner', '/clientes/abc/borrar/')).toBe(true);
+    expect(canAccess('viewer', '/clientes/abc/borrar')).toBe(false);
+    expect(canAccess('owner', '/borrados/job-1')).toBe(true);
     expect(canAccess('owner', '/equipo-extra')).toBe(false);
     expect(canAccess('owner', '/otra')).toBe(false);
     expect(canAccess('owner', '')).toBe(false);

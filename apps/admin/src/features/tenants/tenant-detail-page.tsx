@@ -11,6 +11,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { isAdminNotFound } from '@/lib/admin-errors';
 import type { AdminRole } from '@/lib/navigation';
+import { DangerZone } from '@/features/deletions/danger-zone';
 import {
   AnalyticsPanel,
   BillingPanel,
@@ -133,7 +134,10 @@ export function TenantDetailPage({
           </TabsList>
         </div>
         <TabsContent value="resumen">
-          <SummaryPanel detail={detail} />
+          <div className="flex flex-col gap-6">
+            <SummaryPanel detail={detail} />
+            {role === 'owner' ? <DangerZone tenantId={tenantId} /> : null}
+          </div>
         </TabsContent>
         <TabsContent value="dominio">
           {tab === 'dominio' ? (

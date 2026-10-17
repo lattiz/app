@@ -6,6 +6,7 @@ import {
   LayoutTemplate,
   ScrollText,
   Settings,
+  Trash2,
   UserCog,
   Users,
   type LucideIcon,
@@ -21,6 +22,7 @@ export const ADMIN_PATHS = [
   '/pruebas',
   '/configuracion',
   '/auditoria',
+  '/borrados',
   '/equipo',
 ] as const;
 
@@ -83,6 +85,12 @@ export const NAV_ITEMS: readonly NavItem[] = [
     roles: ['owner'],
   },
   {
+    to: '/borrados',
+    label: 'Borrados',
+    icon: Trash2,
+    roles: ['owner'],
+  },
+  {
     to: '/equipo',
     label: 'Equipo',
     icon: UserCog,
@@ -110,8 +118,13 @@ export function sectionForPath(path: string): NavItem | undefined {
   return match;
 }
 
+/** Operators can open a client; wiping one is owner-only. */
+const OWNER_ONLY_DELETION = /^\/clientes\/[^/]+\/borrar$/;
+
 export function canAccess(role: AdminRole, path: string): boolean {
-  const section = sectionForPath(path);
+  const normalized = normalizePath(path);
+  if (OWNER_ONLY_DELETION.test(normalized)) return role === 'owner';
+  const section = sectionForPath(normalized);
   if (!section) return false;
   return section.roles.includes(role);
 }
