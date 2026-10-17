@@ -5,6 +5,15 @@ export interface SectionBlock {
   category: string;
   media: string;
   content: Record<string, unknown>;
+  /** Kit `slot/variant` this block stands for; its plan follows that variant (see plan.ts). */
+  kitVariant?: string;
+  /** Kit primitive family (lz-btn, lz-tile…) a piece block renders. */
+  kitPrimitive?: string;
+  /** No kit counterpart on purpose: lives only in the editor (docs/template-kit-catalog.md). */
+  editorOnly?: true;
+  /** Studio: shown but not draggable (a Pro block for a plan without Pro). */
+  disable?: boolean;
+  onClick?: () => void;
 }
 
 /**
@@ -65,6 +74,27 @@ export const ICONS = {
     '<svg viewBox="0 0 24 24"><path d="M2 8h20v8H2zm9 2v4h2v-4zm-6 1h4v2H5zm10 0h4v2h-4z"/></svg>',
   clock:
     '<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20m1 5v5.4l4 2.4-.8 1.3L11 13V7z"/></svg>',
+  bento:
+    '<svg viewBox="0 0 24 24"><path d="M3 3h11v9H3zM16 3h5v18h-5zM3 14h5v7H3zM9.5 14H14v7H9.5z"/></svg>',
+  rail: '<svg viewBox="0 0 24 24"><path d="M3 3h5v18H3zM10 3h11v6H10zM10 11h11v10H10z"/></svg>',
+  overlap:
+    '<svg viewBox="0 0 24 24"><path d="M2 5h9v2H2zM2 9h7v2H2zM12 3h9v14h-9zM9 13h7v8H9z"/></svg>',
+  card: '<svg viewBox="0 0 24 24"><path d="M2 4h20v16H2zM4 8h9v9H4z" fill-rule="evenodd"/></svg>',
+  cta: '<svg viewBox="0 0 24 24"><path d="M2 7h20v10H2zM14 10h6v4h-6zM4 10h7v1.5H4zm0 2.5h5V14H4z" fill-rule="evenodd"/></svg>',
+  button:
+    '<svg viewBox="0 0 24 24"><path d="M5 8h14a4 4 0 0 1 0 8H5a4 4 0 0 1 0-8m2 3v2h10v-2z" fill-rule="evenodd"/></svg>',
+  tile: '<svg viewBox="0 0 24 24"><path d="M4 3h16v18H4zm3 3v2h10V6zm0 4v2h8v-2zm0 6v2h5v-2z" fill-rule="evenodd"/></svg>',
+  tag: '<svg viewBox="0 0 24 24"><path d="M3 8h18v8H3zm3 3v2h12v-2z" fill-rule="evenodd"/></svg>',
+  frame:
+    '<svg viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 1 8 8v12H4V10a8 8 0 0 1 8-8m-5 18h10l-3.5-5-2.5 3-1.5-2z"/></svg>',
+  number:
+    '<svg viewBox="0 0 24 24"><path d="M4 4h3v11H4zm5 0h7v2.5h-4.5v2H16V15H9v-2.5h4.5v-2H9zM4 18h16v2H4z"/></svg>',
+  quote:
+    '<svg viewBox="0 0 24 24"><path d="M4 6h7v7H8l-2 5H4l1.5-5H4zm9 0h7v7h-3l-2 5h-2l1.5-5H13z"/></svg>',
+  rule: '<svg viewBox="0 0 24 24"><path d="M2 11h20v2H2z"/></svg>',
   whatsapp:
     '<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 5 5.1-1.3A10 10 0 1 0 12 2m5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7a11 11 0 0 1-4.3-3.8c-.4-.6-1-1.7-1-2.9s.6-1.8.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l1.8.9c.3.1.5.2.5.3.1.2.1.7-.1 1.4"/></svg>',
 };
+
+/** Appended to a locked block's media; styled in grapesjs-sdk.css (editor UI, never the canvas). */
+export const PRO_BADGE = '<span class="lzb-pro-badge">Pro</span>';

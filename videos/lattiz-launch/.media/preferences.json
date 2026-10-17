@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "preferences": {
+    "language": {
+      "value": "es-MX",
+      "confirmed_in": [
+        "lattiz-launch"
+      ],
+      "updated_at": "2026-10-15T20:25:32.596Z"
+    },
+    "destination": {
+      "value": "youtube",
+      "confirmed_in": [
+        "lattiz-launch"
+      ],
+      "updated_at": "2026-10-15T20:25:36.096Z"
+    },
+    "aspect": {
+      "value": "1920x1080",
+      "confirmed_in": [
+        "lattiz-launch"
+      ],
+      "updated_at": "2026-10-15T20:25:36.130Z"
+    },
+    "flow": {
+      "value": "automation",
+      "confirmed_in": [
+        "lattiz-launch"
+      ],
+      "updated_at": "2026-10-15T20:25:36.163Z"
+    },
+    "storyboard": {
+      "value": "yes",
+      "confirmed_in": [
+        "lattiz-launch"
+      ],
+      "updated_at": "2026-10-15T20:25:36.195Z"
+    },
+    "style_preset.product-launch-video": {
+      "value": "blue-professional",
+      "confirmed_in": [
+        "lattiz-launch"
+      ],
+      "updated_at": "2026-10-15T20:28:33.933Z"
+    },
+    "voice": {
+      "value": "7e5eebc368ab477a9175b7d2a2c3317e",
+      "confirmed_in": [
+        "lattiz-launch"
+      ],
+      "updated_at": "2026-10-15T20:36:46.115Z"
+    }
+  },
+  "sightings": {}
+}

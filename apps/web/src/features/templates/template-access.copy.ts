@@ -3,6 +3,10 @@ export const templateAccessCopy = {
   tierLabel: { basic: 'Básico', pro: 'Pro' } as const,
   filters: { all: 'Todas', basic: 'Básico', pro: 'Pro' } as const,
   filterLabel: 'Filtrar por plan',
+  giroFilter: { label: 'Giro', all: 'Todos los giros' },
+  directionFilter: { label: 'Dirección de arte', all: 'Todas las direcciones' },
+  palette: 'Paleta',
+  proFeatures: 'Incluye',
   useTemplate: 'Usar plantilla',
   editTemplate: 'Editar',
   current: 'actual',
@@ -21,6 +25,12 @@ export const templateAccessCopy = {
       `Tu sitio usa la plantilla Pro${name ? ` «${name}»` : ''}. Sigue publicado tal como está, pero para editarlo o publicar cambios elige una plantilla Básica o reactiva Pro.`,
     chooseBasic: 'Elegir plantilla Básica',
     reactivatePro: 'Reactivar Pro',
+  },
+  proFeature: {
+    title: (feature: string) => `«${feature}» es del plan Pro`,
+    body: 'Mejora a Pro para agregar esta sección y usar galerías, portadas con cifras y animaciones. Lo que ya tienes en tu sitio sigue igual.',
+    later: 'Ahora no',
+    lockedLabel: 'Incluido en Pro',
   },
   downgradeLoss: {
     title: 'Vas a perder el acceso a tu plantilla',

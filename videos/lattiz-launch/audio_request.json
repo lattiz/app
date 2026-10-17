@@ -1,0 +1,68 @@
+{
+  "lines": [
+    {
+      "id": "01",
+      "sfx": [
+        "soft whoosh",
+        "keyboard typing",
+        "pop"
+      ]
+    },
+    {
+      "id": "02",
+      "sfx": [
+        "tick",
+        "padlock click",
+        "glass shatter whoosh"
+      ]
+    },
+    {
+      "id": "03",
+      "sfx": [
+        "low riser",
+        "soft impact on logo landing",
+        "chip pops"
+      ]
+    },
+    {
+      "id": "04",
+      "sfx": [
+        "whoosh",
+        "ui click"
+      ]
+    },
+    {
+      "id": "05",
+      "sfx": [
+        "typing",
+        "whoosh on phone slide-in"
+      ]
+    },
+    {
+      "id": "06",
+      "sfx": [
+        "typing",
+        "ui click",
+        "whoosh",
+        "soft pop"
+      ]
+    },
+    {
+      "id": "07",
+      "sfx": [
+        "ticks on count-up",
+        "gentle pops on ticks"
+      ]
+    },
+    {
+      "id": "08",
+      "sfx": [
+        "soft impact",
+        "shimmer"
+      ]
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  }
+}

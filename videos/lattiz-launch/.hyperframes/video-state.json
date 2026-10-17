@@ -1,0 +1,2706 @@
+{
+  "version": 1,
+  "historyId": "509c09d6-30fd-49ff-93ae-b68a091cdee0",
+  "currentRevision": "d040082f-6069-41a2-94a9-7a2b343c110e",
+  "pendingChanges": false,
+  "files": {
+    "AGENTS.md": {
+      "hash": "1d4f0c8ca2507b94fd7c9df709fff01416adbd51a0f922b9d6ed2f40129147d5",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/1d/1d4f0c8ca2507b94fd7c9df709fff01416adbd51a0f922b9d6ed2f40129147d5"
+    },
+    "BRIEF.md": {
+      "hash": "248ad1180edce122c89b6d8c13fa4dee287f871099c61fb0441133f38c91f7a8",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/24/248ad1180edce122c89b6d8c13fa4dee287f871099c61fb0441133f38c91f7a8"
+    },
+    "CLAUDE.md": {
+      "hash": "1d4f0c8ca2507b94fd7c9df709fff01416adbd51a0f922b9d6ed2f40129147d5",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/1d/1d4f0c8ca2507b94fd7c9df709fff01416adbd51a0f922b9d6ed2f40129147d5"
+    },
+    "SCRIPT.md": {
+      "hash": "a1cdad8f4918fdde49d04999575e97d747be07fa7f90e59feb7c32463c7ea55b",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/a1/a1cdad8f4918fdde49d04999575e97d747be07fa7f90e59feb7c32463c7ea55b"
+    },
+    "STORYBOARD.md": {
+      "hash": "8945b4c5344b8f9cd13660043478ab6e8e58891562c65fb57ea2cb5fd7dd1202",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/89/8945b4c5344b8f9cd13660043478ab6e8e58891562c65fb57ea2cb5fd7dd1202"
+    },
+    "assets/fonts/captured-4fa387ec64143e14-s.3f4zuumv8svu0.woff2": {
+      "hash": "75b3bedbebc35f347c0ae3b416aa871941555357e7b0f83767eb5987875589ed",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/75/75b3bedbebc35f347c0ae3b416aa871941555357e7b0f83767eb5987875589ed"
+    },
+    "assets/fonts/captured-53b9e256198e5412-s.2gwoz23eiro2t.woff2": {
+      "hash": "f689f638f29fff460a2d5749edb5d5c38d7bef0389f32032d871f23fc6ebb008",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f6/f689f638f29fff460a2d5749edb5d5c38d7bef0389f32032d871f23fc6ebb008"
+    },
+    "assets/fonts/captured-5ce348bf30bf5439-s.27spqqad3wyeo.woff2": {
+      "hash": "e27f657e38d52887baa3b6b2f812bef93dfdd356f0810e40edd4ee284cc7e9f6",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/e2/e27f657e38d52887baa3b6b2f812bef93dfdd356f0810e40edd4ee284cc7e9f6"
+    },
+    "assets/fonts/captured-6306c77e7c8268e4-s.34r5yzckw0h2s.woff2": {
+      "hash": "d67e4a94ba498635f764ddca7d1ec4271f5642f032eb24b426764480f66f8497",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/d6/d67e4a94ba498635f764ddca7d1ec4271f5642f032eb24b426764480f66f8497"
+    },
+    "assets/fonts/captured-7178b3e590c64307-s.0i3h3th1vs4m7.woff2": {
+      "hash": "58a6b173d5ca1dec92166ea3c6cb1a84a4144556d10928ac14e8e6b40e4787bd",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/58/58a6b173d5ca1dec92166ea3c6cb1a84a4144556d10928ac14e8e6b40e4787bd"
+    },
+    "assets/fonts/captured-797e433ab948586e-s.p.1v5bejj26fx9h.woff2": {
+      "hash": "5f3d6ad60f29d6cb708414ec6887163d63bf197377ef5417d2483ff31ace6c3b",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/5f/5f3d6ad60f29d6cb708414ec6887163d63bf197377ef5417d2483ff31ace6c3b"
+    },
+    "assets/fonts/captured-7d817b4c03b0c5f1-s.2jyz_zw3a8jit.woff2": {
+      "hash": "16e1d48b6dd29eb240aec5db36184eb182933c082cd43de7f35af686d58087d2",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/16/16e1d48b6dd29eb240aec5db36184eb182933c082cd43de7f35af686d58087d2"
+    },
+    "assets/fonts/captured-8a480f0b521d4e75-s.3j-a226dh71aj.woff2": {
+      "hash": "6129fc8571c3e0cb0a4c41f5160c974a843b055009dc4ad8858bd808e18a2d86",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/6129fc8571c3e0cb0a4c41f5160c974a843b055009dc4ad8858bd808e18a2d86"
+    },
+    "assets/fonts/captured-bbc41e54d2fcbd21-s.30bdpjkrtcces.woff2": {
+      "hash": "745994b5cd950ec201b66526375f057d540847cccfc70f4f24f5f571d26d3923",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/74/745994b5cd950ec201b66526375f057d540847cccfc70f4f24f5f571d26d3923"
+    },
+    "assets/fonts/captured-caa3a2e1cccd8315-s.p.0zr6hhvz-h9nw.woff2": {
+      "hash": "9b6f5ff45b278c744b5f379a2c4ecbaf858a842b8eaf82ac8d21b699ca16c608",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/9b/9b6f5ff45b278c744b5f379a2c4ecbaf858a842b8eaf82ac8d21b699ca16c608"
+    },
+    "assets/fonts/captured-fef07dbb0973bf53-s.00az9qtie3ho1.woff2": {
+      "hash": "b7a545bbb08256bd809f11cfe66d88da3e22d169ea4407737b1ef0ec1ed3d791",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/b7/b7a545bbb08256bd809f11cfe66d88da3e22d169ea4407737b1ef0ec1ed3d791"
+    },
+    "assets/src/logo.png": {
+      "hash": "f3dbd95c9d5039540579d88249cbc25b47114db7e759c5b565c7e326f7379fee",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f3/f3dbd95c9d5039540579d88249cbc25b47114db7e759c5b565c7e326f7379fee"
+    },
+    "assets/src/ui-dominio-clean.png": {
+      "hash": "0fa8beb90db66de67f9f8b8e5941cb15cbd99aae8f98a5071715019fd91bb9a5",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/0f/0fa8beb90db66de67f9f8b8e5941cb15cbd99aae8f98a5071715019fd91bb9a5"
+    },
+    "assets/src/ui-dominio-crop.png": {
+      "hash": "58fcdfd03e6c83867c93368241cf7dbbae672a8d7c9d92b43e30dabe9ee29ae6",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/58/58fcdfd03e6c83867c93368241cf7dbbae672a8d7c9d92b43e30dabe9ee29ae6"
+    },
+    "assets/src/ui-dominio.png": {
+      "hash": "3a95aff559a9271768f9321e1321bf5ada3b0cbf6809a5ad2e9c17ae3c6dce40",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/3a/3a95aff559a9271768f9321e1321bf5ada3b0cbf6809a5ad2e9c17ae3c6dce40"
+    },
+    "assets/src/ui-editor-bloques-photo.jpg": {
+      "hash": "795d3a90b1c46b5b80b533c942a32d5e913d97bf794c742dd52e9cdfbf563087",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/79/795d3a90b1c46b5b80b533c942a32d5e913d97bf794c742dd52e9cdfbf563087"
+    },
+    "assets/src/ui-editor-movil-photo.png": {
+      "hash": "e35488d8ea79943deabc02b3d286fbb553aef21cdc36336e377bc3c87a0ac6ce",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/e3/e35488d8ea79943deabc02b3d286fbb553aef21cdc36336e377bc3c87a0ac6ce"
+    },
+    "assets/src/ui-editor-movil-photo.webp": {
+      "hash": "4941fd18a430ea713e6998fd1bce28f083cc3853df78ce522a4c2b5867d2669a",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/49/4941fd18a430ea713e6998fd1bce28f083cc3853df78ce522a4c2b5867d2669a"
+    },
+    "assets/src/ui-editor-movil-screen.png": {
+      "hash": "0d54faed335dd17b97a38a100e49c06274eafb58a08b779249cdd7675060dee8",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/0d/0d54faed335dd17b97a38a100e49c06274eafb58a08b779249cdd7675060dee8"
+    },
+    "assets/src/ui-editor-trigo.png": {
+      "hash": "23fd3ad02855fd9e6e08e5599f361ba9b06fca01e28554b49673f126f44d6c32",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/23/23fd3ad02855fd9e6e08e5599f361ba9b06fca01e28554b49673f126f44d6c32"
+    },
+    "assets/src/ui-editor-trigo.webp": {
+      "hash": "3c67a2eea9a6ecd3c939ddf3a5e18c12ead0674f6104c046118c4805394eb7a2",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/3c/3c67a2eea9a6ecd3c939ddf3a5e18c12ead0674f6104c046118c4805394eb7a2"
+    },
+    "assets/src/ui-plantillas-clean.png": {
+      "hash": "9fc5aa1b19b1ceb7c9b22ac6cc134e5198882e17b25514ecef8783402443dd35",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/9f/9fc5aa1b19b1ceb7c9b22ac6cc134e5198882e17b25514ecef8783402443dd35"
+    },
+    "assets/src/ui-plantillas.png": {
+      "hash": "91de2efdd8a241b31ca7e6eb2d137721537fd92d911086a579ac4556c72e2aa6",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/91/91de2efdd8a241b31ca7e6eb2d137721537fd92d911086a579ac4556c72e2aa6"
+    },
+    "assets/src/ui-plantillas.webp": {
+      "hash": "66e48805da034ff3442d4101bc5c30e53539e82f8635cdc4a81bf8045ecca6a4",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/66/66e48805da034ff3442d4101bc5c30e53539e82f8635cdc4a81bf8045ecca6a4"
+    },
+    "assets/src/ui-publicar.png": {
+      "hash": "3dd0f83adb1586822df2632e9abc53553b05d63117e4f561f5a25ef3dd3ede73",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/3d/3dd0f83adb1586822df2632e9abc53553b05d63117e4f561f5a25ef3dd3ede73"
+    },
+    "capture/AGENTS.md": {
+      "hash": "ecdbd5d326f433234e2e02c62630d2f18e407d01faa24346c7e0f45c5bbac20d",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/ec/ecdbd5d326f433234e2e02c62630d2f18e407d01faa24346c7e0f45c5bbac20d"
+    },
+    "capture/CLAUDE.md": {
+      "hash": "ecdbd5d326f433234e2e02c62630d2f18e407d01faa24346c7e0f45c5bbac20d",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/ec/ecdbd5d326f433234e2e02c62630d2f18e407d01faa24346c7e0f45c5bbac20d"
+    },
+    "capture/assets/aparece-cuando-te-buscan.jpg": {
+      "hash": "19fc63d227aad2fc0a684dca0ec7aff0a8b5f96787e19259a4700aa1093fb8e5",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/19/19fc63d227aad2fc0a684dca0ec7aff0a8b5f96787e19259a4700aa1093fb8e5"
+    },
+    "capture/assets/bg-foreground-px-4.jpg": {
+      "hash": "f9d8e5a19249a69a8cfa311f03b96cfb6a4c210c5046ade02011202bb7d13122",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f9/f9d8e5a19249a69a8cfa311f03b96cfb6a4c210c5046ade02011202bb7d13122"
+    },
+    "capture/assets/contact-sheet-1.jpg": {
+      "hash": "ad5ad4714a9475c0edbfecfd236194e553833cd978ccf381a38ba1c2e41851e9",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/ad/ad5ad4714a9475c0edbfecfd236194e553833cd978ccf381a38ba1c2e41851e9"
+    },
+    "capture/assets/contact-sheet-2.jpg": {
+      "hash": "b9b6827d62ddb8147ef7079f37f020d9befdd78e284a8195bdc0d33894cc772d",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/b9/b9b6827d62ddb8147ef7079f37f020d9befdd78e284a8195bdc0d33894cc772d"
+    },
+    "capture/assets/ejemplo-de-una-plantilla-personalizada-c.jpg": {
+      "hash": "3cb77f9d12549fc20b329d7ef9ddf53d960a875413df9978e0934b59925f7ff1",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/3c/3cb77f9d12549fc20b329d7ef9ddf53d960a875413df9978e0934b59925f7ff1"
+    },
+    "capture/assets/favicon.ico": {
+      "hash": "8b443e39e9ee484ebf17bb7a6b8d3b812de0e31b281ba22eef2e50076c00d089",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/8b/8b443e39e9ee484ebf17bb7a6b8d3b812de0e31b281ba22eef2e50076c00d089"
+    },
+    "capture/assets/fonts/4fa387ec64143e14-s.3f4zuumv8svu0.woff2": {
+      "hash": "75b3bedbebc35f347c0ae3b416aa871941555357e7b0f83767eb5987875589ed",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/75/75b3bedbebc35f347c0ae3b416aa871941555357e7b0f83767eb5987875589ed"
+    },
+    "capture/assets/fonts/53b9e256198e5412-s.2gwoz23eiro2t.woff2": {
+      "hash": "f689f638f29fff460a2d5749edb5d5c38d7bef0389f32032d871f23fc6ebb008",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f6/f689f638f29fff460a2d5749edb5d5c38d7bef0389f32032d871f23fc6ebb008"
+    },
+    "capture/assets/fonts/5ce348bf30bf5439-s.27spqqad3wyeo.woff2": {
+      "hash": "e27f657e38d52887baa3b6b2f812bef93dfdd356f0810e40edd4ee284cc7e9f6",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/e2/e27f657e38d52887baa3b6b2f812bef93dfdd356f0810e40edd4ee284cc7e9f6"
+    },
+    "capture/assets/fonts/6306c77e7c8268e4-s.34r5yzckw0h2s.woff2": {
+      "hash": "d67e4a94ba498635f764ddca7d1ec4271f5642f032eb24b426764480f66f8497",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/d6/d67e4a94ba498635f764ddca7d1ec4271f5642f032eb24b426764480f66f8497"
+    },
+    "capture/assets/fonts/7178b3e590c64307-s.0i3h3th1vs4m7.woff2": {
+      "hash": "58a6b173d5ca1dec92166ea3c6cb1a84a4144556d10928ac14e8e6b40e4787bd",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/58/58a6b173d5ca1dec92166ea3c6cb1a84a4144556d10928ac14e8e6b40e4787bd"
+    },
+    "capture/assets/fonts/797e433ab948586e-s.p.1v5bejj26fx9h.woff2": {
+      "hash": "5f3d6ad60f29d6cb708414ec6887163d63bf197377ef5417d2483ff31ace6c3b",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/5f/5f3d6ad60f29d6cb708414ec6887163d63bf197377ef5417d2483ff31ace6c3b"
+    },
+    "capture/assets/fonts/7d817b4c03b0c5f1-s.2jyz_zw3a8jit.woff2": {
+      "hash": "16e1d48b6dd29eb240aec5db36184eb182933c082cd43de7f35af686d58087d2",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/16/16e1d48b6dd29eb240aec5db36184eb182933c082cd43de7f35af686d58087d2"
+    },
+    "capture/assets/fonts/8a480f0b521d4e75-s.3j-a226dh71aj.woff2": {
+      "hash": "6129fc8571c3e0cb0a4c41f5160c974a843b055009dc4ad8858bd808e18a2d86",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/6129fc8571c3e0cb0a4c41f5160c974a843b055009dc4ad8858bd808e18a2d86"
+    },
+    "capture/assets/fonts/bbc41e54d2fcbd21-s.30bdpjkrtcces.woff2": {
+      "hash": "745994b5cd950ec201b66526375f057d540847cccfc70f4f24f5f571d26d3923",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/74/745994b5cd950ec201b66526375f057d540847cccfc70f4f24f5f571d26d3923"
+    },
+    "capture/assets/fonts/caa3a2e1cccd8315-s.p.0zr6hhvz-h9nw.woff2": {
+      "hash": "9b6f5ff45b278c744b5f379a2c4ecbaf858a842b8eaf82ac8d21b699ca16c608",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/9b/9b6f5ff45b278c744b5f379a2c4ecbaf858a842b8eaf82ac8d21b699ca16c608"
+    },
+    "capture/assets/fonts/fef07dbb0973bf53-s.00az9qtie3ho1.woff2": {
+      "hash": "b7a545bbb08256bd809f11cfe66d88da3e22d169ea4407737b1ef0ec1ed3d791",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/b7/b7a545bbb08256bd809f11cfe66d88da3e22d169ea4407737b1ef0ec1ed3d791"
+    },
+    "capture/assets/hero-4.jpg": {
+      "hash": "fdeec598a19c36994937a07a7fb206f9d9e9482016b82e3d2b02a613802b07a6",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/fd/fdeec598a19c36994937a07a7fb206f9d9e9482016b82e3d2b02a613802b07a6"
+    },
+    "capture/assets/hero-6.jpg": {
+      "hash": "153917373a66bebdac65006d5523913384fcfdfca6db76be3ab04adfe5b0fff1",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/15/153917373a66bebdac65006d5523913384fcfdfca6db76be3ab04adfe5b0fff1"
+    },
+    "capture/assets/hero-8.jpg": {
+      "hash": "7dd9b729c20a7ff9027330e25cc8ff1737b69b554fc9e4795d57812cbbaa6a9f",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/7d/7dd9b729c20a7ff9027330e25cc8ff1737b69b554fc9e4795d57812cbbaa6a9f"
+    },
+    "capture/assets/icon-icon-48x48.ico": {
+      "hash": "8b443e39e9ee484ebf17bb7a6b8d3b812de0e31b281ba22eef2e50076c00d089",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/8b/8b443e39e9ee484ebf17bb7a6b8d3b812de0e31b281ba22eef2e50076c00d089"
+    },
+    "capture/assets/image-11.jpg": {
+      "hash": "2cdf4d3b3ce162af5478100a3a770dda6c2775ebe89ce6c227102966136c8f3e",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/2c/2cdf4d3b3ce162af5478100a3a770dda6c2775ebe89ce6c227102966136c8f3e"
+    },
+    "capture/assets/image-12.jpg": {
+      "hash": "15e77e81b2661f6e3085d28ead6c8ac5db43d0faf0866a1ec2e1f2ad214c8d03",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/15/15e77e81b2661f6e3085d28ead6c8ac5db43d0faf0866a1ec2e1f2ad214c8d03"
+    },
+    "capture/assets/image-13.jpg": {
+      "hash": "7f3d0599e444ec6904f9e64cd60dc8e76f31d1ac4b19803f1e29c68b9d90dc5e",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/7f/7f3d0599e444ec6904f9e64cd60dc8e76f31d1ac4b19803f1e29c68b9d90dc5e"
+    },
+    "capture/assets/image-14.jpg": {
+      "hash": "3d0b80693931999c139d02d6c0a68af8802ee2fcef4fde661d584593e9097331",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/3d/3d0b80693931999c139d02d6c0a68af8802ee2fcef4fde661d584593e9097331"
+    },
+    "capture/assets/image-15.jpg": {
+      "hash": "110822e5b7207bfdaa8f6f4dfc347482b98a8543835eb662c0f1aae70d13bc62",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/11/110822e5b7207bfdaa8f6f4dfc347482b98a8543835eb662c0f1aae70d13bc62"
+    },
+    "capture/assets/image-16.jpg": {
+      "hash": "55537873b21e86fa3ad879fe41cee2c141e8846020477b47b264549370a02411",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/55/55537873b21e86fa3ad879fe41cee2c141e8846020477b47b264549370a02411"
+    },
+    "capture/assets/image-17.jpg": {
+      "hash": "7e44b4b9e0b1fb00ba2faf651f462be8e7200fe8c95fd9334112e918c587ec8f",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/7e/7e44b4b9e0b1fb00ba2faf651f462be8e7200fe8c95fd9334112e918c587ec8f"
+    },
+    "capture/assets/image-18.jpg": {
+      "hash": "5d9bd152079481d2a1df9cbd5e7fcb72ec4decfe3a121fd0044e89b5dd01d3ac",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/5d/5d9bd152079481d2a1df9cbd5e7fcb72ec4decfe3a121fd0044e89b5dd01d3ac"
+    },
+    "capture/assets/image.jpg": {
+      "hash": "bdd90168339e42a644bee8566948b7fc9950ec35d71fd8219595c3551329a202",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/bd/bdd90168339e42a644bee8566948b7fc9950ec35d71fd8219595c3551329a202"
+    },
+    "capture/assets/logo-f7bd9fc9.svg": {
+      "hash": "31495b1f1d5c045557208d2b0329bf169f26b63215c3e07d45003ba7d188a10a",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/31/31495b1f1d5c045557208d2b0329bf169f26b63215c3e07d45003ba7d188a10a"
+    },
+    "capture/assets/logo.png": {
+      "hash": "f3dbd95c9d5039540579d88249cbc25b47114db7e759c5b565c7e326f7379fee",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f3/f3dbd95c9d5039540579d88249cbc25b47114db7e759c5b565c7e326f7379fee"
+    },
+    "capture/assets/relative-overflow-hidden.png": {
+      "hash": "61a4b56a569d1fb40b2c26987d217b09834ab9666d83a54072437211ea4bbb8f",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/61a4b56a569d1fb40b2c26987d217b09834ab9666d83a54072437211ea4bbb8f"
+    },
+    "capture/assets/svg-2bc7de53.svg": {
+      "hash": "1bf10df24c72cc610789056d0c8662ec11f8f7570c4e957b86ba2a33ea563fa3",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/1b/1bf10df24c72cc610789056d0c8662ec11f8f7570c4e957b86ba2a33ea563fa3"
+    },
+    "capture/assets/svgs/contact-sheet-1.jpg": {
+      "hash": "a8f8f0ae4cc36846250c3c8cce14f542ba689be762f9e799df9edcbc32ae2942",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/a8/a8f8f0ae4cc36846250c3c8cce14f542ba689be762f9e799df9edcbc32ae2942"
+    },
+    "capture/assets/svgs/contact-sheet-2.jpg": {
+      "hash": "93b2c350e0a3bcbcadee5d909199eb5db9da7c76260ac4f6ace6e232be220ed4",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/93/93b2c350e0a3bcbcadee5d909199eb5db9da7c76260ac4f6ace6e232be220ed4"
+    },
+    "capture/assets/svgs/contact-sheet-3.jpg": {
+      "hash": "ddd0be8b12ab13b248455d5cbdc2ba08f982e59bfe443255e722509ee97bb90e",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/dd/ddd0be8b12ab13b248455d5cbdc2ba08f982e59bfe443255e722509ee97bb90e"
+    },
+    "capture/assets/svgs/logo-399e51aa.svg": {
+      "hash": "5b0a14852c239e1f7bcaf2d5e584789b63ced774f97af3d48dcc504ec5facf07",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/5b/5b0a14852c239e1f7bcaf2d5e584789b63ced774f97af3d48dcc504ec5facf07"
+    },
+    "capture/assets/svgs/logo-6a28aa85.svg": {
+      "hash": "9a6d6e651d661cb069cf362f387fde0440ca5ce507d90c60ed66448b28de2bed",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/9a/9a6d6e651d661cb069cf362f387fde0440ca5ce507d90c60ed66448b28de2bed"
+    },
+    "capture/assets/svgs/svg-0f723f6a.svg": {
+      "hash": "3618241583e1f0e85fa8af3dee7781daf5418648dec1d6dbe419851b5eabbdbe",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/36/3618241583e1f0e85fa8af3dee7781daf5418648dec1d6dbe419851b5eabbdbe"
+    },
+    "capture/assets/svgs/svg-17acd6a0.svg": {
+      "hash": "f7f9a58952b65e2993c2304b0ed6e4e1b037bb6014e15a3f5e9197a03500da39",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f7/f7f9a58952b65e2993c2304b0ed6e4e1b037bb6014e15a3f5e9197a03500da39"
+    },
+    "capture/assets/svgs/svg-19977fb6.svg": {
+      "hash": "5b3df60788701c6f20b74cc444dac63a0ec26ffe2fe96c67f213ebb972936f26",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/5b/5b3df60788701c6f20b74cc444dac63a0ec26ffe2fe96c67f213ebb972936f26"
+    },
+    "capture/assets/svgs/svg-1b7aa194.svg": {
+      "hash": "8960865cc2f0be0c98a0f7ef9e8e5b8583727b825984083ca7c0b913f8ab65e7",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/89/8960865cc2f0be0c98a0f7ef9e8e5b8583727b825984083ca7c0b913f8ab65e7"
+    },
+    "capture/assets/svgs/svg-261d5b8e.svg": {
+      "hash": "b2a8fa860294a6a540a0a7b957d0118a3d83b26c98e8f19d3f55c6344ca86a64",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/b2/b2a8fa860294a6a540a0a7b957d0118a3d83b26c98e8f19d3f55c6344ca86a64"
+    },
+    "capture/assets/svgs/svg-48c3d6f6-10.svg": {
+      "hash": "617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657"
+    },
+    "capture/assets/svgs/svg-48c3d6f6-11.svg": {
+      "hash": "617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657"
+    },
+    "capture/assets/svgs/svg-48c3d6f6-12.svg": {
+      "hash": "617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657"
+    },
+    "capture/assets/svgs/svg-48c3d6f6-13.svg": {
+      "hash": "617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657"
+    },
+    "capture/assets/svgs/svg-48c3d6f6-14.svg": {
+      "hash": "617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657"
+    },
+    "capture/assets/svgs/svg-48c3d6f6-15.svg": {
+      "hash": "617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657"
+    },
+    "capture/assets/svgs/svg-48c3d6f6-16.svg": {
+      "hash": "617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657"
+    },
+    "capture/assets/svgs/svg-48c3d6f6-17.svg": {
+      "hash": "617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657"
+    },
+    "capture/assets/svgs/svg-48c3d6f6-2.svg": {
+      "hash": "617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657"
+    },
+    "capture/assets/svgs/svg-48c3d6f6-3.svg": {
+      "hash": "617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657"
+    },
+    "capture/assets/svgs/svg-48c3d6f6-4.svg": {
+      "hash": "617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657"
+    },
+    "capture/assets/svgs/svg-48c3d6f6-5.svg": {
+      "hash": "617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657"
+    },
+    "capture/assets/svgs/svg-48c3d6f6-6.svg": {
+      "hash": "617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657"
+    },
+    "capture/assets/svgs/svg-48c3d6f6-7.svg": {
+      "hash": "617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657"
+    },
+    "capture/assets/svgs/svg-48c3d6f6-8.svg": {
+      "hash": "617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657"
+    },
+    "capture/assets/svgs/svg-48c3d6f6-9.svg": {
+      "hash": "617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657"
+    },
+    "capture/assets/svgs/svg-48c3d6f6.svg": {
+      "hash": "617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/61/617a7609e23a18d86645d3be67a3a967a6c3de872d851f9146fe142a612d9657"
+    },
+    "capture/assets/svgs/svg-5bb38c3b.svg": {
+      "hash": "90b39f082e99a437a2cd8a83d2ca76c7722a8babab5e9224f390557c526ede55",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/90/90b39f082e99a437a2cd8a83d2ca76c7722a8babab5e9224f390557c526ede55"
+    },
+    "capture/assets/svgs/svg-5e8300c6.svg": {
+      "hash": "983627596277fe5935b1bc1ae69d7a42249ad074fc05b00c5a238033fd325a29",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/98/983627596277fe5935b1bc1ae69d7a42249ad074fc05b00c5a238033fd325a29"
+    },
+    "capture/assets/svgs/svg-8aff908a.svg": {
+      "hash": "4f522eb8bd60530252bbb08db485826b5ce04d031d99a9a705fb53269cbb3b38",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/4f/4f522eb8bd60530252bbb08db485826b5ce04d031d99a9a705fb53269cbb3b38"
+    },
+    "capture/assets/svgs/svg-a06e04af.svg": {
+      "hash": "ea8c4810ad8f6c4cc3fc10cb67c43b5679b095f2dbea1485ede89be937fae18d",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/ea/ea8c4810ad8f6c4cc3fc10cb67c43b5679b095f2dbea1485ede89be937fae18d"
+    },
+    "capture/assets/svgs/svg-a3d06d6c.svg": {
+      "hash": "025f98c9765f2592f4e30eb742679643ae42b3d9329e55ae2207265527977ec1",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/02/025f98c9765f2592f4e30eb742679643ae42b3d9329e55ae2207265527977ec1"
+    },
+    "capture/assets/svgs/svg-cd91246a.svg": {
+      "hash": "dba38e13c82dabf2e914e0a239eb73e1293298aff77906a7ce641544408797f6",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/db/dba38e13c82dabf2e914e0a239eb73e1293298aff77906a7ce641544408797f6"
+    },
+    "capture/assets/ui-dominio-clean.png": {
+      "hash": "0fa8beb90db66de67f9f8b8e5941cb15cbd99aae8f98a5071715019fd91bb9a5",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/0f/0fa8beb90db66de67f9f8b8e5941cb15cbd99aae8f98a5071715019fd91bb9a5"
+    },
+    "capture/assets/ui-dominio-crop.png": {
+      "hash": "58fcdfd03e6c83867c93368241cf7dbbae672a8d7c9d92b43e30dabe9ee29ae6",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/58/58fcdfd03e6c83867c93368241cf7dbbae672a8d7c9d92b43e30dabe9ee29ae6"
+    },
+    "capture/assets/ui-editor-movil-screen.png": {
+      "hash": "0d54faed335dd17b97a38a100e49c06274eafb58a08b779249cdd7675060dee8",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/0d/0d54faed335dd17b97a38a100e49c06274eafb58a08b779249cdd7675060dee8"
+    },
+    "capture/assets/ui-editor-trigo.png": {
+      "hash": "23fd3ad02855fd9e6e08e5599f361ba9b06fca01e28554b49673f126f44d6c32",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/23/23fd3ad02855fd9e6e08e5599f361ba9b06fca01e28554b49673f126f44d6c32"
+    },
+    "capture/assets/ui-plantillas-clean.png": {
+      "hash": "9fc5aa1b19b1ceb7c9b22ac6cc134e5198882e17b25514ecef8783402443dd35",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/9f/9fc5aa1b19b1ceb7c9b22ac6cc134e5198882e17b25514ecef8783402443dd35"
+    },
+    "capture/assets/ui-publicar.png": {
+      "hash": "3dd0f83adb1586822df2632e9abc53553b05d63117e4f561f5a25ef3dd3ede73",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/3d/3dd0f83adb1586822df2632e9abc53553b05d63117e4f561f5a25ef3dd3ede73"
+    },
+    "capture/assets/videos/previews/video-0-preview.png": {
+      "hash": "a5ac05b327c24c0400c4e3da029395b69e83aab846953cd2930246f2e40dbb2c",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/a5/a5ac05b327c24c0400c4e3da029395b69e83aab846953cd2930246f2e40dbb2c"
+    },
+    "capture/assets/videos/previews/video-1-preview.png": {
+      "hash": "d892a132993165759e8fe46522b1a9ba37b1239e2de0c7542aefc49450945e13",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/d8/d892a132993165759e8fe46522b1a9ba37b1239e2de0c7542aefc49450945e13"
+    },
+    "capture/assets/videos/previews/video-2-preview.png": {
+      "hash": "605a67183b7c257938f2e23aceb5540a99f51e04ce7bf5636d00fb16448c5dec",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/60/605a67183b7c257938f2e23aceb5540a99f51e04ce7bf5636d00fb16448c5dec"
+    },
+    "capture/assets/videos/previews/video-3-preview.png": {
+      "hash": "66341ec960ee05dbcf0c368247d7e608272d80b05dca70ae3a49426870625e7e",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/66/66341ec960ee05dbcf0c368247d7e608272d80b05dca70ae3a49426870625e7e"
+    },
+    "capture/assets/vista-previa-de-la-plantilla-la-nota-azu.jpg": {
+      "hash": "7d9c0391b891c6d50d3a09a52e664516f5d91abe9ef8a11ec3b28cb23c12fb95",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/7d/7d9c0391b891c6d50d3a09a52e664516f5d91abe9ef8a11ec3b28cb23c12fb95"
+    },
+    "capture/assets/vista-previa-de-la-plantilla-margen-caf.jpg": {
+      "hash": "9b6bfd95c388c07f4436b4233e201e0140f85ed4cffc84ed3a6d070dfc203e33",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/9b/9b6bfd95c388c07f4436b4233e201e0140f85ed4cffc84ed3a6d070dfc203e33"
+    },
+    "capture/assets/vista-previa-de-la-plantilla-pulso-depor.jpg": {
+      "hash": "9395bdcf7d5447642c958a945c812ea6aa44569daf14b881f798b6f7ef30dee3",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/93/9395bdcf7d5447642c958a945c812ea6aa44569daf14b881f798b6f7ef30dee3"
+    },
+    "capture/assets/vista-previa-de-la-plantilla-trigo-y-bra.jpg": {
+      "hash": "156ad3193548d6b5e72476a0226f7ea6ed3d88f0503974d69b43500df73d9eb7",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/15/156ad3193548d6b5e72476a0226f7ea6ed3d88f0503974d69b43500df73d9eb7"
+    },
+    "capture/extracted/animations.json": {
+      "hash": "19675e4a580ad7f1fce03635a89909b9111e2faeca5eaad0d1ade185602ac7e5",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/19/19675e4a580ad7f1fce03635a89909b9111e2faeca5eaad0d1ade185602ac7e5"
+    },
+    "capture/extracted/asset-descriptions.md": {
+      "hash": "7ed355005e94112594a2e51213bb1c3a858035f5464c7acd89d157762e9086c0",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/7e/7ed355005e94112594a2e51213bb1c3a858035f5464c7acd89d157762e9086c0"
+    },
+    "capture/extracted/design-styles.json": {
+      "hash": "b9ff307eef9bba824e7478763a211744022e3c3ff920ff5e7c403e6bda6f22f5",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/b9/b9ff307eef9bba824e7478763a211744022e3c3ff920ff5e7c403e6bda6f22f5"
+    },
+    "capture/extracted/fonts-manifest.json": {
+      "hash": "fea877a564f462170a187f76a699bb776f1f7dd59221b6d05ff44887913c236b",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/fe/fea877a564f462170a187f76a699bb776f1f7dd59221b6d05ff44887913c236b"
+    },
+    "capture/extracted/icons-manifest.json": {
+      "hash": "583baa36a5a59a982780f21454f24a1f21b656040c94ff7099d229071cb1795b",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/58/583baa36a5a59a982780f21454f24a1f21b656040c94ff7099d229071cb1795b"
+    },
+    "capture/extracted/page.html": {
+      "hash": "a72383411adf339e5877602d4d50929021a2c0de549ce6c5973b0183ca76934f",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/a7/a72383411adf339e5877602d4d50929021a2c0de549ce6c5973b0183ca76934f"
+    },
+    "capture/extracted/response.json": {
+      "hash": "97fa47bce911b18406caf6d6a1c946fc751353cca043a2c97f63e61e6821072e",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/97/97fa47bce911b18406caf6d6a1c946fc751353cca043a2c97f63e61e6821072e"
+    },
+    "capture/extracted/tokens.json": {
+      "hash": "da69b25b5c54c49d38b41a28668969d7adf4001d0928ed17417001d3925b292d",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/da/da69b25b5c54c49d38b41a28668969d7adf4001d0928ed17417001d3925b292d"
+    },
+    "capture/extracted/video-manifest.json": {
+      "hash": "62513220884bc65cb90b9350fb804a21af58248103a152ca5f8208d1074631e1",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/62/62513220884bc65cb90b9350fb804a21af58248103a152ca5f8208d1074631e1"
+    },
+    "capture/extracted/visible-text.txt": {
+      "hash": "57f5c66e3aa1fe51ba30a0660f1d93f50009e3c5363bea5f4edac5b3ac19eec8",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/57/57f5c66e3aa1fe51ba30a0660f1d93f50009e3c5363bea5f4edac5b3ac19eec8"
+    },
+    "capture/meta.json": {
+      "hash": "6a43e59185eea8ea2b363e55f507586633124c6e799c329f2c1141834c94a03e",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/6a/6a43e59185eea8ea2b363e55f507586633124c6e799c329f2c1141834c94a03e"
+    },
+    "capture/screenshots/contact-sheet-1.jpg": {
+      "hash": "b1364d94e0d9c0d915923709cb7484fbf1ffbe1e522ae266d6904bb22c9512dc",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/b1/b1364d94e0d9c0d915923709cb7484fbf1ffbe1e522ae266d6904bb22c9512dc"
+    },
+    "capture/screenshots/contact-sheet-2.jpg": {
+      "hash": "371d9c989cdb2161edd2bf7fdb8d734a7bba2c8902d1af3a94c41699561cabbe",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/37/371d9c989cdb2161edd2bf7fdb8d734a7bba2c8902d1af3a94c41699561cabbe"
+    },
+    "capture/screenshots/contact-sheet-3.jpg": {
+      "hash": "ef665a91cb3884e6d987f466c004045388073091dda8da155f8d8032ff12baae",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/ef/ef665a91cb3884e6d987f466c004045388073091dda8da155f8d8032ff12baae"
+    },
+    "capture/screenshots/scroll-000.png": {
+      "hash": "10d2d481698edf30b96120eb0b92fdf12f1fe75984e2354d5cafa53ca3554634",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/10/10d2d481698edf30b96120eb0b92fdf12f1fe75984e2354d5cafa53ca3554634"
+    },
+    "capture/screenshots/scroll-004.png": {
+      "hash": "cdf82faf1762a2716707186a8dd8fa143492aede34caf8acc8b845adaa7bce6d",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/cd/cdf82faf1762a2716707186a8dd8fa143492aede34caf8acc8b845adaa7bce6d"
+    },
+    "capture/screenshots/scroll-013.png": {
+      "hash": "3f5aa90710524fd6aeab161d6256df9b1b53917ae745ff69c58e8ede9af76828",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/3f/3f5aa90710524fd6aeab161d6256df9b1b53917ae745ff69c58e8ede9af76828"
+    },
+    "capture/screenshots/scroll-017.png": {
+      "hash": "054dbbef56eaa333731ef4016befb9b0835e8091c5fc5a7f20f3c7183f965761",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/05/054dbbef56eaa333731ef4016befb9b0835e8091c5fc5a7f20f3c7183f965761"
+    },
+    "capture/screenshots/scroll-021.png": {
+      "hash": "918edb19f852e1a20f74812b757a9b97fb962f477d28dcfd77b371a1150a2892",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/91/918edb19f852e1a20f74812b757a9b97fb962f477d28dcfd77b371a1150a2892"
+    },
+    "capture/screenshots/scroll-026.png": {
+      "hash": "182d5644701e17b0b2340b687d34f2533d8cc8dd39eaa9105dc820c127e76231",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/18/182d5644701e17b0b2340b687d34f2533d8cc8dd39eaa9105dc820c127e76231"
+    },
+    "capture/screenshots/scroll-034.png": {
+      "hash": "04f8792490978e853def5e9ea9b25b722fad2ed9cbe7796f41abe4584c57b996",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/04/04f8792490978e853def5e9ea9b25b722fad2ed9cbe7796f41abe4584c57b996"
+    },
+    "capture/screenshots/scroll-039.png": {
+      "hash": "ea6581a3fa42b80573610c21f50fde513708802d915268daca757ecb3d9741c6",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/ea/ea6581a3fa42b80573610c21f50fde513708802d915268daca757ecb3d9741c6"
+    },
+    "capture/screenshots/scroll-043.png": {
+      "hash": "6f79e1e1a13ceb0ad4d9dae0ed8ee872f7c6a1bbf593b6f93d2d2953fc587c91",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/6f/6f79e1e1a13ceb0ad4d9dae0ed8ee872f7c6a1bbf593b6f93d2d2953fc587c91"
+    },
+    "capture/screenshots/scroll-047.png": {
+      "hash": "f8f9d1e64d6c5bd3b43391be0fb2c8b445039b265320dd05923f3250ca69432b",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f8/f8f9d1e64d6c5bd3b43391be0fb2c8b445039b265320dd05923f3250ca69432b"
+    },
+    "capture/screenshots/scroll-056.png": {
+      "hash": "176c75b86dac97fa1b091b8f142e516316ee516782dd216ba54c6ce78e548835",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/17/176c75b86dac97fa1b091b8f142e516316ee516782dd216ba54c6ce78e548835"
+    },
+    "capture/screenshots/scroll-060.png": {
+      "hash": "f47c9c77d54805451c0f5141cb4ac952514abb239da02302d7355c273f0cb891",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f4/f47c9c77d54805451c0f5141cb4ac952514abb239da02302d7355c273f0cb891"
+    },
+    "capture/screenshots/scroll-064.png": {
+      "hash": "5710b9ca3f528a762ea52dff5ce544490a8e27aae707313ac34044eff3a35ee4",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/57/5710b9ca3f528a762ea52dff5ce544490a8e27aae707313ac34044eff3a35ee4"
+    },
+    "capture/screenshots/scroll-069.png": {
+      "hash": "0ab224c4a913ad790f0c5c75bbd75029d01e700525002bdc8aac108c264be807",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/0a/0ab224c4a913ad790f0c5c75bbd75029d01e700525002bdc8aac108c264be807"
+    },
+    "capture/screenshots/scroll-077.png": {
+      "hash": "50773c26bd6be42fd412bf40deefc2896dcf018ad2fc5ec5656278dd848331cc",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/50/50773c26bd6be42fd412bf40deefc2896dcf018ad2fc5ec5656278dd848331cc"
+    },
+    "capture/screenshots/scroll-082.png": {
+      "hash": "7270fbfc21c56d3ca5739ac5df4bc9913a01d83252b1498fd9a556c76b2214a1",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/72/7270fbfc21c56d3ca5739ac5df4bc9913a01d83252b1498fd9a556c76b2214a1"
+    },
+    "capture/screenshots/scroll-086.png": {
+      "hash": "2423086ba4fc14aa9168e86ec192d829b966471d5dbb73831d5e53520b41ec69",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/24/2423086ba4fc14aa9168e86ec192d829b966471d5dbb73831d5e53520b41ec69"
+    },
+    "capture/screenshots/scroll-090.png": {
+      "hash": "b7c3318b70e08f950eda4ef60133744c0a86b58d083345ff95a697469c84c5ee",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/b7/b7c3318b70e08f950eda4ef60133744c0a86b58d083345ff95a697469c84c5ee"
+    },
+    "capture/screenshots/scroll-099.png": {
+      "hash": "2c8f76e578d7bffb87ffcf27646e3074f7313341b8e4292477ff5a926bd80404",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/2c/2c8f76e578d7bffb87ffcf27646e3074f7313341b8e4292477ff5a926bd80404"
+    },
+    "capture/screenshots/scroll-100.png": {
+      "hash": "b11930d36e40d633ff05fedf01331d336d896a33fb6966b4cb509821acf93e09",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/b1/b11930d36e40d633ff05fedf01331d336d896a33fb6966b4cb509821acf93e09"
+    },
+    "frame.md": {
+      "hash": "ade6df2b6b6a5cdbb4d862ac4797ddd7355c0153545cbd5896c6a399373d681c",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/ad/ade6df2b6b6a5cdbb4d862ac4797ddd7355c0153545cbd5896c6a399373d681c"
+    },
+    "hyperframes.json": {
+      "hash": "515081a57e4f9d9235c2842b3d2e1809e6aa5a761b3e3f697ddd25ab00d1ce13",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/51/515081a57e4f9d9235c2842b3d2e1809e6aa5a761b3e3f697ddd25ab00d1ce13"
+    },
+    "index.html": {
+      "hash": "182d4bf3b89dfcba76dfd0edc03dfe66be1095e9b76cade88d525317157fa787",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/18/182d4bf3b89dfcba76dfd0edc03dfe66be1095e9b76cade88d525317157fa787"
+    },
+    "meta.json": {
+      "hash": "b9bfd41893307f16863036256f2696243448472284384dacf827550a30dd2506",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/b9/b9bfd41893307f16863036256f2696243448472284384dacf827550a30dd2506"
+    },
+    "package.json": {
+      "hash": "fd29a5c61d50d1b0f130d9194b3a9aeab79b2eb4eeb062d2e21713e1225b694f",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/fd/fd29a5c61d50d1b0f130d9194b3a9aeab79b2eb4eeb062d2e21713e1225b694f"
+    },
+    "capture/assets/og-image.webp": {
+      "hash": "676db3c4836f61caee83b9a98cea456691015d8bf9802509303632b6034329aa",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/67/676db3c4836f61caee83b9a98cea456691015d8bf9802509303632b6034329aa"
+    },
+    "capture/assets/videos/basico_desktop.mp4_t_0.001": {
+      "hash": "163a6c87b8dd48155388da9a87f16bed613edc20eb8f29ba8f1d25caddc5308d",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/16/163a6c87b8dd48155388da9a87f16bed613edc20eb8f29ba8f1d25caddc5308d"
+    },
+    "capture/assets/videos/basico_mobile.mp4_t_0.001": {
+      "hash": "8c8b43ccd15131085d77a2edefe8030c599d6bd3c6d28e1b5142ecd302fe00d2",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/8c/8c8b43ccd15131085d77a2edefe8030c599d6bd3c6d28e1b5142ecd302fe00d2"
+    },
+    "capture/assets/videos/pro_desktop.mp4_t_0.001": {
+      "hash": "e4b627911b2c5fba92d7450a801506d2ef930fea2d23583ee8820ce7327c5ac9",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/e4/e4b627911b2c5fba92d7450a801506d2ef930fea2d23583ee8820ce7327c5ac9"
+    },
+    "capture/assets/videos/pro_mobile.mp4_t_0.001": {
+      "hash": "d8cd7a2d773eb574dd1558772fae1a13e255ec8e69dbcaa270967e7c4dcf7c8a",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/d8/d8cd7a2d773eb574dd1558772fae1a13e255ec8e69dbcaa270967e7c4dcf7c8a"
+    },
+    ".media/manifest.jsonl": {
+      "hash": "b865940da79b958d34f9513dae2546a70e2b0d87209d15981d4d1b3576fec4da",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/b8/b865940da79b958d34f9513dae2546a70e2b0d87209d15981d4d1b3576fec4da"
+    },
+    "assets/bgm/track.mp3": {
+      "hash": "160f157f45131c919ca4b709b1f08e4321661060dc4ed1545128d0eb981fd8aa",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/16/160f157f45131c919ca4b709b1f08e4321661060dc4ed1545128d0eb981fd8aa"
+    },
+    "assets/hero-6.jpg": {
+      "hash": "153917373a66bebdac65006d5523913384fcfdfca6db76be3ab04adfe5b0fff1",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/15/153917373a66bebdac65006d5523913384fcfdfca6db76be3ab04adfe5b0fff1"
+    },
+    "assets/hero-8.jpg": {
+      "hash": "7dd9b729c20a7ff9027330e25cc8ff1737b69b554fc9e4795d57812cbbaa6a9f",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/7d/7dd9b729c20a7ff9027330e25cc8ff1737b69b554fc9e4795d57812cbbaa6a9f"
+    },
+    "assets/logo.png": {
+      "hash": "f3dbd95c9d5039540579d88249cbc25b47114db7e759c5b565c7e326f7379fee",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f3/f3dbd95c9d5039540579d88249cbc25b47114db7e759c5b565c7e326f7379fee"
+    },
+    "assets/ui-dominio-crop.png": {
+      "hash": "58fcdfd03e6c83867c93368241cf7dbbae672a8d7c9d92b43e30dabe9ee29ae6",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/58/58fcdfd03e6c83867c93368241cf7dbbae672a8d7c9d92b43e30dabe9ee29ae6"
+    },
+    "assets/ui-editor-movil-screen.png": {
+      "hash": "0d54faed335dd17b97a38a100e49c06274eafb58a08b779249cdd7675060dee8",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/0d/0d54faed335dd17b97a38a100e49c06274eafb58a08b779249cdd7675060dee8"
+    },
+    "assets/ui-editor-trigo.png": {
+      "hash": "23fd3ad02855fd9e6e08e5599f361ba9b06fca01e28554b49673f126f44d6c32",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/23/23fd3ad02855fd9e6e08e5599f361ba9b06fca01e28554b49673f126f44d6c32"
+    },
+    "assets/ui-plantillas-clean.png": {
+      "hash": "9fc5aa1b19b1ceb7c9b22ac6cc134e5198882e17b25514ecef8783402443dd35",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/9f/9fc5aa1b19b1ceb7c9b22ac6cc134e5198882e17b25514ecef8783402443dd35"
+    },
+    "assets/ui-publicar.png": {
+      "hash": "3dd0f83adb1586822df2632e9abc53553b05d63117e4f561f5a25ef3dd3ede73",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/3d/3dd0f83adb1586822df2632e9abc53553b05d63117e4f561f5a25ef3dd3ede73"
+    },
+    "assets/vista-previa-de-la-plantilla-la-nota-azu.jpg": {
+      "hash": "7d9c0391b891c6d50d3a09a52e664516f5d91abe9ef8a11ec3b28cb23c12fb95",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/7d/7d9c0391b891c6d50d3a09a52e664516f5d91abe9ef8a11ec3b28cb23c12fb95"
+    },
+    "assets/vista-previa-de-la-plantilla-margen-caf.jpg": {
+      "hash": "9b6bfd95c388c07f4436b4233e201e0140f85ed4cffc84ed3a6d070dfc203e33",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/9b/9b6bfd95c388c07f4436b4233e201e0140f85ed4cffc84ed3a6d070dfc203e33"
+    },
+    "assets/vista-previa-de-la-plantilla-trigo-y-bra.jpg": {
+      "hash": "156ad3193548d6b5e72476a0226f7ea6ed3d88f0503974d69b43500df73d9eb7",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/15/156ad3193548d6b5e72476a0226f7ea6ed3d88f0503974d69b43500df73d9eb7"
+    },
+    "assets/voice/01.wav": {
+      "hash": "55da6b9e0e658dc8f2f616f5a57d4cb08b5ed4d0ebbf9907b90f6c2ea343f9a0",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/55/55da6b9e0e658dc8f2f616f5a57d4cb08b5ed4d0ebbf9907b90f6c2ea343f9a0"
+    },
+    "assets/voice/02.wav": {
+      "hash": "5d6665923cdff69587b3b0e8d5958ed559a2c78d538cdf710a0f164e18587c2b",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/5d/5d6665923cdff69587b3b0e8d5958ed559a2c78d538cdf710a0f164e18587c2b"
+    },
+    "assets/voice/03.wav": {
+      "hash": "f4439b209eb58f8dbfee9bdd7de60ee635f783a9ed15c97d4b83b501cc7b58e5",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f4/f4439b209eb58f8dbfee9bdd7de60ee635f783a9ed15c97d4b83b501cc7b58e5"
+    },
+    "assets/voice/04.wav": {
+      "hash": "332280472e6d7b10312772e8f42fbd1e13d49aa1881cba0e65b967e6b12b0178",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/33/332280472e6d7b10312772e8f42fbd1e13d49aa1881cba0e65b967e6b12b0178"
+    },
+    "assets/voice/05.wav": {
+      "hash": "3fdd525e5f796c13de525d1c3ccb68afd84b8c0f02763f06a02dad580c896d20",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/3f/3fdd525e5f796c13de525d1c3ccb68afd84b8c0f02763f06a02dad580c896d20"
+    },
+    "assets/voice/06.wav": {
+      "hash": "1d0af964d9bef866c7996a86d8e3d5d3b92a365eb2d88e949b79d70e592561be",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/1d/1d0af964d9bef866c7996a86d8e3d5d3b92a365eb2d88e949b79d70e592561be"
+    },
+    "assets/voice/07.wav": {
+      "hash": "1e1c81b807314bb37de6840ceaa5b8b4d397f8e7da2270fad04787520718b708",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/1e/1e1c81b807314bb37de6840ceaa5b8b4d397f8e7da2270fad04787520718b708"
+    },
+    "assets/voice/08.wav": {
+      "hash": "3ef1f4d15b8d1d59115a01701983f4522865575f915c5f0a196f32e2655a71d0",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/3e/3ef1f4d15b8d1d59115a01701983f4522865575f915c5f0a196f32e2655a71d0"
+    },
+    "audio_engine_meta.json": {
+      "hash": "0f9fe1f3d6449c54c98f5e04ad3c2a2b3ed473b5e363e27e54b17f91091c09d1",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/0f/0f9fe1f3d6449c54c98f5e04ad3c2a2b3ed473b5e363e27e54b17f91091c09d1"
+    },
+    "audio_meta.json": {
+      "hash": "f3134786d78785db2248848dc018f273ae4c2de857f12a9fcee42450100034ff",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f3/f3134786d78785db2248848dc018f273ae4c2de857f12a9fcee42450100034ff"
+    },
+    "audio_request.json": {
+      "hash": "5e393e03ed48f9ea1ab13ba8c56a2d9d43d9de020943bb9a77a9be7ead5b40b5",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/5e/5e393e03ed48f9ea1ab13ba8c56a2d9d43d9de020943bb9a77a9be7ead5b40b5"
+    },
+    "compositions/frames/01-gancho.html": {
+      "hash": "39b1bd78a60172b3fb58eff1ee3d1110d26560196b71381574adbafd6df02e4b",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/39/39b1bd78a60172b3fb58eff1ee3d1110d26560196b71381574adbafd6df02e4b"
+    },
+    "voice-samples/camila-vega-friendly.wav": {
+      "hash": "5158b0e9ae8c90d8a8c8d09f5df7c68c9503ba9a98764108eddf332fbd650a23",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/51/5158b0e9ae8c90d8a8c8d09f5df7c68c9503ba9a98764108eddf332fbd650a23"
+    },
+    "voice-samples/lucia-ortega.wav": {
+      "hash": "69377152897471f8dfb04d0512f576d39422f9c6960390318a5f7bb80b42691f",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/69/69377152897471f8dfb04d0512f576d39422f9c6960390318a5f7bb80b42691f"
+    },
+    "voice-samples/lucia-sabia.wav": {
+      "hash": "fa7adbf27217024741ca9fdb18917564264fcdbeca5a0574e480318e4b028b1f",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/fa/fa7adbf27217024741ca9fdb18917564264fcdbeca5a0574e480318e4b028b1f"
+    },
+    "voice-samples/sunny-sofia.wav": {
+      "hash": "240a8eec037b52ae460ba79a9c5f9925a2acc69aec833598933ddffb1b2621cc",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/24/240a8eec037b52ae460ba79a9c5f9925a2acc69aec833598933ddffb1b2621cc"
+    },
+    "compositions/frames/02-costo.html": {
+      "hash": "068fde72559b1b3a1bd7d7b3de09c4e627167ed3a28e4f4cd1f93a1c8513f51a",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/06/068fde72559b1b3a1bd7d7b3de09c4e627167ed3a28e4f4cd1f93a1c8513f51a"
+    },
+    "compositions/frames/03-marca.html": {
+      "hash": "3215e4400baa57fe8a67b4a4f6e3d9ef2c40659d1ab8371c0a90655f53382d49",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/32/3215e4400baa57fe8a67b4a4f6e3d9ef2c40659d1ab8371c0a90655f53382d49"
+    },
+    "compositions/frames/04-plantilla.html": {
+      "hash": "7fa69eaeadd5934062ea2181aa225ffffb3fb02d694eb1d09aa24cb7f95505b1",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/7f/7fa69eaeadd5934062ea2181aa225ffffb3fb02d694eb1d09aa24cb7f95505b1"
+    },
+    "compositions/frames/05-personaliza.html": {
+      "hash": "978237e2a9e12f0c16862722b307457b7f42831d4287b1e76fd3c69cd60e6ef4",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/97/978237e2a9e12f0c16862722b307457b7f42831d4287b1e76fd3c69cd60e6ef4"
+    },
+    "compositions/frames/06-dominio.html": {
+      "hash": "805f1824777fd0da80ab293c87b7628d4c418fc502a782c57c8f11f470e38247",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/80/805f1824777fd0da80ab293c87b7628d4c418fc502a782c57c8f11f470e38247"
+    },
+    "compositions/frames/07-plan.html": {
+      "hash": "ea59b2429eb13759fdf591c854bd1adcff0c3b809c51dc9dc49e7e330a05ecd6",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/ea/ea59b2429eb13759fdf591c854bd1adcff0c3b809c51dc9dc49e7e330a05ecd6"
+    },
+    "compositions/frames/08-cta.html": {
+      "hash": "5290738db29257c5385f8ecc32eb28f5dd4822cd5f0a489193b261ad096dc7ef",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/52/5290738db29257c5385f8ecc32eb28f5dd4822cd5f0a489193b261ad096dc7ef"
+    },
+    "boards/stills/frame-00-at-2.6s.png": {
+      "hash": "67ac584484b75eed62b660b12bac692e290c6017fe20703326c0364d4c1d4a38",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/67/67ac584484b75eed62b660b12bac692e290c6017fe20703326c0364d4c1d4a38"
+    },
+    "boards/stills/frame-01-at-6.6s.png": {
+      "hash": "8024bea34f7a2d05f0112604a80c02c2eae5f88ca3697ed393c78fc1c50f7387",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/80/8024bea34f7a2d05f0112604a80c02c2eae5f88ca3697ed393c78fc1c50f7387"
+    },
+    "boards/stills/frame-02-at-10.2s.png": {
+      "hash": "d7d94770b91ad44ffa987eddb4ee7ee5926e0353c1b54766a54512516c00f1c3",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/d7/d7d94770b91ad44ffa987eddb4ee7ee5926e0353c1b54766a54512516c00f1c3"
+    },
+    "boards/stills/frame-03-at-12.4s.png": {
+      "hash": "d5cb5272c6e871361bc82c599e8e9be8d1c2ef8e329302eb4586c0535cc1f3c9",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/d5/d5cb5272c6e871361bc82c599e8e9be8d1c2ef8e329302eb4586c0535cc1f3c9"
+    },
+    "boards/stills/frame-04-at-16.9s.png": {
+      "hash": "073998ae0f42ebbceb2c40e23552b57ba384a280514dda54e5387ecdc97c9180",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/07/073998ae0f42ebbceb2c40e23552b57ba384a280514dda54e5387ecdc97c9180"
+    },
+    "boards/stills/frame-05-at-19.4s.png": {
+      "hash": "42e84a1c7a980ea49b19e2fe7f34f0cd7f7bc84de7cc46d82b6e8ab512a40681",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/42/42e84a1c7a980ea49b19e2fe7f34f0cd7f7bc84de7cc46d82b6e8ab512a40681"
+    },
+    "boards/stills/frame-06-at-21.4s.png": {
+      "hash": "17b83f76923bb1773fc3c42a555eb2a8bdfdd698fc4f395ea35cae120a871db6",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/17/17b83f76923bb1773fc3c42a555eb2a8bdfdd698fc4f395ea35cae120a871db6"
+    },
+    "boards/stills/frame-07-at-23.4s.png": {
+      "hash": "6bbbe0d3097052f0ee079867e9fb5cf7b1b394a41df8946bb5d03482dd5cf76f",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/6b/6bbbe0d3097052f0ee079867e9fb5cf7b1b394a41df8946bb5d03482dd5cf76f"
+    },
+    "boards/stills/frame-08-at-26s.png": {
+      "hash": "474af7bedecd21d31a8f947cbc61bbcdd3867612e4d6877b83a3e272213f4672",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/47/474af7bedecd21d31a8f947cbc61bbcdd3867612e4d6877b83a3e272213f4672"
+    },
+    "boards/stills/frame-09-at-28.4s.png": {
+      "hash": "2a04e9a76ae83b254c10f0f485fd660310ee669ccd1a78982081a0d566d68fab",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/2a/2a04e9a76ae83b254c10f0f485fd660310ee669ccd1a78982081a0d566d68fab"
+    },
+    "boards/stills/frame-10-at-32s.png": {
+      "hash": "aece9c4d77aec1d7e1e1789b82a466410d672ab615040254f13c3cbd17dc61dc",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/ae/aece9c4d77aec1d7e1e1789b82a466410d672ab615040254f13c3cbd17dc61dc"
+    },
+    "boards/stills/frame-11-at-36s.png": {
+      "hash": "2f5e4acfbd2fb7e90d3c977a2ebbb7e6fdbcd25fb5170396c31dd80e089c0f20",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/2f/2f5e4acfbd2fb7e90d3c977a2ebbb7e6fdbcd25fb5170396c31dd80e089c0f20"
+    },
+    "assets/bgm/track.loop.mp3": {
+      "hash": "4dccbb31fa7af8ee2712485c00282f8a7da90e77a224ef7676ec70ad549af1af",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/4d/4dccbb31fa7af8ee2712485c00282f8a7da90e77a224ef7676ec70ad549af1af"
+    },
+    "assets/sfx/chip-pops.mp3": {
+      "hash": "e3d2fd9ac90f4c79a9b95a006f2b17056b9cf9d345d6c5e575915430e81e0492",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/e3/e3d2fd9ac90f4c79a9b95a006f2b17056b9cf9d345d6c5e575915430e81e0492"
+    },
+    "assets/sfx/gentle-pops-on-ticks.mp3": {
+      "hash": "2765fc75c31a7c6dbe1d97f93381a9d1429643e70df03975fbde33f14f2c2c04",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/27/2765fc75c31a7c6dbe1d97f93381a9d1429643e70df03975fbde33f14f2c2c04"
+    },
+    "assets/sfx/glass-shatter-whoosh.mp3": {
+      "hash": "e3ad25d0aeb0d89fc00965ee6452f339ab08ec8812c3da9d095a354dfcc103cd",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/e3/e3ad25d0aeb0d89fc00965ee6452f339ab08ec8812c3da9d095a354dfcc103cd"
+    },
+    "assets/sfx/keyboard-typing.mp3": {
+      "hash": "3b180c098c858588958c7dd0797e20ab36e327c9202ba180f17152e7e28815ba",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/3b/3b180c098c858588958c7dd0797e20ab36e327c9202ba180f17152e7e28815ba"
+    },
+    "assets/sfx/low-riser.mp3": {
+      "hash": "14310e1c606a0aec5442012561eb3980dab7f87ece41db011d7b12642880637a",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/14/14310e1c606a0aec5442012561eb3980dab7f87ece41db011d7b12642880637a"
+    },
+    "assets/sfx/padlock-click.mp3": {
+      "hash": "a780e99c55417dae6662bb01f19108801ade3ed3357d7908509c810adfd89ee0",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/a7/a780e99c55417dae6662bb01f19108801ade3ed3357d7908509c810adfd89ee0"
+    },
+    "assets/sfx/pop.mp3": {
+      "hash": "c6a9052a4078b3f09a91cc2eaa2d8e342c293b51c769abe2089bb1b2d058fb56",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/c6/c6a9052a4078b3f09a91cc2eaa2d8e342c293b51c769abe2089bb1b2d058fb56"
+    },
+    "assets/sfx/shimmer.mp3": {
+      "hash": "0c87804f9b2f5eca622e527263e051af687bc39d4bdbed0592b2768317a90d5d",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/0c/0c87804f9b2f5eca622e527263e051af687bc39d4bdbed0592b2768317a90d5d"
+    },
+    "assets/sfx/soft-impact-on-logo-landing.mp3": {
+      "hash": "a6b97c2f643cef226fa3201f68865093bd264c87c8d323c4544d0ca1abd16d5c",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/a6/a6b97c2f643cef226fa3201f68865093bd264c87c8d323c4544d0ca1abd16d5c"
+    },
+    "assets/sfx/soft-impact.mp3": {
+      "hash": "56d023b3d99086ad9d1d3c7556b318573e15c03b68f7afab1a4cc8a60ffd3446",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/56/56d023b3d99086ad9d1d3c7556b318573e15c03b68f7afab1a4cc8a60ffd3446"
+    },
+    "assets/sfx/soft-pop.mp3": {
+      "hash": "d69df66afaa0e9499c1503505778ecf3ed0b19897fc8f9c0e4e07ab88d211c3c",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/d6/d69df66afaa0e9499c1503505778ecf3ed0b19897fc8f9c0e4e07ab88d211c3c"
+    },
+    "assets/sfx/soft-whoosh.mp3": {
+      "hash": "bfba9a6bfdd349334fecaff3da58f578d9b1befddb0dcc6bee74d41355509f5f",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/bf/bfba9a6bfdd349334fecaff3da58f578d9b1befddb0dcc6bee74d41355509f5f"
+    },
+    "assets/sfx/tick.mp3": {
+      "hash": "42b8fa8c7511774c9b38cd555e6547f32dfb4e9937cd15f5edb2eb0d241a559d",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/42/42b8fa8c7511774c9b38cd555e6547f32dfb4e9937cd15f5edb2eb0d241a559d"
+    },
+    "assets/sfx/ticks-on-count-up.mp3": {
+      "hash": "000123b18b3798e798f87558fb4b34ffbd573923d07ade958622e16f6e5812b6",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/00/000123b18b3798e798f87558fb4b34ffbd573923d07ade958622e16f6e5812b6"
+    },
+    "assets/sfx/typing.mp3": {
+      "hash": "3b180c098c858588958c7dd0797e20ab36e327c9202ba180f17152e7e28815ba",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/3b/3b180c098c858588958c7dd0797e20ab36e327c9202ba180f17152e7e28815ba"
+    },
+    "assets/sfx/ui-click.mp3": {
+      "hash": "ecec29529dc5b3f5ade7a550f163b4a3a8c9d98716bb7dabe07232a51c723ebc",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/ec/ecec29529dc5b3f5ade7a550f163b4a3a8c9d98716bb7dabe07232a51c723ebc"
+    },
+    "assets/sfx/whoosh-on-phone-slide-in.mp3": {
+      "hash": "0594ff079cb0e3365601ec763176249ac38304c93c37decff35d582cba565997",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/05/0594ff079cb0e3365601ec763176249ac38304c93c37decff35d582cba565997"
+    },
+    "assets/sfx/whoosh.mp3": {
+      "hash": "11e5e8ac6d991f8f86757b35082365724bc6f96a1d518121ba349bd10dbe1932",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/11/11e5e8ac6d991f8f86757b35082365724bc6f96a1d518121ba349bd10dbe1932"
+    },
+    "boards/board-sheet.jpg": {
+      "hash": "d33f2b2b5d79791cb7672595d801df92faca88ac801ab5d818bd286b70dcebef",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/d3/d33f2b2b5d79791cb7672595d801df92faca88ac801ab5d818bd286b70dcebef"
+    },
+    "boards/storyboard.html": {
+      "hash": "7b7e3dad7173e65a1e50e1617a1bdc344c224f97eaccbd6e7aeef197b7bc29ab",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/7b/7b7e3dad7173e65a1e50e1617a1bdc344c224f97eaccbd6e7aeef197b7bc29ab"
+    },
+    "caption_groups.json": {
+      "hash": "f3fbf9a65413270856fb302115dd095a879e4d22ef10e283e42fd3467ddacd35",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f3/f3fbf9a65413270856fb302115dd095a879e4d22ef10e283e42fd3467ddacd35"
+    },
+    "caption-overrides.json": {
+      "hash": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/37/37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    "compositions/captions.html": {
+      "hash": "6c3e63bb7f691d4102dc947229725f7d58acbe53a088405c9db1038ed55d4f7a",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/6c/6c3e63bb7f691d4102dc947229725f7d58acbe53a088405c9db1038ed55d4f7a"
+    },
+    "compositions/components/confetti.html": {
+      "hash": "e1aab1fba4eac8fcbed7367d94a262c41b08dc26cd723a3a0cde51158f7c864f",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/e1/e1aab1fba4eac8fcbed7367d94a262c41b08dc26cd723a3a0cde51158f7c864f"
+    },
+    "compositions/components/number-wheel.html": {
+      "hash": "04e3b1d13a044f9e8ad88b701b27315fc69eded6e951ab99b046ab760dc91110",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/04/04e3b1d13a044f9e8ad88b701b27315fc69eded6e951ab99b046ab760dc91110"
+    },
+    "compositions/components/particle-text-dissolve.html": {
+      "hash": "b4e6a09fdb0cacbffc1476d7d9f2a54869065f8fd1987d6dbd92411b5fd24f84",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/b4/b4e6a09fdb0cacbffc1476d7d9f2a54869065f8fd1987d6dbd92411b5fd24f84"
+    },
+    "compositions/components/shimmer-sweep.html": {
+      "hash": "0358db4e2ec9137c65771e17139741a13e2c12a37be5688fc6cfede9a718d8d6",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/03/0358db4e2ec9137c65771e17139741a13e2c12a37be5688fc6cfede9a718d8d6"
+    },
+    "compositions/swirl-vortex.html": {
+      "hash": "32381e6b750a0a6cf26b67581ade04f8fcb8b619a6714ebef3a6c3baba651b6e",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/32/32381e6b750a0a6cf26b67581ade04f8fcb8b619a6714ebef3a6c3baba651b6e"
+    },
+    "hyperframes.lock.json": {
+      "hash": "87b419fb0ccfcf1e33a38ea1983afc8309a69e5ade48de1374d46d88513d4f8c",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/87/87b419fb0ccfcf1e33a38ea1983afc8309a69e5ade48de1374d46d88513d4f8c"
+    },
+    "package-lock.json": {
+      "hash": "2476245bddff1cd552538f268b3ff6c86283214cc6f8a8aaf51a461d229e0470",
+      "content": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/24/2476245bddff1cd552538f268b3ff6c86283214cc6f8a8aaf51a461d229e0470"
+    }
+  },
+  "revisions": {
+    "ca0039ad-b6e8-4378-bed6-0c12aaf63cab": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792096856962,
+      "endedAt": 1792096857077,
+      "files": {
+        ".media/manifest.jsonl": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f6/f696eaa7d8e61d2ff9ee5ef4b10b3844e095e9c633bc2d46dde173265ae6cba9"
+        },
+        "assets/bgm/track.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/16/160f157f45131c919ca4b709b1f08e4321661060dc4ed1545128d0eb981fd8aa"
+        },
+        "assets/hero-6.jpg": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/15/153917373a66bebdac65006d5523913384fcfdfca6db76be3ab04adfe5b0fff1"
+        },
+        "assets/hero-8.jpg": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/7d/7dd9b729c20a7ff9027330e25cc8ff1737b69b554fc9e4795d57812cbbaa6a9f"
+        },
+        "assets/logo.png": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f3/f3dbd95c9d5039540579d88249cbc25b47114db7e759c5b565c7e326f7379fee"
+        },
+        "assets/ui-dominio-crop.png": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/58/58fcdfd03e6c83867c93368241cf7dbbae672a8d7c9d92b43e30dabe9ee29ae6"
+        },
+        "assets/ui-editor-movil-screen.png": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/0d/0d54faed335dd17b97a38a100e49c06274eafb58a08b779249cdd7675060dee8"
+        },
+        "assets/ui-editor-trigo.png": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/23/23fd3ad02855fd9e6e08e5599f361ba9b06fca01e28554b49673f126f44d6c32"
+        },
+        "assets/ui-plantillas-clean.png": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/9f/9fc5aa1b19b1ceb7c9b22ac6cc134e5198882e17b25514ecef8783402443dd35"
+        },
+        "assets/ui-publicar.png": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/3d/3dd0f83adb1586822df2632e9abc53553b05d63117e4f561f5a25ef3dd3ede73"
+        },
+        "assets/vista-previa-de-la-plantilla-la-nota-azu.jpg": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/7d/7d9c0391b891c6d50d3a09a52e664516f5d91abe9ef8a11ec3b28cb23c12fb95"
+        },
+        "assets/vista-previa-de-la-plantilla-margen-caf.jpg": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/9b/9b6bfd95c388c07f4436b4233e201e0140f85ed4cffc84ed3a6d070dfc203e33"
+        },
+        "assets/vista-previa-de-la-plantilla-trigo-y-bra.jpg": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/15/156ad3193548d6b5e72476a0226f7ea6ed3d88f0503974d69b43500df73d9eb7"
+        },
+        "assets/voice/01.wav": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/55/55da6b9e0e658dc8f2f616f5a57d4cb08b5ed4d0ebbf9907b90f6c2ea343f9a0"
+        },
+        "assets/voice/02.wav": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/5d/5d6665923cdff69587b3b0e8d5958ed559a2c78d538cdf710a0f164e18587c2b"
+        },
+        "assets/voice/03.wav": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f4/f4439b209eb58f8dbfee9bdd7de60ee635f783a9ed15c97d4b83b501cc7b58e5"
+        },
+        "assets/voice/04.wav": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/33/332280472e6d7b10312772e8f42fbd1e13d49aa1881cba0e65b967e6b12b0178"
+        },
+        "assets/voice/05.wav": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/3f/3fdd525e5f796c13de525d1c3ccb68afd84b8c0f02763f06a02dad580c896d20"
+        },
+        "assets/voice/06.wav": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/1d/1d0af964d9bef866c7996a86d8e3d5d3b92a365eb2d88e949b79d70e592561be"
+        },
+        "assets/voice/07.wav": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/1e/1e1c81b807314bb37de6840ceaa5b8b4d397f8e7da2270fad04787520718b708"
+        },
+        "assets/voice/08.wav": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/3e/3ef1f4d15b8d1d59115a01701983f4522865575f915c5f0a196f32e2655a71d0"
+        },
+        "audio_engine_meta.json": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/83/834734df4693e4cb00e5ac987743274fc3bf7de7ce30ab43d322863900e1e506"
+        },
+        "audio_meta.json": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/d0/d0d3b071181b58350d055d59b6d8fbcb1dea51ac97bee64ccbc3affbde4efcec"
+        },
+        "audio_request.json": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f8/f8d21713434924d8f95f82ec4b2aca8cf89a44b7f05c4b4261f2f08c859fa823"
+        },
+        "compositions/frames/01-gancho.html": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/e3/e36ec5f952ca7734aa11338feaadb3bdd853cc057def269a7843a6d2e7f4b0f1"
+        },
+        "index.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/1b/1b8a7122c4208d02b152b6767bef6cac78f54e86f04895f00326e0e94cbfda17",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/19/19dc958aac727d9890f5303720c65ee4e9ed8cbfa6110fcf477f7eb00d4450ce"
+        },
+        "SCRIPT.md": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/2c/2cd4b8ceae220a382b9ff833ff71c6f423e551a625ff96ec8b58a07906ba02b4",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/a1/a1cdad8f4918fdde49d04999575e97d747be07fa7f90e59feb7c32463c7ea55b"
+        },
+        "STORYBOARD.md": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/88/880cd73a19511d8109c3c17b88bb1075aa058117476fd95f69d144fbc5412edf",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/ca/cad9c5781f609c2c8ff67b922bfc2eadbe3bfa96ae0ef8a97ec429148dfdfb08"
+        },
+        "voice-samples/camila-vega-friendly.wav": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/51/5158b0e9ae8c90d8a8c8d09f5df7c68c9503ba9a98764108eddf332fbd650a23"
+        },
+        "voice-samples/lucia-ortega.wav": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/69/69377152897471f8dfb04d0512f576d39422f9c6960390318a5f7bb80b42691f"
+        },
+        "voice-samples/lucia-sabia.wav": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/fa/fa7adbf27217024741ca9fdb18917564264fcdbeca5a0574e480318e4b028b1f"
+        },
+        "voice-samples/sunny-sofia.wav": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/24/240a8eec037b52ae460ba79a9c5f9925a2acc69aec833598933ddffb1b2621cc"
+        }
+      }
+    },
+    "8fa9a4f4-6060-4232-aa2a-32a8a8eec0bf": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792097075600,
+      "endedAt": 1792097075613,
+      "files": {
+        "compositions/frames/02-costo.html": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/74/748423d263d64b8b65b63a1841f42305798c478c6c0fc17d5def2c3d5c0c7db5"
+        },
+        "compositions/frames/03-marca.html": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/91/91730043fd842dc5e89c387d5427d32a26280797ae01fe613b95f3b29a82e86f"
+        },
+        "compositions/frames/04-plantilla.html": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/fc/fcaa3cb43b4caabffc547e63e89dc2ab1262c997f41fca9e5f5c9f34b59d5b3c"
+        },
+        "compositions/frames/05-personaliza.html": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/fb/fb076fbaf4f291db5e5d81e511f34a9a7cf1a0f371e717865bc1af81ffa7f636"
+        },
+        "compositions/frames/06-dominio.html": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/28/283cbe9cb293d7f4cc8efbb9e58f30accbdcdd444687bb80831a5b6221f3b0d5"
+        },
+        "compositions/frames/07-plan.html": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/e0/e01f4e2193ca824893ff7e5c42008958bc767996eb43cc35eb39ab5507e3d233"
+        },
+        "compositions/frames/08-cta.html": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/50/504900788512bae810f5a53405a20ae3d223c3735fac4aae023f1c16d9192f30"
+        },
+        "index.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/19/19dc958aac727d9890f5303720c65ee4e9ed8cbfa6110fcf477f7eb00d4450ce",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/a7/a7198072376f2137d1167fd2573281effb3221574990e0e097263ae0f65008a4"
+        }
+      }
+    },
+    "2cb157f4-5697-4154-9d97-749865d5f299": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792097103451,
+      "endedAt": 1792097103493,
+      "files": {
+        "boards/stills/contact-sheet-1.jpg": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/a2/a2c238a73bbd2634752291443736437342ade2c2722d509484a81bcf8d6fd733"
+        },
+        "boards/stills/contact-sheet-2.jpg": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f3/f3822aec4d5da0bac67259f0425bb8f0871f8e7235cc5b2e070081082bcc652a"
+        },
+        "boards/stills/frame-00-at-2.6s.png": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/67/67ac584484b75eed62b660b12bac692e290c6017fe20703326c0364d4c1d4a38"
+        },
+        "boards/stills/frame-01-at-6.6s.png": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/80/8024bea34f7a2d05f0112604a80c02c2eae5f88ca3697ed393c78fc1c50f7387"
+        },
+        "boards/stills/frame-02-at-10.2s.png": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/72/720fa2ae4e2f8b0fbec57f9d00f38efaf6f2594636a9bb2bb28c114e744f5223"
+        },
+        "boards/stills/frame-03-at-12.4s.png": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/d5/d5cb5272c6e871361bc82c599e8e9be8d1c2ef8e329302eb4586c0535cc1f3c9"
+        },
+        "boards/stills/frame-04-at-16.9s.png": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/07/073998ae0f42ebbceb2c40e23552b57ba384a280514dda54e5387ecdc97c9180"
+        },
+        "boards/stills/frame-05-at-19.4s.png": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/42/42e84a1c7a980ea49b19e2fe7f34f0cd7f7bc84de7cc46d82b6e8ab512a40681"
+        },
+        "boards/stills/frame-06-at-21.4s.png": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/17/17b83f76923bb1773fc3c42a555eb2a8bdfdd698fc4f395ea35cae120a871db6"
+        },
+        "boards/stills/frame-07-at-23.4s.png": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/6b/6bbbe0d3097052f0ee079867e9fb5cf7b1b394a41df8946bb5d03482dd5cf76f"
+        },
+        "boards/stills/frame-08-at-26s.png": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/47/474af7bedecd21d31a8f947cbc61bbcdd3867612e4d6877b83a3e272213f4672"
+        },
+        "boards/stills/frame-09-at-28.4s.png": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/2a/2a04e9a76ae83b254c10f0f485fd660310ee669ccd1a78982081a0d566d68fab"
+        },
+        "boards/stills/frame-10-at-32s.png": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/ae/aece9c4d77aec1d7e1e1789b82a466410d672ab615040254f13c3cbd17dc61dc"
+        },
+        "boards/stills/frame-11-at-36s.png": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/2f/2f5e4acfbd2fb7e90d3c977a2ebbb7e6fdbcd25fb5170396c31dd80e089c0f20"
+        },
+        "compositions/frames/02-costo.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/74/748423d263d64b8b65b63a1841f42305798c478c6c0fc17d5def2c3d5c0c7db5",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/4a/4a8f8dbd5c0b137d413672820c86566cc8d1817fdee023d3b6dae5cc868379db"
+        }
+      }
+    },
+    "ddabed4e-88b2-4708-a94d-0072b48df0a4": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792097117670,
+      "endedAt": 1792097117680,
+      "files": {
+        "boards/stills/redo/contact-sheet.jpg": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/a9/a9a6a225e16bba044cf271cf1538582f4e7c19691bc0184c6bfd37a48f95b093"
+        },
+        "boards/stills/redo/frame-00-at-10.2s.png": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/03/030e5443eaa16fdbefb0b4ab8fa324a9030ab782c787997b97f9a113c0a98205"
+        },
+        "compositions/frames/02-costo.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/4a/4a8f8dbd5c0b137d413672820c86566cc8d1817fdee023d3b6dae5cc868379db",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/62/6229bd7259a03895ec0c16ced6dae8d9d8ad19815dd4644df4e91726882a910a"
+        }
+      }
+    },
+    "4498d062-cad4-45eb-b709-2f203d305a1c": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792097850542,
+      "endedAt": 1792097850599,
+      "files": {
+        ".media/manifest.jsonl": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f6/f696eaa7d8e61d2ff9ee5ef4b10b3844e095e9c633bc2d46dde173265ae6cba9",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/b8/b865940da79b958d34f9513dae2546a70e2b0d87209d15981d4d1b3576fec4da"
+        },
+        "assets/bgm/track.loop.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/4d/4dccbb31fa7af8ee2712485c00282f8a7da90e77a224ef7676ec70ad549af1af"
+        },
+        "assets/sfx/chip-pops.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/e3/e3d2fd9ac90f4c79a9b95a006f2b17056b9cf9d345d6c5e575915430e81e0492"
+        },
+        "assets/sfx/gentle-pops-on-ticks.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/27/2765fc75c31a7c6dbe1d97f93381a9d1429643e70df03975fbde33f14f2c2c04"
+        },
+        "assets/sfx/glass-shatter-whoosh.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/e3/e3ad25d0aeb0d89fc00965ee6452f339ab08ec8812c3da9d095a354dfcc103cd"
+        },
+        "assets/sfx/keyboard-typing.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/3b/3b180c098c858588958c7dd0797e20ab36e327c9202ba180f17152e7e28815ba"
+        },
+        "assets/sfx/low-riser.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/14/14310e1c606a0aec5442012561eb3980dab7f87ece41db011d7b12642880637a"
+        },
+        "assets/sfx/padlock-click.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/a7/a780e99c55417dae6662bb01f19108801ade3ed3357d7908509c810adfd89ee0"
+        },
+        "assets/sfx/pop.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/c6/c6a9052a4078b3f09a91cc2eaa2d8e342c293b51c769abe2089bb1b2d058fb56"
+        },
+        "assets/sfx/shimmer.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/0c/0c87804f9b2f5eca622e527263e051af687bc39d4bdbed0592b2768317a90d5d"
+        },
+        "assets/sfx/soft-impact-on-logo-landing.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/a6/a6b97c2f643cef226fa3201f68865093bd264c87c8d323c4544d0ca1abd16d5c"
+        },
+        "assets/sfx/soft-impact.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/56/56d023b3d99086ad9d1d3c7556b318573e15c03b68f7afab1a4cc8a60ffd3446"
+        },
+        "assets/sfx/soft-pop.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/d6/d69df66afaa0e9499c1503505778ecf3ed0b19897fc8f9c0e4e07ab88d211c3c"
+        },
+        "assets/sfx/soft-whoosh.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/bf/bfba9a6bfdd349334fecaff3da58f578d9b1befddb0dcc6bee74d41355509f5f"
+        },
+        "assets/sfx/tick.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/42/42b8fa8c7511774c9b38cd555e6547f32dfb4e9937cd15f5edb2eb0d241a559d"
+        },
+        "assets/sfx/ticks-on-count-up.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/00/000123b18b3798e798f87558fb4b34ffbd573923d07ade958622e16f6e5812b6"
+        },
+        "assets/sfx/typing.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/3b/3b180c098c858588958c7dd0797e20ab36e327c9202ba180f17152e7e28815ba"
+        },
+        "assets/sfx/ui-click.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/ec/ecec29529dc5b3f5ade7a550f163b4a3a8c9d98716bb7dabe07232a51c723ebc"
+        },
+        "assets/sfx/whoosh-on-phone-slide-in.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/05/0594ff079cb0e3365601ec763176249ac38304c93c37decff35d582cba565997"
+        },
+        "assets/sfx/whoosh.mp3": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/11/11e5e8ac6d991f8f86757b35082365724bc6f96a1d518121ba349bd10dbe1932"
+        },
+        "audio_engine_meta.json": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/83/834734df4693e4cb00e5ac987743274fc3bf7de7ce30ab43d322863900e1e506",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/0f/0f9fe1f3d6449c54c98f5e04ad3c2a2b3ed473b5e363e27e54b17f91091c09d1"
+        },
+        "audio_meta.json": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/d0/d0d3b071181b58350d055d59b6d8fbcb1dea51ac97bee64ccbc3affbde4efcec",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f3/f3134786d78785db2248848dc018f273ae4c2de857f12a9fcee42450100034ff"
+        },
+        "audio_request.json": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f8/f8d21713434924d8f95f82ec4b2aca8cf89a44b7f05c4b4261f2f08c859fa823",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/5e/5e393e03ed48f9ea1ab13ba8c56a2d9d43d9de020943bb9a77a9be7ead5b40b5"
+        },
+        "boards/board-sheet.jpg": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/d3/d33f2b2b5d79791cb7672595d801df92faca88ac801ab5d818bd286b70dcebef"
+        },
+        "boards/stills/contact-sheet-1.jpg": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/a2/a2c238a73bbd2634752291443736437342ade2c2722d509484a81bcf8d6fd733",
+          "after": null
+        },
+        "boards/stills/contact-sheet-2.jpg": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f3/f3822aec4d5da0bac67259f0425bb8f0871f8e7235cc5b2e070081082bcc652a",
+          "after": null
+        },
+        "boards/stills/frame-02-at-10.2s.png": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/72/720fa2ae4e2f8b0fbec57f9d00f38efaf6f2594636a9bb2bb28c114e744f5223",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/d7/d7d94770b91ad44ffa987eddb4ee7ee5926e0353c1b54766a54512516c00f1c3"
+        },
+        "boards/stills/redo/contact-sheet.jpg": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/a9/a9a6a225e16bba044cf271cf1538582f4e7c19691bc0184c6bfd37a48f95b093",
+          "after": null
+        },
+        "boards/stills/redo/frame-00-at-10.2s.png": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/03/030e5443eaa16fdbefb0b4ab8fa324a9030ab782c787997b97f9a113c0a98205",
+          "after": null
+        },
+        "boards/storyboard.html": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/7b/7b7e3dad7173e65a1e50e1617a1bdc344c224f97eaccbd6e7aeef197b7bc29ab"
+        },
+        "caption_groups.json": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/f3/f3fbf9a65413270856fb302115dd095a879e4d22ef10e283e42fd3467ddacd35"
+        },
+        "caption-overrides.json": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/37/37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+        },
+        "compositions/captions.html": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/6a/6aee28bd0e96ca2a96a616795f8cbd7df1402a274cdcfb6eee1f8614e5e260c7"
+        },
+        "compositions/components/confetti.html": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/e1/e1aab1fba4eac8fcbed7367d94a262c41b08dc26cd723a3a0cde51158f7c864f"
+        },
+        "compositions/components/number-wheel.html": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/04/04e3b1d13a044f9e8ad88b701b27315fc69eded6e951ab99b046ab760dc91110"
+        },
+        "compositions/components/particle-text-dissolve.html": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/37/379a4ad6b7686c80a27a10641b168c32d875992ec289bb295876566066674d3e"
+        },
+        "compositions/components/shimmer-sweep.html": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/03/0358db4e2ec9137c65771e17139741a13e2c12a37be5688fc6cfede9a718d8d6"
+        },
+        "compositions/frames/01-gancho.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/e3/e36ec5f952ca7734aa11338feaadb3bdd853cc057def269a7843a6d2e7f4b0f1",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/d0/d015473e6b4b59aa3f95bfdcfdb7993e96b7426b5da4fc416c5cbb066be19812"
+        },
+        "compositions/frames/02-costo.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/62/6229bd7259a03895ec0c16ced6dae8d9d8ad19815dd4644df4e91726882a910a",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/77/77e2fa277924d895fc14e5594fdd7bd775cee8fbf17e8748648bcc1e94705f47"
+        },
+        "compositions/frames/03-marca.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/91/91730043fd842dc5e89c387d5427d32a26280797ae01fe613b95f3b29a82e86f",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/93/93a96c3875fa088811e713cac8ae496188923110eec6a9e8c367d4f2b70ed6a0"
+        },
+        "compositions/frames/04-plantilla.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/fc/fcaa3cb43b4caabffc547e63e89dc2ab1262c997f41fca9e5f5c9f34b59d5b3c",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/d1/d152e420c4ebe65cc79054dd249ac3ecc5e136e70eae750c9769a1519285cf7c"
+        },
+        "compositions/frames/05-personaliza.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/fb/fb076fbaf4f291db5e5d81e511f34a9a7cf1a0f371e717865bc1af81ffa7f636",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/c9/c9ec5714da21c7ea40276a59ead489df06d1807f48ef2dae4aa6616a25805d22"
+        },
+        "compositions/frames/06-dominio.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/28/283cbe9cb293d7f4cc8efbb9e58f30accbdcdd444687bb80831a5b6221f3b0d5",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/c1/c1d30c9e73e040a515907e566da51b40220302d77ebae9e7f5b29219ea52125c"
+        },
+        "compositions/frames/07-plan.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/e0/e01f4e2193ca824893ff7e5c42008958bc767996eb43cc35eb39ab5507e3d233",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/82/82c2dc69c04cc49be27107303e4fa51c8dddc09941dea50ecca0b94a42124477"
+        },
+        "compositions/frames/08-cta.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/50/504900788512bae810f5a53405a20ae3d223c3735fac4aae023f1c16d9192f30",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/fd/fda31c1fd07812f1b8dbfd559d68c2fb117cfe1119efe081f21c0b406b096b60"
+        },
+        "compositions/swirl-vortex.html": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/8a/8ae43f067b0e6ea3b96e5370db1a02d6a4b2c315d3fb66bae236a7d7177a8e3e"
+        },
+        "hyperframes.json": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/44/44d4e8dcefebce0a13f5afa82aa270b0b19a1d3f82e434f92616010cee775dc4",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/51/515081a57e4f9d9235c2842b3d2e1809e6aa5a761b3e3f697ddd25ab00d1ce13"
+        },
+        "hyperframes.lock.json": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/87/87b419fb0ccfcf1e33a38ea1983afc8309a69e5ade48de1374d46d88513d4f8c"
+        },
+        "index.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/a7/a7198072376f2137d1167fd2573281effb3221574990e0e097263ae0f65008a4",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/3f/3f0c34436d8ae8ba5e6318441b99385de33c4920811f67624a00d5f2dc4915e7"
+        },
+        "package-lock.json": {
+          "before": null,
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/24/2476245bddff1cd552538f268b3ff6c86283214cc6f8a8aaf51a461d229e0470"
+        },
+        "package.json": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/be/be007b535d12bc812cf3bd3deb31ff2250879bc626dc0cc0d734ac1fcd905760",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/fd/fd29a5c61d50d1b0f130d9194b3a9aeab79b2eb4eeb062d2e21713e1225b694f"
+        },
+        "STORYBOARD.md": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/ca/cad9c5781f609c2c8ff67b922bfc2eadbe3bfa96ae0ef8a97ec429148dfdfb08",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/89/8945b4c5344b8f9cd13660043478ab6e8e58891562c65fb57ea2cb5fd7dd1202"
+        }
+      }
+    },
+    "c6c70e5c-8211-43ba-8e42-cf2927383d65": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792097946011,
+      "endedAt": 1792097946021,
+      "files": {
+        "compositions/frames/03-marca.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/93/93a96c3875fa088811e713cac8ae496188923110eec6a9e8c367d4f2b70ed6a0",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/25/2546caa21f0f649cc8bc639d80806769ee9a96faaeb74116c814894864fc08c9"
+        },
+        "compositions/frames/06-dominio.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/c1/c1d30c9e73e040a515907e566da51b40220302d77ebae9e7f5b29219ea52125c",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/6e/6eb7880468d5e6960f21e47d060099102333d9474fc2df9ab6c299929dfce36c"
+        },
+        "compositions/frames/07-plan.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/82/82c2dc69c04cc49be27107303e4fa51c8dddc09941dea50ecca0b94a42124477",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/fe/feca1d57dd9297d84b9f092c4b3a9e25756115c7c0f1bc0eb0c596dc993b44f3"
+        }
+      }
+    },
+    "e6674e8d-1fab-44be-bc59-a28c7d1930af": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792097988647,
+      "endedAt": 1792097988675,
+      "files": {
+        "compositions/captions.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/6a/6aee28bd0e96ca2a96a616795f8cbd7df1402a274cdcfb6eee1f8614e5e260c7",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/6c/6c3e63bb7f691d4102dc947229725f7d58acbe53a088405c9db1038ed55d4f7a"
+        },
+        "compositions/components/particle-text-dissolve.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/37/379a4ad6b7686c80a27a10641b168c32d875992ec289bb295876566066674d3e",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/b4/b4e6a09fdb0cacbffc1476d7d9f2a54869065f8fd1987d6dbd92411b5fd24f84"
+        },
+        "compositions/frames/01-gancho.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/d0/d015473e6b4b59aa3f95bfdcfdb7993e96b7426b5da4fc416c5cbb066be19812",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/39/39b1bd78a60172b3fb58eff1ee3d1110d26560196b71381574adbafd6df02e4b"
+        },
+        "compositions/frames/02-costo.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/77/77e2fa277924d895fc14e5594fdd7bd775cee8fbf17e8748648bcc1e94705f47",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/06/068fde72559b1b3a1bd7d7b3de09c4e627167ed3a28e4f4cd1f93a1c8513f51a"
+        },
+        "compositions/frames/03-marca.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/25/2546caa21f0f649cc8bc639d80806769ee9a96faaeb74116c814894864fc08c9",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/32/3215e4400baa57fe8a67b4a4f6e3d9ef2c40659d1ab8371c0a90655f53382d49"
+        },
+        "compositions/frames/04-plantilla.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/d1/d152e420c4ebe65cc79054dd249ac3ecc5e136e70eae750c9769a1519285cf7c",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/7f/7fa69eaeadd5934062ea2181aa225ffffb3fb02d694eb1d09aa24cb7f95505b1"
+        },
+        "compositions/frames/05-personaliza.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/c9/c9ec5714da21c7ea40276a59ead489df06d1807f48ef2dae4aa6616a25805d22",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/97/978237e2a9e12f0c16862722b307457b7f42831d4287b1e76fd3c69cd60e6ef4"
+        },
+        "compositions/frames/06-dominio.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/6e/6eb7880468d5e6960f21e47d060099102333d9474fc2df9ab6c299929dfce36c",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/80/805f1824777fd0da80ab293c87b7628d4c418fc502a782c57c8f11f470e38247"
+        },
+        "compositions/frames/07-plan.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/fe/feca1d57dd9297d84b9f092c4b3a9e25756115c7c0f1bc0eb0c596dc993b44f3",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/ea/ea59b2429eb13759fdf591c854bd1adcff0c3b809c51dc9dc49e7e330a05ecd6"
+        },
+        "compositions/frames/08-cta.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/fd/fda31c1fd07812f1b8dbfd559d68c2fb117cfe1119efe081f21c0b406b096b60",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/52/5290738db29257c5385f8ecc32eb28f5dd4822cd5f0a489193b261ad096dc7ef"
+        },
+        "compositions/swirl-vortex.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/8a/8ae43f067b0e6ea3b96e5370db1a02d6a4b2c315d3fb66bae236a7d7177a8e3e",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/32/32381e6b750a0a6cf26b67581ade04f8fcb8b619a6714ebef3a6c3baba651b6e"
+        },
+        "index.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/3f/3f0c34436d8ae8ba5e6318441b99385de33c4920811f67624a00d5f2dc4915e7",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/c3/c32f00b105d21121b93a8eb7ea32de13edde89f1bb93cce0ae0a1c1e973b0d59"
+        }
+      }
+    },
+    "d040082f-6069-41a2-94a9-7a2b343c110e": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792098014638,
+      "endedAt": 1792098017084,
+      "files": {
+        "index.html": {
+          "before": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/c3/c32f00b105d21121b93a8eb7ea32de13edde89f1bb93cce0ae0a1c1e973b0d59",
+          "after": "/Users/santiagomoreno/.cache/hyperframes/history/509c09d6-30fd-49ff-93ae-b68a091cdee0/blobs/18/182d4bf3b89dfcba76dfd0edc03dfe66be1095e9b76cade88d525317157fa787"
+        }
+      }
+    }
+  },
+  "checks": {
+    "latest": {
+      "revision": "e6674e8d-1fab-44be-bc59-a28c7d1930af",
+      "id": "e5cbcfd5-99a2-4dfa-8ff2-c77860bc8f81"
+    },
+    "revisions": {
+      "4498d062-cad4-45eb-b709-2f203d305a1c": [
+        {
+          "id": "d2c92030-c7fb-45ba-a015-ad4f7aa63780",
+          "scope": "project",
+          "report": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/artifacts/checks/d2c92030-c7fb-45ba-a015-ad4f7aa63780.json",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792097865217,
+          "contentHash": "45c3c59e40a43bb9b70130214f1d986e5b9548f37330f6684ce94b945cf5b99f",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ],
+      "c6c70e5c-8211-43ba-8e42-cf2927383d65": [
+        {
+          "id": "f8bc628e-3c04-4d54-9279-9d8cfdf8342a",
+          "scope": "project",
+          "report": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/artifacts/checks/f8bc628e-3c04-4d54-9279-9d8cfdf8342a.json",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792097984444,
+          "contentHash": "45c3c59e40a43bb9b70130214f1d986e5b9548f37330f6684ce94b945cf5b99f",
+          "revision": "c6c70e5c-8211-43ba-8e42-cf2927383d65",
+          "inputFingerprint": "3fb8f269dcf328c6b782e6dbb8303ccd899bc581bf0e6ab812ef4ff688bda17c",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ],
+      "e6674e8d-1fab-44be-bc59-a28c7d1930af": [
+        {
+          "id": "e5cbcfd5-99a2-4dfa-8ff2-c77860bc8f81",
+          "scope": "project",
+          "report": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/artifacts/checks/e5cbcfd5-99a2-4dfa-8ff2-c77860bc8f81.json",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792098007980,
+          "contentHash": "c3a4fc5a606d1a0e5317a2564cd20d5a1a44aaa844cea1d36d1965cb9ad8f236",
+          "revision": "e6674e8d-1fab-44be-bc59-a28c7d1930af",
+          "inputFingerprint": "135b909907ac994cce5ee9da0f4703d7d5af65cdbca922375b131db78a47c6d6",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ]
+    },
+    "unversioned": [
+      {
+        "id": "e0c93931-0f74-4941-9b84-3a34a175a09e",
+        "scope": "project",
+        "report": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/artifacts/checks/e0c93931-0f74-4941-9b84-3a34a175a09e.json",
+        "metadata": {
+          "ok": true,
+          "browserSkipped": false,
+          "options": {
+            "samples": 9,
+            "atTransitions": false,
+            "maxIssues": 80,
+            "collapseStatic": true,
+            "tolerance": 2,
+            "timeout": 3000,
+            "contrast": true,
+            "strict": false,
+            "snapshots": false,
+            "browserGpuMode": "auto"
+          }
+        },
+        "createdAt": 1792096365019,
+        "contentHash": "a451d9efe4356c73baf24f47d7168e3a070beb2dcbc2d4fa9ddb85a7ddf5207e",
+        "revision": null,
+        "inputFingerprint": "6c80b9511786db80c93b93a2407e49881101e60bcb5c8049dec125e860f0a445",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      }
+    ]
+  },
+  "snapshots": {
+    "latest": {
+      "revision": "c6c70e5c-8211-43ba-8e42-cf2927383d65",
+      "id": "a2730404-6c46-419b-892b-f69d10972e78-5"
+    },
+    "revisions": {
+      "ca0039ad-b6e8-4378-bed6-0c12aaf63cab": [
+        {
+          "scope": "full",
+          "id": "192e6c6d-6297-4146-b58b-dcceb1103e03-0",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/test-stills/frame-00-at-2.6s.png",
+          "time": 2.6,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792096863903,
+          "contentHash": "67ac584484b75eed62b660b12bac692e290c6017fe20703326c0364d4c1d4a38",
+          "revision": "ca0039ad-b6e8-4378-bed6-0c12aaf63cab",
+          "inputFingerprint": "7990a6afb0181ea34f8710b05231ae153205ee39dbdb1e54a30965b6c24f5b9e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "192e6c6d-6297-4146-b58b-dcceb1103e03-1",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/test-stills/frame-01-at-6.6s.png",
+          "time": 6.6,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792096863903,
+          "contentHash": "8024bea34f7a2d05f0112604a80c02c2eae5f88ca3697ed393c78fc1c50f7387",
+          "revision": "ca0039ad-b6e8-4378-bed6-0c12aaf63cab",
+          "inputFingerprint": "7990a6afb0181ea34f8710b05231ae153205ee39dbdb1e54a30965b6c24f5b9e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ],
+      "4498d062-cad4-45eb-b709-2f203d305a1c": [
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-0",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-00-at-1s.png",
+          "time": 1,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "d627280a46c170e9115db2821fafab9e6482fe90d5b55d30e18c1a18fff6681b",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-1",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-01-at-2.9s.png",
+          "time": 2.9,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "be3a0ff353a3f07c7fc66707f89991fcbf71e9d42720f3febd8d48992bb6f466",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-2",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-02-at-4.6s.png",
+          "time": 4.6,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "da8b8f4fea90f09b68b1a12347c1270928517c3f88c249753275cd3018f077c6",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-3",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-03-at-6.8s.png",
+          "time": 6.8,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "a3d93b4258a0b99a06372de9e0b59781abff1207ee3be20666a62acad71e7bca",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-4",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-04-at-9.2s.png",
+          "time": 9.2,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "92dc20671c5f940b1d0d92207d1bb82adc434e67ba68d5cd61f7b9d7e294d097",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-5",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-05-at-10.4s.png",
+          "time": 10.4,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "4c707ba29fa2afcc7e3747f8ef99c015a017bccfbcd60c6d54703bda89d04971",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-6",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-06-at-11.3s.png",
+          "time": 11.3,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "5dc8f0abbb72a02c34970a81e6270438855f3f9b2e32748a26956224396c5fcd",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-7",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-07-at-11.7s.png",
+          "time": 11.7,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "60af0a3cfe81fa26b709f1ab8a5facfb8e928dfaafdd8b4676aa426c40bf0a8f",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-8",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-08-at-12.4s.png",
+          "time": 12.4,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "4d5dffcca08ac46ea1704faeb224d2e5e077159119c8eeeef8a55080336707e2",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-9",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-09-at-13.3s.png",
+          "time": 13.3,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "6594d428f5213e29a2d123f84d96b5da09b5cbbea7f5c38c76a2373dd8eab43b",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-10",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-10-at-14s.png",
+          "time": 14,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "ee247fff737cc4cb93bf2751e143d70f91509266e50109392650c876fdc7ebba",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-11",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-11-at-15.5s.png",
+          "time": 15.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "f6fd545d0019838514080c9953d597ecc4f06056442228063a6dbcf9c7913c59",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-12",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-12-at-17.7s.png",
+          "time": 17.7,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "cb9724fbb861826a3321c3e659fbf83f0bcf89bac04f5306a9dbe7a4dfd724ea",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-13",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-13-at-17.95s.png",
+          "time": 17.95,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "5ba7c513b33bd3761b48bd99d83c32913c29842dd98c696864fe9c6e7513bbf9",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-14",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-14-at-18.6s.png",
+          "time": 18.6,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "e81e7de264cee2d81ac4cc994786088cf0f545449d6b5f8135f138952fc1d8d1",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-15",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-15-at-19.6s.png",
+          "time": 19.6,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "ebbbbc97bb3f74834df8e9f007bf370421979412cadf70c66dd8e15ea80ec625",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-16",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-16-at-20.5s.png",
+          "time": 20.5,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "e33480ba12dc1379fd05ebde597af23d1fc22a41371ef8728417054f4e8fe1c5",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-17",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-17-at-21s.png",
+          "time": 21,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "eae9a7ccd692b6abfbe652df1ac906b882965aa281dd8f63b3b0a2ab4f4e54fc",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-18",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-18-at-22.4s.png",
+          "time": 22.4,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "b93a923705d3801082affdf099569f73ab452da67df985d3c8732ca3ac6f9b96",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-19",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-19-at-23.6s.png",
+          "time": 23.6,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891614,
+          "contentHash": "702754870333cbec42ac136b9ed19d89ed482e2f9fe38d588735da80e9df470d",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-20",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-20-at-24.8s.png",
+          "time": 24.8,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891615,
+          "contentHash": "a7c1e8939cb4262373579d216241bb8f9eb8534c58374e52da2ac7bac3e168c7",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-21",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-21-at-25.9s.png",
+          "time": 25.9,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891615,
+          "contentHash": "9f765ed84a27afbf8f2f2dcfb00a1f85ee9a7cf559fe1ca62446ade313b589ce",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-22",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-22-at-26.6s.png",
+          "time": 26.6,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891615,
+          "contentHash": "675013551fddeecfa610c312b5e6a241b703d29a477e608af64645773f1bd6b9",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-23",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-23-at-27.6s.png",
+          "time": 27.6,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891615,
+          "contentHash": "ae7a0d68a98c98c4565b17df14889b10aa6f9c93381bcb05945f4e6c8d0a01f2",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-24",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-24-at-28.4s.png",
+          "time": 28.4,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891615,
+          "contentHash": "f557b182cb2142776bc50941f12b99cbbd8132ea22149c50b016c3e025f4d1a6",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-25",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-25-at-29.6s.png",
+          "time": 29.6,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891615,
+          "contentHash": "39168aa7149fb1f38573905b885ed237ddf2bc707674d760f0f944a22104a55b",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-26",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-26-at-31.6s.png",
+          "time": 31.6,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891615,
+          "contentHash": "343b1ce5a40188544afd2879b12d641ed5b048e93c8e2407c2d454bb5fd1b6fe",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-27",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-27-at-33.2s.png",
+          "time": 33.2,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891615,
+          "contentHash": "4d23b104f8701f21b18c6ae2b832075804a3785c05d26961cb73f900c226b547",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-28",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-28-at-35.4s.png",
+          "time": 35.4,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891615,
+          "contentHash": "e13052e4dbf241e223b9796c50ddcd1f49e628f85eab192e94c960619e40e564",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-29",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-29-at-37.2s.png",
+          "time": 37.2,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891615,
+          "contentHash": "57d8bca37e36e8629228da9d8455cdf5931c5638dc5711ff1ffe78dd73db53c9",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "c0344f37-b934-47f0-a633-9b7ac583f86e-30",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa1/frame-30-at-36.181s.png",
+          "time": 36.181,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097891615,
+          "contentHash": "a5be8ee2ea27933d5274af70e9bb5661eb5633b3551bcfdab94439a5701690cc",
+          "revision": "4498d062-cad4-45eb-b709-2f203d305a1c",
+          "inputFingerprint": "705ab5757a1a03b8f7c7f0b8bb5ba84e11249fd27ad0407cd88fbd619e1beb2e",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ],
+      "c6c70e5c-8211-43ba-8e42-cf2927383d65": [
+        {
+          "scope": "full",
+          "id": "a2730404-6c46-419b-892b-f69d10972e78-0",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa2/frame-00-at-14s.png",
+          "time": 14,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097954427,
+          "contentHash": "b16bd01bd9ff449575ae330a4cb71b51bdfa593d9dde322b1dc88548abe0082e",
+          "revision": "c6c70e5c-8211-43ba-8e42-cf2927383d65",
+          "inputFingerprint": "3fb8f269dcf328c6b782e6dbb8303ccd899bc581bf0e6ab812ef4ff688bda17c",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "a2730404-6c46-419b-892b-f69d10972e78-1",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa2/frame-01-at-27.4s.png",
+          "time": 27.4,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097954427,
+          "contentHash": "11f50f14feda6b189b3182d896df4f9883ca716a9021a566d4337d31631cc393",
+          "revision": "c6c70e5c-8211-43ba-8e42-cf2927383d65",
+          "inputFingerprint": "3fb8f269dcf328c6b782e6dbb8303ccd899bc581bf0e6ab812ef4ff688bda17c",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "a2730404-6c46-419b-892b-f69d10972e78-2",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa2/frame-02-at-27.75s.png",
+          "time": 27.75,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097954427,
+          "contentHash": "060f5fd84df60c8b93a1b19b447f46de1901a33c3a2794c6c5fc6d750cab67ad",
+          "revision": "c6c70e5c-8211-43ba-8e42-cf2927383d65",
+          "inputFingerprint": "3fb8f269dcf328c6b782e6dbb8303ccd899bc581bf0e6ab812ef4ff688bda17c",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "a2730404-6c46-419b-892b-f69d10972e78-3",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa2/frame-03-at-28s.png",
+          "time": 28,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097954427,
+          "contentHash": "cb67fa1878b115a886bbcb7f672e68a83c43fad6520ea0aff871e50d3ce236d2",
+          "revision": "c6c70e5c-8211-43ba-8e42-cf2927383d65",
+          "inputFingerprint": "3fb8f269dcf328c6b782e6dbb8303ccd899bc581bf0e6ab812ef4ff688bda17c",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "a2730404-6c46-419b-892b-f69d10972e78-4",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa2/frame-04-at-31.6s.png",
+          "time": 31.6,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097954427,
+          "contentHash": "c72bb9c7b29743da28639e748209f8a92b87e8e95ff815db0811b1133c2d5590",
+          "revision": "c6c70e5c-8211-43ba-8e42-cf2927383d65",
+          "inputFingerprint": "3fb8f269dcf328c6b782e6dbb8303ccd899bc581bf0e6ab812ef4ff688bda17c",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "a2730404-6c46-419b-892b-f69d10972e78-5",
+          "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/.hyperframes/qa2/frame-05-at-36.181s.png",
+          "time": 36.181,
+          "metadata": {
+            "width": 1920,
+            "height": 1080,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792097954427,
+          "contentHash": "a5be8ee2ea27933d5274af70e9bb5661eb5633b3551bcfdab94439a5701690cc",
+          "revision": "c6c70e5c-8211-43ba-8e42-cf2927383d65",
+          "inputFingerprint": "3fb8f269dcf328c6b782e6dbb8303ccd899bc581bf0e6ab812ef4ff688bda17c",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ]
+    },
+    "unversioned": [
+      {
+        "scope": "full",
+        "id": "d162b32a-2503-4142-8bcf-3bec724efc0c-0",
+        "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/boards/stills/frame-00-at-2.6s.png",
+        "time": 2.6,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792097088191,
+        "contentHash": "67ac584484b75eed62b660b12bac692e290c6017fe20703326c0364d4c1d4a38",
+        "revision": null,
+        "inputFingerprint": "43d9e79ce14a258a76c5f594f3814093a07e4146c8ff96e90ea7be9331ef82df",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "d162b32a-2503-4142-8bcf-3bec724efc0c-1",
+        "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/boards/stills/frame-01-at-6.6s.png",
+        "time": 6.6,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792097088191,
+        "contentHash": "8024bea34f7a2d05f0112604a80c02c2eae5f88ca3697ed393c78fc1c50f7387",
+        "revision": null,
+        "inputFingerprint": "43d9e79ce14a258a76c5f594f3814093a07e4146c8ff96e90ea7be9331ef82df",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "d162b32a-2503-4142-8bcf-3bec724efc0c-2",
+        "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/boards/stills/frame-02-at-10.2s.png",
+        "time": 10.2,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792097088191,
+        "contentHash": "720fa2ae4e2f8b0fbec57f9d00f38efaf6f2594636a9bb2bb28c114e744f5223",
+        "revision": null,
+        "inputFingerprint": "43d9e79ce14a258a76c5f594f3814093a07e4146c8ff96e90ea7be9331ef82df",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "d162b32a-2503-4142-8bcf-3bec724efc0c-3",
+        "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/boards/stills/frame-03-at-12.4s.png",
+        "time": 12.4,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792097088191,
+        "contentHash": "d5cb5272c6e871361bc82c599e8e9be8d1c2ef8e329302eb4586c0535cc1f3c9",
+        "revision": null,
+        "inputFingerprint": "43d9e79ce14a258a76c5f594f3814093a07e4146c8ff96e90ea7be9331ef82df",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "d162b32a-2503-4142-8bcf-3bec724efc0c-4",
+        "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/boards/stills/frame-04-at-16.9s.png",
+        "time": 16.9,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792097088191,
+        "contentHash": "073998ae0f42ebbceb2c40e23552b57ba384a280514dda54e5387ecdc97c9180",
+        "revision": null,
+        "inputFingerprint": "43d9e79ce14a258a76c5f594f3814093a07e4146c8ff96e90ea7be9331ef82df",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "d162b32a-2503-4142-8bcf-3bec724efc0c-5",
+        "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/boards/stills/frame-05-at-19.4s.png",
+        "time": 19.4,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792097088191,
+        "contentHash": "42e84a1c7a980ea49b19e2fe7f34f0cd7f7bc84de7cc46d82b6e8ab512a40681",
+        "revision": null,
+        "inputFingerprint": "43d9e79ce14a258a76c5f594f3814093a07e4146c8ff96e90ea7be9331ef82df",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "d162b32a-2503-4142-8bcf-3bec724efc0c-6",
+        "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/boards/stills/frame-06-at-21.4s.png",
+        "time": 21.4,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792097088191,
+        "contentHash": "17b83f76923bb1773fc3c42a555eb2a8bdfdd698fc4f395ea35cae120a871db6",
+        "revision": null,
+        "inputFingerprint": "43d9e79ce14a258a76c5f594f3814093a07e4146c8ff96e90ea7be9331ef82df",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "d162b32a-2503-4142-8bcf-3bec724efc0c-7",
+        "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/boards/stills/frame-07-at-23.4s.png",
+        "time": 23.4,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792097088191,
+        "contentHash": "6bbbe0d3097052f0ee079867e9fb5cf7b1b394a41df8946bb5d03482dd5cf76f",
+        "revision": null,
+        "inputFingerprint": "43d9e79ce14a258a76c5f594f3814093a07e4146c8ff96e90ea7be9331ef82df",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "d162b32a-2503-4142-8bcf-3bec724efc0c-8",
+        "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/boards/stills/frame-08-at-26s.png",
+        "time": 26,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792097088191,
+        "contentHash": "474af7bedecd21d31a8f947cbc61bbcdd3867612e4d6877b83a3e272213f4672",
+        "revision": null,
+        "inputFingerprint": "43d9e79ce14a258a76c5f594f3814093a07e4146c8ff96e90ea7be9331ef82df",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "d162b32a-2503-4142-8bcf-3bec724efc0c-9",
+        "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/boards/stills/frame-09-at-28.4s.png",
+        "time": 28.4,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792097088191,
+        "contentHash": "2a04e9a76ae83b254c10f0f485fd660310ee669ccd1a78982081a0d566d68fab",
+        "revision": null,
+        "inputFingerprint": "43d9e79ce14a258a76c5f594f3814093a07e4146c8ff96e90ea7be9331ef82df",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "d162b32a-2503-4142-8bcf-3bec724efc0c-10",
+        "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/boards/stills/frame-10-at-32s.png",
+        "time": 32,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792097088191,
+        "contentHash": "aece9c4d77aec1d7e1e1789b82a466410d672ab615040254f13c3cbd17dc61dc",
+        "revision": null,
+        "inputFingerprint": "43d9e79ce14a258a76c5f594f3814093a07e4146c8ff96e90ea7be9331ef82df",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      },
+      {
+        "scope": "full",
+        "id": "d162b32a-2503-4142-8bcf-3bec724efc0c-11",
+        "image": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/boards/stills/frame-11-at-36s.png",
+        "time": 36,
+        "metadata": {
+          "width": 1920,
+          "height": 1080,
+          "zoomScale": 1,
+          "browserGpuMode": "auto",
+          "warnings": [],
+          "partial": false
+        },
+        "createdAt": 1792097088191,
+        "contentHash": "2f5e4acfbd2fb7e90d3c977a2ebbb7e6fdbcd25fb5170396c31dd80e089c0f20",
+        "revision": null,
+        "inputFingerprint": "43d9e79ce14a258a76c5f594f3814093a07e4146c8ff96e90ea7be9331ef82df",
+        "inputScope": "local-project-files",
+        "attribution": "inputs-changed"
+      }
+    ]
+  }
+}

@@ -1,0 +1,1543 @@
+{
+  "ok": true,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 3,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "composition_file_too_large",
+        "severity": "warning",
+        "message": "This HTML composition file has 397 lines. Smaller sub-compositions are easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Split coherent scenes or layers into separate .html files under compositions/, then mount them from the parent with data-composition-src so each file stays small enough to inspect, revise, and validate independently."
+      },
+      {
+        "code": "caption_track_kind_missing",
+        "severity": "warning",
+        "message": "<div id=\"el-captions\"> looks like captions but is not marked as such, so the timeline cannot group it on the caption track.",
+        "selector": "#el-captions",
+        "dataAttributes": {},
+        "sourceFile": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Add data-track-kind=\"captions\" to <div id=\"el-captions\">."
+      },
+      {
+        "code": "duplicate_media_discovery_risk",
+        "severity": "warning",
+        "message": "Detected 3 matching img entries with the same source/start/duration.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/Users/santiagomoreno/Desktop/app/videos/lattiz-launch/compositions/frames/06-dominio.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Avoid duplicated media nodes that can be discovered twice during compilation."
+      }
+    ],
+    "filesScanned": 11
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 8,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-01-gancho-voice\" is 8.10s but its slot (data-duration) is 8.20s — the slot is shortened to the media length when rendered. Set data-duration to ~8.10s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "37.3",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-02-costo-voice\" is 4.57s but its slot (data-duration) is 4.70s — the slot is shortened to the media length when rendered. Set data-duration to ~4.57s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "37.3",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-03-marca-voice\" is 4.70s but its slot (data-duration) is 4.90s — the slot is shortened to the media length when rendered. Set data-duration to ~4.70s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "37.3",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-04-plantilla-voice\" is 1.57s but its slot (data-duration) is 2.50s — the slot is shortened to the media length when rendered. Set data-duration to ~1.57s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "37.3",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-05-personaliza-voice\" is 3.42s but its slot (data-duration) is 3.70s — the slot is shortened to the media length when rendered. Set data-duration to ~3.42s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "37.3",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-06-dominio-voice\" is 4.44s but its slot (data-duration) is 4.90s — the slot is shortened to the media length when rendered. Set data-duration to ~4.44s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "37.3",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-07-plan-voice\" is 3.66s but its slot (data-duration) is 3.80s — the slot is shortened to the media length when rendered. Set data-duration to ~3.66s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "37.3",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-08-cta-voice\" is 3.66s but its slot (data-duration) is 4.60s — the slot is shortened to the media length when rendered. Set data-duration to ~3.66s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "37.3",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      }
+    ]
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 30,
+    "findings": [
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 2.072,
+        "selector": "#f01-bgclip",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -60.14,
+          "top": -48.76,
+          "right": 1970.06,
+          "bottom": 1128.76,
+          "width": 2030.2,
+          "height": 1177.52
+        },
+        "containerSelector": "#el-01-gancho > div:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 60.14,
+          "right": 50.06,
+          "top": 48.76,
+          "bottom": 48.76
+        },
+        "dataAttributes": {
+          "data-start": "0",
+          "data-duration": "8.2",
+          "data-track-index": "0"
+        },
+        "sourceFile": "compositions/frames/01-gancho.html",
+        "bbox": {
+          "x": -60.14,
+          "y": -48.76,
+          "width": 2030.2,
+          "height": 1177.52
+        },
+        "firstSeen": 2.072,
+        "lastSeen": 6.217,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          2.072,
+          6.217
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 2.072,
+        "selector": "#f01-cam",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -35.33,
+          "top": -17.88,
+          "right": 1955.33,
+          "bottom": 1101.86,
+          "width": 1990.66,
+          "height": 1119.74
+        },
+        "containerSelector": "#el-01-gancho > div:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 35.33,
+          "right": 35.33,
+          "top": 17.88,
+          "bottom": 21.86
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-gancho.html",
+        "bbox": {
+          "x": -35.33,
+          "y": -17.88,
+          "width": 1990.66,
+          "height": 1119.74
+        },
+        "firstSeen": 2.072,
+        "lastSeen": 6.217,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          2.072,
+          6.217
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 6.217,
+        "selector": "#f01-mapart",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 203.36,
+          "top": 313.19,
+          "right": 1131.92,
+          "bottom": 898.58,
+          "width": 928.56,
+          "height": 585.39
+        },
+        "containerSelector": "#f01-map",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 243.4,
+          "top": 348.74,
+          "right": 1111.4,
+          "bottom": 873.57,
+          "width": 868,
+          "height": 524.84
+        },
+        "overflow": {
+          "left": 40.04,
+          "right": 20.52,
+          "top": 35.55,
+          "bottom": 25.01
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-gancho.html",
+        "bbox": {
+          "x": 203.36,
+          "y": 313.19,
+          "width": 928.56,
+          "height": 585.39
+        },
+        "firstSeen": 6.217,
+        "lastSeen": 6.217,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          6.217
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 6.217,
+        "selector": "#f01-mapart > path:nth-of-type(3)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 183.18,
+          "top": 528.84,
+          "right": 1162.2,
+          "bottom": 601.68,
+          "width": 979.02,
+          "height": 72.85
+        },
+        "containerSelector": "#f01-mapart",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 203.36,
+          "top": 313.19,
+          "right": 1131.92,
+          "bottom": 898.58,
+          "width": 928.56,
+          "height": 585.39
+        },
+        "overflow": {
+          "left": 20.18,
+          "right": 30.28
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-gancho.html",
+        "bbox": {
+          "x": 183.18,
+          "y": 528.84,
+          "width": 979.02,
+          "height": 72.85
+        },
+        "firstSeen": 6.217,
+        "lastSeen": 6.217,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          6.217
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 10.361,
+        "selector": "#f02-eyebrow",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 765.39,
+          "top": 270,
+          "right": 1154.59,
+          "bottom": 314,
+          "width": 389.2,
+          "height": 44
+        },
+        "containerSelector": "#f02-canvas",
+        "text": "Una agencia web",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/02-costo.html",
+        "bbox": {
+          "x": 765.39,
+          "y": 270,
+          "width": 389.2,
+          "height": 44
+        },
+        "firstSeen": 10.361,
+        "lastSeen": 10.361,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          10.361
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 10.361,
+        "selector": "#f02-a",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 199.58,
+          "top": 311.29,
+          "right": 754.48,
+          "bottom": 535.68,
+          "width": 554.9,
+          "height": 224.39
+        },
+        "containerSelector": "#f02-canvas",
+        "text": "$6,000",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/02-costo.html",
+        "bbox": {
+          "x": 199.58,
+          "y": 311.29,
+          "width": 554.9,
+          "height": 224.39
+        },
+        "firstSeen": 10.361,
+        "lastSeen": 10.361,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          10.361
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 10.361,
+        "selector": "span.f02-dash",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 772.09,
+          "top": 311.29,
+          "right": 865.45,
+          "bottom": 535.68,
+          "width": 93.37,
+          "height": 224.39
+        },
+        "containerSelector": "#f02-canvas",
+        "text": "–",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/02-costo.html",
+        "bbox": {
+          "x": 772.09,
+          "y": 311.29,
+          "width": 93.37,
+          "height": 224.39
+        },
+        "firstSeen": 10.361,
+        "lastSeen": 10.361,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          10.361
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 10.361,
+        "selector": "#f02-b",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 894.93,
+          "top": 305.15,
+          "right": 1552.75,
+          "bottom": 529.53,
+          "width": 657.83,
+          "height": 224.39
+        },
+        "containerSelector": "#f02-canvas",
+        "text": "$80,000",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/02-costo.html",
+        "bbox": {
+          "x": 894.93,
+          "y": 305.15,
+          "width": 657.83,
+          "height": 224.39
+        },
+        "firstSeen": 10.361,
+        "lastSeen": 10.361,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          10.361
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 10.361,
+        "selector": "#f02-dark",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -61.8,
+          "top": -52.64,
+          "right": 1981.8,
+          "bottom": 1132.64,
+          "width": 2043.6,
+          "height": 1185.29
+        },
+        "containerSelector": "#el-02-costo > div:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 61.8,
+          "right": 61.8,
+          "top": 52.64,
+          "bottom": 52.64
+        },
+        "dataAttributes": {
+          "data-start": "0",
+          "data-duration": "4.7",
+          "data-track-index": "0"
+        },
+        "sourceFile": "compositions/frames/02-costo.html",
+        "bbox": {
+          "x": -61.8,
+          "y": -52.64,
+          "width": 2043.6,
+          "height": 1185.29
+        },
+        "firstSeen": 10.361,
+        "lastSeen": 10.361,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          10.361
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 14.506,
+        "selector": "#f03-word > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 754.76,
+          "top": 457.46,
+          "right": 836.8,
+          "bottom": 656.03,
+          "width": 82.04,
+          "height": 198.57
+        },
+        "containerSelector": "#f03-canvas",
+        "text": "L",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-marca.html",
+        "bbox": {
+          "x": 754.76,
+          "y": 457.46,
+          "width": 82.04,
+          "height": 198.57
+        },
+        "firstSeen": 14.506,
+        "lastSeen": 14.506,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.506
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 14.506,
+        "selector": "#f03-word > span:nth-of-type(2)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 836.8,
+          "top": 457.46,
+          "right": 921.37,
+          "bottom": 656.03,
+          "width": 84.57,
+          "height": 198.57
+        },
+        "containerSelector": "#f03-canvas",
+        "text": "a",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-marca.html",
+        "bbox": {
+          "x": 836.8,
+          "y": 457.46,
+          "width": 84.57,
+          "height": 198.57
+        },
+        "firstSeen": 14.506,
+        "lastSeen": 14.506,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.506
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 14.506,
+        "selector": "#f03-word > span:nth-of-type(3)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 921.37,
+          "top": 457.46,
+          "right": 983.61,
+          "bottom": 656.03,
+          "width": 62.24,
+          "height": 198.57
+        },
+        "containerSelector": "#f03-canvas",
+        "text": "t",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-marca.html",
+        "bbox": {
+          "x": 921.37,
+          "y": 457.46,
+          "width": 62.24,
+          "height": 198.57
+        },
+        "firstSeen": 14.506,
+        "lastSeen": 14.506,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.506
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 14.506,
+        "selector": "#f03-word > span:nth-of-type(4)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 983.58,
+          "top": 457.09,
+          "right": 1045.89,
+          "bottom": 655.65,
+          "width": 62.3,
+          "height": 198.56
+        },
+        "containerSelector": "#f03-canvas",
+        "text": "t",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-marca.html",
+        "bbox": {
+          "x": 983.58,
+          "y": 457.09,
+          "width": 62.3,
+          "height": 198.56
+        },
+        "firstSeen": 14.506,
+        "lastSeen": 14.506,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.506
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 14.506,
+        "selector": "#f03-word > span:nth-of-type(5)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1045.78,
+          "top": 455.87,
+          "right": 1082.39,
+          "bottom": 654.29,
+          "width": 36.61,
+          "height": 198.42
+        },
+        "containerSelector": "#f03-canvas",
+        "text": "i",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-marca.html",
+        "bbox": {
+          "x": 1045.78,
+          "y": 455.87,
+          "width": 36.61,
+          "height": 198.42
+        },
+        "firstSeen": 14.506,
+        "lastSeen": 14.506,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.506
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 14.506,
+        "selector": "#f03-word > span:nth-of-type(6)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1081.94,
+          "top": 454.37,
+          "right": 1165.59,
+          "bottom": 652.32,
+          "width": 83.66,
+          "height": 197.95
+        },
+        "containerSelector": "#f03-canvas",
+        "text": "z",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-marca.html",
+        "bbox": {
+          "x": 1081.94,
+          "y": 454.37,
+          "width": 83.66,
+          "height": 197.95
+        },
+        "firstSeen": 14.506,
+        "lastSeen": 14.506,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.506
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 14.506,
+        "selector": "#f03-c1",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 339.45,
+          "top": 218.49,
+          "right": 477.6,
+          "bottom": 259.61,
+          "width": 138.15,
+          "height": 41.12
+        },
+        "containerSelector": "#f03-canvas",
+        "text": "Plantillas",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-marca.html",
+        "bbox": {
+          "x": 339.45,
+          "y": 218.49,
+          "width": 138.15,
+          "height": 41.12
+        },
+        "firstSeen": 14.506,
+        "lastSeen": 14.506,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.506
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 14.506,
+        "selector": "#f03-c3",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 1247.65,
+          "top": 247.06,
+          "right": 1406.97,
+          "bottom": 283.39,
+          "width": 159.32,
+          "height": 36.33
+        },
+        "containerSelector": "#f03-canvas",
+        "text": "Dominio incluido",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-marca.html",
+        "bbox": {
+          "x": 1247.65,
+          "y": 247.06,
+          "width": 159.32,
+          "height": 36.33
+        },
+        "firstSeen": 14.506,
+        "lastSeen": 14.506,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.506
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 14.506,
+        "selector": "#f03-bgclip",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -130.21,
+          "top": -118,
+          "right": 2050.21,
+          "bottom": 1198,
+          "width": 2180.42,
+          "height": 1316
+        },
+        "containerSelector": "#el-03-marca > div:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 130.21,
+          "right": 130.21,
+          "top": 118,
+          "bottom": 118
+        },
+        "dataAttributes": {
+          "data-start": "0",
+          "data-duration": "5.3",
+          "data-track-index": "0"
+        },
+        "sourceFile": "compositions/frames/03-marca.html",
+        "bbox": {
+          "x": -130.21,
+          "y": -118,
+          "width": 2180.42,
+          "height": 1316
+        },
+        "firstSeen": 14.506,
+        "lastSeen": 14.506,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.506
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 14.506,
+        "selector": "#f03-stage",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -17.57,
+          "top": -7.91,
+          "right": 1937.57,
+          "bottom": 1091.86,
+          "width": 1955.14,
+          "height": 1099.76
+        },
+        "containerSelector": "#el-03-marca > div:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 17.57,
+          "right": 17.57,
+          "top": 7.91,
+          "bottom": 11.86
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-marca.html",
+        "bbox": {
+          "x": -17.57,
+          "y": -7.91,
+          "width": 1955.14,
+          "height": 1099.76
+        },
+        "firstSeen": 14.506,
+        "lastSeen": 14.506,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.506
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 14.506,
+        "selector": "#f03-sweep",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 856.12,
+          "top": 149.18,
+          "right": 1053.69,
+          "bottom": 486.73,
+          "width": 197.57,
+          "height": 337.55
+        },
+        "containerSelector": "#f03-logowrap",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 837.8,
+          "top": 195.75,
+          "right": 1082.2,
+          "bottom": 440.15,
+          "width": 244.39,
+          "height": 244.39
+        },
+        "overflow": {
+          "top": 46.57,
+          "bottom": 46.58
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-marca.html",
+        "bbox": {
+          "x": 856.12,
+          "y": 149.18,
+          "width": 197.57,
+          "height": 337.55
+        },
+        "firstSeen": 14.506,
+        "lastSeen": 14.506,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.506
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 18.089,
+        "selector": "#f03-c1",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 86.28,
+          "top": 91.61,
+          "right": 270.8,
+          "bottom": 154.21,
+          "width": 184.52,
+          "height": 62.6
+        },
+        "containerSelector": "div.f04-num",
+        "text": "Plantillas",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-marca.html",
+        "bbox": {
+          "x": 86.28,
+          "y": 91.61,
+          "width": 184.52,
+          "height": 62.6
+        },
+        "firstSeen": 18.089,
+        "lastSeen": 18.089,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          18.089
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 18.65,
+        "selector": "#f04-bgclip",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -31.97,
+          "top": -17.98,
+          "right": 1951.97,
+          "bottom": 1097.98,
+          "width": 1983.94,
+          "height": 1115.96
+        },
+        "containerSelector": "#el-04-plantilla > div:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 31.97,
+          "right": 31.97,
+          "top": 17.98,
+          "bottom": 17.98
+        },
+        "dataAttributes": {
+          "data-start": "0",
+          "data-duration": "2.5",
+          "data-track-index": "0"
+        },
+        "sourceFile": "compositions/frames/04-plantilla.html",
+        "bbox": {
+          "x": -31.97,
+          "y": -17.98,
+          "width": 1983.94,
+          "height": 1115.96
+        },
+        "firstSeen": 18.65,
+        "lastSeen": 18.65,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          18.65
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 18.65,
+        "selector": "#f04-cam",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 238.32,
+          "top": 101.91,
+          "right": 1860.57,
+          "bottom": 878.89,
+          "width": 1622.25,
+          "height": 776.98
+        },
+        "containerSelector": "div.f04-scr",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 444,
+          "top": 205.87,
+          "right": 1476,
+          "bottom": 831.87,
+          "width": 1032,
+          "height": 626
+        },
+        "overflow": {
+          "left": 205.68,
+          "right": 384.57,
+          "top": 103.96,
+          "bottom": 47.02
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-plantilla.html",
+        "bbox": {
+          "x": 238.32,
+          "y": 101.91,
+          "width": 1622.25,
+          "height": 776.98
+        },
+        "firstSeen": 18.65,
+        "lastSeen": 18.65,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          18.65
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 22.794,
+        "selector": "#f05-bgclip",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -9.37,
+          "top": -9.02,
+          "right": 1942.7,
+          "bottom": 1089.02,
+          "width": 1952.06,
+          "height": 1098.04
+        },
+        "containerSelector": "#el-05-personaliza > div:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 9.37,
+          "right": 22.7,
+          "top": 9.02,
+          "bottom": 9.02
+        },
+        "dataAttributes": {
+          "data-start": "0",
+          "data-duration": "3.7",
+          "data-track-index": "0"
+        },
+        "sourceFile": "compositions/frames/05-personaliza.html",
+        "bbox": {
+          "x": -9.37,
+          "y": -9.02,
+          "width": 1952.06,
+          "height": 1098.04
+        },
+        "firstSeen": 22.794,
+        "lastSeen": 22.794,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          22.794
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 22.794,
+        "selector": "#f05-cam",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -24.53,
+          "top": 253,
+          "right": 1050.34,
+          "bottom": 763.7,
+          "width": 1074.86,
+          "height": 510.7
+        },
+        "containerSelector": "div.f05-scr",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 78.47,
+          "top": 216,
+          "right": 1050.47,
+          "bottom": 802,
+          "width": 972,
+          "height": 586
+        },
+        "overflow": {
+          "left": 103
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/05-personaliza.html",
+        "bbox": {
+          "x": -24.53,
+          "y": 253,
+          "width": 1074.86,
+          "height": 510.7
+        },
+        "firstSeen": 22.794,
+        "lastSeen": 22.794,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          22.794
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 26.939,
+        "selector": "#f06-bgclip",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -19.3,
+          "top": -10.85,
+          "right": 1939.3,
+          "bottom": 1090.85,
+          "width": 1958.59,
+          "height": 1101.71
+        },
+        "containerSelector": "#el-06-dominio > div:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 19.3,
+          "right": 19.3,
+          "top": 10.85,
+          "bottom": 10.85
+        },
+        "dataAttributes": {
+          "data-start": "0",
+          "data-duration": "4.9",
+          "data-track-index": "0"
+        },
+        "sourceFile": "compositions/frames/06-dominio.html",
+        "bbox": {
+          "x": -19.3,
+          "y": -10.85,
+          "width": 1958.59,
+          "height": 1101.71
+        },
+        "firstSeen": 26.939,
+        "lastSeen": 26.939,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          26.939
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 31.083,
+        "selector": "#f07-bgclip",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -20.64,
+          "top": -11.61,
+          "right": 1940.64,
+          "bottom": 1091.61,
+          "width": 1961.28,
+          "height": 1103.22
+        },
+        "containerSelector": "#el-07-plan > div:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 20.64,
+          "right": 20.64,
+          "top": 11.61,
+          "bottom": 11.61
+        },
+        "dataAttributes": {
+          "data-start": "0",
+          "data-duration": "3.8",
+          "data-track-index": "0"
+        },
+        "sourceFile": "compositions/frames/07-plan.html",
+        "bbox": {
+          "x": -20.64,
+          "y": -11.61,
+          "width": 1961.28,
+          "height": 1103.22
+        },
+        "firstSeen": 31.083,
+        "lastSeen": 31.083,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          31.083
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 35.228,
+        "selector": "#f08-bgclip",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -16.03,
+          "top": -9.02,
+          "right": 1936.03,
+          "bottom": 1089.02,
+          "width": 1952.06,
+          "height": 1098.04
+        },
+        "containerSelector": "#el-08-cta > div:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 16.03,
+          "right": 16.03,
+          "top": 9.02,
+          "bottom": 9.02
+        },
+        "dataAttributes": {
+          "data-start": "0",
+          "data-duration": "4.6",
+          "data-track-index": "0"
+        },
+        "sourceFile": "compositions/frames/08-cta.html",
+        "bbox": {
+          "x": -16.03,
+          "y": -9.02,
+          "width": 1952.06,
+          "height": 1098.04
+        },
+        "firstSeen": 35.228,
+        "lastSeen": 35.228,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          35.228
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 35.228,
+        "selector": "#f08-shine",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 1415.89,
+          "top": 386.59,
+          "right": 1567.77,
+          "bottom": 556.59,
+          "width": 151.88,
+          "height": 170
+        },
+        "containerSelector": "#f08-shinewrap",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 606.83,
+          "top": 406.59,
+          "right": 1326.83,
+          "bottom": 534.59,
+          "width": 720,
+          "height": 128
+        },
+        "overflow": {
+          "right": 240.94,
+          "top": 20,
+          "bottom": 22
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/08-cta.html",
+        "bbox": {
+          "x": 1415.89,
+          "y": 386.59,
+          "width": 151.88,
+          "height": 170
+        },
+        "firstSeen": 35.228,
+        "lastSeen": 35.228,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          35.228
+        ]
+      },
+      {
+        "code": "escaped_container",
+        "severity": "info",
+        "time": 35.228,
+        "selector": "#f08-shine",
+        "message": "Positioned element renders far outside its offset parent — its coordinates were likely computed in a different frame (canvas/viewport pixels).",
+        "rect": {
+          "left": 1415.89,
+          "top": 386.59,
+          "right": 1567.77,
+          "bottom": 556.59,
+          "width": 151.88,
+          "height": 170
+        },
+        "containerSelector": "#f08-shinewrap",
+        "text": "",
+        "fixHint": "Compute left/top in the offset parent's frame (subtract its rect), or mark intentional placement with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 606.83,
+          "top": 406.59,
+          "right": 1326.83,
+          "bottom": 534.59,
+          "width": 720,
+          "height": 128
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/08-cta.html",
+        "bbox": {
+          "x": 1415.89,
+          "y": 386.59,
+          "width": 151.88,
+          "height": 170
+        },
+        "firstSeen": 35.228,
+        "lastSeen": 35.228,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          35.228
+        ]
+      }
+    ],
+    "duration": 37.3,
+    "samples": [
+      2.072,
+      6.217,
+      10.361,
+      14.506,
+      18.65,
+      22.794,
+      26.939,
+      31.083,
+      35.228
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 30,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      2.072,
+      10.361,
+      18.65,
+      26.939,
+      35.228
+    ],
+    "checked": 75,
+    "passed": 75
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

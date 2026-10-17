@@ -1,0 +1,97 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: Geist; font-style: normal; font-weight: 100 900; font-display: block; src: url("assets/fonts/captured-caa3a2e1cccd8315-s.p.0zr6hhvz-h9nw.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+    @font-face { font-family: Geist; font-style: normal; font-weight: 100 900; font-display: block; src: url("assets/fonts/captured-7178b3e590c64307-s.0i3h3th1vs4m7.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C4; }
+    #root { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; font-family: Geist, "Helvetica Neue", Arial, sans-serif; color: #0B1020; }
+    .f04-bg { position: absolute; inset: 0; background: radial-gradient(1000px 600px at 50% 30%, #FFFFFF 0%, rgba(255,255,255,0) 70%), radial-gradient(700px 500px at 90% 95%, rgba(20,71,230,0.14), transparent 70%), linear-gradient(170deg, #DAD8F8 0%, #ECEBFB 50%, #F8F8FE 100%); }
+    .f04-grain { position: absolute; inset: 0; opacity: 0.05; mix-blend-mode: multiply; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+
+    #f04-step { position: absolute; left: 110px; top: 70px; display: flex; align-items: center; gap: 24px; }
+    #f04-step .f04-num { width: 84px; height: 84px; border-radius: 50%; background: #1447E6; color: #fff; font-size: 48px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: 0 12px 34px rgba(20,71,230,0.45); }
+    #f04-step .f04-lbl { font-size: 60px; font-weight: 800; letter-spacing: -0.04em; }
+
+    .f04-thumb { position: absolute; border-radius: 18px; overflow: hidden; box-shadow: 0 30px 70px rgba(11,16,32,0.25); border: 6px solid #fff; }
+    .f04-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+    #f04-lap { position: absolute; left: 430px; top: 190px; width: 1060px; }
+    .f04-lid { position: relative; width: 1060px; height: 660px; border-radius: 30px 30px 14px 14px; background: linear-gradient(180deg, #1C1C1F, #0C0C0E); padding: 16px 14px 18px; box-shadow: 0 0 0 3px #C9CCD3, 0 60px 120px rgba(11,16,32,0.32); }
+    .f04-lid::before { content: ""; position: absolute; left: 524px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: #2A2A2E; }
+    .f04-scr { position: relative; width: 100%; height: 100%; border-radius: 10px; overflow: hidden; background: #0A0A0B; }
+    #f04-cam { position: absolute; left: 0; top: 0; width: 1568px; height: 751px; transform-origin: 0 0; }
+    #f04-cam img { position: absolute; left: 0; top: 0; width: 1568px; height: 751px; }
+    .f04-glare { position: absolute; inset: 0; background: linear-gradient(118deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 38%); pointer-events: none; }
+    .f04-base { position: relative; margin-left: -70px; width: 1200px; height: 26px; border-radius: 2px 2px 22px 22px; background: linear-gradient(180deg, #F1F2F4 0%, #C3C6CC 60%, #9DA1A8 100%); box-shadow: 0 30px 50px rgba(11,16,32,0.25); }
+    .f04-base::before { content: ""; position: absolute; left: 520px; top: 0; width: 160px; height: 9px; border-radius: 0 0 10px 10px; background: #A9ADB4; }
+
+    .f04-ring { position: absolute; border-radius: 10px; border: 3px solid #DAD8F8; box-shadow: 0 0 0 6px rgba(20,71,230,0.45), 0 0 26px rgba(218,216,248,0.9); }
+    #f04-cursor { position: absolute; left: 560px; top: 396px; width: 30px; height: 40px; }
+  </style>
+
+  <div data-hf-id="hf-itcy" id="root" data-composition-id="04-plantilla" data-start="0" data-duration="2.5" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-h4y7" id="f04-bgclip" class="clip f04-bg" data-start="0" data-duration="2.5" data-track-index="0"></div>
+
+    <div data-hf-id="hf-03mp" id="f04-t1" class="f04-thumb" style="left:36px;top:330px;width:380px;height:238px;filter:blur(1.5px)"><img data-hf-id="hf-zw5c" src="assets/vista-previa-de-la-plantilla-la-nota-azu.jpg" alt="" /></div>
+    <div data-hf-id="hf-7sl9" id="f04-t2" class="f04-thumb" style="left:1530px;top:150px;width:360px;height:225px"><img data-hf-id="hf-sfyk" src="assets/vista-previa-de-la-plantilla-margen-caf.jpg" alt="" /></div>
+    <div data-hf-id="hf-ipgi" id="f04-t3" class="f04-thumb" style="left:1560px;top:560px;width:330px;height:206px;filter:blur(3px)"><img data-hf-id="hf-srkm" src="assets/hero-6.jpg" alt="" /></div>
+
+    <div data-hf-id="hf-w2p0" id="f04-step"><div data-hf-id="hf-ouyc" class="f04-num">1</div><div data-hf-id="hf-qha3" class="f04-lbl">Elige tu plantilla</div></div>
+
+    <div data-hf-id="hf-db1p" id="f04-lap">
+      <div data-hf-id="hf-wsf2" class="f04-lid">
+        <div data-hf-id="hf-wbrh" class="f04-scr">
+          <div data-hf-id="hf-5fyv" id="f04-cam">
+            <img data-hf-id="hf-sm6c" src="assets/ui-plantillas-clean.png" alt="" />
+            <div data-hf-id="hf-zuaq" id="f04-r1" class="f04-ring" style="left:322px;top:334px;width:63px;height:32px"></div>
+            <div data-hf-id="hf-rdof" id="f04-r2" class="f04-ring" style="left:770px;top:334px;width:48px;height:32px"></div>
+            <div data-hf-id="hf-j3zm" id="f04-press" style="position:absolute;left:447px;top:385px;width:191px;height:25px;border-radius:5px;background:#fff;opacity:0"></div>
+            <div data-hf-id="hf-pupt" id="f04-ripple" style="position:absolute;left:542px;top:397px;width:80px;height:80px;margin:-40px 0 0 -40px;border-radius:50%;border:3px solid #DAD8F8;opacity:0"></div>
+            <svg data-hf-id="hf-tmsh" id="f04-cursor" viewBox="0 0 30 40"><path data-hf-id="hf-ltd9" d="M3 2 L3 32 L11 25 L16 37 L21 35 L16 23 L27 23 Z" fill="#fff" stroke="#0B1020" stroke-width="2.2" stroke-linejoin="round"/></svg>
+          </div>
+          <div data-hf-id="hf-64jg" class="f04-glare"></div>
+        </div>
+      </div>
+      <div data-hf-id="hf-p7ss" class="f04-base"></div>
+    </div>
+    <div data-hf-id="hf-v1c0" class="f04-grain"></div>
+  </div>
+
+  <script>
+    (function () {
+      const D = 2.5;
+      const tl = gsap.timeline({ paused: true });
+      tl.to({ p: 0 }, { p: 1, duration: D, ease: "none" }, 0);
+      tl.fromTo("#f04-bgclip", { scale: 1.05 }, { scale: 1, duration: D, ease: "none" }, 0);
+
+      // Step badge.
+      tl.fromTo("#f04-step .f04-num", { scale: 0, rotation: -90 }, { scale: 1, rotation: 0, duration: 0.45, ease: "back.out(2.6)" }, 0.02);
+      tl.fromTo("#f04-step .f04-lbl", { x: -40, opacity: 0, filter: "blur(8px)" }, { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.45, ease: "power3.out" }, 0.18);
+
+      // Laptop rises; camera pushes from the whole gallery into the first two cards, then dollies on.
+      tl.fromTo("#f04-lap", { y: 140, rotationX: 16, transformPerspective: 1800, opacity: 0 }, { y: 0, rotationX: 0, opacity: 1, duration: 0.65, ease: "power3.out" }, 0);
+      tl.fromTo("#f04-cam", { x: -60, y: -40, scale: 0.68 }, { x: -265, y: -130, scale: 1.179, duration: 1.0, ease: "power2.inOut" }, 0.25);
+      tl.to("#f04-cam", { x: -285, y: -146, scale: 1.215, duration: 1.25, ease: "none" }, 1.25);
+      tl.fromTo("#f04-lap", { y: 0 }, { y: -10, duration: 1.8, ease: "sine.inOut", immediateRender: false }, 0.7);
+
+      // Real templates float in depth with a spring stagger.
+      [["#f04-t1", -7, 0.12, -120], ["#f04-t2", 6, 0.22, 120], ["#f04-t3", -4, 0.32, 140]].forEach(function (t) {
+        tl.fromTo(t[0], { x: t[3], y: 60, rotation: t[1] * 2.5, opacity: 0 }, { x: 0, y: 0, rotation: t[1], opacity: 1, duration: 0.8, ease: "back.out(1.4)" }, t[2]);
+        tl.to(t[0], { y: -18, rotation: t[1] * 0.7, duration: D - t[2] - 0.8, ease: "sine.inOut" }, t[2] + 0.8);
+      });
+
+      // Highlight rings on Básico / Pro.
+      tl.fromTo("#f04-r1", { scale: 1.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2.2)" }, 0.8);
+      tl.fromTo("#f04-r2", { scale: 1.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2.2)" }, 0.95);
+
+      // Magnetic cursor → click "Usar plantilla" → press + ripple.
+      tl.fromTo("#f04-cursor", { x: 360, y: 210, opacity: 0 }, { x: 0, y: 0, opacity: 1, duration: 0.6, ease: "back.out(1.3)" }, 1.0);
+      tl.to("#f04-cursor", { scale: 0.82, duration: 0.08, ease: "power2.in", transformOrigin: "0 0" }, 1.66);
+      tl.to("#f04-cursor", { scale: 1, duration: 0.18, ease: "back.out(3)" }, 1.74);
+      tl.fromTo("#f04-press", { opacity: 0 }, { opacity: 0.35, duration: 0.06, ease: "none" }, 1.68);
+      tl.to("#f04-press", { opacity: 0, duration: 0.3, ease: "power2.out" }, 1.76);
+      tl.fromTo("#f04-ripple", { scale: 0.2, opacity: 0.9 }, { scale: 2.2, opacity: 0, duration: 0.6, ease: "power2.out" }, 1.7);
+
+      window.__timelines["04-plantilla"] = tl;
+    })();
+  </script>
+</template>

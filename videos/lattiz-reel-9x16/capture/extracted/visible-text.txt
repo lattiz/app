@@ -1,0 +1,179 @@
+[span] Lattiz
+[a] Plantillas
+[a] Preguntas frecuentes
+[a] contacto
+[span] Prueba gratis 3 días
+[a] Inicio
+[a] Plantillas
+[a] Precios
+[a] Preguntas frecuentes
+[a] contacto
+[a] Prueba gratis 3 días
+[h1] Tu sitio web ya está
+[h1] construido,
+[span] solo lánzalo.
+[div] Elige una base diseñada profesionalmente, personalízala con tu marca, contenido, y publica en segundos. Sin diseñadores, sin programadores, sin complicaciones.
+[div] •  Tu marca en internet
+[div] • Edita cuando quieras
+[div] • Métricas en tiempo real
+[div] • .com/.mx incluido
+[div] • Cancela cuando quieras
+[span] Nosotros
+[span] Hecho para el negocio mexicano de hoy.
+[span] Características y Beneficios
+[span] Construido para que estés en línea rápido.
+[h3] Aparece cuando te buscan.
+[p] Tus clientes escriben «cafeterías cerca de mí» o «postres fit en Clavería». Con tu propia página, tu negocio entra en esos resultados. Elije una plantilla prediseñada
+[h3] Reseñas que te traen más clientes.
+[p] Genera reseñas con un botón. Más reseñas ayudan a que Google te muestre mejor y generan confianza antes de la primera visita.
+[h3] Tu menú y servicios, siempre a la mano.
+[p] Precios, horarios, ubicación y catálogo disponibles las 24 horas. Que tu cliente lo vea sin tener que preguntarte por mensaje.
+[h3] WhatsApp a un toque.
+[p] Un botón y tu cliente te escribe con el mensaje ya listo. De «vi tu página» a «quiero una cita» en segundos.
+[h3] Todo tu negocio en un solo link.
+[p] Tu plan incluye una dirección única y exclusiva que tu mismo escoges para visitar tu página web (dominio). Compártelo y añade tus redes sociales.
+[h3] Conoce quién te visita y de dónde llega
+[p] Visitas, origen de los usuarios y páginas más vistas en un panel sencillo. Decide qué promocionar o mejorar con datos reales, no con corazonadas.
+[h3] Actualiza cuando quieras
+[p] Nueva promo, nuevo logo, nuevo precio de temporada o servicio: edítalo y personalizado tú y se publica nuevos cambios en segundos.
+[h3] Nos adaptamos a tu negocio
+[p] Reservas, pedidos, formularios u otras integraciones: cuéntanos qué necesitas y lo conectamos.
+[h3] Personaliza con bloques y secciones
+[p] Arrastra y suelta secciones pre-diseñadas que incluyen funcionalidades y animaciones especiales para que tu sitio web sea único.
+[h3] Edita tu sitio web desde tu celular
+[p] Puedes editar y actualizar tu sitio web desde tu celular, sin necesidad de una computadora. Todo lo que necesitas está en la palma de tu mano.
+[span] De cero a en línea en 3 pasos.
+[p] Elige tu plantilla
+[p] Explora diseños hechos para tu giro y elige el que mejor represente a tu negocio.
+[p] Personaliza tu contenido
+[p] Agrega tu nombre, servicios, fotos y datos de contacto. Sin conocimientos técnicos.
+[p] Publica y empieza a recibir clientes
+[p] Con un clic tu sitio está en línea, con tu dominio propio y listo para que te encuentren.
+[span] Plantillas
+[span] Básico o Pro: mira la diferencia antes de elegir
+[span] Pro
+[span] Básico
+[span] Secciones
+[p] 8 a 10 secciones: suma sobre nosotros, galería o prueba social y testimonios.
+[span] Contacto
+[p] Tarjeta de contacto con mapa.
+[span] Diseño
+[p] Diseño propio por giro: orden de secciones, variantes y tipografía.
+[span] Movimiento
+[p] Lattiz Motion: revelados, contadores, parallax, galería con lightbox, comparador antes/después, cuenta regresiva y «abierto ahora».
+[span] Bloques del editor
+[p] 13 bloques: suma antes y después, cifras animadas, barra de promoción, «abierto ahora» y menú con pedido por WhatsApp.
+[span] Temas
+[p] 8 paletas con modo oscuro y 6 combinaciones de tipografía.
+[span] Menú en celular
+[p] Pantalla completa.
+[span] Plan requerido
+[p] Plan Pro.
+[span] Incluido en ambos
+[p] Botón flotante de WhatsApp, contacto por teléfono, correo o mapa y diseño adaptable a celular.
+[a] Ver planes y precios
+[div] Desliza para comparar
+[span] 01 / 08
+[caption] Básico o Pro: mira la diferencia antes de elegir
+[th] Plantillas
+[th] Básico
+[th] Pro
+[th] Secciones
+[td] 6 a 7 secciones: portada, catálogo, contacto, preguntas frecuentes y lo esencial para recibir mensajes.
+[td] 8 a 10 secciones: suma sobre nosotros, galería o prueba social y testimonios.
+[th] Contacto
+[td] Contacto compacto.
+[td] Tarjeta de contacto con mapa.
+[th] Diseño
+[td] Estructura compartida por giro; cambian el tema y la portada.
+[td] Diseño propio por giro: orden de secciones, variantes y tipografía.
+[th] Movimiento
+[td] Limpio y rápido, sin animaciones al hacer scroll.
+[td] Lattiz Motion: revelados, contadores, parallax, galería con lightbox, comparador antes/después, cuenta regresiva y «abierto ahora».
+[th] Bloques del editor
+[td] 4 bloques: portada simple, servicios en tarjetas, galería en cuadrícula y contacto con horario.
+[td] 13 bloques: suma antes y después, cifras animadas, barra de promoción, «abierto ahora» y menú con pedido por WhatsApp.
+[th] Temas
+[td] 4 paletas de color; la tipografía no se cambia.
+[td] 8 paletas con modo oscuro y 6 combinaciones de tipografía.
+[th] Menú en celular
+[td] Tarjeta flotante.
+[td] Pantalla completa.
+[th] Plan requerido
+[td] Plan Básico.
+[td] Plan Pro.
+[th] Incluido en ambos
+[td] Botón flotante de WhatsApp, contacto por teléfono, correo o mapa y diseño adaptable a celular.
+[span] Planes y precios
+[span] Un plan para cada etapa de tu negocio
+[span] mensual
+[span] anual
+[div] ¡Ahorra 2 meses!
+[h2] Básico
+[span] MX$449
+[p] Por mes
+[h3] Para salones, consultorios, tiendas locales y restaurantes pequeños.
+[li] (1) Sitio Web Profesional
+[li] Acceso al panel de edición (CMS)
+[li] Dominio incluido a elección.
+[li] Certificado de seguridad SSL incluido
+[li] Botón de WhatsApp integrado
+[li] 99.9% de uptime
+[li] Soporte por correo (respuesta 48hrs)
+[a] Empezar con plan básico ahora
+[h2] Pro
+[div] 🔥 Más popular
+[span] MX$699
+[p] Por mes
+[h3] Para restaurantes establecidos, despachos, clínicas con volumen y boutiques.
+[li] Todo lo del plan Básico
+[li] Más opciones de dominios (.com, .mx...)
+[li] SEO avanzado pre-configurado
+[li] Sitios web premium + secciones premium
+[li] Analíticas y métricas sobre clientes
+[li] Acceso anticipado a nuevas funciones
+[li] Soporte prioritario por WhatsApp
+[a] Empezar con plan Pro ahora
+[h2] Empresarial
+[h1] Desde $1,999 MXN
+[h3] Para multi-ubicaciones, franquicias y empresas con necesidades específicas.
+[li] Todo lo del plan Pro
+[li] Múltiples sitios web bajo una sola cuenta
+[li] Diseño y sitios web personalizados, únicos
+[li] Integraciones personalizadas (CRM, reservas, pagos)
+[li] Dominios múltiples a elección*
+[li] SLA con garantía de disponibilidad
+[li] Account manager dedicado
+[li] Soporte prioritario con atención directa
+[a] Contáctanos
+[p] Se cobra una couta anual de mantenimiento del sitio web: $599 MXN + IVA a partir del 2º año en plan Básico y Pro.
+[span] Preguntas frecuentes
+[span] Todo lo que necesitas saber antes de empezar.
+[h3] ¿Cómo funciona Lattiz?
+[h3] ¿Necesito saber de diseño o programación?
+[h3] ¿Puedo probar Lattiz gratis antes de pagar?
+[h3] ¿El dominio está incluido? ¿A nombre de quién queda?
+[h3] ¿Qué es la cuota anual y es obligatoria?
+[h3] ¿Puedo cancelar cuando quiera?
+[h3] ¿Hay costos ocultos?
+[span] Ver todas las preguntas
+[h2] ¿Ninguna plantilla se parece a tu negocio?
+[h2] Te hacemos una a tu medida sin costo adicional
+[p] Por promoción de lanzamiento, válida hasta
+[p] diciembre 2026
+[p] , puedes solicitar una plantilla personalizada que refleje tu marca y tu imagen. Tu sitio se verá como tu negocio, no como el de todos los demás.
+[li] Diseñada con tu logo, tus colores y tu estilo
+[li] Pensada para tu giro y para los clientes que quieres atraer
+[li] Lista para publicarse y actualizarla tú mismo en tiempo real
+[span] Solicita tu plantilla personalizada
+[span] (se abre en una pestaña nueva)
+[a] Ver plantillas disponibles
+[p] Sitios web profesionales en segundos. Sin programadores. Sin diseñadores. Sin complicaciones.
+[h3] Productos
+[a] Acceso clientes
+[h3] Contacto
+[a] contacto@lattiz.app
+[p] © Lattiz. Todos los derechos reservados.
+[a] Política de privacidad
+[a] Términos de servicio
+[a] Política de cookies

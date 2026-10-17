@@ -863,7 +863,7 @@ cliente). Equivalencias aproximadas (ninguna es el mismo markup):
 | -------------------- | --------------------------------------- | ------------------------------------------ | ----------------------------------------------------- |
 | `lzb-hero-simple`    | Básico (`.lzb-hero`)                    | `hero/split` (sin foto: ninguna)           | ninguno (`data-lz-section="hero"`, inerte sin Motion) |
 | `lzb-services-grid`  | Básico (`.lzb-services`)                | `services/cards`                           | ninguno                                               |
-| `lzb-gallery-grid`   | Básico (`.lzb-gallery`)                 | `gallery/grid` (**solo Pro** en el kit)    | ninguno: el editor da galería a Básico y el kit no    |
+| `lzb-gallery-grid`   | Pro desde Fase C (`.lzb-gallery`)       | `gallery/grid` (**solo Pro** en el kit)    | ninguno (Pro por su variante)                         |
 | `lzb-contact-hours`  | Básico (`.lzb-contact`)                 | `locations/single-card`                    | ninguno                                               |
 | `lzb-hero-editorial` | Pro (`.lzb-hero-ed`)                    | `hero/columns`                             | `data-lz-words`, `data-lz-parallax`, `data-lz-reveal` |
 | `lzb-marquee`        | Pro (`.lzb-marquee`)                    | `marquee/ticker`                           | ninguno de Motion (animación CSS)                     |
@@ -875,10 +875,12 @@ cliente). Equivalencias aproximadas (ninguna es el mismo markup):
 | `lzb-open-now`       | Pro (`.lzb-open`)                       | sin equivalente                            | `data-lz-open-now`                                    |
 | `lzb-whatsapp-cards` | Pro (`.lzb-menu`)                       | `services/menu-columns`                    | `data-lz-reveal`, `data-lz-stagger`                   |
 
-Huecos para el trabajo del editor (no se cambian en A1): los bloques no se pueden identificar por
-`data-lz-slot`/`data-lz-variant` (solo por su clase raíz `lzb-*`); 3 bloques Pro sin variante en el kit
-(`stacked-cards`, `before-after`, `open-now`); la galería es Básica en el editor y solo Pro en el kit;
-20+ variantes del kit no tienen bloque.
+Fase C: cada bloque declara su `kitVariant` y su plan se deriva del manifiesto (`blocks/plan.ts`); la
+galería pasó a Pro. Los 3 bloques Pro sin variante en el kit (`stacked-cards`, `before-after`,
+`open-now`) quedan **solo editor** (`editorOnly`): son Pro por sus hooks de Motion y no se agregan al
+kit. Los bloques `lzb-*` escritos a mano siguen sin `data-lz-slot`/`data-lz-variant`; los bloques nuevos
+generados del kit (`lzb-hero-bento`, `-rail`, `-overlap`, `-stack`, `lzb-cta-band` y 7 piezas) sí los
+llevan, así que el guard de la API los ve.
 
 ## Presupuesto de bytes y Web Vitals (A1 · WP5)
 
@@ -957,8 +959,63 @@ aditivo. Estado al 2026-10-14:
 - Nada remoto: sin seed, deploy, publish, Stripe, R2 ni Vercel, y sin escrituras en Supabase. Rama
   local `feat/kit-phase-a2`, sin push.
 
-Desviación de catálogo heredada de A1 y vigente: `lzb-gallery-grid` es Básico en el editor aunque
-`gallery` es solo Pro en el kit (ver «Inventario: bloques del editor ↔ variantes del kit»).
+La desviación heredada de A1 (`lzb-gallery-grid` Básico en el editor, `gallery` solo Pro en el kit) quedó
+cerrada en la Fase C.
+
+### Fase C: editor y dashboard (rama `feat/phase-c-editor-dashboard`, desde `main` @ `5549062`)
+
+Que el editor y el dashboard reflejen el kit y que el plan sea uno solo de punta a punta (manifiesto →
+API → editor → dashboard). Estado al 2026-10-17:
+
+| WP    | Qué                                                         | Estado | Commits | Desviaciones                                                                                                       |
+| ----- | ----------------------------------------------------------- | ------ | ------- | ------------------------------------------------------------------------------------------------------------------ |
+| WP-C0 | Auditoría y plan                                            | hecho  | —       | `hero/bento` tenía `tiers: ['pro']` pero no era «solo Pro»; rail/overlap/stack son Básico + Pro en el kit           |
+| WP-C1 | Fuente única del plan (manifiesto → API y editor)           | hecho  | bfbd69a | `meta.tiers` explícito gana al blueprint: `hero/bento` pasa a solo Pro; galería Pro también en el editor            |
+| WP-C2 | Bloques del kit en el editor (portadas, `cta`, primitivos)  | hecho  | c22084e | los 3 bloques Pro sin variante quedan «solo editor» (sin cambio en el kit)                                          |
+| WP-C3 | Dashboard: filtros por giro y dirección, rasgos Pro         | hecho  | bae05db | índice estático generado desde el kit; sin endpoint ni cambio de esquema                                            |
+| WP-C4 | Pruebas, revisión en el editor local, docs                  | hecho  | 364b2f0, (este) | la revisión encontró 2 fallas (clic en bloque bloqueado, tokens en proyectos legacy), corregidas en 364b2f0 |
+
+**Qué escribe ahora `kit:manifest`** (todo cubierto por `--check`, que corre en `pnpm lint`):
+`catalog/catalog.manifest.json`, `apps/api/src/modules/sites/plan-catalog.generated.ts` y su copia
+idéntica `apps/web/src/features/editor/blocks/plan-catalog.generated.ts`, los bloques del kit
+`apps/web/src/features/editor/blocks/kit-blocks.generated.ts` (`src/cli/editor-blocks.ts`) y la identidad
+por plantilla `apps/web/src/features/templates/template-identity.generated.ts` (`src/cli/template-identity.ts`).
+
+**Plan de un bloque** (`apps/web/src/features/editor/blocks/plan.ts`): Pro si la variante del kit que
+representa (`kitVariant`) es solo Pro o si su markup lleva un hook de Motion solo Pro. Es la misma regla
+y la misma lista que el guard de la API. Sin Pro, los bloques Pro se ven con insignia «Pro», no se
+arrastran y el clic abre el aviso para mejorar (`blocks.appendOnClick`: Studio 1.1.1 inserta por clic
+aunque el bloque esté `disable` y no llama su `onClick`). `plan.test.ts` falla si el editor, el
+manifiesto y la API no coinciden en una variante o un hook.
+
+**Bloques del kit:** se renderizan desde `section.html` con copy neutro es-MX, `h1` → `h2`, sin `id` ni
+`fetchpriority`, contacto como `{{lz:*}}`, y llevan solo el CSS que usa su markup: las reglas de
+`core.css` cuyas clases están todas en el markup, los primitivos usados (con su estilo por defecto) y el
+CSS de la variante. Studio agrega el `styles` de un bloque con `avoidUpdateStyle`, así que una regla que
+el proyecto ya tiene nunca se reescribe (insertar no cambia lo existente). Los tokens van de respaldo en
+`:where(html){…}`: sin especificidad, solo llenan los que el proyecto no define (proyectos legacy con su
+propio `:root`); en una plantilla del kit su `:root` gana en cada token. Dentro de una plantilla cuya
+dirección usa otro estilo de primitivo, una pieza insertada se ve con el estilo por defecto.
+
+**Matriz de plan (después):**
+
+| Elemento                         | Kit (`proOnly`) | API guard | Editor                                | Dashboard                    |
+| -------------------------------- | --------------- | --------- | ------------------------------------- | ---------------------------- |
+| `gallery/*`                      | Pro             | Pro       | `lzb-gallery-grid`, `lzb-snap-gallery` Pro | rasgo «Galería» Pro      |
+| `hero/bento`                     | Pro             | Pro       | `lzb-hero-bento` Pro                  | rasgo «Portada con cifras»   |
+| `hero/rail`, `overlap`, `stack`  | Básico + Pro    | libre     | bloques Básico                        | —                            |
+| `cta/band`                       | Básico + Pro    | libre     | `lzb-cta-band` Básico                 | —                            |
+| primitivos (7)                   | ambos tiers     | n/a       | «Piezas», Básico                      | —                            |
+| hooks de Motion (9)              | Pro             | Pro (no bloquea) | bloques que los llevan, Pro    | rasgo «Animaciones» en Pro   |
+
+**Verificación (2026-10-17, MacBook, Node 24.9 de Homebrew):** tests de `apps/web` 36/36 en los archivos
+nuevos y viejos que vitest corre; API node 201/201 (5 nuevos del guard) y jest ok; kit 201/201;
+`kit:manifest --check` ok (hash `db31f8c7389a84bb`); `kit:verify-snapshot` con las mismas 5 diferencias
+de La Nota Azul que ya tenía `main` (ninguna nueva). Revisión manual en un arnés local del editor
+(Studio + bloques + proyectos del kit y el fixture legacy `oxido`, guardando en `sessionStorage`, sin
+API ni datos de producción): bloqueo en Básico, inserción de cada bloque nuevo, guardar y recargar,
+tokens de la plantilla intactos, HTML exportado sin marcadores Pro en Básico. No revisado en navegador:
+el dashboard (necesita la API con datos reales) y el diálogo para mejorar (necesita el router).
 
 ## Primitivos (A2 · WP1)
 

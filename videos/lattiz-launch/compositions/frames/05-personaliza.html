@@ -1,0 +1,148 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: Geist; font-style: normal; font-weight: 100 900; font-display: block; src: url("assets/fonts/captured-caa3a2e1cccd8315-s.p.0zr6hhvz-h9nw.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+    @font-face { font-family: Geist; font-style: normal; font-weight: 100 900; font-display: block; src: url("assets/fonts/captured-7178b3e590c64307-s.0i3h3th1vs4m7.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C4; }
+    #root { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; font-family: Geist, "Helvetica Neue", Arial, sans-serif; color: #0B1020; }
+    .f05-bg { position: absolute; inset: 0; background: radial-gradient(900px 600px at 30% 35%, #FFFFFF 0%, rgba(255,255,255,0) 70%), radial-gradient(700px 600px at 85% 60%, rgba(20,71,230,0.16), transparent 70%), linear-gradient(170deg, #DAD8F8 0%, #ECEBFB 55%, #F8F8FE 100%); }
+    .f05-grain { position: absolute; inset: 0; opacity: 0.05; mix-blend-mode: multiply; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+
+    #f05-step { position: absolute; left: 110px; top: 70px; display: flex; align-items: center; gap: 24px; }
+    #f05-step .f05-num { width: 84px; height: 84px; border-radius: 50%; background: #1447E6; color: #fff; font-size: 48px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: 0 12px 34px rgba(20,71,230,0.45); }
+    #f05-step .f05-lbl { font-size: 60px; font-weight: 800; letter-spacing: -0.04em; }
+
+    #f05-lap { position: absolute; left: 80px; top: 200px; width: 1000px; }
+    .f05-lid { position: relative; width: 1000px; height: 620px; border-radius: 30px 30px 14px 14px; background: linear-gradient(180deg, #1C1C1F, #0C0C0E); padding: 16px 14px 18px; box-shadow: 0 0 0 3px #C9CCD3, 0 60px 120px rgba(11,16,32,0.32); }
+    .f05-scr { position: relative; width: 100%; height: 100%; border-radius: 10px; overflow: hidden; background: #000; }
+    #f05-cam { position: absolute; left: 0; top: 0; width: 1568px; height: 745px; transform-origin: 0 0; }
+    #f05-cam img { position: absolute; left: 0; top: 0; width: 1568px; height: 745px; }
+    #f05-tint { position: absolute; left: 240px; top: 340px; width: 330px; height: 130px; background: #B4532A; mix-blend-mode: lighten; }
+    #f05-caret { position: absolute; left: 246px; top: 414px; width: 4px; height: 50px; background: #1447E6; }
+    #f05-colorring { position: absolute; left: 1372px; top: 222px; width: 194px; height: 36px; border-radius: 8px; border: 3px solid #1447E6; box-shadow: 0 0 22px rgba(20,71,230,0.9); }
+    .f05-glare { position: absolute; inset: 0; background: linear-gradient(118deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 38%); }
+    .f05-base { position: relative; margin-left: -66px; width: 1132px; height: 26px; border-radius: 2px 2px 22px 22px; background: linear-gradient(180deg, #F1F2F4 0%, #C3C6CC 60%, #9DA1A8 100%); box-shadow: 0 30px 50px rgba(11,16,32,0.25); }
+    .f05-base::before { content: ""; position: absolute; left: 486px; top: 0; width: 160px; height: 9px; border-radius: 0 0 10px 10px; background: #A9ADB4; }
+
+    #f05-swatch { position: absolute; left: 960px; top: 300px; padding: 22px 26px; border-radius: 22px; background: rgba(255,255,255,0.72); border: 1px solid rgba(255,255,255,0.9); backdrop-filter: blur(18px); box-shadow: 0 30px 70px rgba(11,16,32,0.25); }
+    #f05-swatch .f05-sw-lbl { font-size: 24px; font-weight: 600; color: #52525C; margin-bottom: 14px; }
+    #f05-swatch .f05-row { display: flex; gap: 14px; }
+    .f05-dot { width: 46px; height: 46px; border-radius: 50%; }
+    .f05-dot.f05-on { box-shadow: 0 0 0 4px #fff, 0 0 0 7px #1447E6; }
+
+    #f05-phone { position: absolute; left: 1330px; top: 150px; width: 348px; height: 728px; border-radius: 60px; padding: 12px; background: linear-gradient(135deg, #B9BBC0 0%, #6E7177 22%, #9A9DA3 50%, #5E6167 78%, #C4C6CA 100%); box-shadow: 0 50px 110px rgba(11,16,32,0.38), inset 0 0 0 2px rgba(255,255,255,0.4); }
+    .f05-pscr { position: relative; width: 324px; height: 704px; border-radius: 48px; overflow: hidden; background: #F8F8F6; }
+    .f05-status { position: absolute; left: 0; top: 0; width: 324px; height: 46px; background: #1447E6; color: #fff; font-size: 17px; font-weight: 600; }
+    .f05-status .f05-time { position: absolute; left: 34px; top: 15px; }
+    .f05-status svg { position: absolute; right: 26px; top: 16px; }
+    .f05-island { position: absolute; left: 107px; top: 11px; width: 110px; height: 30px; border-radius: 16px; background: #000; }
+    .f05-pscr img { position: absolute; left: 0; top: 46px; width: 324px; height: 658px; }
+    .f05-pglare { position: absolute; inset: 0; border-radius: 48px; background: linear-gradient(125deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 30%); }
+
+    #f05-arc { position: absolute; left: 0; top: 0; }
+    #f05-badge { position: absolute; left: 1090px; top: 700px; padding: 18px 30px; border-radius: 24px; background: rgba(255,255,255,0.78); border: 1px solid #fff; backdrop-filter: blur(18px); box-shadow: 0 30px 70px rgba(11,16,32,0.25); text-align: center; }
+    #f05-badge b { display: block; font-size: 64px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; }
+    #f05-badge span { font-size: 28px; font-weight: 500; color: #52525C; }
+  </style>
+
+  <div data-hf-id="hf-z60f" id="root" data-composition-id="05-personaliza" data-start="0" data-duration="3.7" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-0q8c" id="f05-bgclip" class="clip f05-bg" data-start="0" data-duration="3.7" data-track-index="0"></div>
+
+    <div data-hf-id="hf-gak3" id="f05-step"><div data-hf-id="hf-4mb6" class="f05-num">2</div><div data-hf-id="hf-nc6j" class="f05-lbl">Personaliza con tu marca</div></div>
+
+    <div data-hf-id="hf-tfvg" id="f05-lap">
+      <div data-hf-id="hf-qk9b" class="f05-lid">
+        <div data-hf-id="hf-q1ag" class="f05-scr">
+          <div data-hf-id="hf-2ufy" id="f05-cam">
+            <img data-hf-id="hf-hv41" src="assets/ui-editor-trigo.png" alt="" />
+            <div data-hf-id="hf-odcq" id="f05-tint"></div>
+            <div data-hf-id="hf-17h7" id="f05-cover" style="position:absolute;left:243px;top:408px;width:320px;height:62px;background:#EED98C;transform-origin:100% 50%"></div>
+            <div data-hf-id="hf-aqry" id="f05-caret"></div>
+            <div data-hf-id="hf-rr20" id="f05-colorring"></div>
+          </div>
+          <div data-hf-id="hf-b74t" class="f05-glare"></div>
+        </div>
+      </div>
+      <div data-hf-id="hf-57yz" class="f05-base"></div>
+    </div>
+
+    <div data-hf-id="hf-cjcx" id="f05-swatch">
+      <div data-hf-id="hf-dt0q" class="f05-sw-lbl">Color</div>
+      <div data-hf-id="hf-omzx" class="f05-row" style="position:relative">
+        <div data-hf-id="hf-2n9a" id="f05-selring" style="position:absolute;left:-7px;top:-7px;width:60px;height:60px;border-radius:50%;border:3px solid #1447E6;box-shadow:inset 0 0 0 4px #fff"></div>
+        <div data-hf-id="hf-g1t0" class="f05-dot" style="background:#2A2520"></div>
+        <div data-hf-id="hf-2ucj" class="f05-dot" style="background:#B4532A"></div>
+        <div data-hf-id="hf-y448" class="f05-dot" style="background:#2F6B4F"></div>
+        <div data-hf-id="hf-1cev" class="f05-dot" style="background:#1447E6"></div>
+      </div>
+    </div>
+
+    <svg data-hf-id="hf-poza" id="f05-arc" width="1920" height="1080" viewBox="0 0 1920 1080">
+      <path data-hf-id="hf-ejmm" d="M 980 820 C 1120 960, 1560 960, 1720 700" fill="none" stroke="#1447E6" stroke-width="4" stroke-linecap="round" style="filter: drop-shadow(0 0 10px rgba(20,71,230,0.9))"/>
+    </svg>
+
+    <div data-hf-id="hf-va4j" id="f05-phone">
+      <div data-hf-id="hf-febc" class="f05-pscr">
+        <img data-hf-id="hf-jfyo" src="assets/ui-editor-movil-screen.png" alt="" />
+        <div data-hf-id="hf-bnbu" class="f05-status"><div data-hf-id="hf-vrjj" class="f05-time">9:41</div>
+          <svg data-hf-id="hf-zcwl" width="66" height="14" viewBox="0 0 66 14" fill="#fff"><rect data-hf-id="hf-3pkj" x="0" y="9" width="3" height="5" rx="1"/><rect data-hf-id="hf-w7qi" x="5" y="6" width="3" height="8" rx="1"/><rect data-hf-id="hf-ut65" x="10" y="3" width="3" height="11" rx="1"/><rect data-hf-id="hf-jieq" x="15" y="0" width="3" height="14" rx="1"/><path data-hf-id="hf-ttmw" d="M27 5a9 9 0 0 1 12 0l-1.6 1.7a6.6 6.6 0 0 0-8.8 0zM30 8.3a4.5 4.5 0 0 1 6 0L33 12z"/><rect data-hf-id="hf-p5qo" x="44" y="1" width="20" height="12" rx="3" fill="none" stroke="#fff" stroke-width="1.5"/><rect data-hf-id="hf-3l50" x="46" y="3" width="15" height="8" rx="1.5"/></svg>
+        </div>
+        <div data-hf-id="hf-1c77" class="f05-island"></div>
+        <div data-hf-id="hf-pb1p" class="f05-pglare"></div>
+      </div>
+    </div>
+
+    <div data-hf-id="hf-b17q" id="f05-badge"><b data-hf-id="hf-eel7">100%</b><span data-hf-id="hf-d8dr">responsive</span></div>
+    <div data-hf-id="hf-4rzx" class="f05-grain"></div>
+  </div>
+
+  <script>
+    (function () {
+      const D = 3.7;
+      const tl = gsap.timeline({ paused: true });
+      tl.to({ p: 0 }, { p: 1, duration: D, ease: "none" }, 0);
+      tl.fromTo("#f05-bgclip", { scale: 1.05, x: 20 }, { scale: 1, x: 0, duration: D, ease: "none" }, 0);
+
+      tl.fromTo("#f05-step .f05-num", { scale: 0, rotation: -90 }, { scale: 1, rotation: 0, duration: 0.45, ease: "back.out(2.6)" }, 0.02);
+      tl.fromTo("#f05-step .f05-lbl", { x: -40, opacity: 0, filter: "blur(8px)" }, { x: 0, opacity: 1, filter: "blur(0px)", duration: 0.45, ease: "power3.out" }, 0.16);
+
+      // Match-cut: open close on the hero headline, pull back to the editor once the edit lands.
+      tl.fromTo("#f05-lap", { scale: 1.08, y: -16 }, { scale: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0);
+      tl.fromTo("#f05-cam", { x: 46, y: -147, scale: 1.1 }, { x: 46, y: -150, scale: 1.13, duration: 1.15, ease: "none" }, 0);
+      tl.to("#f05-cam", { x: -103, y: 37, scale: 0.6855, duration: 0.6, ease: "power2.inOut" }, 1.15);
+
+      // Live edit: "masa madre" is deleted and retyped, the color swaps to the brand terracotta.
+      tl.set("#f05-tint", { opacity: 0 }, 0);
+      tl.fromTo("#f05-cover", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "steps(10)" }, 0.3);
+      tl.fromTo("#f05-caret", { x: 320 }, { x: 0, duration: 0.3, ease: "steps(10)" }, 0.3);
+      tl.set("#f05-tint", { opacity: 1 }, 0.62);
+      tl.set("#f05-cover", { transformOrigin: "0% 50%" }, 0.63);
+      tl.to("#f05-cover", { x: 320, scaleX: 0, duration: 0.55, ease: "steps(10)" }, 0.64);
+      tl.to("#f05-caret", { x: 320, duration: 0.55, ease: "steps(10)" }, 0.64);
+      [0.0, 1.3, 2.3].forEach(function (t) {
+        tl.fromTo("#f05-caret", { opacity: 1 }, { opacity: 0.1, duration: 0.2, ease: "none", immediateRender: false }, t + 0.1);
+        tl.to("#f05-caret", { opacity: 1, duration: 0.2, ease: "none" }, t + 0.3);
+      });
+
+      // Styles panel: Color field pulses, swatch picker pops, selection slides to terracotta.
+      tl.fromTo("#f05-colorring", { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, 0.45);
+      tl.to("#f05-colorring", { opacity: 0.35, duration: 0.5, ease: "sine.inOut" }, 0.8);
+      tl.to("#f05-colorring", { opacity: 1, duration: 0.5, ease: "sine.inOut" }, 1.3);
+      tl.fromTo("#f05-swatch", { scale: 0.6, opacity: 0, x: -60 }, { scale: 1, opacity: 1, x: 0, duration: 0.45, ease: "back.out(2)" }, 0.4);
+      tl.fromTo("#f05-selring", { x: 0 }, { x: 60, duration: 0.3, ease: "power3.inOut" }, 0.6);
+      tl.to("#f05-swatch", { y: -14, duration: 2.4, ease: "sine.inOut" }, 1.0);
+
+      // "hasta desde tu celular": phone springs in from the right; arc draws; badge pops.
+      tl.fromTo("#f05-phone", { x: 520, rotation: 10, opacity: 0 }, { x: 0, rotation: 0, opacity: 1, duration: 0.75, ease: "back.out(1.2)" }, 1.72);
+      tl.to("#f05-phone", { y: -14, rotation: -1.5, duration: 1.2, ease: "sine.inOut" }, 2.5);
+      tl.to("#f05-lap", { x: -24, duration: 1.6, ease: "sine.out" }, 1.75);
+      tl.to("#f05-swatch", { opacity: 0, scale: 0.8, duration: 0.3, ease: "power2.in" }, 1.75);
+      const arc = document.querySelector("#f05-arc path");
+      tl.fromTo(arc, { attr: { "stroke-dasharray": "0 1200" } }, { attr: { "stroke-dasharray": "1200 0" }, duration: 0.7, ease: "power2.out" }, 2.0);
+      tl.set("#f05-arc", { opacity: 1 }, 0);
+      tl.fromTo("#f05-badge", { scale: 0.5, opacity: 0, y: 30 }, { scale: 1, opacity: 1, y: 0, duration: 0.5, ease: "back.out(2.4)" }, 2.3);
+      tl.to("#f05-badge", { y: -10, duration: 0.9, ease: "sine.inOut" }, 2.8);
+
+      window.__timelines["05-personaliza"] = tl;
+    })();
+  </script>
+</template>
