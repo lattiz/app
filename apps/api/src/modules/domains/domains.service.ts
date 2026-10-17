@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { sql, type SQL } from 'drizzle-orm';
 import { isUnderPreviewBase } from '../../common/preview/preview-url';
@@ -7,9 +7,11 @@ import { EmailOutboxService } from '../email/application/email-outbox.service';
 import { isDefinitiveDomainPurchaseFailure } from '../email/domain/email-kinds';
 import {
   DNS_PROVIDER_PORT,
+  DNS_ZONE_INSPECTION_PORT,
   type DnsProviderName,
   type DnsProviderPort,
   type DnsRecord,
+  type DnsZoneInspectionPort,
 } from './domain/dns-provider.port';
 import {
   DOMAIN_PRICE_CAPS,
@@ -42,6 +44,24 @@ import {
 } from './dto/domains.response.dto';
 import { PurchaseDomainDto } from './dto/purchase-domain.dto';
 import { DomainRenewalConfig } from './domain-renewal.config';
+import { DomainRenewalPaymentService } from './domain-renewal-payment.service';
+import {
+  DOMAIN_INSPECT_TIMEOUT_MS,
+  asDate,
+  buildManagedRenewal,
+  cents,
+  emptyInspection,
+  expiryMismatch,
+  firstYearIncluded,
+  recordsMatchVercel,
+  trimLastError,
+  type DnsInspection,
+  type DomainInspection,
+  type DomainInspectionCycle,
+  type ProviderError,
+  type RegistrarInspection,
+  type VercelInspection,
+} from './domain-inspection';
 import {
   DomainAgreementsRequiredException,
   DomainJobNotFoundException,
@@ -112,6 +132,7 @@ interface DomainRow {
   released_at: string | Date | null;
   dns_provider: DnsProviderName | null;
   dns_zone_id: string | null;
+  dns_activation_checked_at: string | Date | null;
 }
 
 interface JobRow {
@@ -153,6 +174,10 @@ export class DomainsService {
     @Inject(EFFECTIVE_PLAN_PORT)
     private readonly effectivePlan: EffectivePlanPort,
     private readonly renewalConfig: DomainRenewalConfig,
+    @Inject(DNS_ZONE_INSPECTION_PORT)
+    private readonly zoneInspection: DnsZoneInspectionPort,
+    @Inject(forwardRef(() => DomainRenewalPaymentService))
+    private readonly renewalPayments: DomainRenewalPaymentService,
   ) {}
 
   // ── Search ────────────────────────────────────────────────────────────────
@@ -960,6 +985,39 @@ export class DomainsService {
     return toStatusDto(domain);
   }
 
+  /**
+   * Read-only picture of the tenant's domain for the admin panel.
+   * A down registrar, DNS provider or Vercel call becomes `{ error: 'unavailable' }`
+   * and does not fail the others. Each of those calls is capped at 8s.
+   */
+  async inspectForTenant(
+    tenantId: string,
+    now: Date = new Date(),
+  ): Promise<DomainInspection> {
+    const row = await this.getDomainByTenant(tenantId);
+    if (!row || row.released_at) return emptyInspection();
+
+    const managed = row.source === 'lattiz_managed';
+    const [renewal, registrar, dns, vercel] = await Promise.all([
+      managed
+        ? this.inspectManagedRenewal(row, tenantId, now)
+        : Promise.resolve({ managedBy: 'customer' as const }),
+      managed && row.registrar_domain_id
+        ? this.inspectRegistrar(row)
+        : Promise.resolve(null),
+      this.inspectDns(row.domain),
+      this.inspectVercel(row.domain),
+    ]);
+
+    return {
+      domain: toInspectionRecord(row),
+      renewal,
+      registrar,
+      dns,
+      vercel,
+    };
+  }
+
   /** Best-effort nudge so Cloudflare notices the nameserver change sooner; never fails the status poll. */
   private async requestActivationCheckIfDue(domain: DomainRow): Promise<void> {
     if (
@@ -1213,7 +1271,8 @@ export class DomainsService {
                  annual_cost_usd_cents, period_years,
                  expires_at, dns_status, vercel_domain_id, vercel_mapped,
                  ssl_active, is_mock, purchase_completed_at, suspended_at,
-                 released_at, dns_provider, dns_zone_id
+                 released_at, dns_provider, dns_zone_id,
+                 dns_activation_checked_at
           FROM public.domains
           WHERE tenant_id = ${tenantId}::uuid
           LIMIT 1`,
@@ -1492,6 +1551,137 @@ export class DomainsService {
     );
   }
 
+  private async inspectManagedRenewal(
+    row: DomainRow,
+    tenantId: string,
+    now: Date,
+  ) {
+    const [tenant, cycles, currentCycle] = await Promise.all([
+      this.query<{
+        plan: string | null;
+        included_domain_used_at: string | Date | null;
+      }>(
+        sql`SELECT plan, included_domain_used_at
+            FROM public.tenants
+            WHERE id = ${tenantId}::uuid
+            LIMIT 1`,
+      ),
+      this.query<CycleHistoryRow>(
+        sql`SELECT status, amount_cents, currency, opened_at, paid_at,
+                   renewed_at, overdue_at, lapsed_at, last_error
+            FROM public.domain_maintenance_cycles
+            WHERE tenant_id = ${tenantId}::uuid
+              AND domain_id = ${row.id}::uuid
+            ORDER BY opened_at DESC NULLS LAST, created_at DESC
+            LIMIT 10`,
+      ),
+      this.renewalPayments.getStatusForTenant(tenantId),
+    ]);
+    const profile = tenant[0];
+    return buildManagedRenewal({
+      expiresAt: asDate(row.expires_at),
+      now,
+      openDaysBefore: this.renewalConfig.openDaysBefore,
+      noticeDaysBefore: this.renewalConfig.noticeDaysBefore,
+      lateDays: this.renewalConfig.lateDays,
+      feeMxnCents: this.renewalConfig.feeMxnCents(profile?.plan ?? ''),
+      taxRateBps: this.renewalConfig.taxRateBps,
+      currentCycle,
+      cycles: cycles.map(mapCycle),
+      firstYearIncluded: firstYearIncluded({
+        isMock: row.is_mock,
+        purchaseCompletedAt: asDate(row.purchase_completed_at),
+        includedDomainUsedAt: asDate(profile?.included_domain_used_at),
+      }),
+    });
+  }
+
+  private inspectRegistrar(
+    row: DomainRow,
+  ): Promise<RegistrarInspection | ProviderError> {
+    const registrarDomainId = row.registrar_domain_id;
+    if (!registrarDomainId) {
+      return Promise.resolve({ error: 'unavailable' });
+    }
+    return this.withProviderTimeout('registrar', async () => {
+      const [life, autoRenew] = await Promise.all([
+        this.registrar.getLifecycle(registrarDomainId),
+        this.registrar.getAutoRenew(registrarDomainId),
+      ]);
+      return {
+        status: life.status,
+        renewalDate: life.renewalDate ? life.renewalDate.toISOString() : null,
+        canRenew: life.canRenew,
+        restorableUntil: life.restorableUntil
+          ? life.restorableUntil.toISOString()
+          : null,
+        autoRenew,
+        expiryMismatch: expiryMismatch(
+          life.renewalDate,
+          asDate(row.expires_at),
+        ),
+      };
+    });
+  }
+
+  private inspectDns(domain: string): Promise<DnsInspection | ProviderError> {
+    return this.withProviderTimeout('dns', async () => {
+      const [zone, targets] = await Promise.all([
+        this.zoneInspection.inspectZone(domain),
+        this.vercel.getDnsTargets(domain),
+      ]);
+      return {
+        ...zone,
+        recordsMatchVercel: recordsMatchVercel(domain, zone.records, targets),
+      };
+    });
+  }
+
+  private inspectVercel(
+    domain: string,
+  ): Promise<VercelInspection | ProviderError> {
+    return this.withProviderTimeout('vercel', async () => {
+      const [inProject, configured] = await Promise.all([
+        this.vercel.hasDomain(domain),
+        this.vercel.isDomainConfigured(domain),
+      ]);
+      return { inProject, configured };
+    });
+  }
+
+  private async withProviderTimeout<T>(
+    label: string,
+    work: () => Promise<T>,
+  ): Promise<T | ProviderError> {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const timeout = new Promise<ProviderError>((resolve) => {
+      timer = setTimeout(
+        () => resolve({ error: 'unavailable' }),
+        DOMAIN_INSPECT_TIMEOUT_MS,
+      );
+    });
+    const attempt = work().then(
+      (value) => ({ kind: 'value' as const, value }),
+      (err: unknown) => {
+        this.logger.warn(
+          `[inspect] ${label} failed: ${err instanceof Error ? err.message : 'unknown'}`,
+        );
+        return { kind: 'error' as const };
+      },
+    );
+    const winner = await Promise.race([
+      attempt,
+      timeout.then((error) => ({ kind: 'timeout' as const, error })),
+    ]);
+    if (timer) clearTimeout(timer);
+    if (winner.kind === 'value') return winner.value;
+    if (winner.kind === 'timeout') {
+      this.logger.warn(`[inspect] ${label} timed out`);
+      return winner.error;
+    }
+    return { error: 'unavailable' };
+  }
+
   private async query<T>(statement: SQL): Promise<T[]> {
     const rows = await this.db.execute(statement);
     return rows as unknown as T[];
@@ -1533,6 +1723,57 @@ function toStatusDto(row: DomainRow): DomainStatusResponseDto {
       ? toIso(row.purchase_completed_at)
       : null,
   };
+}
+
+function toInspectionRecord(row: DomainRow): DomainInspection['domain'] {
+  return {
+    name: row.domain,
+    source: row.source,
+    expiresAt: row.expires_at ? toIso(row.expires_at) : null,
+    dnsStatus: row.dns_status,
+    dnsProvider: row.dns_provider,
+    dnsActivationCheckedAt: row.dns_activation_checked_at
+      ? toIso(row.dns_activation_checked_at)
+      : null,
+    vercelMapped: row.vercel_mapped,
+    sslActive: row.ssl_active,
+    suspendedAt: row.suspended_at ? toIso(row.suspended_at) : null,
+    isMock: row.is_mock,
+    purchaseCompletedAt: row.purchase_completed_at
+      ? toIso(row.purchase_completed_at)
+      : null,
+  };
+}
+
+interface CycleHistoryRow {
+  status: string;
+  amount_cents: number | string | null;
+  currency: string | null;
+  opened_at: string | Date | null;
+  paid_at: string | Date | null;
+  renewed_at: string | Date | null;
+  overdue_at: string | Date | null;
+  lapsed_at: string | Date | null;
+  last_error: string | null;
+}
+
+function mapCycle(row: CycleHistoryRow): DomainInspectionCycle {
+  return {
+    status: row.status,
+    amountCents: cents(row.amount_cents),
+    currency: row.currency ?? 'mxn',
+    openedAt: isoOrNull(row.opened_at),
+    paidAt: isoOrNull(row.paid_at),
+    renewedAt: isoOrNull(row.renewed_at),
+    overdueAt: isoOrNull(row.overdue_at),
+    lapsedAt: isoOrNull(row.lapsed_at),
+    lastError: trimLastError(row.last_error),
+  };
+}
+
+function isoOrNull(value: string | Date | null): string | null {
+  const date = asDate(value);
+  return date ? date.toISOString() : null;
 }
 
 function toIso(value: string | Date): string {

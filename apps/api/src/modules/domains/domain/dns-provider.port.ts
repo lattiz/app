@@ -54,3 +54,32 @@ export interface DnsZoneInventoryPort {
 }
 
 export const DNS_ZONE_INVENTORY_PORT = Symbol('DNS_ZONE_INVENTORY_PORT');
+
+export interface DnsZoneInspectionRecord {
+  type: string;
+  name: string;
+  content: string;
+  proxied: boolean | null;
+}
+
+/** Live zone view for the admin panel. Records are only A/AAAA/CNAME at the apex and www. */
+export interface DnsZoneInspection {
+  exists: boolean;
+  zoneId: string | null;
+  status: string | null;
+  nameservers: string[];
+  originalNameservers: string[];
+  activatedOn: string | null;
+  paused: boolean | null;
+  records: DnsZoneInspectionRecord[];
+}
+
+/**
+ * Reading one zone's status is useful for every provider; listing every zone in the account is not,
+ * so this stays a separate port (same split as {@link DnsZoneInventoryPort}).
+ */
+export interface DnsZoneInspectionPort {
+  inspectZone(domain: string): Promise<DnsZoneInspection>;
+}
+
+export const DNS_ZONE_INSPECTION_PORT = Symbol('DNS_ZONE_INSPECTION_PORT');

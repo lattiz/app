@@ -103,6 +103,8 @@ function setup(
     caps,
     effective,
     renewalConfig,
+    { inspectZone: jest.fn() },
+    { getStatusForTenant: jest.fn() } as never,
   );
   const internals = service as unknown as PurchaseInternals;
   jest.spyOn(internals, 'getTenantIdByUserSub').mockResolvedValue(TENANT_ID);

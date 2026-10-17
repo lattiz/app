@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { sql, type SQL } from 'drizzle-orm';
 import Stripe from 'stripe';
@@ -109,6 +109,7 @@ export class DomainRenewalPaymentService {
     @Inject(REGISTRAR_PORT) private readonly registrar: RegistrarPort,
     private readonly config: DomainRenewalConfig,
     private readonly renewals: DomainRenewalService,
+    @Inject(forwardRef(() => DomainsService))
     private readonly domains: DomainsService,
     private readonly emails: EmailOutboxService,
     private readonly adminAlerts: AdminAlertService,
@@ -168,15 +169,32 @@ export class DomainRenewalPaymentService {
     return { url: session.url };
   }
 
-  /** Live cycle for the caller's tenant, or null when renewal is off or nothing is due. */
+  /**
+   * Live cycle for the caller's tenant, or null when renewal is off or nothing is due.
+   * The disabled short-circuit stays here so a turned-off renewal never touches the database.
+   */
   async getStatusForUser(
     userSub: string,
   ): Promise<DomainRenewalStatusDto | null> {
     if (!this.config.enabled) return null;
-
     const tenant = await this.loadTenant(userSub);
     if (!tenant) return null;
+    return this.renewalStatus(tenant);
+  }
 
+  /** Same payload as {@link getStatusForUser}, addressed by tenant id. */
+  async getStatusForTenant(
+    tenantId: string,
+  ): Promise<DomainRenewalStatusDto | null> {
+    if (!this.config.enabled) return null;
+    const tenant = await this.loadTenantById(tenantId);
+    if (!tenant) return null;
+    return this.renewalStatus(tenant);
+  }
+
+  private async renewalStatus(
+    tenant: TenantBillingRow,
+  ): Promise<DomainRenewalStatusDto | null> {
     const cycle = await this.renewals.findActiveCycleForTenant(tenant.id);
     if (!cycle || !isVisibleRenewalStatus(cycle.status)) return null;
 
@@ -358,11 +376,23 @@ export class DomainRenewalPaymentService {
   }
 
   private async loadTenant(userSub: string): Promise<TenantBillingRow | null> {
+    return this.loadTenantWhere(sql`t.user_id = ${userSub}::uuid`);
+  }
+
+  private async loadTenantById(
+    tenantId: string,
+  ): Promise<TenantBillingRow | null> {
+    return this.loadTenantWhere(sql`t.id = ${tenantId}::uuid`);
+  }
+
+  private async loadTenantWhere(
+    where: SQL,
+  ): Promise<TenantBillingRow | null> {
     const rows = await this.query<TenantBillingRow>(
       sql`SELECT t.id, t.stripe_customer_id, s.status, s.current_period_end
           FROM public.tenants t
           LEFT JOIN public.subscriptions s ON s.tenant_id = t.id
-          WHERE t.user_id = ${userSub}::uuid
+          WHERE ${where}
           ORDER BY s.created_at DESC NULLS LAST
           LIMIT 1`,
     );

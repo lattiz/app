@@ -3,6 +3,7 @@ import { PreviewModule } from '../../common/billing/preview.module';
 import { SettingsModule } from '../../common/settings/settings.module';
 import { DatabaseModule } from '../../database/database.module';
 import { BillingCoreModule } from '../billing/billing-core.module';
+import { DomainsModule } from '../domains/domains.module';
 import { StorageModule } from '../storage/storage.module';
 import { AdminAuditInterceptor } from './audit/admin-audit.interceptor';
 import { AdminAuditService } from './audit/admin-audit.service';
@@ -10,6 +11,8 @@ import { AdminGuard } from './auth/admin.guard';
 import { AdminMembersService } from './auth/admin-members.service';
 import { AdminSubscriptionsController } from './billing/admin-subscriptions.controller';
 import { AdminSubscriptionsService } from './billing/admin-subscriptions.service';
+import { AdminDomainController } from './domains/admin-domain.controller';
+import { AdminDomainService } from './domains/admin-domain.service';
 import { AdminMeController } from './me/admin-me.controller';
 import { AdminMetricsController } from './metrics/admin-metrics.controller';
 import { AdminMetricsService } from './metrics/admin-metrics.service';
@@ -27,6 +30,7 @@ import { AdminTrialsService } from './trials/admin-trials.service';
   imports: [
     DatabaseModule,
     BillingCoreModule,
+    DomainsModule,
     PreviewModule,
     SettingsModule,
     StorageModule,
@@ -34,6 +38,7 @@ import { AdminTrialsService } from './trials/admin-trials.service';
   controllers: [
     AdminMeController,
     AdminTenantsController,
+    AdminDomainController,
     AdminSubscriptionsController,
     AdminTemplatesController,
     AdminTrialsController,
@@ -47,6 +52,7 @@ import { AdminTrialsService } from './trials/admin-trials.service';
     StorageUsageService,
     StorageUsageCron,
     AdminTenantsService,
+    AdminDomainService,
     AdminSubscriptionsService,
     AdminTemplatesService,
     AdminTrialsService,
