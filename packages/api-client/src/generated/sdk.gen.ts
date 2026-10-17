@@ -2,7 +2,7 @@
 
 import { type Client, type ClientMeta, formDataBodySerializer, type Options as Options2, type RequestResult, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { AdminMeControllerMeData, AdminMeControllerMeErrors, AdminMeControllerMeResponses, AnalyticsControllerOverviewData, AnalyticsControllerOverviewResponses, AnalyticsControllerRealtimeData, AnalyticsControllerRealtimeResponses, AnalyticsControllerRetryData, AnalyticsControllerRetryResponses, BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionErrors, BillingControllerCreateCheckoutSessionResponses, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponses, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponses, BillingControllerGetPlanChangeData, BillingControllerGetPlanChangeResponses, BillingControllerGetPlansData, BillingControllerGetPlansResponses, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionPriceData, BillingControllerGetSubscriptionPriceResponses, BillingControllerGetSubscriptionResponses, BillingControllerReleasePendingPlanChangeData, BillingControllerReleasePendingPlanChangeResponses, BillingControllerRequestPlanChangeData, BillingControllerRequestPlanChangeErrors, BillingControllerRequestPlanChangeResponses, DomainsControllerConnectData, DomainsControllerConnectResponses, DomainsControllerCreateRenewalCheckoutData, DomainsControllerCreateRenewalCheckoutResponses, DomainsControllerGetDomainData, DomainsControllerGetDomainResponses, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponses, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponses, DomainsControllerGetRenewalData, DomainsControllerGetRenewalResponses, DomainsControllerPurchaseData, DomainsControllerPurchaseResponses, DomainsControllerRelaunchData, DomainsControllerRelaunchResponses, DomainsControllerSearchData, DomainsControllerSearchResponses, HealthControllerHealthData, HealthControllerHealthResponses, MeControllerDeleteMeData, MeControllerDeleteMeErrors, MeControllerDeleteMeResponses, MeControllerMeData, MeControllerMeErrors, MeControllerMeResponses, PlanChangeImpactControllerGetImpactData, PlanChangeImpactControllerGetImpactErrors, PlanChangeImpactControllerGetImpactResponses, PublicTemplatesControllerFindPublishedData, PublicTemplatesControllerFindPublishedResponses, SitesControllerChangeTemplateData, SitesControllerChangeTemplateErrors, SitesControllerChangeTemplateResponses, SitesControllerGetSchemaData, SitesControllerGetSchemaErrors, SitesControllerGetSchemaResponses, SitesControllerPublishData, SitesControllerPublishErrors, SitesControllerPublishResponses, SitesControllerSaveSchemaData, SitesControllerSaveSchemaErrors, SitesControllerSaveSchemaResponses, SitesControllerSelectTemplateData, SitesControllerSelectTemplateErrors, SitesControllerSelectTemplateResponses, SitesControllerUploadAssetsData, SitesControllerUploadAssetsErrors, SitesControllerUploadAssetsResponses, SiteStockAssetsControllerImportPhotoData, SiteStockAssetsControllerImportPhotoErrors, SiteStockAssetsControllerImportPhotoResponses, StockControllerSearchData, StockControllerSearchErrors, StockControllerSearchResponses, StockControllerStatusData, StockControllerStatusErrors, StockControllerStatusResponses, TemplatesControllerFindAllData, TemplatesControllerFindAllErrors, TemplatesControllerFindAllResponses, TenantsControllerMeData, TenantsControllerMeErrors, TenantsControllerMeResponses, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingErrors, TenantsControllerRemoveBrandingResponses, TenantsControllerSlugAvailabilityData, TenantsControllerSlugAvailabilityErrors, TenantsControllerSlugAvailabilityResponses, TenantsControllerSlugSuggestionData, TenantsControllerSlugSuggestionErrors, TenantsControllerSlugSuggestionResponses, TenantsControllerUpdateBusinessProfileData, TenantsControllerUpdateBusinessProfileErrors, TenantsControllerUpdateBusinessProfileResponses, TenantsControllerUpdateSiteSettingsData, TenantsControllerUpdateSiteSettingsErrors, TenantsControllerUpdateSiteSettingsResponses, TenantsControllerUpdateSlugData, TenantsControllerUpdateSlugErrors, TenantsControllerUpdateSlugResponses, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingErrors, TenantsControllerUploadBrandingResponses } from './types.gen';
+import type { AdminDomainControllerActivationCheckData, AdminDomainControllerActivationCheckErrors, AdminDomainControllerActivationCheckResponses, AdminDomainControllerInspectData, AdminDomainControllerInspectErrors, AdminDomainControllerInspectResponses, AdminMeControllerMeData, AdminMeControllerMeErrors, AdminMeControllerMeResponses, AdminMetricsControllerFunnelData, AdminMetricsControllerFunnelErrors, AdminMetricsControllerFunnelResponses, AdminMetricsControllerHistoryData, AdminMetricsControllerHistoryErrors, AdminMetricsControllerHistoryResponses, AdminMetricsControllerOverviewData, AdminMetricsControllerOverviewErrors, AdminMetricsControllerOverviewResponses, AdminMetricsControllerRevenueData, AdminMetricsControllerRevenueErrors, AdminMetricsControllerRevenueResponses, AdminMetricsControllerTemplatesData, AdminMetricsControllerTemplatesErrors, AdminMetricsControllerTemplatesResponses, AdminSubscriptionsControllerGetData, AdminSubscriptionsControllerGetErrors, AdminSubscriptionsControllerGetResponses, AdminSubscriptionsControllerListData, AdminSubscriptionsControllerListErrors, AdminSubscriptionsControllerListResponses, AdminTemplatesControllerGetData, AdminTemplatesControllerGetErrors, AdminTemplatesControllerGetResponses, AdminTemplatesControllerListData, AdminTemplatesControllerListErrors, AdminTemplatesControllerListResponses, AdminTenantsControllerGetData, AdminTenantsControllerGetErrors, AdminTenantsControllerGetResponses, AdminTenantsControllerListData, AdminTenantsControllerListErrors, AdminTenantsControllerListResponses, AdminTenantsControllerRefreshData, AdminTenantsControllerRefreshErrors, AdminTenantsControllerRefreshResponses, AdminTrialsControllerListData, AdminTrialsControllerListErrors, AdminTrialsControllerListResponses, AdminTrialsControllerSummaryData, AdminTrialsControllerSummaryErrors, AdminTrialsControllerSummaryResponses, AnalyticsControllerOverviewData, AnalyticsControllerOverviewResponses, AnalyticsControllerRealtimeData, AnalyticsControllerRealtimeResponses, AnalyticsControllerRetryData, AnalyticsControllerRetryResponses, BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionErrors, BillingControllerCreateCheckoutSessionResponses, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponses, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponses, BillingControllerGetPlanChangeData, BillingControllerGetPlanChangeResponses, BillingControllerGetPlansData, BillingControllerGetPlansResponses, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionPriceData, BillingControllerGetSubscriptionPriceResponses, BillingControllerGetSubscriptionResponses, BillingControllerReleasePendingPlanChangeData, BillingControllerReleasePendingPlanChangeResponses, BillingControllerRequestPlanChangeData, BillingControllerRequestPlanChangeErrors, BillingControllerRequestPlanChangeResponses, DomainsControllerConnectData, DomainsControllerConnectResponses, DomainsControllerCreateRenewalCheckoutData, DomainsControllerCreateRenewalCheckoutResponses, DomainsControllerGetDomainData, DomainsControllerGetDomainResponses, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponses, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponses, DomainsControllerGetRenewalData, DomainsControllerGetRenewalResponses, DomainsControllerPurchaseData, DomainsControllerPurchaseResponses, DomainsControllerRelaunchData, DomainsControllerRelaunchResponses, DomainsControllerSearchData, DomainsControllerSearchResponses, HealthControllerHealthData, HealthControllerHealthResponses, MeControllerDeleteMeData, MeControllerDeleteMeErrors, MeControllerDeleteMeResponses, MeControllerMeData, MeControllerMeErrors, MeControllerMeResponses, PlanChangeImpactControllerGetImpactData, PlanChangeImpactControllerGetImpactErrors, PlanChangeImpactControllerGetImpactResponses, PublicTemplatesControllerFindPublishedData, PublicTemplatesControllerFindPublishedResponses, SitesControllerChangeTemplateData, SitesControllerChangeTemplateErrors, SitesControllerChangeTemplateResponses, SitesControllerGetSchemaData, SitesControllerGetSchemaErrors, SitesControllerGetSchemaResponses, SitesControllerPublishData, SitesControllerPublishErrors, SitesControllerPublishResponses, SitesControllerSaveSchemaData, SitesControllerSaveSchemaErrors, SitesControllerSaveSchemaResponses, SitesControllerSelectTemplateData, SitesControllerSelectTemplateErrors, SitesControllerSelectTemplateResponses, SitesControllerUploadAssetsData, SitesControllerUploadAssetsErrors, SitesControllerUploadAssetsResponses, SiteStockAssetsControllerImportPhotoData, SiteStockAssetsControllerImportPhotoErrors, SiteStockAssetsControllerImportPhotoResponses, StockControllerSearchData, StockControllerSearchErrors, StockControllerSearchResponses, StockControllerStatusData, StockControllerStatusErrors, StockControllerStatusResponses, TemplatesControllerFindAllData, TemplatesControllerFindAllErrors, TemplatesControllerFindAllResponses, TenantsControllerMeData, TenantsControllerMeErrors, TenantsControllerMeResponses, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingErrors, TenantsControllerRemoveBrandingResponses, TenantsControllerSlugAvailabilityData, TenantsControllerSlugAvailabilityErrors, TenantsControllerSlugAvailabilityResponses, TenantsControllerSlugSuggestionData, TenantsControllerSlugSuggestionErrors, TenantsControllerSlugSuggestionResponses, TenantsControllerUpdateBusinessProfileData, TenantsControllerUpdateBusinessProfileErrors, TenantsControllerUpdateBusinessProfileResponses, TenantsControllerUpdateSiteSettingsData, TenantsControllerUpdateSiteSettingsErrors, TenantsControllerUpdateSiteSettingsResponses, TenantsControllerUpdateSlugData, TenantsControllerUpdateSlugErrors, TenantsControllerUpdateSlugResponses, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingErrors, TenantsControllerUploadBrandingResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -24,6 +24,243 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 export const adminMeControllerMe = <ThrowOnError extends boolean = false>(options?: Options<AdminMeControllerMeData, ThrowOnError>): RequestResult<AdminMeControllerMeResponses, AdminMeControllerMeErrors, ThrowOnError> => (options?.client ?? client).get<AdminMeControllerMeResponses, AdminMeControllerMeErrors, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/admin/me',
+    ...options
+});
+
+/**
+ * List tenants
+ */
+export const adminTenantsControllerList = <ThrowOnError extends boolean = false>(options?: Options<AdminTenantsControllerListData, ThrowOnError>): RequestResult<AdminTenantsControllerListResponses, AdminTenantsControllerListErrors, ThrowOnError> => (options?.client ?? client).get<AdminTenantsControllerListResponses, AdminTenantsControllerListErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/tenants',
+    ...options
+});
+
+/**
+ * Get a tenant
+ */
+export const adminTenantsControllerGet = <ThrowOnError extends boolean = false>(options: Options<AdminTenantsControllerGetData, ThrowOnError>): RequestResult<AdminTenantsControllerGetResponses, AdminTenantsControllerGetErrors, ThrowOnError> => (options.client ?? client).get<AdminTenantsControllerGetResponses, AdminTenantsControllerGetErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/tenants/{id}',
+    ...options
+});
+
+/**
+ * Refresh stored object usage for a tenant
+ */
+export const adminTenantsControllerRefresh = <ThrowOnError extends boolean = false>(options: Options<AdminTenantsControllerRefreshData, ThrowOnError>): RequestResult<AdminTenantsControllerRefreshResponses, AdminTenantsControllerRefreshErrors, ThrowOnError> => (options.client ?? client).post<AdminTenantsControllerRefreshResponses, AdminTenantsControllerRefreshErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/tenants/{id}/storage/refresh',
+    ...options
+});
+
+/**
+ * Inspect a tenant domain
+ */
+export const adminDomainControllerInspect = <ThrowOnError extends boolean = false>(options: Options<AdminDomainControllerInspectData, ThrowOnError>): RequestResult<AdminDomainControllerInspectResponses, AdminDomainControllerInspectErrors, ThrowOnError> => (options.client ?? client).get<AdminDomainControllerInspectResponses, AdminDomainControllerInspectErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/tenants/{id}/domain',
+    ...options
+});
+
+/**
+ * Re-check DNS activation for a tenant domain
+ */
+export const adminDomainControllerActivationCheck = <ThrowOnError extends boolean = false>(options: Options<AdminDomainControllerActivationCheckData, ThrowOnError>): RequestResult<AdminDomainControllerActivationCheckResponses, AdminDomainControllerActivationCheckErrors, ThrowOnError> => (options.client ?? client).post<AdminDomainControllerActivationCheckResponses, AdminDomainControllerActivationCheckErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/tenants/{id}/domain/activation-check',
+    ...options
+});
+
+/**
+ * List subscriptions
+ */
+export const adminSubscriptionsControllerList = <ThrowOnError extends boolean = false>(options?: Options<AdminSubscriptionsControllerListData, ThrowOnError>): RequestResult<AdminSubscriptionsControllerListResponses, AdminSubscriptionsControllerListErrors, ThrowOnError> => (options?.client ?? client).get<AdminSubscriptionsControllerListResponses, AdminSubscriptionsControllerListErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/subscriptions',
+    ...options
+});
+
+/**
+ * Get a subscription
+ */
+export const adminSubscriptionsControllerGet = <ThrowOnError extends boolean = false>(options: Options<AdminSubscriptionsControllerGetData, ThrowOnError>): RequestResult<AdminSubscriptionsControllerGetResponses, AdminSubscriptionsControllerGetErrors, ThrowOnError> => (options.client ?? client).get<AdminSubscriptionsControllerGetResponses, AdminSubscriptionsControllerGetErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/subscriptions/{id}',
+    ...options
+});
+
+/**
+ * List templates
+ */
+export const adminTemplatesControllerList = <ThrowOnError extends boolean = false>(options?: Options<AdminTemplatesControllerListData, ThrowOnError>): RequestResult<AdminTemplatesControllerListResponses, AdminTemplatesControllerListErrors, ThrowOnError> => (options?.client ?? client).get<AdminTemplatesControllerListResponses, AdminTemplatesControllerListErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/templates',
+    ...options
+});
+
+/**
+ * Get a template
+ */
+export const adminTemplatesControllerGet = <ThrowOnError extends boolean = false>(options: Options<AdminTemplatesControllerGetData, ThrowOnError>): RequestResult<AdminTemplatesControllerGetResponses, AdminTemplatesControllerGetErrors, ThrowOnError> => (options.client ?? client).get<AdminTemplatesControllerGetResponses, AdminTemplatesControllerGetErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/templates/{id}',
+    ...options
+});
+
+/**
+ * Summarize free previews
+ */
+export const adminTrialsControllerSummary = <ThrowOnError extends boolean = false>(options?: Options<AdminTrialsControllerSummaryData, ThrowOnError>): RequestResult<AdminTrialsControllerSummaryResponses, AdminTrialsControllerSummaryErrors, ThrowOnError> => (options?.client ?? client).get<AdminTrialsControllerSummaryResponses, AdminTrialsControllerSummaryErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/trials/summary',
+    ...options
+});
+
+/**
+ * List free previews
+ */
+export const adminTrialsControllerList = <ThrowOnError extends boolean = false>(options?: Options<AdminTrialsControllerListData, ThrowOnError>): RequestResult<AdminTrialsControllerListResponses, AdminTrialsControllerListErrors, ThrowOnError> => (options?.client ?? client).get<AdminTrialsControllerListResponses, AdminTrialsControllerListErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/trials',
+    ...options
+});
+
+/**
+ * Business overview
+ */
+export const adminMetricsControllerOverview = <ThrowOnError extends boolean = false>(options?: Options<AdminMetricsControllerOverviewData, ThrowOnError>): RequestResult<AdminMetricsControllerOverviewResponses, AdminMetricsControllerOverviewErrors, ThrowOnError> => (options?.client ?? client).get<AdminMetricsControllerOverviewResponses, AdminMetricsControllerOverviewErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/metrics/overview',
+    ...options
+});
+
+/**
+ * Monthly collected revenue
+ */
+export const adminMetricsControllerRevenue = <ThrowOnError extends boolean = false>(options?: Options<AdminMetricsControllerRevenueData, ThrowOnError>): RequestResult<AdminMetricsControllerRevenueResponses, AdminMetricsControllerRevenueErrors, ThrowOnError> => (options?.client ?? client).get<AdminMetricsControllerRevenueResponses, AdminMetricsControllerRevenueErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/metrics/revenue',
+    ...options
+});
+
+/**
+ * Signup funnel
+ */
+export const adminMetricsControllerFunnel = <ThrowOnError extends boolean = false>(options?: Options<AdminMetricsControllerFunnelData, ThrowOnError>): RequestResult<AdminMetricsControllerFunnelResponses, AdminMetricsControllerFunnelErrors, ThrowOnError> => (options?.client ?? client).get<AdminMetricsControllerFunnelResponses, AdminMetricsControllerFunnelErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/metrics/funnel',
+    ...options
+});
+
+/**
+ * Template adoption and conversion
+ */
+export const adminMetricsControllerTemplates = <ThrowOnError extends boolean = false>(options?: Options<AdminMetricsControllerTemplatesData, ThrowOnError>): RequestResult<AdminMetricsControllerTemplatesResponses, AdminMetricsControllerTemplatesErrors, ThrowOnError> => (options?.client ?? client).get<AdminMetricsControllerTemplatesResponses, AdminMetricsControllerTemplatesErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/metrics/templates',
+    ...options
+});
+
+/**
+ * Daily KPI history
+ */
+export const adminMetricsControllerHistory = <ThrowOnError extends boolean = false>(options?: Options<AdminMetricsControllerHistoryData, ThrowOnError>): RequestResult<AdminMetricsControllerHistoryResponses, AdminMetricsControllerHistoryErrors, ThrowOnError> => (options?.client ?? client).get<AdminMetricsControllerHistoryResponses, AdminMetricsControllerHistoryErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/admin/metrics/history',
+    ...options
+});
+
+/**
+ * Search available domains (protected)
+ */
+export const domainsControllerSearch = <ThrowOnError extends boolean = false>(options: Options<DomainsControllerSearchData, ThrowOnError>): RequestResult<DomainsControllerSearchResponses, unknown, ThrowOnError> => (options.client ?? client).get<DomainsControllerSearchResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/domains/search',
+    ...options
+});
+
+/**
+ * Get a registration quote (protected)
+ */
+export const domainsControllerGetQuote = <ThrowOnError extends boolean = false>(options: Options<DomainsControllerGetQuoteData, ThrowOnError>): RequestResult<DomainsControllerGetQuoteResponses, unknown, ThrowOnError> => (options.client ?? client).post<DomainsControllerGetQuoteResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/domains/quote',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Purchase a domain (protected, async)
+ */
+export const domainsControllerPurchase = <ThrowOnError extends boolean = false>(options: Options<DomainsControllerPurchaseData, ThrowOnError>): RequestResult<DomainsControllerPurchaseResponses, unknown, ThrowOnError> => (options.client ?? client).post<DomainsControllerPurchaseResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/domains/purchase',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Connect a tenant-owned domain (protected)
+ */
+export const domainsControllerConnect = <ThrowOnError extends boolean = false>(options: Options<DomainsControllerConnectData, ThrowOnError>): RequestResult<DomainsControllerConnectResponses, unknown, ThrowOnError> => (options.client ?? client).post<DomainsControllerConnectResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/domains/connect',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Relaunch a suspended domain (protected)
+ */
+export const domainsControllerRelaunch = <ThrowOnError extends boolean = false>(options?: Options<DomainsControllerRelaunchData, ThrowOnError>): RequestResult<DomainsControllerRelaunchResponses, unknown, ThrowOnError> => (options?.client ?? client).post<DomainsControllerRelaunchResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/domains/relaunch',
+    ...options
+});
+
+/**
+ * Get the domain renewal cycle (protected)
+ */
+export const domainsControllerGetRenewal = <ThrowOnError extends boolean = false>(options?: Options<DomainsControllerGetRenewalData, ThrowOnError>): RequestResult<DomainsControllerGetRenewalResponses, unknown, ThrowOnError> => (options?.client ?? client).get<DomainsControllerGetRenewalResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/domains/renewal',
+    ...options
+});
+
+/**
+ * Start domain renewal checkout (protected)
+ */
+export const domainsControllerCreateRenewalCheckout = <ThrowOnError extends boolean = false>(options?: Options<DomainsControllerCreateRenewalCheckoutData, ThrowOnError>): RequestResult<DomainsControllerCreateRenewalCheckoutResponses, unknown, ThrowOnError> => (options?.client ?? client).post<DomainsControllerCreateRenewalCheckoutResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/domains/renewal/checkout',
+    ...options
+});
+
+/**
+ * Get domain purchase job status (protected)
+ */
+export const domainsControllerGetJobStatus = <ThrowOnError extends boolean = false>(options: Options<DomainsControllerGetJobStatusData, ThrowOnError>): RequestResult<DomainsControllerGetJobStatusResponses, unknown, ThrowOnError> => (options.client ?? client).get<DomainsControllerGetJobStatusResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/domains/jobs/{jobId}',
+    ...options
+});
+
+/**
+ * Get the tenant current domain + DNS/SSL status (protected)
+ */
+export const domainsControllerGetDomain = <ThrowOnError extends boolean = false>(options?: Options<DomainsControllerGetDomainData, ThrowOnError>): RequestResult<DomainsControllerGetDomainResponses, unknown, ThrowOnError> => (options?.client ?? client).get<DomainsControllerGetDomainResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/domains',
     ...options
 });
 
@@ -149,99 +386,6 @@ export const billingControllerGetInvoices = <ThrowOnError extends boolean = fals
 export const planChangeImpactControllerGetImpact = <ThrowOnError extends boolean = false>(options: Options<PlanChangeImpactControllerGetImpactData, ThrowOnError>): RequestResult<PlanChangeImpactControllerGetImpactResponses, PlanChangeImpactControllerGetImpactErrors, ThrowOnError> => (options.client ?? client).get<PlanChangeImpactControllerGetImpactResponses, PlanChangeImpactControllerGetImpactErrors, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/tenants/{tenantId}/plan-change-impact',
-    ...options
-});
-
-/**
- * Search available domains (protected)
- */
-export const domainsControllerSearch = <ThrowOnError extends boolean = false>(options: Options<DomainsControllerSearchData, ThrowOnError>): RequestResult<DomainsControllerSearchResponses, unknown, ThrowOnError> => (options.client ?? client).get<DomainsControllerSearchResponses, unknown, ThrowOnError>({
-    security: [{ scheme: 'bearer', type: 'http' }],
-    url: '/domains/search',
-    ...options
-});
-
-/**
- * Get a registration quote (protected)
- */
-export const domainsControllerGetQuote = <ThrowOnError extends boolean = false>(options: Options<DomainsControllerGetQuoteData, ThrowOnError>): RequestResult<DomainsControllerGetQuoteResponses, unknown, ThrowOnError> => (options.client ?? client).post<DomainsControllerGetQuoteResponses, unknown, ThrowOnError>({
-    security: [{ scheme: 'bearer', type: 'http' }],
-    url: '/domains/quote',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Purchase a domain (protected, async)
- */
-export const domainsControllerPurchase = <ThrowOnError extends boolean = false>(options: Options<DomainsControllerPurchaseData, ThrowOnError>): RequestResult<DomainsControllerPurchaseResponses, unknown, ThrowOnError> => (options.client ?? client).post<DomainsControllerPurchaseResponses, unknown, ThrowOnError>({
-    security: [{ scheme: 'bearer', type: 'http' }],
-    url: '/domains/purchase',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Connect a tenant-owned domain (protected)
- */
-export const domainsControllerConnect = <ThrowOnError extends boolean = false>(options: Options<DomainsControllerConnectData, ThrowOnError>): RequestResult<DomainsControllerConnectResponses, unknown, ThrowOnError> => (options.client ?? client).post<DomainsControllerConnectResponses, unknown, ThrowOnError>({
-    security: [{ scheme: 'bearer', type: 'http' }],
-    url: '/domains/connect',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-    }
-});
-
-/**
- * Relaunch a suspended domain (protected)
- */
-export const domainsControllerRelaunch = <ThrowOnError extends boolean = false>(options?: Options<DomainsControllerRelaunchData, ThrowOnError>): RequestResult<DomainsControllerRelaunchResponses, unknown, ThrowOnError> => (options?.client ?? client).post<DomainsControllerRelaunchResponses, unknown, ThrowOnError>({
-    security: [{ scheme: 'bearer', type: 'http' }],
-    url: '/domains/relaunch',
-    ...options
-});
-
-/**
- * Get the domain renewal cycle (protected)
- */
-export const domainsControllerGetRenewal = <ThrowOnError extends boolean = false>(options?: Options<DomainsControllerGetRenewalData, ThrowOnError>): RequestResult<DomainsControllerGetRenewalResponses, unknown, ThrowOnError> => (options?.client ?? client).get<DomainsControllerGetRenewalResponses, unknown, ThrowOnError>({
-    security: [{ scheme: 'bearer', type: 'http' }],
-    url: '/domains/renewal',
-    ...options
-});
-
-/**
- * Start domain renewal checkout (protected)
- */
-export const domainsControllerCreateRenewalCheckout = <ThrowOnError extends boolean = false>(options?: Options<DomainsControllerCreateRenewalCheckoutData, ThrowOnError>): RequestResult<DomainsControllerCreateRenewalCheckoutResponses, unknown, ThrowOnError> => (options?.client ?? client).post<DomainsControllerCreateRenewalCheckoutResponses, unknown, ThrowOnError>({
-    security: [{ scheme: 'bearer', type: 'http' }],
-    url: '/domains/renewal/checkout',
-    ...options
-});
-
-/**
- * Get domain purchase job status (protected)
- */
-export const domainsControllerGetJobStatus = <ThrowOnError extends boolean = false>(options: Options<DomainsControllerGetJobStatusData, ThrowOnError>): RequestResult<DomainsControllerGetJobStatusResponses, unknown, ThrowOnError> => (options.client ?? client).get<DomainsControllerGetJobStatusResponses, unknown, ThrowOnError>({
-    security: [{ scheme: 'bearer', type: 'http' }],
-    url: '/domains/jobs/{jobId}',
-    ...options
-});
-
-/**
- * Get the tenant current domain + DNS/SSL status (protected)
- */
-export const domainsControllerGetDomain = <ThrowOnError extends boolean = false>(options?: Options<DomainsControllerGetDomainData, ThrowOnError>): RequestResult<DomainsControllerGetDomainResponses, unknown, ThrowOnError> => (options?.client ?? client).get<DomainsControllerGetDomainResponses, unknown, ThrowOnError>({
-    security: [{ scheme: 'bearer', type: 'http' }],
-    url: '/domains',
     ...options
 });
 

@@ -19,6 +19,869 @@ export type AdminMeResponseDto = {
     role: 'owner' | 'operator' | 'viewer';
 };
 
+export type AdminTenantSubscriptionSummaryDto = {
+    status: 'active' | 'trialing' | 'past_due' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'unpaid' | 'paused';
+    plan: 'basico' | 'pro';
+    billingPeriod: 'monthly' | 'annual';
+    currentPeriodEnd: string | null;
+    /**
+     * When the subscription is scheduled to end; null if it is not.
+     */
+    cancelAt: string | null;
+    cancelAtPeriodEnd: boolean;
+};
+
+export type AdminTenantTemplateRefDto = {
+    id: string;
+    name: string | null;
+};
+
+export type AdminTenantDomainSummaryDto = {
+    name: string;
+    expiresAt: string | null;
+    dnsStatus: 'pending' | 'configuring' | 'propagating' | 'active' | 'error';
+};
+
+export type AdminTenantListItemDto = {
+    id: string;
+    slug: string;
+    name: string;
+    email: string | null;
+    plan: 'none' | 'basico' | 'pro' | 'trial';
+    status: 'active' | 'inactive' | 'cancelled';
+    entitled: boolean;
+    previewState: 'paid' | 'trial_unstarted' | 'trial_active' | 'trial_expired' | 'lapsed';
+    previewExpiresAt: string | null;
+    subscription: AdminTenantSubscriptionSummaryDto | null;
+    template: AdminTenantTemplateRefDto | null;
+    published: boolean;
+    domain: AdminTenantDomainSummaryDto | null;
+    /**
+     * Sum of asset and branding bytes, or null when never measured.
+     */
+    storageBytes: number | null;
+    isInternal: boolean;
+    tags: Array<string>;
+    createdAt: string;
+    lastSignInAt: string | null;
+};
+
+export type AdminTenantListResponseDto = {
+    items: Array<AdminTenantListItemDto>;
+    total: number;
+    page: number;
+    pageSize: number;
+};
+
+export type AdminTenantOverviewDto = {
+    tenantId: string;
+    userId: string;
+    slug: string;
+    name: string;
+    plan: 'none' | 'basico' | 'pro' | 'trial';
+    status: 'active' | 'inactive' | 'cancelled';
+    createdAt: string;
+    previewStartedAt: string | null;
+    includedDomainUsedAt: string | null;
+    stripeCustomerId: string | null;
+    email: string | null;
+    emailConfirmedAt: string | null;
+    lastSignInAt: string | null;
+    isInternal: boolean;
+    tags: Array<string>;
+    entitled: boolean;
+    subscriptionId: string | null;
+    subscriptionStatus: 'active' | 'trialing' | 'past_due' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'unpaid' | 'paused';
+    subscriptionPlan: 'basico' | 'pro';
+    billingPeriod: 'monthly' | 'annual';
+    currentPeriodEnd: string | null;
+    cancelAtPeriodEnd: boolean | null;
+    cancelAt: string | null;
+    paymentAttempts: number | null;
+    subscriptionCreatedAt: string | null;
+    templateId: string | null;
+    siteStatus: 'draft' | 'published';
+    publishedAt: string | null;
+    siteUpdatedAt: string | null;
+    domain: string | null;
+    domainSource: 'godaddy_managed' | 'user_provided';
+    dnsStatus: 'pending' | 'configuring' | 'propagating' | 'active' | 'error';
+    domainExpiresAt: string | null;
+    domainSuspendedAt: string | null;
+    dnsProvider: string | null;
+    renewalStatus: 'pricing_pending' | 'open' | 'overdue' | 'paid' | 'renewed' | 'renewal_failed' | 'over_cap' | 'lapsed' | 'refunded' | 'void';
+    renewalLateDeadlineAt: string | null;
+    storageBytes: number | null;
+    storageMeasuredAt: string | null;
+};
+
+export type AdminTenantIdentityDto = {
+    email: string | null;
+    emailVerified: boolean;
+    lastSignInAt: string | null;
+    /**
+     * Values of `auth.users.raw_app_meta_data.providers`.
+     */
+    providers: Array<string>;
+    /**
+     * When the auth user was created.
+     */
+    createdAt: string | null;
+};
+
+export type AdminTenantSiteDto = {
+    template: AdminTenantTemplateRefDto | null;
+    status: 'draft' | 'published';
+    published: boolean;
+    publishedAt: string | null;
+    updatedAt: string | null;
+    /**
+     * `{scheme}://{slug}.{PREVIEW_BASE_DOMAIN}` via `previewUrl`.
+     */
+    previewUrl: string;
+    /**
+     * `https://{domain}` when dns_status is active.
+     */
+    customDomainUrl: string | null;
+};
+
+export type AdminTemplateArchiveDto = {
+    templateId: string | null;
+    reason: string;
+    archivedAt: string;
+};
+
+export type AdminTenantSubscriptionDto = {
+    id: string;
+    stripeSubscriptionId: string;
+    status: 'active' | 'trialing' | 'past_due' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'unpaid' | 'paused';
+    plan: 'basico' | 'pro';
+    billingPeriod: 'monthly' | 'annual';
+    currentPeriodStart: string | null;
+    currentPeriodEnd: string | null;
+    cancelAt: string | null;
+    cancelAtPeriodEnd: boolean;
+    canceledAt: string | null;
+    paymentAttempts: number;
+    createdAt: string;
+};
+
+export type AdminTenantAnalyticsDto = {
+    provisioningStatus: 'pending' | 'provisioning' | 'ready' | 'failed';
+    isMock: boolean | null;
+    fetchedAt: string | null;
+    /**
+     * Cached report jsonb, unchanged.
+     */
+    report: {
+        [key: string]: unknown;
+    } | null;
+};
+
+export type AdminStorageUsageDto = {
+    tenantId: string;
+    assetsBytes: number;
+    /**
+     * Always 0 until object storage can count keys, not only bytes.
+     */
+    assetsObjects: number;
+    brandingBytes: number;
+    /**
+     * Always 0 until object storage can count keys, not only bytes.
+     */
+    brandingObjects: number;
+    /**
+     * When this row was measured (ISO 8601).
+     */
+    measuredAt: string;
+};
+
+export type AdminTenantStorageDto = {
+    usage: AdminStorageUsageDto | null;
+    /**
+     * `preview.max_asset_bytes` while the tenant is not paying.
+     * Null when entitled, or when the configured cap is 0.
+     */
+    assetByteLimit: number | null;
+};
+
+export type AdminTenantEmailDto = {
+    kind: string;
+    status: string;
+    attempts: number;
+    createdAt: string;
+    sentAt: string | null;
+    /**
+     * `last_error` clipped to 200 characters.
+     */
+    lastError: string | null;
+};
+
+export type AdminTenantFlagsDto = {
+    isInternal: boolean;
+    tags: Array<string>;
+    notes: string | null;
+};
+
+export type AdminTenantDetailDto = {
+    overview: AdminTenantOverviewDto;
+    identity: AdminTenantIdentityDto;
+    previewState: 'paid' | 'trial_unstarted' | 'trial_active' | 'trial_expired' | 'lapsed';
+    previewExpiresAt: string | null;
+    site: AdminTenantSiteDto;
+    templateHistory: Array<AdminTemplateArchiveDto>;
+    subscriptions: Array<AdminTenantSubscriptionDto>;
+    analytics: AdminTenantAnalyticsDto | null;
+    storage: AdminTenantStorageDto;
+    emails: Array<AdminTenantEmailDto>;
+    flags: AdminTenantFlagsDto;
+};
+
+export type AdminDomainRecordDto = {
+    name: string;
+    source: 'lattiz_managed' | 'user_provided';
+    expiresAt: string | null;
+    dnsStatus: 'pending' | 'configuring' | 'propagating' | 'active' | 'error';
+    dnsProvider: 'cloudflare' | 'openprovider';
+    dnsActivationCheckedAt: string | null;
+    vercelMapped: boolean;
+    sslActive: boolean;
+    suspendedAt: string | null;
+    isMock: boolean;
+    purchaseCompletedAt: string | null;
+};
+
+export type AdminDomainCurrentCycleDto = {
+    domain: string;
+    status: 'open' | 'overdue' | 'paid' | 'renewal_failed';
+    expiresAt: string;
+    lateDeadlineAt: string | null;
+    baseCents: number;
+    taxCents: number;
+    totalCents: number;
+    currency: string;
+    canPay: boolean;
+    payBlockedReason: 'subscription_inactive' | 'window_closed' | null;
+};
+
+export type AdminDomainCycleDto = {
+    status: 'pricing_pending' | 'open' | 'overdue' | 'paid' | 'renewed' | 'renewal_failed' | 'over_cap' | 'lapsed' | 'refunded' | 'void';
+    amountCents: number | null;
+    currency: string;
+    openedAt: string | null;
+    paidAt: string | null;
+    renewedAt: string | null;
+    overdueAt: string | null;
+    lapsedAt: string | null;
+    lastError: string | null;
+};
+
+export type AdminDomainRenewalDto = {
+    managedBy?: 'customer';
+    expiresAt?: string | null;
+    daysUntilExpiry?: number | null;
+    paymentOpensAt?: string | null;
+    daysUntilPaymentOpens?: number | null;
+    noticeDates?: Array<string>;
+    lateDeadlineAt?: string | null;
+    currentCycle?: AdminDomainCurrentCycleDto | null;
+    cycles?: Array<AdminDomainCycleDto>;
+    /**
+     * Annual fee including IVA, in cents.
+     */
+    expectedChargeCents?: number;
+    currency?: string;
+    firstYearIncluded?: boolean;
+};
+
+export type AdminDomainRegistrarDto = {
+    error?: 'unavailable';
+    status?: 'active' | 'expired' | 'pending' | 'unknown';
+    renewalDate?: string | null;
+    canRenew?: boolean;
+    restorableUntil?: string | null;
+    autoRenew?: 'on' | 'off' | 'default';
+    expiryMismatch?: boolean;
+};
+
+export type AdminDomainDnsRecordDto = {
+    type: string;
+    name: string;
+    content: string;
+    proxied: boolean | null;
+};
+
+export type AdminDomainDnsDto = {
+    error?: 'unavailable';
+    exists?: boolean;
+    zoneId?: string | null;
+    status?: string | null;
+    nameservers?: Array<string>;
+    originalNameservers?: Array<string>;
+    activatedOn?: string | null;
+    paused?: boolean | null;
+    records?: Array<AdminDomainDnsRecordDto>;
+    recordsMatchVercel?: boolean;
+};
+
+export type AdminDomainVercelDto = {
+    error?: 'unavailable';
+    inProject?: boolean;
+    configured?: boolean;
+};
+
+export type AdminDomainInspectionDto = {
+    domain: AdminDomainRecordDto | null;
+    renewal: AdminDomainRenewalDto | null;
+    registrar: AdminDomainRegistrarDto | null;
+    dns: AdminDomainDnsDto | null;
+    vercel: AdminDomainVercelDto | null;
+};
+
+export type AdminSubscriptionTenantDto = {
+    id: string;
+    slug: string;
+    name: string;
+    email: string | null;
+};
+
+export type AdminSubscriptionListItemDto = {
+    id: string;
+    stripeSubscriptionId: string;
+    tenant: AdminSubscriptionTenantDto;
+    plan: 'basico' | 'pro';
+    period: 'monthly' | 'annual';
+    status: 'active' | 'trialing' | 'past_due' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'unpaid' | 'paused';
+    currentPeriodEnd: string | null;
+    /**
+     * When the subscription is scheduled to end; null if it is not.
+     */
+    cancelAt: string | null;
+    cancelAtPeriodEnd: boolean;
+    paymentAttempts: number;
+    createdAt: string;
+    canceledAt: string | null;
+    /**
+     * Stripe Dashboard link. `/test` when `STRIPE_SECRET_KEY` starts with `sk_test_`.
+     */
+    stripeDashboardUrl: string;
+};
+
+export type AdminSubscriptionListResponseDto = {
+    items: Array<AdminSubscriptionListItemDto>;
+    total: number;
+    page: number;
+    pageSize: number;
+};
+
+export type AdminSubscriptionDiscountDto = {
+    percentOff: number | null;
+    /**
+     * Fixed amount in cents when the coupon is not a percent.
+     */
+    amountOff: number | null;
+    currency: string | null;
+};
+
+export type AdminSubscriptionPriceDto = {
+    unitAmount: number | null;
+    currency: string;
+    interval: 'day' | 'week' | 'month' | 'year';
+    intervalCount: number | null;
+    discount: AdminSubscriptionDiscountDto | null;
+};
+
+export type AdminSubscriptionPaymentMethodDto = {
+    brand: string;
+    last4: string;
+    expMonth: number;
+    expYear: number;
+};
+
+export type AdminSubscriptionUpcomingInvoiceDto = {
+    total: number;
+    currency: string;
+    /**
+     * Next charge: `next_payment_attempt`, otherwise `due_date`, otherwise `period_end`.
+     */
+    date: string | null;
+};
+
+export type AdminSubscriptionSchedulePhaseDto = {
+    plan: 'basico' | 'pro';
+    priceId: string;
+    start: string;
+    end: string;
+};
+
+export type AdminSubscriptionScheduleDto = {
+    id: string;
+    status: 'not_started' | 'active' | 'completed' | 'released' | 'canceled';
+    phases: Array<AdminSubscriptionSchedulePhaseDto>;
+};
+
+export type AdminSubscriptionInvoiceDto = {
+    number: string | null;
+    status: 'draft' | 'open' | 'paid' | 'uncollectible' | 'void';
+    total: number;
+    currency: string;
+    createdAt: string;
+    /**
+     * `status_transitions.paid_at`.
+     */
+    paidAt: string | null;
+    hostedInvoiceUrl: string | null;
+    invoicePdf: string | null;
+};
+
+export type AdminSubscriptionStripeDto = {
+    status: 'active' | 'trialing' | 'past_due' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'unpaid' | 'paused';
+    price: AdminSubscriptionPriceDto | null;
+    paymentMethod: AdminSubscriptionPaymentMethodDto | null;
+    upcomingInvoice: AdminSubscriptionUpcomingInvoiceDto | null;
+    schedule: AdminSubscriptionScheduleDto | null;
+    invoices: Array<AdminSubscriptionInvoiceDto>;
+};
+
+export type AdminSubscriptionDetailDto = {
+    local: AdminSubscriptionListItemDto;
+    stripe: AdminSubscriptionStripeDto | null;
+    stripeError: 'unavailable';
+};
+
+export type AdminTemplateUsageDto = {
+    tenantsUsing: number;
+    sitesPublished: number;
+    payingTenants: number;
+    trialTenants: number;
+    archivedCount: number;
+};
+
+export type AdminTemplateListItemDto = {
+    id: string;
+    name: string;
+    description: string | null;
+    category: string | null;
+    tier: 'basic' | 'pro';
+    status: 'pending' | 'active';
+    thumbnailUrl: string | null;
+    previewUrl: string | null;
+    sortOrder: number;
+    createdAt: string;
+    usage: AdminTemplateUsageDto;
+};
+
+export type AdminTemplateListResponseDto = {
+    items: Array<AdminTemplateListItemDto>;
+};
+
+export type AdminTemplateTenantDto = {
+    id: string;
+    slug: string;
+    name: string;
+    plan: 'none' | 'basico' | 'pro' | 'trial';
+    entitled: boolean;
+    published: boolean;
+};
+
+export type AdminTemplateDetailDto = {
+    id: string;
+    name: string;
+    description: string | null;
+    category: string | null;
+    tier: 'basic' | 'pro';
+    status: 'pending' | 'active';
+    thumbnailUrl: string | null;
+    previewUrl: string | null;
+    sortOrder: number;
+    createdAt: string;
+    usage: AdminTemplateUsageDto;
+    /**
+     * Sections on the first GrapesJS page. The project JSON is not returned.
+     */
+    sectionCount: number;
+    tenants: Array<AdminTemplateTenantDto>;
+};
+
+export type AdminTrialSummaryDto = {
+    active: number;
+    expiring: number;
+    expired: number;
+    converted: number;
+    /**
+     * Converted / started in the last 30 days. Null when none started.
+     */
+    conversionRate30d: number | null;
+    /**
+     * Converted / started in the last 90 days. Null when none started.
+     */
+    conversionRate90d: number | null;
+    /**
+     * Median hours from preview start to the first later subscription.
+     */
+    medianHoursToConvert: number | null;
+    trialDays: number;
+    enabled: boolean;
+};
+
+export type AdminTrialTenantDto = {
+    id: string;
+    slug: string;
+    name: string;
+    email: string | null;
+};
+
+export type AdminTrialTemplateDto = {
+    id: string;
+    name: string | null;
+};
+
+export type AdminTrialListItemDto = {
+    tenant: AdminTrialTenantDto;
+    template: AdminTrialTemplateDto | null;
+    previewStartedAt: string;
+    previewExpiresAt: string | null;
+    state: 'active' | 'expiring' | 'expired' | 'converted';
+    convertedAt: string | null;
+    hoursToConvert: number | null;
+};
+
+export type AdminTrialListResponseDto = {
+    items: Array<AdminTrialListItemDto>;
+    total: number;
+    page: number;
+    pageSize: number;
+};
+
+export type MetricsMrrPlanDto = {
+    plan: 'basico' | 'pro';
+    mrrCents: number;
+};
+
+export type MetricsMrrPeriodDto = {
+    period: 'monthly' | 'annual' | 'weekly';
+    mrrCents: number;
+};
+
+export type MetricsMrrCurrencyDto = {
+    currency: string;
+    mrrCents: number;
+    arrCents: number;
+    byPlan: Array<MetricsMrrPlanDto>;
+    byPeriod: Array<MetricsMrrPeriodDto>;
+};
+
+export type MetricsCustomersDto = {
+    payingTenants: number;
+    newPayingThisMonth: number;
+    cancellationsThisMonth: number;
+    /**
+     * Cancelaciones del mes ÷ pagadores al inicio. Null si no había pagadores.
+     */
+    churnRateThisMonth: number | null;
+    /**
+     * past_due más cancelaciones programadas, un cliente cuenta una vez.
+     */
+    atRisk: number;
+};
+
+export type MetricsTrialsDto = {
+    active: number;
+    expiringWithin48h: number;
+};
+
+export type MetricsRenewalsNext30DaysDto = {
+    count: number;
+    expectedRevenueCents: number;
+    currency: string;
+};
+
+export type MetricsProductDto = {
+    publishedSites: number;
+    domainsPurchased: number;
+    domainsConnected: number;
+    renewalsOverdue: number;
+    renewalsNext30Days: MetricsRenewalsNext30DaysDto;
+};
+
+export type MetricsOverviewDto = {
+    mrrCents: number | null;
+    arrCents: number | null;
+    currency: string | null;
+    mrrByPlan: Array<MetricsMrrPlanDto>;
+    mrrByPeriod: Array<MetricsMrrPeriodDto>;
+    mrrByCurrency: Array<MetricsMrrCurrencyDto>;
+    revenueError: 'unavailable';
+    customers: MetricsCustomersDto;
+    trials: MetricsTrialsDto;
+    product: MetricsProductDto;
+    generatedAt: string;
+};
+
+export type MetricsRevenueMonthDto = {
+    month: string;
+    grossCents: number;
+    feeCents: number;
+    refundCents: number;
+    netCents: number;
+    currency: string;
+};
+
+export type MetricsRevenueDto = {
+    items: Array<MetricsRevenueMonthDto>;
+    months: number;
+};
+
+export type MetricsFunnelDto = {
+    days: number;
+    signups: number;
+    choseTemplate: number;
+    published: number;
+    paid: number;
+    choseTemplateRate: number | null;
+    publishedRate: number | null;
+    paidRate: number | null;
+    medianHoursToPay: number | null;
+};
+
+export type MetricsTemplateRankDto = {
+    id: string;
+    name: string;
+    tier: 'basic' | 'pro';
+    tenantsUsing: number;
+    payingTenants: number;
+    conversionRate: number | null;
+};
+
+export type MetricsTemplatesDto = {
+    byAdoption: Array<MetricsTemplateRankDto>;
+    byConversion: Array<MetricsTemplateRankDto>;
+};
+
+export type MetricsHistoryItemDto = {
+    day: string;
+    mrrCents: number | null;
+    currency: string | null;
+    payingTenants: number;
+    trialsActive: number;
+    signups: number;
+    newPaying: number;
+    cancellations: number;
+    publishedSites: number;
+    capturedAt: string;
+};
+
+export type MetricsHistoryDto = {
+    items: Array<MetricsHistoryItemDto>;
+    days: number;
+};
+
+export type DomainSearchResultDto = {
+    domain: string;
+    available: boolean;
+    /**
+     * True only when the name is free and both the first year and the renewal sit inside the tenant plan caps.
+     */
+    coveredByPlan: boolean;
+    /**
+     * Why an available domain is outside the plan: `purchase_over_cap` (first year),
+     * `requires_pro` (renewal fits Pro but not this plan), `renewal_over_cap`
+     * (renewal above every plan), or `price_unknown` (price could not be read —
+     * fail closed). Null when covered or not available.
+     */
+    notCoveredReason: 'purchase_over_cap' | 'renewal_over_cap' | 'requires_pro' | 'price_unknown' | null;
+    /**
+     * True only when this tenant is not on Pro, the name is free, the first year
+     * fits the purchase cap, and the renewal fits the Pro cap but not the current plan.
+     */
+    availableWithPro: boolean;
+    /**
+     * What one renewal year costs Lattiz, in USD cents; null when it was not (or could not be) priced.
+     */
+    renewalPriceUsdCents: number | null;
+};
+
+export type GetQuoteDto = {
+    /**
+     * Fully-qualified domain to quote, e.g. "miempresa.com".
+     */
+    domain: string;
+};
+
+export type DomainMaintenanceFeeDto = {
+    amountCents: number;
+    /**
+     * Lowercase ISO 4217 code, as Stripe uses it.
+     */
+    currency: string;
+    /**
+     * IVA en puntos base; el monto no lo incluye.
+     */
+    taxRateBps: number;
+};
+
+export type DomainAgreementDto = {
+    agreementType: string;
+    title: string;
+    url: string | null;
+};
+
+export type DomainQuoteResponseDto = {
+    domain: string;
+    available: boolean;
+    coveredByPlan: boolean;
+    /**
+     * Why an available domain is outside the plan: `purchase_over_cap` (first year),
+     * `requires_pro` (renewal fits Pro but not this plan), `renewal_over_cap`
+     * (renewal above every plan), or `price_unknown` (price could not be read —
+     * fail closed). Null when covered or not available.
+     */
+    notCoveredReason: 'purchase_over_cap' | 'renewal_over_cap' | 'requires_pro' | 'price_unknown' | null;
+    /**
+     * True only when this tenant is not on Pro, the name is free, the first year
+     * fits the purchase cap, and the renewal fits the Pro cap but not the current plan.
+     */
+    availableWithPro: boolean;
+    /**
+     * The renewal price the coverage was decided with, in USD cents; null when it was not (or could not be) priced.
+     */
+    renewalPriceUsdCents: number | null;
+    /**
+     * Charged every year starting with the second one; the registration itself is covered by the plan.
+     */
+    maintenanceFee: DomainMaintenanceFeeDto;
+    requiredAgreements: Array<DomainAgreementDto>;
+    irreversible: boolean;
+};
+
+export type PurchaseDomainDto = {
+    /**
+     * Fully-qualified domain to purchase.
+     */
+    domain: string;
+    /**
+     * Agreement types the user accepted — must match the quote's requiredAgreements.
+     */
+    agreementTypes: Array<string>;
+    /**
+     * ISO timestamp of when the user actually clicked "Acepto" — never fabricated.
+     */
+    agreedAt: string;
+};
+
+export type DomainPurchaseResponseDto = {
+    /**
+     * Poll GET /domains/jobs/:jobId with this id for pipeline progress.
+     */
+    jobId: string;
+};
+
+export type ConnectDomainDto = {
+    /**
+     * Domain the tenant already owns at another registrar, e.g. "miempresa.com".
+     */
+    domain: string;
+};
+
+export type DnsInstructionDto = {
+    type: 'A' | 'CNAME';
+    /**
+     * '@' for the apex, 'www' for the subdomain.
+     */
+    name: string;
+    value: string;
+    ttl: number;
+};
+
+export type ConnectDomainResponseDto = {
+    jobId: string;
+    /**
+     * DNS records the tenant must create manually at their registrar.
+     */
+    dnsInstructions: Array<DnsInstructionDto>;
+};
+
+export type RelaunchDomainResponseDto = {
+    /**
+     * False when there was nothing to relaunch (no domain, or not suspended).
+     */
+    relaunched: boolean;
+    domain: string | null;
+};
+
+export type DomainRenewalStatusDto = {
+    /**
+     * Domain name this cycle renews.
+     */
+    domain: string;
+    /**
+     * open: pago abierto; overdue: venció y aún puede pagar; paid: pago recibido, renovando; renewal_failed: pago recibido, Lattiz lo está resolviendo.
+     */
+    status: 'open' | 'overdue' | 'paid' | 'renewal_failed';
+    /**
+     * End of the current registration period, as an ISO timestamp.
+     */
+    expiresAt: string;
+    /**
+     * Last moment a late payment is still accepted, as an ISO timestamp; null before the domain expires.
+     */
+    lateDeadlineAt: string | null;
+    /**
+     * Renewal price before IVA, in cents.
+     */
+    baseCents: number;
+    /**
+     * IVA in cents.
+     */
+    taxCents: number;
+    /**
+     * baseCents plus taxCents.
+     */
+    totalCents: number;
+    /**
+     * Lowercase ISO 4217 code.
+     */
+    currency: string;
+    /**
+     * True when the tenant can start checkout for this cycle right now.
+     */
+    canPay: boolean;
+    /**
+     * Por qué no puede pagar; null si puede o si ya pagó.
+     */
+    payBlockedReason: 'subscription_inactive' | 'window_closed' | null;
+};
+
+export type DomainRenewalCheckoutResponseDto = {
+    /**
+     * Stripe Checkout URL for the live renewal cycle.
+     */
+    url: string;
+};
+
+export type DomainJobStatusDto = {
+    jobId: string;
+    domain: string;
+    status: 'pending' | 'purchasing' | 'configuring_dns' | 'registering_vercel' | 'completed' | 'failed';
+    stepsCompleted: Array<string>;
+    /**
+     * Set when status is 'failed'.
+     */
+    errorCode: 'DNS_PROVIDER_UNAVAILABLE' | 'DNS_ZONE_REJECTED' | 'SERVICE_CONFIGURATION_ERROR' | 'REGISTRAR_UNAVAILABLE' | 'REGISTRATION_REJECTED' | 'DOMAIN_NO_LONGER_AVAILABLE' | 'REGISTRATION_PENDING' | 'DNS_SETUP_FAILED' | 'VERCEL_SETUP_FAILED' | 'PURCHASE_INTERRUPTED' | 'UNEXPECTED_ERROR';
+    errorStep: string | null;
+};
+
+export type DomainStatusResponseDto = {
+    domain: string;
+    source: 'lattiz_managed' | 'user_provided';
+    dnsStatus: 'pending' | 'configuring' | 'propagating' | 'active' | 'error';
+    vercelMapped: boolean;
+    sslActive: boolean;
+    isMock: boolean;
+    expiresAt: string | null;
+    purchaseCompletedAt: string | null;
+};
+
 export type AnalyticsStatus = 'not_eligible' | 'unavailable' | 'provisioning' | 'failed' | 'ready';
 
 export type AnalyticsDailyPointDto = {
@@ -257,212 +1120,6 @@ export type PlanChangeImpactResponseDto = {
      * Empty when nothing is lost. A non-empty list must be acknowledged to schedule the change.
      */
     items: Array<PlanChangeImpactItemDto>;
-};
-
-export type DomainSearchResultDto = {
-    domain: string;
-    available: boolean;
-    /**
-     * True only when the name is free and both the first year and the renewal sit inside the tenant plan caps.
-     */
-    coveredByPlan: boolean;
-    /**
-     * Why an available domain is outside the plan: `purchase_over_cap` (first year),
-     * `requires_pro` (renewal fits Pro but not this plan), `renewal_over_cap`
-     * (renewal above every plan), or `price_unknown` (price could not be read —
-     * fail closed). Null when covered or not available.
-     */
-    notCoveredReason: 'purchase_over_cap' | 'renewal_over_cap' | 'requires_pro' | 'price_unknown' | null;
-    /**
-     * True only when this tenant is not on Pro, the name is free, the first year
-     * fits the purchase cap, and the renewal fits the Pro cap but not the current plan.
-     */
-    availableWithPro: boolean;
-    /**
-     * What one renewal year costs Lattiz, in USD cents; null when it was not (or could not be) priced.
-     */
-    renewalPriceUsdCents: number | null;
-};
-
-export type GetQuoteDto = {
-    /**
-     * Fully-qualified domain to quote, e.g. "miempresa.com".
-     */
-    domain: string;
-};
-
-export type DomainMaintenanceFeeDto = {
-    amountCents: number;
-    /**
-     * Lowercase ISO 4217 code, as Stripe uses it.
-     */
-    currency: string;
-    /**
-     * IVA en puntos base; el monto no lo incluye.
-     */
-    taxRateBps: number;
-};
-
-export type DomainAgreementDto = {
-    agreementType: string;
-    title: string;
-    url: string | null;
-};
-
-export type DomainQuoteResponseDto = {
-    domain: string;
-    available: boolean;
-    coveredByPlan: boolean;
-    /**
-     * Why an available domain is outside the plan: `purchase_over_cap` (first year),
-     * `requires_pro` (renewal fits Pro but not this plan), `renewal_over_cap`
-     * (renewal above every plan), or `price_unknown` (price could not be read —
-     * fail closed). Null when covered or not available.
-     */
-    notCoveredReason: 'purchase_over_cap' | 'renewal_over_cap' | 'requires_pro' | 'price_unknown' | null;
-    /**
-     * True only when this tenant is not on Pro, the name is free, the first year
-     * fits the purchase cap, and the renewal fits the Pro cap but not the current plan.
-     */
-    availableWithPro: boolean;
-    /**
-     * The renewal price the coverage was decided with, in USD cents; null when it was not (or could not be) priced.
-     */
-    renewalPriceUsdCents: number | null;
-    /**
-     * Charged every year starting with the second one; the registration itself is covered by the plan.
-     */
-    maintenanceFee: DomainMaintenanceFeeDto;
-    requiredAgreements: Array<DomainAgreementDto>;
-    irreversible: boolean;
-};
-
-export type PurchaseDomainDto = {
-    /**
-     * Fully-qualified domain to purchase.
-     */
-    domain: string;
-    /**
-     * Agreement types the user accepted — must match the quote's requiredAgreements.
-     */
-    agreementTypes: Array<string>;
-    /**
-     * ISO timestamp of when the user actually clicked "Acepto" — never fabricated.
-     */
-    agreedAt: string;
-};
-
-export type DomainPurchaseResponseDto = {
-    /**
-     * Poll GET /domains/jobs/:jobId with this id for pipeline progress.
-     */
-    jobId: string;
-};
-
-export type ConnectDomainDto = {
-    /**
-     * Domain the tenant already owns at another registrar, e.g. "miempresa.com".
-     */
-    domain: string;
-};
-
-export type DnsInstructionDto = {
-    type: 'A' | 'CNAME';
-    /**
-     * '@' for the apex, 'www' for the subdomain.
-     */
-    name: string;
-    value: string;
-    ttl: number;
-};
-
-export type ConnectDomainResponseDto = {
-    jobId: string;
-    /**
-     * DNS records the tenant must create manually at their registrar.
-     */
-    dnsInstructions: Array<DnsInstructionDto>;
-};
-
-export type RelaunchDomainResponseDto = {
-    /**
-     * False when there was nothing to relaunch (no domain, or not suspended).
-     */
-    relaunched: boolean;
-    domain: string | null;
-};
-
-export type DomainRenewalStatusDto = {
-    /**
-     * Domain name this cycle renews.
-     */
-    domain: string;
-    /**
-     * open: pago abierto; overdue: venció y aún puede pagar; paid: pago recibido, renovando; renewal_failed: pago recibido, Lattiz lo está resolviendo.
-     */
-    status: 'open' | 'overdue' | 'paid' | 'renewal_failed';
-    /**
-     * End of the current registration period, as an ISO timestamp.
-     */
-    expiresAt: string;
-    /**
-     * Last moment a late payment is still accepted, as an ISO timestamp; null before the domain expires.
-     */
-    lateDeadlineAt: string | null;
-    /**
-     * Renewal price before IVA, in cents.
-     */
-    baseCents: number;
-    /**
-     * IVA in cents.
-     */
-    taxCents: number;
-    /**
-     * baseCents plus taxCents.
-     */
-    totalCents: number;
-    /**
-     * Lowercase ISO 4217 code.
-     */
-    currency: string;
-    /**
-     * True when the tenant can start checkout for this cycle right now.
-     */
-    canPay: boolean;
-    /**
-     * Por qué no puede pagar; null si puede o si ya pagó.
-     */
-    payBlockedReason: 'subscription_inactive' | 'window_closed' | null;
-};
-
-export type DomainRenewalCheckoutResponseDto = {
-    /**
-     * Stripe Checkout URL for the live renewal cycle.
-     */
-    url: string;
-};
-
-export type DomainJobStatusDto = {
-    jobId: string;
-    domain: string;
-    status: 'pending' | 'purchasing' | 'configuring_dns' | 'registering_vercel' | 'completed' | 'failed';
-    stepsCompleted: Array<string>;
-    /**
-     * Set when status is 'failed'.
-     */
-    errorCode: 'DNS_PROVIDER_UNAVAILABLE' | 'DNS_ZONE_REJECTED' | 'SERVICE_CONFIGURATION_ERROR' | 'REGISTRAR_UNAVAILABLE' | 'REGISTRATION_REJECTED' | 'DOMAIN_NO_LONGER_AVAILABLE' | 'REGISTRATION_PENDING' | 'DNS_SETUP_FAILED' | 'VERCEL_SETUP_FAILED' | 'PURCHASE_INTERRUPTED' | 'UNEXPECTED_ERROR';
-    errorStep: string | null;
-};
-
-export type DomainStatusResponseDto = {
-    domain: string;
-    source: 'lattiz_managed' | 'user_provided';
-    dnsStatus: 'pending' | 'configuring' | 'propagating' | 'active' | 'error';
-    vercelMapped: boolean;
-    sslActive: boolean;
-    isMock: boolean;
-    expiresAt: string | null;
-    purchaseCompletedAt: string | null;
 };
 
 export type TemplateGalleryItemDto = {
@@ -967,6 +1624,634 @@ export type AdminMeControllerMeResponses = {
 
 export type AdminMeControllerMeResponse = AdminMeControllerMeResponses[keyof AdminMeControllerMeResponses];
 
+export type AdminTenantsControllerListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Case-insensitive match on email, slug, name, or domain.
+         */
+        q?: string;
+        plan?: 'none' | 'basico' | 'pro' | 'trial';
+        status?: 'active' | 'inactive' | 'cancelled';
+        entitled?: boolean;
+        /**
+         * Internal tenants are excluded unless this is true, which lifts the exclusion.
+         */
+        internal?: boolean;
+        /**
+         * Domain expires within this many days from now.
+         */
+        domainExpiringDays?: number;
+        /**
+         * Latest non-void maintenance cycle is `overdue` (or is not, when false).
+         */
+        renewalOverdue?: boolean;
+        /**
+         * true: dns_status is set and not active. false: dns_status is active.
+         */
+        dnsIssue?: boolean;
+        sort?: 'created_at' | 'last_sign_in_at' | 'domain_expires_at';
+        order?: 'asc' | 'desc';
+        page?: number;
+        pageSize?: number;
+    };
+    url: '/admin/tenants';
+};
+
+export type AdminTenantsControllerListErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+};
+
+export type AdminTenantsControllerListResponses = {
+    200: AdminTenantListResponseDto;
+};
+
+export type AdminTenantsControllerListResponse = AdminTenantsControllerListResponses[keyof AdminTenantsControllerListResponses];
+
+export type AdminTenantsControllerGetData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/tenants/{id}';
+};
+
+export type AdminTenantsControllerGetErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown tenant (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+};
+
+export type AdminTenantsControllerGetResponses = {
+    200: AdminTenantDetailDto;
+};
+
+export type AdminTenantsControllerGetResponse = AdminTenantsControllerGetResponses[keyof AdminTenantsControllerGetResponses];
+
+export type AdminTenantsControllerRefreshData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/tenants/{id}/storage/refresh';
+};
+
+export type AdminTenantsControllerRefreshErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown tenant (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+};
+
+export type AdminTenantsControllerRefreshResponses = {
+    200: AdminStorageUsageDto;
+};
+
+export type AdminTenantsControllerRefreshResponse = AdminTenantsControllerRefreshResponses[keyof AdminTenantsControllerRefreshResponses];
+
+export type AdminDomainControllerInspectData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: {
+        /**
+         * `1` skips the 5-minute cache and reads the providers again.
+         */
+        refresh?: '1';
+    };
+    url: '/admin/tenants/{id}/domain';
+};
+
+export type AdminDomainControllerInspectErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown tenant (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+};
+
+export type AdminDomainControllerInspectResponses = {
+    200: AdminDomainInspectionDto;
+};
+
+export type AdminDomainControllerInspectResponse = AdminDomainControllerInspectResponses[keyof AdminDomainControllerInspectResponses];
+
+export type AdminDomainControllerActivationCheckData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/tenants/{id}/domain/activation-check';
+};
+
+export type AdminDomainControllerActivationCheckErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown tenant (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+};
+
+export type AdminDomainControllerActivationCheckResponses = {
+    200: AdminDomainInspectionDto;
+};
+
+export type AdminDomainControllerActivationCheckResponse = AdminDomainControllerActivationCheckResponses[keyof AdminDomainControllerActivationCheckResponses];
+
+export type AdminSubscriptionsControllerListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Case-insensitive match on email, slug, or tenant name.
+         */
+        q?: string;
+        /**
+         * Comma-separated statuses from the subscriptions CHECK.
+         */
+        status?: Array<'active' | 'trialing' | 'past_due' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'unpaid' | 'paused'>;
+        plan?: 'basico' | 'pro';
+        period?: 'monthly' | 'annual';
+        /**
+         * Scheduled cancellation (`cancel_at` or `cancel_at_period_end`),
+         * excluding terminal statuses.
+         */
+        cancelScheduled?: boolean;
+        /**
+         * `payment_attempts > 0` or status `past_due`.
+         */
+        paymentIssues?: boolean;
+        /**
+         * Internal tenants are excluded unless this is true, which lifts the exclusion.
+         */
+        internal?: boolean;
+        page?: number;
+        pageSize?: number;
+    };
+    url: '/admin/subscriptions';
+};
+
+export type AdminSubscriptionsControllerListErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+};
+
+export type AdminSubscriptionsControllerListResponses = {
+    200: AdminSubscriptionListResponseDto;
+};
+
+export type AdminSubscriptionsControllerListResponse = AdminSubscriptionsControllerListResponses[keyof AdminSubscriptionsControllerListResponses];
+
+export type AdminSubscriptionsControllerGetData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/subscriptions/{id}';
+};
+
+export type AdminSubscriptionsControllerGetErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown subscription (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+};
+
+export type AdminSubscriptionsControllerGetResponses = {
+    200: AdminSubscriptionDetailDto;
+};
+
+export type AdminSubscriptionsControllerGetResponse = AdminSubscriptionsControllerGetResponses[keyof AdminSubscriptionsControllerGetResponses];
+
+export type AdminTemplatesControllerListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        tier?: 'basic' | 'pro';
+        category?: string;
+        /**
+         * Inactive templates are pending until a later phase adds retired_at.
+         */
+        status?: 'pending' | 'active';
+        /**
+         * Case-insensitive match on template id or name.
+         */
+        q?: string;
+    };
+    url: '/admin/templates';
+};
+
+export type AdminTemplatesControllerListErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+};
+
+export type AdminTemplatesControllerListResponses = {
+    200: AdminTemplateListResponseDto;
+};
+
+export type AdminTemplatesControllerListResponse = AdminTemplatesControllerListResponses[keyof AdminTemplatesControllerListResponses];
+
+export type AdminTemplatesControllerGetData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/admin/templates/{id}';
+};
+
+export type AdminTemplatesControllerGetErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown template (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+};
+
+export type AdminTemplatesControllerGetResponses = {
+    200: AdminTemplateDetailDto;
+};
+
+export type AdminTemplatesControllerGetResponse = AdminTemplatesControllerGetResponses[keyof AdminTemplatesControllerGetResponses];
+
+export type AdminTrialsControllerSummaryData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/admin/trials/summary';
+};
+
+export type AdminTrialsControllerSummaryErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+};
+
+export type AdminTrialsControllerSummaryResponses = {
+    200: AdminTrialSummaryDto;
+};
+
+export type AdminTrialsControllerSummaryResponse = AdminTrialsControllerSummaryResponses[keyof AdminTrialsControllerSummaryResponses];
+
+export type AdminTrialsControllerListData = {
+    body?: never;
+    path?: never;
+    query?: {
+        state?: 'active' | 'expiring' | 'expired' | 'converted';
+        page?: number;
+        pageSize?: number;
+    };
+    url: '/admin/trials';
+};
+
+export type AdminTrialsControllerListErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+};
+
+export type AdminTrialsControllerListResponses = {
+    200: AdminTrialListResponseDto;
+};
+
+export type AdminTrialsControllerListResponse = AdminTrialsControllerListResponses[keyof AdminTrialsControllerListResponses];
+
+export type AdminMetricsControllerOverviewData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/admin/metrics/overview';
+};
+
+export type AdminMetricsControllerOverviewErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+};
+
+export type AdminMetricsControllerOverviewResponses = {
+    200: MetricsOverviewDto;
+};
+
+export type AdminMetricsControllerOverviewResponse = AdminMetricsControllerOverviewResponses[keyof AdminMetricsControllerOverviewResponses];
+
+export type AdminMetricsControllerRevenueData = {
+    body?: never;
+    path?: never;
+    query?: {
+        months?: number;
+    };
+    url: '/admin/metrics/revenue';
+};
+
+export type AdminMetricsControllerRevenueErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Stripe did not answer (ADMIN_STRIPE_UNAVAILABLE).
+     */
+    502: unknown;
+};
+
+export type AdminMetricsControllerRevenueResponses = {
+    200: MetricsRevenueDto;
+};
+
+export type AdminMetricsControllerRevenueResponse = AdminMetricsControllerRevenueResponses[keyof AdminMetricsControllerRevenueResponses];
+
+export type AdminMetricsControllerFunnelData = {
+    body?: never;
+    path?: never;
+    query?: {
+        days?: number;
+    };
+    url: '/admin/metrics/funnel';
+};
+
+export type AdminMetricsControllerFunnelErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+};
+
+export type AdminMetricsControllerFunnelResponses = {
+    200: MetricsFunnelDto;
+};
+
+export type AdminMetricsControllerFunnelResponse = AdminMetricsControllerFunnelResponses[keyof AdminMetricsControllerFunnelResponses];
+
+export type AdminMetricsControllerTemplatesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/admin/metrics/templates';
+};
+
+export type AdminMetricsControllerTemplatesErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+};
+
+export type AdminMetricsControllerTemplatesResponses = {
+    200: MetricsTemplatesDto;
+};
+
+export type AdminMetricsControllerTemplatesResponse = AdminMetricsControllerTemplatesResponses[keyof AdminMetricsControllerTemplatesResponses];
+
+export type AdminMetricsControllerHistoryData = {
+    body?: never;
+    path?: never;
+    query?: {
+        days?: number;
+    };
+    url: '/admin/metrics/history';
+};
+
+export type AdminMetricsControllerHistoryErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+};
+
+export type AdminMetricsControllerHistoryResponses = {
+    200: MetricsHistoryDto;
+};
+
+export type AdminMetricsControllerHistoryResponse = AdminMetricsControllerHistoryResponses[keyof AdminMetricsControllerHistoryResponses];
+
+export type DomainsControllerSearchData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Keyword to search domains for (no TLD — variants are generated server-side).
+         */
+        q: string;
+    };
+    url: '/domains/search';
+};
+
+export type DomainsControllerSearchResponses = {
+    200: Array<DomainSearchResultDto>;
+};
+
+export type DomainsControllerSearchResponse = DomainsControllerSearchResponses[keyof DomainsControllerSearchResponses];
+
+export type DomainsControllerGetQuoteData = {
+    body: GetQuoteDto;
+    path?: never;
+    query?: never;
+    url: '/domains/quote';
+};
+
+export type DomainsControllerGetQuoteResponses = {
+    200: DomainQuoteResponseDto;
+};
+
+export type DomainsControllerGetQuoteResponse = DomainsControllerGetQuoteResponses[keyof DomainsControllerGetQuoteResponses];
+
+export type DomainsControllerPurchaseData = {
+    body: PurchaseDomainDto;
+    path?: never;
+    query?: never;
+    url: '/domains/purchase';
+};
+
+export type DomainsControllerPurchaseResponses = {
+    200: DomainPurchaseResponseDto;
+};
+
+export type DomainsControllerPurchaseResponse = DomainsControllerPurchaseResponses[keyof DomainsControllerPurchaseResponses];
+
+export type DomainsControllerConnectData = {
+    body: ConnectDomainDto;
+    path?: never;
+    query?: never;
+    url: '/domains/connect';
+};
+
+export type DomainsControllerConnectResponses = {
+    200: ConnectDomainResponseDto;
+};
+
+export type DomainsControllerConnectResponse = DomainsControllerConnectResponses[keyof DomainsControllerConnectResponses];
+
+export type DomainsControllerRelaunchData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/domains/relaunch';
+};
+
+export type DomainsControllerRelaunchResponses = {
+    200: RelaunchDomainResponseDto;
+};
+
+export type DomainsControllerRelaunchResponse = DomainsControllerRelaunchResponses[keyof DomainsControllerRelaunchResponses];
+
+export type DomainsControllerGetRenewalData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/domains/renewal';
+};
+
+export type DomainsControllerGetRenewalResponses = {
+    200: DomainRenewalStatusDto | unknown;
+};
+
+export type DomainsControllerGetRenewalResponse = DomainsControllerGetRenewalResponses[keyof DomainsControllerGetRenewalResponses];
+
+export type DomainsControllerCreateRenewalCheckoutData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/domains/renewal/checkout';
+};
+
+export type DomainsControllerCreateRenewalCheckoutResponses = {
+    200: DomainRenewalCheckoutResponseDto;
+};
+
+export type DomainsControllerCreateRenewalCheckoutResponse = DomainsControllerCreateRenewalCheckoutResponses[keyof DomainsControllerCreateRenewalCheckoutResponses];
+
+export type DomainsControllerGetJobStatusData = {
+    body?: never;
+    path: {
+        jobId: string;
+    };
+    query?: never;
+    url: '/domains/jobs/{jobId}';
+};
+
+export type DomainsControllerGetJobStatusResponses = {
+    200: DomainJobStatusDto;
+};
+
+export type DomainsControllerGetJobStatusResponse = DomainsControllerGetJobStatusResponses[keyof DomainsControllerGetJobStatusResponses];
+
+export type DomainsControllerGetDomainData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/domains';
+};
+
+export type DomainsControllerGetDomainResponses = {
+    200: DomainStatusResponseDto | unknown;
+};
+
+export type DomainsControllerGetDomainResponse = DomainsControllerGetDomainResponses[keyof DomainsControllerGetDomainResponses];
+
 export type AnalyticsControllerOverviewData = {
     body?: never;
     path?: never;
@@ -1164,130 +2449,6 @@ export type PlanChangeImpactControllerGetImpactResponses = {
 };
 
 export type PlanChangeImpactControllerGetImpactResponse = PlanChangeImpactControllerGetImpactResponses[keyof PlanChangeImpactControllerGetImpactResponses];
-
-export type DomainsControllerSearchData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * Keyword to search domains for (no TLD — variants are generated server-side).
-         */
-        q: string;
-    };
-    url: '/domains/search';
-};
-
-export type DomainsControllerSearchResponses = {
-    200: Array<DomainSearchResultDto>;
-};
-
-export type DomainsControllerSearchResponse = DomainsControllerSearchResponses[keyof DomainsControllerSearchResponses];
-
-export type DomainsControllerGetQuoteData = {
-    body: GetQuoteDto;
-    path?: never;
-    query?: never;
-    url: '/domains/quote';
-};
-
-export type DomainsControllerGetQuoteResponses = {
-    200: DomainQuoteResponseDto;
-};
-
-export type DomainsControllerGetQuoteResponse = DomainsControllerGetQuoteResponses[keyof DomainsControllerGetQuoteResponses];
-
-export type DomainsControllerPurchaseData = {
-    body: PurchaseDomainDto;
-    path?: never;
-    query?: never;
-    url: '/domains/purchase';
-};
-
-export type DomainsControllerPurchaseResponses = {
-    200: DomainPurchaseResponseDto;
-};
-
-export type DomainsControllerPurchaseResponse = DomainsControllerPurchaseResponses[keyof DomainsControllerPurchaseResponses];
-
-export type DomainsControllerConnectData = {
-    body: ConnectDomainDto;
-    path?: never;
-    query?: never;
-    url: '/domains/connect';
-};
-
-export type DomainsControllerConnectResponses = {
-    200: ConnectDomainResponseDto;
-};
-
-export type DomainsControllerConnectResponse = DomainsControllerConnectResponses[keyof DomainsControllerConnectResponses];
-
-export type DomainsControllerRelaunchData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/domains/relaunch';
-};
-
-export type DomainsControllerRelaunchResponses = {
-    200: RelaunchDomainResponseDto;
-};
-
-export type DomainsControllerRelaunchResponse = DomainsControllerRelaunchResponses[keyof DomainsControllerRelaunchResponses];
-
-export type DomainsControllerGetRenewalData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/domains/renewal';
-};
-
-export type DomainsControllerGetRenewalResponses = {
-    200: DomainRenewalStatusDto | unknown;
-};
-
-export type DomainsControllerGetRenewalResponse = DomainsControllerGetRenewalResponses[keyof DomainsControllerGetRenewalResponses];
-
-export type DomainsControllerCreateRenewalCheckoutData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/domains/renewal/checkout';
-};
-
-export type DomainsControllerCreateRenewalCheckoutResponses = {
-    200: DomainRenewalCheckoutResponseDto;
-};
-
-export type DomainsControllerCreateRenewalCheckoutResponse = DomainsControllerCreateRenewalCheckoutResponses[keyof DomainsControllerCreateRenewalCheckoutResponses];
-
-export type DomainsControllerGetJobStatusData = {
-    body?: never;
-    path: {
-        jobId: string;
-    };
-    query?: never;
-    url: '/domains/jobs/{jobId}';
-};
-
-export type DomainsControllerGetJobStatusResponses = {
-    200: DomainJobStatusDto;
-};
-
-export type DomainsControllerGetJobStatusResponse = DomainsControllerGetJobStatusResponses[keyof DomainsControllerGetJobStatusResponses];
-
-export type DomainsControllerGetDomainData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/domains';
-};
-
-export type DomainsControllerGetDomainResponses = {
-    200: DomainStatusResponseDto | unknown;
-};
-
-export type DomainsControllerGetDomainResponse = DomainsControllerGetDomainResponses[keyof DomainsControllerGetDomainResponses];
 
 export type TemplatesControllerFindAllData = {
     body?: never;

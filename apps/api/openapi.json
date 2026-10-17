@@ -34,6 +34,1290 @@
         ]
       }
     },
+    "/admin/tenants": {
+      "get": {
+        "operationId": "AdminTenantsController_list",
+        "parameters": [
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "description": "Case-insensitive match on email, slug, name, or domain.",
+            "schema": {
+              "maxLength": 200,
+              "type": "string"
+            }
+          },
+          {
+            "name": "plan",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "none",
+                "basico",
+                "pro",
+                "trial"
+              ]
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "active",
+                "inactive",
+                "cancelled"
+              ]
+            }
+          },
+          {
+            "name": "entitled",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "internal",
+            "required": false,
+            "in": "query",
+            "description": "Internal tenants are excluded unless this is true, which lifts the exclusion.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "domainExpiringDays",
+            "required": false,
+            "in": "query",
+            "description": "Domain expires within this many days from now.",
+            "schema": {
+              "minimum": 1,
+              "maximum": 3650,
+              "type": "number"
+            }
+          },
+          {
+            "name": "renewalOverdue",
+            "required": false,
+            "in": "query",
+            "description": "Latest non-void maintenance cycle is `overdue` (or is not, when false).",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "dnsIssue",
+            "required": false,
+            "in": "query",
+            "description": "true: dns_status is set and not active. false: dns_status is active.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": "created_at",
+              "type": "string",
+              "enum": [
+                "created_at",
+                "last_sign_in_at",
+                "domain_expires_at"
+              ]
+            }
+          },
+          {
+            "name": "order",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": "desc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100000,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTenantListResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List tenants",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/tenants/{id}": {
+      "get": {
+        "operationId": "AdminTenantsController_get",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTenantDetailDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown tenant (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get a tenant",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/tenants/{id}/storage/refresh": {
+      "post": {
+        "operationId": "AdminTenantsController_refresh",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminStorageUsageDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown tenant (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Refresh stored object usage for a tenant",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/tenants/{id}/domain": {
+      "get": {
+        "operationId": "AdminDomainController_inspect",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "refresh",
+            "required": false,
+            "in": "query",
+            "description": "`1` skips the 5-minute cache and reads the providers again.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminDomainInspectionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown tenant (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Inspect a tenant domain",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/tenants/{id}/domain/activation-check": {
+      "post": {
+        "operationId": "AdminDomainController_activationCheck",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminDomainInspectionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown tenant (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Re-check DNS activation for a tenant domain",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/subscriptions": {
+      "get": {
+        "operationId": "AdminSubscriptionsController_list",
+        "parameters": [
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "description": "Case-insensitive match on email, slug, or tenant name.",
+            "schema": {
+              "maxLength": 200,
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "description": "Comma-separated statuses from the subscriptions CHECK.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "active",
+                  "trialing",
+                  "past_due",
+                  "canceled",
+                  "incomplete",
+                  "incomplete_expired",
+                  "unpaid",
+                  "paused"
+                ]
+              }
+            }
+          },
+          {
+            "name": "plan",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basico",
+                "pro"
+              ]
+            }
+          },
+          {
+            "name": "period",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "monthly",
+                "annual"
+              ]
+            }
+          },
+          {
+            "name": "cancelScheduled",
+            "required": false,
+            "in": "query",
+            "description": "Scheduled cancellation (`cancel_at` or `cancel_at_period_end`),\nexcluding terminal statuses.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "paymentIssues",
+            "required": false,
+            "in": "query",
+            "description": "`payment_attempts > 0` or status `past_due`.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "internal",
+            "required": false,
+            "in": "query",
+            "description": "Internal tenants are excluded unless this is true, which lifts the exclusion.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100000,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSubscriptionListResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List subscriptions",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/subscriptions/{id}": {
+      "get": {
+        "operationId": "AdminSubscriptionsController_get",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSubscriptionDetailDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown subscription (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get a subscription",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/templates": {
+      "get": {
+        "operationId": "AdminTemplatesController_list",
+        "parameters": [
+          {
+            "name": "tier",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "pro"
+              ]
+            }
+          },
+          {
+            "name": "category",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "maxLength": 100,
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "description": "Inactive templates are pending until a later phase adds retired_at.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "active"
+              ]
+            }
+          },
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "description": "Case-insensitive match on template id or name.",
+            "schema": {
+              "maxLength": 200,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTemplateListResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List templates",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/templates/{id}": {
+      "get": {
+        "operationId": "AdminTemplatesController_get",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTemplateDetailDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown template (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get a template",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/trials/summary": {
+      "get": {
+        "operationId": "AdminTrialsController_summary",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTrialSummaryDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Summarize free previews",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/trials": {
+      "get": {
+        "operationId": "AdminTrialsController_list",
+        "parameters": [
+          {
+            "name": "state",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "active",
+                "expiring",
+                "expired",
+                "converted"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100000,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTrialListResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List free previews",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/metrics/overview": {
+      "get": {
+        "operationId": "AdminMetricsController_overview",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricsOverviewDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Business overview",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/metrics/revenue": {
+      "get": {
+        "operationId": "AdminMetricsController_revenue",
+        "parameters": [
+          {
+            "name": "months",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 24,
+              "default": 12,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricsRevenueDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "502": {
+            "description": "Stripe did not answer (ADMIN_STRIPE_UNAVAILABLE)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Monthly collected revenue",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/metrics/funnel": {
+      "get": {
+        "operationId": "AdminMetricsController_funnel",
+        "parameters": [
+          {
+            "name": "days",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 7,
+              "maximum": 365,
+              "default": 30,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricsFunnelDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Signup funnel",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/metrics/templates": {
+      "get": {
+        "operationId": "AdminMetricsController_templates",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricsTemplatesDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Template adoption and conversion",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/metrics/history": {
+      "get": {
+        "operationId": "AdminMetricsController_history",
+        "parameters": [
+          {
+            "name": "days",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 7,
+              "maximum": 730,
+              "default": 90,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricsHistoryDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Daily KPI history",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/domains/search": {
+      "get": {
+        "operationId": "DomainsController_search",
+        "parameters": [
+          {
+            "name": "q",
+            "required": true,
+            "in": "query",
+            "description": "Keyword to search domains for (no TLD — variants are generated server-side).",
+            "schema": {
+              "minLength": 2,
+              "maxLength": 63,
+              "pattern": "^[a-z0-9][a-z0-9-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DomainSearchResultDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Search available domains (protected)",
+        "tags": [
+          "domains"
+        ]
+      }
+    },
+    "/domains/quote": {
+      "post": {
+        "operationId": "DomainsController_getQuote",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetQuoteDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainQuoteResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get a registration quote (protected)",
+        "tags": [
+          "domains"
+        ]
+      }
+    },
+    "/domains/purchase": {
+      "post": {
+        "operationId": "DomainsController_purchase",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurchaseDomainDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainPurchaseResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Purchase a domain (protected, async)",
+        "tags": [
+          "domains"
+        ]
+      }
+    },
+    "/domains/connect": {
+      "post": {
+        "operationId": "DomainsController_connect",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConnectDomainDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectDomainResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Connect a tenant-owned domain (protected)",
+        "tags": [
+          "domains"
+        ]
+      }
+    },
+    "/domains/relaunch": {
+      "post": {
+        "operationId": "DomainsController_relaunch",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelaunchDomainResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Relaunch a suspended domain (protected)",
+        "tags": [
+          "domains"
+        ]
+      }
+    },
+    "/domains/renewal": {
+      "get": {
+        "operationId": "DomainsController_getRenewal",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/DomainRenewalStatusDto"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get the domain renewal cycle (protected)",
+        "tags": [
+          "domains"
+        ]
+      }
+    },
+    "/domains/renewal/checkout": {
+      "post": {
+        "operationId": "DomainsController_createRenewalCheckout",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainRenewalCheckoutResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Start domain renewal checkout (protected)",
+        "tags": [
+          "domains"
+        ]
+      }
+    },
+    "/domains/jobs/{jobId}": {
+      "get": {
+        "operationId": "DomainsController_getJobStatus",
+        "parameters": [
+          {
+            "name": "jobId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DomainJobStatusDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get domain purchase job status (protected)",
+        "tags": [
+          "domains"
+        ]
+      }
+    },
+    "/domains": {
+      "get": {
+        "operationId": "DomainsController_getDomain",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/DomainStatusResponseDto"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get the tenant current domain + DNS/SSL status (protected)",
+        "tags": [
+          "domains"
+        ]
+      }
+    },
     "/analytics/overview": {
       "get": {
         "operationId": "AnalyticsController_overview",
@@ -443,318 +1727,6 @@
         "summary": "Preview what a plan change removes (protected)",
         "tags": [
           "billing"
-        ]
-      }
-    },
-    "/domains/search": {
-      "get": {
-        "operationId": "DomainsController_search",
-        "parameters": [
-          {
-            "name": "q",
-            "required": true,
-            "in": "query",
-            "description": "Keyword to search domains for (no TLD — variants are generated server-side).",
-            "schema": {
-              "minLength": 2,
-              "maxLength": 63,
-              "pattern": "^[a-z0-9][a-z0-9-]*$",
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DomainSearchResultDto"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "summary": "Search available domains (protected)",
-        "tags": [
-          "domains"
-        ]
-      }
-    },
-    "/domains/quote": {
-      "post": {
-        "operationId": "DomainsController_getQuote",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetQuoteDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DomainQuoteResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "summary": "Get a registration quote (protected)",
-        "tags": [
-          "domains"
-        ]
-      }
-    },
-    "/domains/purchase": {
-      "post": {
-        "operationId": "DomainsController_purchase",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PurchaseDomainDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DomainPurchaseResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "summary": "Purchase a domain (protected, async)",
-        "tags": [
-          "domains"
-        ]
-      }
-    },
-    "/domains/connect": {
-      "post": {
-        "operationId": "DomainsController_connect",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ConnectDomainDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ConnectDomainResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "summary": "Connect a tenant-owned domain (protected)",
-        "tags": [
-          "domains"
-        ]
-      }
-    },
-    "/domains/relaunch": {
-      "post": {
-        "operationId": "DomainsController_relaunch",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RelaunchDomainResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "summary": "Relaunch a suspended domain (protected)",
-        "tags": [
-          "domains"
-        ]
-      }
-    },
-    "/domains/renewal": {
-      "get": {
-        "operationId": "DomainsController_getRenewal",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/DomainRenewalStatusDto"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "summary": "Get the domain renewal cycle (protected)",
-        "tags": [
-          "domains"
-        ]
-      }
-    },
-    "/domains/renewal/checkout": {
-      "post": {
-        "operationId": "DomainsController_createRenewalCheckout",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DomainRenewalCheckoutResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "summary": "Start domain renewal checkout (protected)",
-        "tags": [
-          "domains"
-        ]
-      }
-    },
-    "/domains/jobs/{jobId}": {
-      "get": {
-        "operationId": "DomainsController_getJobStatus",
-        "parameters": [
-          {
-            "name": "jobId",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DomainJobStatusDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "summary": "Get domain purchase job status (protected)",
-        "tags": [
-          "domains"
-        ]
-      }
-    },
-    "/domains": {
-      "get": {
-        "operationId": "DomainsController_getDomain",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/DomainStatusResponseDto"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
-        "summary": "Get the tenant current domain + DNS/SSL status (protected)",
-        "tags": [
-          "domains"
         ]
       }
     },
@@ -1796,6 +2768,3097 @@
           "role"
         ]
       },
+      "AdminTenantSubscriptionSummaryDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "enum": [
+              "active",
+              "trialing",
+              "past_due",
+              "canceled",
+              "incomplete",
+              "incomplete_expired",
+              "unpaid",
+              "paused"
+            ],
+            "type": "string"
+          },
+          "plan": {
+            "enum": [
+              "basico",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "billingPeriod": {
+            "enum": [
+              "monthly",
+              "annual"
+            ],
+            "type": "string"
+          },
+          "currentPeriodEnd": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancelAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "When the subscription is scheduled to end; null if it is not."
+          },
+          "cancelAtPeriodEnd": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "status",
+          "plan",
+          "billingPeriod",
+          "currentPeriodEnd",
+          "cancelAt",
+          "cancelAtPeriodEnd"
+        ]
+      },
+      "AdminTenantTemplateRefDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "AdminTenantDomainSummaryDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "dnsStatus": {
+            "enum": [
+              "pending",
+              "configuring",
+              "propagating",
+              "active",
+              "error"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "expiresAt",
+          "dnsStatus"
+        ]
+      },
+      "AdminTenantListItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "plan": {
+            "enum": [
+              "none",
+              "basico",
+              "pro",
+              "trial"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "inactive",
+              "cancelled"
+            ],
+            "type": "string"
+          },
+          "entitled": {
+            "type": "boolean"
+          },
+          "previewState": {
+            "enum": [
+              "paid",
+              "trial_unstarted",
+              "trial_active",
+              "trial_expired",
+              "lapsed"
+            ],
+            "type": "string"
+          },
+          "previewExpiresAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "subscription": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminTenantSubscriptionSummaryDto"
+              }
+            ]
+          },
+          "template": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminTenantTemplateRefDto"
+              }
+            ]
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "domain": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminTenantDomainSummaryDto"
+              }
+            ]
+          },
+          "storageBytes": {
+            "type": "number",
+            "nullable": true,
+            "description": "Sum of asset and branding bytes, or null when never measured."
+          },
+          "isInternal": {
+            "type": "boolean"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "lastSignInAt": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "email",
+          "plan",
+          "status",
+          "entitled",
+          "previewState",
+          "previewExpiresAt",
+          "subscription",
+          "template",
+          "published",
+          "domain",
+          "storageBytes",
+          "isInternal",
+          "tags",
+          "createdAt",
+          "lastSignInAt"
+        ]
+      },
+      "AdminTenantListResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminTenantListItemDto"
+            }
+          },
+          "total": {
+            "type": "number"
+          },
+          "page": {
+            "type": "number"
+          },
+          "pageSize": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
+      "AdminTenantOverviewDto": {
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "plan": {
+            "enum": [
+              "none",
+              "basico",
+              "pro",
+              "trial"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "inactive",
+              "cancelled"
+            ],
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "previewStartedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "includedDomainUsedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "stripeCustomerId": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailConfirmedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastSignInAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "isInternal": {
+            "type": "boolean"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "entitled": {
+            "type": "boolean"
+          },
+          "subscriptionId": {
+            "type": "string",
+            "nullable": true
+          },
+          "subscriptionStatus": {
+            "nullable": true,
+            "enum": [
+              "active",
+              "trialing",
+              "past_due",
+              "canceled",
+              "incomplete",
+              "incomplete_expired",
+              "unpaid",
+              "paused"
+            ],
+            "type": "string"
+          },
+          "subscriptionPlan": {
+            "nullable": true,
+            "enum": [
+              "basico",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "billingPeriod": {
+            "nullable": true,
+            "enum": [
+              "monthly",
+              "annual"
+            ],
+            "type": "string"
+          },
+          "currentPeriodEnd": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancelAtPeriodEnd": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "cancelAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "paymentAttempts": {
+            "type": "number",
+            "nullable": true
+          },
+          "subscriptionCreatedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "templateId": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteStatus": {
+            "nullable": true,
+            "enum": [
+              "draft",
+              "published"
+            ],
+            "type": "string"
+          },
+          "publishedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteUpdatedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "domain": {
+            "type": "string",
+            "nullable": true
+          },
+          "domainSource": {
+            "nullable": true,
+            "enum": [
+              "godaddy_managed",
+              "user_provided"
+            ],
+            "type": "string"
+          },
+          "dnsStatus": {
+            "nullable": true,
+            "enum": [
+              "pending",
+              "configuring",
+              "propagating",
+              "active",
+              "error"
+            ],
+            "type": "string"
+          },
+          "domainExpiresAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "domainSuspendedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "dnsProvider": {
+            "type": "string",
+            "nullable": true
+          },
+          "renewalStatus": {
+            "nullable": true,
+            "enum": [
+              "pricing_pending",
+              "open",
+              "overdue",
+              "paid",
+              "renewed",
+              "renewal_failed",
+              "over_cap",
+              "lapsed",
+              "refunded",
+              "void"
+            ],
+            "type": "string"
+          },
+          "renewalLateDeadlineAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "storageBytes": {
+            "type": "number",
+            "nullable": true
+          },
+          "storageMeasuredAt": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tenantId",
+          "userId",
+          "slug",
+          "name",
+          "plan",
+          "status",
+          "createdAt",
+          "previewStartedAt",
+          "includedDomainUsedAt",
+          "stripeCustomerId",
+          "email",
+          "emailConfirmedAt",
+          "lastSignInAt",
+          "isInternal",
+          "tags",
+          "entitled",
+          "subscriptionId",
+          "subscriptionStatus",
+          "subscriptionPlan",
+          "billingPeriod",
+          "currentPeriodEnd",
+          "cancelAtPeriodEnd",
+          "cancelAt",
+          "paymentAttempts",
+          "subscriptionCreatedAt",
+          "templateId",
+          "siteStatus",
+          "publishedAt",
+          "siteUpdatedAt",
+          "domain",
+          "domainSource",
+          "dnsStatus",
+          "domainExpiresAt",
+          "domainSuspendedAt",
+          "dnsProvider",
+          "renewalStatus",
+          "renewalLateDeadlineAt",
+          "storageBytes",
+          "storageMeasuredAt"
+        ]
+      },
+      "AdminTenantIdentityDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailVerified": {
+            "type": "boolean"
+          },
+          "lastSignInAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "providers": {
+            "description": "Values of `auth.users.raw_app_meta_data.providers`.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "When the auth user was created."
+          }
+        },
+        "required": [
+          "email",
+          "emailVerified",
+          "lastSignInAt",
+          "providers",
+          "createdAt"
+        ]
+      },
+      "AdminTenantSiteDto": {
+        "type": "object",
+        "properties": {
+          "template": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminTenantTemplateRefDto"
+              }
+            ]
+          },
+          "status": {
+            "nullable": true,
+            "enum": [
+              "draft",
+              "published"
+            ],
+            "type": "string"
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "publishedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "previewUrl": {
+            "type": "string",
+            "description": "`{scheme}://{slug}.{PREVIEW_BASE_DOMAIN}` via `previewUrl`."
+          },
+          "customDomainUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "`https://{domain}` when dns_status is active."
+          }
+        },
+        "required": [
+          "template",
+          "status",
+          "published",
+          "publishedAt",
+          "updatedAt",
+          "previewUrl",
+          "customDomainUrl"
+        ]
+      },
+      "AdminTemplateArchiveDto": {
+        "type": "object",
+        "properties": {
+          "templateId": {
+            "type": "string",
+            "nullable": true
+          },
+          "reason": {
+            "type": "string"
+          },
+          "archivedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "templateId",
+          "reason",
+          "archivedAt"
+        ]
+      },
+      "AdminTenantSubscriptionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "stripeSubscriptionId": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "trialing",
+              "past_due",
+              "canceled",
+              "incomplete",
+              "incomplete_expired",
+              "unpaid",
+              "paused"
+            ],
+            "type": "string"
+          },
+          "plan": {
+            "enum": [
+              "basico",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "billingPeriod": {
+            "enum": [
+              "monthly",
+              "annual"
+            ],
+            "type": "string"
+          },
+          "currentPeriodStart": {
+            "type": "string",
+            "nullable": true
+          },
+          "currentPeriodEnd": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancelAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancelAtPeriodEnd": {
+            "type": "boolean"
+          },
+          "canceledAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "paymentAttempts": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "stripeSubscriptionId",
+          "status",
+          "plan",
+          "billingPeriod",
+          "currentPeriodStart",
+          "currentPeriodEnd",
+          "cancelAt",
+          "cancelAtPeriodEnd",
+          "canceledAt",
+          "paymentAttempts",
+          "createdAt"
+        ]
+      },
+      "AdminTenantAnalyticsDto": {
+        "type": "object",
+        "properties": {
+          "provisioningStatus": {
+            "nullable": true,
+            "enum": [
+              "pending",
+              "provisioning",
+              "ready",
+              "failed"
+            ],
+            "type": "string"
+          },
+          "isMock": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "fetchedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "report": {
+            "type": "object",
+            "description": "Cached report jsonb, unchanged.",
+            "additionalProperties": true,
+            "nullable": true
+          }
+        },
+        "required": [
+          "provisioningStatus",
+          "isMock",
+          "fetchedAt",
+          "report"
+        ]
+      },
+      "AdminStorageUsageDto": {
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string"
+          },
+          "assetsBytes": {
+            "type": "number"
+          },
+          "assetsObjects": {
+            "type": "number",
+            "description": "Always 0 until object storage can count keys, not only bytes."
+          },
+          "brandingBytes": {
+            "type": "number"
+          },
+          "brandingObjects": {
+            "type": "number",
+            "description": "Always 0 until object storage can count keys, not only bytes."
+          },
+          "measuredAt": {
+            "type": "string",
+            "description": "When this row was measured (ISO 8601)."
+          }
+        },
+        "required": [
+          "tenantId",
+          "assetsBytes",
+          "assetsObjects",
+          "brandingBytes",
+          "brandingObjects",
+          "measuredAt"
+        ]
+      },
+      "AdminTenantStorageDto": {
+        "type": "object",
+        "properties": {
+          "usage": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminStorageUsageDto"
+              }
+            ]
+          },
+          "assetByteLimit": {
+            "type": "number",
+            "nullable": true,
+            "description": "`preview.max_asset_bytes` while the tenant is not paying.\nNull when entitled, or when the configured cap is 0."
+          }
+        },
+        "required": [
+          "usage",
+          "assetByteLimit"
+        ]
+      },
+      "AdminTenantEmailDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "attempts": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "sentAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastError": {
+            "type": "string",
+            "nullable": true,
+            "description": "`last_error` clipped to 200 characters."
+          }
+        },
+        "required": [
+          "kind",
+          "status",
+          "attempts",
+          "createdAt",
+          "sentAt",
+          "lastError"
+        ]
+      },
+      "AdminTenantFlagsDto": {
+        "type": "object",
+        "properties": {
+          "isInternal": {
+            "type": "boolean"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "isInternal",
+          "tags",
+          "notes"
+        ]
+      },
+      "AdminTenantDetailDto": {
+        "type": "object",
+        "properties": {
+          "overview": {
+            "$ref": "#/components/schemas/AdminTenantOverviewDto"
+          },
+          "identity": {
+            "$ref": "#/components/schemas/AdminTenantIdentityDto"
+          },
+          "previewState": {
+            "enum": [
+              "paid",
+              "trial_unstarted",
+              "trial_active",
+              "trial_expired",
+              "lapsed"
+            ],
+            "type": "string"
+          },
+          "previewExpiresAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "site": {
+            "$ref": "#/components/schemas/AdminTenantSiteDto"
+          },
+          "templateHistory": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminTemplateArchiveDto"
+            }
+          },
+          "subscriptions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminTenantSubscriptionDto"
+            }
+          },
+          "analytics": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminTenantAnalyticsDto"
+              }
+            ]
+          },
+          "storage": {
+            "$ref": "#/components/schemas/AdminTenantStorageDto"
+          },
+          "emails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminTenantEmailDto"
+            }
+          },
+          "flags": {
+            "$ref": "#/components/schemas/AdminTenantFlagsDto"
+          }
+        },
+        "required": [
+          "overview",
+          "identity",
+          "previewState",
+          "previewExpiresAt",
+          "site",
+          "templateHistory",
+          "subscriptions",
+          "analytics",
+          "storage",
+          "emails",
+          "flags"
+        ]
+      },
+      "AdminDomainRecordDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "source": {
+            "enum": [
+              "lattiz_managed",
+              "user_provided"
+            ],
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "dnsStatus": {
+            "enum": [
+              "pending",
+              "configuring",
+              "propagating",
+              "active",
+              "error"
+            ],
+            "type": "string"
+          },
+          "dnsProvider": {
+            "nullable": true,
+            "enum": [
+              "cloudflare",
+              "openprovider"
+            ],
+            "type": "string"
+          },
+          "dnsActivationCheckedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "vercelMapped": {
+            "type": "boolean"
+          },
+          "sslActive": {
+            "type": "boolean"
+          },
+          "suspendedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "isMock": {
+            "type": "boolean"
+          },
+          "purchaseCompletedAt": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "name",
+          "source",
+          "expiresAt",
+          "dnsStatus",
+          "dnsProvider",
+          "dnsActivationCheckedAt",
+          "vercelMapped",
+          "sslActive",
+          "suspendedAt",
+          "isMock",
+          "purchaseCompletedAt"
+        ]
+      },
+      "AdminDomainCurrentCycleDto": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "open",
+              "overdue",
+              "paid",
+              "renewal_failed"
+            ],
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string"
+          },
+          "lateDeadlineAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "baseCents": {
+            "type": "number"
+          },
+          "taxCents": {
+            "type": "number"
+          },
+          "totalCents": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "canPay": {
+            "type": "boolean"
+          },
+          "payBlockedReason": {
+            "nullable": true,
+            "enum": [
+              "subscription_inactive",
+              "window_closed",
+              null
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "domain",
+          "status",
+          "expiresAt",
+          "lateDeadlineAt",
+          "baseCents",
+          "taxCents",
+          "totalCents",
+          "currency",
+          "canPay",
+          "payBlockedReason"
+        ]
+      },
+      "AdminDomainCycleDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "pricing_pending",
+              "open",
+              "overdue",
+              "paid",
+              "renewed",
+              "renewal_failed",
+              "over_cap",
+              "lapsed",
+              "refunded",
+              "void"
+            ]
+          },
+          "amountCents": {
+            "type": "number",
+            "nullable": true
+          },
+          "currency": {
+            "type": "string"
+          },
+          "openedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "paidAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "renewedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "overdueAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "lapsedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastError": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "status",
+          "amountCents",
+          "currency",
+          "openedAt",
+          "paidAt",
+          "renewedAt",
+          "overdueAt",
+          "lapsedAt",
+          "lastError"
+        ]
+      },
+      "AdminDomainRenewalDto": {
+        "type": "object",
+        "properties": {
+          "managedBy": {
+            "type": "string",
+            "enum": [
+              "customer"
+            ]
+          },
+          "expiresAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "daysUntilExpiry": {
+            "type": "number",
+            "nullable": true
+          },
+          "paymentOpensAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "daysUntilPaymentOpens": {
+            "type": "number",
+            "nullable": true
+          },
+          "noticeDates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "lateDeadlineAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "currentCycle": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminDomainCurrentCycleDto"
+              }
+            ]
+          },
+          "cycles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminDomainCycleDto"
+            }
+          },
+          "expectedChargeCents": {
+            "type": "number",
+            "description": "Annual fee including IVA, in cents."
+          },
+          "currency": {
+            "type": "string"
+          },
+          "firstYearIncluded": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AdminDomainRegistrarDto": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "enum": [
+              "unavailable"
+            ]
+          },
+          "status": {
+            "enum": [
+              "active",
+              "expired",
+              "pending",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "renewalDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "canRenew": {
+            "type": "boolean"
+          },
+          "restorableUntil": {
+            "type": "string",
+            "nullable": true
+          },
+          "autoRenew": {
+            "enum": [
+              "on",
+              "off",
+              "default"
+            ],
+            "type": "string"
+          },
+          "expiryMismatch": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AdminDomainDnsRecordDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "proxied": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "content",
+          "proxied"
+        ]
+      },
+      "AdminDomainDnsDto": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "enum": [
+              "unavailable"
+            ]
+          },
+          "exists": {
+            "type": "boolean"
+          },
+          "zoneId": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "nameservers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "originalNameservers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "activatedOn": {
+            "type": "string",
+            "nullable": true
+          },
+          "paused": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "records": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminDomainDnsRecordDto"
+            }
+          },
+          "recordsMatchVercel": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AdminDomainVercelDto": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "enum": [
+              "unavailable"
+            ]
+          },
+          "inProject": {
+            "type": "boolean"
+          },
+          "configured": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AdminDomainInspectionDto": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminDomainRecordDto"
+              }
+            ]
+          },
+          "renewal": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminDomainRenewalDto"
+              }
+            ]
+          },
+          "registrar": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminDomainRegistrarDto"
+              }
+            ]
+          },
+          "dns": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminDomainDnsDto"
+              }
+            ]
+          },
+          "vercel": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminDomainVercelDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "domain",
+          "renewal",
+          "registrar",
+          "dns",
+          "vercel"
+        ]
+      },
+      "AdminSubscriptionTenantDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "email"
+        ]
+      },
+      "AdminSubscriptionListItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "stripeSubscriptionId": {
+            "type": "string"
+          },
+          "tenant": {
+            "$ref": "#/components/schemas/AdminSubscriptionTenantDto"
+          },
+          "plan": {
+            "enum": [
+              "basico",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "period": {
+            "enum": [
+              "monthly",
+              "annual"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "trialing",
+              "past_due",
+              "canceled",
+              "incomplete",
+              "incomplete_expired",
+              "unpaid",
+              "paused"
+            ],
+            "type": "string"
+          },
+          "currentPeriodEnd": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancelAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "When the subscription is scheduled to end; null if it is not."
+          },
+          "cancelAtPeriodEnd": {
+            "type": "boolean"
+          },
+          "paymentAttempts": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "canceledAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "stripeDashboardUrl": {
+            "type": "string",
+            "description": "Stripe Dashboard link. `/test` when `STRIPE_SECRET_KEY` starts with `sk_test_`."
+          }
+        },
+        "required": [
+          "id",
+          "stripeSubscriptionId",
+          "tenant",
+          "plan",
+          "period",
+          "status",
+          "currentPeriodEnd",
+          "cancelAt",
+          "cancelAtPeriodEnd",
+          "paymentAttempts",
+          "createdAt",
+          "canceledAt",
+          "stripeDashboardUrl"
+        ]
+      },
+      "AdminSubscriptionListResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminSubscriptionListItemDto"
+            }
+          },
+          "total": {
+            "type": "number"
+          },
+          "page": {
+            "type": "number"
+          },
+          "pageSize": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
+      "AdminSubscriptionDiscountDto": {
+        "type": "object",
+        "properties": {
+          "percentOff": {
+            "type": "number",
+            "nullable": true
+          },
+          "amountOff": {
+            "type": "number",
+            "nullable": true,
+            "description": "Fixed amount in cents when the coupon is not a percent."
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "percentOff",
+          "amountOff",
+          "currency"
+        ]
+      },
+      "AdminSubscriptionPriceDto": {
+        "type": "object",
+        "properties": {
+          "unitAmount": {
+            "type": "number",
+            "nullable": true
+          },
+          "currency": {
+            "type": "string"
+          },
+          "interval": {
+            "nullable": true,
+            "enum": [
+              "day",
+              "week",
+              "month",
+              "year"
+            ],
+            "type": "string"
+          },
+          "intervalCount": {
+            "type": "number",
+            "nullable": true
+          },
+          "discount": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminSubscriptionDiscountDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "unitAmount",
+          "currency",
+          "interval",
+          "intervalCount",
+          "discount"
+        ]
+      },
+      "AdminSubscriptionPaymentMethodDto": {
+        "type": "object",
+        "properties": {
+          "brand": {
+            "type": "string"
+          },
+          "last4": {
+            "type": "string"
+          },
+          "expMonth": {
+            "type": "number"
+          },
+          "expYear": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "brand",
+          "last4",
+          "expMonth",
+          "expYear"
+        ]
+      },
+      "AdminSubscriptionUpcomingInvoiceDto": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "nullable": true,
+            "description": "Next charge: `next_payment_attempt`, otherwise `due_date`, otherwise `period_end`."
+          }
+        },
+        "required": [
+          "total",
+          "currency",
+          "date"
+        ]
+      },
+      "AdminSubscriptionSchedulePhaseDto": {
+        "type": "object",
+        "properties": {
+          "plan": {
+            "nullable": true,
+            "enum": [
+              "basico",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "priceId": {
+            "type": "string"
+          },
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "plan",
+          "priceId",
+          "start",
+          "end"
+        ]
+      },
+      "AdminSubscriptionScheduleDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "not_started",
+              "active",
+              "completed",
+              "released",
+              "canceled"
+            ],
+            "type": "string"
+          },
+          "phases": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminSubscriptionSchedulePhaseDto"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "phases"
+        ]
+      },
+      "AdminSubscriptionInvoiceDto": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "nullable": true,
+            "enum": [
+              "draft",
+              "open",
+              "paid",
+              "uncollectible",
+              "void"
+            ],
+            "type": "string"
+          },
+          "total": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "paidAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "`status_transitions.paid_at`."
+          },
+          "hostedInvoiceUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "invoicePdf": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "number",
+          "status",
+          "total",
+          "currency",
+          "createdAt",
+          "paidAt",
+          "hostedInvoiceUrl",
+          "invoicePdf"
+        ]
+      },
+      "AdminSubscriptionStripeDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "enum": [
+              "active",
+              "trialing",
+              "past_due",
+              "canceled",
+              "incomplete",
+              "incomplete_expired",
+              "unpaid",
+              "paused"
+            ],
+            "type": "string"
+          },
+          "price": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminSubscriptionPriceDto"
+              }
+            ]
+          },
+          "paymentMethod": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminSubscriptionPaymentMethodDto"
+              }
+            ]
+          },
+          "upcomingInvoice": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminSubscriptionUpcomingInvoiceDto"
+              }
+            ]
+          },
+          "schedule": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminSubscriptionScheduleDto"
+              }
+            ]
+          },
+          "invoices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminSubscriptionInvoiceDto"
+            }
+          }
+        },
+        "required": [
+          "status",
+          "price",
+          "paymentMethod",
+          "upcomingInvoice",
+          "schedule",
+          "invoices"
+        ]
+      },
+      "AdminSubscriptionDetailDto": {
+        "type": "object",
+        "properties": {
+          "local": {
+            "$ref": "#/components/schemas/AdminSubscriptionListItemDto"
+          },
+          "stripe": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminSubscriptionStripeDto"
+              }
+            ]
+          },
+          "stripeError": {
+            "type": "string",
+            "nullable": true,
+            "enum": [
+              "unavailable"
+            ]
+          }
+        },
+        "required": [
+          "local",
+          "stripe",
+          "stripeError"
+        ]
+      },
+      "AdminTemplateUsageDto": {
+        "type": "object",
+        "properties": {
+          "tenantsUsing": {
+            "type": "number"
+          },
+          "sitesPublished": {
+            "type": "number"
+          },
+          "payingTenants": {
+            "type": "number"
+          },
+          "trialTenants": {
+            "type": "number"
+          },
+          "archivedCount": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "tenantsUsing",
+          "sitesPublished",
+          "payingTenants",
+          "trialTenants",
+          "archivedCount"
+        ]
+      },
+      "AdminTemplateListItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "tier": {
+            "enum": [
+              "basic",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "active"
+            ],
+            "type": "string"
+          },
+          "thumbnailUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "previewUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "sortOrder": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "usage": {
+            "$ref": "#/components/schemas/AdminTemplateUsageDto"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "category",
+          "tier",
+          "status",
+          "thumbnailUrl",
+          "previewUrl",
+          "sortOrder",
+          "createdAt",
+          "usage"
+        ]
+      },
+      "AdminTemplateListResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminTemplateListItemDto"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "AdminTemplateTenantDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "plan": {
+            "enum": [
+              "none",
+              "basico",
+              "pro",
+              "trial"
+            ],
+            "type": "string"
+          },
+          "entitled": {
+            "type": "boolean"
+          },
+          "published": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "plan",
+          "entitled",
+          "published"
+        ]
+      },
+      "AdminTemplateDetailDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "tier": {
+            "enum": [
+              "basic",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "active"
+            ],
+            "type": "string"
+          },
+          "thumbnailUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "previewUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "sortOrder": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "usage": {
+            "$ref": "#/components/schemas/AdminTemplateUsageDto"
+          },
+          "sectionCount": {
+            "type": "number",
+            "description": "Sections on the first GrapesJS page. The project JSON is not returned."
+          },
+          "tenants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminTemplateTenantDto"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "category",
+          "tier",
+          "status",
+          "thumbnailUrl",
+          "previewUrl",
+          "sortOrder",
+          "createdAt",
+          "usage",
+          "sectionCount",
+          "tenants"
+        ]
+      },
+      "AdminTrialSummaryDto": {
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "number"
+          },
+          "expiring": {
+            "type": "number"
+          },
+          "expired": {
+            "type": "number"
+          },
+          "converted": {
+            "type": "number"
+          },
+          "conversionRate30d": {
+            "type": "number",
+            "nullable": true,
+            "description": "Converted / started in the last 30 days. Null when none started."
+          },
+          "conversionRate90d": {
+            "type": "number",
+            "nullable": true,
+            "description": "Converted / started in the last 90 days. Null when none started."
+          },
+          "medianHoursToConvert": {
+            "type": "number",
+            "nullable": true,
+            "description": "Median hours from preview start to the first later subscription."
+          },
+          "trialDays": {
+            "type": "number"
+          },
+          "enabled": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "active",
+          "expiring",
+          "expired",
+          "converted",
+          "conversionRate30d",
+          "conversionRate90d",
+          "medianHoursToConvert",
+          "trialDays",
+          "enabled"
+        ]
+      },
+      "AdminTrialTenantDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "email"
+        ]
+      },
+      "AdminTrialTemplateDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "AdminTrialListItemDto": {
+        "type": "object",
+        "properties": {
+          "tenant": {
+            "$ref": "#/components/schemas/AdminTrialTenantDto"
+          },
+          "template": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminTrialTemplateDto"
+              }
+            ]
+          },
+          "previewStartedAt": {
+            "type": "string"
+          },
+          "previewExpiresAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "state": {
+            "enum": [
+              "active",
+              "expiring",
+              "expired",
+              "converted"
+            ],
+            "type": "string"
+          },
+          "convertedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "hoursToConvert": {
+            "type": "number",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tenant",
+          "template",
+          "previewStartedAt",
+          "previewExpiresAt",
+          "state",
+          "convertedAt",
+          "hoursToConvert"
+        ]
+      },
+      "AdminTrialListResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminTrialListItemDto"
+            }
+          },
+          "total": {
+            "type": "number"
+          },
+          "page": {
+            "type": "number"
+          },
+          "pageSize": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
+      "MetricsMrrPlanDto": {
+        "type": "object",
+        "properties": {
+          "plan": {
+            "enum": [
+              "basico",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "mrrCents": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "plan",
+          "mrrCents"
+        ]
+      },
+      "MetricsMrrPeriodDto": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "enum": [
+              "monthly",
+              "annual",
+              "weekly"
+            ],
+            "type": "string"
+          },
+          "mrrCents": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "period",
+          "mrrCents"
+        ]
+      },
+      "MetricsMrrCurrencyDto": {
+        "type": "object",
+        "properties": {
+          "currency": {
+            "type": "string"
+          },
+          "mrrCents": {
+            "type": "number"
+          },
+          "arrCents": {
+            "type": "number"
+          },
+          "byPlan": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsMrrPlanDto"
+            }
+          },
+          "byPeriod": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsMrrPeriodDto"
+            }
+          }
+        },
+        "required": [
+          "currency",
+          "mrrCents",
+          "arrCents",
+          "byPlan",
+          "byPeriod"
+        ]
+      },
+      "MetricsCustomersDto": {
+        "type": "object",
+        "properties": {
+          "payingTenants": {
+            "type": "number"
+          },
+          "newPayingThisMonth": {
+            "type": "number"
+          },
+          "cancellationsThisMonth": {
+            "type": "number"
+          },
+          "churnRateThisMonth": {
+            "type": "number",
+            "nullable": true,
+            "description": "Cancelaciones del mes ÷ pagadores al inicio. Null si no había pagadores."
+          },
+          "atRisk": {
+            "type": "number",
+            "description": "past_due más cancelaciones programadas, un cliente cuenta una vez."
+          }
+        },
+        "required": [
+          "payingTenants",
+          "newPayingThisMonth",
+          "cancellationsThisMonth",
+          "churnRateThisMonth",
+          "atRisk"
+        ]
+      },
+      "MetricsTrialsDto": {
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "number"
+          },
+          "expiringWithin48h": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "active",
+          "expiringWithin48h"
+        ]
+      },
+      "MetricsRenewalsNext30DaysDto": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "number"
+          },
+          "expectedRevenueCents": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "count",
+          "expectedRevenueCents",
+          "currency"
+        ]
+      },
+      "MetricsProductDto": {
+        "type": "object",
+        "properties": {
+          "publishedSites": {
+            "type": "number"
+          },
+          "domainsPurchased": {
+            "type": "number"
+          },
+          "domainsConnected": {
+            "type": "number"
+          },
+          "renewalsOverdue": {
+            "type": "number"
+          },
+          "renewalsNext30Days": {
+            "$ref": "#/components/schemas/MetricsRenewalsNext30DaysDto"
+          }
+        },
+        "required": [
+          "publishedSites",
+          "domainsPurchased",
+          "domainsConnected",
+          "renewalsOverdue",
+          "renewalsNext30Days"
+        ]
+      },
+      "MetricsOverviewDto": {
+        "type": "object",
+        "properties": {
+          "mrrCents": {
+            "type": "number",
+            "nullable": true
+          },
+          "arrCents": {
+            "type": "number",
+            "nullable": true
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          },
+          "mrrByPlan": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsMrrPlanDto"
+            }
+          },
+          "mrrByPeriod": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsMrrPeriodDto"
+            }
+          },
+          "mrrByCurrency": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsMrrCurrencyDto"
+            }
+          },
+          "revenueError": {
+            "type": "string",
+            "nullable": true,
+            "enum": [
+              "unavailable"
+            ]
+          },
+          "customers": {
+            "$ref": "#/components/schemas/MetricsCustomersDto"
+          },
+          "trials": {
+            "$ref": "#/components/schemas/MetricsTrialsDto"
+          },
+          "product": {
+            "$ref": "#/components/schemas/MetricsProductDto"
+          },
+          "generatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "mrrCents",
+          "arrCents",
+          "currency",
+          "mrrByPlan",
+          "mrrByPeriod",
+          "mrrByCurrency",
+          "revenueError",
+          "customers",
+          "trials",
+          "product",
+          "generatedAt"
+        ]
+      },
+      "MetricsRevenueMonthDto": {
+        "type": "object",
+        "properties": {
+          "month": {
+            "type": "string"
+          },
+          "grossCents": {
+            "type": "number"
+          },
+          "feeCents": {
+            "type": "number"
+          },
+          "refundCents": {
+            "type": "number"
+          },
+          "netCents": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "month",
+          "grossCents",
+          "feeCents",
+          "refundCents",
+          "netCents",
+          "currency"
+        ]
+      },
+      "MetricsRevenueDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsRevenueMonthDto"
+            }
+          },
+          "months": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "items",
+          "months"
+        ]
+      },
+      "MetricsFunnelDto": {
+        "type": "object",
+        "properties": {
+          "days": {
+            "type": "number"
+          },
+          "signups": {
+            "type": "number"
+          },
+          "choseTemplate": {
+            "type": "number"
+          },
+          "published": {
+            "type": "number"
+          },
+          "paid": {
+            "type": "number"
+          },
+          "choseTemplateRate": {
+            "type": "number",
+            "nullable": true
+          },
+          "publishedRate": {
+            "type": "number",
+            "nullable": true
+          },
+          "paidRate": {
+            "type": "number",
+            "nullable": true
+          },
+          "medianHoursToPay": {
+            "type": "number",
+            "nullable": true
+          }
+        },
+        "required": [
+          "days",
+          "signups",
+          "choseTemplate",
+          "published",
+          "paid",
+          "choseTemplateRate",
+          "publishedRate",
+          "paidRate",
+          "medianHoursToPay"
+        ]
+      },
+      "MetricsTemplateRankDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "tier": {
+            "enum": [
+              "basic",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "tenantsUsing": {
+            "type": "number"
+          },
+          "payingTenants": {
+            "type": "number"
+          },
+          "conversionRate": {
+            "type": "number",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "tier",
+          "tenantsUsing",
+          "payingTenants",
+          "conversionRate"
+        ]
+      },
+      "MetricsTemplatesDto": {
+        "type": "object",
+        "properties": {
+          "byAdoption": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsTemplateRankDto"
+            }
+          },
+          "byConversion": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsTemplateRankDto"
+            }
+          }
+        },
+        "required": [
+          "byAdoption",
+          "byConversion"
+        ]
+      },
+      "MetricsHistoryItemDto": {
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "string"
+          },
+          "mrrCents": {
+            "type": "number",
+            "nullable": true
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          },
+          "payingTenants": {
+            "type": "number"
+          },
+          "trialsActive": {
+            "type": "number"
+          },
+          "signups": {
+            "type": "number"
+          },
+          "newPaying": {
+            "type": "number"
+          },
+          "cancellations": {
+            "type": "number"
+          },
+          "publishedSites": {
+            "type": "number"
+          },
+          "capturedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "day",
+          "mrrCents",
+          "currency",
+          "payingTenants",
+          "trialsActive",
+          "signups",
+          "newPaying",
+          "cancellations",
+          "publishedSites",
+          "capturedAt"
+        ]
+      },
+      "MetricsHistoryDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsHistoryItemDto"
+            }
+          },
+          "days": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "items",
+          "days"
+        ]
+      },
+      "DomainSearchResultDto": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string"
+          },
+          "available": {
+            "type": "boolean"
+          },
+          "coveredByPlan": {
+            "type": "boolean",
+            "description": "True only when the name is free and both the first year and the renewal sit inside the tenant plan caps."
+          },
+          "notCoveredReason": {
+            "nullable": true,
+            "description": "Why an available domain is outside the plan: `purchase_over_cap` (first year),\n`requires_pro` (renewal fits Pro but not this plan), `renewal_over_cap`\n(renewal above every plan), or `price_unknown` (price could not be read —\nfail closed). Null when covered or not available.",
+            "enum": [
+              "purchase_over_cap",
+              "renewal_over_cap",
+              "requires_pro",
+              "price_unknown",
+              null
+            ],
+            "type": "string"
+          },
+          "availableWithPro": {
+            "type": "boolean",
+            "description": "True only when this tenant is not on Pro, the name is free, the first year\nfits the purchase cap, and the renewal fits the Pro cap but not the current plan."
+          },
+          "renewalPriceUsdCents": {
+            "type": "number",
+            "nullable": true,
+            "description": "What one renewal year costs Lattiz, in USD cents; null when it was not (or could not be) priced."
+          }
+        },
+        "required": [
+          "domain",
+          "available",
+          "coveredByPlan",
+          "notCoveredReason",
+          "availableWithPro",
+          "renewalPriceUsdCents"
+        ]
+      },
+      "GetQuoteDto": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Fully-qualified domain to quote, e.g. \"miempresa.com\"."
+          }
+        },
+        "required": [
+          "domain"
+        ]
+      },
+      "DomainMaintenanceFeeDto": {
+        "type": "object",
+        "properties": {
+          "amountCents": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Lowercase ISO 4217 code, as Stripe uses it."
+          },
+          "taxRateBps": {
+            "type": "number",
+            "description": "IVA en puntos base; el monto no lo incluye."
+          }
+        },
+        "required": [
+          "amountCents",
+          "currency",
+          "taxRateBps"
+        ]
+      },
+      "DomainAgreementDto": {
+        "type": "object",
+        "properties": {
+          "agreementType": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "agreementType",
+          "title",
+          "url"
+        ]
+      },
+      "DomainQuoteResponseDto": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string"
+          },
+          "available": {
+            "type": "boolean"
+          },
+          "coveredByPlan": {
+            "type": "boolean"
+          },
+          "notCoveredReason": {
+            "nullable": true,
+            "description": "Why an available domain is outside the plan: `purchase_over_cap` (first year),\n`requires_pro` (renewal fits Pro but not this plan), `renewal_over_cap`\n(renewal above every plan), or `price_unknown` (price could not be read —\nfail closed). Null when covered or not available.",
+            "enum": [
+              "purchase_over_cap",
+              "renewal_over_cap",
+              "requires_pro",
+              "price_unknown",
+              null
+            ],
+            "type": "string"
+          },
+          "availableWithPro": {
+            "type": "boolean",
+            "description": "True only when this tenant is not on Pro, the name is free, the first year\nfits the purchase cap, and the renewal fits the Pro cap but not the current plan."
+          },
+          "renewalPriceUsdCents": {
+            "type": "number",
+            "nullable": true,
+            "description": "The renewal price the coverage was decided with, in USD cents; null when it was not (or could not be) priced."
+          },
+          "maintenanceFee": {
+            "description": "Charged every year starting with the second one; the registration itself is covered by the plan.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DomainMaintenanceFeeDto"
+              }
+            ]
+          },
+          "requiredAgreements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DomainAgreementDto"
+            }
+          },
+          "irreversible": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "domain",
+          "available",
+          "coveredByPlan",
+          "notCoveredReason",
+          "availableWithPro",
+          "renewalPriceUsdCents",
+          "maintenanceFee",
+          "requiredAgreements",
+          "irreversible"
+        ]
+      },
+      "PurchaseDomainDto": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Fully-qualified domain to purchase."
+          },
+          "agreementTypes": {
+            "description": "Agreement types the user accepted — must match the quote's requiredAgreements.",
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "agreedAt": {
+            "type": "string",
+            "description": "ISO timestamp of when the user actually clicked \"Acepto\" — never fabricated."
+          }
+        },
+        "required": [
+          "domain",
+          "agreementTypes",
+          "agreedAt"
+        ]
+      },
+      "DomainPurchaseResponseDto": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string",
+            "description": "Poll GET /domains/jobs/:jobId with this id for pipeline progress."
+          }
+        },
+        "required": [
+          "jobId"
+        ]
+      },
+      "ConnectDomainDto": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Domain the tenant already owns at another registrar, e.g. \"miempresa.com\"."
+          }
+        },
+        "required": [
+          "domain"
+        ]
+      },
+      "DnsInstructionDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": [
+              "A",
+              "CNAME"
+            ],
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "'@' for the apex, 'www' for the subdomain."
+          },
+          "value": {
+            "type": "string"
+          },
+          "ttl": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "value",
+          "ttl"
+        ]
+      },
+      "ConnectDomainResponseDto": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string"
+          },
+          "dnsInstructions": {
+            "description": "DNS records the tenant must create manually at their registrar.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DnsInstructionDto"
+            }
+          }
+        },
+        "required": [
+          "jobId",
+          "dnsInstructions"
+        ]
+      },
+      "RelaunchDomainResponseDto": {
+        "type": "object",
+        "properties": {
+          "relaunched": {
+            "type": "boolean",
+            "description": "False when there was nothing to relaunch (no domain, or not suspended)."
+          },
+          "domain": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "relaunched",
+          "domain"
+        ]
+      },
+      "DomainRenewalStatusDto": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Domain name this cycle renews."
+          },
+          "status": {
+            "description": "open: pago abierto; overdue: venció y aún puede pagar; paid: pago recibido, renovando; renewal_failed: pago recibido, Lattiz lo está resolviendo.",
+            "enum": [
+              "open",
+              "overdue",
+              "paid",
+              "renewal_failed"
+            ],
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "description": "End of the current registration period, as an ISO timestamp."
+          },
+          "lateDeadlineAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "Last moment a late payment is still accepted, as an ISO timestamp; null before the domain expires."
+          },
+          "baseCents": {
+            "type": "number",
+            "description": "Renewal price before IVA, in cents."
+          },
+          "taxCents": {
+            "type": "number",
+            "description": "IVA in cents."
+          },
+          "totalCents": {
+            "type": "number",
+            "description": "baseCents plus taxCents."
+          },
+          "currency": {
+            "type": "string",
+            "description": "Lowercase ISO 4217 code."
+          },
+          "canPay": {
+            "type": "boolean",
+            "description": "True when the tenant can start checkout for this cycle right now."
+          },
+          "payBlockedReason": {
+            "nullable": true,
+            "description": "Por qué no puede pagar; null si puede o si ya pagó.",
+            "enum": [
+              "subscription_inactive",
+              "window_closed",
+              null
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "domain",
+          "status",
+          "expiresAt",
+          "lateDeadlineAt",
+          "baseCents",
+          "taxCents",
+          "totalCents",
+          "currency",
+          "canPay",
+          "payBlockedReason"
+        ]
+      },
+      "DomainRenewalCheckoutResponseDto": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Stripe Checkout URL for the live renewal cycle."
+          }
+        },
+        "required": [
+          "url"
+        ]
+      },
+      "DomainJobStatusDto": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "purchasing",
+              "configuring_dns",
+              "registering_vercel",
+              "completed",
+              "failed"
+            ],
+            "type": "string"
+          },
+          "stepsCompleted": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "errorCode": {
+            "nullable": true,
+            "description": "Set when status is 'failed'.",
+            "enum": [
+              "DNS_PROVIDER_UNAVAILABLE",
+              "DNS_ZONE_REJECTED",
+              "SERVICE_CONFIGURATION_ERROR",
+              "REGISTRAR_UNAVAILABLE",
+              "REGISTRATION_REJECTED",
+              "DOMAIN_NO_LONGER_AVAILABLE",
+              "REGISTRATION_PENDING",
+              "DNS_SETUP_FAILED",
+              "VERCEL_SETUP_FAILED",
+              "PURCHASE_INTERRUPTED",
+              "UNEXPECTED_ERROR"
+            ],
+            "type": "string"
+          },
+          "errorStep": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "jobId",
+          "domain",
+          "status",
+          "stepsCompleted",
+          "errorCode",
+          "errorStep"
+        ]
+      },
+      "DomainStatusResponseDto": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string"
+          },
+          "source": {
+            "enum": [
+              "lattiz_managed",
+              "user_provided"
+            ],
+            "type": "string"
+          },
+          "dnsStatus": {
+            "enum": [
+              "pending",
+              "configuring",
+              "propagating",
+              "active",
+              "error"
+            ],
+            "type": "string"
+          },
+          "vercelMapped": {
+            "type": "boolean"
+          },
+          "sslActive": {
+            "type": "boolean"
+          },
+          "isMock": {
+            "type": "boolean"
+          },
+          "expiresAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "purchaseCompletedAt": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "domain",
+          "source",
+          "dnsStatus",
+          "vercelMapped",
+          "sslActive",
+          "isMock",
+          "expiresAt",
+          "purchaseCompletedAt"
+        ]
+      },
       "AnalyticsStatus": {
         "type": "string",
         "enum": [
@@ -2488,472 +6551,6 @@
         "required": [
           "target",
           "items"
-        ]
-      },
-      "DomainSearchResultDto": {
-        "type": "object",
-        "properties": {
-          "domain": {
-            "type": "string"
-          },
-          "available": {
-            "type": "boolean"
-          },
-          "coveredByPlan": {
-            "type": "boolean",
-            "description": "True only when the name is free and both the first year and the renewal sit inside the tenant plan caps."
-          },
-          "notCoveredReason": {
-            "nullable": true,
-            "description": "Why an available domain is outside the plan: `purchase_over_cap` (first year),\n`requires_pro` (renewal fits Pro but not this plan), `renewal_over_cap`\n(renewal above every plan), or `price_unknown` (price could not be read —\nfail closed). Null when covered or not available.",
-            "enum": [
-              "purchase_over_cap",
-              "renewal_over_cap",
-              "requires_pro",
-              "price_unknown",
-              null
-            ],
-            "type": "string"
-          },
-          "availableWithPro": {
-            "type": "boolean",
-            "description": "True only when this tenant is not on Pro, the name is free, the first year\nfits the purchase cap, and the renewal fits the Pro cap but not the current plan."
-          },
-          "renewalPriceUsdCents": {
-            "type": "number",
-            "nullable": true,
-            "description": "What one renewal year costs Lattiz, in USD cents; null when it was not (or could not be) priced."
-          }
-        },
-        "required": [
-          "domain",
-          "available",
-          "coveredByPlan",
-          "notCoveredReason",
-          "availableWithPro",
-          "renewalPriceUsdCents"
-        ]
-      },
-      "GetQuoteDto": {
-        "type": "object",
-        "properties": {
-          "domain": {
-            "type": "string",
-            "description": "Fully-qualified domain to quote, e.g. \"miempresa.com\"."
-          }
-        },
-        "required": [
-          "domain"
-        ]
-      },
-      "DomainMaintenanceFeeDto": {
-        "type": "object",
-        "properties": {
-          "amountCents": {
-            "type": "number"
-          },
-          "currency": {
-            "type": "string",
-            "description": "Lowercase ISO 4217 code, as Stripe uses it."
-          },
-          "taxRateBps": {
-            "type": "number",
-            "description": "IVA en puntos base; el monto no lo incluye."
-          }
-        },
-        "required": [
-          "amountCents",
-          "currency",
-          "taxRateBps"
-        ]
-      },
-      "DomainAgreementDto": {
-        "type": "object",
-        "properties": {
-          "agreementType": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "required": [
-          "agreementType",
-          "title",
-          "url"
-        ]
-      },
-      "DomainQuoteResponseDto": {
-        "type": "object",
-        "properties": {
-          "domain": {
-            "type": "string"
-          },
-          "available": {
-            "type": "boolean"
-          },
-          "coveredByPlan": {
-            "type": "boolean"
-          },
-          "notCoveredReason": {
-            "nullable": true,
-            "description": "Why an available domain is outside the plan: `purchase_over_cap` (first year),\n`requires_pro` (renewal fits Pro but not this plan), `renewal_over_cap`\n(renewal above every plan), or `price_unknown` (price could not be read —\nfail closed). Null when covered or not available.",
-            "enum": [
-              "purchase_over_cap",
-              "renewal_over_cap",
-              "requires_pro",
-              "price_unknown",
-              null
-            ],
-            "type": "string"
-          },
-          "availableWithPro": {
-            "type": "boolean",
-            "description": "True only when this tenant is not on Pro, the name is free, the first year\nfits the purchase cap, and the renewal fits the Pro cap but not the current plan."
-          },
-          "renewalPriceUsdCents": {
-            "type": "number",
-            "nullable": true,
-            "description": "The renewal price the coverage was decided with, in USD cents; null when it was not (or could not be) priced."
-          },
-          "maintenanceFee": {
-            "description": "Charged every year starting with the second one; the registration itself is covered by the plan.",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/DomainMaintenanceFeeDto"
-              }
-            ]
-          },
-          "requiredAgreements": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DomainAgreementDto"
-            }
-          },
-          "irreversible": {
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "domain",
-          "available",
-          "coveredByPlan",
-          "notCoveredReason",
-          "availableWithPro",
-          "renewalPriceUsdCents",
-          "maintenanceFee",
-          "requiredAgreements",
-          "irreversible"
-        ]
-      },
-      "PurchaseDomainDto": {
-        "type": "object",
-        "properties": {
-          "domain": {
-            "type": "string",
-            "description": "Fully-qualified domain to purchase."
-          },
-          "agreementTypes": {
-            "description": "Agreement types the user accepted — must match the quote's requiredAgreements.",
-            "minItems": 1,
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "agreedAt": {
-            "type": "string",
-            "description": "ISO timestamp of when the user actually clicked \"Acepto\" — never fabricated."
-          }
-        },
-        "required": [
-          "domain",
-          "agreementTypes",
-          "agreedAt"
-        ]
-      },
-      "DomainPurchaseResponseDto": {
-        "type": "object",
-        "properties": {
-          "jobId": {
-            "type": "string",
-            "description": "Poll GET /domains/jobs/:jobId with this id for pipeline progress."
-          }
-        },
-        "required": [
-          "jobId"
-        ]
-      },
-      "ConnectDomainDto": {
-        "type": "object",
-        "properties": {
-          "domain": {
-            "type": "string",
-            "description": "Domain the tenant already owns at another registrar, e.g. \"miempresa.com\"."
-          }
-        },
-        "required": [
-          "domain"
-        ]
-      },
-      "DnsInstructionDto": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "enum": [
-              "A",
-              "CNAME"
-            ],
-            "type": "string"
-          },
-          "name": {
-            "type": "string",
-            "description": "'@' for the apex, 'www' for the subdomain."
-          },
-          "value": {
-            "type": "string"
-          },
-          "ttl": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "type",
-          "name",
-          "value",
-          "ttl"
-        ]
-      },
-      "ConnectDomainResponseDto": {
-        "type": "object",
-        "properties": {
-          "jobId": {
-            "type": "string"
-          },
-          "dnsInstructions": {
-            "description": "DNS records the tenant must create manually at their registrar.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DnsInstructionDto"
-            }
-          }
-        },
-        "required": [
-          "jobId",
-          "dnsInstructions"
-        ]
-      },
-      "RelaunchDomainResponseDto": {
-        "type": "object",
-        "properties": {
-          "relaunched": {
-            "type": "boolean",
-            "description": "False when there was nothing to relaunch (no domain, or not suspended)."
-          },
-          "domain": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "required": [
-          "relaunched",
-          "domain"
-        ]
-      },
-      "DomainRenewalStatusDto": {
-        "type": "object",
-        "properties": {
-          "domain": {
-            "type": "string",
-            "description": "Domain name this cycle renews."
-          },
-          "status": {
-            "description": "open: pago abierto; overdue: venció y aún puede pagar; paid: pago recibido, renovando; renewal_failed: pago recibido, Lattiz lo está resolviendo.",
-            "enum": [
-              "open",
-              "overdue",
-              "paid",
-              "renewal_failed"
-            ],
-            "type": "string"
-          },
-          "expiresAt": {
-            "type": "string",
-            "description": "End of the current registration period, as an ISO timestamp."
-          },
-          "lateDeadlineAt": {
-            "type": "string",
-            "nullable": true,
-            "description": "Last moment a late payment is still accepted, as an ISO timestamp; null before the domain expires."
-          },
-          "baseCents": {
-            "type": "number",
-            "description": "Renewal price before IVA, in cents."
-          },
-          "taxCents": {
-            "type": "number",
-            "description": "IVA in cents."
-          },
-          "totalCents": {
-            "type": "number",
-            "description": "baseCents plus taxCents."
-          },
-          "currency": {
-            "type": "string",
-            "description": "Lowercase ISO 4217 code."
-          },
-          "canPay": {
-            "type": "boolean",
-            "description": "True when the tenant can start checkout for this cycle right now."
-          },
-          "payBlockedReason": {
-            "nullable": true,
-            "description": "Por qué no puede pagar; null si puede o si ya pagó.",
-            "enum": [
-              "subscription_inactive",
-              "window_closed",
-              null
-            ],
-            "type": "string"
-          }
-        },
-        "required": [
-          "domain",
-          "status",
-          "expiresAt",
-          "lateDeadlineAt",
-          "baseCents",
-          "taxCents",
-          "totalCents",
-          "currency",
-          "canPay",
-          "payBlockedReason"
-        ]
-      },
-      "DomainRenewalCheckoutResponseDto": {
-        "type": "object",
-        "properties": {
-          "url": {
-            "type": "string",
-            "description": "Stripe Checkout URL for the live renewal cycle."
-          }
-        },
-        "required": [
-          "url"
-        ]
-      },
-      "DomainJobStatusDto": {
-        "type": "object",
-        "properties": {
-          "jobId": {
-            "type": "string"
-          },
-          "domain": {
-            "type": "string"
-          },
-          "status": {
-            "enum": [
-              "pending",
-              "purchasing",
-              "configuring_dns",
-              "registering_vercel",
-              "completed",
-              "failed"
-            ],
-            "type": "string"
-          },
-          "stepsCompleted": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "errorCode": {
-            "nullable": true,
-            "description": "Set when status is 'failed'.",
-            "enum": [
-              "DNS_PROVIDER_UNAVAILABLE",
-              "DNS_ZONE_REJECTED",
-              "SERVICE_CONFIGURATION_ERROR",
-              "REGISTRAR_UNAVAILABLE",
-              "REGISTRATION_REJECTED",
-              "DOMAIN_NO_LONGER_AVAILABLE",
-              "REGISTRATION_PENDING",
-              "DNS_SETUP_FAILED",
-              "VERCEL_SETUP_FAILED",
-              "PURCHASE_INTERRUPTED",
-              "UNEXPECTED_ERROR"
-            ],
-            "type": "string"
-          },
-          "errorStep": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "required": [
-          "jobId",
-          "domain",
-          "status",
-          "stepsCompleted",
-          "errorCode",
-          "errorStep"
-        ]
-      },
-      "DomainStatusResponseDto": {
-        "type": "object",
-        "properties": {
-          "domain": {
-            "type": "string"
-          },
-          "source": {
-            "enum": [
-              "lattiz_managed",
-              "user_provided"
-            ],
-            "type": "string"
-          },
-          "dnsStatus": {
-            "enum": [
-              "pending",
-              "configuring",
-              "propagating",
-              "active",
-              "error"
-            ],
-            "type": "string"
-          },
-          "vercelMapped": {
-            "type": "boolean"
-          },
-          "sslActive": {
-            "type": "boolean"
-          },
-          "isMock": {
-            "type": "boolean"
-          },
-          "expiresAt": {
-            "type": "string",
-            "nullable": true
-          },
-          "purchaseCompletedAt": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "required": [
-          "domain",
-          "source",
-          "dnsStatus",
-          "vercelMapped",
-          "sslActive",
-          "isMock",
-          "expiresAt",
-          "purchaseCompletedAt"
         ]
       },
       "TemplateGalleryItemDto": {
