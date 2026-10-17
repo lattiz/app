@@ -21,13 +21,13 @@ export class AdminMfaRequiredException extends DomainException {
   }
 }
 
-/** El cliente no existe. */
+/** La fila pedida no existe. El mensaje por defecto es el de clientes. */
 export class AdminNotFoundException extends DomainException {
   readonly code = 'ADMIN_NOT_FOUND';
   readonly status = HttpStatus.NOT_FOUND;
 
-  constructor() {
-    super('No se encontró el cliente.');
+  constructor(message = 'No se encontró el cliente.') {
+    super(message);
   }
 }
 
