@@ -1,0 +1,484 @@
+{
+  "$schema": "./spec.schema.json",
+  "specVersion": 1,
+  "idBase": "restaurante-claveria-verde",
+  "twin": true,
+  "giro": "restaurante",
+  "business": {
+    "name": "Clavería Verde",
+    "shortName": "Clavería Verde",
+    "tagline": "Cocina fresca de temporada",
+    "city": "CDMX",
+    "branch": "Clavería",
+    "address": "Calle Cedro 48, Col. Clavería, Azcapotzalco, CDMX",
+    "hours": "Lun–Sáb 8:30–20:00 · Dom 9:00–17:00",
+    "phone": "+52 55 0000 0000",
+    "whatsapp": "5215500000000",
+    "whatsappMessage": "Hola, quiero reservar una mesa en Clavería Verde",
+    "email": "hola@claveriaverde.mx"
+  },
+  "brand": {
+    "catalog": "extended",
+    "palette": {
+      "preset": "pal-coral-tinta"
+    }
+  },
+  "layout": {
+    "direction": "jardin-suave",
+    "archetype": "soft",
+    "dials": {
+      "variance": 6,
+      "density": 3,
+      "motion": 4
+    }
+  },
+  "sections": {
+    "pro": [
+      {
+        "role": "header"
+      },
+      {
+        "role": "hero"
+      },
+      {
+        "role": "marquee"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog"
+      },
+      {
+        "role": "proof"
+      },
+      {
+        "role": "team"
+      },
+      {
+        "role": "testimonials"
+      },
+      {
+        "role": "faq"
+      },
+      {
+        "role": "contact"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer"
+      }
+    ],
+    "basico": [
+      {
+        "role": "header"
+      },
+      {
+        "role": "hero"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog"
+      },
+      {
+        "role": "faq"
+      },
+      {
+        "role": "contact"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer"
+      }
+    ]
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "{{name}} en la colonia Clavería, CDMX: comida saludable de temporada, menú con precios y reservaciones por WhatsApp."
+    },
+    "navbar": {
+      "cta": "Reservar mesa"
+    },
+    "hero": {
+      "image": "hero.jpg",
+      "imageAlt": "Mesa con bowls de verduras, aguacate y flores comestibles bajo luz de mediodía",
+      "eyebrow": "Comida saludable · {{branch}}",
+      "title": "Come <span class=\"lz-title__serif\">fresco</span> en el corazón de Clavería.",
+      "text": "Verduras de mercado, tortillas de maíz nixtamalizado y guisos ligeros. Reserva por WhatsApp y ven a comer sin prisa.",
+      "primaryCta": "Reservar mesa",
+      "secondaryCta": "Ver el menú",
+      "secondaryHref": "#servicios",
+      "sticker": "Menú de temporada"
+    },
+    "marquee": {
+      "label": "Lo que se pide en Clavería",
+      "items": [
+        "Bowls de temporada",
+        "Tortillas de maíz azul",
+        "Aguas frescas de fruta",
+        "Opciones veganas",
+        "Pan de masa madre"
+      ]
+    },
+    "about": {
+      "kicker": "{{index}} — Nosotros",
+      "title": "Cocina <span class=\"lz-title__serif\">ligera</span>, sabor de barrio.",
+      "summary": "En {{shortName}} cocinamos con verduras y granos que llegan cada mañana al mercado de {{branch}}. Porciones justas, recetas de casa y mesa para quedarte.",
+      "statement": "Cocinamos con lo que llega al mercado de la colonia: poco aceite, mucha verdura y sabor de casa.",
+      "image": "about.jpg",
+      "imageAlt": "Cocinera acomodando hojas verdes y flores sobre un platillo en la cocina abierta",
+      "sticker": "Desde 2019",
+      "paragraphs": [
+        "{{shortName}} abrió como una barra de jugos en una esquina de {{branch}}. Hoy tenemos comedor, cocina abierta y un menú que cambia cada temporada.",
+        "Compramos a productores de Xochimilco y Milpa Alta, hacemos las tortillas cada mañana y preparamos aderezos y salsas sin conservadores.",
+        "Pasa a desayunar, comer o merendar. La sobremesa también es parte del menú."
+      ],
+      "stats": [
+        {
+          "value": "+7 años",
+          "label": "Cocinando en {{branch}}"
+        },
+        {
+          "value": "12 bowls",
+          "label": "Fijos y de temporada"
+        },
+        {
+          "value": "4.7 ★",
+          "label": "Opiniones de ejemplo"
+        }
+      ]
+    },
+    "services": {
+      "kicker": "{{index}} — Menú",
+      "title": "Nuestro <span class=\"lz-title__serif\">menú</span>",
+      "intro": "Precios de ejemplo en pesos mexicanos. Pregunta por el bowl de temporada.",
+      "prices": [
+        {
+          "name": "Bowl de la milpa",
+          "price": "$165",
+          "description": "Frijol, calabacita, elote, aguacate y tortilla de maíz azul."
+        },
+        {
+          "name": "Ensalada de nopal y jícama",
+          "price": "$135",
+          "description": "Con limón, queso fresco y semillas de calabaza tostadas."
+        },
+        {
+          "name": "Tostadas de hongos",
+          "price": "$150",
+          "description": "Tres tostadas de hongos al ajillo, aguacate y salsa de chile guajillo."
+        },
+        {
+          "name": "Pescado en hoja de plátano",
+          "price": "$235",
+          "description": "Filete al vapor con arroz de cilantro y verduras salteadas."
+        },
+        {
+          "name": "Sopa de verduras de la casa",
+          "price": "$95",
+          "description": "Caldo ligero con verduras de temporada y un toque de epazote."
+        },
+        {
+          "name": "Agua fresca de jamaica y rosas",
+          "price": "$55",
+          "description": "Jamaica, pétalos de rosa y piloncillo, servida en jarra."
+        }
+      ],
+      "promos": [
+        {
+          "tag": "Comida corrida",
+          "title": "Menú del día, lunes a viernes",
+          "text": "Sopa, bowl del día, agua fresca y postre por $175.",
+          "cta": "Reservar",
+          "href": "{{whatsappUrl:Hola, quiero reservar para el menú del día}}"
+        },
+        {
+          "tag": "Eventos",
+          "title": "Desayunos y comidas para grupos",
+          "text": "Reservamos el comedor para grupos de hasta 24 personas.",
+          "cta": "Cotizar",
+          "href": "{{whatsappUrl:Hola, quiero cotizar una comida para un grupo}}"
+        }
+      ]
+    },
+    "gallery": {
+      "kicker": "{{index}} — Platillos",
+      "title": "Del mercado a tu <span class=\"lz-title__serif\">mesa</span>",
+      "items": [
+        {
+          "image": "gallery-01.jpg",
+          "caption": "Bowl de la milpa",
+          "alt": "Bowl con frijoles, calabacita, elote y aguacate sobre una mesa clara"
+        },
+        {
+          "image": "gallery-02.jpg",
+          "caption": "Tostadas de hongos",
+          "alt": "Tostadas con hongos salteados y aguacate en un plato"
+        },
+        {
+          "image": "gallery-03.jpg",
+          "caption": "Tortillas del día",
+          "alt": "Manos formando tortillas de maíz sobre un comal"
+        },
+        {
+          "image": "gallery-04.jpg",
+          "caption": "Pescado al vapor",
+          "alt": "Filete de pescado con limón y hierbas frescas en un plato"
+        },
+        {
+          "image": "gallery-05.jpg",
+          "caption": "El comedor",
+          "alt": "Comedor luminoso con mesas de madera clara y plantas"
+        },
+        {
+          "image": "gallery-06.jpg",
+          "caption": "Aguas frescas",
+          "alt": "Jarras de agua fresca de jamaica y fruta con hielo"
+        },
+        {
+          "image": "gallery-07.jpg",
+          "caption": "Postre de temporada",
+          "alt": "Postre de fruta con crema en un plato blanco"
+        },
+        {
+          "image": "gallery-08.jpg",
+          "caption": "La barra de jugos",
+          "alt": "Barra con frutas, jugos y vasos de vidrio"
+        }
+      ]
+    },
+    "team": {
+      "kicker": "{{index}} — Cocina",
+      "title": "Quién <span class=\"lz-title__serif\">cocina</span>",
+      "members": [
+        {
+          "name": "Renata Villalobos",
+          "role": "Chef y fundadora",
+          "tags": [
+            "Cocina de mercado",
+            "Milpa"
+          ],
+          "image": "team-1.jpg",
+          "imageAlt": "Retrato de Renata Villalobos con filipina blanca en la cocina"
+        },
+        {
+          "name": "Emilio Barrera",
+          "role": "Parrilla y vapor",
+          "tags": [
+            "Pescados",
+            "Verduras"
+          ],
+          "image": "team-2.jpg",
+          "imageAlt": "Retrato de Emilio Barrera junto a la estufa"
+        },
+        {
+          "name": "Ximena Cortés",
+          "role": "Panadería y postres",
+          "tags": [
+            "Masa madre",
+            "Fruta"
+          ],
+          "image": "team-3.jpg",
+          "imageAlt": "Retrato de Ximena Cortés con harina en las manos"
+        },
+        {
+          "name": "Tomás Aguirre",
+          "role": "Sala y barra",
+          "tags": [
+            "Aguas frescas",
+            "Servicio"
+          ],
+          "image": "team-4.jpg",
+          "imageAlt": "Retrato de Tomás Aguirre detrás de la barra de jugos"
+        }
+      ]
+    },
+    "testimonials": {
+      "kicker": "{{index}} — Reseñas",
+      "score": "4.7",
+      "summary": "Opiniones de ejemplo en Google",
+      "allReviewsCta": "Ver todas en Google",
+      "writeReviewCta": "Dejar reseña en Google",
+      "reviews": [
+        {
+          "text": "Fuimos a desayunar un sábado y el bowl de la milpa nos dejó contentos. La mesa junto a la ventana, perfecta.",
+          "author": "Daniela R."
+        },
+        {
+          "text": "Reservé por WhatsApp en un minuto. Nos atendieron con calma y las tortillas azules estaban recién hechas.",
+          "author": "Miguel A."
+        },
+        {
+          "text": "Hicimos la comida de cumpleaños de mi mamá en el comedor. Hubo opciones veganas para todos.",
+          "author": "Paola S."
+        }
+      ]
+    },
+    "faq": {
+      "kicker": "{{index}} — Preguntas",
+      "title": "Antes de <span class=\"lz-title__serif\">venir</span>",
+      "intro": "Dudas frecuentes sobre mesas, ingredientes y pedidos. Para otras, escríbenos.",
+      "cta": "Preguntar por WhatsApp",
+      "items": [
+        {
+          "question": "¿Necesito reservar?",
+          "answer": "Los fines de semana te lo recomendamos. Entre semana casi siempre hay mesa, pero reservar por WhatsApp te asegura lugar."
+        },
+        {
+          "question": "¿Tienen opciones veganas o vegetarianas?",
+          "answer": "Sí, la mayor parte del menú es vegetariana y hay platos veganos marcados. Pregunta por los ingredientes de cada uno."
+        },
+        {
+          "question": "¿Manejan alérgenos?",
+          "answer": "Cuéntanos qué necesitas evitar y te decimos qué lleva cada platillo. Compartimos cocina, así que no podemos descartar trazas."
+        },
+        {
+          "question": "¿Qué formas de pago aceptan?",
+          "answer": "Aceptamos efectivo, tarjeta de débito o crédito, y también transferencia."
+        },
+        {
+          "question": "¿Hacen pedidos para llevar?",
+          "answer": "Sí. Manda tu pedido por WhatsApp y te avisamos cuándo pasar. Lo empacamos en envases compostables."
+        },
+        {
+          "question": "¿Hay dónde estacionarse?",
+          "answer": "No tenemos estacionamiento propio. Hay lugares en la calle y un estacionamiento público a dos cuadras."
+        }
+      ]
+    },
+    "locations": {
+      "kicker": "{{index}} — Reservar",
+      "title": "Te esperamos en <span class=\"lz-title__serif\">Clavería</span>",
+      "contactText": "Reserva o pide para llevar por WhatsApp dentro del horario. Para grupos, mejor escríbenos al correo.",
+      "whatsappLabel": "WhatsApp",
+      "whatsappValue": "Reservar mesa",
+      "callLabel": "Teléfono",
+      "emailLabel": "Correo",
+      "directionsLabel": "Cómo llegar",
+      "hoursLabel": "Horario",
+      "whatsappCta": "Reservar por WhatsApp",
+      "callCta": "Llamar"
+    },
+    "floating-whatsapp": {
+      "label": "Reservar por WhatsApp"
+    },
+    "footer": {
+      "about": "Comida saludable de temporada en {{branch}}, {{city}}. Mesa y pedidos para llevar por WhatsApp.",
+      "branchesTitle": "Dónde estamos",
+      "linksTitle": "Explorar",
+      "contactTitle": "Contacto"
+    }
+  },
+  "images": [
+    {
+      "key": "hero",
+      "source": {
+        "url": "https://images.pexels.com/photos/24246029/pexels-photo-24246029.jpeg"
+      }
+    },
+    {
+      "key": "about",
+      "source": {
+        "url": "https://images.pexels.com/photos/7964680/pexels-photo-7964680.jpeg"
+      }
+    },
+    {
+      "key": "team-1",
+      "source": {
+        "url": "https://images.pexels.com/photos/7964694/pexels-photo-7964694.jpeg"
+      }
+    },
+    {
+      "key": "team-2",
+      "source": {
+        "url": "https://images.pexels.com/photos/27870594/pexels-photo-27870594.jpeg"
+      }
+    },
+    {
+      "key": "team-3",
+      "source": {
+        "url": "https://images.pexels.com/photos/27870589/pexels-photo-27870589.jpeg"
+      }
+    },
+    {
+      "key": "team-4",
+      "source": {
+        "url": "https://images.pexels.com/photos/7964688/pexels-photo-7964688.jpeg"
+      }
+    },
+    {
+      "key": "gallery-01",
+      "source": {
+        "url": "https://images.pexels.com/photos/5779569/pexels-photo-5779569.jpeg"
+      }
+    },
+    {
+      "key": "gallery-02",
+      "source": {
+        "url": "https://images.pexels.com/photos/13068714/pexels-photo-13068714.jpeg"
+      }
+    },
+    {
+      "key": "gallery-03",
+      "source": {
+        "url": "https://images.pexels.com/photos/32335062/pexels-photo-32335062.jpeg"
+      }
+    },
+    {
+      "key": "gallery-04",
+      "source": {
+        "url": "https://images.pexels.com/photos/12034617/pexels-photo-12034617.jpeg"
+      }
+    },
+    {
+      "key": "gallery-05",
+      "source": {
+        "url": "https://images.pexels.com/photos/34566510/pexels-photo-34566510.jpeg"
+      }
+    },
+    {
+      "key": "gallery-06",
+      "source": {
+        "url": "https://images.pexels.com/photos/34481088/pexels-photo-34481088.jpeg"
+      }
+    },
+    {
+      "key": "gallery-07",
+      "source": {
+        "url": "https://images.pexels.com/photos/28891607/pexels-photo-28891607.jpeg"
+      }
+    },
+    {
+      "key": "gallery-08",
+      "source": {
+        "url": "https://images.pexels.com/photos/11882491/pexels-photo-11882491.jpeg"
+      }
+    }
+  ],
+  "motion": {
+    "preset": "calm",
+    "progress": false
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Comida <span class=\"lz-title__serif\">del día</span>, hecha en Clavería.",
+          "text": "Menú con precios, bowls de temporada y tortillas del día. Pide por WhatsApp o pasa a comer."
+        }
+      },
+      "brand": {
+        "palette": {
+          "preset": "pal-salvia-tinta"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,234 @@
+<template id="captions-template" data-composition-id="captions" data-width="1080" data-height="1920">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+
+<style data-brand-tokens>
+      :root {
+      --bg: #FFFFFF;
+      --primary: #1447E6;
+      --text: #000000;
+      --text-muted: #52525C;
+      --text-light: #9A9A9A;
+      --accent-light: rgba(20, 71, 230, 0.08);
+      --accent-medium: rgba(20, 71, 230, 0.15);
+      --border: rgba(20, 71, 230, 0.2);
+      --card-bg: rgba(20, 71, 230, 0.04);
+      --positive: #059669;
+      --negative: #dc2626;
+      --lavender: #DAD8F8;
+      --navy: #0B1020;
+      --surface: #0A0A0B;
+      --surface-card: #18181B;
+      --success: #22C55E;
+      --success-bg: rgba(34, 197, 94, 0.12);
+      --chart-teal: #2DD4BF;
+      --cap-ink: #000000;
+      --cap-canvas: #FFFFFF;
+      --cap-accent: #1447E6;
+      --cap-accent-2: #2DD4BF;
+      --font-display: "Geist", system-ui, serif;
+      --font-body: "Geist", system-ui, sans-serif;
+      --cap-band-top: 1600px;
+      --cap-band-height: 320px;
+      }
+    </style>
+
+<style>
+  @font-face { font-family: Geist; font-style: normal; font-weight: 100 900; font-display: block; src: url("assets/fonts/captured-caa3a2e1cccd8315-s.p.0zr6hhvz-h9nw.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: Geist; font-style: normal; font-weight: 100 900; font-display: block; src: url("assets/fonts/captured-7178b3e590c64307-s.0i3h3th1vs4m7.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C4; }
+  #captions-root {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .caption-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+  }
+  /* the keep-out band, from captionBand(H) — frame content stays above it */
+  .caption-stage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 1306px;
+    height: 174px; /* bottom edge at 1480px: clear of the Reels caption/username overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .caption-group {
+    /* every group is absolutely stacked over the SAME band — exactly one shown at a
+       time via opacity. Must be absolute: in-flow groups would lay out side-by-side. */
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    opacity: 0;
+  }
+
+  /* THE tinted card — 4% cobalt fill, 1.5px 20%-cobalt border, soft 14px corners,
+     NO shadow (the tinted card does the lift; cast depth is forbidden) */
+  .caption-pill {
+    max-width: 88%;
+    padding: 14px 34px 18px;
+    background: rgba(11, 16, 32, 0.74);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 22px;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 18px 50px rgba(11, 16, 32, 0.28);
+  }
+  .caption-line {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.1em 0.34em;
+    font-family: Geist, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 600;
+    font-size: 56px;
+    line-height: 1.16;
+    letter-spacing: -0.02em;
+  }
+
+  /* upcoming — muted gray, no chip */
+  .caption-word {
+    display: inline-block;
+    padding: 0 0.18em;
+    border-radius: 0.32em;
+    color: rgba(255, 255, 255, 0.62);
+  }
+  /* current word — THE solid cobalt chip (the single-accent gesture; pill-rounded
+     fill, NO shadow), cream reading on top */
+  .caption-word.is-active {
+    color: #ffffff;
+    background: #1447E6;
+    box-shadow: none;
+  }
+  /* already spoken — solid near-black ink, chip cleared */
+  .caption-word.is-spoken {
+    color: #ffffff;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* optional per-word accents (dormant until a word-classer tags them) */
+  /* brand / key term — cobalt, the system's one accent on a key word */
+  .caption-word.cap-brand {
+    color: #DAD8F8;
+  }
+  /* numerals / data — cobalt 700, the figure voice */
+  .caption-word.cap-num {
+    font-family: "Geist", system-ui, sans-serif;
+    font-weight: 700;
+    color: #DAD8F8;
+  }
+  /* emphasis — a directional-red hairline underline (inline only, never a fill) */
+  .caption-word.cap-cta {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--cap-accent-2, #dc2626);
+    text-underline-offset: 0.1em;
+  }
+
+  @media (max-aspect-ratio: 9/16) {
+    .caption-pill {
+      max-width: 92%;
+    }
+    .caption-line {
+      font-size: clamp(34px, 5.4vw, 48px);
+    }
+  }
+</style>
+
+<div data-hf-id="hf-95gr"
+  id="captions-root"
+  data-composition-id="captions"
+  data-timeline-locked
+  data-start="0"
+  data-duration="37.3"
+  data-fps="30"
+  data-width="1080"
+  data-height="1920"
+>
+  <div data-hf-id="hf-9flp" class="caption-layer" aria-hidden="true">
+    <div data-hf-id="hf-ajrg" id="caption-stage" class="caption-stage"></div>
+  </div>
+</div>
+
+<script>
+  // captions.mjs injects the engine's scene-aware groups + real duration here.
+  var GROUPS = [{"id":"caption-group-0","frame":1,"start":0.299,"end":1.6349999999999998,"text":"Tu negocio existe.","words":[{"id":"caption-word-0-0","text":"Tu","start":0.299,"end":0.469},{"id":"caption-word-0-1","text":"negocio","start":0.512,"end":0.853},{"id":"caption-word-0-2","text":"existe.","start":0.896,"end":1.515}]},{"id":"caption-group-1","frame":1,"start":1.792,"end":2.7230000000000003,"text":"Tu sitio web,","words":[{"id":"caption-word-1-0","text":"Tu","start":1.792,"end":1.963},{"id":"caption-word-1-1","text":"sitio","start":2.005,"end":2.219},{"id":"caption-word-1-2","text":"web,","start":2.304,"end":2.603}]},{"id":"caption-group-2","frame":1,"start":2.731,"end":3.9810000000000003,"text":"también debería.","words":[{"id":"caption-word-2-0","text":"también","start":2.731,"end":3.072},{"id":"caption-word-2-1","text":"debería.","start":3.115,"end":3.861}]},{"id":"caption-group-3","frame":1,"start":4.224,"end":5.795,"text":"7 de cada 10 mexicanos","words":[{"id":"caption-word-3-0","text":"7","start":4.224,"end":4.565},{"id":"caption-word-3-1","text":"de","start":4.651,"end":4.779},{"id":"caption-word-3-2","text":"cada","start":4.821,"end":4.907},{"id":"caption-word-3-3","text":"10","start":5.035,"end":5.205},{"id":"caption-word-3-4","text":"mexicanos","start":5.248,"end":5.675}]},{"id":"caption-group-4","frame":1,"start":5.888,"end":7.117,"text":"buscan en internet","words":[{"id":"caption-word-4-0","text":"buscan","start":5.888,"end":6.443},{"id":"caption-word-4-1","text":"en","start":6.485,"end":6.613},{"id":"caption-word-4-2","text":"internet","start":6.656,"end":6.997}]},{"id":"caption-group-5","frame":1,"start":7.125,"end":7.974,"text":"antes de comprar.","words":[{"id":"caption-word-5-0","text":"antes","start":7.125,"end":7.381},{"id":"caption-word-5-1","text":"de","start":7.424,"end":7.509},{"id":"caption-word-5-2","text":"comprar.","start":7.552,"end":7.854}]},{"id":"caption-group-6","frame":2,"start":8.456,"end":9.139,"text":"Una agencia","words":[{"id":"caption-word-6-0","text":"Una","start":8.456,"end":8.712},{"id":"caption-word-6-1","text":"agencia","start":8.755,"end":9.096}]},{"id":"caption-group-7","frame":2,"start":9.139,"end":10.923,"text":"cobra hasta $80,000.","words":[{"id":"caption-word-7-0","text":"cobra","start":9.139,"end":9.352},{"id":"caption-word-7-1","text":"hasta","start":9.437,"end":9.736},{"id":"caption-word-7-2","text":"$80,000.","start":9.779,"end":10.803}]},{"id":"caption-group-8","frame":2,"start":11.016,"end":12.645,"text":"Con Lattiz, todo incluido.","words":[{"id":"caption-word-8-0","text":"Con","start":11.016,"end":11.187},{"id":"caption-word-8-1","text":"Lattiz,","start":11.229,"end":11.677},{"id":"caption-word-8-2","text":"todo","start":11.869,"end":12.125},{"id":"caption-word-8-3","text":"incluido.","start":12.168,"end":12.525}]},{"id":"caption-group-9","frame":3,"start":13.156,"end":14.896999999999998,"text":"Esto es Lattiz.","words":[{"id":"caption-word-9-0","text":"Esto","start":13.156,"end":13.497},{"id":"caption-word-9-1","text":"es","start":13.54,"end":13.625},{"id":"caption-word-9-2","text":"Lattiz.","start":13.753,"end":14.777}]},{"id":"caption-group-10","frame":3,"start":15.033,"end":16.561,"text":"Tu sitio ya está construido:","words":[{"id":"caption-word-10-0","text":"Tu","start":15.033,"end":15.161},{"id":"caption-word-10-1","text":"sitio","start":15.204,"end":15.417},{"id":"caption-word-10-2","text":"ya","start":15.46,"end":15.588},{"id":"caption-word-10-3","text":"está","start":15.631,"end":15.716},{"id":"caption-word-10-4","text":"construido:","start":15.759,"end":16.441}]},{"id":"caption-group-11","frame":3,"start":16.612,"end":17.473000000000003,"text":"solo lánzalo.","words":[{"id":"caption-word-11-0","text":"solo","start":16.612,"end":16.911},{"id":"caption-word-11-1","text":"lánzalo.","start":16.953,"end":17.353}]},{"id":"caption-group-12","frame":4,"start":18.056,"end":19.445,"text":"Elige tu plantilla.","words":[{"id":"caption-word-12-0","text":"Elige","start":18.056,"end":18.312},{"id":"caption-word-12-1","text":"tu","start":18.397,"end":18.483},{"id":"caption-word-12-2","text":"plantilla.","start":18.525,"end":19.325}]},{"id":"caption-group-13","frame":5,"start":20.599,"end":22.092,"text":"Personalízala con tu marca,","words":[{"id":"caption-word-13-0","text":"Personalízala","start":20.599,"end":21.324},{"id":"caption-word-13-1","text":"con","start":21.367,"end":21.495},{"id":"caption-word-13-2","text":"tu","start":21.537,"end":21.623},{"id":"caption-word-13-3","text":"marca,","start":21.665,"end":22.007}]},{"id":"caption-group-14","frame":5,"start":22.092,"end":23.596,"text":"hasta desde tu celular.","words":[{"id":"caption-word-14-0","text":"hasta","start":22.092,"end":22.647},{"id":"caption-word-14-1","text":"desde","start":22.689,"end":22.903},{"id":"caption-word-14-2","text":"tu","start":22.945,"end":23.031},{"id":"caption-word-14-3","text":"celular.","start":23.073,"end":23.476}]},{"id":"caption-group-15","frame":6,"start":24.256,"end":25.528000000000002,"text":"Escoge tu dominio,","words":[{"id":"caption-word-15-0","text":"Escoge","start":24.256,"end":24.768},{"id":"caption-word-15-1","text":"tu","start":24.811,"end":24.896},{"id":"caption-word-15-2","text":"dominio,","start":24.939,"end":25.408}]},{"id":"caption-group-16","frame":6,"start":25.621,"end":26.957,"text":"incluido en tu plan,","words":[{"id":"caption-word-16-0","text":"incluido","start":25.621,"end":26.304},{"id":"caption-word-16-1","text":"en","start":26.347,"end":26.389},{"id":"caption-word-16-2","text":"tu","start":26.432,"end":26.475},{"id":"caption-word-16-3","text":"plan,","start":26.517,"end":26.837}]},{"id":"caption-group-17","frame":6,"start":27.029,"end":28.317,"text":"y publica con un clic.","words":[{"id":"caption-word-17-0","text":"y","start":27.029,"end":27.2},{"id":"caption-word-17-1","text":"publica","start":27.243,"end":27.541},{"id":"caption-word-17-2","text":"con","start":27.669,"end":27.797},{"id":"caption-word-17-3","text":"un","start":27.84,"end":27.925},{"id":"caption-word-17-4","text":"clic.","start":27.925,"end":28.197}]},{"id":"caption-group-18","frame":7,"start":29.156,"end":30.172,"text":"Plan Básico:","words":[{"id":"caption-word-18-0","text":"Plan","start":29.156,"end":29.412},{"id":"caption-word-18-1","text":"Básico:","start":29.455,"end":30.052}]},{"id":"caption-group-19","frame":7,"start":30.265,"end":32.451,"text":"$449 al mes.","words":[{"id":"caption-word-19-0","text":"$449","start":30.265,"end":31.929},{"id":"caption-word-19-1","text":"al","start":31.972,"end":32.057},{"id":"caption-word-19-2","text":"mes.","start":32.143,"end":32.331}]},{"id":"caption-group-20","frame":8,"start":32.999,"end":34.023,"text":"Prueba Lattiz gratis","words":[{"id":"caption-word-20-0","text":"Prueba","start":32.999,"end":33.297},{"id":"caption-word-20-1","text":"Lattiz","start":33.34,"end":33.596},{"id":"caption-word-20-2","text":"gratis","start":33.639,"end":33.98}]},{"id":"caption-group-21","frame":8,"start":34.023,"end":34.846999999999994,"text":"3 días,","words":[{"id":"caption-word-21-0","text":"3","start":34.023,"end":34.236},{"id":"caption-word-21-1","text":"días,","start":34.279,"end":34.727}]},{"id":"caption-group-22","frame":8,"start":34.919,"end":36.251,"text":"en lattiz.app","words":[{"id":"caption-word-22-0","text":"en","start":34.919,"end":35.089},{"id":"caption-word-22-1","text":"lattiz.app","start":35.132,"end":36.131}]}];
+  var DURATION = 37.3;
+
+  (function () {
+    var stage = document.getElementById("caption-stage");
+
+    // build DOM: one .caption-group per group, .caption-word per word
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.createElement("div");
+      groupEl.className = "caption-group";
+      groupEl.id = "caption-group-" + g;
+      var pill = document.createElement("div");
+      pill.className = "caption-pill";
+      var line = document.createElement("div");
+      line.className = "caption-line";
+      (group.words || []).forEach(function (w, i) {
+        var span = document.createElement("span");
+        span.className = "caption-word";
+        span.id = "caption-word-" + g + "-" + i;
+        span.textContent = String(w.text);
+        line.appendChild(span);
+      });
+      pill.appendChild(line);
+      groupEl.appendChild(pill);
+      stage.appendChild(groupEl);
+    });
+
+    window.__timelines = window.__timelines || {};
+    var tl = gsap.timeline({ paused: true });
+
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.getElementById("caption-group-" + g);
+      var words = group.words || [];
+      var next = GROUPS[g + 1];
+      var isLast = g === GROUPS.length - 1;
+      var start = Math.max(0, Number(group.start));
+      var end = isLast ? DURATION : Math.min(Number(next.start), Number(group.end) + 0.3);
+      if (end <= start) end = start + 0.01;
+
+      // group on/off — exactly one group visible at a time
+      tl.set(groupEl, { opacity: 1 }, start);
+      tl.set(groupEl, { opacity: 0 }, end);
+
+      // 3-state karaoke via className SETS — seek-safe (gsap.set applies on the
+      // engine's frame-by-frame seek; .call callbacks would NOT fire).
+      words.forEach(function (w, i) {
+        var el = document.getElementById("caption-word-" + g + "-" + i);
+        var at = Math.max(start, Number(w.start));
+        tl.set(el, { className: "caption-word" }, start); // upcoming (also resets on reverse-seek)
+        tl.set(el, { className: "caption-word is-active" }, at); // current
+        tl.fromTo(el, { scale: 0.985 }, { scale: 1, duration: 0.18, ease: "power1.out" }, at);
+        if (i + 1 < words.length) {
+          var nextAt = Math.max(start, Number(words[i + 1].start));
+          tl.set(el, { className: "caption-word is-spoken" }, nextAt); // demote when next activates
+        }
+      });
+      if (words.length) {
+        var lastEl = document.getElementById("caption-word-" + g + "-" + (words.length - 1));
+        var lastSpoken = Math.min(end, Number(words[words.length - 1].end) + 0.1);
+        tl.set(lastEl, { className: "caption-word is-spoken" }, lastSpoken);
+      }
+    });
+
+    // full-span anchor so the sub-comp timeline spans the whole video
+    tl.to({}, { duration: DURATION }, 0);
+    window.__timelines["captions"] = tl;
+  })();
+</script>
+
+<style>
+  .caption-line { line-height: 1.1 !important; }
+</style>
+</template>

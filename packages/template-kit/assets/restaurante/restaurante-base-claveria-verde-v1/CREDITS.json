@@ -1,0 +1,19 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-claveria-verde.spec.json (spec 9d5c34066125, file 49a5c4f71feb). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "0d00c45ef901e4bd83d2428a4d8258c70d23d709c856698d91d5cbc6925b86d4",
+      "url": "https://images.pexels.com/photos/24246029/pexels-photo-24246029.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/24246029/"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "url",
+      "sha256": "bf88aa8b0dcc6019d829979821fba7b33556cdc9e1b96d974bebb0ce520848cc",
+      "url": "https://images.pexels.com/photos/5779569/pexels-photo-5779569.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/5779569/"
+    }
+  ]
+}

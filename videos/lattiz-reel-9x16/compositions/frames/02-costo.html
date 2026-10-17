@@ -1,0 +1,165 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: Geist; font-style: normal; font-weight: 100 900; font-display: block; src: url("assets/fonts/captured-caa3a2e1cccd8315-s.p.0zr6hhvz-h9nw.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+    @font-face { font-family: Geist; font-style: normal; font-weight: 100 900; font-display: block; src: url("assets/fonts/captured-7178b3e590c64307-s.0i3h3th1vs4m7.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C4; }
+    #root { position: absolute; inset: 0; width: 1080px; height: 1920px; overflow: hidden; font-family: Geist, "Helvetica Neue", Arial, sans-serif; color: #fff; }
+    .f02-bg-dark { position: absolute; inset: -60px; background: radial-gradient(900px 900px at 50% 40%, rgba(20,71,230,0.32), transparent 65%), linear-gradient(180deg, #0B1020 0%, #0E1430 100%); }
+    .f02-bg-light { position: absolute; inset: 0; background: radial-gradient(900px 900px at 50% 40%, #FFFFFF 0%, rgba(255,255,255,0) 70%), linear-gradient(170deg, #DAD8F8 0%, #EEEDFC 55%, #FFFFFF 100%); }
+    .f02-grain { position: absolute; inset: 0; opacity: 0.06; mix-blend-mode: overlay; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+
+    #f02-cost { position: absolute; inset: 0; }
+    #f02-lock { position: absolute; left: 470px; top: 300px; width: 140px; height: 165px; overflow: visible; }
+    #f02-eyebrow { position: absolute; left: 0; right: 0; top: 510px; text-align: center; font-size: 34px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #DAD8F8; }
+    .f02-line { position: absolute; left: 0; right: 0; text-align: center; font-size: 172px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+    #f02-lineA { top: 580px; }
+    #f02-lineB { top: 770px; }
+    .f02-line span { display: inline-block; }
+    #f02-a { width: 560px; text-align: right; }
+    .f02-dash { color: rgba(255,255,255,0.45); font-weight: 500; width: 110px; text-align: right; }
+    #f02-chip { position: absolute; left: 0; right: 0; top: 1000px; text-align: center; }
+    #f02-chip span { display: inline-flex; align-items: center; gap: 16px; padding: 18px 34px; border-radius: 100px; background: rgba(220,38,38,0.16); border: 1.5px solid rgba(252,165,165,0.55); color: #FECACA; font-size: 40px; font-weight: 600; }
+
+    #f02-light { clip-path: circle(0% at 50% 40%); }
+    #f02-incl { position: absolute; inset: 0; }
+    .f02-t { position: absolute; left: 0; right: 0; text-align: center; font-size: 196px; font-weight: 800; letter-spacing: -0.055em; line-height: 1; }
+    #f02-t1 { top: 600px; color: #0B1020; }
+    #f02-t2 { top: 800px; color: #1447E6; }
+    .f02-t span { display: inline-block; }
+    .f02-spark { position: absolute; border-radius: 50%; background: #1447E6; }
+    #f02-canvas { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; pointer-events: none; }
+  </style>
+
+  <div data-hf-id="hf-405d" id="root" data-composition-id="02-costo" data-start="0" data-duration="4.7" data-width="1080" data-height="1920">
+    <div data-hf-id="hf-hcu5" id="f02-dark" class="clip f02-bg-dark" data-start="0" data-duration="4.7" data-track-index="0"></div>
+    <div data-hf-id="hf-16ho" id="f02-light" class="f02-bg-light"></div>
+
+    <div data-hf-id="hf-8nob" id="f02-cost">
+      <svg data-hf-id="hf-dagd" id="f02-lock" viewBox="0 0 170 200">
+        <defs data-hf-id="hf-mh0t"><linearGradient data-hf-id="hf-8dvs" id="f02-lg" x1="0" y1="0" x2="0" y2="1"><stop data-hf-id="hf-w5z3" offset="0" stop-color="#F4F4F5"/><stop data-hf-id="hf-5lq5" offset="1" stop-color="#9F9FA9"/></linearGradient></defs>
+        <path data-hf-id="hf-uc6x" id="f02-shackle" d="M40 92V62a45 45 0 0 1 90 0v30" fill="none" stroke="url(#f02-lg)" stroke-width="18" stroke-linecap="round"/>
+        <rect data-hf-id="hf-ko01" x="14" y="86" width="142" height="108" rx="24" fill="url(#f02-lg)"/>
+        <circle data-hf-id="hf-a81l" cx="85" cy="132" r="14" fill="#3F3F46"/><rect data-hf-id="hf-6cpd" x="79" y="136" width="12" height="28" rx="6" fill="#3F3F46"/>
+      </svg>
+      <div data-hf-id="hf-gm55" id="f02-eyebrow">Una agencia web</div>
+      <div data-hf-id="hf-uecf" id="f02-lineA" class="f02-line"><span data-hf-id="hf-z6x4" id="f02-a">$0</span><span data-hf-id="hf-dsrl" class="f02-dash">–</span></div>
+      <div data-hf-id="hf-lqgk" id="f02-lineB" class="f02-line"><span data-hf-id="hf-1zwx" id="f02-b">$6,000</span></div>
+      <div data-hf-id="hf-ug7m" id="f02-chip"><span data-hf-id="hf-1c8k"><svg data-hf-id="hf-m93t" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FECACA" stroke-width="2.2" stroke-linecap="round"><rect data-hf-id="hf-46f0" x="4" y="10" width="16" height="11" rx="3"/><path data-hf-id="hf-apke" d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Sin poder editar</span></div>
+    </div>
+
+    <div data-hf-id="hf-ap7w" id="f02-incl">
+      <div data-hf-id="hf-m0hr" class="f02-spark" style="left:150px;top:520px;width:14px;height:14px"></div>
+      <div data-hf-id="hf-6i2s" class="f02-spark" style="left:900px;top:470px;width:10px;height:10px;opacity:.6"></div>
+      <div data-hf-id="hf-m4q9" class="f02-spark" style="left:930px;top:1060px;width:18px;height:18px;opacity:.8"></div>
+      <div data-hf-id="hf-ecv8" class="f02-spark" style="left:120px;top:1100px;width:9px;height:9px;opacity:.5"></div>
+      <div data-hf-id="hf-ycpc" class="f02-spark" style="left:560px;top:420px;width:8px;height:8px;opacity:.7"></div>
+      <div data-hf-id="hf-y2vx" id="f02-t1" class="f02-t"><span data-hf-id="hf-no1l">Todo</span></div>
+      <div data-hf-id="hf-48lq" id="f02-t2" class="f02-t"><span data-hf-id="hf-h2ry">incluido</span></div>
+    </div>
+    <canvas data-hf-id="hf-073z" id="f02-canvas" width="1080" height="1920"></canvas>
+    <div data-hf-id="hf-snha" class="f02-grain"></div>
+  </div>
+
+  <script>
+    (function () {
+      const D = 4.7, W = 1080, H = 1920;
+      const BURST = 2.72, GATHER = 3.25, SETTLE = 3.95, END = 4.2;
+      const a = document.getElementById("f02-a");
+      const b = document.getElementById("f02-b");
+      const canvas = document.getElementById("f02-canvas");
+      const ctx = canvas.getContext("2d");
+      const fmt = function (n) { return "$" + Math.round(n).toLocaleString("en-US"); };
+      const clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+      const out3 = function (t) { return 1 - Math.pow(1 - t, 3); };
+      const inOut = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+
+      // Particle table built lazily on the first particle frame (fonts loaded by then). Seeded LCG.
+      let table = null;
+      function raster(lines, size, spacing) {
+        const off = document.createElement("canvas");
+        off.width = W; off.height = H;
+        const o = off.getContext("2d", { willReadFrequently: true });
+        o.font = "800 " + size + "px Geist, 'Helvetica Neue', Arial, sans-serif";
+        if ("letterSpacing" in o) o.letterSpacing = spacing;
+        o.textAlign = "center"; o.textBaseline = "middle"; o.fillStyle = "#fff";
+        lines.forEach(function (l) { o.fillText(l[0], l[1], l[2]); });
+        const d = o.getImageData(0, 0, W, H).data;
+        const cells = [];
+        for (let yy = 0; yy < H; yy += 5) for (let xx = 0; xx < W; xx += 5) if (d[(yy * W + xx) * 4 + 3] > 127) cells.push([xx, yy]);
+        return cells;
+      }
+      function build() {
+        let s = 0x5eed1447;
+        const rnd = function () { s = (Math.imul(1664525, s) + 1013904223) >>> 0; return s / 4294967296; };
+        const src = raster([["$6,000 –", 540, 666], ["$80,000", 540, 856]], 172, "-8.6px");
+        for (let i = 0; i < 220; i++) src.push([480 + rnd() * 120, 370 + rnd() * 92]);
+        const tgt = raster([["Todo", 540, 698], ["incluido", 540, 898]], 196, "-10.8px");
+        const N = 1700, rows = [];
+        for (let i = 0; i < N; i++) {
+          const sp = src[Math.floor(rnd() * src.length)] || [540, 700];
+          const tp = tgt[Math.floor((i / N) * tgt.length)] || [540, 800];
+          const ang = rnd() * Math.PI * 2;
+          rows.push({ sx: sp[0], sy: sp[1], tx: tp[0], ty: tp[1], dx: Math.cos(ang) * 0.8, dy: Math.sin(ang), dist: 90 + rnd() * 360, delay: rnd() * 0.18, r: 1.8 + rnd() * 1.9, blueText: tp[1] > 800 });
+        }
+        return rows;
+      }
+      function paint(t) {
+        ctx.clearRect(0, 0, W, H);
+        if (t < BURST || t > END) return;
+        if (!table) table = build();
+        const colorMix = clamp((t - 2.85) / 0.5);
+        for (let i = 0; i < table.length; i++) {
+          const r = table[i];
+          const pa = out3(clamp((t - BURST) / (GATHER - BURST)));
+          const bx = r.sx + r.dx * r.dist * pa, by = r.sy + r.dy * r.dist * pa;
+          const pb = inOut(clamp((t - GATHER - r.delay) / (SETTLE - GATHER - 0.18)));
+          const x = bx + (r.tx - bx) * pb, y = by + (r.ty - by) * pb;
+          const alpha = clamp((t - BURST) / 0.06) * (1 - clamp((t - 3.88) / 0.3));
+          if (alpha <= 0.01) continue;
+          const ink = r.blueText ? [20, 71, 230] : [11, 16, 32];
+          const c = [255 + (ink[0] - 255) * colorMix, 255 + (ink[1] - 255) * colorMix, 255 + (ink[2] - 255) * colorMix];
+          ctx.fillStyle = "rgba(" + (c[0] | 0) + "," + (c[1] | 0) + "," + (c[2] | 0) + "," + alpha.toFixed(3) + ")";
+          ctx.beginPath();
+          ctx.arc(x, y, r.r, 0, 6.2832);
+          ctx.fill();
+        }
+      }
+
+      const tl = gsap.timeline({
+        paused: true,
+        onUpdate: function () {
+          const t = tl.time();
+          a.textContent = fmt(6000 * out3(clamp((t - 0.3) / 0.75)));
+          b.textContent = fmt(6000 + 74000 * out3(clamp((t - 1.15) / 0.95)));
+          paint(t);
+        },
+      });
+      tl.to({ p: 0 }, { p: 1, duration: D, ease: "none" }, 0);
+
+      tl.fromTo("#f02-dark", { scale: 1.04 }, { scale: 1, duration: D, ease: "none" }, 0);
+      tl.fromTo("#f02-eyebrow", { y: 20, opacity: 0, scale: 1.08 }, { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" }, 0.15);
+      tl.fromTo("#f02-lineA", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "power3.out" }, 0.25);
+      tl.fromTo("#f02-lineB", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "power3.out" }, 1.05);
+      tl.fromTo("#f02-lineB", { scale: 1 }, { scale: 1.05, duration: 0.25, ease: "power2.out", immediateRender: false }, 2.05);
+      tl.to("#f02-lineB", { scale: 1, duration: 0.3, ease: "power2.inOut" }, 2.3);
+
+      tl.fromTo("#f02-lock", { y: -260, rotation: -18, opacity: 0 }, { y: 0, rotation: 0, opacity: 1, duration: 0.38, ease: "back.out(2.2)" }, 1.98);
+      tl.fromTo("#f02-shackle", { y: -16 }, { y: 0, duration: 0.12, ease: "power4.in" }, 2.32);
+      tl.to("#f02-cost", { x: -9, duration: 0.04, ease: "none" }, 2.44);
+      tl.to("#f02-cost", { x: 7, duration: 0.05, ease: "none" }, 2.48);
+      tl.to("#f02-cost", { x: -4, duration: 0.05, ease: "none" }, 2.53);
+      tl.to("#f02-cost", { x: 0, duration: 0.06, ease: "none" }, 2.58);
+      tl.fromTo("#f02-chip", { y: 24, opacity: 0, scale: 0.8 }, { y: 0, opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2.4)" }, 2.2);
+
+      tl.to("#f02-cost", { opacity: 0, scale: 1.04, duration: 0.08, ease: "none" }, BURST);
+      tl.fromTo("#f02-light", { clipPath: "circle(0% at 50% 40%)" }, { clipPath: "circle(120% at 50% 40%)", duration: 0.75, ease: "power2.inOut" }, 2.8);
+      tl.fromTo("#f02-t1 span", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 3.82);
+      tl.fromTo("#f02-t2 span", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2.6)" }, 3.9);
+      tl.fromTo(".f02-spark", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(3)", stagger: 0.05 }, 3.95);
+      tl.fromTo(["#f02-t1", "#f02-t2"], { scale: 1 }, { scale: 1.03, duration: 0.8, ease: "sine.out" }, 3.9);
+      tl.fromTo(".f02-spark", { y: 0 }, { y: -26, duration: 0.5, ease: "sine.inOut", immediateRender: false }, 4.2);
+
+      window.__timelines["02-costo"] = tl;
+    })();
+  </script>
+</template>

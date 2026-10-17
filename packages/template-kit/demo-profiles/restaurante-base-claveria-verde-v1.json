@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-claveria-verde.spec.json (spec 9d5c34066125, file d376842b1d7e). Do not edit: use the spec, or freeze.",
+  "name": "Clavería Verde",
+  "category": "restaurant",
+  "phone": "+525500000000",
+  "whatsapp": "+5215500000000",
+  "email": "hola@claveriaverde.mx",
+  "address": {
+    "street": "Calle Cedro 48, Col. Clavería, Azcapotzalco",
+    "city": "CDMX",
+    "country": "MX"
+  },
+  "hours": {
+    "tue": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "sun": [
+      {
+        "open": "13:00",
+        "close": "18:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}

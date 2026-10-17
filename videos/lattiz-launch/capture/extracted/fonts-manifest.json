@@ -1,0 +1,196 @@
+{
+  "files": [
+    {
+      "file": "4fa387ec64143e14-s.3f4zuumv8svu0.woff2",
+      "family": "Geist Mono",
+      "rawFamily": "Geist Mono",
+      "subfamily": "Regular",
+      "postscript": "GeistMono-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "53b9e256198e5412-s.2gwoz23eiro2t.woff2",
+      "family": "Geist",
+      "rawFamily": "Geist",
+      "subfamily": "Regular",
+      "postscript": "Geist-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "5ce348bf30bf5439-s.27spqqad3wyeo.woff2",
+      "family": "Geist Mono",
+      "rawFamily": "Geist Mono",
+      "subfamily": "Regular",
+      "postscript": "GeistMono-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "6306c77e7c8268e4-s.34r5yzckw0h2s.woff2",
+      "family": "Geist Mono",
+      "rawFamily": "Geist Mono",
+      "subfamily": "Regular",
+      "postscript": "GeistMono-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "7178b3e590c64307-s.0i3h3th1vs4m7.woff2",
+      "family": "Geist",
+      "rawFamily": "Geist",
+      "subfamily": "Regular",
+      "postscript": "Geist-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "797e433ab948586e-s.p.1v5bejj26fx9h.woff2",
+      "family": "Geist Mono",
+      "rawFamily": "Geist Mono",
+      "subfamily": "Regular",
+      "postscript": "GeistMono-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "7d817b4c03b0c5f1-s.2jyz_zw3a8jit.woff2",
+      "family": "Geist Mono",
+      "rawFamily": "Geist Mono",
+      "subfamily": "Regular",
+      "postscript": "GeistMono-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "8a480f0b521d4e75-s.3j-a226dh71aj.woff2",
+      "family": "Geist",
+      "rawFamily": "Geist",
+      "subfamily": "Regular",
+      "postscript": "Geist-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "bbc41e54d2fcbd21-s.30bdpjkrtcces.woff2",
+      "family": "Geist Mono",
+      "rawFamily": "Geist Mono",
+      "subfamily": "Regular",
+      "postscript": "GeistMono-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "caa3a2e1cccd8315-s.p.0zr6hhvz-h9nw.woff2",
+      "family": "Geist",
+      "rawFamily": "Geist",
+      "subfamily": "Regular",
+      "postscript": "Geist-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "fef07dbb0973bf53-s.00az9qtie3ho1.woff2",
+      "family": "Geist",
+      "rawFamily": "Geist",
+      "subfamily": "Regular",
+      "postscript": "Geist-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    }
+  ],
+  "families": [
+    {
+      "family": "Geist",
+      "weights": [
+        400
+      ],
+      "variable": true,
+      "fileCount": 5,
+      "files": [
+        "53b9e256198e5412-s.2gwoz23eiro2t.woff2",
+        "7178b3e590c64307-s.0i3h3th1vs4m7.woff2",
+        "8a480f0b521d4e75-s.3j-a226dh71aj.woff2",
+        "caa3a2e1cccd8315-s.p.0zr6hhvz-h9nw.woff2",
+        "fef07dbb0973bf53-s.00az9qtie3ho1.woff2"
+      ]
+    },
+    {
+      "family": "Geist Mono",
+      "weights": [
+        400
+      ],
+      "variable": true,
+      "fileCount": 6,
+      "files": [
+        "4fa387ec64143e14-s.3f4zuumv8svu0.woff2",
+        "5ce348bf30bf5439-s.27spqqad3wyeo.woff2",
+        "6306c77e7c8268e4-s.34r5yzckw0h2s.woff2",
+        "797e433ab948586e-s.p.1v5bejj26fx9h.woff2",
+        "7d817b4c03b0c5f1-s.2jyz_zw3a8jit.woff2",
+        "bbc41e54d2fcbd21-s.30bdpjkrtcces.woff2"
+      ]
+    }
+  ],
+  "unidentified": [],
+  "meta": {
+    "generatedAt": "2026-10-15T20:26:50.085Z",
+    "tool": "fontkit"
+  }
+}

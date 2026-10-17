@@ -1,0 +1,58 @@
+[
+  {
+    "index": 0,
+    "url": "https://www.lattiz.app/pro_desktop.mp4#t=0.001",
+    "filename": "pro_desktop.mp4#t=0.001",
+    "width": 406,
+    "height": 263,
+    "sourceWidth": 960,
+    "sourceHeight": 584,
+    "heading": "",
+    "caption": "",
+    "ariaLabel": "",
+    "preview": "assets/videos/previews/video-0-preview.png",
+    "localPath": "assets/videos/pro_desktop.mp4_t_0.001"
+  },
+  {
+    "index": 1,
+    "url": "https://www.lattiz.app/basico_desktop.mp4#t=0.001",
+    "filename": "basico_desktop.mp4#t=0.001",
+    "width": 406,
+    "height": 263,
+    "sourceWidth": 0,
+    "sourceHeight": 0,
+    "heading": "",
+    "caption": "",
+    "ariaLabel": "",
+    "preview": "assets/videos/previews/video-1-preview.png",
+    "localPath": "assets/videos/basico_desktop.mp4_t_0.001"
+  },
+  {
+    "index": 2,
+    "url": "https://www.lattiz.app/pro_mobile.mp4#t=0.001",
+    "filename": "pro_mobile.mp4#t=0.001",
+    "width": 173,
+    "height": 376,
+    "sourceWidth": 960,
+    "sourceHeight": 2080,
+    "heading": "",
+    "caption": "",
+    "ariaLabel": "",
+    "preview": "assets/videos/previews/video-2-preview.png",
+    "localPath": "assets/videos/pro_mobile.mp4_t_0.001"
+  },
+  {
+    "index": 3,
+    "url": "https://www.lattiz.app/basico_mobile.mp4#t=0.001",
+    "filename": "basico_mobile.mp4#t=0.001",
+    "width": 173,
+    "height": 376,
+    "sourceWidth": 0,
+    "sourceHeight": 0,
+    "heading": "",
+    "caption": "",
+    "ariaLabel": "",
+    "preview": "assets/videos/previews/video-3-preview.png",
+    "localPath": "assets/videos/basico_mobile.mp4_t_0.001"
+  }
+]

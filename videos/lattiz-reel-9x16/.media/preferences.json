@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "preferences": {
+    "destination": {
+      "value": "instagram-reels",
+      "confirmed_in": [
+        "lattiz-reel-9x16"
+      ],
+      "updated_at": "2026-10-16T05:24:34.471Z"
+    },
+    "aspect": {
+      "value": "1080x1920",
+      "confirmed_in": [
+        "lattiz-reel-9x16"
+      ],
+      "updated_at": "2026-10-16T05:24:34.507Z"
+    }
+  },
+  "sightings": {}
+}
