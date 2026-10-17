@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { SectionPlaceholder } from '@/components/layout/section-placeholder';
+import { MembersPage } from '@/features/members/members-page';
 import { canAccess } from '@/lib/navigation';
 
 export const Route = createFileRoute('/_admin/equipo')({
@@ -8,12 +9,8 @@ export const Route = createFileRoute('/_admin/equipo')({
 
 function EquipoPage() {
   const { me } = Route.useRouteContext();
-
-  return (
-    <SectionPlaceholder
-      title="Equipo"
-      description="Miembros del panel y sus roles."
-      allowed={!!me && canAccess(me.role, '/equipo')}
-    />
-  );
+  if (!me || !canAccess(me.role, '/equipo')) {
+    return <SectionPlaceholder title="Equipo" allowed={false} />;
+  }
+  return <MembersPage currentUserId={me.userId} />;
 }

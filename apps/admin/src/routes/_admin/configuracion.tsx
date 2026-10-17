@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { SectionPlaceholder } from '@/components/layout/section-placeholder';
+import { SettingsPage } from '@/features/settings/settings-page';
 import { canAccess } from '@/lib/navigation';
 
 export const Route = createFileRoute('/_admin/configuracion')({
@@ -8,12 +9,8 @@ export const Route = createFileRoute('/_admin/configuracion')({
 
 function ConfiguracionPage() {
   const { me } = Route.useRouteContext();
-
-  return (
-    <SectionPlaceholder
-      title="Configuración"
-      description="Ajustes internos del panel."
-      allowed={!!me && canAccess(me.role, '/configuracion')}
-    />
-  );
+  if (!me || !canAccess(me.role, '/configuracion')) {
+    return <SectionPlaceholder title="Configuración" allowed={false} />;
+  }
+  return <SettingsPage canEdit={me.role === 'owner'} />;
 }

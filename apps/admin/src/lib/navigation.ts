@@ -74,13 +74,13 @@ export const NAV_ITEMS: readonly NavItem[] = [
     to: '/configuracion',
     label: 'Configuración',
     icon: Settings,
-    roles: ['owner'],
+    roles: ['owner', 'operator'],
   },
   {
     to: '/auditoria',
     label: 'Auditoría',
     icon: ScrollText,
-    roles: ['owner', 'operator'],
+    roles: ['owner'],
   },
   {
     to: '/equipo',

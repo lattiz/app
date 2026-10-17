@@ -20,14 +20,14 @@ describe('navItemsFor', () => {
     ]);
   });
 
-  it('hides Configuración and Equipo from the operator', () => {
+  it('lets the operator read Configuración and hides Auditoría and Equipo', () => {
     expect(pathsFor('operator')).toEqual([
       '/',
       '/plantillas',
       '/clientes',
       '/suscripciones',
       '/pruebas',
-      '/auditoria',
+      '/configuracion',
     ]);
   });
 
@@ -51,11 +51,11 @@ describe('canAccess', () => {
     }
   });
 
-  it('blocks the operator from Configuración and Equipo', () => {
-    expect(canAccess('operator', '/configuracion')).toBe(false);
+  it('lets the operator open Configuración and blocks Auditoría and Equipo', () => {
+    expect(canAccess('operator', '/configuracion')).toBe(true);
     expect(canAccess('operator', '/equipo')).toBe(false);
+    expect(canAccess('operator', '/auditoria')).toBe(false);
     expect(canAccess('operator', '/clientes')).toBe(true);
-    expect(canAccess('operator', '/auditoria')).toBe(true);
   });
 
   it('lets the owner open every section', () => {

@@ -148,12 +148,12 @@ export function TemplateControls({
         {actions.delete ? (
           block ? (
             <Tooltip>
-              <TooltipTrigger className="inline-flex">
-                <span className="inline-flex" tabIndex={0}>
-                  <Button type="button" variant="destructive" disabled>
-                    Borrar
-                  </Button>
-                </span>
+              <TooltipTrigger
+                render={<span tabIndex={0} className="inline-flex" />}
+              >
+                <Button type="button" variant="destructive" disabled>
+                  Borrar
+                </Button>
               </TooltipTrigger>
               <TooltipContent>{block}</TooltipContent>
             </Tooltip>
