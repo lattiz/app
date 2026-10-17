@@ -882,6 +882,327 @@ export type MetricsHistoryDto = {
     days: number;
 };
 
+export type DeletionPreviewStripeDto = {
+    customerId: string | null;
+    liveSubscriptionIds: Array<string>;
+    balance: number;
+    openInvoices: number;
+};
+
+export type DeletionPreviewDomainDto = {
+    name: string;
+    source: string;
+    dnsProvider: string | null;
+    dnsZoneId: string | null;
+    activeDnsProvider: string;
+    zoneOnActiveProvider: boolean;
+    vercelInProject: boolean | null;
+    expiresAt: string | null;
+    autoRenew: string | null;
+    renewalDate: string | null;
+};
+
+export type DeletionPreviewAnalyticsDto = {
+    propertyId: string | null;
+    isMock: boolean;
+};
+
+export type DeletionPreviewStorageDto = {
+    assetsBytes: number;
+    brandingBytes: number;
+    /**
+     * Last measured counts. `usageBytes` does not return an object count.
+     */
+    assetsObjects: number;
+    brandingObjects: number;
+};
+
+export type DeletionPreviewDto = {
+    tenantId: string;
+    userId: string;
+    slug: string;
+    emailMasked: string | null;
+    stripe: DeletionPreviewStripeDto;
+    domain: DeletionPreviewDomainDto | null;
+    analytics: DeletionPreviewAnalyticsDto;
+    storage: DeletionPreviewStorageDto;
+    pendingEmails: number;
+    warnings: Array<string>;
+    blocking: boolean;
+    whatIsKept: Array<string>;
+};
+
+export type StartTenantDeletionDto = {
+    /**
+     * Must equal the tenant slug.
+     */
+    confirmSlug: string;
+    reason: string;
+    /**
+     * Sends the account-deleted notice. Defaults to true.
+     */
+    notifyCustomer?: boolean;
+};
+
+export type TenantDeletionAcceptedDto = {
+    jobId: string;
+};
+
+export type DeletionDomainSnapshotDto = {
+    name: string;
+    source: string;
+    registrarDomainId: string | null;
+    expiresAt: string | null;
+    dnsProvider: string | null;
+    dnsZoneId: string | null;
+    autoRenew: string | null;
+    renewalDate: string | null;
+    vercelInProject: boolean | null;
+};
+
+export type DeletionSnapshotDto = {
+    tenantId: string;
+    userId: string;
+    slug: string;
+    emailMasked: string | null;
+    domain: DeletionDomainSnapshotDto | null;
+    ga4PropertyId: string | null;
+    analyticsIsMock: boolean;
+    stripeCustomerId: string | null;
+    subscriptionIds: Array<string>;
+    r2Bytes: number;
+    r2Objects: number;
+    pendingEmails: number;
+};
+
+export type DeletionStepDto = {
+    key: 'offline' | 'stripe' | 'domain' | 'registrar' | 'analytics' | 'storage' | 'emails' | 'account' | 'verify';
+    status: 'pending' | 'running' | 'done' | 'skipped' | 'manual' | 'failed';
+    startedAt: string | null;
+    finishedAt: string | null;
+    detail: string | null;
+    error: string | null;
+};
+
+export type DeletionJobDto = {
+    id: string;
+    tenantId: string;
+    userId: string;
+    slug: string;
+    snapshot: DeletionSnapshotDto;
+    notifyCustomer: boolean;
+    status: 'pending' | 'running' | 'completed' | 'completed_manual' | 'failed';
+    steps: Array<DeletionStepDto>;
+    reason: string;
+    actorUserId: string;
+    actorEmail: string | null;
+    createdAt: string;
+    updatedAt: string;
+    finishedAt: string | null;
+};
+
+export type DeletionJobListDto = {
+    items: Array<DeletionJobDto>;
+    total: number;
+    page: number;
+    pageSize: number;
+};
+
+export type AnalyticsStatus = 'not_eligible' | 'unavailable' | 'provisioning' | 'failed' | 'ready';
+
+export type AnalyticsOverviewDto = {
+    status: AnalyticsStatus;
+    report: AnalyticsReportDto | null;
+    fetchedAt: string | null;
+    /**
+     * True when the Data API failed and an expired cached report is served instead.
+     */
+    stale: boolean;
+    /**
+     * When `POST /analytics/retry` will be accepted again (only for `failed`).
+     */
+    retryAvailableAt: string | null;
+};
+
+export type AnalyticsRealtimeMinuteDto = {
+    /**
+     * 29 (oldest) … 0 (the current minute).
+     */
+    minutesAgo: number;
+    activeUsers: number;
+};
+
+export type AnalyticsRealtimeDataDto = {
+    /**
+     * Distinct users in the last 30 minutes (not the sum of `perMinute`).
+     */
+    activeUsers: number;
+    /**
+     * Exactly 30 points oldest → newest, or empty when the per-minute breakdown failed.
+     */
+    perMinute: Array<AnalyticsRealtimeMinuteDto>;
+};
+
+export type AnalyticsRealtimeDto = {
+    status: AnalyticsStatus;
+    realtime: AnalyticsRealtimeDataDto | null;
+    /**
+     * True when the Realtime API failed; the failure is cached for a minute.
+     */
+    unavailable: boolean;
+    fetchedAt: string | null;
+};
+
+export type PlanPriceDto = {
+    plan: 'basico' | 'pro';
+    period: 'monthly' | 'annual';
+    /**
+     * Price per billing period, in cents (minor currency unit).
+     */
+    amount: number;
+    /**
+     * ISO 4217, lowercase (e.g. `mxn`).
+     */
+    currency: string;
+    lookupKey: string;
+};
+
+export type CreateCheckoutSessionDto = {
+    plan: 'basico' | 'pro';
+    period: 'monthly' | 'annual';
+};
+
+export type BillingRedirectResponseDto = {
+    url: string;
+};
+
+export type PendingPlanChangeDto = {
+    targetPlan: 'basico' | 'pro';
+    /**
+     * ISO date the scheduled change takes effect.
+     */
+    effectiveAt: string;
+};
+
+export type PlanChangeOptionDto = {
+    targetPlan: 'basico' | 'pro';
+    /**
+     * `none` when the target is the current plan or the current plan is unknown.
+     */
+    direction: 'upgrade' | 'downgrade' | 'none';
+    /**
+     * Upgrades apply now (prorated); downgrades at the end of the current billing period.
+     */
+    effective: 'immediate' | 'period_end' | null;
+    /**
+     * ISO date a downgrade would take effect; null for upgrades.
+     */
+    effectiveAt: string | null;
+    allowed: boolean;
+    blockers: Array<'NO_ACTIVE_SUBSCRIPTION' | 'SUBSCRIPTION_NOT_ACTIVE' | 'SUBSCRIPTION_CANCELING' | 'SAME_PLAN' | 'PLAN_CHANGE_PENDING' | 'UNSUPPORTED_SUBSCRIPTION' | 'DOWNGRADE_DOMAIN_ABOVE_BASIC_CAP' | 'DOWNGRADE_PRICE_UNAVAILABLE'>;
+};
+
+export type PlanChangeStatusResponseDto = {
+    /**
+     * Derived from the subscription's price; null without a subscription or for an unknown price.
+     */
+    currentPlan: 'basico' | 'pro' | null;
+    billingPeriod: 'monthly' | 'annual' | null;
+    pending: PendingPlanChangeDto | null;
+    options: Array<PlanChangeOptionDto>;
+};
+
+export type RequestPlanChangeDto = {
+    targetPlan: 'basico' | 'pro';
+    /**
+     * Required (true) when GET /tenants/:tenantId/plan-change-impact lists any loss;
+     * otherwise the API answers 409 PLAN_CHANGE_IMPACT_NOT_ACKNOWLEDGED with the impact.
+     */
+    acknowledgeLosses?: boolean;
+};
+
+export type PlanChangeResultDto = {
+    kind: 'redirect' | 'scheduled';
+    url: string | null;
+    effectiveAt: string | null;
+};
+
+export type ReleasePlanChangeResponseDto = {
+    released: boolean;
+};
+
+export type SubscriptionResponseDto = {
+    plan: 'basico' | 'pro';
+    billingPeriod: 'monthly' | 'annual';
+    status: 'active' | 'trialing' | 'past_due' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'unpaid' | 'paused';
+    currentPeriodEnd: string | null;
+    /**
+     * ISO date when the subscription ends, if a cancellation is scheduled; null otherwise.
+     */
+    cancelAt: string | null;
+    cancelAtPeriodEnd: boolean;
+};
+
+export type SubscriptionPriceDto = {
+    /**
+     * Price per billing period, in cents (minor currency unit).
+     */
+    amount: number;
+    /**
+     * ISO 4217, lowercase (e.g. `mxn`).
+     */
+    currency: string;
+    period: 'monthly' | 'annual';
+};
+
+export type SubscriptionPriceResponseDto = {
+    /**
+     * Null when the tenant has never subscribed.
+     */
+    price: SubscriptionPriceDto | null;
+};
+
+export type InvoiceDto = {
+    id: string;
+    /**
+     * Unix timestamp (seconds).
+     */
+    date: number;
+    /**
+     * Amount paid, in cents.
+     */
+    amountPaid: number;
+    currency: string;
+    status: string;
+    periodStart: number;
+    periodEnd: number;
+    invoicePdf: string | null;
+    hostedInvoiceUrl: string | null;
+    description: string | null;
+};
+
+export type InvoiceListResponseDto = {
+    invoices: Array<InvoiceDto>;
+};
+
+export type PlanChangeImpactItemDto = {
+    kind: 'template_loss' | 'analytics' | 'domain_renewal_cap';
+    templateId: string | null;
+    templateName: string | null;
+    /**
+     * ISO date the loss takes effect (period end for a downgrade).
+     */
+    effectiveAt: string | null;
+};
+
+export type PlanChangeImpactResponseDto = {
+    target: 'basico' | 'pro';
+    /**
+     * Empty when nothing is lost. A non-empty list must be acknowledged to schedule the change.
+     */
+    items: Array<PlanChangeImpactItemDto>;
+};
+
 export type DomainSearchResultDto = {
     domain: string;
     available: boolean;
@@ -1088,201 +1409,6 @@ export type DomainStatusResponseDto = {
     purchaseCompletedAt: string | null;
 };
 
-export type AnalyticsStatus = 'not_eligible' | 'unavailable' | 'provisioning' | 'failed' | 'ready';
-
-export type AnalyticsOverviewDto = {
-    status: AnalyticsStatus;
-    report: AnalyticsReportDto | null;
-    fetchedAt: string | null;
-    /**
-     * True when the Data API failed and an expired cached report is served instead.
-     */
-    stale: boolean;
-    /**
-     * When `POST /analytics/retry` will be accepted again (only for `failed`).
-     */
-    retryAvailableAt: string | null;
-};
-
-export type AnalyticsRealtimeMinuteDto = {
-    /**
-     * 29 (oldest) … 0 (the current minute).
-     */
-    minutesAgo: number;
-    activeUsers: number;
-};
-
-export type AnalyticsRealtimeDataDto = {
-    /**
-     * Distinct users in the last 30 minutes (not the sum of `perMinute`).
-     */
-    activeUsers: number;
-    /**
-     * Exactly 30 points oldest → newest, or empty when the per-minute breakdown failed.
-     */
-    perMinute: Array<AnalyticsRealtimeMinuteDto>;
-};
-
-export type AnalyticsRealtimeDto = {
-    status: AnalyticsStatus;
-    realtime: AnalyticsRealtimeDataDto | null;
-    /**
-     * True when the Realtime API failed; the failure is cached for a minute.
-     */
-    unavailable: boolean;
-    fetchedAt: string | null;
-};
-
-export type PlanPriceDto = {
-    plan: 'basico' | 'pro';
-    period: 'monthly' | 'annual';
-    /**
-     * Price per billing period, in cents (minor currency unit).
-     */
-    amount: number;
-    /**
-     * ISO 4217, lowercase (e.g. `mxn`).
-     */
-    currency: string;
-    lookupKey: string;
-};
-
-export type CreateCheckoutSessionDto = {
-    plan: 'basico' | 'pro';
-    period: 'monthly' | 'annual';
-};
-
-export type BillingRedirectResponseDto = {
-    url: string;
-};
-
-export type PendingPlanChangeDto = {
-    targetPlan: 'basico' | 'pro';
-    /**
-     * ISO date the scheduled change takes effect.
-     */
-    effectiveAt: string;
-};
-
-export type PlanChangeOptionDto = {
-    targetPlan: 'basico' | 'pro';
-    /**
-     * `none` when the target is the current plan or the current plan is unknown.
-     */
-    direction: 'upgrade' | 'downgrade' | 'none';
-    /**
-     * Upgrades apply now (prorated); downgrades at the end of the current billing period.
-     */
-    effective: 'immediate' | 'period_end' | null;
-    /**
-     * ISO date a downgrade would take effect; null for upgrades.
-     */
-    effectiveAt: string | null;
-    allowed: boolean;
-    blockers: Array<'NO_ACTIVE_SUBSCRIPTION' | 'SUBSCRIPTION_NOT_ACTIVE' | 'SUBSCRIPTION_CANCELING' | 'SAME_PLAN' | 'PLAN_CHANGE_PENDING' | 'UNSUPPORTED_SUBSCRIPTION' | 'DOWNGRADE_DOMAIN_ABOVE_BASIC_CAP' | 'DOWNGRADE_PRICE_UNAVAILABLE'>;
-};
-
-export type PlanChangeStatusResponseDto = {
-    /**
-     * Derived from the subscription's price; null without a subscription or for an unknown price.
-     */
-    currentPlan: 'basico' | 'pro' | null;
-    billingPeriod: 'monthly' | 'annual' | null;
-    pending: PendingPlanChangeDto | null;
-    options: Array<PlanChangeOptionDto>;
-};
-
-export type RequestPlanChangeDto = {
-    targetPlan: 'basico' | 'pro';
-    /**
-     * Required (true) when GET /tenants/:tenantId/plan-change-impact lists any loss;
-     * otherwise the API answers 409 PLAN_CHANGE_IMPACT_NOT_ACKNOWLEDGED with the impact.
-     */
-    acknowledgeLosses?: boolean;
-};
-
-export type PlanChangeResultDto = {
-    kind: 'redirect' | 'scheduled';
-    url: string | null;
-    effectiveAt: string | null;
-};
-
-export type ReleasePlanChangeResponseDto = {
-    released: boolean;
-};
-
-export type SubscriptionResponseDto = {
-    plan: 'basico' | 'pro';
-    billingPeriod: 'monthly' | 'annual';
-    status: 'active' | 'trialing' | 'past_due' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'unpaid' | 'paused';
-    currentPeriodEnd: string | null;
-    /**
-     * ISO date when the subscription ends, if a cancellation is scheduled; null otherwise.
-     */
-    cancelAt: string | null;
-    cancelAtPeriodEnd: boolean;
-};
-
-export type SubscriptionPriceDto = {
-    /**
-     * Price per billing period, in cents (minor currency unit).
-     */
-    amount: number;
-    /**
-     * ISO 4217, lowercase (e.g. `mxn`).
-     */
-    currency: string;
-    period: 'monthly' | 'annual';
-};
-
-export type SubscriptionPriceResponseDto = {
-    /**
-     * Null when the tenant has never subscribed.
-     */
-    price: SubscriptionPriceDto | null;
-};
-
-export type InvoiceDto = {
-    id: string;
-    /**
-     * Unix timestamp (seconds).
-     */
-    date: number;
-    /**
-     * Amount paid, in cents.
-     */
-    amountPaid: number;
-    currency: string;
-    status: string;
-    periodStart: number;
-    periodEnd: number;
-    invoicePdf: string | null;
-    hostedInvoiceUrl: string | null;
-    description: string | null;
-};
-
-export type InvoiceListResponseDto = {
-    invoices: Array<InvoiceDto>;
-};
-
-export type PlanChangeImpactItemDto = {
-    kind: 'template_loss' | 'analytics' | 'domain_renewal_cap';
-    templateId: string | null;
-    templateName: string | null;
-    /**
-     * ISO date the loss takes effect (period end for a downgrade).
-     */
-    effectiveAt: string | null;
-};
-
-export type PlanChangeImpactResponseDto = {
-    target: 'basico' | 'pro';
-    /**
-     * Empty when nothing is lost. A non-empty list must be acknowledged to schedule the change.
-     */
-    items: Array<PlanChangeImpactItemDto>;
-};
-
 export type TemplateGalleryItemDto = {
     id: string;
     name: string;
@@ -1316,25 +1442,6 @@ export type TemplateListItemDto = {
     tier: 'basic' | 'pro';
 };
 
-export type DependencyStatusDto = {
-    /**
-     * Dependency name.
-     */
-    name: string;
-    status: 'up' | 'down';
-};
-
-export type HealthResponseDto = {
-    /**
-     * Overall service status.
-     */
-    status: 'ok' | 'degraded';
-    /**
-     * Per-dependency probe results.
-     */
-    dependencies: Array<DependencyStatusDto>;
-};
-
 export type UserProfileDto = {
     /**
      * Profile id (matches the Supabase user id).
@@ -1362,6 +1469,25 @@ export type MeResponseDto = {
      * Application profile, or null if none exists yet.
      */
     profile: UserProfileDto | null;
+};
+
+export type DependencyStatusDto = {
+    /**
+     * Dependency name.
+     */
+    name: string;
+    status: 'up' | 'down';
+};
+
+export type HealthResponseDto = {
+    /**
+     * Overall service status.
+     */
+    status: 'ok' | 'degraded';
+    /**
+     * Per-dependency probe results.
+     */
+    dependencies: Array<DependencyStatusDto>;
 };
 
 export type SiteSchemaResponseDto = {
@@ -2940,129 +3066,165 @@ export type AdminMetricsControllerHistoryResponses = {
 
 export type AdminMetricsControllerHistoryResponse = AdminMetricsControllerHistoryResponses[keyof AdminMetricsControllerHistoryResponses];
 
-export type DomainsControllerSearchData = {
+export type AdminTenantDeletionControllerPreviewData = {
     body?: never;
-    path?: never;
-    query: {
-        /**
-         * Keyword to search domains for (no TLD — variants are generated server-side).
-         */
-        q: string;
+    path: {
+        id: string;
     };
-    url: '/domains/search';
-};
-
-export type DomainsControllerSearchResponses = {
-    200: Array<DomainSearchResultDto>;
-};
-
-export type DomainsControllerSearchResponse = DomainsControllerSearchResponses[keyof DomainsControllerSearchResponses];
-
-export type DomainsControllerGetQuoteData = {
-    body: GetQuoteDto;
-    path?: never;
     query?: never;
-    url: '/domains/quote';
+    url: '/admin/tenants/{id}/deletion-preview';
 };
 
-export type DomainsControllerGetQuoteResponses = {
-    200: DomainQuoteResponseDto;
+export type AdminTenantDeletionControllerPreviewErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown tenant (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
 };
 
-export type DomainsControllerGetQuoteResponse = DomainsControllerGetQuoteResponses[keyof DomainsControllerGetQuoteResponses];
+export type AdminTenantDeletionControllerPreviewResponses = {
+    200: DeletionPreviewDto;
+};
 
-export type DomainsControllerPurchaseData = {
-    body: PurchaseDomainDto;
-    path?: never;
+export type AdminTenantDeletionControllerPreviewResponse = AdminTenantDeletionControllerPreviewResponses[keyof AdminTenantDeletionControllerPreviewResponses];
+
+export type AdminTenantDeletionControllerStartData = {
+    body: StartTenantDeletionDto;
+    path: {
+        id: string;
+    };
     query?: never;
-    url: '/domains/purchase';
+    url: '/admin/tenants/{id}/deletion';
 };
 
-export type DomainsControllerPurchaseResponses = {
-    200: DomainPurchaseResponseDto;
+export type AdminTenantDeletionControllerStartErrors = {
+    /**
+     * Validation failed or confirmSlug does not match.
+     */
+    400: unknown;
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown tenant (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+    /**
+     * The user is an active admin (ADMIN_MEMBER_NOT_DELETABLE) or a deletion is already in progress (TENANT_DELETION_ACTIVE).
+     */
+    409: unknown;
 };
 
-export type DomainsControllerPurchaseResponse = DomainsControllerPurchaseResponses[keyof DomainsControllerPurchaseResponses];
-
-export type DomainsControllerConnectData = {
-    body: ConnectDomainDto;
-    path?: never;
-    query?: never;
-    url: '/domains/connect';
+export type AdminTenantDeletionControllerStartResponses = {
+    202: TenantDeletionAcceptedDto;
 };
 
-export type DomainsControllerConnectResponses = {
-    200: ConnectDomainResponseDto;
-};
+export type AdminTenantDeletionControllerStartResponse = AdminTenantDeletionControllerStartResponses[keyof AdminTenantDeletionControllerStartResponses];
 
-export type DomainsControllerConnectResponse = DomainsControllerConnectResponses[keyof DomainsControllerConnectResponses];
-
-export type DomainsControllerRelaunchData = {
+export type AdminDeletionsControllerListData = {
     body?: never;
     path?: never;
-    query?: never;
-    url: '/domains/relaunch';
+    query?: {
+        status?: 'pending' | 'running' | 'completed' | 'completed_manual' | 'failed';
+        page?: number;
+        pageSize?: number;
+    };
+    url: '/admin/deletions';
 };
 
-export type DomainsControllerRelaunchResponses = {
-    200: RelaunchDomainResponseDto;
+export type AdminDeletionsControllerListErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
 };
 
-export type DomainsControllerRelaunchResponse = DomainsControllerRelaunchResponses[keyof DomainsControllerRelaunchResponses];
-
-export type DomainsControllerGetRenewalData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/domains/renewal';
+export type AdminDeletionsControllerListResponses = {
+    200: DeletionJobListDto;
 };
 
-export type DomainsControllerGetRenewalResponses = {
-    200: DomainRenewalStatusDto | unknown;
-};
+export type AdminDeletionsControllerListResponse = AdminDeletionsControllerListResponses[keyof AdminDeletionsControllerListResponses];
 
-export type DomainsControllerGetRenewalResponse = DomainsControllerGetRenewalResponses[keyof DomainsControllerGetRenewalResponses];
-
-export type DomainsControllerCreateRenewalCheckoutData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/domains/renewal/checkout';
-};
-
-export type DomainsControllerCreateRenewalCheckoutResponses = {
-    200: DomainRenewalCheckoutResponseDto;
-};
-
-export type DomainsControllerCreateRenewalCheckoutResponse = DomainsControllerCreateRenewalCheckoutResponses[keyof DomainsControllerCreateRenewalCheckoutResponses];
-
-export type DomainsControllerGetJobStatusData = {
+export type AdminDeletionsControllerGetData = {
     body?: never;
     path: {
         jobId: string;
     };
     query?: never;
-    url: '/domains/jobs/{jobId}';
+    url: '/admin/deletions/{jobId}';
 };
 
-export type DomainsControllerGetJobStatusResponses = {
-    200: DomainJobStatusDto;
+export type AdminDeletionsControllerGetErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown job (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
 };
 
-export type DomainsControllerGetJobStatusResponse = DomainsControllerGetJobStatusResponses[keyof DomainsControllerGetJobStatusResponses];
+export type AdminDeletionsControllerGetResponses = {
+    200: DeletionJobDto;
+};
 
-export type DomainsControllerGetDomainData = {
+export type AdminDeletionsControllerGetResponse = AdminDeletionsControllerGetResponses[keyof AdminDeletionsControllerGetResponses];
+
+export type AdminDeletionsControllerRetryData = {
     body?: never;
-    path?: never;
+    path: {
+        jobId: string;
+    };
     query?: never;
-    url: '/domains';
+    url: '/admin/deletions/{jobId}/retry';
 };
 
-export type DomainsControllerGetDomainResponses = {
-    200: DomainStatusResponseDto | unknown;
+export type AdminDeletionsControllerRetryErrors = {
+    /**
+     * Missing or invalid bearer token.
+     */
+    401: unknown;
+    /**
+     * Not an active admin, MFA missing, or role not allowed.
+     */
+    403: unknown;
+    /**
+     * Unknown job (ADMIN_NOT_FOUND).
+     */
+    404: unknown;
+    /**
+     * The job is not failed or stale (TENANT_DELETION_NOT_RETRYABLE).
+     */
+    409: unknown;
 };
 
-export type DomainsControllerGetDomainResponse = DomainsControllerGetDomainResponses[keyof DomainsControllerGetDomainResponses];
+export type AdminDeletionsControllerRetryResponses = {
+    202: TenantDeletionAcceptedDto;
+};
+
+export type AdminDeletionsControllerRetryResponse = AdminDeletionsControllerRetryResponses[keyof AdminDeletionsControllerRetryResponses];
 
 export type AnalyticsControllerOverviewData = {
     body?: never;
@@ -3262,6 +3424,130 @@ export type PlanChangeImpactControllerGetImpactResponses = {
 
 export type PlanChangeImpactControllerGetImpactResponse = PlanChangeImpactControllerGetImpactResponses[keyof PlanChangeImpactControllerGetImpactResponses];
 
+export type DomainsControllerSearchData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Keyword to search domains for (no TLD — variants are generated server-side).
+         */
+        q: string;
+    };
+    url: '/domains/search';
+};
+
+export type DomainsControllerSearchResponses = {
+    200: Array<DomainSearchResultDto>;
+};
+
+export type DomainsControllerSearchResponse = DomainsControllerSearchResponses[keyof DomainsControllerSearchResponses];
+
+export type DomainsControllerGetQuoteData = {
+    body: GetQuoteDto;
+    path?: never;
+    query?: never;
+    url: '/domains/quote';
+};
+
+export type DomainsControllerGetQuoteResponses = {
+    200: DomainQuoteResponseDto;
+};
+
+export type DomainsControllerGetQuoteResponse = DomainsControllerGetQuoteResponses[keyof DomainsControllerGetQuoteResponses];
+
+export type DomainsControllerPurchaseData = {
+    body: PurchaseDomainDto;
+    path?: never;
+    query?: never;
+    url: '/domains/purchase';
+};
+
+export type DomainsControllerPurchaseResponses = {
+    200: DomainPurchaseResponseDto;
+};
+
+export type DomainsControllerPurchaseResponse = DomainsControllerPurchaseResponses[keyof DomainsControllerPurchaseResponses];
+
+export type DomainsControllerConnectData = {
+    body: ConnectDomainDto;
+    path?: never;
+    query?: never;
+    url: '/domains/connect';
+};
+
+export type DomainsControllerConnectResponses = {
+    200: ConnectDomainResponseDto;
+};
+
+export type DomainsControllerConnectResponse = DomainsControllerConnectResponses[keyof DomainsControllerConnectResponses];
+
+export type DomainsControllerRelaunchData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/domains/relaunch';
+};
+
+export type DomainsControllerRelaunchResponses = {
+    200: RelaunchDomainResponseDto;
+};
+
+export type DomainsControllerRelaunchResponse = DomainsControllerRelaunchResponses[keyof DomainsControllerRelaunchResponses];
+
+export type DomainsControllerGetRenewalData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/domains/renewal';
+};
+
+export type DomainsControllerGetRenewalResponses = {
+    200: DomainRenewalStatusDto | unknown;
+};
+
+export type DomainsControllerGetRenewalResponse = DomainsControllerGetRenewalResponses[keyof DomainsControllerGetRenewalResponses];
+
+export type DomainsControllerCreateRenewalCheckoutData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/domains/renewal/checkout';
+};
+
+export type DomainsControllerCreateRenewalCheckoutResponses = {
+    200: DomainRenewalCheckoutResponseDto;
+};
+
+export type DomainsControllerCreateRenewalCheckoutResponse = DomainsControllerCreateRenewalCheckoutResponses[keyof DomainsControllerCreateRenewalCheckoutResponses];
+
+export type DomainsControllerGetJobStatusData = {
+    body?: never;
+    path: {
+        jobId: string;
+    };
+    query?: never;
+    url: '/domains/jobs/{jobId}';
+};
+
+export type DomainsControllerGetJobStatusResponses = {
+    200: DomainJobStatusDto;
+};
+
+export type DomainsControllerGetJobStatusResponse = DomainsControllerGetJobStatusResponses[keyof DomainsControllerGetJobStatusResponses];
+
+export type DomainsControllerGetDomainData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/domains';
+};
+
+export type DomainsControllerGetDomainResponses = {
+    200: DomainStatusResponseDto | unknown;
+};
+
+export type DomainsControllerGetDomainResponse = DomainsControllerGetDomainResponses[keyof DomainsControllerGetDomainResponses];
+
 export type TemplatesControllerFindAllData = {
     body?: never;
     path?: never;
@@ -3294,19 +3580,6 @@ export type PublicTemplatesControllerFindPublishedResponses = {
 };
 
 export type PublicTemplatesControllerFindPublishedResponse = PublicTemplatesControllerFindPublishedResponses[keyof PublicTemplatesControllerFindPublishedResponses];
-
-export type HealthControllerHealthData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/health';
-};
-
-export type HealthControllerHealthResponses = {
-    200: HealthResponseDto;
-};
-
-export type HealthControllerHealthResponse = HealthControllerHealthResponses[keyof HealthControllerHealthResponses];
 
 export type MeControllerDeleteMeData = {
     body?: never;
@@ -3350,6 +3623,19 @@ export type MeControllerMeResponses = {
 };
 
 export type MeControllerMeResponse = MeControllerMeResponses[keyof MeControllerMeResponses];
+
+export type HealthControllerHealthData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/health';
+};
+
+export type HealthControllerHealthResponses = {
+    200: HealthResponseDto;
+};
+
+export type HealthControllerHealthResponse = HealthControllerHealthResponses[keyof HealthControllerHealthResponses];
 
 export type SitesControllerGetSchemaData = {
     body?: never;
