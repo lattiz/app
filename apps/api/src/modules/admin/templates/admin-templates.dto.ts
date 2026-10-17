@@ -1,12 +1,31 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsIn, IsOptional, IsString, MaxLength } from 'class-validator';
+import { Transform } from 'class-transformer';
+import {
+  ArrayMaxSize,
+  ArrayMinSize,
+  ArrayUnique,
+  IsArray,
+  IsBoolean,
+  IsIn,
+  IsOptional,
+  IsString,
+  Matches,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 import { TENANT_PLANS, type TenantPlan } from '../tenants/admin-tenants.dto';
 
 export const TEMPLATE_TIERS = ['basic', 'pro'] as const;
-export const TEMPLATE_STATUSES = ['pending', 'active'] as const;
+export const TEMPLATE_STATUSES = ['pending', 'active', 'retired'] as const;
 
 export type TemplateTier = (typeof TEMPLATE_TIERS)[number];
 export type TemplateStatus = (typeof TEMPLATE_STATUSES)[number];
+
+const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+function trimString({ value }: { value: unknown }): unknown {
+  return typeof value === 'string' ? value.trim() : value;
+}
 
 export class AdminTemplateListQueryDto {
   @ApiPropertyOptional({ enum: TEMPLATE_TIERS })
@@ -20,7 +39,7 @@ export class AdminTemplateListQueryDto {
   @MaxLength(100)
   category?: string;
 
-  /** Inactive templates are pending until a later phase adds retired_at. */
+  /** `pending` is inactive and not retired. */
   @ApiPropertyOptional({ enum: TEMPLATE_STATUSES })
   @IsOptional()
   @IsIn(TEMPLATE_STATUSES)
@@ -32,6 +51,85 @@ export class AdminTemplateListQueryDto {
   @IsString()
   @MaxLength(200)
   q?: string;
+
+  /** Exact tag. Tags are stored in lowercase. */
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @MaxLength(24)
+  @Matches(SLUG)
+  tag?: string;
+}
+
+export class AdminTemplateUpdateDto {
+  @ApiPropertyOptional({ minLength: 1, maxLength: 80 })
+  @IsOptional()
+  @Transform(trimString)
+  @IsString()
+  @MinLength(1)
+  @MaxLength(80)
+  name?: string;
+
+  @ApiPropertyOptional({ type: String, nullable: true, maxLength: 500 })
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  description?: string | null;
+
+  @ApiPropertyOptional({ maxLength: 40 })
+  @IsOptional()
+  @Transform(trimString)
+  @IsString()
+  @MinLength(1)
+  @MaxLength(40)
+  @Matches(SLUG)
+  category?: string;
+
+  @ApiPropertyOptional({ type: [String], maxItems: 10 })
+  @IsOptional()
+  @IsArray()
+  @ArrayMaxSize(10)
+  @ArrayUnique()
+  @IsString({ each: true })
+  @MaxLength(24, { each: true })
+  @Matches(SLUG, { each: true })
+  tags?: string[];
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsBoolean()
+  featured?: boolean;
+}
+
+export class AdminTemplateRetireDto {
+  @ApiProperty({ minLength: 3, maxLength: 300 })
+  @IsString()
+  @MinLength(3)
+  @MaxLength(300)
+  reason!: string;
+}
+
+export class AdminTemplateReorderDto {
+  @ApiProperty({ type: [String] })
+  @IsArray()
+  @ArrayMinSize(1)
+  @ArrayMaxSize(500)
+  @IsString({ each: true })
+  @MaxLength(120, { each: true })
+  ids!: string[];
+}
+
+export class AdminTemplateReorderResponseDto {
+  @ApiProperty({ type: [String] })
+  ids!: string[];
+}
+
+export class AdminTemplateDeleteDto {
+  @ApiProperty()
+  @IsString()
+  @MinLength(1)
+  @MaxLength(120)
+  confirmId!: string;
 }
 
 export class AdminTemplateUsageDto {
@@ -81,6 +179,25 @@ export class AdminTemplateListItemDto {
 
   @ApiProperty()
   createdAt!: string;
+
+  @ApiProperty({ type: [String] })
+  tags!: string[];
+
+  @ApiProperty()
+  featured!: boolean;
+
+  @ApiProperty()
+  updatedAt!: string;
+
+  @ApiProperty({ type: String, nullable: true })
+  retiredAt!: string | null;
+
+  @ApiProperty({
+    type: 'object',
+    nullable: true,
+    additionalProperties: true,
+  })
+  kitMeta!: Record<string, unknown> | null;
 
   @ApiProperty({ type: AdminTemplateUsageDto })
   usage!: AdminTemplateUsageDto;

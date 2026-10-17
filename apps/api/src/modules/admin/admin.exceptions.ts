@@ -50,3 +50,70 @@ export class AdminStripeUnavailableException extends DomainException {
     super('Stripe no está disponible para calcular los ingresos.');
   }
 }
+
+/** Activar exige vista previa y miniatura, igual que el catálogo público. */
+export class TemplateNotReadyException extends DomainException {
+  readonly code = 'TEMPLATE_NOT_READY';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor(missing: readonly string[]) {
+    super('La plantilla no tiene vista previa o miniatura para activarse.', {
+      missing: [...missing],
+    });
+  }
+}
+
+/** Hay sitios o archivos que todavía apuntan a la plantilla. */
+export class TemplateInUseException extends DomainException {
+  readonly code = 'TEMPLATE_IN_USE';
+  readonly status = HttpStatus.CONFLICT;
+
+  constructor(sites: number, archives: number) {
+    super('La plantilla sigue en uso y no se puede borrar.', {
+      sites,
+      archives,
+    });
+  }
+}
+
+/** El orden trae ids repetidos o que no existen en el catálogo. */
+export class TemplateOrderInvalidException extends DomainException {
+  readonly code = 'TEMPLATE_ORDER_INVALID';
+  readonly status = HttpStatus.BAD_REQUEST;
+
+  constructor(details: { unknown?: string[]; duplicates?: string[] }) {
+    super('La lista tiene ids repetidos o desconocidos.', details);
+  }
+}
+
+/** confirmId no es el id de la ruta. */
+export class TemplateDeleteConfirmException extends DomainException {
+  readonly code = 'TEMPLATE_DELETE_CONFIRM';
+  readonly status = HttpStatus.BAD_REQUEST;
+
+  constructor() {
+    super('confirmId tiene que ser el id de la plantilla.');
+  }
+}
+
+/** El archivo no es jpeg, png o webp, o la firma no coincide con el tipo. */
+export class TemplateThumbnailRejectedException extends DomainException {
+  readonly code = 'TEMPLATE_THUMBNAIL_REJECTED';
+  readonly status = HttpStatus.BAD_REQUEST;
+
+  constructor() {
+    super(
+      'La miniatura debe ser jpeg, png o webp y coincidir con la firma del archivo.',
+    );
+  }
+}
+
+/** Por encima del límite de 2 MB. */
+export class TemplateThumbnailTooLargeException extends DomainException {
+  readonly code = 'TEMPLATE_THUMBNAIL_TOO_LARGE';
+  readonly status = HttpStatus.PAYLOAD_TOO_LARGE;
+
+  constructor(maxBytes: number) {
+    super('La miniatura supera el tamaño permitido.', { maxBytes });
+  }
+}

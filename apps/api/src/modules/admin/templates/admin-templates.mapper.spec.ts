@@ -22,18 +22,39 @@ function row(overrides: Partial<TemplateDetailRow> = {}): TemplateDetailRow {
     paying_tenants: 1,
     trial_tenants: 2,
     archived_count: 0,
+    tags: ['barberia'],
+    featured: true,
+    updated_at: '2026-03-02T00:00:00.000Z',
+    retired_at: null,
+    kit_meta: { giro: 'barberia' },
     section_count: '8',
     ...overrides,
   };
 }
 
 describe('template mapping', () => {
-  it('marks an inactive template as pending', () => {
-    expect(templateStatus(false)).toBe('pending');
-    expect(templateStatus(true)).toBe('active');
+  it('maps active, retired and pending', () => {
+    expect(templateStatus(true, null)).toBe('active');
+    expect(templateStatus(true, '2026-06-01T00:00:00.000Z')).toBe('active');
+    expect(templateStatus(false, '2026-06-01T00:00:00.000Z')).toBe('retired');
+    expect(templateStatus(false, null)).toBe('pending');
     expect(mapTemplateListItem(row({ is_active: false })).status).toBe(
       'pending',
     );
+    expect(
+      mapTemplateListItem(
+        row({
+          is_active: false,
+          retired_at: '2026-06-01T00:00:00.000Z',
+        }),
+      ).status,
+    ).toBe('retired');
+    const item = mapTemplateListItem(row());
+    expect(item.tags).toEqual(['barberia']);
+    expect(item.featured).toBe(true);
+    expect(item.updatedAt).toBe('2026-03-02T00:00:00.000Z');
+    expect(item.retiredAt).toBeNull();
+    expect(item.kitMeta).toEqual({ giro: 'barberia' });
   });
 
   it('never includes grapesjs_json', () => {
