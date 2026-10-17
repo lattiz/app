@@ -384,7 +384,7 @@ function mapAnalytics(
       row.provisioning_status as AdminTenantAnalyticsDto['provisioningStatus'],
     isMock: row.is_mock,
     fetchedAt: toIso(row.fetched_at),
-    report: row.report ?? null,
+    report: (row.report ?? null) as AdminTenantAnalyticsDto['report'],
   };
 }
 

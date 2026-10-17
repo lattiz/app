@@ -81,8 +81,8 @@ describe('AdminTenantsService', () => {
             site_status: null,
             published_at: null,
             site_updated_at: null,
-            domain: null,
-            domain_source: null,
+            domain: 'cafe.mx',
+            domain_source: 'lattiz_managed',
             dns_status: null,
             domain_expires_at: null,
             domain_suspended_at: null,
@@ -104,6 +104,7 @@ describe('AdminTenantsService', () => {
       new Date('2026-06-15T12:00:00.000Z'),
     );
 
+    expect(detail.overview.domainSource).toBe('lattiz_managed');
     expect(detail.previewState).toBe('trial_unstarted');
     expect(detail.flags.notes).toBe('nota');
     expect(detail.storage.assetByteLimit).toBe(1000);

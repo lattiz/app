@@ -61,7 +61,7 @@ export class AdminDomainRecordDto {
   @ApiProperty({ enum: DNS_STATUSES })
   dnsStatus!: DnsStatus;
 
-  @ApiProperty({ enum: DNS_PROVIDERS, nullable: true })
+  @ApiProperty({ enum: [...DNS_PROVIDERS, null], nullable: true })
   dnsProvider!: DnsProviderName | null;
 
   @ApiProperty({ type: String, nullable: true })

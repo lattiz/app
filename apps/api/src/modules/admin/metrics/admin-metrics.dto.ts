@@ -151,7 +151,7 @@ export class MetricsOverviewDto {
   @ApiProperty({ type: [MetricsMrrCurrencyDto] })
   mrrByCurrency!: MetricsMrrCurrencyDto[];
 
-  @ApiProperty({ enum: REVENUE_ERRORS, nullable: true })
+  @ApiProperty({ enum: [...REVENUE_ERRORS, null], nullable: true })
   revenueError!: (typeof REVENUE_ERRORS)[number] | null;
 
   @ApiProperty({ type: MetricsCustomersDto })

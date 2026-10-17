@@ -238,7 +238,7 @@ export class AdminSubscriptionPriceDto {
   @ApiProperty()
   currency!: string;
 
-  @ApiProperty({ enum: PRICE_INTERVALS, nullable: true })
+  @ApiProperty({ enum: [...PRICE_INTERVALS, null], nullable: true })
   interval!: (typeof PRICE_INTERVALS)[number] | null;
 
   @ApiProperty({ type: Number, nullable: true })
@@ -275,7 +275,7 @@ export class AdminSubscriptionUpcomingInvoiceDto {
 }
 
 export class AdminSubscriptionSchedulePhaseDto {
-  @ApiProperty({ enum: SUBSCRIPTION_PLANS, nullable: true })
+  @ApiProperty({ enum: [...SUBSCRIPTION_PLANS, null], nullable: true })
   plan!: SubscriptionPlan | null;
 
   @ApiProperty()
@@ -303,7 +303,7 @@ export class AdminSubscriptionInvoiceDto {
   @ApiProperty({ type: String, nullable: true })
   number!: string | null;
 
-  @ApiProperty({ enum: INVOICE_STATUSES, nullable: true })
+  @ApiProperty({ enum: [...INVOICE_STATUSES, null], nullable: true })
   status!: (typeof INVOICE_STATUSES)[number] | null;
 
   @ApiProperty()
@@ -353,6 +353,6 @@ export class AdminSubscriptionDetailDto {
   @ApiProperty({ type: AdminSubscriptionStripeDto, nullable: true })
   stripe!: AdminSubscriptionStripeDto | null;
 
-  @ApiProperty({ enum: STRIPE_DETAIL_ERRORS, nullable: true })
+  @ApiProperty({ enum: [...STRIPE_DETAIL_ERRORS, null], nullable: true })
   stripeError!: (typeof STRIPE_DETAIL_ERRORS)[number] | null;
 }

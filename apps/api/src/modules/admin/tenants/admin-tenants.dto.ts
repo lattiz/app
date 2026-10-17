@@ -11,6 +11,7 @@ import {
   Min,
 } from 'class-validator';
 import type { PreviewState } from '../../../common/billing/preview-capability';
+import { AnalyticsReportDto } from '../../analytics/dto/analytics.response.dto';
 import { AdminStorageUsageDto } from '../storage/storage-usage.dto';
 
 export const TENANT_PLANS = ['none', 'basico', 'pro', 'trial'] as const;
@@ -51,7 +52,7 @@ export const DNS_STATUSES = [
   'active',
   'error',
 ] as const;
-export const DOMAIN_SOURCES = ['godaddy_managed', 'user_provided'] as const;
+export const DOMAIN_SOURCES = ['lattiz_managed', 'user_provided'] as const;
 export const RENEWAL_STATUSES = [
   'pricing_pending',
   'open',
@@ -334,13 +335,13 @@ export class AdminTenantOverviewDto {
   @ApiProperty({ type: String, nullable: true })
   subscriptionId!: string | null;
 
-  @ApiProperty({ enum: SUBSCRIPTION_STATUSES, nullable: true })
+  @ApiProperty({ enum: [...SUBSCRIPTION_STATUSES, null], nullable: true })
   subscriptionStatus!: (typeof SUBSCRIPTION_STATUSES)[number] | null;
 
-  @ApiProperty({ enum: SUBSCRIPTION_PLANS, nullable: true })
+  @ApiProperty({ enum: [...SUBSCRIPTION_PLANS, null], nullable: true })
   subscriptionPlan!: (typeof SUBSCRIPTION_PLANS)[number] | null;
 
-  @ApiProperty({ enum: BILLING_PERIODS, nullable: true })
+  @ApiProperty({ enum: [...BILLING_PERIODS, null], nullable: true })
   billingPeriod!: (typeof BILLING_PERIODS)[number] | null;
 
   @ApiProperty({ type: String, nullable: true })
@@ -361,7 +362,7 @@ export class AdminTenantOverviewDto {
   @ApiProperty({ type: String, nullable: true })
   templateId!: string | null;
 
-  @ApiProperty({ enum: SITE_STATUSES, nullable: true })
+  @ApiProperty({ enum: [...SITE_STATUSES, null], nullable: true })
   siteStatus!: (typeof SITE_STATUSES)[number] | null;
 
   @ApiProperty({ type: String, nullable: true })
@@ -373,10 +374,10 @@ export class AdminTenantOverviewDto {
   @ApiProperty({ type: String, nullable: true })
   domain!: string | null;
 
-  @ApiProperty({ enum: DOMAIN_SOURCES, nullable: true })
+  @ApiProperty({ enum: [...DOMAIN_SOURCES, null], nullable: true })
   domainSource!: (typeof DOMAIN_SOURCES)[number] | null;
 
-  @ApiProperty({ enum: DNS_STATUSES, nullable: true })
+  @ApiProperty({ enum: [...DNS_STATUSES, null], nullable: true })
   dnsStatus!: (typeof DNS_STATUSES)[number] | null;
 
   @ApiProperty({ type: String, nullable: true })
@@ -388,7 +389,7 @@ export class AdminTenantOverviewDto {
   @ApiProperty({ type: String, nullable: true })
   dnsProvider!: string | null;
 
-  @ApiProperty({ enum: RENEWAL_STATUSES, nullable: true })
+  @ApiProperty({ enum: [...RENEWAL_STATUSES, null], nullable: true })
   renewalStatus!: (typeof RENEWAL_STATUSES)[number] | null;
 
   @ApiProperty({ type: String, nullable: true })
@@ -424,7 +425,7 @@ export class AdminTenantSiteDto {
   @ApiProperty({ type: AdminTenantTemplateRefDto, nullable: true })
   template!: AdminTenantTemplateRefDto | null;
 
-  @ApiProperty({ enum: SITE_STATUSES, nullable: true })
+  @ApiProperty({ enum: [...SITE_STATUSES, null], nullable: true })
   status!: (typeof SITE_STATUSES)[number] | null;
 
   @ApiProperty()
@@ -495,7 +496,7 @@ export class AdminTenantSubscriptionDto {
 }
 
 export class AdminTenantAnalyticsDto {
-  @ApiProperty({ enum: PROVISIONING_STATUSES, nullable: true })
+  @ApiProperty({ enum: [...PROVISIONING_STATUSES, null], nullable: true })
   provisioningStatus!: (typeof PROVISIONING_STATUSES)[number] | null;
 
   @ApiProperty({ type: Boolean, nullable: true })
@@ -504,13 +505,9 @@ export class AdminTenantAnalyticsDto {
   @ApiProperty({ type: String, nullable: true })
   fetchedAt!: string | null;
 
-  /** Cached report jsonb, unchanged. */
-  @ApiProperty({
-    type: 'object',
-    additionalProperties: true,
-    nullable: true,
-  })
-  report!: unknown;
+  /** Cached report jsonb, same shape as the tenant analytics report. */
+  @ApiProperty({ type: AnalyticsReportDto, nullable: true })
+  report!: AnalyticsReportDto | null;
 }
 
 export class AdminTenantStorageDto {
