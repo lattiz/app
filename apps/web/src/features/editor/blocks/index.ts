@@ -1,10 +1,12 @@
 import { BASIC_BLOCKS } from './basic-blocks';
+import { KIT_SECTION_BLOCKS } from './kit-blocks';
 import { blockPlan } from './plan';
 import { PRO_BLOCKS } from './pro-blocks';
 import { PRO_BADGE, type SectionBlock } from './shared';
 
 export const ALL_BLOCKS: readonly SectionBlock[] = [
   ...BASIC_BLOCKS,
+  ...KIT_SECTION_BLOCKS,
   ...PRO_BLOCKS,
 ];
 

@@ -49,6 +49,13 @@ describe('editor blocks', () => {
         expect(block.kitVariant, block.id).toBeUndefined();
         continue;
       }
+      if (block.kitPrimitive) {
+        expect(
+          manifest.primitives.map((p) => p.family),
+          block.id,
+        ).toContain(block.kitPrimitive);
+        continue;
+      }
       const v = variants.get(block.kitVariant ?? '');
       expect(v, `${block.id} → ${block.kitVariant}`).toBeDefined();
       if (v?.proOnly) expect(blockPlan(block), block.id).toBe('pro');
