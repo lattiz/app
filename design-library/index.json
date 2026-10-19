@@ -3,8 +3,8 @@
   "count": 2,
   "by_status": {
     "collected": 0,
-    "harvested": 2,
-    "promoted": 0,
+    "harvested": 1,
+    "promoted": 1,
     "shelved": 0,
     "rejected": 0
   },
@@ -12,7 +12,7 @@
     {
       "id": "barberia-don-porfirio-01",
       "giro": "barberia",
-      "status": "harvested",
+      "status": "promoted",
       "tags": [
         "verde-bosque",
         "plata",

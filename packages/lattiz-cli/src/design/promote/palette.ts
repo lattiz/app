@@ -90,7 +90,7 @@ export function usabilityNotes(
 }
 
 export type PaletteOverride = Partial<
-  Record<'bg' | 'text' | 'accent' | 'surface' | 'surface2', string>
+  Record<'bg' | 'text' | 'accent' | 'surface' | 'surface2' | 'label', string>
 >;
 
 /**

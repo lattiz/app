@@ -216,7 +216,10 @@ function runPromote(ctx: Context): ExitCode {
     pattern: str(ctx.flags, 'pattern'),
     regenerateManifest: bool(ctx.flags, 'regenerate-manifest'),
     dryRun,
-    paletteSet: parseSet(str(ctx.flags, 'set')),
+    paletteSet: {
+      ...parseSet(str(ctx.flags, 'set')),
+      ...(str(ctx.flags, 'name') ? { label: str(ctx.flags, 'name') } : {}),
+    },
   });
   if (bool(ctx.flags, 'json')) {
     console.log(JSON.stringify(report, null, 2));

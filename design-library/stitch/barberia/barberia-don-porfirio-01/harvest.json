@@ -17,7 +17,7 @@
     ],
     "bg": "#111413",
     "text": "#e1e3e1",
-    "accent": "#ffb4ab",
+    "accent": "#c3c7cd",
     "surface": "#191c1b",
     "surface2": "#282b29",
     "photoTreatment": "none",
@@ -25,7 +25,7 @@
     "from": {
       "bg": "background",
       "text": "on-background",
-      "accent": "tertiary",
+      "accent": "secondary",
       "surface": "surface-container-low",
       "surface2": "surface-container-high"
     },
@@ -71,9 +71,9 @@
       "--lz-color-surface-2": "#282B29",
       "--lz-color-text": "#E1E3E1",
       "--lz-color-muted": "#969897",
-      "--lz-color-accent": "#FFB4AB",
+      "--lz-color-accent": "#C3C7CD",
       "--lz-color-on-accent": "#111413",
-      "--lz-color-accent-text": "#FFB4AB",
+      "--lz-color-accent-text": "#C3C7CD",
       "--lz-color-line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
       "--lz-color-line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
       "--lz-color-overlay": "#111413",
@@ -205,10 +205,10 @@
     "distance": [
       {
         "giro": "barberia",
-        "nearest": "pal-tinta-hueso",
-        "distance": 24.8,
+        "nearest": "pal-pizarra-plata",
+        "distance": 8.3,
         "min": 15,
-        "ok": true
+        "ok": false
       }
     ]
   },

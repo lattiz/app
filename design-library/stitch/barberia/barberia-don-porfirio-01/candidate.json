@@ -2,7 +2,7 @@
   "id": "barberia-don-porfirio-01",
   "giro": "barberia",
   "source": "stitch",
-  "status": "harvested",
+  "status": "promoted",
   "tags": [
     "verde-bosque",
     "plata",
@@ -18,5 +18,8 @@
       "680722a5cd3744aa9313e8ee5afb259e"
     ]
   },
-  "direction": "neon-nocturno"
+  "direction": "neon-nocturno",
+  "promoted": {
+    "palette": "pal-musgo-y-plata"
+  }
 }
