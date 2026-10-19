@@ -1,0 +1,461 @@
+{
+  "version": 1,
+  "candidate_id": "barberia-don-porfirio-01",
+  "input": {
+    "file": "design.md",
+    "kind": "design-md"
+  },
+  "palette": {
+    "label": "Artisanal Barberia Heritage (Stitch, oscuro)",
+    "mode": "dark",
+    "mood": [
+      "nocturno",
+      "stitch"
+    ],
+    "affinity": [
+      "barberia"
+    ],
+    "bg": "#111413",
+    "text": "#e1e3e1",
+    "accent": "#ffb4ab",
+    "surface": "#191c1b",
+    "surface2": "#282b29",
+    "photoTreatment": "none",
+    "placeholder": "rules",
+    "from": {
+      "bg": "background",
+      "text": "on-background",
+      "accent": "tertiary",
+      "surface": "surface-container-low",
+      "surface2": "surface-container-high"
+    },
+    "aa": {
+      "ok": true,
+      "problems": []
+    },
+    "roles": {
+      "surface": [
+        "surface",
+        "surface-dim",
+        "surface-bright",
+        "surface-container-lowest",
+        "surface-container-low",
+        "surface-container",
+        "surface-container-high",
+        "surface-container-highest",
+        "surface-tint",
+        "background",
+        "surface-variant"
+      ],
+      "text": [
+        "on-surface",
+        "on-surface-variant",
+        "on-background"
+      ],
+      "accent": [
+        "primary",
+        "primary-container",
+        "secondary",
+        "secondary-container",
+        "tertiary",
+        "tertiary-container"
+      ],
+      "border": [
+        "outline",
+        "outline-variant"
+      ]
+    },
+    "lz": {
+      "--lz-color-bg": "#111413",
+      "--lz-color-surface": "#191C1B",
+      "--lz-color-surface-2": "#282B29",
+      "--lz-color-text": "#E1E3E1",
+      "--lz-color-muted": "#969897",
+      "--lz-color-accent": "#FFB4AB",
+      "--lz-color-on-accent": "#111413",
+      "--lz-color-accent-text": "#FFB4AB",
+      "--lz-color-line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+      "--lz-color-line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+      "--lz-color-overlay": "#111413",
+      "--lz-color-on-overlay": "#E1E3E1",
+      "--lz-color-navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+      "--lz-color-ink": "#111413"
+    },
+    "pairs": [
+      {
+        "fg": "on-surface",
+        "bg": "surface",
+        "ratio": 14.36,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-primary",
+        "bg": "primary",
+        "ratio": 7.74,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-primary-container",
+        "bg": "primary-container",
+        "ratio": 4.55,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-secondary",
+        "bg": "secondary",
+        "ratio": 7.73,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-secondary-container",
+        "bg": "secondary-container",
+        "ratio": 4.53,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-tertiary",
+        "bg": "tertiary",
+        "ratio": 7.72,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-tertiary-container",
+        "bg": "tertiary-container",
+        "ratio": 4.55,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-error",
+        "bg": "error",
+        "ratio": 7.72,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-error-container",
+        "bg": "error-container",
+        "ratio": 7.24,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-background",
+        "bg": "background",
+        "ratio": 14.36,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface",
+        "bg": "background",
+        "ratio": 14.36,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "background",
+        "ratio": 10.88,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "surface",
+        "ratio": 10.88,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface",
+        "bg": "surface-container-low",
+        "ratio": 13.31,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "surface-container-low",
+        "ratio": 10.08,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface",
+        "bg": "surface-container-high",
+        "ratio": 11.09,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "surface-container-high",
+        "ratio": 8.4,
+        "min": 4.5,
+        "aa_pass": true
+      }
+    ],
+    "distance": [
+      {
+        "giro": "barberia",
+        "nearest": "pal-tinta-hueso",
+        "distance": 24.8,
+        "min": 15,
+        "ok": true
+      }
+    ]
+  },
+  "typography": {
+    "scale": [
+      {
+        "token": "headline-xl",
+        "role": "headline",
+        "family": "Playfair Display",
+        "sizePx": 48,
+        "weight": 700,
+        "lineHeightPx": 56,
+        "letterSpacingEm": 0.15
+      },
+      {
+        "token": "headline-lg",
+        "role": "headline",
+        "family": "Playfair Display",
+        "sizePx": 36,
+        "weight": 600,
+        "lineHeightPx": 44,
+        "letterSpacingEm": 0.15
+      },
+      {
+        "token": "headline-xl-mobile",
+        "role": "headline",
+        "family": "Playfair Display",
+        "sizePx": 32,
+        "weight": 700,
+        "lineHeightPx": 40,
+        "letterSpacingEm": 0.12
+      },
+      {
+        "token": "headline-lg-mobile",
+        "role": "headline",
+        "family": "Playfair Display",
+        "sizePx": 26,
+        "weight": 600,
+        "lineHeightPx": 34,
+        "letterSpacingEm": 0.12
+      },
+      {
+        "token": "headline-md",
+        "role": "headline",
+        "family": "Playfair Display",
+        "sizePx": 24,
+        "weight": 600,
+        "lineHeightPx": 32,
+        "letterSpacingEm": 0.12
+      },
+      {
+        "token": "headline-sm",
+        "role": "headline",
+        "family": "Playfair Display",
+        "sizePx": 20,
+        "weight": 600,
+        "lineHeightPx": 28,
+        "letterSpacingEm": 0.1
+      },
+      {
+        "token": "title-md",
+        "role": "headline",
+        "family": "Playfair Display",
+        "sizePx": 18,
+        "weight": 500,
+        "lineHeightPx": 26,
+        "letterSpacingEm": 0.08
+      },
+      {
+        "token": "body-lg",
+        "role": "body",
+        "family": "Plus Jakarta Sans",
+        "sizePx": 18,
+        "weight": 400,
+        "lineHeightPx": 28,
+        "letterSpacingEm": 0.01
+      },
+      {
+        "token": "body-md",
+        "role": "body",
+        "family": "Plus Jakarta Sans",
+        "sizePx": 15,
+        "weight": 400,
+        "lineHeightPx": 24,
+        "letterSpacingEm": 0
+      },
+      {
+        "token": "label-lg",
+        "role": "label",
+        "family": "Plus Jakarta Sans",
+        "sizePx": 14,
+        "weight": 600,
+        "lineHeightPx": 20,
+        "letterSpacingEm": 0.1
+      },
+      {
+        "token": "body-sm",
+        "role": "body",
+        "family": "Plus Jakarta Sans",
+        "sizePx": 13,
+        "weight": 400,
+        "lineHeightPx": 20,
+        "letterSpacingEm": 0.01
+      },
+      {
+        "token": "label-md",
+        "role": "label",
+        "family": "Plus Jakarta Sans",
+        "sizePx": 12,
+        "weight": 600,
+        "lineHeightPx": 16,
+        "letterSpacingEm": 0.12
+      },
+      {
+        "token": "label-sm",
+        "role": "label",
+        "family": "Plus Jakarta Sans",
+        "sizePx": 10,
+        "weight": 700,
+        "lineHeightPx": 14,
+        "letterSpacingEm": 0.14
+      }
+    ],
+    "displayFamily": "Playfair Display",
+    "bodyFamily": "Plus Jakarta Sans",
+    "googleFamilies": [
+      "Playfair Display",
+      "Plus Jakarta Sans"
+    ],
+    "unsupportedFamilies": [],
+    "excludedFamilies": [],
+    "metrics": {
+      "Playfair Display": true,
+      "Plus Jakarta Sans": true
+    },
+    "delivery": {
+      "ok": true,
+      "problems": []
+    },
+    "radiusPx": 4,
+    "spacing": {
+      "gutter": "1.5rem",
+      "gutter-mobile": "1rem",
+      "margin": "3rem",
+      "margin-mobile": "1.25rem",
+      "space-xs": "0.25rem",
+      "space-sm": "0.5rem",
+      "space-md": "1rem",
+      "space-lg": "1.5rem",
+      "space-xl": "2.5rem"
+    }
+  },
+  "sections": [
+    {
+      "ref": "maestros",
+      "columns": 12,
+      "items": 2,
+      "hasImage": true,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "glass",
+      "heading": "Dos generaciones afeitando barbas duras.",
+      "mappable": true,
+      "slot": "about",
+      "layout": "split",
+      "existing": "about/text-image-offset"
+    },
+    {
+      "ref": "servicios",
+      "columns": 3,
+      "items": 6,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "bordered",
+      "heading": "RITUALES & TARIFA CLARA",
+      "mappable": true,
+      "slot": "services",
+      "layout": "card-grid",
+      "existing": "services/cards"
+    },
+    {
+      "ref": "resenas",
+      "columns": 3,
+      "items": 3,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "bordered",
+      "heading": "PALABRA DE BARRIO",
+      "mappable": true,
+      "slot": "testimonials",
+      "layout": "card-grid",
+      "existing": "testimonials/cards"
+    },
+    {
+      "ref": "preguntas",
+      "columns": 2,
+      "items": 4,
+      "hasImage": false,
+      "hasStat": true,
+      "hasQuote": false,
+      "surface": "bordered",
+      "heading": "PREGUNTAS FRECUENTES",
+      "mappable": true,
+      "slot": "faq",
+      "layout": "card-grid",
+      "existing": "faq/grid"
+    },
+    {
+      "ref": "8. FOOTER SECTION",
+      "columns": 0,
+      "items": 0,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "bordered",
+      "mappable": true,
+      "slot": "footer",
+      "layout": "link-columns",
+      "existing": "footer/columns"
+    }
+  ],
+  "not_mappable": [
+    {
+      "ref": "contacto",
+      "reason": "contacto: el kit lo arma con locations/* y los datos del negocio, no desde el diseño"
+    },
+    {
+      "ref": "experiencia",
+      "reason": "hero/centered: el kit aún no sabe construirlo desde un patrón (sin variante equivalente ni generador)"
+    }
+  ],
+  "interactivity": [],
+  "image_needs": [
+    {
+      "ref": "experiencia",
+      "slot": "hero",
+      "orientation": "unspecified",
+      "use": "foreground"
+    },
+    {
+      "ref": "maestros",
+      "slot": "about",
+      "orientation": "unspecified",
+      "use": "foreground"
+    }
+  ],
+  "images_ignored": 2
+}

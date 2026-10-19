@@ -1,14 +1,29 @@
 {
   "version": 1,
-  "count": 1,
+  "count": 2,
   "by_status": {
     "collected": 0,
-    "harvested": 1,
+    "harvested": 2,
     "promoted": 0,
     "shelved": 0,
     "rejected": 0
   },
   "candidates": [
+    {
+      "id": "barberia-don-porfirio-01",
+      "giro": "barberia",
+      "status": "harvested",
+      "tags": [
+        "verde-bosque",
+        "plata",
+        "loose",
+        "oscuro"
+      ],
+      "spin": "barberia-victoriana-plata",
+      "created_at": "2026-10-19T07:55:45.989Z",
+      "harvested": true,
+      "path": "stitch/barberia/barberia-don-porfirio-01"
+    },
     {
       "id": "dental-arquimedes-polanco-01",
       "giro": "dental",

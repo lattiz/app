@@ -1,0 +1,22 @@
+{
+  "id": "barberia-don-porfirio-01",
+  "giro": "barberia",
+  "source": "stitch",
+  "status": "harvested",
+  "tags": [
+    "verde-bosque",
+    "plata",
+    "loose",
+    "oscuro"
+  ],
+  "spin": "barberia-victoriana-plata",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-19T07:55:45.989Z",
+  "stitch": {
+    "project_id": "12020063627248580428",
+    "screen_ids": [
+      "680722a5cd3744aa9313e8ee5afb259e"
+    ]
+  },
+  "direction": "neon-nocturno"
+}

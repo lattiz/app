@@ -45,6 +45,7 @@ describe('validator on the library templates', () => {
     expect(pro?.similarity.map((s) => s.other).sort()).toEqual([
       'barberia-abeto-v1',
       'barberia-concreto-v1',
+      'barberia-gabinete-pinar-v1',
       'barberia-oxido-v1',
     ]);
     const basic = reports.get('barberia-base-claro-v1');

@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/barberia-gabinete-pinar-v1.spec.json (spec af41d063bb47, file 6c569834bbc6). Do not edit: use the spec, or freeze.",
+  "name": "Gabinete Pinar",
+  "category": "barbershop",
+  "phone": "+525500000000",
+  "whatsapp": "+5215500000000",
+  "email": "hola@gabinetepinar.mx",
+  "address": {
+    "street": "Calle Pinar 24, Condesa, Cuauhtémoc",
+    "city": "CDMX",
+    "country": "MX"
+  },
+  "hours": {
+    "tue": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "sun": [
+      {
+        "open": "11:00",
+        "close": "16:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}
