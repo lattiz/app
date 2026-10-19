@@ -80,3 +80,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [stitch-design-source](stitch-design-source.md) — Stitch como fuente de diseño del kit; biblioteca, harvester, promote con compuertas
 - [editor-plan-catalog](editor-plan-catalog.md) — plan de bloques del editor derivado del manifiesto; misma lista que la API
 - [editor-kit-blocks](editor-kit-blocks.md) — bloques del kit en el editor; solo el CSS usado; tokens en :where(html)
+- [stitch-native-reconstruction](stitch-native-reconstruction.md) — patrones de Stitch como secciones nativas; frenos anti-inflación; compuerta de foto de portada

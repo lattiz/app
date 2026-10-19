@@ -67,8 +67,9 @@ guía en `docs/design-stitch-flow.md`, detalle del MCP en la skill `/lattiz-desi
    tipográfico y las secciones (incluidas las recién promovidas, con `layout.variantOverrides`). Con
    `layout.direction` el compilador elige la paleta de la dirección y **ignora** una paleta fija: para usar
    la paleta promovida, fíjala sin `layout.direction` (o pide agregarla a la dirección, que es un cambio del
-   kit). Recordatorio: las secciones nuevas las inserta el compilador al construir desde el spec; **no son
-   bloques de GrapesJS**.
+   kit). Recordatorio: las secciones nuevas las inserta el compilador al construir desde el spec; además
+   tienen un bloque del editor generado desde el kit (Fase C). Para reconstruir lo que falta, ver «Flujo Stitch nativo»
+   en `/lattiz-design`.
 
 **Lista de traducción** (de `harvest.json` a su destino; la skill nunca promueve ni publica algo que falle
 una compuerta y, en duda, deja el candidato `shelved`):

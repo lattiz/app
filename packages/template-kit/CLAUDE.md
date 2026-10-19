@@ -77,6 +77,7 @@ Palettes, font pairs and section variants can come from Google Stitch through `p
 guide `docs/design-stitch-flow.md`). `design promote` is the only way they enter the kit: it appends to `palettes/seeds.ts` /
 `font-pairs/library.ts` / `sections/` through the same gates (AA, ΔE00 between palettes, extended-sections contract, `kit probe`, unchanged
 `kit:verify-snapshot`, `kit:manifest`) and restores everything if one fails. Never import Stitch HTML or images, and never hand-edit what it generated.
+Patterns the kit lacks are rebuilt by hand as native sections (contract and anti-inflation rules: `docs/stitch-native-sections.md`): reuse a similar variant before creating one, root class `lz-<slot>-<variant>`, tokens only, no JS, and register the editor block in `src/cli/editor-blocks.ts`.
 
 ## Generated templates
 

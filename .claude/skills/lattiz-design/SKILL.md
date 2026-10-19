@@ -64,3 +64,28 @@ Para construir con lo promovido, la **lista de traducción** y el paso opcional 
 `/lattiz-template` («Paso opcional: diseño con Stitch»). Reporta ids, estado (`pnpm lattiz design list`), qué extrajo cada harvest, supuestos, y lo que dejaste en
 `.lattiz/stitch/`. No commitees ni promuevas sin que lo pidan. Para construir una landing con una
 paleta/sección promovida, cambia a `/lattiz-template`.
+
+## Flujo «Stitch nativo» (Modelo D): reconstruir lo que falta, a mano
+
+Úsalo cuando el usuario quiere el diseño de Stitch fiel y no solo su paleta. Guía: `docs/stitch-native-sections.md`.
+
+1. **Diseño.** Igual que arriba (pasos 1–4): candidato `collected` con HTML y captura. Sondea con `list_screens` /
+   `get_screen` por la conexión directa antes de dar la generación por fallida; no repitas la llamada.
+2. **Descomponer.** `pnpm lattiz design harvest <id> [--accent primary|secondary|tertiary]` y lee, por sección:
+   `existing` (ya está: **reutilízala**), `similar` (parecidas: reutiliza una antes de crear), `draft` (nueva) y
+   `not_mappable`. **Reutilizar antes que crear.**
+3. **Reconstruir a mano** solo lo nuevo, siguiendo el contrato (tokens `--lz-*`, sin JS, clase raíz
+   `lz-<slot>-<variante>`, Básico + Pro, copy con las mismas claves que sus hermanas): carpeta en `sections/`, `FAMILIES`
+   en `archetypes/families.ts`, una alternativa en un arquetipo, el bloque en `packages/template-kit/src/cli/editor-blocks.ts`
+   y `pnpm --filter @lattiz/template-kit kit:manifest` (cambia manifiesto, hashes y datos generados de `apps/web`/`apps/api`:
+   reporta el diff). Valida con `lattiz kit probe <slot/variante>`.
+4. **Armar el par** con el spec (dirección, paleta, fuentes, `layout.variantOverrides`) y `pnpm lattiz build`. Las fotos las
+   pone una persona en `images[]`; un hero placeholder falla en `ship`/`publish`.
+5. **Fidelidad.** Compara capturas a 390×844 y 1440×900 contra la de Stitch.
+6. **Parar.** Nunca `ship`, `seed`, push ni promoción de algo que falle una compuerta.
+
+**Checklist de fidelidad:** sin bloques vacíos (hero con foto) · composición y jerarquía iguales · escala del titular
+similar · contraste AA · sin efectos caros (backdrop-filter, parallax) · dentro de presupuesto (hero ≤ 120 KiB, CSS ≤ 1.2 KB
+gzip) · `kit probe` 16/16 · lo que se aproximó queda anotado en el reporte.
+
+**Disciplina anti-inflación:** tope de 6 secciones nacidas de Stitch; `--allow-similar` solo con una razón escrita.
