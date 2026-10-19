@@ -1,0 +1,65 @@
+{
+  "$lattiz": "GENERATED from specs/barberia-la-insignia.spec.json (spec 53ae2d79110a, file 9fbb500e8e68). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "abaf7a86fa3b2d8347372607f2d96e989a11a097ff59f5964ac62a9741bbf431"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "placeholder",
+      "sha256": "ac10ef6c7bb359e3b317221cd1c2c867b790fcf71cf562893d3a979330143db9"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "placeholder",
+      "sha256": "f3a7c9ebc3a797568ecb1d77330806b97631243b3037852e9d30a474171f69c1"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "placeholder",
+      "sha256": "bd9c231dc46d61b926efecd7a73ac24511c06efdcedb4176e4bd08e2b7eb06bf"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "placeholder",
+      "sha256": "97a647084c94375816a71485d10b3db108fa4d66a751b5161c821e1e6ce822c6"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "placeholder",
+      "sha256": "91678bb80f94703329de52ff781ca2be38455694133d2c1e5f6017092ce1def0"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "placeholder",
+      "sha256": "483d89f4f2af985f3745123408b04415788f3263a2af3623f8c8c7057c34a40d"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "placeholder",
+      "sha256": "a3352e91f4c07818eaf9ba6052c711d67b4093b59843a45cfa2a0d70530e2cc9"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "placeholder",
+      "sha256": "ca889fa98084130a3bdc024181ff40bd2e8b62b28dc9cac04583fb502377a8ca"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "placeholder",
+      "sha256": "02da12ea3096a463e32d1f6a9387271e8c28c4e0c568464fbe3d4c90234ccb86"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "placeholder",
+      "sha256": "bf844804b097063d8087f975432442aea07ebe437d0cf9fe165de6cee82af64f"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "placeholder",
+      "sha256": "6462ebd7c05de48f0cd8e9f56c1f340a2a0e7ef48199f55cc03815a86673196a"
+    }
+  ]
+}

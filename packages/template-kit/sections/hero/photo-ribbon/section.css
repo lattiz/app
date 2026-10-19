@@ -53,7 +53,7 @@
 .lz-hero-ribbon__inner {
   position: relative;
   z-index: 1;
-  padding: clamp(72px, 10svh, 136px) 0 clamp(28px, 5svh, 80px);
+  padding: clamp(64px, 8.5svh, 128px) 0 clamp(24px, 4.5svh, 72px);
 }
 
 .lz-hero-ribbon__content {
@@ -105,7 +105,7 @@
 .lz-hero-ribbon__title {
   margin: 0;
   font-size: calc(
-    min(clamp(44px, 6.4vw, 104px), 9.5svh) * var(--lz-display-scale)
+    min(clamp(44px, 6.4vw, 104px), 8.6svh) * var(--lz-display-scale)
   );
   line-height: min(var(--lz-display-leading), 1.08);
   letter-spacing: var(--lz-display-tracking, 0.01em);

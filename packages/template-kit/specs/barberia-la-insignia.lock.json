@@ -1,0 +1,57 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/barberia-la-insignia.spec.json",
+  "catalog": "extended",
+  "catalogVersion": 2,
+  "tiers": {
+    "barberia-la-insignia-v1": {
+      "tier": "pro",
+      "palette": "pal-pizarra-plata",
+      "fontPair": "gilda-display+hanken-grotesk",
+      "shape": "urbano",
+      "archetype": "neo-brutal",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "photo-ribbon" },
+        { "role": "marquee", "slot": "marquee", "variant": "ticker" },
+        { "role": "about", "slot": "about", "variant": "stats-strip" },
+        { "role": "catalog", "slot": "services", "variant": "cards" },
+        { "role": "proof", "slot": "gallery", "variant": "bento" },
+        { "role": "contact", "slot": "locations", "variant": "with-contact" },
+        { "role": "team", "slot": "team", "variant": "grid" },
+        { "role": "testimonials", "slot": "testimonials", "variant": "cards" },
+        { "role": "faq", "slot": "faq", "variant": "list" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "big-wordmark" }
+      ],
+      "layout": { "direction": "insignia-musgo", "archetype": "bold" }
+    },
+    "barberia-base-la-insignia-v1": {
+      "tier": "basico",
+      "palette": "petroleo",
+      "fontPair": "bricolage-grotesque+inter",
+      "shape": "suave",
+      "archetype": "essential",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "image-bg" },
+        { "role": "about", "slot": "about", "variant": "brief" },
+        { "role": "catalog", "slot": "services", "variant": "price-list" },
+        { "role": "faq", "slot": "faq", "variant": "list" },
+        { "role": "contact", "slot": "locations", "variant": "single" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "columns" }
+      ],
+      "layout": { "direction": "insignia-musgo", "archetype": "bold" }
+    }
+  }
+}
