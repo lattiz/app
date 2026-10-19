@@ -215,6 +215,7 @@ function runPromote(ctx: Context): ExitCode {
     section: bool(ctx.flags, 'section'),
     pattern: str(ctx.flags, 'pattern'),
     regenerateManifest: bool(ctx.flags, 'regenerate-manifest'),
+    allowSimilar: bool(ctx.flags, 'allow-similar'),
     dryRun,
     paletteSet: {
       ...parseSet(str(ctx.flags, 'set')),
@@ -477,6 +478,7 @@ export const design: Command = {
     pattern: { type: 'string' },
     'dry-run': { type: 'boolean' },
     'regenerate-manifest': { type: 'boolean' },
+    'allow-similar': { type: 'boolean' },
   },
   async run(ctx) {
     setQuiet(bool(ctx.flags, 'json'));

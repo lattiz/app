@@ -138,6 +138,7 @@ export const PATTERN_LAYOUTS = [
   'link-columns',
   'band',
   'list',
+  'photo-overlay',
 ] as const;
 export type PatternLayout = (typeof PATTERN_LAYOUTS)[number];
 
@@ -166,6 +167,8 @@ export interface SectionPattern {
   notes?: string[];
   /** The kit already has it: `slot/variant`. Nothing is created. */
   existing?: string;
+  /** Variants of the same slot and composition family: reuse one before creating another. */
+  similar?: string[];
   /** New but mappable: files for an additive extended variant (promote writes them). */
   draft?: SectionDraft;
   /** Mappable = fits the kit's roles and ranges; only these can be promoted. */

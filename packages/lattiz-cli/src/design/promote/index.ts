@@ -18,6 +18,7 @@ export interface PromoteOptions {
   section: boolean;
   pattern?: string;
   regenerateManifest: boolean;
+  allowSimilar?: boolean;
   dryRun: boolean;
   /** `--set bg=#hex,accent=#hex`: adjustments to the palette draft, recorded on the candidate. */
   paletteSet?: PaletteOverride;
@@ -96,7 +97,11 @@ export function promote(
       const r = promoteSection(
         c,
         harvest,
-        { pick: opts.pattern, regenerateManifest: opts.regenerateManifest },
+        {
+          pick: opts.pattern,
+          regenerateManifest: opts.regenerateManifest,
+          allowSimilar: opts.allowSimilar,
+        },
         runners.kit,
         runners.lattiz,
         undo,

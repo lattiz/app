@@ -248,3 +248,30 @@ describe('harvest of real Stitch output (Arquímedes Polanco, dental, marmol-sob
     expect(h.typography.delivery.problems.join(' ')).not.toMatch(/Playfair/);
   });
 });
+
+describe('real Stitch hero (Don Porfirio): photo + veil is a hero the kit already has', () => {
+  const lib = resolve(
+    import.meta.dirname,
+    '../../../design-library/stitch/barberia/barberia-don-porfirio-01',
+  );
+  const dir = mkdtempSync(join(tmpdir(), 'harvest-dp-'));
+  copyFileSync(join(lib, 'design.md'), join(dir, 'design.md'));
+  copyFileSync(join(lib, 'source.html'), join(dir, 'source.html'));
+  const h = harvestFolder(candidate, dir);
+
+  it('reads the full-bleed photo with a gradient veil as hero/photo-overlay → hero/photo-ribbon', () => {
+    const hero = h.sections.find((s) => s.slot === 'hero')!;
+    expect(hero.layout).toBe('photo-overlay');
+    expect(hero.existing).toBe('hero/photo-ribbon');
+    expect(h.not_mappable.some((n) => /hero/.test(n.ref))).toBe(false);
+  });
+
+  it('takes primary (sage) as the accent by default and silver when asked', () => {
+    expect(h.palette!.from.accent).toBe('primary');
+    const silver = harvestFolder(candidate, dir, { accentRole: 'secondary' });
+    expect(silver.palette!.accent.toLowerCase()).toBe('#c3c7cd');
+    expect(
+      harvestFolder(candidate, dir, { accentRole: 'nope' }).palette,
+    ).toBeNull();
+  });
+});

@@ -283,4 +283,77 @@ describe('palette adjustments (--set)', () => {
     expect(msg).toMatch(/AA/);
     expect(seeds()).toBe(before);
   });
+
+  describe('anti-inflation gates on --section', () => {
+    const sectionOpts = {
+      ...base,
+      palette: false,
+      section: true,
+      pattern: 'about/quote',
+      regenerateManifest: true,
+    };
+    const edit = (fn: (h: any) => void) => {
+      const file = join(
+        libraryRoot(),
+        'stitch/dental/dental-executive-vision-01/harvest.json',
+      );
+      const h = JSON.parse(readFileSync(file, 'utf8'));
+      fn(h);
+      writeFileSync(file, JSON.stringify(h));
+    };
+
+    it('refuses a draft when the kit already has a similar variant, unless it is allowed', () => {
+      edit((h) => {
+        h.sections.find((s: any) => s.layout === 'quote').similar = [
+          'about/statement',
+        ];
+      });
+      const msg = gateError(() =>
+        promote(
+          findCandidate('dental-executive-vision-01'),
+          sectionOpts,
+          runners(),
+        ),
+      );
+      expect(msg).toMatch(/anti-inflación/);
+      expect(msg).toMatch(/about\/statement/);
+      expect(msg).toMatch(/--allow-similar/);
+    });
+
+    it('refuses a draft above the CSS budget', () => {
+      edit((h) => {
+        h.sections.find((s: any) => s.layout === 'quote').draft.bytes.css_gzip =
+          5000;
+      });
+      expect(
+        gateError(() =>
+          promote(
+            findCandidate('dental-executive-vision-01'),
+            sectionOpts,
+            runners(),
+          ),
+        ),
+      ).toMatch(/presupuesto de la sección/);
+    });
+
+    it('stops at the cap of Stitch-born sections', () => {
+      for (let i = 0; i < 6; i += 1) {
+        const dir = join(kit, 'sections/hero', `stub-${i}`);
+        mkdirSync(dir, { recursive: true });
+        writeFileSync(
+          join(dir, 'meta.ts'),
+          '// Stitch: x\nexport default {};\n',
+        );
+      }
+      expect(
+        gateError(() =>
+          promote(
+            findCandidate('dental-executive-vision-01'),
+            sectionOpts,
+            runners(),
+          ),
+        ),
+      ).toMatch(/tope de secciones de Stitch/);
+    });
+  });
 });

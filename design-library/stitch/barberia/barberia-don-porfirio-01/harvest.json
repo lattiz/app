@@ -363,6 +363,20 @@
   },
   "sections": [
     {
+      "ref": "experiencia",
+      "columns": 0,
+      "items": 0,
+      "hasImage": true,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "glass",
+      "heading": "CORTE LIMPIO, BARBA EN ORDEN.",
+      "mappable": true,
+      "slot": "hero",
+      "layout": "photo-overlay",
+      "existing": "hero/photo-ribbon"
+    },
+    {
       "ref": "maestros",
       "columns": 12,
       "items": 2,
@@ -436,10 +450,6 @@
     {
       "ref": "contacto",
       "reason": "contacto: el kit lo arma con locations/* y los datos del negocio, no desde el diseño"
-    },
-    {
-      "ref": "experiencia",
-      "reason": "hero/centered: el kit aún no sabe construirlo desde un patrón (sin variante equivalente ni generador)"
     }
   ],
   "interactivity": [],

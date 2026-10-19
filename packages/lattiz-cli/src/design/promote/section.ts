@@ -1,4 +1,10 @@
-import { existsSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+} from 'node:fs';
 import { join } from 'node:path';
 import { slugify } from '../library';
 import type { Candidate, Harvest, SectionPattern } from '../types';
@@ -16,6 +22,23 @@ import {
 import type { PromoteOutcome } from './palette';
 import { folderExists } from '../harvest/resolve';
 import { type Scaffold, supportedPatterns } from './section-templates';
+
+/** Anti-inflation: a Stitch design adds at most this many sections before the kit is deduped. */
+export const MAX_STITCH_SECTIONS = 6;
+/** The largest existing extended variant is ~1 KB of gzip CSS; a draft above this is not "budgeted". */
+export const SECTION_CSS_GZIP_MAX = 1200;
+
+export function stitchSectionCount(): number {
+  const root = kitFile('sections');
+  let n = 0;
+  for (const slot of readdirSync(root))
+    for (const variant of readdirSync(join(root, slot))) {
+      const meta = join(root, slot, variant, 'meta.ts');
+      if (existsSync(meta) && /^\/\/ Stitch:/m.test(readFileSync(meta, 'utf8')))
+        n += 1;
+    }
+  return n;
+}
 
 export const sectionKey = (p: SectionPattern) => `${p.slot}/${p.layout}`;
 
@@ -59,6 +82,8 @@ export interface SectionOptions {
   pick?: string;
   /** Keep the generated manifest files (touches apps/api and apps/web generated slices). */
   regenerateManifest: boolean;
+  /** Create it although the kit has similar variants (a deliberate decision, not a default). */
+  allowSimilar?: boolean;
 }
 
 export function pickPattern(harvest: Harvest, pick?: string): SectionPattern {
@@ -119,6 +144,22 @@ export function promoteSection(
     throw new GateFailure(
       'patrón',
       `sections/${pattern.slot}/${variant} ya existe (¿ya se promovió?). Vuelve a correr harvest.`,
+    );
+  if (pattern.similar?.length && !opts.allowSimilar)
+    throw new GateFailure(
+      'anti-inflación (¿ya existe algo parecido?)',
+      `El kit ya tiene ${pattern.similar.join(', ')} en la misma familia de composición.\nReutiliza una (layout.variantOverrides en el spec) o confirma que esta es distinta con --allow-similar.`,
+    );
+  const count = stitchSectionCount();
+  if (count >= MAX_STITCH_SECTIONS)
+    throw new GateFailure(
+      'tope de secciones de Stitch',
+      `Ya hay ${count} secciones nacidas de Stitch (tope ${MAX_STITCH_SECTIONS}). Haz un repaso de duplicados antes de sumar otra.`,
+    );
+  if (draft.bytes.css_gzip > SECTION_CSS_GZIP_MAX)
+    throw new GateFailure(
+      'presupuesto de la sección',
+      `El CSS del borrador pesa ${draft.bytes.css_gzip} B gzip (máximo ${SECTION_CSS_GZIP_MAX}). Simplifica el patrón: quita efectos o variantes.`,
     );
   const problems = draftProblems(draft);
   if (problems.length)

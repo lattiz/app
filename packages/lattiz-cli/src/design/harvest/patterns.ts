@@ -137,6 +137,12 @@ function classify(section: Element, ref: string): SectionPattern | NotMappable {
       section.querySelectorAll('a').length >= 3 ? 'link-columns' : 'list',
     );
   if (section.querySelector('h1')) {
+    const bleed = [...section.querySelectorAll('img')].some((img) => {
+      const own = `${img.getAttribute('class') ?? ''} ${img.parentElement?.getAttribute('class') ?? ''}`;
+      return /\babsolute\b/.test(own) && /\binset-0\b/.test(own);
+    });
+    if (bleed && /bg-gradient|\bbg-[\w-]+\/\d+/.test(section.outerHTML))
+      return make('hero', 'photo-overlay');
     const split =
       hasImage &&
       (columns >= 2 || /md:flex-row|lg:flex-row/.test(section.outerHTML));
