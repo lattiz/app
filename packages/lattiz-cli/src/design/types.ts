@@ -168,8 +168,7 @@ export function validateCandidate(input: unknown, file = 'candidate.json') {
   if (!CANDIDATE_STATUSES.includes(o.status as CandidateStatus))
     p.push(`status: uno de ${CANDIDATE_STATUSES.join(', ')}`);
   if (!isStrArr(o.tags)) p.push('tags: lista de textos');
-  if (o.spin !== undefined && typeof o.spin !== 'string')
-    p.push('spin: texto');
+  if (o.spin !== undefined && typeof o.spin !== 'string') p.push('spin: texto');
   if (!isStr(o.license_ref)) p.push('license_ref: obligatorio');
   if (o.reuse_of !== undefined && !isStr(o.reuse_of))
     p.push('reuse_of: id de otro candidato');
@@ -192,7 +191,10 @@ export function validateHarvest(input: unknown, file = 'harvest.json') {
   const o = input;
   if (o.version !== 1) p.push('version: 1');
   if (!isStr(o.candidate_id)) p.push('candidate_id: obligatorio');
-  if (!isRec(o.input) || !['html', 'design-md'].includes(o.input.kind as string))
+  if (
+    !isRec(o.input) ||
+    !['html', 'design-md'].includes(o.input.kind as string)
+  )
     p.push('input.kind: html | design-md');
   if (o.palette !== null) {
     if (!isRec(o.palette)) p.push('palette: objeto o null');

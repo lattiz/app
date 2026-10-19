@@ -23,7 +23,12 @@ describe('candidate.json', () => {
   });
   it('lists every problem at once', () => {
     try {
-      validateCandidate({ ...candidate, status: 'x', source: 'figma', tags: 1 });
+      validateCandidate({
+        ...candidate,
+        status: 'x',
+        source: 'figma',
+        tags: 1,
+      });
       expect.unreachable();
     } catch (e) {
       expect(e).toBeInstanceOf(ValidationError);
