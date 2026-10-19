@@ -52,7 +52,7 @@ export default {
     basic: ['photo-ribbon', 'image-bg'],
   },
   motion: 'calm',
-  dials: { variance: 5, motion: 4, density: 4 },
+  dials: { variance: 5, motion: 4, density: 3 },
   giros: ['barberia', 'restaurante', 'despacho'],
   rules: ['scheme:dark', 'display:upper'],
 } satisfies ArtDirection;
