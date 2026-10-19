@@ -25,7 +25,7 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 
 - [grapesjs-mobile-layout-plugin](grapesjs-mobile-layout-plugin.md) — layoutSidebarButtons + cast de tipos; cambia también el escritorio
 - [grapesjs-sdk-pin-1-1-1](grapesjs-sdk-pin-1-1-1.md) — no subir studio-sdk a 1.2.1; cómo reparar node_modules roto
-- [vercel-web-deploy-requirements](vercel-web-deploy-requirements.md) — rewrite SPA, VITE_API_BASE_URL, outputs/env de turbo
+- [vercel-web-deploy-requirements](vercel-web-deploy-requirements.md) — web y admin: rewrite SPA, VITE_API_BASE_URL (redeploy sin caché), env de turbo
 - [grapesjs-license-domain](grapesjs-license-domain.md) — autorizar dashboard.lattiz.app + clave real en Vercel
 - [editor-mobile-header-collapse](editor-mobile-header-collapse.md) — header colapsable en móvil + resize del canvas
 - [editor-text-edit-touch-emulation](editor-text-edit-touch-emulation.md) — la emulación táctil de Chrome bloquea editar texto; estilos del RTE
