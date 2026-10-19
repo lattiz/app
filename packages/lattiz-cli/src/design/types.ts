@@ -150,6 +150,7 @@ export interface SectionPattern {
     | 'services'
     | 'testimonials'
     | 'faq'
+    | 'locations'
     | 'cta'
     | 'footer';
   layout: PatternLayout;
@@ -169,6 +170,17 @@ export interface SectionPattern {
   existing?: string;
   /** Variants of the same slot and composition family: reuse one before creating another. */
   similar?: string[];
+  /**
+   * The kit variant that *might* be this section (same slot and layout). A guess, not a verdict:
+   * only `lattiz design fidelity` turns it into `existing`.
+   */
+  reuse_candidate?: string;
+  /** Measured against the kit's variants of the slot (design fidelity); absent = not measured yet. */
+  fidelity?: {
+    verdict: 'match' | 'different';
+    best: string | null;
+    structure: number;
+  };
   /** New but mappable: files for an additive extended variant (promote writes them). */
   draft?: SectionDraft;
   /** Mappable = fits the kit's roles and ranges; only these can be promoted. */
@@ -206,6 +218,14 @@ export interface ImageNeed {
   use: 'foreground' | 'background';
 }
 
+export interface RebuildItem {
+  ref: string;
+  slot: SectionPattern['slot'];
+  layout: PatternLayout;
+  /** Why: measured as different, or not measured yet. */
+  reason: string;
+}
+
 export interface NotMappable {
   ref: string;
   reason: string;
@@ -219,6 +239,8 @@ export interface Harvest {
   typography: TypographyDraft;
   sections: SectionPattern[];
   not_mappable: NotMappable[];
+  /** Sections the kit cannot give as they are: rebuild them by hand as native sections (Model D). */
+  rebuild: RebuildItem[];
   /** JS behaviors seen in the source and what replaces them. */
   interactivity: Interactivity[];
   /** What each slot's photo has to be (for IMAGES.md); never a URL. */

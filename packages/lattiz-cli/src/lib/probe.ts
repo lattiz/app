@@ -228,7 +228,7 @@ export async function probeBlueprint(tier: Tier): Promise<Blueprint> {
   return { ...real, roles, verticals } as unknown as Blueprint;
 }
 
-function sectionsFor(
+export function sectionsFor(
   tier: Tier,
   slot: string,
   variant: string,

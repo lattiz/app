@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { usage } from '../../lib/errors';
 import type { Candidate, Harvest } from '../types';
+import { readFidelity } from '../fidelity';
 import { paletteFromTokens } from './palette';
 import { interactivityOf } from './interactivity';
 import { sectionPatterns } from './patterns';
@@ -38,7 +39,11 @@ export function harvestFolder(
   const patterns = html
     ? sectionPatterns(html)
     : { sections: [], notMappable: [], imagesIgnored: 0, imageNeeds: [] };
-  const resolved = resolvePatterns(patterns.sections, candidate.id);
+  const resolved = resolvePatterns(
+    patterns.sections,
+    candidate.id,
+    readFidelity(dir),
+  );
   const typography = tokens
     ? typographyFromTokens({
         ...tokens,
@@ -72,7 +77,8 @@ export function harvestFolder(
       : null,
     typography,
     sections: resolved.sections,
-    not_mappable: [...patterns.notMappable, ...resolved.notMappable],
+    not_mappable: patterns.notMappable,
+    rebuild: resolved.rebuild,
     interactivity: html ? interactivityOf(html) : [],
     image_needs: patterns.imageNeeds,
     images_ignored: patterns.imagesIgnored,

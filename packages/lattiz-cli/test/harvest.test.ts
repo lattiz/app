@@ -156,8 +156,9 @@ describe('harvest audit trail (Part 5)', () => {
     const by = Object.fromEntries(
       h.sections.map((s) => [`${s.slot}/${s.layout}`, s]),
     );
-    expect(by['hero/split'].existing).toBe('hero/split');
-    expect(by['footer/link-columns'].existing).toBe('footer/columns');
+    expect(by['hero/split'].reuse_candidate).toBe('hero/split');
+    expect(by['hero/split'].existing).toBeUndefined();
+    expect(by['footer/link-columns'].reuse_candidate).toBe('footer/columns');
     expect(by['hero/split'].draft).toBeUndefined();
     for (const key of ['about/quote', 'services/bento', 'cta/centered']) {
       const d = by[key].draft!;
@@ -222,17 +223,23 @@ describe('harvest of real Stitch output (Arquímedes Polanco, dental, marmol-sob
   );
 
   it('names sections by their id, not by their grid: services, testimonials and faq stay apart', () => {
-    expect(by['services/card-grid'].existing).toBe('services/cards');
-    expect(by['testimonials/card-grid'].existing).toBe('testimonials/cards');
-    expect(by['faq/card-grid'].existing).toBe('faq/grid');
+    expect(by['services/card-grid'].reuse_candidate).toBe('services/cards');
+    expect(by['testimonials/card-grid'].reuse_candidate).toBe(
+      'testimonials/cards',
+    );
+    expect(by['faq/card-grid'].reuse_candidate).toBe('faq/grid');
+    expect(by['faq/card-grid'].existing).toBeUndefined();
     expect(h.sections.filter((s) => s.slot === 'services')).toHaveLength(1);
   });
 
   it('cleans separator comments from refs and flags what the kit cannot build', () => {
     expect(h.sections.every((s) => !/^[=\-\s]+$/.test(s.ref))).toBe(true);
     const nm = Object.fromEntries(h.not_mappable.map((n) => [n.ref, n.reason]));
-    expect(nm.contacto).toMatch(/locations/);
     expect(nm.acerca).toMatch(/sin|no tiene/);
+    // Contact is not "not mappable" anymore: it is a section to rebuild by hand.
+    expect(
+      h.rebuild.some((r) => r.ref === 'contacto' && r.slot === 'locations'),
+    ).toBe(true);
   });
 
   it('measures the palette against the giro and reports it too close (gate material)', () => {
@@ -249,7 +256,7 @@ describe('harvest of real Stitch output (Arquímedes Polanco, dental, marmol-sob
   });
 });
 
-describe('real Stitch hero (Don Porfirio): photo + veil is a hero the kit already has', () => {
+describe('real Stitch hero (Don Porfirio): photo + veil is recognized, and the hero in the kit is only a candidate until measured', () => {
   const lib = resolve(
     import.meta.dirname,
     '../../../design-library/stitch/barberia/barberia-don-porfirio-01',
@@ -262,8 +269,12 @@ describe('real Stitch hero (Don Porfirio): photo + veil is a hero the kit alread
   it('reads the full-bleed photo with a gradient veil as hero/photo-overlay → hero/photo-ribbon', () => {
     const hero = h.sections.find((s) => s.slot === 'hero')!;
     expect(hero.layout).toBe('photo-overlay');
-    expect(hero.existing).toBe('hero/photo-ribbon');
+    expect(hero.reuse_candidate).toBe('hero/photo-ribbon');
     expect(h.not_mappable.some((n) => /hero/.test(n.ref))).toBe(false);
+    // Unmeasured: the candidate is named, and the verdict still has to come from `design fidelity`.
+    expect(h.rebuild.find((r) => r.slot === 'hero')?.reason).toMatch(
+      /sin medir.*hero\/photo-ribbon/,
+    );
   });
 
   it('takes primary (sage) as the accent by default and silver when asked', () => {

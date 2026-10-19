@@ -71,9 +71,11 @@ paleta/sección promovida, cambia a `/lattiz-template`.
 
 1. **Diseño.** Igual que arriba (pasos 1–4): candidato `collected` con HTML y captura. Sondea con `list_screens` /
    `get_screen` por la conexión directa antes de dar la generación por fallida; no repitas la llamada.
-2. **Descomponer.** `pnpm lattiz design harvest <id> [--accent primary|secondary|tertiary]` y lee, por sección:
-   `existing` (ya está: **reutilízala**), `similar` (parecidas: reutiliza una antes de crear), `draft` (nueva) y
-   `not_mappable`. **Reutilizar antes que crear.**
+2. **Descomponer y medir.** `pnpm lattiz design harvest <id> [--accent primary|secondary|tertiary]` lista las secciones.
+   Un `reuse_candidate` es solo una conjetura: **corre `pnpm lattiz design fidelity <id> <sección>` por cada una** (necesita
+   Chromium y red) y mira `.lattiz/stitch/fidelity/<id>/<sección>/vs-*.png`. Solo un veredicto `match` (estructura ≤ 0.15)
+   vale como «ya existe: reutilízala». Lo distinto sale en `rebuild` y **se reconstruye**: el objetivo de usar Stitch es
+   tener su diseño, no la variante genérica más cercana. `not_mappable` es solo lo que el kit no admite.
 3. **Reconstruir a mano** solo lo nuevo, siguiendo el contrato (tokens `--lz-*`, sin JS, clase raíz
    `lz-<slot>-<variante>`, Básico + Pro, copy con las mismas claves que sus hermanas): carpeta en `sections/`, `FAMILIES`
    en `archetypes/families.ts`, una alternativa en un arquetipo, el bloque en `packages/template-kit/src/cli/editor-blocks.ts`

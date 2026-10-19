@@ -240,7 +240,14 @@ describe('promote --palette (hermetic: fake runner, copied kit files)', () => {
     ).toMatch(/--regenerate-manifest/);
   });
 
-  it('refuses to create a section the kit already has and says which to use', () => {
+  it('refuses to create a section the kit already has (measured) and says which to use', () => {
+    const file = join(
+      libraryRoot(),
+      'stitch/dental/dental-executive-vision-01/harvest.json',
+    );
+    const h = JSON.parse(readFileSync(file, 'utf8')) as Harvest;
+    h.sections.find((x) => x.layout === 'split')!.existing = 'hero/split';
+    writeFileSync(file, JSON.stringify(h));
     const msg = gateError(() =>
       promote(
         findCandidate('dental-executive-vision-01'),

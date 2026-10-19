@@ -4,7 +4,8 @@ import { FAMILIES } from '../../../../template-kit/archetypes/families';
 import { kitFile } from '../promote/kit';
 import { metaSource, variantName } from '../promote/section';
 import { scaffoldFor } from '../promote/section-templates';
-import type { NotMappable, SectionPattern } from '../types';
+import type { FidelityEntry } from '../fidelity';
+import type { RebuildItem, SectionPattern } from '../types';
 
 /** (slot, layout) pairs the kit already builds, with the variant that does it. */
 const EXISTING: Record<string, string> = {
@@ -46,35 +47,61 @@ export const folderExists = (key: string) =>
   existsSync(kitFile('sections', ...key.split('/')));
 
 /**
- * Pattern → one of: already in the kit ("use <slot/variant>"), a draft for an additive variant, or
- * not mappable. Never writes anything: drafts live in harvest.json until `promote`.
+ * Pattern → one of: already in the kit (a MEASURED match), a draft for an additive variant, or a
+ * section to rebuild by hand. A same-slot, same-layout variant is only a `reuse_candidate`: layout
+ * class is not enough to say "already exists" (a card grid with numbered cards and a centered header
+ * is not the kit's plain card grid). Never writes anything: drafts live in harvest.json until `promote`.
  */
 export function resolvePatterns(
   patterns: SectionPattern[],
   candidateId: string,
-): { sections: SectionPattern[]; notMappable: NotMappable[] } {
+  fidelity: Record<string, FidelityEntry> = {},
+): { sections: SectionPattern[]; rebuild: RebuildItem[] } {
   const sections: SectionPattern[] = [];
-  const notMappable: NotMappable[] = [];
+  const rebuild: RebuildItem[] = [];
   for (const p of patterns) {
     const key = `${p.slot}/${p.layout}`;
-    const existing = EXISTING[key];
-    if (existing && folderExists(existing)) {
-      sections.push({ ...p, existing });
+    const fid = fidelity[p.ref];
+    const measured = fid
+      ? {
+          verdict: fid.verdict,
+          best: fid.best,
+          structure: fid.measured[0]?.structure ?? 1,
+        }
+      : undefined;
+    if (
+      measured?.verdict === 'match' &&
+      measured.best &&
+      folderExists(measured.best)
+    ) {
+      sections.push({ ...p, existing: measured.best, fidelity: measured });
       continue;
     }
+    const guess = EXISTING[key];
+    const reuse = !measured && guess && folderExists(guess) ? guess : undefined;
+    const similar = similarVariants(p);
+    const base = {
+      ...p,
+      ...(reuse ? { reuse_candidate: reuse } : {}),
+      ...(similar.length ? { similar } : {}),
+      ...(measured ? { fidelity: measured } : {}),
+    };
     const variant = variantName(p);
     const scaffold = scaffoldFor(variant, p);
     if (!scaffold) {
-      notMappable.push({
+      sections.push(base);
+      rebuild.push({
         ref: p.ref,
-        reason: `${key}: el kit aún no sabe construirlo desde un patrón (sin variante equivalente ni generador)`,
+        slot: p.slot,
+        layout: p.layout,
+        reason: measured
+          ? `medida: ninguna variante del kit se parece (mejor ${measured.best ?? '—'} a ${measured.structure}); sin generador: reconstrúyela a mano`
+          : `sin medir${reuse ? ` (¿${reuse}?)` : ''}: corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano`,
       });
       continue;
     }
-    const similar = similarVariants(p);
     sections.push({
-      ...p,
-      ...(similar.length ? { similar } : {}),
+      ...base,
       draft: {
         variant,
         html: scaffold.html,
@@ -88,5 +115,5 @@ export function resolvePatterns(
       },
     });
   }
-  return { sections, notMappable };
+  return { sections, rebuild };
 }

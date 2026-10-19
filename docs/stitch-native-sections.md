@@ -34,19 +34,37 @@ el runtime de Motion, el seed ni plantillas, paletas o secciones existentes.
   dirección y `variantOverrides: { hero: photo-ribbon }`.
 - **Compuerta de foto de portada**: `lattiz ship`/`publish` fallan si `images[] «hero»` sigue siendo un
   placeholder (mensaje es-MX con el campo exacto); `lattiz check` y el build lo muestran como aviso.
-- **Harvest y promote**: `primary` es el acento por defecto (antes se elegía «el más cromático» y salía el
+- **Harvest y promote** (ver «Cuándo algo ya existe» más abajo): `primary` es el acento por defecto (antes se elegía «el más cromático» y salía el
   rojo del poste), `harvest --accent <rol>`, `promote --set bg=#… --name …` para ajustes guiados por las
-  compuertas, reconocimiento de foto + velo (`hero/photo-overlay` → ya existe `hero/photo-ribbon`), reporte
-  de variantes parecidas y tres frenos en `promote --section`.
+  compuertas, reconocimiento de foto + velo (`hero/photo-overlay`), `design fidelity` y tres frenos en `promote --section`.
 
-## Disciplina anti-inflación
+## Cuándo algo «ya existe»: se mide, no se adivina
 
-Antes de crear, el harvest dice si el patrón ya existe (`existing`) y qué variantes de su familia de
-composición se le parecen (`similar`). `promote --section` se niega si hay parecidas salvo `--allow-similar`
-(decisión deliberada), si ya hay 6 secciones nacidas de Stitch (`// Stitch:` en su `meta.ts`) o si el CSS
-del borrador pasa de 1.2 KB gzip. **En la prueba real casi todo ya existía**: del diseño de Don Porfirio
-solo la portada era nueva; servicios, testimonios, preguntas, equipo y pie se reutilizan, y no se creó
-ninguna sección de cuerpo. Eso es lo esperado: Stitch deja de ser indispensable conforme el kit crece.
+**Corrección (2026-10-19).** La primera versión decidía «ya existe» por *slot + tipo de layout*: unas preguntas en
+tarjetas numeradas con cabecera centrada se tomaron por `faq/grid`, y casi todo el cuerpo de La Insignia quedó con
+variantes genéricas. Era un error de criterio, y la regla anti-inflación empujaba además a reutilizar. Ahora:
+
+- El harvest solo propone un `reuse_candidate` (misma familia y layout): es una **conjetura**, no un veredicto.
+- `pnpm lattiz design fidelity <id> <sección>` **mide**: renderiza la sección de Stitch (solo para medir; necesita red
+  por el CDN de Tailwind y no se sirve ni se guarda) y cada variante del slot con **la misma copy** y el mismo tema.
+  Compara el **layout**: rectángulos de texto y de cajas normalizados a la sección (ocupación con tolerancia de una
+  celda), más la «firma» (cuántas cajas grandes y en cuántas columnas) y el alto. Es inmune al color, la tipografía y la
+  longitud de la copy. Deja capturas lado a lado y `fidelity.json` en el candidato.
+- **`existing` solo con veredicto `match`** (distancia de estructura ≤ 0.15 y alto 0.7–1.4×). Calibrado con las preguntas
+  de Don Porfirio: la variante reconstruida da 0.10, `faq/grid` 0.23, `faq/list` 0.60, `faq/two-col` 0.64; el umbral
+  de 0.15 es deliberadamente estricto para que lo «parecido» (como `faq/grid`) **no** cuente como existente.
+- Lo que no coincide va a `rebuild` en el harvest (antes caía en «no mapeable»): secciones a **reconstruir a mano**, con la
+  razón y los números. `not_mappable` queda para lo que el kit no admite (iframe, video, carrusel…).
+- `promote --section` ya no bloquea lo parecido: bloquea lo **no medido** (pide correr `design fidelity`) y deja crear lo
+  medido como distinto. Siguen el tope de 6 secciones de Stitch por proyecto y el presupuesto de CSS (1.2 KB gzip).
+
+Primer caso: **`faq/numbered-cards`** (cabecera centrada con antetítulo, tarjetas numeradas con contador CSS en dos
+columnas de igual alto, pregunta en la fuente de titulares; cada tarjeta es un `<details open>` que se abre y cierra sola;
+`+`/`−` sin JS). Bloque del editor `lzb-faq-numbered-cards`. Las preguntas de La Insignia lo usan.
+
+**Cómo aplicar un override a un spec con lock.** `layout.variantOverrides` nuevo no se aplica si el lock ya fija ese rol: el
+build usa el lock. Alinea la variante del rol en `specs/<stem>.lock.json` con la del spec, reconstruye y corre
+`lattiz spec lock <stem>` (comprueba que reproduce).
 
 ## Fidelidad (hero, 1440×900 y 390, contra la captura de Stitch)
 

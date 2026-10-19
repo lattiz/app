@@ -11,6 +11,7 @@ import {
   findCandidate,
   LICENSE_REF,
   nextId,
+  readHarvest,
   readIndex,
   reindex,
   setStatus,
@@ -19,6 +20,7 @@ import {
   writeJson,
 } from '../design/library';
 import { harvestFolder } from '../design/harvest';
+import { measureFidelity, saveFidelity } from '../design/fidelity';
 import {
   buildDesignMd,
   buildPrompt,
@@ -151,16 +153,28 @@ function runHarvest(ctx: Context): ExitCode {
     log.plain(
       `${c.bold('Sección')} ${s.slot}/${s.layout} · ${s.ref} · ${
         s.existing
-          ? c.gray(`ya existe, usa ${s.existing}`)
+          ? c.gray(`ya existe (medido), usa ${s.existing}`)
           : s.draft
             ? c.green(
                 `borrador sections/${s.slot}/${s.draft.variant} (${s.draft.bytes.css_gzip} B css gzip)`,
               )
-            : ''
+            : s.reuse_candidate
+              ? c.yellow(`¿${s.reuse_candidate}? sin medir (design fidelity)`)
+              : s.fidelity
+                ? c.cyan(
+                    `medida: distinta (mejor ${s.fidelity.best ?? '—'} a ${s.fidelity.structure})`,
+                  )
+                : ''
       }${s.notes ? c.gray(` · ${s.notes.join('; ')}`) : ''}`,
     );
   for (const n of harvest.not_mappable)
     log.plain(c.yellow(`No mapeable: ${n.ref} — ${n.reason}`));
+  for (const r of harvest.rebuild ?? [])
+    log.plain(
+      c.cyan(
+        `Reconstruir a mano: ${r.slot}/${r.layout} (${r.ref}) — ${r.reason}`,
+      ),
+    );
   for (const i of harvest.interactivity)
     log.plain(`${c.bold('JS')} ${i.kind}: ${i.recommendation}`);
   for (const d of p?.distance ?? [])
@@ -204,6 +218,62 @@ function parseSet(v: string | undefined) {
     out[k] = hex;
   }
   return out;
+}
+
+async function runFidelity(ctx: Context): Promise<ExitCode> {
+  const loc = findCandidate(ctx.positionals[1]);
+  const ref = ctx.positionals[2];
+  if (!ref)
+    throw usage(
+      'Falta la sección.',
+      'Ejemplo: pnpm lattiz design fidelity <id> preguntas',
+    );
+  const harvest = readHarvest(loc);
+  const found = harvest.sections.find((x) => x.ref === ref);
+  const slot = str(ctx.flags, 'slot') ?? found?.slot;
+  if (!slot)
+    throw usage(
+      `No sé a qué slot del kit corresponde "${ref}".`,
+      'Pasa --slot faq|services|…',
+    );
+  const entry = await measureFidelity({
+    candidateId: loc.candidate.id,
+    candidateDir: loc.dir,
+    giro: loc.candidate.giro,
+    ref,
+    slot,
+    variants: str(ctx.flags, 'variants')?.split(',').filter(Boolean),
+    theme: str(ctx.flags, 'theme'),
+    tier: str(ctx.flags, 'tier') === 'basic' ? 'basic' : 'pro',
+  });
+  saveFidelity(loc.dir, entry);
+  if (bool(ctx.flags, 'json')) {
+    console.log(JSON.stringify(entry, null, 2));
+    return EXIT.OK;
+  }
+  log.title(`lattiz design fidelity ${loc.candidate.id} ${ref}`);
+  log.plain(
+    table(
+      ['Variante', 'Estructura', 'Alto', 'Veredicto'],
+      entry.measured.map((m) => [
+        m.variant,
+        String(m.structure),
+        String(m.heightRatio),
+        m.match ? c.green('parecida') : c.gray('distinta'),
+      ]),
+    ),
+  );
+  log.plain(
+    entry.verdict === 'match'
+      ? c.green(`\nYa existe: usa ${entry.best}.`)
+      : c.yellow(
+          `\nNinguna variante se parece lo suficiente (estructura ≤ ${entry.thresholds.structure}): la sección es NUEVA.`,
+        ),
+  );
+  log.hint(
+    `Comparaciones: .lattiz/stitch/fidelity/${loc.candidate.id}/${ref}/vs-*.png`,
+  );
+  return EXIT.OK;
 }
 
 function runPromote(ctx: Context): ExitCode {
@@ -442,6 +512,7 @@ export const design: Command = {
     'design promote <id> [--palette] [--fonts] [--section [--pattern slot/layout]] [--dry-run] [--regenerate-manifest]',
     '                          pasa los borradores del harvest por las compuertas del kit; si una falla no queda nada',
     '                          --section sin --regenerate-manifest es solo una prueba (esa bandera reescribe archivos generados de apps/api y apps/web)',
+    'design fidelity <id> <seccion> [--slot s] [--variants a/b,c/d] [--theme t] [--tier basic|pro]\n                          ¿ya existe en el kit, VISUALMENTE? renderiza la sección de Stitch y las variantes del slot y mide',
     'design harvest <id> [--accent primary|secondary|tertiary]   (acento por defecto: primary; fuerza otro rol, p. ej. la plata)',
     'design list [--giro g] [--status s] [--tag t] [--spin s] [--json]',
     'design shelve|reject <id> [--note texto]     mueve la bandera',
@@ -468,6 +539,10 @@ export const design: Command = {
     n: { type: 'string' },
     rigor: { type: 'string' },
     accent: { type: 'string' },
+    slot: { type: 'string' },
+    variants: { type: 'string' },
+    theme: { type: 'string' },
+    tier: { type: 'string' },
     set: { type: 'string' },
     all: { type: 'boolean' },
     brief: { type: 'string' },
@@ -491,6 +566,8 @@ export const design: Command = {
         return runReindex();
       case 'harvest':
         return runHarvest(ctx);
+      case 'fidelity':
+        return runFidelity(ctx);
       case 'promote':
         return runPromote(ctx);
       case 'shelve':

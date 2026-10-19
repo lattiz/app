@@ -146,10 +146,15 @@ export function promoteSection(
       'patrón',
       `sections/${pattern.slot}/${variant} ya existe (¿ya se promovió?). Vuelve a correr harvest.`,
     );
-  if (pattern.similar?.length && !opts.allowSimilar)
+  const unmeasured = pattern.fidelity?.verdict !== 'different';
+  if (
+    (pattern.reuse_candidate || pattern.similar?.length) &&
+    unmeasured &&
+    !opts.allowSimilar
+  )
     throw new GateFailure(
       'anti-inflación (¿ya existe algo parecido?)',
-      `El kit ya tiene ${pattern.similar.join(', ')} en la misma familia de composición.\nReutiliza una (layout.variantOverrides en el spec) o confirma que esta es distinta con --allow-similar.`,
+      `El kit tiene ${[pattern.reuse_candidate, ...(pattern.similar ?? [])].filter(Boolean).join(', ')} en la misma familia de composición y no se midió si esta sección es distinta.\nCorre «lattiz design fidelity <id> ${pattern.ref}»: si es distinta (estructura > 0.15) se puede crear; si no, reutiliza la variante. O confirma a ciegas con --allow-similar.`,
     );
   const count = stitchSectionCount();
   if (count >= MAX_STITCH_SECTIONS)

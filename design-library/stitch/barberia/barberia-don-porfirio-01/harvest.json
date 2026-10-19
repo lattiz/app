@@ -374,7 +374,13 @@
       "mappable": true,
       "slot": "hero",
       "layout": "photo-overlay",
-      "existing": "hero/photo-ribbon"
+      "reuse_candidate": "hero/photo-ribbon",
+      "similar": [
+        "hero/image-bg",
+        "hero/framed",
+        "hero/poster",
+        "hero/photo-ribbon"
+      ]
     },
     {
       "ref": "maestros",
@@ -388,7 +394,11 @@
       "mappable": true,
       "slot": "about",
       "layout": "split",
-      "existing": "about/text-image-offset"
+      "reuse_candidate": "about/text-image-offset",
+      "similar": [
+        "about/text-image-offset",
+        "about/portrait"
+      ]
     },
     {
       "ref": "servicios",
@@ -402,7 +412,22 @@
       "mappable": true,
       "slot": "services",
       "layout": "card-grid",
-      "existing": "services/cards"
+      "reuse_candidate": "services/cards",
+      "similar": [
+        "services/cards",
+        "services/product-grid"
+      ],
+      "draft": {
+        "variant": "bordered-card-grid",
+        "html": "<section id=\"servicios\" data-lz-slot=\"services\" data-lz-variant=\"bordered-card-grid\" class=\"lz-section lz-services-bordered-card-grid\">\n  <div class=\"lz-container\">\n    <p class=\"lz-services-bordered-card-grid__kicker\" data-lz-key=\"kicker\"></p>\n    <h2 class=\"lz-title lz-title--section\" data-lz-key=\"title\"></h2>\n    <div class=\"lz-services-bordered-card-grid__grid\">\n      <article class=\"lz-services-bordered-card-grid__card\" data-lz-each=\"prices\">\n        <p class=\"lz-services-bordered-card-grid__price\" data-lz-key=\"price\"></p>\n        <h3 class=\"lz-services-bordered-card-grid__name\" data-lz-key=\"name\"></h3>\n        <p class=\"lz-services-bordered-card-grid__desc\" data-lz-key=\"description\"></p>\n      </article>\n    </div>\n  </div>\n</section>\n",
+        "css": ".lz-services-bordered-card-grid {\n  padding: var(--lz-section-pad) 0;\n}\n\n.lz-services-bordered-card-grid__kicker {\n  margin: 0 0 calc(12px * var(--lz-space));\n  color: var(--lz-color-text);\n  font-size: calc(14px * var(--lz-text-scale));\n  letter-spacing: 0.12em;\n  text-transform: uppercase;\n}\n\n.lz-services-bordered-card-grid__grid {\n  display: grid;\n  grid-template-columns: repeat(3, minmax(0, 1fr));\n  gap: calc(20px * var(--lz-space));\n  margin-top: calc(40px * var(--lz-space));\n}\n\n.lz-services-bordered-card-grid__card {\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  gap: calc(14px * var(--lz-space));\n  min-height: calc(220px * var(--lz-space));\n  padding: calc(32px * var(--lz-space));\n  border-radius: var(--lz-radius-card);\n  color: var(--lz-color-text);\n  background: var(--lz-color-surface);\n  border: var(--lz-border-width, 1px) solid var(--lz-color-line);\n}\n\n.lz-services-bordered-card-grid__price {\n  margin: 0;\n  color: var(--lz-color-accent-text);\n  font-family: var(--lz-font-display);\n  font-size: calc(clamp(36px, 4.4vw, 60px) * var(--lz-display-scale));\n  letter-spacing: var(--lz-display-tracking, 0);\n  line-height: 1;\n}\n\n.lz-services-bordered-card-grid__name {\n  margin: 0;\n  font-family: var(--lz-font-display);\n  font-size: calc(24px * var(--lz-text-scale));\n  line-height: 1.2;\n}\n\n.lz-services-bordered-card-grid__desc {\n  max-width: 44ch;\n  margin: 0;\n  color: var(--lz-color-muted);\n  font-size: calc(16px * var(--lz-text-scale));\n  line-height: 1.55;\n  text-wrap: pretty;\n}\n\n@media (max-width: 992px) {\n  .lz-services-bordered-card-grid__grid {\n    grid-template-columns: repeat(2, minmax(0, 1fr));\n  }\n  .lz-services-bordered-card-grid__card,\n  .lz-services-bordered-card-grid__card:nth-child(n) {\n    grid-column: auto;\n  }\n}\n\n@media (max-width: 480px) {\n  .lz-services-bordered-card-grid__grid {\n    grid-template-columns: minmax(0, 1fr);\n  }\n  .lz-services-bordered-card-grid__card,\n  .lz-services-bordered-card-grid__card:nth-child(n) {\n    grid-column: auto;\n    padding: calc(24px * var(--lz-space));\n  }\n}\n",
+        "meta_ts": "import type { SectionMeta } from '../../../src/types';\n\n// Stitch: barberia-don-porfirio-01\nexport default {\n  slot: \"services\",\n  variant: \"bordered-card-grid\",\n  label: \"Servicios y precios\",\n  region: 'main',\n  description: \"Tarjetas con filete con el precio grande arriba, nombre y descripción; tres por fila en escritorio.\",\n  numbered: true,\n  tiers: [\n  \"basic\",\n  \"pro\"\n],\n  intent: \"Catálogo en retícula con tarjetas con filete, a partir de un patrón de Stitch; para giros con pocos servicios bien diferenciados.\",\n  archetypes: [\n  \"catalog\",\n  \"soft\"\n],\n  contentKeys: [\n  \"kicker\",\n  \"title\",\n  \"prices[].name\",\n  \"prices[].price\",\n  \"prices[].description\"\n],\n  sample: {\n  \"prices\": [\n    {\n      \"name\": \"Valoración inicial\",\n      \"price\": \"$600\",\n      \"description\": \"Revisión completa y plan por escrito, sin compromiso.\"\n    },\n    {\n      \"name\": \"Limpieza profunda\",\n      \"price\": \"$950\",\n      \"description\": \"Higiene con ultrasonido y pulido, en una sola visita.\"\n    },\n    {\n      \"name\": \"Blanqueamiento\",\n      \"price\": \"$3,200\",\n      \"description\": \"Dos sesiones con seguimiento de sensibilidad.\"\n    },\n    {\n      \"name\": \"Ortodoncia\",\n      \"price\": \"$1,400\",\n      \"description\": \"Mensualidad con revisión incluida.\"\n    }\n  ]\n},\n} satisfies SectionMeta;\n",
+        "bytes": {
+          "html": 751,
+          "css": 2079,
+          "css_gzip": 584
+        }
+      }
     },
     {
       "ref": "resenas",
@@ -416,7 +441,10 @@
       "mappable": true,
       "slot": "testimonials",
       "layout": "card-grid",
-      "existing": "testimonials/cards"
+      "reuse_candidate": "testimonials/cards",
+      "similar": [
+        "testimonials/cards"
+      ]
     },
     {
       "ref": "preguntas",
@@ -430,7 +458,28 @@
       "mappable": true,
       "slot": "faq",
       "layout": "card-grid",
-      "existing": "faq/grid"
+      "existing": "faq/numbered-cards",
+      "fidelity": {
+        "verdict": "match",
+        "best": "faq/numbered-cards",
+        "structure": 0.095
+      }
+    },
+    {
+      "ref": "contacto",
+      "columns": 12,
+      "items": 2,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "bordered",
+      "heading": "LLEGA O APARTA TU SILLÓN",
+      "mappable": true,
+      "slot": "locations",
+      "layout": "split",
+      "similar": [
+        "locations/single"
+      ]
     },
     {
       "ref": "8. FOOTER SECTION",
@@ -443,13 +492,46 @@
       "mappable": true,
       "slot": "footer",
       "layout": "link-columns",
-      "existing": "footer/columns"
+      "reuse_candidate": "footer/columns",
+      "similar": [
+        "footer/big-wordmark",
+        "footer/columns",
+        "footer/minimal-centered",
+        "footer/ledger"
+      ]
     }
   ],
-  "not_mappable": [
+  "not_mappable": [],
+  "rebuild": [
+    {
+      "ref": "experiencia",
+      "slot": "hero",
+      "layout": "photo-overlay",
+      "reason": "sin medir (¿hero/photo-ribbon?): corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
+    },
+    {
+      "ref": "maestros",
+      "slot": "about",
+      "layout": "split",
+      "reason": "sin medir (¿about/text-image-offset?): corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
+    },
+    {
+      "ref": "resenas",
+      "slot": "testimonials",
+      "layout": "card-grid",
+      "reason": "sin medir (¿testimonials/cards?): corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
+    },
     {
       "ref": "contacto",
-      "reason": "contacto: el kit lo arma con locations/* y los datos del negocio, no desde el diseño"
+      "slot": "locations",
+      "layout": "split",
+      "reason": "sin medir: corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
+    },
+    {
+      "ref": "8. FOOTER SECTION",
+      "slot": "footer",
+      "layout": "link-columns",
+      "reason": "sin medir (¿footer/columns?): corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
     }
   ],
   "interactivity": [],

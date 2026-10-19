@@ -155,12 +155,7 @@ function classify(section: Element, ref: string): SectionPattern | NotMappable {
     section.querySelectorAll('a, button').length >= 1 &&
     section.querySelectorAll('p').length <= 3;
   // A short "contact" block with one action is the closing CTA; the data block is the kit's locations.
-  if (hint === 'contact' && !ctaShaped)
-    return {
-      ref,
-      reason:
-        'contacto: el kit lo arma con locations/* y los datos del negocio, no desde el diseño',
-    };
+  if (hint === 'contact' && !ctaShaped) return make('locations', 'split');
   if (hint === 'faq' || hint === 'testimonials')
     return make(hint, grid || columns >= 2 ? 'card-grid' : 'list');
   if (hint === 'about' && items >= 3 && grid)
