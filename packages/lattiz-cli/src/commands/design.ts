@@ -11,6 +11,7 @@ import {
   slugify,
   writeJson,
 } from '../design/library';
+import { harvestFolder } from '../design/harvest';
 import type { Candidate, CandidateStatus } from '../design/types';
 import { GIROS } from '../../../template-kit/giros';
 import { bool, type Command, type Context, str } from '../lib/command';
@@ -80,6 +81,54 @@ function runFlag(ctx: Context, status: CandidateStatus): ExitCode {
   setStatus(loc, status, note ? { notes: note } : {});
   reindex();
   log.ok(`${loc.candidate.id} → ${status}`);
+  return EXIT.OK;
+}
+
+function runHarvest(ctx: Context): ExitCode {
+  const loc = findCandidate(ctx.positionals[1]);
+  if (loc.candidate.status === 'rejected')
+    throw usage(`"${loc.candidate.id}" está rechazado: no se extrae.`);
+  const harvest = harvestFolder(loc.candidate, loc.dir);
+  writeJson(join(loc.dir, 'harvest.json'), harvest);
+  setStatus(loc, 'harvested');
+  reindex();
+  if (bool(ctx.flags, 'json')) {
+    console.log(JSON.stringify(harvest, null, 2));
+    return EXIT.OK;
+  }
+  log.title(`lattiz design harvest ${loc.candidate.id}`);
+  const p = harvest.palette;
+  if (p)
+    log.plain(
+      `${c.bold('Paleta')} ${p.mode} · fondo ${p.bg} · texto ${p.text} · acento ${p.accent} ${
+        p.aa.ok ? c.green('AA ✓') : c.red(`AA ✗ ${p.aa.problems.join('; ')}`)
+      }`,
+    );
+  else log.warn('Sin paleta: faltan tokens de color en la fuente.');
+  const t = harvest.typography;
+  log.plain(
+    `${c.bold('Tipografía')} ${t.displayFamily ?? '—'} + ${t.bodyFamily ?? '—'} · ${t.scale.length} niveles${
+      t.unsupportedFamilies.length
+        ? c.yellow(
+            ` · sin fuente utilizable: ${t.unsupportedFamilies.join(', ')}`,
+          )
+        : ''
+    }`,
+  );
+  for (const s of harvest.sections)
+    log.plain(
+      `${c.bold('Sección')} ${s.slot}/${s.layout} · ${s.ref} · ${s.items} ítem(s) · ${s.surface}${s.notes ? c.gray(` · ${s.notes.join('; ')}`) : ''}`,
+    );
+  for (const n of harvest.not_mappable)
+    log.plain(c.yellow(`No mapeable: ${n.ref} — ${n.reason}`));
+  log.plain(
+    c.gray(
+      `${harvest.images_ignored} imagen(es) ignorada(s): nunca se copian.`,
+    ),
+  );
+  log.hint(
+    `Revisa y promueve: pnpm lattiz design promote ${loc.candidate.id} --palette`,
+  );
   return EXIT.OK;
 }
 
@@ -188,6 +237,8 @@ export const design: Command = {
         return runList(ctx);
       case 'reindex':
         return runReindex();
+      case 'harvest':
+        return runHarvest(ctx);
       case 'shelve':
         return runFlag(ctx, 'shelved');
       case 'reject':
@@ -203,4 +254,3 @@ export const design: Command = {
     }
   },
 };
-
