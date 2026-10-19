@@ -1,4 +1,4 @@
-// GENERATED from specs/barberia-la-insignia.spec.json (spec 53ae2d79110a, file 4ea7d9180896). Do not edit: use the spec, or freeze.
+// GENERATED from specs/barberia-la-insignia.spec.json (spec 023c9502fca0, file dcf0ee0125ee). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
@@ -28,11 +28,11 @@ export default {
     },
     {
       slot: 'about',
-      variant: 'stats-strip',
+      variant: 'framed-craft',
     },
     {
       slot: 'services',
-      variant: 'cards',
+      variant: 'ritual-cards',
     },
     {
       slot: 'gallery',
@@ -40,7 +40,7 @@ export default {
     },
     {
       slot: 'locations',
-      variant: 'with-contact',
+      variant: 'booking-panel',
     },
     {
       slot: 'team',
@@ -48,11 +48,11 @@ export default {
     },
     {
       slot: 'testimonials',
-      variant: 'cards',
+      variant: 'paper-trio',
     },
     {
       slot: 'faq',
-      variant: 'list',
+      variant: 'numbered-cards',
     },
     {
       slot: 'floating-whatsapp',
@@ -60,7 +60,7 @@ export default {
     },
     {
       slot: 'footer',
-      variant: 'big-wordmark',
+      variant: 'signature-bar',
     },
   ],
   motion: {

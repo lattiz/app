@@ -110,9 +110,30 @@ const GEOMETRY_READER = `(sel) => {
     const bg = cs.backgroundColor;
     const filled = bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent';
     const r = el.getBoundingClientRect();
-    if ((bw > 0 || filled) && r.width > 60 && r.height > 24 && r.width < r0.width * 0.98) push('box', el);
+    // An empty box is decoration (a glow, a rule), not a card.
+    const hasContent = (el.textContent || '').trim().length > 1 || el.querySelector('img, picture, video, svg');
+    if ((bw > 0 || filled) && hasContent && r.width > 60 && r.height > 24 && r.width < r0.width * 0.98) push('box', el);
   }
-  return { w: r0.width, h: r0.height, rects };
+  // Anatomy: where the text sits inside each large box (title/price row, rule, footer row…).
+  const cards = [];
+  for (const el of Array.from(root.querySelectorAll('*'))) {
+    const r = el.getBoundingClientRect();
+    if (r.width < r0.width * 0.12 || r.width > r0.width * 0.9 || r.height < 60) continue;
+    const cs = getComputedStyle(el);
+    const bw = parseFloat(cs.borderTopWidth) + parseFloat(cs.borderLeftWidth);
+    const bg = cs.backgroundColor;
+    if (!(bw > 0 || (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent'))) continue;
+    const inner = [];
+    for (const t of Array.from(el.querySelectorAll('*'))) {
+      const direct = Array.from(t.childNodes).some((n) => n.nodeType === 3 && n.textContent.trim().length > 1);
+      if (!direct) continue;
+      const q = t.getBoundingClientRect();
+      if (q.width < 8 || q.height < 6) continue;
+      inner.push({ x: (q.left - r.left) / r.width, y: (q.top - r.top) / r.height, w: q.width / r.width, h: q.height / r.height });
+    }
+    if (inner.length >= 2) cards.push(inner);
+  }
+  return { w: r0.width, h: r0.height, rects, cards };
 }`;
 
 interface Rect {
@@ -126,6 +147,8 @@ export interface Geometry {
   w: number;
   h: number;
   rects: Rect[];
+  /** Text rectangles inside each large box, normalized to the box. */
+  cards?: Omit<Rect, 'kind'>[][];
 }
 
 const GRID = 48;
@@ -177,6 +200,79 @@ export function dice(a: Uint8Array, b: Uint8Array): number {
   return total === 0 ? 1 : Math.min(1, inter / total);
 }
 
+const A = 16;
+
+/** Average card anatomy: cells where at least half of the cards have text. */
+export function anatomyMap(g: Geometry): Uint8Array | null {
+  const cards = g.cards ?? [];
+  if (cards.length < 2) return null;
+  const count = new Float64Array(A * A);
+  for (const card of cards) {
+    const seen = new Uint8Array(A * A);
+    for (const r of card) {
+      const x0 = Math.max(0, Math.floor(r.x * A));
+      const x1 = Math.min(A - 1, Math.ceil((r.x + r.w) * A) - 1);
+      const y0 = Math.max(0, Math.floor(r.y * A));
+      const y1 = Math.min(A - 1, Math.ceil((r.y + r.h) * A) - 1);
+      for (let y = y0; y <= y1; y += 1)
+        for (let x = x0; x <= x1; x += 1) seen[y * A + x] = 1;
+    }
+    for (let i = 0; i < seen.length; i += 1) count[i] += seen[i];
+  }
+  return Uint8Array.from(count, (v) => (v / cards.length >= 0.5 ? 1 : 0));
+}
+
+/** Dice on a 16-cell map, tolerant by one cell. */
+function diceSmall(a: Uint8Array, b: Uint8Array): number {
+  const near = (m: Uint8Array, i: number) => {
+    const y = Math.floor(i / A);
+    const x = i % A;
+    for (let dy = -1; dy <= 1; dy += 1)
+      for (let dx = -1; dx <= 1; dx += 1) {
+        const yy = y + dy;
+        const xx = x + dx;
+        if (yy >= 0 && yy < A && xx >= 0 && xx < A && m[yy * A + xx])
+          return true;
+      }
+    return false;
+  };
+  let inter = 0;
+  let sa = 0;
+  let sb = 0;
+  for (let i = 0; i < a.length; i += 1) {
+    if (a[i] && near(b, i)) inter += 1;
+    if (b[i] && near(a, i)) inter += 1;
+    sa += a[i];
+    sb += b[i];
+  }
+  return sa + sb === 0 ? 1 : Math.min(1, inter / (sa + sb));
+}
+
+/** Per card: text blocks, and rows that hold two or more blocks side by side (title + price). */
+export function cardStats(
+  g: Geometry,
+): { blocks: number; pairedRows: number } | null {
+  const cards = g.cards ?? [];
+  if (cards.length < 2) return null;
+  const avg = (xs: number[]) =>
+    Math.round(xs.reduce((a, b) => a + b, 0) / xs.length);
+  const rowsOf = (card: Omit<Rect, 'kind'>[]) => {
+    const rows: Omit<Rect, 'kind'>[][] = [];
+    for (const r of [...card].sort((a, b) => a.y - b.y)) {
+      const row = rows.find(
+        (x) => Math.abs(x[0].y + x[0].h / 2 - (r.y + r.h / 2)) < 0.07,
+      );
+      if (row) row.push(r);
+      else rows.push([r]);
+    }
+    return rows.filter((row) => row.length >= 2).length;
+  };
+  return {
+    blocks: avg(cards.map((c) => c.length)),
+    pairedRows: avg(cards.map(rowsOf)),
+  };
+}
+
 /** Large boxes (cards) and how many distinct columns they sit in: the skeleton of the section. */
 export function skeleton(g: Geometry): { boxes: number; columns: number } {
   const big = g.rects.filter(
@@ -195,6 +291,18 @@ export function layoutDistance(a: Geometry, b: Geometry): number {
     a.rects.some((r) => r.kind === 'box') ||
     b.rects.some((r) => r.kind === 'box');
   const box = hasBoxes ? dice(occupancy(a, 'box'), occupancy(b, 'box')) : text;
+  const ma = anatomyMap(a);
+  const mb = anatomyMap(b);
+  // Both sides have cards: their inner anatomy weighs as much as the outer layout.
+  const anatomy = ma && mb ? diceSmall(ma, mb) : null;
+  const ca = cardStats(a);
+  const cb = cardStats(b);
+  // Two or more blocks of difference per card, or paired rows missing: another anatomy, not a restyle.
+  const anatomyPenalty =
+    ca && cb
+      ? (Math.abs(ca.blocks - cb.blocks) >= 2 ? 0.15 : 0) +
+        (Math.abs(ca.pairedRows - cb.pairedRows) >= 2 ? 0.15 : 0)
+      : 0;
   const sa = skeleton(a);
   const sb = skeleton(b);
   const penalty =
@@ -203,10 +311,64 @@ export function layoutDistance(a: Geometry, b: Geometry): number {
     1.5 * Math.max(1, Math.min(sa.boxes, sb.boxes))
       ? 0.15
       : 0);
-  return Math.round(Math.min(1, 1 - (text + box) / 2 + penalty) * 1000) / 1000;
+  return (
+    Math.round(
+      Math.min(
+        1,
+        1 -
+          (anatomy === null ? (text + box) / 2 : (text + box + anatomy) / 3) +
+          penalty +
+          anatomyPenalty,
+      ) * 1000,
+    ) / 1000
+  );
 }
 
-const READERS: Record<string, typeof readFaqCopy> = { faq: readFaqCopy };
+/** The reference's single location panel (address, hours, map link) as the kit's `branches`. */
+const LOCATIONS_READER = `(id) => {
+  const root = document.getElementById(id);
+  if (!root) return null;
+  const text = (e) => ((e && e.textContent) || '').replace(/\\s+/g, ' ').trim();
+  const head = Array.from(root.querySelectorAll('h3'))[0];
+  const panel = head ? head.closest('div[class*="rounded"]') : null;
+  if (!panel) return null;
+  const address = Array.from(panel.querySelectorAll('p')).map(text).find((t) => t.length > 12);
+  const rows = Array.from(panel.querySelectorAll('div')).filter((d) => d.children.length === 2 && d.children[0].tagName === 'SPAN' && d.children[1].tagName === 'SPAN');
+  const maps = Array.from(root.querySelectorAll('a')).find((a) => /maps/.test(a.getAttribute('href') || ''));
+  if (!address || !rows.length || !maps) return null;
+  const h2 = root.querySelector('h2');
+  const lead = h2 ? Array.from(root.querySelectorAll('p')).find((p) => p.compareDocumentPosition(h2) & 2 && text(p).length > 30) : null;
+  const wrap = h2 ? h2.parentElement : null;
+  const kicker = wrap ? Array.from(wrap.querySelectorAll('span')).find((e) => text(e).length > 2) : null;
+  return {
+    title: text(h2),
+    ...(lead ? { contactText: text(lead) } : {}),
+    ...(kicker ? { kicker: text(kicker) } : {}),
+    hoursLabel: text(rows[0].children[0]),
+    branches: [{
+      name: text(head),
+      address,
+      hours: text(rows[0].children[1]),
+      directionsUrl: maps.getAttribute('href'),
+      mapUrl: 'about:blank',
+      mapTitle: text(head),
+    }],
+  };
+}`;
+
+async function readLocationsCopy(
+  page: Page,
+  ref: string,
+): Promise<ContentObject | null> {
+  return page.evaluate(
+    `(${LOCATIONS_READER})(${JSON.stringify(ref)})`,
+  ) as Promise<ContentObject | null>;
+}
+
+const READERS: Record<string, typeof readFaqCopy> = {
+  faq: readFaqCopy,
+  locations: readLocationsCopy,
+};
 
 export interface FidelityInput {
   candidateId: string;
@@ -294,63 +456,83 @@ export async function measureFidelity(
       })
       .catch(() => undefined);
     await page.evaluate(() => document.fonts.ready);
-    const target = page.locator(`#${input.ref}`).first();
+    // Footers carry no id in most designs: fall back to the element itself.
+    // Refs that are not a plain id (a comment label) and footers without id: the element itself.
+    const plainId = /^[A-Za-z][\w-]*$/.test(input.ref);
+    let selector = plainId ? `#${input.ref}` : 'footer';
+    if (
+      plainId &&
+      input.slot === 'footer' &&
+      (await page.locator(selector).count()) === 0
+    )
+      selector = 'footer';
+    const target = page.locator(selector).first();
     if ((await target.count()) === 0)
       throw usage(`No hay una sección con id "${input.ref}" en ${source}.`);
+    // The design's sticky header overlays the crop: measure the section alone.
+    await page.addStyleTag({ content: 'header{display:none!important}' });
     await target.screenshot({ path: stitchPng });
     const stitchGeo = (await page.evaluate(
-      `(${GEOMETRY_READER})(${JSON.stringify(`#${input.ref}`)})`,
+      `(${GEOMETRY_READER})(${JSON.stringify(selector)})`,
     )) as Geometry;
     const copy = await READERS[input.slot]?.(page, input.ref);
     const stitchMeta = await sharp(stitchPng).metadata();
 
     const giro = GIROS[input.giro];
+    const skipped: string[] = [];
     for (const key of variants) {
       const [slot, variant] = key.split('/');
-      const dir = join(out, `_page-${variant}`);
-      mkdirSync(dir, { recursive: true });
-      await composePage({
-        id: `fidelity-${slot}-${variant}`,
-        name: `Fidelidad ${key}`,
-        tier,
-        sections: sectionsFor(tier, slot, variant),
-        giro,
-        theme: { ...loadTheme(theme), tier },
-        mode: 'demo',
-        dir,
-        // No CTA: the reference has none, and an extra button would change the height.
-        extra: copy ? { [slot]: { ...copy, cta: '' } } : undefined,
-      });
-      const shot = join(out, `${variant}.png`);
-      const kit = await browser.newPage({
-        viewport: { width: 1280, height: 900 },
-      });
-      await open(kit, pathToFileURL(resolve(dir, 'index.html')).href);
-      // Chrome (header, floating WhatsApp) overlays the crop; only the section is measured.
-      await kit.addStyleTag({
-        content:
-          '[data-lz-slot="navbar"],[data-lz-slot="floating-whatsapp"],.lz-whatsapp{display:none!important}',
-      });
-      await kit
-        .locator(`[data-lz-slot="${slot}"]`)
-        .first()
-        .screenshot({ path: shot });
-      const kitGeo = (await kit.evaluate(
-        `(${GEOMETRY_READER})(${JSON.stringify(`[data-lz-slot="${slot}"]`)})`,
-      )) as Geometry;
-      await kit.close();
-      const meta = await sharp(shot).metadata();
-      const structure = layoutDistance(stitchGeo, kitGeo);
-      const heightRatio =
-        Math.round(((meta.height ?? 1) / (stitchMeta.height ?? 1)) * 100) / 100;
-      measured.push({
-        variant: key,
-        structure,
-        heightRatio,
-        match: isMatch(structure, heightRatio),
-      });
-      await sideBySide(stitchPng, shot, join(out, `vs-${variant}.png`));
+      try {
+        const dir = join(out, `_page-${variant}`);
+        mkdirSync(dir, { recursive: true });
+        await composePage({
+          id: `fidelity-${slot}-${variant}`,
+          name: `Fidelidad ${key}`,
+          tier,
+          sections: sectionsFor(tier, slot, variant),
+          giro,
+          theme: { ...loadTheme(theme), tier },
+          mode: 'demo',
+          dir,
+          // No CTA: the reference has none, and an extra button would change the height.
+          extra: copy ? { [slot]: { ...copy, cta: '' } } : undefined,
+        });
+        const shot = join(out, `${variant}.png`);
+        const kit = await browser.newPage({
+          viewport: { width: 1280, height: 900 },
+        });
+        await open(kit, pathToFileURL(resolve(dir, 'index.html')).href);
+        // Chrome (header, floating WhatsApp) overlays the crop; only the section is measured.
+        await kit.addStyleTag({
+          content:
+            '[data-lz-slot="navbar"],[data-lz-slot="floating-whatsapp"],.lz-whatsapp{display:none!important}',
+        });
+        await kit
+          .locator(`[data-lz-slot="${slot}"]`)
+          .first()
+          .screenshot({ path: shot });
+        const kitGeo = (await kit.evaluate(
+          `(${GEOMETRY_READER})(${JSON.stringify(`[data-lz-slot="${slot}"]`)})`,
+        )) as Geometry;
+        await kit.close();
+        const meta = await sharp(shot).metadata();
+        const structure = layoutDistance(stitchGeo, kitGeo);
+        const heightRatio =
+          Math.round(((meta.height ?? 1) / (stitchMeta.height ?? 1)) * 100) /
+          100;
+        measured.push({
+          variant: key,
+          structure,
+          heightRatio,
+          match: isMatch(structure, heightRatio),
+        });
+        await sideBySide(stitchPng, shot, join(out, `vs-${variant}.png`));
+      } catch (error) {
+        // A variant that cannot render with generic giro copy (a product grid, say) is skipped, not fatal.
+        skipped.push(`${key}: ${(error as Error).message.split('\n')[0]}`);
+      }
     }
+    for (const k of skipped) console.error(`  (omitida) ${k}`);
   } finally {
     await browser.close();
   }

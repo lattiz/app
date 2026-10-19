@@ -1,0 +1,22 @@
+<footer id="footer" data-lz-slot="footer" data-lz-variant="signature-bar" class="lz-section lz-footer-signature-bar">
+  <div class="lz-container lz-footer-signature-bar__inner">
+    <div class="lz-footer-signature-bar__top">
+      <p class="lz-footer-signature-bar__brand">
+        <span class="lz-footer-signature-bar__monogram" data-lz-if="monogram" data-lz-key="monogram" aria-hidden="true"></span>
+        <span class="lz-footer-signature-bar__name">{{name}}</span>
+      </p>
+      <p class="lz-footer-signature-bar__motto">
+        <span data-lz-if="motto" data-lz-key="motto"></span>
+        <span class="lz-footer-signature-bar__ribbon" aria-hidden="true"></span>
+      </p>
+    </div>
+    <div class="lz-footer-signature-bar__bottom">
+      <nav aria-label="Enlaces del pie">
+        <ul class="lz-footer-signature-bar__links">
+          <li data-lz-each="links"><a class="lz-footer-signature-bar__link" data-lz-attr-href="href" data-lz-key="label"></a></li>
+        </ul>
+      </nav>
+      <p class="lz-footer-signature-bar__legal">© {{year}} {{name}}. Todos los derechos reservados. · Hecho con Lattiz</p>
+    </div>
+  </div>
+</footer>

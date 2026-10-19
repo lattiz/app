@@ -172,9 +172,21 @@ export async function validateSpec(
         );
   }
 
+  // An override applies in the tiers that allow it (the compiler skips it elsewhere): Pro-only variants.
+  const blueprints = new Map(
+    await Promise.all(
+      targets.map(
+        async ({ tier }) =>
+          [
+            tier,
+            await loadBlueprint('service-landing', KIT_TIER[tier]),
+          ] as const,
+      ),
+    ),
+  );
   const usedImages = new Set<string>();
   for (const { tier } of targets) {
-    const blueprint = await loadBlueprint('service-landing', KIT_TIER[tier]);
+    const blueprint = blueprints.get(tier)!;
     const slotsByRole = blueprint.verticals[giro.id]?.slots ?? {};
     const entries = spec.sections?.[tier] ?? giro.sections[tier];
     const path = `sections.${tier}`;
@@ -239,7 +251,17 @@ export async function validateSpec(
       }
       const slot = slotsByRole[entry.role] as string;
       const allowed = allowedVariants(blueprint, entry.role, slot, 'extended');
-      if (!allowed.includes(variant)) {
+      const allowedElsewhere = targets.some(
+        (t) =>
+          t.tier !== tier &&
+          allowedVariants(
+            blueprints.get(t.tier)!,
+            entry.role,
+            slot,
+            'extended',
+          ).includes(variant),
+      );
+      if (!allowed.includes(variant) && !allowedElsewhere) {
         const guess = closest(variant, allowed);
         err(
           at,

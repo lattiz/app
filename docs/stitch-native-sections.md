@@ -38,6 +38,37 @@ el runtime de Motion, el seed ni plantillas, paletas o secciones existentes.
   rojo del poste), `harvest --accent <rol>`, `promote --set bg=#… --name …` para ajustes guiados por las
   compuertas, reconocimiento de foto + velo (`hero/photo-overlay`), `design fidelity` y tres frenos en `promote --section`.
 
+## Ronda 2: el cuerpo de La Insignia (`barberia-don-porfirio-01`)
+
+Cada sección se midió primero (todas salieron NUEVAS) y luego se reconstruyó a mano. Medición final, tema `barberia-la-insignia-v1`:
+
+| Sección de Stitch      | Variante nueva              | Antes (mejor existente) | Después | Veredicto |
+|------------------------|-----------------------------|-------------------------|---------|-----------|
+| `preguntas`            | `faq/numbered-cards`        | 0.155 (`faq/grid`)      | 0.066   | match     |
+| `servicios`            | `services/ritual-cards`     | 0.219                   | 0.103   | match     |
+| `resenas`              | `testimonials/paper-trio`   | 0.376                   | 0.044   | match     |
+| `maestros` (= oficio)  | `about/framed-craft`        | 0.428 (`stats-strip`)   | 0.021   | match     |
+| `contacto`             | `locations/booking-panel`   | 0.299 (`single`)        | 0.206   | cerca     |
+| pie                    | `footer/signature-bar`      | 0.819                   | 0.213   | cerca     |
+
+- **`maestros` no es el equipo**: en Stitch es la sección del oficio (texto + tres filas + foto enmarcada con placa), así que
+  se reconstruyó como `about`. Stitch no trae sección de equipo: `team/grid` de La Insignia se queda como está.
+- **Contacto y pie quedan en «cerca» (0.2–0.25), no en match.** A la vista el layout es el mismo (`vs-*.png`); el residuo viene
+  del esqueleto de la métrica (cuenta cajas por altura relativa de la sección y una fila de horario de dos líneas en Stitch).
+  No se forzó el CSS para bajar el número. Se dejan como «rebuild» en `fidelity.json` hasta que la métrica se afine.
+- **Datos opcionales, nunca obligatorios**: las variantes nuevas leen claves opcionales (`duration?`, `badge?`, `note?`,
+  `place?`, `monogram?`, `motto?`…) con `data-lz-if`; si el copy del giro no las trae, la pieza no se pinta. Cada una trae su
+  `sample` en `meta.ts` para la galería y la fidelidad.
+- **Blueprint Pro**: `about` admite `framed-craft` y `contact` admite `booking-panel` (Básico mantiene `brief`/`single`: su
+  estructura compartida es a propósito). `variantOverrides` ahora vale en el tier que lo permite y el compilador lo ignora en el
+  otro (antes el validador fallaba en el tier que no lo tenía); un override que ningún tier admite sigue siendo error.
+- **Arnés de fidelidad**: `locations` lee el panel de ubicación de Stitch como `branches` (con un solo local, no los dos de la
+  demo); `extra` de `composePage` gana sobre lo derivado; las cajas vacías (resplandores decorativos) no cuentan como tarjetas.
+- **Áreas táctiles sin mover el layout**: `padding-block: 12px; margin-block: -12px` en enlaces sueltos. Un `min-height: 44px`
+  real cambió la anatomía de las tarjetas y subió la distancia de 0.10 a 0.25.
+- Un `prettier --write` sobre `sections/` reformateó secciones ya publicadas y movió el snapshot dorado de 5 a 74
+  diferencias: formatea solo los archivos nuevos.
+
 ## Cuándo algo «ya existe»: se mide, no se adivina
 
 **Corrección (2026-10-19).** La primera versión decidía «ya existe» por *slot + tipo de layout*: unas preguntas en

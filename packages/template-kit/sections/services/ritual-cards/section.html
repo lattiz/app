@@ -1,0 +1,34 @@
+<section id="servicios" data-lz-slot="services" data-lz-variant="ritual-cards" class="lz-section lz-services-ritual-cards">
+  <div class="lz-container">
+    <div class="lz-services-ritual-cards__head">
+      <div class="lz-services-ritual-cards__lead">
+        <p class="lz-services-ritual-cards__kicker" data-lz-key="kicker"></p>
+        <h2 class="lz-title lz-services-ritual-cards__title" data-lz-key="title"></h2>
+      </div>
+      <p class="lz-services-ritual-cards__intro" data-lz-if="intro" data-lz-key="intro"></p>
+    </div>
+    <div class="lz-services-ritual-cards__grid">
+      <article class="lz-services-ritual-cards__card" data-lz-each="prices">
+        <p class="lz-services-ritual-cards__badge" data-lz-if="badge" data-lz-key="badge"></p>
+        <div class="lz-services-ritual-cards__top">
+          <div class="lz-services-ritual-cards__row">
+            <h3 class="lz-services-ritual-cards__name" data-lz-key="name"></h3>
+            <p class="lz-services-ritual-cards__price" data-lz-key="price"></p>
+          </div>
+          <p class="lz-services-ritual-cards__desc" data-lz-key="description"></p>
+        </div>
+        <div class="lz-services-ritual-cards__foot">
+          <span class="lz-services-ritual-cards__duration" data-lz-if="duration" data-lz-key="duration"></span>
+          <a href="{{whatsappUrl:Hola, quiero reservar un servicio}}" target="_blank" rel="noopener noreferrer" class="lz-services-ritual-cards__pick">Elegir servicio<span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+    </div>
+    <div class="lz-services-ritual-cards__note" data-lz-if="note">
+      <p class="lz-services-ritual-cards__note-text">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v5c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+        <span data-lz-key="note"></span>
+      </p>
+      <a href="{{whatsappUrl:Hola, quiero consultar disponibilidad de horario}}" target="_blank" rel="noopener noreferrer" class="lz-services-ritual-cards__note-cta" data-lz-if="noteCta" data-lz-key="noteCta"></a>
+    </div>
+  </div>
+</section>

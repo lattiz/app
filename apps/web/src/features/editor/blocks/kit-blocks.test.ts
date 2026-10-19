@@ -4,6 +4,8 @@ import { blockPlan } from './plan';
 import { KIT_BLOCKS } from './kit-blocks.generated';
 import { KIT_SECTION_BLOCKS } from './kit-blocks';
 
+/** Sections whose design has no contact link (the craft section only tells how the work is done). */
+const NO_CONTACT_LINK = new Set(['lzb-about-framed-craft']);
 const sections = KIT_BLOCKS.filter((b) => 'kitVariant' in b);
 /** Role modifiers (lz-btn--secondary) live in a primitive's base.css, as in kit templates. */
 const ROLE_CLASSES = new Set(
@@ -19,6 +21,10 @@ describe('kit blocks (generated from the kit)', () => {
       'lzb-hero-stack',
       'lzb-hero-photo-ribbon',
       'lzb-faq-numbered-cards',
+      'lzb-services-ritual-cards',
+      'lzb-testimonials-paper-trio',
+      'lzb-about-framed-craft',
+      'lzb-locations-booking-panel',
       'lzb-cta-band',
       'lzb-btn',
       'lzb-tile',
@@ -51,7 +57,8 @@ describe('kit blocks (generated from the kit)', () => {
 
   it('use tenant-sites tokens for contact data, never demo values', () => {
     for (const b of sections) {
-      expect(b.content.components, b.id).toMatch(/\{\{lz:whatsapp_url\}\}/);
+      if (!NO_CONTACT_LINK.has(b.id))
+        expect(b.content.components, b.id).toMatch(/\{\{lz:whatsapp_url\}\}/);
       expect(b.content.components, b.id).not.toMatch(/\{\{(?!lz:)/);
     }
   });

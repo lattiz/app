@@ -133,15 +133,7 @@ export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
     },
     swatches: ['#1B1F24', '#272B30', '#CDD3DA', '#E9EDF1'],
     dark: true,
-    proFeatures: [
-      'Cinta en movimiento',
-      'Nosotros Pro',
-      'Galería',
-      'Contacto con mapa',
-      'Equipo',
-      'Testimonios',
-      'Animaciones',
-    ],
+    proFeatures: ['Cinta en movimiento', 'Galería', 'Equipo', 'Animaciones'],
   },
   {
     id: 'barberia-norte-v1',

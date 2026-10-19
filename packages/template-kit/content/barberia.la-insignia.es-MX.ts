@@ -1,4 +1,4 @@
-// GENERATED from specs/barberia-la-insignia.spec.json (spec 53ae2d79110a, file 1cb5823a3f6f). Do not edit: use the spec, or freeze.
+// GENERATED from specs/barberia-la-insignia.spec.json (spec 023c9502fca0, file e2a507c4d693). Do not edit: use the spec, or freeze.
 import type { ContentPack } from '../src/types';
 
 export default {
@@ -72,6 +72,26 @@ export default {
         'Un oficio que se <span class="lz-title__serif">aprende</span> mirando.',
       summary:
         'En {{shortName}} trabajamos como se hacía en las barberías de antes: vapor, aceite, navaja recta y una charla corta antes de empezar. Cada silla tiene su hora completa.',
+      body: 'Cortamos a tijera y a máquina, afeitamos a navaja libre y usamos productos de pequeña producción.',
+      imageAlt:
+        'Brocha, navaja recta y toalla doblada sobre una repisa de madera oscura',
+      plateLabel: 'Barbería de oficio',
+      plateTitle: 'Navaja recta y vapor',
+      plateAside: 'Desde 2014',
+      features: [
+        {
+          title: 'Vapor antes de cada afeitado',
+          text: 'Toalla caliente y aceite para abrir el poro antes de la hoja.',
+        },
+        {
+          title: 'Navaja recta, hoja nueva',
+          text: 'Cada afeitado empieza con una hoja nueva, abierta frente a ti.',
+        },
+        {
+          title: 'Bálsamo frío al terminar',
+          text: 'Cierra el poro y calma la piel, con productos de pequeña producción.',
+        },
+      ],
       stats: [
         {
           value: 'Desde 2014',
@@ -89,8 +109,6 @@ export default {
       statement:
         'La navaja no perdona la prisa: por eso cada afeitado empieza con vapor y termina con bálsamo frío.',
       image: 'about.jpg',
-      imageAlt:
-        'Brocha, navaja recta y toalla doblada sobre una repisa de madera oscura',
       paragraphs: [
         '{{shortName}} abrió con una sola silla de cuero y una regla: nadie se levanta sin haber sido escuchado.',
         'Cortamos a tijera y a máquina, afeitamos a navaja libre y usamos productos de pequeña producción.',
@@ -98,41 +116,56 @@ export default {
       ],
     },
     services: {
-      kicker: '{{index}} — La carta',
-      title: 'Cortes y <span class="lz-title__serif">rituales</span>',
-      intro:
-        'Precios en pesos mexicanos. Todo ritual incluye consulta, toalla caliente y acabado con producto.',
+      note: 'Cada servicio incluye café negro recién colado o agua fría de cortesía.',
+      noteCta: 'Consultar horarios disponibles →',
       prices: [
         {
           name: 'Corte clásico',
           price: '$380',
           description:
             'Tijera y máquina, perfilado limpio y peinado con pomada mate.',
+          duration: '45 minutos',
         },
         {
           name: 'Afeitado a navaja',
           price: '$320',
           description:
             'Vapor, aceite pre-afeitado, navaja libre y bálsamo frío.',
+          duration: '40 minutos',
         },
         {
           name: 'Barba perfilada',
           price: '$260',
           description: 'Forma y contornos a navaja, con tónico para la piel.',
+          duration: '35 minutos',
         },
         {
           name: 'Corte y barba',
           price: '$560',
           description:
             'El corte clásico con la barba perfilada en una sola cita.',
+          duration: '75 minutos',
         },
         {
           name: 'Ritual completo',
           price: '$720',
           description:
             'Corte, afeitado a navaja, mascarilla y una bebida de cortesía.',
+          duration: '90 minutos',
+          badge: 'Ritual Insignia',
+        },
+        {
+          name: 'Limpieza de cuello y ceja',
+          price: '$150',
+          description:
+            'Mantenimiento rápido de contornos a navaja entre citas.',
+          duration: '20 minutos',
         },
       ],
+      kicker: '{{index}} — La carta',
+      title: 'Cortes y <span class="lz-title__serif">rituales</span>',
+      intro:
+        'Precios en pesos mexicanos. Todo ritual incluye consulta, toalla caliente y acabado con producto.',
       promos: [
         {
           tag: 'Nota',
@@ -184,26 +217,15 @@ export default {
           answer:
             'Si necesitas moverla, avísanos con 12 horas y te damos otro horario sin costo.',
         },
-        {
-          question: '¿Cuánto dura un ritual?',
-          answer:
-            'El corte toma cerca de una hora y el afeitado a navaja, cuarenta minutos.',
-        },
       ],
     },
     locations: {
       kicker: '{{index}} — Visítanos',
-      title: 'Pasa por la <span class="lz-title__serif">Americana</span>',
       hoursLabel: 'Horario',
+      whatsappNote: 'Atención rápida para apartar tu turno',
+      callNote: 'Llamada directa al mostrador',
+      emailNote: 'Para grupos y eventos privados',
       whatsappCta: 'Agendar por WhatsApp',
-      callCta: 'Llamar',
-      directionsLabel: 'Cómo llegar',
-      contactText:
-        'Contestamos de lunes a sábado dentro del horario. Para grupos, usa el correo.',
-      whatsappLabel: 'WhatsApp',
-      whatsappValue: 'Reservar cita',
-      callLabel: 'Teléfono',
-      emailLabel: 'Correo',
       branches: [
         {
           name: 'Americana',
@@ -214,11 +236,22 @@ export default {
           mapTitle: 'Mapa de la sucursal Americana',
         },
       ],
+      title: 'Pasa por la <span class="lz-title__serif">Americana</span>',
+      callCta: 'Llamar',
+      directionsLabel: 'Cómo llegar',
+      contactText:
+        'Contestamos de lunes a sábado dentro del horario. Para grupos, usa el correo.',
+      whatsappLabel: 'WhatsApp',
+      whatsappValue: 'Reservar cita',
+      callLabel: 'Teléfono',
+      emailLabel: 'Correo',
     },
     'floating-whatsapp': {
       label: 'Escribir a La Insignia',
     },
     footer: {
+      monogram: 'LI',
+      motto: 'Oficio · Navaja · Barrio',
       about:
         'Barbería de oficio en Guadalajara. Corte clásico, afeitado a navaja y barba perfilada, con cita.',
       branchesTitle: 'La casa',
@@ -328,25 +361,30 @@ export default {
       ],
     },
     testimonials: {
-      kicker: '{{index}} — Opiniones',
-      score: '4.9',
-      summary: 'Opiniones de ejemplo',
-      allReviewsCta: 'Leer todas',
-      writeReviewCta: 'Escribir una opinión',
+      kicker: 'Clientela habitual',
+      title: 'Palabra de barrio',
+      intro: 'Testimonios directos de quienes no cambian de barbero por nada.',
       reviews: [
         {
           text: 'Ramiro afeita como pocos: la toalla a punto y cero prisa. Llevo cuatro años viniendo cada mes.',
-          author: 'Héctor V. · cliente desde 2021',
+          author: 'Héctor V.',
+          place: 'Cliente desde 2021',
         },
         {
           text: 'Me corté el pelo y la barba en una cita y salí con tiempo de sobra. Todo en orden.',
           author: 'Emiliano S.',
+          place: 'Colonia Roma',
         },
         {
           text: 'El ritual completo es un buen regalo. Me trataron con calma de principio a fin.',
           author: 'Daniel R.',
+          place: 'San Rafael',
         },
       ],
+      score: '4.9',
+      summary: 'Opiniones de ejemplo',
+      allReviewsCta: 'Leer todas',
+      writeReviewCta: 'Escribir una opinión',
     },
     marquee: {
       label: 'Especialidades de la barbería',

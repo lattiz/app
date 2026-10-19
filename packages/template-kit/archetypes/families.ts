@@ -36,10 +36,12 @@ export const FAMILIES: Record<string, Family> = {
   'about/statement': 'type',
   'about/stats-strip': 'figures',
   'about/brief': 'figures',
+  'about/framed-craft': 'media-text',
   'services/price-list': 'rows',
   'services/menu-columns': 'rows',
   'services/editorial-table': 'rows',
   'services/cards': 'cells',
+  'services/ritual-cards': 'cells',
   'services/product-grid': 'cells',
   'gallery/grid': 'full-media',
   'gallery/mosaic': 'full-media',
@@ -49,6 +51,7 @@ export const FAMILIES: Record<string, Family> = {
   'team/list': 'rows',
   'team/spotlight': 'media-text',
   'testimonials/cards': 'cells',
+  'testimonials/paper-trio': 'cells',
   'testimonials/quote-feature': 'quote',
   'testimonials/rating-wall': 'quote',
   'faq/list': 'rows',
@@ -58,6 +61,7 @@ export const FAMILIES: Record<string, Family> = {
   'locations/single': 'media-text',
   'locations/single-card': 'cells',
   'locations/with-contact': 'split-panel',
+  'locations/booking-panel': 'split-panel',
   'locations/map-link': 'split-panel',
   'locations/cards': 'cells',
   'cta/band': 'band',
@@ -70,6 +74,7 @@ export const FAMILIES: Record<string, Family> = {
   'footer/columns': 'chrome',
   'footer/minimal-centered': 'chrome',
   'footer/ledger': 'chrome',
+  'footer/signature-bar': 'chrome',
 };
 
 export function familyOf(slot: string, variant: string): Family | undefined {

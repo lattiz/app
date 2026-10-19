@@ -6,33 +6,269 @@
     "measured": [
       {
         "variant": "faq/numbered-cards",
-        "structure": 0.095,
+        "structure": 0.066,
         "heightRatio": 1.3,
         "match": true
       },
       {
         "variant": "faq/grid",
-        "structure": 0.233,
+        "structure": 0.155,
         "heightRatio": 1.36,
-        "match": true
+        "match": false
+      },
+      {
+        "variant": "faq/two-col",
+        "structure": 0.513,
+        "heightRatio": 1.47,
+        "match": false
       },
       {
         "variant": "faq/list",
         "structure": 0.596,
         "heightRatio": 1.74,
         "match": false
-      },
-      {
-        "variant": "faq/two-col",
-        "structure": 0.644,
-        "heightRatio": 1.47,
-        "match": false
       }
     ],
     "best": "faq/numbered-cards",
     "verdict": "match",
     "thresholds": {
-      "structure": 0.35,
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "resenas": {
+    "ref": "resenas",
+    "slot": "testimonials",
+    "theme": "barberia-la-insignia-v1",
+    "measured": [
+      {
+        "variant": "testimonials/paper-trio",
+        "structure": 0.044,
+        "heightRatio": 1.23,
+        "match": true
+      },
+      {
+        "variant": "testimonials/rating-wall",
+        "structure": 0.376,
+        "heightRatio": 1.02,
+        "match": false
+      },
+      {
+        "variant": "testimonials/cards",
+        "structure": 0.421,
+        "heightRatio": 1.12,
+        "match": false
+      },
+      {
+        "variant": "testimonials/quote-feature",
+        "structure": 0.573,
+        "heightRatio": 1.38,
+        "match": false
+      }
+    ],
+    "best": "testimonials/paper-trio",
+    "verdict": "match",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "maestros": {
+    "ref": "maestros",
+    "slot": "about",
+    "theme": "barberia-la-insignia-v1",
+    "measured": [
+      {
+        "variant": "about/framed-craft",
+        "structure": 0.021,
+        "heightRatio": 1.24,
+        "match": true
+      },
+      {
+        "variant": "about/stats-strip",
+        "structure": 0.428,
+        "heightRatio": 1.53,
+        "match": false
+      },
+      {
+        "variant": "about/brief",
+        "structure": 0.841,
+        "heightRatio": 1.23,
+        "match": false
+      },
+      {
+        "variant": "about/statement",
+        "structure": 0.871,
+        "heightRatio": 1.83,
+        "match": false
+      },
+      {
+        "variant": "about/portrait",
+        "structure": 0.873,
+        "heightRatio": 1.72,
+        "match": false
+      },
+      {
+        "variant": "about/text-image-offset",
+        "structure": 1,
+        "heightRatio": 1.74,
+        "match": false
+      }
+    ],
+    "best": "about/framed-craft",
+    "verdict": "match",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "contacto": {
+    "ref": "contacto",
+    "slot": "locations",
+    "theme": "barberia-la-insignia-v1",
+    "measured": [
+      {
+        "variant": "locations/booking-panel",
+        "structure": 0.206,
+        "heightRatio": 1.16,
+        "match": false
+      },
+      {
+        "variant": "locations/cards",
+        "structure": 0.596,
+        "heightRatio": 1.07,
+        "match": false
+      },
+      {
+        "variant": "locations/with-contact",
+        "structure": 0.676,
+        "heightRatio": 1.57,
+        "match": false
+      },
+      {
+        "variant": "locations/single",
+        "structure": 0.705,
+        "heightRatio": 1.13,
+        "match": false
+      },
+      {
+        "variant": "locations/map-link",
+        "structure": 0.933,
+        "heightRatio": 1.26,
+        "match": false
+      },
+      {
+        "variant": "locations/single-card",
+        "structure": 0.959,
+        "heightRatio": 0.85,
+        "match": false
+      }
+    ],
+    "best": "locations/booking-panel",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "servicios": {
+    "ref": "servicios",
+    "slot": "services",
+    "theme": "barberia-la-insignia-v1",
+    "measured": [
+      {
+        "variant": "services/ritual-cards",
+        "structure": 0.103,
+        "heightRatio": 1.14,
+        "match": true
+      },
+      {
+        "variant": "services/editorial-table",
+        "structure": 0.219,
+        "heightRatio": 1.35,
+        "match": false
+      },
+      {
+        "variant": "services/cards",
+        "structure": 0.392,
+        "heightRatio": 1.26,
+        "match": false
+      },
+      {
+        "variant": "services/price-list",
+        "structure": 0.457,
+        "heightRatio": 1.29,
+        "match": false
+      },
+      {
+        "variant": "services/menu-columns",
+        "structure": 0.558,
+        "heightRatio": 1.18,
+        "match": false
+      }
+    ],
+    "best": "services/ritual-cards",
+    "verdict": "match",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "8. FOOTER SECTION": {
+    "ref": "8. FOOTER SECTION",
+    "slot": "footer",
+    "theme": "barberia-la-insignia-v1",
+    "measured": [
+      {
+        "variant": "footer/signature-bar",
+        "structure": 0.213,
+        "heightRatio": 1.03,
+        "match": false
+      },
+      {
+        "variant": "footer/big-wordmark",
+        "structure": 0.819,
+        "heightRatio": 3.59,
+        "match": false
+      },
+      {
+        "variant": "footer/columns",
+        "structure": 0.819,
+        "heightRatio": 2.02,
+        "match": false
+      },
+      {
+        "variant": "footer/ledger",
+        "structure": 0.835,
+        "heightRatio": 2.57,
+        "match": false
+      },
+      {
+        "variant": "footer/minimal-centered",
+        "structure": 1,
+        "heightRatio": 2.1,
+        "match": false
+      }
+    ],
+    "best": "footer/signature-bar",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
       "heightRatio": [
         0.7,
         1.4

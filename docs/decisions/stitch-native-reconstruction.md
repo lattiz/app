@@ -21,6 +21,11 @@ LCP, nojs y presupuestos. Lo que se aprendió al hacerlo:
   plantillas; la paleta se aprovecha en otros giros y la dirección aporta portada, tipografía, estilo y voz.
 - Roles de Stitch (Material): `primary` es el acento de marca, no «el más cromático».
 - La clase raíz debe ser `lz-<slot>-<variante>` (lo exige el bloque del editor); el rojo/azul del poste no pueden ser literales.
+- Se reconstruyeron a mano `faq/numbered-cards`, `services/ritual-cards`, `testimonials/paper-trio`, `about/framed-craft`
+  (la «sección de maestros» de Stitch era el oficio, no el equipo), `locations/booking-panel` y `footer/signature-bar`. Las dos
+  últimas miden 0.2–0.25 (a la vista iguales; el esqueleto de la métrica es frágil), así que no cuentan como match.
+- Los slots con variantes solo Pro se declaran en el blueprint; `variantOverrides` vale en el tier que lo admite y se ignora
+  en el otro.
 - `ship`/`publish` fallan con un hero placeholder (`images[] «hero»`); `check` solo avisa.
 
 **How to apply:** `docs/stitch-native-sections.md` (contrato, fidelidad, checklist). Antes de reconstruir corre `design harvest` y

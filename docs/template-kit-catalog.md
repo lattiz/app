@@ -40,7 +40,7 @@ blueprints, mover el copy de `archetypes/verticals.ts` y los `sample` de cada `m
 | Fase             | Qué                                                                                          | Estado   | Detalle                      |
 | ---------------- | -------------------------------------------------------------------------------------------- | -------- | ---------------------------- |
 | Phase B / Stitch | Stitch como fuente de diseño: biblioteca de candidatos, harvester y `promote` con compuertas | en curso | `docs/design-stitch-flow.md` |
-| Phase D / Stitch nativo | Secciones reconstruidas a mano desde diseños de Stitch (`hero/photo-ribbon`, dirección `insignia-musgo`), bloque del editor y compuerta de foto de portada | hecho (falta prueba del editor en vivo) | `docs/stitch-native-sections.md` |
+| Phase D / Stitch nativo | Secciones reconstruidas a mano desde diseños de Stitch (`hero/photo-ribbon`, `faq/numbered-cards`, `services/ritual-cards`, `testimonials/paper-trio`, `about/framed-craft`, `locations/booking-panel`, `footer/signature-bar`, dirección `insignia-musgo`), bloque del editor y compuerta de foto de portada | hecho (falta prueba del editor en vivo) | `docs/stitch-native-sections.md` |
 
 Rama `feat/stitch-design-flow` (desde `main`). No toca `apps/tenant-sites`, Motion, seed ni plantillas existentes.
 

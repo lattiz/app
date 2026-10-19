@@ -22,7 +22,13 @@
   "layout": {
     "direction": "insignia-musgo",
     "variantOverrides": {
-      "hero": "photo-ribbon"
+      "hero": "photo-ribbon",
+      "faq": "numbered-cards",
+      "catalog": "ritual-cards",
+      "testimonials": "paper-trio",
+      "about": "framed-craft",
+      "contact": "booking-panel",
+      "footer": "signature-bar"
     }
   },
   "sections": {
@@ -135,7 +141,25 @@
         "{{shortName}} abrió con una sola silla de cuero y una regla: nadie se levanta sin haber sido escuchado.",
         "Cortamos a tijera y a máquina, afeitamos a navaja libre y usamos productos de pequeña producción.",
         "Sin pantallas ni fila. Una cita, tu silla y el tiempo que haga falta."
-      ]
+      ],
+      "body": "Cortamos a tijera y a máquina, afeitamos a navaja libre y usamos productos de pequeña producción.",
+      "features": [
+        {
+          "title": "Vapor antes de cada afeitado",
+          "text": "Toalla caliente y aceite para abrir el poro antes de la hoja."
+        },
+        {
+          "title": "Navaja recta, hoja nueva",
+          "text": "Cada afeitado empieza con una hoja nueva, abierta frente a ti."
+        },
+        {
+          "title": "Bálsamo frío al terminar",
+          "text": "Cierra el poro y calma la piel, con productos de pequeña producción."
+        }
+      ],
+      "plateLabel": "Barbería de oficio",
+      "plateTitle": "Navaja recta y vapor",
+      "plateAside": "Desde 2014"
     },
     "services": {
       "kicker": "{{index}} — La carta",
@@ -145,27 +169,39 @@
         {
           "name": "Corte clásico",
           "price": "$380",
-          "description": "Tijera y máquina, perfilado limpio y peinado con pomada mate."
+          "description": "Tijera y máquina, perfilado limpio y peinado con pomada mate.",
+          "duration": "45 minutos"
         },
         {
           "name": "Afeitado a navaja",
           "price": "$320",
-          "description": "Vapor, aceite pre-afeitado, navaja libre y bálsamo frío."
+          "description": "Vapor, aceite pre-afeitado, navaja libre y bálsamo frío.",
+          "duration": "40 minutos"
         },
         {
           "name": "Barba perfilada",
           "price": "$260",
-          "description": "Forma y contornos a navaja, con tónico para la piel."
+          "description": "Forma y contornos a navaja, con tónico para la piel.",
+          "duration": "35 minutos"
         },
         {
           "name": "Corte y barba",
           "price": "$560",
-          "description": "El corte clásico con la barba perfilada en una sola cita."
+          "description": "El corte clásico con la barba perfilada en una sola cita.",
+          "duration": "75 minutos"
         },
         {
           "name": "Ritual completo",
           "price": "$720",
-          "description": "Corte, afeitado a navaja, mascarilla y una bebida de cortesía."
+          "description": "Corte, afeitado a navaja, mascarilla y una bebida de cortesía.",
+          "duration": "90 minutos",
+          "badge": "Ritual Insignia"
+        },
+        {
+          "name": "Limpieza de cuello y ceja",
+          "price": "$150",
+          "description": "Mantenimiento rápido de contornos a navaja entre citas.",
+          "duration": "20 minutos"
         }
       ],
       "promos": [
@@ -190,7 +226,9 @@
           "cta": "Cotizar",
           "href": "{{whatsappUrl:Hola, quiero cotizar un grupo}}"
         }
-      ]
+      ],
+      "note": "Cada servicio incluye café negro recién colado o agua fría de cortesía.",
+      "noteCta": "Consultar horarios disponibles →"
     },
     "faq": {
       "kicker": "{{index}} — Preguntas",
@@ -213,10 +251,6 @@
         {
           "question": "¿Y si necesito cambiar la cita?",
           "answer": "Si necesitas moverla, avísanos con 12 horas y te damos otro horario sin costo."
-        },
-        {
-          "question": "¿Cuánto dura un ritual?",
-          "answer": "El corte toma cerca de una hora y el afeitado a navaja, cuarenta minutos."
         }
       ]
     },
@@ -231,7 +265,10 @@
       "whatsappLabel": "WhatsApp",
       "whatsappValue": "Reservar cita",
       "callLabel": "Teléfono",
-      "emailLabel": "Correo"
+      "emailLabel": "Correo",
+      "whatsappNote": "Atención rápida para apartar tu turno",
+      "callNote": "Llamada directa al mostrador",
+      "emailNote": "Para grupos y eventos privados"
     },
     "floating-whatsapp": {
       "label": "Escribir a La Insignia"
@@ -240,7 +277,9 @@
       "about": "Barbería de oficio en Guadalajara. Corte clásico, afeitado a navaja y barba perfilada, con cita.",
       "branchesTitle": "La casa",
       "linksTitle": "Secciones",
-      "contactTitle": "Contacto"
+      "contactTitle": "Contacto",
+      "monogram": "LI",
+      "motto": "Oficio · Navaja · Barrio"
     },
     "team": {
       "kicker": "{{index}} — Los barberos",
@@ -325,7 +364,7 @@
       ]
     },
     "testimonials": {
-      "kicker": "{{index}} — Opiniones",
+      "kicker": "Clientela habitual",
       "score": "4.9",
       "summary": "Opiniones de ejemplo",
       "allReviewsCta": "Leer todas",
@@ -333,17 +372,22 @@
       "reviews": [
         {
           "text": "Ramiro afeita como pocos: la toalla a punto y cero prisa. Llevo cuatro años viniendo cada mes.",
-          "author": "Héctor V. · cliente desde 2021"
+          "author": "Héctor V.",
+          "place": "Cliente desde 2021"
         },
         {
           "text": "Me corté el pelo y la barba en una cita y salí con tiempo de sobra. Todo en orden.",
-          "author": "Emiliano S."
+          "author": "Emiliano S.",
+          "place": "Colonia Roma"
         },
         {
           "text": "El ritual completo es un buen regalo. Me trataron con calma de principio a fin.",
-          "author": "Daniel R."
+          "author": "Daniel R.",
+          "place": "San Rafael"
         }
-      ]
+      ],
+      "title": "Palabra de barrio",
+      "intro": "Testimonios directos de quienes no cambian de barbero por nada."
     },
     "marquee": {
       "label": "Especialidades de la barbería",
@@ -360,79 +404,79 @@
     {
       "key": "hero",
       "source": {
-        "pexels": "vintage barber chair leather moody steam towel"
+        "url": "https://images.pexels.com/photos/37764947/pexels-photo-37764947.jpeg"
       }
     },
     {
       "key": "about",
       "source": {
-        "pexels": "barber tools scissors comb"
+        "url": "https://images.pexels.com/photos/9280243/pexels-photo-9280243.jpeg"
       }
     },
     {
       "key": "team-1",
       "source": {
-        "pexels": "barber portrait"
+        "url": "https://images.pexels.com/photos/8552627/pexels-photo-8552627.jpeg"
       }
     },
     {
       "key": "team-2",
       "source": {
-        "pexels": "barber portrait smiling"
+        "url": "https://images.pexels.com/photos/18483772/pexels-photo-18483772.jpeg"
       }
     },
     {
       "key": "team-3",
       "source": {
-        "pexels": "hairdresser portrait"
+        "url": "https://images.pexels.com/photos/12946033/pexels-photo-12946033.jpeg"
       }
     },
     {
       "key": "gallery-01",
       "source": {
-        "pexels": "men haircut fade"
+        "url": "https://images.pexels.com/photos/4625630/pexels-photo-4625630.jpeg"
       }
     },
     {
       "key": "gallery-02",
       "source": {
-        "pexels": "straight razor shave"
+        "url": "https://images.pexels.com/photos/39559308/pexels-photo-39559308.jpeg"
       }
     },
     {
       "key": "gallery-03",
       "source": {
-        "pexels": "textured haircut men"
+        "url": "https://images.pexels.com/photos/7518734/pexels-photo-7518734.jpeg"
       }
     },
     {
       "key": "gallery-04",
       "source": {
-        "pexels": "beard trim"
+        "url": "https://images.pexels.com/photos/2775272/pexels-photo-2775272.jpeg"
       }
     },
     {
       "key": "gallery-05",
       "source": {
-        "pexels": "barber shop interior"
+        "url": "https://images.pexels.com/photos/7781844/pexels-photo-7781844.jpeg"
       }
     },
     {
       "key": "gallery-06",
       "source": {
-        "pexels": "long hair scissors cut"
+        "url": "https://images.pexels.com/photos/9146943/pexels-photo-9146943.jpeg"
       }
     },
     {
       "key": "gallery-07",
       "source": {
-        "pexels": "barber tools"
+        "url": "https://images.pexels.com/photos/14011984/pexels-photo-14011984.jpeg"
       }
     },
     {
       "key": "gallery-08",
       "source": {
-        "pexels": "low taper fade"
+        "url": "https://images.pexels.com/photos/7922651/pexels-photo-7922651.jpeg"
       }
     }
   ],

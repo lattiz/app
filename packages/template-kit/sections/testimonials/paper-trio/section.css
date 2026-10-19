@@ -1,0 +1,137 @@
+.lz-testimonials-paper-trio {
+  padding: var(--lz-section-pad) 0;
+  border-top: var(--lz-divider, none);
+}
+
+.lz-testimonials-paper-trio__head {
+  display: grid;
+  justify-items: center;
+  gap: calc(14px * var(--lz-space));
+  max-width: 720px;
+  margin: 0 auto calc(56px * var(--lz-space));
+  text-align: center;
+}
+
+.lz-testimonials-paper-trio__kicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  color: var(--lz-color-accent-text);
+  font-size: calc(13px * var(--lz-text-scale));
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.lz-testimonials-paper-trio__kicker::before,
+.lz-testimonials-paper-trio__kicker::after {
+  width: 16px;
+  height: 1px;
+  background: var(--lz-color-accent);
+  content: '';
+}
+
+.lz-testimonials-paper-trio__title {
+  margin: 0;
+  font-size: calc(clamp(26px, 2.8vw, 40px) * var(--lz-display-scale));
+  letter-spacing: var(--lz-display-tracking, 0.01em);
+  text-wrap: balance;
+}
+
+.lz-testimonials-paper-trio__intro {
+  margin: 0;
+  color: var(--lz-color-muted);
+  font-size: calc(16px * var(--lz-text-scale));
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.lz-testimonials-paper-trio__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: calc(32px * var(--lz-space));
+}
+
+/* Odd cards swap the page colors: paper on a dark theme, slate on a light one. */
+.lz-testimonials-paper-trio__card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: calc(28px * var(--lz-space));
+  margin: 0;
+  padding: calc(32px * var(--lz-space));
+  border: var(--lz-border-width) solid var(--lz-color-line);
+  border-radius: var(--lz-radius-card);
+  background: var(--lz-color-surface);
+  box-shadow: var(--lz-card-shadow, none);
+}
+
+.lz-testimonials-paper-trio__card:nth-child(odd) {
+  border-color: var(--lz-color-accent);
+  background: var(--lz-color-text);
+  color: var(--lz-color-bg);
+}
+
+.lz-testimonials-paper-trio__card::before {
+  color: var(--lz-color-muted);
+  font-family: var(--lz-font-display);
+  font-size: calc(48px * var(--lz-display-scale));
+  line-height: 0.6;
+  opacity: 0.55;
+  content: '\201C';
+}
+
+.lz-testimonials-paper-trio__quote {
+  margin: 0;
+  font-size: calc(clamp(17px, 1.6vw, 20px) * var(--lz-text-scale));
+  font-style: italic;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.lz-testimonials-paper-trio__who {
+  display: grid;
+  gap: 4px;
+  padding-top: calc(20px * var(--lz-space));
+  border-top: var(--lz-border-width) solid var(--lz-color-line);
+}
+
+.lz-testimonials-paper-trio__card:nth-child(odd)
+  .lz-testimonials-paper-trio__who {
+  border-top-color: color-mix(in srgb, var(--lz-color-bg) 28%, transparent);
+}
+
+.lz-testimonials-paper-trio__author {
+  font-family: var(--lz-font-display);
+  font-size: calc(17px * var(--lz-text-scale));
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.lz-testimonials-paper-trio__place {
+  color: var(--lz-color-muted);
+  font-size: calc(12px * var(--lz-text-scale));
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.lz-testimonials-paper-trio__card:nth-child(odd)
+  .lz-testimonials-paper-trio__place,
+.lz-testimonials-paper-trio__card:nth-child(odd)::before {
+  color: color-mix(in srgb, var(--lz-color-bg) 66%, var(--lz-color-text));
+}
+
+.lz-testimonials-paper-trio__cta {
+  justify-self: center;
+  margin: calc(40px * var(--lz-space)) auto 0;
+  display: flex;
+  width: fit-content;
+}
+
+@media (max-width: 992px) {
+  .lz-testimonials-paper-trio__grid {
+    grid-template-columns: 1fr;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+}

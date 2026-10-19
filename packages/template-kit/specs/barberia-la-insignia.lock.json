@@ -12,24 +12,71 @@
       "shape": "urbano",
       "archetype": "neo-brutal",
       "sections": [
-        { "role": "header", "slot": "navbar", "variant": "inline" },
-        { "role": "hero", "slot": "hero", "variant": "photo-ribbon" },
-        { "role": "marquee", "slot": "marquee", "variant": "ticker" },
-        { "role": "about", "slot": "about", "variant": "stats-strip" },
-        { "role": "catalog", "slot": "services", "variant": "cards" },
-        { "role": "proof", "slot": "gallery", "variant": "bento" },
-        { "role": "contact", "slot": "locations", "variant": "with-contact" },
-        { "role": "team", "slot": "team", "variant": "grid" },
-        { "role": "testimonials", "slot": "testimonials", "variant": "cards" },
-        { "role": "faq", "slot": "faq", "variant": "list" },
+        {
+          "role": "header",
+          "slot": "navbar",
+          "variant": "inline"
+        },
+        {
+          "role": "hero",
+          "slot": "hero",
+          "variant": "photo-ribbon"
+        },
+        {
+          "role": "marquee",
+          "slot": "marquee",
+          "variant": "ticker"
+        },
+        {
+          "role": "about",
+          "slot": "about",
+          "variant": "framed-craft"
+        },
+        {
+          "role": "catalog",
+          "slot": "services",
+          "variant": "ritual-cards"
+        },
+        {
+          "role": "proof",
+          "slot": "gallery",
+          "variant": "bento"
+        },
+        {
+          "role": "contact",
+          "slot": "locations",
+          "variant": "booking-panel"
+        },
+        {
+          "role": "team",
+          "slot": "team",
+          "variant": "grid"
+        },
+        {
+          "role": "testimonials",
+          "slot": "testimonials",
+          "variant": "paper-trio"
+        },
+        {
+          "role": "faq",
+          "slot": "faq",
+          "variant": "numbered-cards"
+        },
         {
           "role": "whatsapp",
           "slot": "floating-whatsapp",
           "variant": "bubble"
         },
-        { "role": "footer", "slot": "footer", "variant": "big-wordmark" }
+        {
+          "role": "footer",
+          "slot": "footer",
+          "variant": "signature-bar"
+        }
       ],
-      "layout": { "direction": "insignia-musgo", "archetype": "bold" }
+      "layout": {
+        "direction": "insignia-musgo",
+        "archetype": "bold"
+      }
     },
     "barberia-base-la-insignia-v1": {
       "tier": "basico",
@@ -38,20 +85,51 @@
       "shape": "suave",
       "archetype": "essential",
       "sections": [
-        { "role": "header", "slot": "navbar", "variant": "inline" },
-        { "role": "hero", "slot": "hero", "variant": "image-bg" },
-        { "role": "about", "slot": "about", "variant": "brief" },
-        { "role": "catalog", "slot": "services", "variant": "price-list" },
-        { "role": "faq", "slot": "faq", "variant": "list" },
-        { "role": "contact", "slot": "locations", "variant": "single" },
+        {
+          "role": "header",
+          "slot": "navbar",
+          "variant": "inline"
+        },
+        {
+          "role": "hero",
+          "slot": "hero",
+          "variant": "image-bg"
+        },
+        {
+          "role": "about",
+          "slot": "about",
+          "variant": "brief"
+        },
+        {
+          "role": "catalog",
+          "slot": "services",
+          "variant": "ritual-cards"
+        },
+        {
+          "role": "faq",
+          "slot": "faq",
+          "variant": "numbered-cards"
+        },
+        {
+          "role": "contact",
+          "slot": "locations",
+          "variant": "single"
+        },
         {
           "role": "whatsapp",
           "slot": "floating-whatsapp",
           "variant": "bubble"
         },
-        { "role": "footer", "slot": "footer", "variant": "columns" }
+        {
+          "role": "footer",
+          "slot": "footer",
+          "variant": "signature-bar"
+        }
       ],
-      "layout": { "direction": "insignia-musgo", "archetype": "bold" }
+      "layout": {
+        "direction": "insignia-musgo",
+        "archetype": "bold"
+      }
     }
   }
 }

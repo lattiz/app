@@ -166,6 +166,141 @@ const SECTIONS: SectionSpec[] = [
     },
   },
   {
+    id: 'lzb-services-ritual-cards',
+    label: 'Servicios en tarjetas de tarifa',
+    category: 'Secciones',
+    icon: 'grid',
+    slot: 'services',
+    variant: 'ritual-cards',
+    data: {
+      kicker: 'Carta de servicios',
+      title: 'Rituales y tarifa clara',
+      intro:
+        'Precios netos, sin añadidos forzados. El servicio dura lo que tenga que durar.',
+      note: 'Cada servicio incluye café o agua fría de cortesía.',
+      noteCta: 'Consultar horarios disponibles →',
+      prices: [
+        {
+          name: 'Corte ejecutivo',
+          price: '$350',
+          description:
+            'Lavado, corte a tijera y máquina, peinado con pomada mate.',
+          duration: '45 minutos',
+        },
+        {
+          name: 'Afeitado a navaja',
+          price: '$320',
+          description:
+            'Toallas calientes, espuma densa, navaja libre y bálsamo.',
+          duration: '40 minutos',
+        },
+        {
+          name: 'Ritual completo',
+          price: '$580',
+          description: 'Corte, afeitado y tónico mentolado en una sola sesión.',
+          duration: '75 minutos',
+          badge: 'Ritual estrella',
+        },
+      ],
+    },
+  },
+  {
+    id: 'lzb-testimonials-paper-trio',
+    label: 'Reseñas en tarjetas de papel',
+    category: 'Secciones',
+    icon: 'quote',
+    slot: 'testimonials',
+    variant: 'paper-trio',
+    data: {
+      kicker: 'Clientela habitual',
+      title: 'Palabra de barrio',
+      intro: 'Testimonios directos de quienes no cambian de barbero por nada.',
+      cta: 'Reservar mi cita',
+      reviews: [
+        {
+          text: 'Llevo años viniendo cada quincena. No falla un solo trazo y salgo listo para lo que venga.',
+          author: 'Rogelio Morales',
+          place: 'Santa María la Ribera',
+        },
+        {
+          text: 'La toalla caliente y el filo son de otro calibre. Te dejan como hombre de palabra.',
+          author: 'Carlos Valenzuela',
+          place: 'Colonia Roma',
+        },
+        {
+          text: 'Puntuales, pulcros y con música tranquila. Se viene a relajarse y a salir bien arreglado.',
+          author: 'David Menéndez',
+          place: 'San Rafael',
+        },
+      ],
+    },
+  },
+  {
+    id: 'lzb-about-framed-craft',
+    label: 'Oficio con foto enmarcada',
+    category: 'Secciones',
+    icon: 'frame',
+    slot: 'about',
+    variant: 'framed-craft',
+    data: {
+      kicker: 'El oficio',
+      title: 'Hecho a mano, paso a paso.',
+      summary:
+        'Respetamos el tiempo del cliente y el filo de la hoja: cada servicio sigue el mismo orden y usa lo mejor de cada herramienta.',
+      body: 'Sin prisas ni atajos. Aquí se revisa, se prepara y se termina con calma, para que salgas como llegaste a pedir.',
+      image: 'about.jpg',
+      imageAlt: 'Herramientas de trabajo sobre una mesa de madera',
+      plateLabel: 'Herramientas de oficio',
+      plateTitle: 'Acero templado',
+      plateAside: 'Desde 2014',
+      features: [
+        {
+          title: 'Espuma batida a mano',
+          text: 'Con brocha de cerda natural en tazón tibio.',
+        },
+        {
+          title: 'Navaja nueva en cada servicio',
+          text: 'Hojas abiertas directamente en tu presencia.',
+        },
+        {
+          title: 'Loción artesanal',
+          text: 'Fórmula clásica que cierra el poro y calma la piel.',
+        },
+      ],
+    },
+  },
+  {
+    id: 'lzb-locations-booking-panel',
+    label: 'Contacto y ubicación en tarjeta',
+    category: 'Secciones',
+    icon: 'card',
+    slot: 'locations',
+    variant: 'booking-panel',
+    data: {
+      kicker: 'Sin intermediarios',
+      title: 'Llega o aparta tu lugar',
+      contactText:
+        'Sin formularios lentos que nadie contesta. Escríbenos o llámanos para tener tu turno confirmado.',
+      whatsappLabel: 'WhatsApp directo',
+      whatsappValue: 'Reservar cita',
+      whatsappNote: 'Atención rápida para apartar tu turno',
+      whatsappCta: 'Escribir por WhatsApp ahora',
+      callLabel: 'Teléfono',
+      callNote: 'Llamada directa al mostrador',
+      emailLabel: 'Correo',
+      emailNote: 'Para eventos privados y grupos',
+      directionsLabel: 'Abrir en Google Maps',
+      branches: [
+        {
+          name: 'Ubicación y horarios',
+          address: '{{address}}',
+          hours: 'Lunes a sábado · 09:00 – 20:00',
+          directionsUrl: 'https://maps.google.com/?q=ubicacion',
+        },
+      ],
+    },
+  },
+  {
     id: 'lzb-cta-band',
     label: 'Llamado a la acción',
     category: 'Secciones',
