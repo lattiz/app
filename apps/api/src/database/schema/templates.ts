@@ -29,10 +29,27 @@ export const templates = pgTable(
     createdAt: timestamp('created_at', { withTimezone: true })
       .defaultNow()
       .notNull(),
+    tags: text('tags')
+      .array()
+      .notNull()
+      .default(sql`'{}'::text[]`),
+    featured: boolean('featured').notNull().default(false),
+    updatedAt: timestamp('updated_at', { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+    retiredAt: timestamp('retired_at', { withTimezone: true }),
+    kitMeta: jsonb('kit_meta').$type<Record<string, unknown>>(),
   },
   (t) => [
     index('templates_tier_idx').on(t.tier),
+    index('templates_active_sort_order_idx')
+      .on(t.sortOrder)
+      .where(sql`${t.isActive}`),
     check('templates_tier_check', sql`${t.tier} IN ('basic', 'pro')`),
+    check(
+      'templates_retired_at_check',
+      sql`${t.retiredAt} IS NULL OR ${t.isActive} = false`,
+    ),
   ],
 );
 

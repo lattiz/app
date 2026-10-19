@@ -2,6 +2,8 @@ import type {
   DnsProviderPort,
   DnsRecord,
   DnsZone,
+  DnsZoneInspection,
+  DnsZoneInspectionPort,
 } from '../../domain/dns-provider.port';
 import { RegistrarApiException } from '../../domains.exceptions';
 import { OpenproviderClient } from './openprovider.client';
@@ -30,7 +32,9 @@ export const OPENPROVIDER_NAMESERVERS = [
   'ns3.openprovider.eu',
 ];
 
-export class OpenproviderDnsAdapter implements DnsProviderPort {
+export class OpenproviderDnsAdapter
+  implements DnsProviderPort, DnsZoneInspectionPort
+{
   readonly provider = 'openprovider';
 
   constructor(private readonly client: OpenproviderClient) {}
@@ -52,6 +56,21 @@ export class OpenproviderDnsAdapter implements DnsProviderPort {
 
   requestActivationCheck(): Promise<void> {
     return Promise.resolve();
+  }
+
+  /** Openprovider zones have no status payload we can trust here; existence is the only signal. */
+  async inspectZone(domain: string): Promise<DnsZoneInspection> {
+    const zone = await this.findZone(domain);
+    return {
+      exists: zone !== null,
+      zoneId: zone ? String(zone.id) : null,
+      status: null,
+      nameservers: [],
+      originalNameservers: [],
+      activatedOn: null,
+      paused: null,
+      records: [],
+    };
   }
 
   async upsertRecords(domain: string, records: DnsRecord[]): Promise<void> {

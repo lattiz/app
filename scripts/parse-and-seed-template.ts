@@ -8,8 +8,12 @@
  *     (--file ./x.grapesjs --html ./x-export/index.html | --dir packages/template-kit/dist/<id>) \
  *     --id restaurante-moderno-v1 --name "Restaurante Moderno" --category restaurantes \
  *     [--description ".."] [--sort-order 10] [--tier basic|pro] [--motion calm|editorial|none] \
- *     [--dry-run] [--no-deploy] [--no-thumbnail] [--no-preview] [--finalize]
+ *     [--dry-run] [--no-deploy] [--no-thumbnail] [--no-preview] [--finalize] [--overwrite-meta]
  *
+ * --overwrite-meta (default off): also overwrite name, description, category, sort_order and an
+ * admin thumbnail (`templates/<id>/admin-thumb-<hash>.<ext>`). Without it, a re-seed keeps those
+ * admin-owned fields. Either way it writes grapesjs_json, tier, preview_url and kit_meta, and
+ * does not reactivate a row with retired_at set. tier always comes from the kit.
  * --finalize: the previews were already deployed (`pnpm lattiz deploy`); skip stages 1b–6 and the
  * deploy, wait for <TEMPLATE_PREVIEWS_BASE_URL>/<id> to answer 200, then thumbnail and activate.
  * The row must exist (a previous run with --no-deploy).
@@ -24,8 +28,15 @@
  * Env: see the root .env.example (read from ./.env, then apps/api/.env for the shared keys).
  * Workflow: docs/adding-templates.md
  */
+import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+} from 'node:fs';
 import { basename, dirname, join, relative, resolve } from 'node:path';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import {
@@ -47,6 +58,17 @@ import {
   type SectionOverrides,
 } from './lib/motion-sections';
 import { loadSeedEnv } from './lib/seed-env';
+import {
+  buildKitMeta,
+  pickKitIdentity,
+  shouldActivate,
+  shouldReplaceThumbnail,
+  templateWriteFields,
+  type KitCheckSummary,
+  type KitIdentitySources,
+  type KitMetaRecord,
+  type KitSourceMeta,
+} from './lib/template-seed-policy';
 import { TEMPLATE_PREVIEWS_DIR, vercel } from './lib/vercel-cli';
 
 const REPO_ROOT = resolve(__dirname, '..');
@@ -112,6 +134,8 @@ interface CliArgs {
   finalize: boolean;
   thumbnail: boolean;
   preview: boolean;
+  overwriteMeta: boolean;
+  meta: KitMeta | null;
 }
 
 interface GrapesProject {
@@ -160,20 +184,37 @@ function isTier(value: unknown): value is TemplateTier {
   return (TIERS as readonly unknown[]).includes(value);
 }
 
-interface KitMeta {
+interface KitMeta extends KitSourceMeta {
   tier?: unknown;
-  motion?: { preset?: MotionPreset; sections?: SectionOverrides; progress?: boolean };
+  motion?: {
+    preset?: MotionPreset;
+    sections?: SectionOverrides;
+    progress?: boolean;
+  };
+}
+
+interface SeededRow {
+  created: boolean;
+  wasActive: boolean;
+  retiredAt: string | null;
+  thumbnailUrl: string | null;
 }
 
 function readMeta(dir: string | undefined): KitMeta | null {
   const meta = dir && dir !== 'true' ? join(dir, 'template.meta.json') : null;
-  return meta && existsSync(meta) ? (JSON.parse(readFileSync(meta, 'utf8')) as KitMeta) : null;
+  return meta && existsSync(meta)
+    ? (JSON.parse(readFileSync(meta, 'utf8')) as KitMeta)
+    : null;
 }
 
 /** --tier wins; otherwise the kit's template.meta.json next to the project. */
-function resolveTier(flag: string | undefined, dir: string | undefined): TemplateTier {
+function resolveTier(
+  flag: string | undefined,
+  dir: string | undefined,
+): TemplateTier {
   if (flag !== undefined) {
-    if (!isTier(flag)) throw new StageError(`--tier must be one of ${TIERS.join(' | ')}.`);
+    if (!isTier(flag))
+      throw new StageError(`--tier must be one of ${TIERS.join(' | ')}.`);
     return flag;
   }
   const meta = dir && dir !== 'true' ? join(dir, 'template.meta.json') : null;
@@ -236,9 +277,13 @@ function parseArgs(argv: string[]): CliArgs {
   const file = raw.get('file') as string;
   const tier = resolveTier(raw.get('tier'), dir);
   const meta = readMeta(dir);
-  const motion = (raw.get('motion') ?? meta?.motion?.preset ?? 'none') as MotionPreset;
+  const motion = (raw.get('motion') ??
+    meta?.motion?.preset ??
+    'none') as MotionPreset;
   if (!MOTION_PRESETS.includes(motion)) {
-    throw new StageError(`--motion must be one of ${MOTION_PRESETS.join(' | ')}.`);
+    throw new StageError(
+      `--motion must be one of ${MOTION_PRESETS.join(' | ')}.`,
+    );
   }
   return {
     file,
@@ -261,6 +306,8 @@ function parseArgs(argv: string[]): CliArgs {
     finalize: raw.has('finalize'),
     thumbnail: !raw.has('no-thumbnail'),
     preview,
+    overwriteMeta: raw.has('overwrite-meta'),
+    meta,
   };
 }
 
@@ -474,7 +521,10 @@ async function optimizeAsset(
 ): Promise<DownloadedAsset> {
   if (!OPTIMIZABLE_TYPE_RE.test(asset.contentType)) return asset;
   const image = await optimizer.optimize(asset.body);
-  const hash = createHash('sha256').update(asset.body).digest('hex').slice(0, 16);
+  const hash = createHash('sha256')
+    .update(asset.body)
+    .digest('hex')
+    .slice(0, 16);
   if (image.transformed) {
     console.log(
       `    ${(image.originalBytes / 1024).toFixed(0).padStart(6)} KB → ${(image.bytes / 1024).toFixed(0).padStart(5)} KB  ${asset.url}`,
@@ -610,7 +660,11 @@ interface TemplateRow {
   id: string;
   is_active: boolean;
   tier: string;
+  retired_at: string | null;
+  thumbnail_url: string | null;
 }
+
+const TEMPLATE_ROW_COLUMNS = 'id, is_active, tier, retired_at, thumbnail_url';
 
 /** Read-only: how many tenants' sites use this template today. */
 async function countTenantsUsing(
@@ -625,15 +679,119 @@ async function countTenantsUsing(
   return count ?? 0;
 }
 
+function readJsonFile(path: string): unknown {
+  try {
+    return JSON.parse(readFileSync(path, 'utf8')) as unknown;
+  } catch {
+    return null;
+  }
+}
+
+/** `specs/<stem>.lock.json` tier for this id, plus the spec it points at. */
+function kitIdentitySources(
+  id: string,
+  assetsBase: string,
+): KitIdentitySources {
+  const specsDir = join(REPO_ROOT, 'packages/template-kit/specs');
+  let lockTier: unknown;
+  let spec: unknown;
+  if (existsSync(specsDir)) {
+    for (const name of readdirSync(specsDir)) {
+      if (!name.endsWith('.lock.json')) continue;
+      const lock = readJsonFile(join(specsDir, name));
+      if (!lock || typeof lock !== 'object' || Array.isArray(lock)) continue;
+      const tiers = (lock as { tiers?: unknown }).tiers;
+      if (!tiers || typeof tiers !== 'object' || Array.isArray(tiers)) continue;
+      const tier = (tiers as Record<string, unknown>)[id];
+      if (tier === undefined) continue;
+      lockTier = tier;
+      const specRel = (lock as { spec?: unknown }).spec;
+      if (
+        typeof specRel === 'string' &&
+        /^specs\/[a-z0-9-]+\.spec\.json$/.test(specRel)
+      ) {
+        spec = readJsonFile(join(REPO_ROOT, 'packages/template-kit', specRel));
+      }
+      break;
+    }
+  }
+  const manifest = readJsonFile(join(assetsBase, 'manifest.json'));
+  let themeFontPair: unknown;
+  if (manifest && typeof manifest === 'object' && !Array.isArray(manifest)) {
+    const theme = (manifest as { theme?: unknown }).theme;
+    if (theme && typeof theme === 'object' && !Array.isArray(theme)) {
+      themeFontPair = (theme as { fontPair?: unknown }).fontPair;
+    }
+  }
+  return { lockTier, spec, themeFontPair };
+}
+
+/** `.lattiz/state/<id>.json` lastCheck, when `lattiz check` has written one. */
+function readLastCheck(id: string): KitCheckSummary | undefined {
+  const file = join(REPO_ROOT, '.lattiz/state', `${id}.json`);
+  if (!existsSync(file)) return undefined;
+  const state = readJsonFile(file);
+  if (!state || typeof state !== 'object' || Array.isArray(state))
+    return undefined;
+  const check = (state as { lastCheck?: unknown }).lastCheck;
+  if (!check || typeof check !== 'object' || Array.isArray(check))
+    return undefined;
+  const row = check as {
+    at?: unknown;
+    result?: unknown;
+    fail?: unknown;
+    warn?: unknown;
+    forced?: unknown;
+  };
+  if (
+    typeof row.at !== 'string' ||
+    typeof row.result !== 'string' ||
+    typeof row.fail !== 'number' ||
+    typeof row.warn !== 'number'
+  ) {
+    return undefined;
+  }
+  return {
+    at: row.at,
+    result: row.result,
+    fail: row.fail,
+    warn: row.warn,
+    ...(row.forced === true ? { forced: true } : {}),
+  };
+}
+
+function gitShortSha(): string | null {
+  try {
+    const result = spawnSync('git', ['rev-parse', '--short', 'HEAD'], {
+      cwd: REPO_ROOT,
+      encoding: 'utf8',
+    });
+    if (result.status !== 0) return null;
+    const sha = result.stdout.trim();
+    return /^[0-9a-f]+$/i.test(sha) ? sha : null;
+  } catch {
+    return null;
+  }
+}
+
+function kitMetaFor(args: CliArgs): KitMetaRecord {
+  return buildKitMeta(args.meta, {
+    ...pickKitIdentity(kitIdentitySources(args.id, args.assetsBase)),
+    check: readLastCheck(args.id),
+    gitSha: gitShortSha(),
+    seededAt: new Date().toISOString(),
+  });
+}
+
 async function upsertTemplate(
   supabase: SupabaseClient,
   args: CliArgs,
   grapesjsJson: unknown,
   previewUrl: string | null,
-): Promise<{ created: boolean; wasActive: boolean }> {
+): Promise<SeededRow> {
   const { data: existing, error: readError } = await supabase
     .from('templates')
-    .select('id, is_active, tier')
+    .select(TEMPLATE_ROW_COLUMNS)
     .eq('id', args.id)
     .maybeSingle<TemplateRow>();
   if (readError) throw new StageError(readError.message);
@@ -650,17 +808,20 @@ async function upsertTemplate(
     );
   }
 
-  const fields = {
-    name: args.name,
-    category: args.category,
-    tier: args.tier,
-    grapesjs_json: grapesjsJson,
-    ...(previewUrl ? { preview_url: previewUrl } : {}),
-    ...(args.description !== undefined
-      ? { description: args.description }
-      : {}),
-    ...(args.sortOrder !== undefined ? { sort_order: args.sortOrder } : {}),
-  };
+  const fields = templateWriteFields(
+    existing,
+    {
+      name: args.name,
+      description: args.description,
+      category: args.category,
+      sortOrder: args.sortOrder,
+      tier: args.tier,
+      grapesjsJson,
+      previewUrl,
+      kitMeta: kitMetaFor(args),
+    },
+    args.overwriteMeta,
+  );
 
   if (existing) {
     const { error } = await supabase
@@ -668,14 +829,24 @@ async function upsertTemplate(
       .update(fields)
       .eq('id', args.id);
     if (error) throw new StageError(error.message);
-    return { created: false, wasActive: existing.is_active };
+    return {
+      created: false,
+      wasActive: existing.is_active,
+      retiredAt: existing.retired_at,
+      thumbnailUrl: existing.thumbnail_url,
+    };
   }
   // New templates stay hidden until the preview and thumbnail are confirmed.
   const { error } = await supabase
     .from('templates')
     .insert({ id: args.id, ...fields, is_active: false });
   if (error) throw new StageError(error.message);
-  return { created: true, wasActive: false };
+  return {
+    created: true,
+    wasActive: false,
+    retiredAt: null,
+    thumbnailUrl: null,
+  };
 }
 
 // ── Stage 7–8: deploy, thumbnail ─────────────────────────────────────────────
@@ -786,11 +957,24 @@ async function run(argv: string[]): Promise<void> {
 
   // 1b. Motion
   if (exportHtml) {
-    const tagged = motionHtml(exportHtml, args.motion, args.motionSections, false, args.motionProgress);
+    const tagged = motionHtml(
+      exportHtml,
+      args.motion,
+      args.motionSections,
+      false,
+      args.motionProgress,
+    );
     try {
-      motionProject(project, args.motion, tagged.result.rows, args.motionProgress);
+      motionProject(
+        project,
+        args.motion,
+        tagged.result.rows,
+        args.motionProgress,
+      );
     } catch (error) {
-      throw new StageError(error instanceof Error ? error.message : String(error));
+      throw new StageError(
+        error instanceof Error ? error.message : String(error),
+      );
     }
     exportHtml = tagged.html;
     const typed = tagged.result.rows.filter((r) => r.type !== 'skip').length;
@@ -804,7 +988,9 @@ async function run(argv: string[]): Promise<void> {
     );
     console.log(classificationTable(args.id, tagged.result.rows));
   } else if (args.motion !== 'none') {
-    throw new StageError('--motion classifies the export HTML: pass --html or --dir.');
+    throw new StageError(
+      '--motion classifies the export HTML: pass --html or --dir.',
+    );
   } else {
     record('1b motion', '–', 'none');
   }
@@ -868,7 +1054,7 @@ async function run(argv: string[]): Promise<void> {
   if (args.finalize) {
     const { data: row, error } = await supabase
       .from('templates')
-      .select('id, is_active, tier')
+      .select(TEMPLATE_ROW_COLUMNS)
       .eq('id', args.id)
       .maybeSingle<TemplateRow>();
     if (error) throw new StageError(error.message);
@@ -876,8 +1062,16 @@ async function run(argv: string[]): Promise<void> {
       throw new StageError(
         `--finalize needs an existing row; seed ${args.id} without --finalize first.`,
       );
-    record('3–6 seed', '–', '--finalize: assets, preview file and row already written');
-    await finishPublish(args, argv, supabase, storage, previewUrl, row.is_active);
+    record(
+      '3–6 seed',
+      '–',
+      '--finalize: assets, preview file and row already written',
+    );
+    await finishPublish(args, argv, supabase, storage, previewUrl, {
+      wasActive: row.is_active,
+      retiredAt: row.retired_at,
+      thumbnailUrl: row.thumbnail_url,
+    });
     return;
   }
 
@@ -919,7 +1113,8 @@ async function run(argv: string[]): Promise<void> {
     const dir = join(TEMPLATE_PREVIEWS_DIR, 'public', args.id);
     mkdirSync(dir, { recursive: true });
     // Básico tenants never get the runtime, so only Pro previews animate.
-    const previewHtml = args.tier === 'pro' ? injectMotion(rewrittenHtml) : rewrittenHtml;
+    const previewHtml =
+      args.tier === 'pro' ? injectMotion(rewrittenHtml) : rewrittenHtml;
     writeFileSync(
       join(dir, 'index.html'),
       finalizePreviewHtml(previewHtml, args.name),
@@ -937,7 +1132,7 @@ async function run(argv: string[]): Promise<void> {
   }
 
   // 6. Database
-  const { created, wasActive } = await upsertTemplate(
+  const seeded = await upsertTemplate(
     supabase,
     args,
     updateAssetMimeTypes(JSON.parse(rewrittenJson) as GrapesProject, mimeTypes),
@@ -946,10 +1141,12 @@ async function run(argv: string[]): Promise<void> {
   record(
     '6 upsert templates',
     '✓',
-    created ? 'inserted (inactive)' : `updated (is_active=${wasActive} kept)`,
+    seeded.created
+      ? 'inserted (inactive)'
+      : `updated (is_active=${seeded.wasActive} kept)`,
   );
 
-  await finishPublish(args, argv, supabase, storage, previewUrl, wasActive);
+  await finishPublish(args, argv, supabase, storage, previewUrl, seeded);
 }
 
 /** Stages 7–9: deploy (or, with --finalize, only wait for the deployed preview), thumbnail, activate. */
@@ -959,7 +1156,7 @@ async function finishPublish(
   supabase: SupabaseClient,
   storage: ObjectStoragePort,
   previewUrl: string | null,
-  wasActive: boolean,
+  seeded: Omit<SeededRow, 'created'>,
 ): Promise<void> {
   // 7. Deploy
   let previewLive = false;
@@ -986,12 +1183,19 @@ async function finishPublish(
     record('7 deploy previews', '✓', `${previewUrl} → 200`);
   }
 
-  // 8. Thumbnail
-  let thumbnailDone = false;
+  // 8. Thumbnail. An admin upload (`/admin-thumb-`) counts as ready and is kept.
+  let thumbnailReady = false;
+  const replaceThumb = shouldReplaceThumbnail(
+    seeded.thumbnailUrl,
+    args.overwriteMeta,
+  );
   if (!args.thumbnail) {
     record('8 thumbnail', '–', 'skipped (--no-thumbnail)');
   } else if (!previewLive || !previewUrl) {
     record('8 thumbnail', '–', 'needs a live preview (stage 7)');
+  } else if (!replaceThumb) {
+    thumbnailReady = true;
+    record('8 thumbnail', '✓', 'admin thumbnail kept');
   } else {
     const playwright = await loadPlaywright();
     if (!playwright) {
@@ -1013,27 +1217,38 @@ async function finishPublish(
         .update({ thumbnail_url: thumbnailUrl })
         .eq('id', args.id);
       if (error) throw new StageError(error.message);
-      thumbnailDone = true;
+      thumbnailReady = true;
       record('8 thumbnail', '✓', thumbnailUrl);
     }
   }
 
-  // 9. Activate
-  if (previewLive && thumbnailDone) {
+  // 9. Activate. A retired template stays inactive (retired_at requires it).
+  const ready = previewLive && thumbnailReady;
+  if (
+    shouldActivate({
+      previewLive,
+      thumbnailReady,
+      retiredAt: seeded.retiredAt,
+    })
+  ) {
     const { error } = await supabase
       .from('templates')
       .update({ is_active: true })
       .eq('id', args.id);
     if (error) throw new StageError(error.message);
     record('9 activate', '✓', 'is_active=true');
+  } else if (seeded.retiredAt) {
+    record('9 activate', '–', 'retirada en el admin; no se reactiva');
   } else {
     record(
       '9 activate',
       '–',
-      wasActive
+      seeded.wasActive
         ? 'left as is (already active)'
         : 'left inactive until stages 7–8 succeed',
     );
+  }
+  if (!ready) {
     printSummary();
     console.log(`\nResume with:\n  ${resumeCommand(argv)}`);
     return;

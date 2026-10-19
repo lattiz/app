@@ -20,5 +20,6 @@ import { MeController } from './interface/me.controller';
     { provide: USER_REPOSITORY_PORT, useClass: DrizzleUserRepository },
     { provide: AUTH_ADMIN_PORT, useClass: SupabaseAuthAdminAdapter },
   ],
+  exports: [USER_REPOSITORY_PORT, AUTH_ADMIN_PORT],
 })
 export class MeModule {}

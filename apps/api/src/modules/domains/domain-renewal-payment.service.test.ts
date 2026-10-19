@@ -1105,3 +1105,22 @@ describe('DomainRenewalPaymentService getStatusForUser', () => {
     }
   });
 });
+
+describe('DomainRenewalPaymentService getStatusForTenant', () => {
+  it('returns null when renewal is disabled, before any lookup', async () => {
+    const { service, calls, cycleLookups } = await harness({
+      enabled: false,
+      cycle: cycleView(),
+    });
+    assert.equal(await service.getStatusForTenant(TENANT), null);
+    assert.equal(calls.length, 0);
+    assert.equal(cycleLookups(), 0);
+  });
+
+  it('matches getStatusForUser for the same tenant', async () => {
+    const { service } = await harness({ cycle: cycleView() });
+    const byUser = await service.getStatusForUser(USER);
+    const byTenant = await service.getStatusForTenant(TENANT);
+    assert.deepEqual(byTenant, byUser);
+  });
+});

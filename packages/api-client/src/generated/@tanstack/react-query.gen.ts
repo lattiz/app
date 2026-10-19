@@ -3,8 +3,8 @@
 import { type DefaultError, type InfiniteData, infiniteQueryOptions, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { analyticsControllerOverview, analyticsControllerRealtime, analyticsControllerRetry, billingControllerCreateCheckoutSession, billingControllerCreatePortalSession, billingControllerGetInvoices, billingControllerGetPlanChange, billingControllerGetPlans, billingControllerGetSubscription, billingControllerGetSubscriptionPrice, billingControllerReleasePendingPlanChange, billingControllerRequestPlanChange, domainsControllerConnect, domainsControllerCreateRenewalCheckout, domainsControllerGetDomain, domainsControllerGetJobStatus, domainsControllerGetQuote, domainsControllerGetRenewal, domainsControllerPurchase, domainsControllerRelaunch, domainsControllerSearch, healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options, planChangeImpactControllerGetImpact, publicTemplatesControllerFindPublished, sitesControllerChangeTemplate, sitesControllerGetSchema, sitesControllerPublish, sitesControllerSaveSchema, sitesControllerSelectTemplate, sitesControllerUploadAssets, siteStockAssetsControllerImportPhoto, stockControllerSearch, stockControllerStatus, templatesControllerFindAll, tenantsControllerMe, tenantsControllerRemoveBranding, tenantsControllerSlugAvailability, tenantsControllerSlugSuggestion, tenantsControllerUpdateBusinessProfile, tenantsControllerUpdateSiteSettings, tenantsControllerUpdateSlug, tenantsControllerUploadBranding } from '../sdk.gen';
-import type { AnalyticsControllerOverviewData, AnalyticsControllerOverviewResponse, AnalyticsControllerRealtimeData, AnalyticsControllerRealtimeResponse, AnalyticsControllerRetryData, AnalyticsControllerRetryResponse, BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponse, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponse, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponse, BillingControllerGetPlanChangeData, BillingControllerGetPlanChangeResponse, BillingControllerGetPlansData, BillingControllerGetPlansResponse, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionPriceData, BillingControllerGetSubscriptionPriceResponse, BillingControllerGetSubscriptionResponse, BillingControllerReleasePendingPlanChangeData, BillingControllerReleasePendingPlanChangeResponse, BillingControllerRequestPlanChangeData, BillingControllerRequestPlanChangeResponse, DomainsControllerConnectData, DomainsControllerConnectResponse, DomainsControllerCreateRenewalCheckoutData, DomainsControllerCreateRenewalCheckoutResponse, DomainsControllerGetDomainData, DomainsControllerGetDomainResponse, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponse, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponse, DomainsControllerGetRenewalData, DomainsControllerGetRenewalResponse, DomainsControllerPurchaseData, DomainsControllerPurchaseResponse, DomainsControllerRelaunchData, DomainsControllerRelaunchResponse, DomainsControllerSearchData, DomainsControllerSearchResponse, HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse, PlanChangeImpactControllerGetImpactData, PlanChangeImpactControllerGetImpactResponse, PublicTemplatesControllerFindPublishedData, PublicTemplatesControllerFindPublishedResponse, SitesControllerChangeTemplateData, SitesControllerChangeTemplateResponse, SitesControllerGetSchemaData, SitesControllerGetSchemaResponse, SitesControllerPublishData, SitesControllerPublishResponse, SitesControllerSaveSchemaData, SitesControllerSaveSchemaResponse, SitesControllerSelectTemplateData, SitesControllerSelectTemplateResponse, SitesControllerUploadAssetsData, SitesControllerUploadAssetsResponse, SiteStockAssetsControllerImportPhotoData, SiteStockAssetsControllerImportPhotoResponse, StockControllerSearchData, StockControllerSearchResponse, StockControllerStatusData, StockControllerStatusResponse, TemplatesControllerFindAllData, TemplatesControllerFindAllResponse, TenantsControllerMeData, TenantsControllerMeResponse, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingResponse, TenantsControllerSlugAvailabilityData, TenantsControllerSlugAvailabilityResponse, TenantsControllerSlugSuggestionData, TenantsControllerSlugSuggestionResponse, TenantsControllerUpdateBusinessProfileData, TenantsControllerUpdateBusinessProfileResponse, TenantsControllerUpdateSiteSettingsData, TenantsControllerUpdateSiteSettingsResponse, TenantsControllerUpdateSlugData, TenantsControllerUpdateSlugResponse, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingResponse } from '../types.gen';
+import { adminAuditControllerList, adminDeletionsControllerGet, adminDeletionsControllerList, adminDeletionsControllerRetry, adminDomainControllerActivationCheck, adminDomainControllerInspect, adminMeControllerMe, adminMembersControllerGrant, adminMembersControllerList, adminMembersControllerRevoke, adminMembersControllerUpdateRole, adminMetricsControllerFunnel, adminMetricsControllerHistory, adminMetricsControllerOverview, adminMetricsControllerRevenue, adminMetricsControllerTemplates, adminSettingsControllerList, adminSettingsControllerRemove, adminSettingsControllerUpdate, adminSubscriptionsControllerCancel, adminSubscriptionsControllerGet, adminSubscriptionsControllerList, adminSubscriptionsControllerResume, adminTemplatesControllerActivate, adminTemplatesControllerGet, adminTemplatesControllerList, adminTemplatesControllerRemove, adminTemplatesControllerReorder, adminTemplatesControllerReplaceThumbnail, adminTemplatesControllerRetire, adminTemplatesControllerUpdate, adminTenantDeletionControllerPreview, adminTenantDeletionControllerStart, adminTenantsControllerGet, adminTenantsControllerList, adminTenantsControllerReactivate, adminTenantsControllerRefresh, adminTenantsControllerSuspend, adminTenantsControllerUpdateFlags, adminTrialsControllerList, adminTrialsControllerSummary, analyticsControllerOverview, analyticsControllerRealtime, analyticsControllerRetry, billingControllerCreateCheckoutSession, billingControllerCreatePortalSession, billingControllerGetInvoices, billingControllerGetPlanChange, billingControllerGetPlans, billingControllerGetSubscription, billingControllerGetSubscriptionPrice, billingControllerReleasePendingPlanChange, billingControllerRequestPlanChange, domainsControllerConnect, domainsControllerCreateRenewalCheckout, domainsControllerGetDomain, domainsControllerGetJobStatus, domainsControllerGetQuote, domainsControllerGetRenewal, domainsControllerPurchase, domainsControllerRelaunch, domainsControllerSearch, healthControllerHealth, meControllerDeleteMe, meControllerMe, type Options, planChangeImpactControllerGetImpact, publicTemplatesControllerFindPublished, sitesControllerChangeTemplate, sitesControllerGetSchema, sitesControllerPublish, sitesControllerSaveSchema, sitesControllerSelectTemplate, sitesControllerUploadAssets, siteStockAssetsControllerImportPhoto, stockControllerSearch, stockControllerStatus, templatesControllerFindAll, tenantsControllerMe, tenantsControllerRemoveBranding, tenantsControllerSlugAvailability, tenantsControllerSlugSuggestion, tenantsControllerUpdateBusinessProfile, tenantsControllerUpdateSiteSettings, tenantsControllerUpdateSlug, tenantsControllerUploadBranding } from '../sdk.gen';
+import type { AdminAuditControllerListData, AdminAuditControllerListResponse, AdminDeletionsControllerGetData, AdminDeletionsControllerGetResponse, AdminDeletionsControllerListData, AdminDeletionsControllerListResponse, AdminDeletionsControllerRetryData, AdminDeletionsControllerRetryResponse, AdminDomainControllerActivationCheckData, AdminDomainControllerActivationCheckResponse, AdminDomainControllerInspectData, AdminDomainControllerInspectResponse, AdminMeControllerMeData, AdminMeControllerMeResponse, AdminMembersControllerGrantData, AdminMembersControllerGrantResponse, AdminMembersControllerListData, AdminMembersControllerListResponse, AdminMembersControllerRevokeData, AdminMembersControllerRevokeResponse, AdminMembersControllerUpdateRoleData, AdminMembersControllerUpdateRoleResponse, AdminMetricsControllerFunnelData, AdminMetricsControllerFunnelResponse, AdminMetricsControllerHistoryData, AdminMetricsControllerHistoryResponse, AdminMetricsControllerOverviewData, AdminMetricsControllerOverviewResponse, AdminMetricsControllerRevenueData, AdminMetricsControllerRevenueResponse, AdminMetricsControllerTemplatesData, AdminMetricsControllerTemplatesResponse, AdminSettingsControllerListData, AdminSettingsControllerListResponse, AdminSettingsControllerRemoveData, AdminSettingsControllerRemoveResponse, AdminSettingsControllerUpdateData, AdminSettingsControllerUpdateResponse, AdminSubscriptionsControllerCancelData, AdminSubscriptionsControllerCancelResponse, AdminSubscriptionsControllerGetData, AdminSubscriptionsControllerGetResponse, AdminSubscriptionsControllerListData, AdminSubscriptionsControllerListResponse, AdminSubscriptionsControllerResumeData, AdminSubscriptionsControllerResumeResponse, AdminTemplatesControllerActivateData, AdminTemplatesControllerActivateResponse, AdminTemplatesControllerGetData, AdminTemplatesControllerGetResponse, AdminTemplatesControllerListData, AdminTemplatesControllerListResponse, AdminTemplatesControllerRemoveData, AdminTemplatesControllerRemoveResponse, AdminTemplatesControllerReorderData, AdminTemplatesControllerReorderResponse, AdminTemplatesControllerReplaceThumbnailData, AdminTemplatesControllerReplaceThumbnailResponse, AdminTemplatesControllerRetireData, AdminTemplatesControllerRetireResponse, AdminTemplatesControllerUpdateData, AdminTemplatesControllerUpdateResponse, AdminTenantDeletionControllerPreviewData, AdminTenantDeletionControllerPreviewResponse, AdminTenantDeletionControllerStartData, AdminTenantDeletionControllerStartResponse, AdminTenantsControllerGetData, AdminTenantsControllerGetResponse, AdminTenantsControllerListData, AdminTenantsControllerListResponse, AdminTenantsControllerReactivateData, AdminTenantsControllerReactivateResponse, AdminTenantsControllerRefreshData, AdminTenantsControllerRefreshResponse, AdminTenantsControllerSuspendData, AdminTenantsControllerSuspendResponse, AdminTenantsControllerUpdateFlagsData, AdminTenantsControllerUpdateFlagsResponse, AdminTrialsControllerListData, AdminTrialsControllerListResponse, AdminTrialsControllerSummaryData, AdminTrialsControllerSummaryResponse, AnalyticsControllerOverviewData, AnalyticsControllerOverviewResponse, AnalyticsControllerRealtimeData, AnalyticsControllerRealtimeResponse, AnalyticsControllerRetryData, AnalyticsControllerRetryResponse, BillingControllerCreateCheckoutSessionData, BillingControllerCreateCheckoutSessionResponse, BillingControllerCreatePortalSessionData, BillingControllerCreatePortalSessionResponse, BillingControllerGetInvoicesData, BillingControllerGetInvoicesResponse, BillingControllerGetPlanChangeData, BillingControllerGetPlanChangeResponse, BillingControllerGetPlansData, BillingControllerGetPlansResponse, BillingControllerGetSubscriptionData, BillingControllerGetSubscriptionPriceData, BillingControllerGetSubscriptionPriceResponse, BillingControllerGetSubscriptionResponse, BillingControllerReleasePendingPlanChangeData, BillingControllerReleasePendingPlanChangeResponse, BillingControllerRequestPlanChangeData, BillingControllerRequestPlanChangeResponse, DomainsControllerConnectData, DomainsControllerConnectResponse, DomainsControllerCreateRenewalCheckoutData, DomainsControllerCreateRenewalCheckoutResponse, DomainsControllerGetDomainData, DomainsControllerGetDomainResponse, DomainsControllerGetJobStatusData, DomainsControllerGetJobStatusResponse, DomainsControllerGetQuoteData, DomainsControllerGetQuoteResponse, DomainsControllerGetRenewalData, DomainsControllerGetRenewalResponse, DomainsControllerPurchaseData, DomainsControllerPurchaseResponse, DomainsControllerRelaunchData, DomainsControllerRelaunchResponse, DomainsControllerSearchData, DomainsControllerSearchResponse, HealthControllerHealthData, HealthControllerHealthResponse, MeControllerDeleteMeData, MeControllerDeleteMeResponse, MeControllerMeData, MeControllerMeResponse, PlanChangeImpactControllerGetImpactData, PlanChangeImpactControllerGetImpactResponse, PublicTemplatesControllerFindPublishedData, PublicTemplatesControllerFindPublishedResponse, SitesControllerChangeTemplateData, SitesControllerChangeTemplateResponse, SitesControllerGetSchemaData, SitesControllerGetSchemaResponse, SitesControllerPublishData, SitesControllerPublishResponse, SitesControllerSaveSchemaData, SitesControllerSaveSchemaResponse, SitesControllerSelectTemplateData, SitesControllerSelectTemplateResponse, SitesControllerUploadAssetsData, SitesControllerUploadAssetsResponse, SiteStockAssetsControllerImportPhotoData, SiteStockAssetsControllerImportPhotoResponse, StockControllerSearchData, StockControllerSearchResponse, StockControllerStatusData, StockControllerStatusResponse, TemplatesControllerFindAllData, TemplatesControllerFindAllResponse, TenantsControllerMeData, TenantsControllerMeResponse, TenantsControllerRemoveBrandingData, TenantsControllerRemoveBrandingResponse, TenantsControllerSlugAvailabilityData, TenantsControllerSlugAvailabilityResponse, TenantsControllerSlugSuggestionData, TenantsControllerSlugSuggestionResponse, TenantsControllerUpdateBusinessProfileData, TenantsControllerUpdateBusinessProfileResponse, TenantsControllerUpdateSiteSettingsData, TenantsControllerUpdateSiteSettingsResponse, TenantsControllerUpdateSlugData, TenantsControllerUpdateSlugResponse, TenantsControllerUploadBrandingData, TenantsControllerUploadBrandingResponse } from '../types.gen';
 
 export type QueryKey<TOptions extends Options> = [
     Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
@@ -37,6 +37,888 @@ const createQueryKey = <TOptions extends Options>(id: string, options?: TOptions
         params.query = options.query;
     }
     return [params];
+};
+
+export const adminMeControllerMeQueryKey = (options?: Options<AdminMeControllerMeData>) => createQueryKey('adminMeControllerMe', options);
+
+/**
+ * Current admin member
+ */
+export const adminMeControllerMeOptions = (options?: Options<AdminMeControllerMeData>) => queryOptions<AdminMeControllerMeResponse, DefaultError, AdminMeControllerMeResponse, ReturnType<typeof adminMeControllerMeQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminMeControllerMe({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminMeControllerMeQueryKey(options)
+});
+
+export const adminSettingsControllerListQueryKey = (options?: Options<AdminSettingsControllerListData>) => createQueryKey('adminSettingsControllerList', options);
+
+/**
+ * List business settings
+ */
+export const adminSettingsControllerListOptions = (options?: Options<AdminSettingsControllerListData>) => queryOptions<AdminSettingsControllerListResponse, DefaultError, AdminSettingsControllerListResponse, ReturnType<typeof adminSettingsControllerListQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminSettingsControllerList({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminSettingsControllerListQueryKey(options)
+});
+
+/**
+ * Reset a business setting
+ */
+export const adminSettingsControllerRemoveMutation = (options?: Partial<Options<AdminSettingsControllerRemoveData>>): UseMutationOptions<AdminSettingsControllerRemoveResponse, DefaultError, Options<AdminSettingsControllerRemoveData>> => {
+    const mutationOptions: UseMutationOptions<AdminSettingsControllerRemoveResponse, DefaultError, Options<AdminSettingsControllerRemoveData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminSettingsControllerRemove({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Update a business setting
+ */
+export const adminSettingsControllerUpdateMutation = (options?: Partial<Options<AdminSettingsControllerUpdateData>>): UseMutationOptions<AdminSettingsControllerUpdateResponse, DefaultError, Options<AdminSettingsControllerUpdateData>> => {
+    const mutationOptions: UseMutationOptions<AdminSettingsControllerUpdateResponse, DefaultError, Options<AdminSettingsControllerUpdateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminSettingsControllerUpdate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const adminMembersControllerListQueryKey = (options?: Options<AdminMembersControllerListData>) => createQueryKey('adminMembersControllerList', options);
+
+/**
+ * List admin members
+ */
+export const adminMembersControllerListOptions = (options?: Options<AdminMembersControllerListData>) => queryOptions<AdminMembersControllerListResponse, DefaultError, AdminMembersControllerListResponse, ReturnType<typeof adminMembersControllerListQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminMembersControllerList({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminMembersControllerListQueryKey(options)
+});
+
+/**
+ * Grant admin access
+ */
+export const adminMembersControllerGrantMutation = (options?: Partial<Options<AdminMembersControllerGrantData>>): UseMutationOptions<AdminMembersControllerGrantResponse, DefaultError, Options<AdminMembersControllerGrantData>> => {
+    const mutationOptions: UseMutationOptions<AdminMembersControllerGrantResponse, DefaultError, Options<AdminMembersControllerGrantData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminMembersControllerGrant({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Revoke admin access
+ */
+export const adminMembersControllerRevokeMutation = (options?: Partial<Options<AdminMembersControllerRevokeData>>): UseMutationOptions<AdminMembersControllerRevokeResponse, DefaultError, Options<AdminMembersControllerRevokeData>> => {
+    const mutationOptions: UseMutationOptions<AdminMembersControllerRevokeResponse, DefaultError, Options<AdminMembersControllerRevokeData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminMembersControllerRevoke({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Change an admin member role
+ */
+export const adminMembersControllerUpdateRoleMutation = (options?: Partial<Options<AdminMembersControllerUpdateRoleData>>): UseMutationOptions<AdminMembersControllerUpdateRoleResponse, DefaultError, Options<AdminMembersControllerUpdateRoleData>> => {
+    const mutationOptions: UseMutationOptions<AdminMembersControllerUpdateRoleResponse, DefaultError, Options<AdminMembersControllerUpdateRoleData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminMembersControllerUpdateRole({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const adminAuditControllerListQueryKey = (options?: Options<AdminAuditControllerListData>) => createQueryKey('adminAuditControllerList', options);
+
+/**
+ * List admin audit events
+ */
+export const adminAuditControllerListOptions = (options?: Options<AdminAuditControllerListData>) => queryOptions<AdminAuditControllerListResponse, DefaultError, AdminAuditControllerListResponse, ReturnType<typeof adminAuditControllerListQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminAuditControllerList({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminAuditControllerListQueryKey(options)
+});
+
+const createInfiniteParams = <K extends Pick<QueryKey<Options>[0], 'body' | 'headers' | 'path' | 'query'>>(queryKey: QueryKey<Options>, page: K) => {
+    const params = { ...queryKey[0] };
+    if (page.body) {
+        params.body = {
+            ...queryKey[0].body as any,
+            ...page.body as any
+        };
+    }
+    if (page.headers) {
+        params.headers = {
+            ...queryKey[0].headers,
+            ...page.headers
+        };
+    }
+    if (page.path) {
+        params.path = {
+            ...queryKey[0].path as any,
+            ...page.path as any
+        };
+    }
+    if (page.query) {
+        params.query = {
+            ...queryKey[0].query as any,
+            ...page.query as any
+        };
+    }
+    return params as unknown as typeof page;
+};
+
+export const adminAuditControllerListInfiniteQueryKey = (options?: Options<AdminAuditControllerListData>): QueryKey<Options<AdminAuditControllerListData>> => createQueryKey('adminAuditControllerList', options, true);
+
+/**
+ * List admin audit events
+ */
+export const adminAuditControllerListInfiniteOptions = (options?: Options<AdminAuditControllerListData>) => infiniteQueryOptions<AdminAuditControllerListResponse, DefaultError, InfiniteData<AdminAuditControllerListResponse>, QueryKey<Options<AdminAuditControllerListData>>, number | Pick<QueryKey<Options<AdminAuditControllerListData>>[0], 'body' | 'headers' | 'path' | 'query'>>(
+// @ts-ignore
+{
+    queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<QueryKey<Options<AdminAuditControllerListData>>[0], 'body' | 'headers' | 'path' | 'query'> = typeof pageParam === 'object' ? pageParam : {
+            query: {
+                page: pageParam
+            }
+        };
+        const params = createInfiniteParams(queryKey, page);
+        const { data } = await adminAuditControllerList({
+            ...options,
+            ...params,
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminAuditControllerListInfiniteQueryKey(options)
+});
+
+export const adminTenantsControllerListQueryKey = (options?: Options<AdminTenantsControllerListData>) => createQueryKey('adminTenantsControllerList', options);
+
+/**
+ * List tenants
+ */
+export const adminTenantsControllerListOptions = (options?: Options<AdminTenantsControllerListData>) => queryOptions<AdminTenantsControllerListResponse, DefaultError, AdminTenantsControllerListResponse, ReturnType<typeof adminTenantsControllerListQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminTenantsControllerList({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminTenantsControllerListQueryKey(options)
+});
+
+export const adminTenantsControllerListInfiniteQueryKey = (options?: Options<AdminTenantsControllerListData>): QueryKey<Options<AdminTenantsControllerListData>> => createQueryKey('adminTenantsControllerList', options, true);
+
+/**
+ * List tenants
+ */
+export const adminTenantsControllerListInfiniteOptions = (options?: Options<AdminTenantsControllerListData>) => infiniteQueryOptions<AdminTenantsControllerListResponse, DefaultError, InfiniteData<AdminTenantsControllerListResponse>, QueryKey<Options<AdminTenantsControllerListData>>, number | Pick<QueryKey<Options<AdminTenantsControllerListData>>[0], 'body' | 'headers' | 'path' | 'query'>>(
+// @ts-ignore
+{
+    queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<QueryKey<Options<AdminTenantsControllerListData>>[0], 'body' | 'headers' | 'path' | 'query'> = typeof pageParam === 'object' ? pageParam : {
+            query: {
+                page: pageParam
+            }
+        };
+        const params = createInfiniteParams(queryKey, page);
+        const { data } = await adminTenantsControllerList({
+            ...options,
+            ...params,
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminTenantsControllerListInfiniteQueryKey(options)
+});
+
+export const adminTenantsControllerGetQueryKey = (options: Options<AdminTenantsControllerGetData>) => createQueryKey('adminTenantsControllerGet', options);
+
+/**
+ * Get a tenant
+ */
+export const adminTenantsControllerGetOptions = (options: Options<AdminTenantsControllerGetData>) => queryOptions<AdminTenantsControllerGetResponse, DefaultError, AdminTenantsControllerGetResponse, ReturnType<typeof adminTenantsControllerGetQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminTenantsControllerGet({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminTenantsControllerGetQueryKey(options)
+});
+
+/**
+ * Refresh stored object usage for a tenant
+ */
+export const adminTenantsControllerRefreshMutation = (options?: Partial<Options<AdminTenantsControllerRefreshData>>): UseMutationOptions<AdminTenantsControllerRefreshResponse, DefaultError, Options<AdminTenantsControllerRefreshData>> => {
+    const mutationOptions: UseMutationOptions<AdminTenantsControllerRefreshResponse, DefaultError, Options<AdminTenantsControllerRefreshData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminTenantsControllerRefresh({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Suspend a tenant site
+ */
+export const adminTenantsControllerSuspendMutation = (options?: Partial<Options<AdminTenantsControllerSuspendData>>): UseMutationOptions<AdminTenantsControllerSuspendResponse, DefaultError, Options<AdminTenantsControllerSuspendData>> => {
+    const mutationOptions: UseMutationOptions<AdminTenantsControllerSuspendResponse, DefaultError, Options<AdminTenantsControllerSuspendData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminTenantsControllerSuspend({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Reactivate a suspended tenant site
+ */
+export const adminTenantsControllerReactivateMutation = (options?: Partial<Options<AdminTenantsControllerReactivateData>>): UseMutationOptions<AdminTenantsControllerReactivateResponse, DefaultError, Options<AdminTenantsControllerReactivateData>> => {
+    const mutationOptions: UseMutationOptions<AdminTenantsControllerReactivateResponse, DefaultError, Options<AdminTenantsControllerReactivateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminTenantsControllerReactivate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Update internal flags for a tenant
+ */
+export const adminTenantsControllerUpdateFlagsMutation = (options?: Partial<Options<AdminTenantsControllerUpdateFlagsData>>): UseMutationOptions<AdminTenantsControllerUpdateFlagsResponse, DefaultError, Options<AdminTenantsControllerUpdateFlagsData>> => {
+    const mutationOptions: UseMutationOptions<AdminTenantsControllerUpdateFlagsResponse, DefaultError, Options<AdminTenantsControllerUpdateFlagsData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminTenantsControllerUpdateFlags({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const adminDomainControllerInspectQueryKey = (options: Options<AdminDomainControllerInspectData>) => createQueryKey('adminDomainControllerInspect', options);
+
+/**
+ * Inspect a tenant domain
+ */
+export const adminDomainControllerInspectOptions = (options: Options<AdminDomainControllerInspectData>) => queryOptions<AdminDomainControllerInspectResponse, DefaultError, AdminDomainControllerInspectResponse, ReturnType<typeof adminDomainControllerInspectQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminDomainControllerInspect({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminDomainControllerInspectQueryKey(options)
+});
+
+/**
+ * Re-check DNS activation for a tenant domain
+ */
+export const adminDomainControllerActivationCheckMutation = (options?: Partial<Options<AdminDomainControllerActivationCheckData>>): UseMutationOptions<AdminDomainControllerActivationCheckResponse, DefaultError, Options<AdminDomainControllerActivationCheckData>> => {
+    const mutationOptions: UseMutationOptions<AdminDomainControllerActivationCheckResponse, DefaultError, Options<AdminDomainControllerActivationCheckData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminDomainControllerActivationCheck({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const adminSubscriptionsControllerListQueryKey = (options?: Options<AdminSubscriptionsControllerListData>) => createQueryKey('adminSubscriptionsControllerList', options);
+
+/**
+ * List subscriptions
+ */
+export const adminSubscriptionsControllerListOptions = (options?: Options<AdminSubscriptionsControllerListData>) => queryOptions<AdminSubscriptionsControllerListResponse, DefaultError, AdminSubscriptionsControllerListResponse, ReturnType<typeof adminSubscriptionsControllerListQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminSubscriptionsControllerList({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminSubscriptionsControllerListQueryKey(options)
+});
+
+export const adminSubscriptionsControllerListInfiniteQueryKey = (options?: Options<AdminSubscriptionsControllerListData>): QueryKey<Options<AdminSubscriptionsControllerListData>> => createQueryKey('adminSubscriptionsControllerList', options, true);
+
+/**
+ * List subscriptions
+ */
+export const adminSubscriptionsControllerListInfiniteOptions = (options?: Options<AdminSubscriptionsControllerListData>) => infiniteQueryOptions<AdminSubscriptionsControllerListResponse, DefaultError, InfiniteData<AdminSubscriptionsControllerListResponse>, QueryKey<Options<AdminSubscriptionsControllerListData>>, number | Pick<QueryKey<Options<AdminSubscriptionsControllerListData>>[0], 'body' | 'headers' | 'path' | 'query'>>(
+// @ts-ignore
+{
+    queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<QueryKey<Options<AdminSubscriptionsControllerListData>>[0], 'body' | 'headers' | 'path' | 'query'> = typeof pageParam === 'object' ? pageParam : {
+            query: {
+                page: pageParam
+            }
+        };
+        const params = createInfiniteParams(queryKey, page);
+        const { data } = await adminSubscriptionsControllerList({
+            ...options,
+            ...params,
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminSubscriptionsControllerListInfiniteQueryKey(options)
+});
+
+export const adminSubscriptionsControllerGetQueryKey = (options: Options<AdminSubscriptionsControllerGetData>) => createQueryKey('adminSubscriptionsControllerGet', options);
+
+/**
+ * Get a subscription
+ */
+export const adminSubscriptionsControllerGetOptions = (options: Options<AdminSubscriptionsControllerGetData>) => queryOptions<AdminSubscriptionsControllerGetResponse, DefaultError, AdminSubscriptionsControllerGetResponse, ReturnType<typeof adminSubscriptionsControllerGetQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminSubscriptionsControllerGet({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminSubscriptionsControllerGetQueryKey(options)
+});
+
+/**
+ * Cancel a subscription in Stripe
+ */
+export const adminSubscriptionsControllerCancelMutation = (options?: Partial<Options<AdminSubscriptionsControllerCancelData>>): UseMutationOptions<AdminSubscriptionsControllerCancelResponse, DefaultError, Options<AdminSubscriptionsControllerCancelData>> => {
+    const mutationOptions: UseMutationOptions<AdminSubscriptionsControllerCancelResponse, DefaultError, Options<AdminSubscriptionsControllerCancelData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminSubscriptionsControllerCancel({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Undo a scheduled subscription cancellation
+ */
+export const adminSubscriptionsControllerResumeMutation = (options?: Partial<Options<AdminSubscriptionsControllerResumeData>>): UseMutationOptions<AdminSubscriptionsControllerResumeResponse, DefaultError, Options<AdminSubscriptionsControllerResumeData>> => {
+    const mutationOptions: UseMutationOptions<AdminSubscriptionsControllerResumeResponse, DefaultError, Options<AdminSubscriptionsControllerResumeData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminSubscriptionsControllerResume({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const adminTemplatesControllerListQueryKey = (options?: Options<AdminTemplatesControllerListData>) => createQueryKey('adminTemplatesControllerList', options);
+
+/**
+ * List templates
+ */
+export const adminTemplatesControllerListOptions = (options?: Options<AdminTemplatesControllerListData>) => queryOptions<AdminTemplatesControllerListResponse, DefaultError, AdminTemplatesControllerListResponse, ReturnType<typeof adminTemplatesControllerListQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminTemplatesControllerList({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminTemplatesControllerListQueryKey(options)
+});
+
+/**
+ * Reorder templates
+ */
+export const adminTemplatesControllerReorderMutation = (options?: Partial<Options<AdminTemplatesControllerReorderData>>): UseMutationOptions<AdminTemplatesControllerReorderResponse, DefaultError, Options<AdminTemplatesControllerReorderData>> => {
+    const mutationOptions: UseMutationOptions<AdminTemplatesControllerReorderResponse, DefaultError, Options<AdminTemplatesControllerReorderData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminTemplatesControllerReorder({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Delete an unused template
+ */
+export const adminTemplatesControllerRemoveMutation = (options?: Partial<Options<AdminTemplatesControllerRemoveData>>): UseMutationOptions<AdminTemplatesControllerRemoveResponse, DefaultError, Options<AdminTemplatesControllerRemoveData>> => {
+    const mutationOptions: UseMutationOptions<AdminTemplatesControllerRemoveResponse, DefaultError, Options<AdminTemplatesControllerRemoveData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminTemplatesControllerRemove({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const adminTemplatesControllerGetQueryKey = (options: Options<AdminTemplatesControllerGetData>) => createQueryKey('adminTemplatesControllerGet', options);
+
+/**
+ * Get a template
+ */
+export const adminTemplatesControllerGetOptions = (options: Options<AdminTemplatesControllerGetData>) => queryOptions<AdminTemplatesControllerGetResponse, DefaultError, AdminTemplatesControllerGetResponse, ReturnType<typeof adminTemplatesControllerGetQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminTemplatesControllerGet({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminTemplatesControllerGetQueryKey(options)
+});
+
+/**
+ * Update template catalog fields
+ */
+export const adminTemplatesControllerUpdateMutation = (options?: Partial<Options<AdminTemplatesControllerUpdateData>>): UseMutationOptions<AdminTemplatesControllerUpdateResponse, DefaultError, Options<AdminTemplatesControllerUpdateData>> => {
+    const mutationOptions: UseMutationOptions<AdminTemplatesControllerUpdateResponse, DefaultError, Options<AdminTemplatesControllerUpdateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminTemplatesControllerUpdate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Activate a template
+ */
+export const adminTemplatesControllerActivateMutation = (options?: Partial<Options<AdminTemplatesControllerActivateData>>): UseMutationOptions<AdminTemplatesControllerActivateResponse, DefaultError, Options<AdminTemplatesControllerActivateData>> => {
+    const mutationOptions: UseMutationOptions<AdminTemplatesControllerActivateResponse, DefaultError, Options<AdminTemplatesControllerActivateData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminTemplatesControllerActivate({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Retire a template
+ */
+export const adminTemplatesControllerRetireMutation = (options?: Partial<Options<AdminTemplatesControllerRetireData>>): UseMutationOptions<AdminTemplatesControllerRetireResponse, DefaultError, Options<AdminTemplatesControllerRetireData>> => {
+    const mutationOptions: UseMutationOptions<AdminTemplatesControllerRetireResponse, DefaultError, Options<AdminTemplatesControllerRetireData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminTemplatesControllerRetire({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Replace a template thumbnail
+ */
+export const adminTemplatesControllerReplaceThumbnailMutation = (options?: Partial<Options<AdminTemplatesControllerReplaceThumbnailData>>): UseMutationOptions<AdminTemplatesControllerReplaceThumbnailResponse, DefaultError, Options<AdminTemplatesControllerReplaceThumbnailData>> => {
+    const mutationOptions: UseMutationOptions<AdminTemplatesControllerReplaceThumbnailResponse, DefaultError, Options<AdminTemplatesControllerReplaceThumbnailData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminTemplatesControllerReplaceThumbnail({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const adminTrialsControllerSummaryQueryKey = (options?: Options<AdminTrialsControllerSummaryData>) => createQueryKey('adminTrialsControllerSummary', options);
+
+/**
+ * Summarize free previews
+ */
+export const adminTrialsControllerSummaryOptions = (options?: Options<AdminTrialsControllerSummaryData>) => queryOptions<AdminTrialsControllerSummaryResponse, DefaultError, AdminTrialsControllerSummaryResponse, ReturnType<typeof adminTrialsControllerSummaryQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminTrialsControllerSummary({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminTrialsControllerSummaryQueryKey(options)
+});
+
+export const adminTrialsControllerListQueryKey = (options?: Options<AdminTrialsControllerListData>) => createQueryKey('adminTrialsControllerList', options);
+
+/**
+ * List free previews
+ */
+export const adminTrialsControllerListOptions = (options?: Options<AdminTrialsControllerListData>) => queryOptions<AdminTrialsControllerListResponse, DefaultError, AdminTrialsControllerListResponse, ReturnType<typeof adminTrialsControllerListQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminTrialsControllerList({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminTrialsControllerListQueryKey(options)
+});
+
+export const adminTrialsControllerListInfiniteQueryKey = (options?: Options<AdminTrialsControllerListData>): QueryKey<Options<AdminTrialsControllerListData>> => createQueryKey('adminTrialsControllerList', options, true);
+
+/**
+ * List free previews
+ */
+export const adminTrialsControllerListInfiniteOptions = (options?: Options<AdminTrialsControllerListData>) => infiniteQueryOptions<AdminTrialsControllerListResponse, DefaultError, InfiniteData<AdminTrialsControllerListResponse>, QueryKey<Options<AdminTrialsControllerListData>>, number | Pick<QueryKey<Options<AdminTrialsControllerListData>>[0], 'body' | 'headers' | 'path' | 'query'>>(
+// @ts-ignore
+{
+    queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<QueryKey<Options<AdminTrialsControllerListData>>[0], 'body' | 'headers' | 'path' | 'query'> = typeof pageParam === 'object' ? pageParam : {
+            query: {
+                page: pageParam
+            }
+        };
+        const params = createInfiniteParams(queryKey, page);
+        const { data } = await adminTrialsControllerList({
+            ...options,
+            ...params,
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminTrialsControllerListInfiniteQueryKey(options)
+});
+
+export const adminMetricsControllerOverviewQueryKey = (options?: Options<AdminMetricsControllerOverviewData>) => createQueryKey('adminMetricsControllerOverview', options);
+
+/**
+ * Business overview
+ */
+export const adminMetricsControllerOverviewOptions = (options?: Options<AdminMetricsControllerOverviewData>) => queryOptions<AdminMetricsControllerOverviewResponse, DefaultError, AdminMetricsControllerOverviewResponse, ReturnType<typeof adminMetricsControllerOverviewQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminMetricsControllerOverview({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminMetricsControllerOverviewQueryKey(options)
+});
+
+export const adminMetricsControllerRevenueQueryKey = (options?: Options<AdminMetricsControllerRevenueData>) => createQueryKey('adminMetricsControllerRevenue', options);
+
+/**
+ * Monthly collected revenue
+ */
+export const adminMetricsControllerRevenueOptions = (options?: Options<AdminMetricsControllerRevenueData>) => queryOptions<AdminMetricsControllerRevenueResponse, DefaultError, AdminMetricsControllerRevenueResponse, ReturnType<typeof adminMetricsControllerRevenueQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminMetricsControllerRevenue({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminMetricsControllerRevenueQueryKey(options)
+});
+
+export const adminMetricsControllerFunnelQueryKey = (options?: Options<AdminMetricsControllerFunnelData>) => createQueryKey('adminMetricsControllerFunnel', options);
+
+/**
+ * Signup funnel
+ */
+export const adminMetricsControllerFunnelOptions = (options?: Options<AdminMetricsControllerFunnelData>) => queryOptions<AdminMetricsControllerFunnelResponse, DefaultError, AdminMetricsControllerFunnelResponse, ReturnType<typeof adminMetricsControllerFunnelQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminMetricsControllerFunnel({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminMetricsControllerFunnelQueryKey(options)
+});
+
+export const adminMetricsControllerTemplatesQueryKey = (options?: Options<AdminMetricsControllerTemplatesData>) => createQueryKey('adminMetricsControllerTemplates', options);
+
+/**
+ * Template adoption and conversion
+ */
+export const adminMetricsControllerTemplatesOptions = (options?: Options<AdminMetricsControllerTemplatesData>) => queryOptions<AdminMetricsControllerTemplatesResponse, DefaultError, AdminMetricsControllerTemplatesResponse, ReturnType<typeof adminMetricsControllerTemplatesQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminMetricsControllerTemplates({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminMetricsControllerTemplatesQueryKey(options)
+});
+
+export const adminMetricsControllerHistoryQueryKey = (options?: Options<AdminMetricsControllerHistoryData>) => createQueryKey('adminMetricsControllerHistory', options);
+
+/**
+ * Daily KPI history
+ */
+export const adminMetricsControllerHistoryOptions = (options?: Options<AdminMetricsControllerHistoryData>) => queryOptions<AdminMetricsControllerHistoryResponse, DefaultError, AdminMetricsControllerHistoryResponse, ReturnType<typeof adminMetricsControllerHistoryQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminMetricsControllerHistory({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminMetricsControllerHistoryQueryKey(options)
+});
+
+export const adminTenantDeletionControllerPreviewQueryKey = (options: Options<AdminTenantDeletionControllerPreviewData>) => createQueryKey('adminTenantDeletionControllerPreview', options);
+
+/**
+ * Preview a full tenant deletion
+ */
+export const adminTenantDeletionControllerPreviewOptions = (options: Options<AdminTenantDeletionControllerPreviewData>) => queryOptions<AdminTenantDeletionControllerPreviewResponse, DefaultError, AdminTenantDeletionControllerPreviewResponse, ReturnType<typeof adminTenantDeletionControllerPreviewQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminTenantDeletionControllerPreview({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminTenantDeletionControllerPreviewQueryKey(options)
+});
+
+/**
+ * Delete a tenant across every provider
+ */
+export const adminTenantDeletionControllerStartMutation = (options?: Partial<Options<AdminTenantDeletionControllerStartData>>): UseMutationOptions<AdminTenantDeletionControllerStartResponse, DefaultError, Options<AdminTenantDeletionControllerStartData>> => {
+    const mutationOptions: UseMutationOptions<AdminTenantDeletionControllerStartResponse, DefaultError, Options<AdminTenantDeletionControllerStartData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminTenantDeletionControllerStart({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const adminDeletionsControllerListQueryKey = (options?: Options<AdminDeletionsControllerListData>) => createQueryKey('adminDeletionsControllerList', options);
+
+/**
+ * List tenant deletion jobs
+ */
+export const adminDeletionsControllerListOptions = (options?: Options<AdminDeletionsControllerListData>) => queryOptions<AdminDeletionsControllerListResponse, DefaultError, AdminDeletionsControllerListResponse, ReturnType<typeof adminDeletionsControllerListQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminDeletionsControllerList({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminDeletionsControllerListQueryKey(options)
+});
+
+export const adminDeletionsControllerListInfiniteQueryKey = (options?: Options<AdminDeletionsControllerListData>): QueryKey<Options<AdminDeletionsControllerListData>> => createQueryKey('adminDeletionsControllerList', options, true);
+
+/**
+ * List tenant deletion jobs
+ */
+export const adminDeletionsControllerListInfiniteOptions = (options?: Options<AdminDeletionsControllerListData>) => infiniteQueryOptions<AdminDeletionsControllerListResponse, DefaultError, InfiniteData<AdminDeletionsControllerListResponse>, QueryKey<Options<AdminDeletionsControllerListData>>, number | Pick<QueryKey<Options<AdminDeletionsControllerListData>>[0], 'body' | 'headers' | 'path' | 'query'>>(
+// @ts-ignore
+{
+    queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<QueryKey<Options<AdminDeletionsControllerListData>>[0], 'body' | 'headers' | 'path' | 'query'> = typeof pageParam === 'object' ? pageParam : {
+            query: {
+                page: pageParam
+            }
+        };
+        const params = createInfiniteParams(queryKey, page);
+        const { data } = await adminDeletionsControllerList({
+            ...options,
+            ...params,
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminDeletionsControllerListInfiniteQueryKey(options)
+});
+
+export const adminDeletionsControllerGetQueryKey = (options: Options<AdminDeletionsControllerGetData>) => createQueryKey('adminDeletionsControllerGet', options);
+
+/**
+ * Get a tenant deletion job
+ */
+export const adminDeletionsControllerGetOptions = (options: Options<AdminDeletionsControllerGetData>) => queryOptions<AdminDeletionsControllerGetResponse, DefaultError, AdminDeletionsControllerGetResponse, ReturnType<typeof adminDeletionsControllerGetQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await adminDeletionsControllerGet({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: adminDeletionsControllerGetQueryKey(options)
+});
+
+/**
+ * Retry a failed or stalled tenant deletion
+ */
+export const adminDeletionsControllerRetryMutation = (options?: Partial<Options<AdminDeletionsControllerRetryData>>): UseMutationOptions<AdminDeletionsControllerRetryResponse, DefaultError, Options<AdminDeletionsControllerRetryData>> => {
+    const mutationOptions: UseMutationOptions<AdminDeletionsControllerRetryResponse, DefaultError, Options<AdminDeletionsControllerRetryData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await adminDeletionsControllerRetry({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
 };
 
 export const analyticsControllerOverviewQueryKey = (options?: Options<AnalyticsControllerOverviewData>) => createQueryKey('analyticsControllerOverview', options);
@@ -461,24 +1343,6 @@ export const publicTemplatesControllerFindPublishedOptions = (options?: Options<
     queryKey: publicTemplatesControllerFindPublishedQueryKey(options)
 });
 
-export const healthControllerHealthQueryKey = (options?: Options<HealthControllerHealthData>) => createQueryKey('healthControllerHealth', options);
-
-/**
- * Service health (public)
- */
-export const healthControllerHealthOptions = (options?: Options<HealthControllerHealthData>) => queryOptions<HealthControllerHealthResponse, DefaultError, HealthControllerHealthResponse, ReturnType<typeof healthControllerHealthQueryKey>>({
-    queryFn: async ({ queryKey, signal }) => {
-        const { data } = await healthControllerHealth({
-            ...options,
-            ...queryKey[0],
-            signal,
-            throwOnError: true
-        });
-        return data;
-    },
-    queryKey: healthControllerHealthQueryKey(options)
-});
-
 /**
  * Delete current account (protected — requires Supabase JWT)
  */
@@ -512,6 +1376,24 @@ export const meControllerMeOptions = (options?: Options<MeControllerMeData>) => 
         return data;
     },
     queryKey: meControllerMeQueryKey(options)
+});
+
+export const healthControllerHealthQueryKey = (options?: Options<HealthControllerHealthData>) => createQueryKey('healthControllerHealth', options);
+
+/**
+ * Service health (public)
+ */
+export const healthControllerHealthOptions = (options?: Options<HealthControllerHealthData>) => queryOptions<HealthControllerHealthResponse, DefaultError, HealthControllerHealthResponse, ReturnType<typeof healthControllerHealthQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await healthControllerHealth({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: healthControllerHealthQueryKey(options)
 });
 
 export const sitesControllerGetSchemaQueryKey = (options: Options<SitesControllerGetSchemaData>) => createQueryKey('sitesControllerGetSchema', options);
@@ -652,35 +1534,6 @@ export const stockControllerSearchOptions = (options: Options<StockControllerSea
     },
     queryKey: stockControllerSearchQueryKey(options)
 });
-
-const createInfiniteParams = <K extends Pick<QueryKey<Options>[0], 'body' | 'headers' | 'path' | 'query'>>(queryKey: QueryKey<Options>, page: K) => {
-    const params = { ...queryKey[0] };
-    if (page.body) {
-        params.body = {
-            ...queryKey[0].body as any,
-            ...page.body as any
-        };
-    }
-    if (page.headers) {
-        params.headers = {
-            ...queryKey[0].headers,
-            ...page.headers
-        };
-    }
-    if (page.path) {
-        params.path = {
-            ...queryKey[0].path as any,
-            ...page.path as any
-        };
-    }
-    if (page.query) {
-        params.query = {
-            ...queryKey[0].query as any,
-            ...page.query as any
-        };
-    }
-    return params as unknown as typeof page;
-};
 
 export const stockControllerSearchInfiniteQueryKey = (options: Options<StockControllerSearchData>): QueryKey<Options<StockControllerSearchData>> => createQueryKey('stockControllerSearch', options, true);
 

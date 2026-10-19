@@ -23,6 +23,16 @@ export interface ObjectStoragePort {
 
   /** Sum of object sizes whose key starts with `prefix`. Throws ObjectStorageException on provider failure. */
   usageBytes(prefix: string): Promise<number>;
+
+  /**
+   * Deletes every object under `prefix`. Refuses (and deletes nothing) unless the
+   * prefix is exactly one tenant's assets or branding path (`tenant-assets/<uuid>/`
+   * or `tenant-branding/<uuid>/`).
+   */
+  removePrefix(prefix: string): Promise<{
+    deletedObjects: number;
+    deletedBytes: number;
+  }>;
 }
 
 export const OBJECT_STORAGE_PORT = Symbol('OBJECT_STORAGE_PORT');

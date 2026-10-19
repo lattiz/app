@@ -1,4 +1,4 @@
-# Auditoría de Lattiz Motion — plantilla piloto `barberia-norte-v1`
+# Auditoría de Lattiz Motion — plantilla piloto `barberia-norte-v1` 
 
 Fecha: 2026-10-11. Objetivo: tener evidencia de por qué Motion v1 se siente inconsistente antes de
 cambiar nada, y una línea base de rendimiento para comparar después (WP4, al final de este documento).

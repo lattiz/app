@@ -15,5 +15,6 @@ import { createGa4Gateway, GA4_GATEWAY } from './ga4.gateway';
     AnalyticsService,
     { provide: GA4_GATEWAY, useFactory: createGa4Gateway, inject: [AnalyticsConfig] },
   ],
+  exports: [GA4_GATEWAY],
 })
 export class AnalyticsModule {}

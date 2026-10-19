@@ -19,6 +19,7 @@ export default tseslint.config(
       '**/node_modules/**',
       'packages/api-client/src/generated/**',
       'apps/web/src/routeTree.gen.ts',
+      'apps/admin/src/routeTree.gen.ts',
       'apps/api/drizzle/**',
       'apps/api/openapi.json',
       '**/.next/**',
@@ -41,7 +42,7 @@ export default tseslint.config(
   },
   // Web app runs in the browser and uses React hooks.
   {
-    files: ['apps/web/**/*.{ts,tsx}'],
+    files: ['apps/web/**/*.{ts,tsx}', 'apps/admin/**/*.{ts,tsx}'],
     languageOptions: {
       globals: { ...globals.browser },
     },

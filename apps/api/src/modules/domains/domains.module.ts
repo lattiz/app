@@ -8,8 +8,10 @@ import { EffectivePlanService } from '../billing/effective-plan.service';
 import { EmailModule } from '../email/email.module';
 import {
   DNS_PROVIDER_PORT,
+  DNS_ZONE_INSPECTION_PORT,
   DNS_ZONE_INVENTORY_PORT,
   type DnsProviderPort,
+  type DnsZoneInspectionPort,
 } from './domain/dns-provider.port';
 import { DOMAIN_PRICE_CAPS } from './domain/domain-pricing.policy';
 import { EFFECTIVE_PLAN_PORT } from './domain/effective-plan.port';
@@ -120,6 +122,22 @@ async function createDnsProvider(
       useFactory: (dns: DnsProviderPort) =>
         dns instanceof CloudflareDnsAdapter ? dns : null,
     },
+    {
+      provide: DNS_ZONE_INSPECTION_PORT,
+      inject: [DNS_PROVIDER_PORT],
+      useFactory: (dns: DnsProviderPort): DnsZoneInspectionPort => {
+        if (
+          dns instanceof CloudflareDnsAdapter ||
+          dns instanceof OpenproviderDnsAdapter ||
+          dns instanceof MockDnsAdapter
+        ) {
+          return dns;
+        }
+        throw new Error(
+          'The active DNS provider does not implement zone inspection.',
+        );
+      },
+    },
     DnsReconcileService,
     DomainRenewalService,
     DomainRenewalPaymentService,
@@ -130,6 +148,8 @@ async function createDnsProvider(
     DomainRenewalConfig,
     DomainRenewalService,
     DomainRenewalPaymentService,
+    DNS_PROVIDER_PORT,
+    DNS_ZONE_INSPECTION_PORT,
   ],
 })
 export class DomainsModule {}

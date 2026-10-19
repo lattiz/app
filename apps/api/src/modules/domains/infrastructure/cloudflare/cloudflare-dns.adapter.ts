@@ -3,6 +3,8 @@ import type {
   DnsProviderPort,
   DnsRecord,
   DnsZone,
+  DnsZoneInspection,
+  DnsZoneInspectionPort,
   DnsZoneInventoryPort,
   DnsZoneSummary,
 } from '../../domain/dns-provider.port';
@@ -13,6 +15,10 @@ interface CloudflareZone {
   id: string;
   name: string;
   name_servers?: string[];
+  original_name_servers?: string[];
+  status?: string;
+  activated_on?: string;
+  paused?: boolean;
   created_on?: string;
 }
 
@@ -35,7 +41,7 @@ const ZONES_PER_PAGE = 50;
 const RECORDS_PER_PAGE = 100;
 
 export class CloudflareDnsAdapter
-  implements DnsProviderPort, DnsZoneInventoryPort
+  implements DnsProviderPort, DnsZoneInventoryPort, DnsZoneInspectionPort
 {
   readonly provider = 'cloudflare';
   private readonly logger = new Logger(CloudflareDnsAdapter.name);
@@ -96,6 +102,34 @@ export class CloudflareDnsAdapter
         return;
       throw err;
     }
+  }
+
+  async inspectZone(domain: string): Promise<DnsZoneInspection> {
+    const name = normalize(domain);
+    const zone = await this.findZone(name);
+    if (!zone) return emptyInspection();
+
+    const [apex, www] = await Promise.all([
+      this.listRecordsAt(zone.id, name),
+      this.listRecordsAt(zone.id, `www.${name}`),
+    ]);
+    return {
+      exists: true,
+      zoneId: zone.id,
+      status: zone.status ?? null,
+      nameservers: zone.name_servers ?? [],
+      originalNameservers: zone.original_name_servers ?? [],
+      activatedOn: zone.activated_on ?? null,
+      paused: zone.paused ?? null,
+      records: [...apex, ...www]
+        .filter((record) => WEB_RECORD_TYPES.has(record.type))
+        .map((record) => ({
+          type: record.type,
+          name: record.name,
+          content: record.content,
+          proxied: record.proxied ?? null,
+        })),
+    };
   }
 
   async requestActivationCheck(domain: string): Promise<void> {
@@ -196,6 +230,19 @@ export class CloudflareDnsAdapter
       throw err;
     }
   }
+}
+
+function emptyInspection(): DnsZoneInspection {
+  return {
+    exists: false,
+    zoneId: null,
+    status: null,
+    nameservers: [],
+    originalNameservers: [],
+    activatedOn: null,
+    paused: null,
+    records: [],
+  };
 }
 
 function normalize(domain: string): string {

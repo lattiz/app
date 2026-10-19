@@ -10,10 +10,11 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "pnpm run test:jest && pnpm run test:node",
     "test:jest": "jest",
-    "test:node": "node --import tsx --test \"src/**/*.test.ts\"",
+    "test:node": "node --import tsx --test \"src/**/*.test.ts\" \"scripts/**/*.test.ts\"",
     "generate:openapi": "nest build && node dist/generate-openapi.js",
     "db:studio": "drizzle-kit studio",
-    "smoke:renewal": "node --import tsx scripts/smoke-domain-renewal.ts"
+    "smoke:renewal": "node --import tsx scripts/smoke-domain-renewal.ts",
+    "admin:grant": "node --import tsx scripts/admin-grant.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1146.0",

@@ -88,6 +88,7 @@ function serviceFor(
       usageCalls.push(prefix);
       return usedBytes;
     },
+    removePrefix: async () => ({ deletedObjects: 0, deletedBytes: 0 }),
   } as ObjectStoragePort;
 
   const configService = {

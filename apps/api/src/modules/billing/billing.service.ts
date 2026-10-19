@@ -65,6 +65,12 @@ interface SuspendedDomainCandidateRow {
   current_period_end: string | Date | null;
 }
 
+export interface CustomerDeletionBilling {
+  balance: number;
+  openInvoices: number;
+  liveSubscriptionIds: string[];
+}
+
 interface SubscriptionRow {
   plan: BillingPlan;
   billing_period: BillingPeriod;
@@ -488,6 +494,49 @@ export class BillingService {
       );
       throw new SubscriptionCancellationFailedException();
     }
+  }
+
+  /**
+   * Live means the same statuses {@link cancelSubscriptionsForUser} still cancels.
+   * Pages the whole list (`status: 'all'`), not the first page.
+   */
+  async listLiveSubscriptionIds(customerId: string): Promise<string[]> {
+    const ids: string[] = [];
+    for await (const subscription of this.stripe.subscriptions.list({
+      customer: customerId,
+      status: 'all',
+    })) {
+      if (ENDED_STATUSES.includes(subscription.status)) continue;
+      ids.push(subscription.id);
+    }
+    return ids;
+  }
+
+  /** Balance and open invoices are warnings only; the customer itself is kept. */
+  async describeCustomerForDeletion(
+    customerId: string,
+  ): Promise<CustomerDeletionBilling> {
+    const [customer, openInvoices, liveSubscriptionIds] = await Promise.all([
+      this.stripe.customers.retrieve(customerId),
+      this.countOpenInvoices(customerId),
+      this.listLiveSubscriptionIds(customerId),
+    ]);
+    return {
+      balance: customer.deleted ? 0 : customer.balance,
+      openInvoices,
+      liveSubscriptionIds,
+    };
+  }
+
+  private async countOpenInvoices(customerId: string): Promise<number> {
+    let count = 0;
+    for await (const invoice of this.stripe.invoices.list({
+      customer: customerId,
+      status: 'open',
+    })) {
+      if (invoice.id) count += 1;
+    }
+    return count;
   }
 
   // ── Payment retries ───────────────────────────────────────────────────────

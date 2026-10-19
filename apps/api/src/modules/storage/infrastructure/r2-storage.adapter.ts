@@ -1,5 +1,7 @@
 import {
   DeleteObjectCommand,
+  DeleteObjectsCommand,
+  type DeleteObjectsCommandOutput,
   ListObjectsV2Command,
   type ListObjectsV2CommandOutput,
   PutObjectCommand,
@@ -14,6 +16,7 @@ import {
   ObjectStorageException,
 } from '../domain/object-storage.exceptions';
 import {
+  assertRemovableTenantPrefix,
   assertSafePath,
   assertSafePrefix,
   encodePath,
@@ -32,7 +35,11 @@ export interface R2Config {
 /** The only part of S3Client the adapter uses — lets tests stub the wire. */
 export interface S3Sender {
   send(
-    command: PutObjectCommand | DeleteObjectCommand | ListObjectsV2Command,
+    command:
+      | PutObjectCommand
+      | DeleteObjectCommand
+      | DeleteObjectsCommand
+      | ListObjectsV2Command,
   ): Promise<unknown>;
 }
 
@@ -43,6 +50,8 @@ const MUTABLE_CACHE = 'public, max-age=300';
 
 const REQUEST_TIMEOUT_MS = 30_000;
 const CONNECTION_TIMEOUT_MS = 5_000;
+/** DeleteObjects accepts at most 1000 keys; ListObjectsV2 pages are capped the same way. */
+const DELETE_BATCH = 1000;
 
 /** Stores public assets in a Cloudflare R2 bucket over its S3-compatible API. */
 export class R2StorageAdapter implements ObjectStoragePort {
@@ -110,9 +119,50 @@ export class R2StorageAdapter implements ObjectStoragePort {
     }
   }
 
+  async removePrefix(
+    prefix: string,
+  ): Promise<{ deletedObjects: number; deletedBytes: number }> {
+    assertRemovableTenantPrefix(prefix);
+    let deletedObjects = 0;
+    let deletedBytes = 0;
+    let token: string | undefined;
+    for (;;) {
+      const page = await this.listPage(prefix, token, 'removePrefix', DELETE_BATCH);
+      const objects = keysInPrefix(prefix, page.Contents ?? []);
+      for (let i = 0; i < objects.length; i += DELETE_BATCH) {
+        const batch = objects.slice(i, i + DELETE_BATCH);
+        await this.deleteBatch(batch);
+        deletedObjects += batch.length;
+        for (const object of batch) deletedBytes += object.Size ?? 0;
+      }
+      if (!page.IsTruncated) break;
+      const next = page.NextContinuationToken;
+      if (!next || next === token) {
+        throw new ObjectStorageException(
+          'removePrefix',
+          'rejected',
+          'ListObjectsV2 was truncated without a new continuation token.',
+        );
+      }
+      token = next;
+    }
+
+    const leftover = await this.listPage(prefix, undefined, 'removePrefix', DELETE_BATCH);
+    if ((leftover.Contents ?? []).length > 0 || leftover.IsTruncated) {
+      throw new ObjectStorageException(
+        'removePrefix',
+        'rejected',
+        `Prefix "${prefix.slice(0, 80)}" still has objects after delete.`,
+      );
+    }
+    return { deletedObjects, deletedBytes };
+  }
+
   private async listPage(
     prefix: string,
     token: string | undefined,
+    operation = 'usage',
+    maxKeys?: number,
   ): Promise<ListObjectsV2CommandOutput> {
     try {
       return (await this.client.send(
@@ -120,17 +170,46 @@ export class R2StorageAdapter implements ObjectStoragePort {
           Bucket: this.config.bucket,
           Prefix: prefix,
           ContinuationToken: token,
+          ...(maxKeys === undefined ? {} : { MaxKeys: maxKeys }),
         }),
       )) as ListObjectsV2CommandOutput;
     } catch (error) {
       const failure = describeS3Error(error);
       throw new ObjectStorageException(
-        'usage',
+        operation,
         classifyHttpStatus(failure.httpStatus),
         failure.detail,
         failure.httpStatus,
       );
     }
+  }
+
+  private async deleteBatch(objects: { Key: string }[]): Promise<void> {
+    let output: DeleteObjectsCommandOutput;
+    try {
+      output = (await this.client.send(
+        new DeleteObjectsCommand({
+          Bucket: this.config.bucket,
+          Delete: { Objects: objects.map((object) => ({ Key: object.Key })) },
+        }),
+      )) as DeleteObjectsCommandOutput;
+    } catch (error) {
+      const failure = describeS3Error(error);
+      throw new ObjectStorageException(
+        'removePrefix',
+        classifyHttpStatus(failure.httpStatus),
+        failure.detail,
+        failure.httpStatus,
+      );
+    }
+    const first = output.Errors?.[0];
+    if (!first) return;
+    const detail = [first.Key, first.Code, first.Message].filter(Boolean).join(': ');
+    throw new ObjectStorageException(
+      'removePrefix',
+      'rejected',
+      detail || 'DeleteObjects reported an error.',
+    );
   }
 
   private async send(
@@ -175,6 +254,26 @@ interface S3ErrorLike {
   name?: string;
   message?: string;
   $metadata?: { httpStatusCode?: number };
+}
+
+function keysInPrefix(
+  prefix: string,
+  contents: NonNullable<ListObjectsV2CommandOutput['Contents']>,
+): { Key: string; Size?: number }[] {
+  const objects: { Key: string; Size?: number }[] = [];
+  for (const object of contents) {
+    const key = object.Key;
+    if (!key) continue;
+    if (!key.startsWith(prefix)) {
+      throw new ObjectStorageException(
+        'removePrefix',
+        'rejected',
+        `ListObjectsV2 returned a key outside the prefix: "${key.slice(0, 80)}".`,
+      );
+    }
+    objects.push({ Key: key, Size: object.Size });
+  }
+  return objects;
 }
 
 function describeS3Error(error: unknown): {

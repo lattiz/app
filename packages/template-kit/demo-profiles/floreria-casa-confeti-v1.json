@@ -1,0 +1,63 @@
+{
+  "$lattiz": "GENERATED from specs/floreria-casa-confeti.spec.json (spec e112920bb92f, file 76a2c5f352dd). Do not edit: use the spec, or freeze.",
+  "name": "Casa Confeti",
+  "category": "store",
+  "phone": "+525500000000",
+  "whatsapp": "+5215500000000",
+  "email": "hola@casaconfeti.mx",
+  "address": {
+    "street": "Calle Pilares 123, Col. Narvarte Poniente, Benito Juárez",
+    "city": "CDMX",
+    "country": "MX"
+  },
+  "hours": {
+    "mon": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "tue": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "sun": [
+      {
+        "open": "09:00",
+        "close": "14:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}

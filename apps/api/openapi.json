@@ -1,6 +1,2340 @@
 {
   "openapi": "3.0.0",
   "paths": {
+    "/admin/me": {
+      "get": {
+        "operationId": "AdminMeController_me",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminMeResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Current admin member",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/settings": {
+      "get": {
+        "operationId": "AdminSettingsController_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSettingsResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List business settings",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/settings/{key}": {
+      "patch": {
+        "operationId": "AdminSettingsController_update",
+        "parameters": [
+          {
+            "name": "key",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminUpdateSettingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSettingViewDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Value failed the registry parser (SETTING_VALUE_INVALID)."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Key is not in the registry (SETTING_UNKNOWN)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update a business setting",
+        "tags": [
+          "admin"
+        ]
+      },
+      "delete": {
+        "operationId": "AdminSettingsController_remove",
+        "parameters": [
+          {
+            "name": "key",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminDeleteSettingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSettingViewDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Key is not in the registry (SETTING_UNKNOWN)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Reset a business setting",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/members": {
+      "get": {
+        "operationId": "AdminMembersController_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminMemberListResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List admin members",
+        "tags": [
+          "admin"
+        ]
+      },
+      "post": {
+        "operationId": "AdminMembersController_grant",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminGrantMemberDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminMemberDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "The email is not registered yet (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "Already active, ambiguous email, or self-grant (ADMIN_MEMBER_CONFLICT)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Grant admin access",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/members/{userId}": {
+      "patch": {
+        "operationId": "AdminMembersController_updateRole",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminUpdateMemberDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminMemberDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown member (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "Self-change or last owner (ADMIN_MEMBER_CONFLICT)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Change an admin member role",
+        "tags": [
+          "admin"
+        ]
+      },
+      "delete": {
+        "operationId": "AdminMembersController_revoke",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminMemberDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown member (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "Self-revoke or last owner (ADMIN_MEMBER_CONFLICT)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Revoke admin access",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/audit": {
+      "get": {
+        "operationId": "AdminAuditController_list",
+        "parameters": [
+          {
+            "name": "actor",
+            "required": false,
+            "in": "query",
+            "description": "Email or user id of the actor.",
+            "schema": {
+              "maxLength": 320,
+              "type": "string"
+            }
+          },
+          {
+            "name": "action",
+            "required": false,
+            "in": "query",
+            "description": "Action prefix, for example `template.`.",
+            "schema": {
+              "maxLength": 200,
+              "type": "string"
+            }
+          },
+          {
+            "name": "targetType",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "maxLength": 100,
+              "type": "string"
+            }
+          },
+          {
+            "name": "targetId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "maxLength": 200,
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100000,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "Values above 100 are clipped.",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminAuditListResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List admin audit events",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/tenants": {
+      "get": {
+        "operationId": "AdminTenantsController_list",
+        "parameters": [
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "description": "Case-insensitive match on email, slug, name, or domain.",
+            "schema": {
+              "maxLength": 200,
+              "type": "string"
+            }
+          },
+          {
+            "name": "plan",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "none",
+                "basico",
+                "pro",
+                "trial"
+              ]
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "active",
+                "inactive",
+                "cancelled"
+              ]
+            }
+          },
+          {
+            "name": "entitled",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "internal",
+            "required": false,
+            "in": "query",
+            "description": "Internal tenants are excluded unless this is true, which lifts the exclusion.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "domainExpiringDays",
+            "required": false,
+            "in": "query",
+            "description": "Domain expires within this many days from now.",
+            "schema": {
+              "minimum": 1,
+              "maximum": 3650,
+              "type": "number"
+            }
+          },
+          {
+            "name": "renewalOverdue",
+            "required": false,
+            "in": "query",
+            "description": "Latest non-void maintenance cycle is `overdue` (or is not, when false).",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "dnsIssue",
+            "required": false,
+            "in": "query",
+            "description": "true: dns_status is set and not active. false: dns_status is active.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": "created_at",
+              "type": "string",
+              "enum": [
+                "created_at",
+                "last_sign_in_at",
+                "domain_expires_at"
+              ]
+            }
+          },
+          {
+            "name": "order",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": "desc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100000,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTenantListResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List tenants",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/tenants/{id}": {
+      "get": {
+        "operationId": "AdminTenantsController_get",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTenantDetailDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown tenant (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get a tenant",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/tenants/{id}/storage/refresh": {
+      "post": {
+        "operationId": "AdminTenantsController_refresh",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminStorageUsageDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown tenant (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Refresh stored object usage for a tenant",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/tenants/{id}/suspend": {
+      "post": {
+        "operationId": "AdminTenantsController_suspend",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSuspendTenantDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTenantDetailDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown tenant (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "The site is not active (TENANT_STATUS_CONFLICT)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Suspend a tenant site",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/tenants/{id}/reactivate": {
+      "post": {
+        "operationId": "AdminTenantsController_reactivate",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTenantDetailDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown tenant (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "The site is not suspended (TENANT_STATUS_CONFLICT)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Reactivate a suspended tenant site",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/tenants/{id}/flags": {
+      "patch": {
+        "operationId": "AdminTenantsController_updateFlags",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTenantFlagsPatchDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTenantDetailDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown tenant (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update internal flags for a tenant",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/tenants/{id}/domain": {
+      "get": {
+        "operationId": "AdminDomainController_inspect",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "refresh",
+            "required": false,
+            "in": "query",
+            "description": "`1` skips the 5-minute cache and reads the providers again.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminDomainInspectionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown tenant (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Inspect a tenant domain",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/tenants/{id}/domain/activation-check": {
+      "post": {
+        "operationId": "AdminDomainController_activationCheck",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminDomainInspectionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown tenant (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Re-check DNS activation for a tenant domain",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/subscriptions": {
+      "get": {
+        "operationId": "AdminSubscriptionsController_list",
+        "parameters": [
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "description": "Case-insensitive match on email, slug, or tenant name.",
+            "schema": {
+              "maxLength": 200,
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "description": "Comma-separated statuses from the subscriptions CHECK.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "active",
+                  "trialing",
+                  "past_due",
+                  "canceled",
+                  "incomplete",
+                  "incomplete_expired",
+                  "unpaid",
+                  "paused"
+                ]
+              }
+            }
+          },
+          {
+            "name": "plan",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basico",
+                "pro"
+              ]
+            }
+          },
+          {
+            "name": "period",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "monthly",
+                "annual"
+              ]
+            }
+          },
+          {
+            "name": "cancelScheduled",
+            "required": false,
+            "in": "query",
+            "description": "Scheduled cancellation (`cancel_at` or `cancel_at_period_end`),\nexcluding terminal statuses.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "paymentIssues",
+            "required": false,
+            "in": "query",
+            "description": "`payment_attempts > 0` or status `past_due`.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "internal",
+            "required": false,
+            "in": "query",
+            "description": "Internal tenants are excluded unless this is true, which lifts the exclusion.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100000,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSubscriptionListResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List subscriptions",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/subscriptions/{id}": {
+      "get": {
+        "operationId": "AdminSubscriptionsController_get",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSubscriptionDetailDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown subscription (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get a subscription",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/subscriptions/{id}/cancel": {
+      "post": {
+        "operationId": "AdminSubscriptionsController_cancel",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminCancelSubscriptionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSubscriptionDetailDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown subscription (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "Already ended (SUBSCRIPTION_NOT_CANCELABLE) or an active schedule (SUBSCRIPTION_SCHEDULE_ACTIVE)."
+          },
+          "502": {
+            "description": "Stripe did not respond (ADMIN_STRIPE_UNAVAILABLE)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Cancel a subscription in Stripe",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/subscriptions/{id}/resume": {
+      "post": {
+        "operationId": "AdminSubscriptionsController_resume",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSubscriptionDetailDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown subscription (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "Nothing scheduled to undo (SUBSCRIPTION_NOT_RESUMABLE)."
+          },
+          "502": {
+            "description": "Stripe did not respond (ADMIN_STRIPE_UNAVAILABLE)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Undo a scheduled subscription cancellation",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/templates": {
+      "get": {
+        "operationId": "AdminTemplatesController_list",
+        "parameters": [
+          {
+            "name": "tier",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "basic",
+                "pro"
+              ]
+            }
+          },
+          {
+            "name": "category",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "maxLength": 100,
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "description": "`pending` is inactive and not retired.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "active",
+                "retired"
+              ]
+            }
+          },
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "description": "Case-insensitive match on template id or name.",
+            "schema": {
+              "maxLength": 200,
+              "type": "string"
+            }
+          },
+          {
+            "name": "tag",
+            "required": false,
+            "in": "query",
+            "description": "Exact tag. Tags are stored in lowercase.",
+            "schema": {
+              "maxLength": 24,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTemplateListResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List templates",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/templates/order": {
+      "put": {
+        "operationId": "AdminTemplatesController_reorder",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTemplateReorderDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTemplateReorderResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unknown or repeated ids (TEMPLATE_ORDER_INVALID)."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Reorder templates",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/templates/{id}": {
+      "get": {
+        "operationId": "AdminTemplatesController_get",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTemplateDetailDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown template (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get a template",
+        "tags": [
+          "admin"
+        ]
+      },
+      "patch": {
+        "operationId": "AdminTemplatesController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTemplateUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTemplateDetailDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown template (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update template catalog fields",
+        "tags": [
+          "admin"
+        ]
+      },
+      "delete": {
+        "operationId": "AdminTemplatesController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTemplateDeleteDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "The template row was deleted."
+          },
+          "400": {
+            "description": "confirmId does not match (TEMPLATE_DELETE_CONFIRM)."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown template (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "Sites or archives still reference it (TEMPLATE_IN_USE)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete an unused template",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/templates/{id}/activate": {
+      "post": {
+        "operationId": "AdminTemplatesController_activate",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTemplateDetailDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown template (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "Missing preview_url or thumbnail_url (TEMPLATE_NOT_READY)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Activate a template",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/templates/{id}/retire": {
+      "post": {
+        "operationId": "AdminTemplatesController_retire",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTemplateRetireDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTemplateDetailDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "reason must be 3–300 characters."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown template (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Retire a template",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/templates/{id}/thumbnail": {
+      "post": {
+        "operationId": "AdminTemplatesController_replaceThumbnail",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "file"
+                ],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTemplateDetailDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing file or magic bytes do not match (TEMPLATE_THUMBNAIL_REJECTED)."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown template (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Replace a template thumbnail",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/trials/summary": {
+      "get": {
+        "operationId": "AdminTrialsController_summary",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTrialSummaryDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Summarize free previews",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/trials": {
+      "get": {
+        "operationId": "AdminTrialsController_list",
+        "parameters": [
+          {
+            "name": "state",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "active",
+                "expiring",
+                "expired",
+                "converted"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100000,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTrialListResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List free previews",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/metrics/overview": {
+      "get": {
+        "operationId": "AdminMetricsController_overview",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricsOverviewDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Business overview",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/metrics/revenue": {
+      "get": {
+        "operationId": "AdminMetricsController_revenue",
+        "parameters": [
+          {
+            "name": "months",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 24,
+              "default": 12,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricsRevenueDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "502": {
+            "description": "Stripe did not answer (ADMIN_STRIPE_UNAVAILABLE)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Monthly collected revenue",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/metrics/funnel": {
+      "get": {
+        "operationId": "AdminMetricsController_funnel",
+        "parameters": [
+          {
+            "name": "days",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 7,
+              "maximum": 365,
+              "default": 30,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricsFunnelDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Signup funnel",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/metrics/templates": {
+      "get": {
+        "operationId": "AdminMetricsController_templates",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricsTemplatesDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Template adoption and conversion",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/metrics/history": {
+      "get": {
+        "operationId": "AdminMetricsController_history",
+        "parameters": [
+          {
+            "name": "days",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 7,
+              "maximum": 730,
+              "default": 90,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricsHistoryDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Daily KPI history",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/tenants/{id}/deletion-preview": {
+      "get": {
+        "operationId": "AdminTenantDeletionController_preview",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeletionPreviewDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown tenant (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Preview a full tenant deletion",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/tenants/{id}/deletion": {
+      "post": {
+        "operationId": "AdminTenantDeletionController_start",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartTenantDeletionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantDeletionAcceptedDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed or confirmSlug does not match."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown tenant (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "The user is an active admin (ADMIN_MEMBER_NOT_DELETABLE) or a deletion is already in progress (TENANT_DELETION_ACTIVE)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete a tenant across every provider",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/deletions": {
+      "get": {
+        "operationId": "AdminDeletionsController_list",
+        "parameters": [
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "running",
+                "completed",
+                "completed_manual",
+                "failed"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100000,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeletionJobListDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List tenant deletion jobs",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/deletions/{jobId}": {
+      "get": {
+        "operationId": "AdminDeletionsController_get",
+        "parameters": [
+          {
+            "name": "jobId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeletionJobDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown job (ADMIN_NOT_FOUND)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get a tenant deletion job",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/admin/deletions/{jobId}/retry": {
+      "post": {
+        "operationId": "AdminDeletionsController_retry",
+        "parameters": [
+          {
+            "name": "jobId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantDeletionAcceptedDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "Not an active admin, MFA missing, or role not allowed."
+          },
+          "404": {
+            "description": "Unknown job (ADMIN_NOT_FOUND)."
+          },
+          "409": {
+            "description": "The job is not failed or stale (TENANT_DELETION_NOT_RETRYABLE)."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Retry a failed or stalled tenant deletion",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/analytics/overview": {
       "get": {
         "operationId": "AnalyticsController_overview",
@@ -783,28 +3117,6 @@
         ]
       }
     },
-    "/health": {
-      "get": {
-        "operationId": "HealthController_health",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HealthResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "summary": "Service health (public)",
-        "tags": [
-          "health"
-        ]
-      }
-    },
     "/me": {
       "get": {
         "operationId": "MeController_me",
@@ -853,6 +3165,28 @@
         "summary": "Delete current account (protected — requires Supabase JWT)",
         "tags": [
           "me"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "HealthController_health",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Service health (public)",
+        "tags": [
+          "health"
         ]
       }
     },
@@ -1735,14 +4069,1123 @@
       }
     },
     "schemas": {
-      "AnalyticsStatus": {
-        "type": "string",
-        "enum": [
-          "not_eligible",
-          "unavailable",
-          "provisioning",
-          "failed",
-          "ready"
+      "AdminMeResponseDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "Supabase user id (`sub`) of the active admin member."
+          },
+          "email": {
+            "type": "string",
+            "nullable": true,
+            "description": "Email claim, or null when the token has none."
+          },
+          "role": {
+            "description": "Active role stored in admin.members.",
+            "enum": [
+              "owner",
+              "operator",
+              "viewer"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "userId",
+          "email",
+          "role"
+        ]
+      },
+      "AdminSettingViewDto": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string",
+            "description": "Prefix before the first dot."
+          },
+          "type": {
+            "enum": [
+              "bool",
+              "int",
+              "string",
+              "string-list",
+              "int-list"
+            ],
+            "type": "string"
+          },
+          "min": {
+            "type": "number",
+            "nullable": true
+          },
+          "max": {
+            "type": "number",
+            "nullable": true
+          },
+          "default": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "envValue": {
+            "type": "string",
+            "nullable": true,
+            "description": "Raw env string when the variable is set. Omitted for secret-like names."
+          },
+          "dbValue": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "effectiveValue": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "source": {
+            "enum": [
+              "db",
+              "env",
+              "default"
+            ],
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "key",
+          "group",
+          "type",
+          "min",
+          "max",
+          "default",
+          "envValue",
+          "dbValue",
+          "effectiveValue",
+          "source",
+          "description",
+          "updatedAt",
+          "updatedBy"
+        ]
+      },
+      "AdminSettingsResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminSettingViewDto"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "AdminUpdateSettingDto": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "description": "JSON value. The registry parser checks the type and the range.",
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "value",
+          "reason"
+        ]
+      },
+      "AdminDeleteSettingDto": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "reason"
+        ]
+      },
+      "AdminMemberDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "owner",
+              "operator",
+              "viewer"
+            ],
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true,
+            "description": "Email of the member who granted access, when it is still known."
+          },
+          "revokedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastSignInAt": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "userId",
+          "email",
+          "role",
+          "createdAt",
+          "createdBy",
+          "revokedAt",
+          "lastSignInAt"
+        ]
+      },
+      "AdminMemberListResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminMemberDto"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "AdminGrantMemberDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 320,
+            "format": "email"
+          },
+          "role": {
+            "enum": [
+              "owner",
+              "operator",
+              "viewer"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "role"
+        ]
+      },
+      "AdminUpdateMemberDto": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "enum": [
+              "owner",
+              "operator",
+              "viewer"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "role"
+        ]
+      },
+      "AdminAuditEntryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "actorUserId": {
+            "type": "string"
+          },
+          "actorEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "action": {
+            "type": "string"
+          },
+          "targetType": {
+            "type": "string",
+            "nullable": true
+          },
+          "targetId": {
+            "type": "string",
+            "nullable": true
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "before": {
+            "type": "object",
+            "nullable": true
+          },
+          "after": {
+            "type": "object",
+            "nullable": true
+          },
+          "ip": {
+            "type": "string",
+            "nullable": true
+          },
+          "userAgent": {
+            "type": "string",
+            "nullable": true,
+            "description": "`user_agent` clipped to 200 characters."
+          },
+          "createdAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "actorUserId",
+          "actorEmail",
+          "action",
+          "targetType",
+          "targetId",
+          "reason",
+          "before",
+          "after",
+          "ip",
+          "userAgent",
+          "createdAt"
+        ]
+      },
+      "AdminAuditListResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminAuditEntryDto"
+            }
+          },
+          "total": {
+            "type": "number"
+          },
+          "page": {
+            "type": "number"
+          },
+          "pageSize": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
+      "AdminTenantSubscriptionSummaryDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "enum": [
+              "active",
+              "trialing",
+              "past_due",
+              "canceled",
+              "incomplete",
+              "incomplete_expired",
+              "unpaid",
+              "paused"
+            ],
+            "type": "string"
+          },
+          "plan": {
+            "enum": [
+              "basico",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "billingPeriod": {
+            "enum": [
+              "monthly",
+              "annual"
+            ],
+            "type": "string"
+          },
+          "currentPeriodEnd": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancelAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "When the subscription is scheduled to end; null if it is not."
+          },
+          "cancelAtPeriodEnd": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "status",
+          "plan",
+          "billingPeriod",
+          "currentPeriodEnd",
+          "cancelAt",
+          "cancelAtPeriodEnd"
+        ]
+      },
+      "AdminTenantTemplateRefDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "AdminTenantDomainSummaryDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "dnsStatus": {
+            "enum": [
+              "pending",
+              "configuring",
+              "propagating",
+              "active",
+              "error"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "expiresAt",
+          "dnsStatus"
+        ]
+      },
+      "AdminTenantListItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "plan": {
+            "enum": [
+              "none",
+              "basico",
+              "pro",
+              "trial"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "inactive",
+              "cancelled"
+            ],
+            "type": "string"
+          },
+          "entitled": {
+            "type": "boolean"
+          },
+          "previewState": {
+            "enum": [
+              "paid",
+              "trial_unstarted",
+              "trial_active",
+              "trial_expired",
+              "lapsed"
+            ],
+            "type": "string"
+          },
+          "previewExpiresAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "subscription": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminTenantSubscriptionSummaryDto"
+              }
+            ]
+          },
+          "template": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminTenantTemplateRefDto"
+              }
+            ]
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "domain": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminTenantDomainSummaryDto"
+              }
+            ]
+          },
+          "storageBytes": {
+            "type": "number",
+            "nullable": true,
+            "description": "Sum of asset and branding bytes, or null when never measured."
+          },
+          "isInternal": {
+            "type": "boolean"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "lastSignInAt": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "email",
+          "plan",
+          "status",
+          "entitled",
+          "previewState",
+          "previewExpiresAt",
+          "subscription",
+          "template",
+          "published",
+          "domain",
+          "storageBytes",
+          "isInternal",
+          "tags",
+          "createdAt",
+          "lastSignInAt"
+        ]
+      },
+      "AdminTenantListResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminTenantListItemDto"
+            }
+          },
+          "total": {
+            "type": "number"
+          },
+          "page": {
+            "type": "number"
+          },
+          "pageSize": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
+      "AdminTenantOverviewDto": {
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "plan": {
+            "enum": [
+              "none",
+              "basico",
+              "pro",
+              "trial"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "inactive",
+              "cancelled"
+            ],
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "previewStartedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "includedDomainUsedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "stripeCustomerId": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailConfirmedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastSignInAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "isInternal": {
+            "type": "boolean"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "entitled": {
+            "type": "boolean"
+          },
+          "subscriptionId": {
+            "type": "string",
+            "nullable": true
+          },
+          "subscriptionStatus": {
+            "nullable": true,
+            "enum": [
+              "active",
+              "trialing",
+              "past_due",
+              "canceled",
+              "incomplete",
+              "incomplete_expired",
+              "unpaid",
+              "paused",
+              null
+            ],
+            "type": "string"
+          },
+          "subscriptionPlan": {
+            "nullable": true,
+            "enum": [
+              "basico",
+              "pro",
+              null
+            ],
+            "type": "string"
+          },
+          "billingPeriod": {
+            "nullable": true,
+            "enum": [
+              "monthly",
+              "annual",
+              null
+            ],
+            "type": "string"
+          },
+          "currentPeriodEnd": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancelAtPeriodEnd": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "cancelAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "paymentAttempts": {
+            "type": "number",
+            "nullable": true
+          },
+          "subscriptionCreatedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "templateId": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteStatus": {
+            "nullable": true,
+            "enum": [
+              "draft",
+              "published",
+              null
+            ],
+            "type": "string"
+          },
+          "publishedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteUpdatedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "domain": {
+            "type": "string",
+            "nullable": true
+          },
+          "domainSource": {
+            "nullable": true,
+            "enum": [
+              "lattiz_managed",
+              "user_provided",
+              null
+            ],
+            "type": "string"
+          },
+          "dnsStatus": {
+            "nullable": true,
+            "enum": [
+              "pending",
+              "configuring",
+              "propagating",
+              "active",
+              "error",
+              null
+            ],
+            "type": "string"
+          },
+          "domainExpiresAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "domainSuspendedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "dnsProvider": {
+            "type": "string",
+            "nullable": true
+          },
+          "renewalStatus": {
+            "nullable": true,
+            "enum": [
+              "pricing_pending",
+              "open",
+              "overdue",
+              "paid",
+              "renewed",
+              "renewal_failed",
+              "over_cap",
+              "lapsed",
+              "refunded",
+              "void",
+              null
+            ],
+            "type": "string"
+          },
+          "renewalLateDeadlineAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "storageBytes": {
+            "type": "number",
+            "nullable": true
+          },
+          "storageMeasuredAt": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tenantId",
+          "userId",
+          "slug",
+          "name",
+          "plan",
+          "status",
+          "createdAt",
+          "previewStartedAt",
+          "includedDomainUsedAt",
+          "stripeCustomerId",
+          "email",
+          "emailConfirmedAt",
+          "lastSignInAt",
+          "isInternal",
+          "tags",
+          "entitled",
+          "subscriptionId",
+          "subscriptionStatus",
+          "subscriptionPlan",
+          "billingPeriod",
+          "currentPeriodEnd",
+          "cancelAtPeriodEnd",
+          "cancelAt",
+          "paymentAttempts",
+          "subscriptionCreatedAt",
+          "templateId",
+          "siteStatus",
+          "publishedAt",
+          "siteUpdatedAt",
+          "domain",
+          "domainSource",
+          "dnsStatus",
+          "domainExpiresAt",
+          "domainSuspendedAt",
+          "dnsProvider",
+          "renewalStatus",
+          "renewalLateDeadlineAt",
+          "storageBytes",
+          "storageMeasuredAt"
+        ]
+      },
+      "AdminTenantIdentityDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailVerified": {
+            "type": "boolean"
+          },
+          "lastSignInAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "providers": {
+            "description": "Values of `auth.users.raw_app_meta_data.providers`.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "When the auth user was created."
+          }
+        },
+        "required": [
+          "email",
+          "emailVerified",
+          "lastSignInAt",
+          "providers",
+          "createdAt"
+        ]
+      },
+      "AdminTenantSiteDto": {
+        "type": "object",
+        "properties": {
+          "template": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminTenantTemplateRefDto"
+              }
+            ]
+          },
+          "status": {
+            "nullable": true,
+            "enum": [
+              "draft",
+              "published",
+              null
+            ],
+            "type": "string"
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "publishedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "previewUrl": {
+            "type": "string",
+            "description": "`{scheme}://{slug}.{PREVIEW_BASE_DOMAIN}` via `previewUrl`."
+          },
+          "customDomainUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "`https://{domain}` when dns_status is active."
+          }
+        },
+        "required": [
+          "template",
+          "status",
+          "published",
+          "publishedAt",
+          "updatedAt",
+          "previewUrl",
+          "customDomainUrl"
+        ]
+      },
+      "AdminTemplateArchiveDto": {
+        "type": "object",
+        "properties": {
+          "templateId": {
+            "type": "string",
+            "nullable": true
+          },
+          "reason": {
+            "type": "string"
+          },
+          "archivedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "templateId",
+          "reason",
+          "archivedAt"
+        ]
+      },
+      "AdminTenantSubscriptionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "stripeSubscriptionId": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "trialing",
+              "past_due",
+              "canceled",
+              "incomplete",
+              "incomplete_expired",
+              "unpaid",
+              "paused"
+            ],
+            "type": "string"
+          },
+          "plan": {
+            "enum": [
+              "basico",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "billingPeriod": {
+            "enum": [
+              "monthly",
+              "annual"
+            ],
+            "type": "string"
+          },
+          "currentPeriodStart": {
+            "type": "string",
+            "nullable": true
+          },
+          "currentPeriodEnd": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancelAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancelAtPeriodEnd": {
+            "type": "boolean"
+          },
+          "canceledAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "paymentAttempts": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "stripeSubscriptionId",
+          "status",
+          "plan",
+          "billingPeriod",
+          "currentPeriodStart",
+          "currentPeriodEnd",
+          "cancelAt",
+          "cancelAtPeriodEnd",
+          "canceledAt",
+          "paymentAttempts",
+          "createdAt"
         ]
       },
       "AnalyticsDailyPointDto": {
@@ -1845,6 +5288,2672 @@
           "channels",
           "topChannel",
           "hasData"
+        ]
+      },
+      "AdminTenantAnalyticsDto": {
+        "type": "object",
+        "properties": {
+          "provisioningStatus": {
+            "nullable": true,
+            "enum": [
+              "pending",
+              "provisioning",
+              "ready",
+              "failed",
+              null
+            ],
+            "type": "string"
+          },
+          "isMock": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "fetchedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "report": {
+            "nullable": true,
+            "description": "Cached report jsonb, same shape as the tenant analytics report.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AnalyticsReportDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "provisioningStatus",
+          "isMock",
+          "fetchedAt",
+          "report"
+        ]
+      },
+      "AdminStorageUsageDto": {
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string"
+          },
+          "assetsBytes": {
+            "type": "number"
+          },
+          "assetsObjects": {
+            "type": "number",
+            "description": "Always 0 until object storage can count keys, not only bytes."
+          },
+          "brandingBytes": {
+            "type": "number"
+          },
+          "brandingObjects": {
+            "type": "number",
+            "description": "Always 0 until object storage can count keys, not only bytes."
+          },
+          "measuredAt": {
+            "type": "string",
+            "description": "When this row was measured (ISO 8601)."
+          }
+        },
+        "required": [
+          "tenantId",
+          "assetsBytes",
+          "assetsObjects",
+          "brandingBytes",
+          "brandingObjects",
+          "measuredAt"
+        ]
+      },
+      "AdminTenantStorageDto": {
+        "type": "object",
+        "properties": {
+          "usage": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminStorageUsageDto"
+              }
+            ]
+          },
+          "assetByteLimit": {
+            "type": "number",
+            "nullable": true,
+            "description": "`preview.max_asset_bytes` while the tenant is not paying.\nNull when entitled, or when the configured cap is 0."
+          }
+        },
+        "required": [
+          "usage",
+          "assetByteLimit"
+        ]
+      },
+      "AdminTenantEmailDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "attempts": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "sentAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastError": {
+            "type": "string",
+            "nullable": true,
+            "description": "`last_error` clipped to 200 characters."
+          }
+        },
+        "required": [
+          "kind",
+          "status",
+          "attempts",
+          "createdAt",
+          "sentAt",
+          "lastError"
+        ]
+      },
+      "AdminTenantFlagsDto": {
+        "type": "object",
+        "properties": {
+          "isInternal": {
+            "type": "boolean"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "isInternal",
+          "tags",
+          "notes"
+        ]
+      },
+      "AdminTenantDetailDto": {
+        "type": "object",
+        "properties": {
+          "overview": {
+            "$ref": "#/components/schemas/AdminTenantOverviewDto"
+          },
+          "identity": {
+            "$ref": "#/components/schemas/AdminTenantIdentityDto"
+          },
+          "previewState": {
+            "enum": [
+              "paid",
+              "trial_unstarted",
+              "trial_active",
+              "trial_expired",
+              "lapsed"
+            ],
+            "type": "string"
+          },
+          "previewExpiresAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "site": {
+            "$ref": "#/components/schemas/AdminTenantSiteDto"
+          },
+          "templateHistory": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminTemplateArchiveDto"
+            }
+          },
+          "subscriptions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminTenantSubscriptionDto"
+            }
+          },
+          "analytics": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminTenantAnalyticsDto"
+              }
+            ]
+          },
+          "storage": {
+            "$ref": "#/components/schemas/AdminTenantStorageDto"
+          },
+          "emails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminTenantEmailDto"
+            }
+          },
+          "flags": {
+            "$ref": "#/components/schemas/AdminTenantFlagsDto"
+          }
+        },
+        "required": [
+          "overview",
+          "identity",
+          "previewState",
+          "previewExpiresAt",
+          "site",
+          "templateHistory",
+          "subscriptions",
+          "analytics",
+          "storage",
+          "emails",
+          "flags"
+        ]
+      },
+      "AdminSuspendTenantDto": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "reason"
+        ]
+      },
+      "AdminTenantFlagsPatchDto": {
+        "type": "object",
+        "properties": {
+          "isInternal": {
+            "type": "boolean"
+          },
+          "tags": {
+            "description": "Hasta 10 marcas de 24 caracteres. Reemplaza la lista entera.",
+            "maxItems": 10,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 24,
+              "minLength": 1
+            }
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true,
+            "description": "`null` borra la nota.",
+            "maxLength": 2000
+          }
+        }
+      },
+      "AdminDomainRecordDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "source": {
+            "enum": [
+              "lattiz_managed",
+              "user_provided"
+            ],
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "dnsStatus": {
+            "enum": [
+              "pending",
+              "configuring",
+              "propagating",
+              "active",
+              "error"
+            ],
+            "type": "string"
+          },
+          "dnsProvider": {
+            "nullable": true,
+            "enum": [
+              "cloudflare",
+              "openprovider",
+              null
+            ],
+            "type": "string"
+          },
+          "dnsActivationCheckedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "vercelMapped": {
+            "type": "boolean"
+          },
+          "sslActive": {
+            "type": "boolean"
+          },
+          "suspendedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "isMock": {
+            "type": "boolean"
+          },
+          "purchaseCompletedAt": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "name",
+          "source",
+          "expiresAt",
+          "dnsStatus",
+          "dnsProvider",
+          "dnsActivationCheckedAt",
+          "vercelMapped",
+          "sslActive",
+          "suspendedAt",
+          "isMock",
+          "purchaseCompletedAt"
+        ]
+      },
+      "AdminDomainCurrentCycleDto": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "open",
+              "overdue",
+              "paid",
+              "renewal_failed"
+            ],
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string"
+          },
+          "lateDeadlineAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "baseCents": {
+            "type": "number"
+          },
+          "taxCents": {
+            "type": "number"
+          },
+          "totalCents": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "canPay": {
+            "type": "boolean"
+          },
+          "payBlockedReason": {
+            "nullable": true,
+            "enum": [
+              "subscription_inactive",
+              "window_closed",
+              null
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "domain",
+          "status",
+          "expiresAt",
+          "lateDeadlineAt",
+          "baseCents",
+          "taxCents",
+          "totalCents",
+          "currency",
+          "canPay",
+          "payBlockedReason"
+        ]
+      },
+      "AdminDomainCycleDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "pricing_pending",
+              "open",
+              "overdue",
+              "paid",
+              "renewed",
+              "renewal_failed",
+              "over_cap",
+              "lapsed",
+              "refunded",
+              "void"
+            ]
+          },
+          "amountCents": {
+            "type": "number",
+            "nullable": true
+          },
+          "currency": {
+            "type": "string"
+          },
+          "openedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "paidAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "renewedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "overdueAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "lapsedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastError": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "status",
+          "amountCents",
+          "currency",
+          "openedAt",
+          "paidAt",
+          "renewedAt",
+          "overdueAt",
+          "lapsedAt",
+          "lastError"
+        ]
+      },
+      "AdminDomainRenewalDto": {
+        "type": "object",
+        "properties": {
+          "managedBy": {
+            "type": "string",
+            "enum": [
+              "customer"
+            ]
+          },
+          "expiresAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "daysUntilExpiry": {
+            "type": "number",
+            "nullable": true
+          },
+          "paymentOpensAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "daysUntilPaymentOpens": {
+            "type": "number",
+            "nullable": true
+          },
+          "noticeDates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "lateDeadlineAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "currentCycle": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminDomainCurrentCycleDto"
+              }
+            ]
+          },
+          "cycles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminDomainCycleDto"
+            }
+          },
+          "expectedChargeCents": {
+            "type": "number",
+            "description": "Annual fee including IVA, in cents."
+          },
+          "currency": {
+            "type": "string"
+          },
+          "firstYearIncluded": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AdminDomainRegistrarDto": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "enum": [
+              "unavailable"
+            ]
+          },
+          "status": {
+            "enum": [
+              "active",
+              "expired",
+              "pending",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "renewalDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "canRenew": {
+            "type": "boolean"
+          },
+          "restorableUntil": {
+            "type": "string",
+            "nullable": true
+          },
+          "autoRenew": {
+            "enum": [
+              "on",
+              "off",
+              "default"
+            ],
+            "type": "string"
+          },
+          "expiryMismatch": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AdminDomainDnsRecordDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "proxied": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "content",
+          "proxied"
+        ]
+      },
+      "AdminDomainDnsDto": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "enum": [
+              "unavailable"
+            ]
+          },
+          "exists": {
+            "type": "boolean"
+          },
+          "zoneId": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "nameservers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "originalNameservers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "activatedOn": {
+            "type": "string",
+            "nullable": true
+          },
+          "paused": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "records": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminDomainDnsRecordDto"
+            }
+          },
+          "recordsMatchVercel": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AdminDomainVercelDto": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "enum": [
+              "unavailable"
+            ]
+          },
+          "inProject": {
+            "type": "boolean"
+          },
+          "configured": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AdminDomainInspectionDto": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminDomainRecordDto"
+              }
+            ]
+          },
+          "renewal": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminDomainRenewalDto"
+              }
+            ]
+          },
+          "registrar": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminDomainRegistrarDto"
+              }
+            ]
+          },
+          "dns": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminDomainDnsDto"
+              }
+            ]
+          },
+          "vercel": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminDomainVercelDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "domain",
+          "renewal",
+          "registrar",
+          "dns",
+          "vercel"
+        ]
+      },
+      "AdminSubscriptionTenantDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "email"
+        ]
+      },
+      "AdminSubscriptionListItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "stripeSubscriptionId": {
+            "type": "string"
+          },
+          "tenant": {
+            "$ref": "#/components/schemas/AdminSubscriptionTenantDto"
+          },
+          "plan": {
+            "enum": [
+              "basico",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "period": {
+            "enum": [
+              "monthly",
+              "annual"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "trialing",
+              "past_due",
+              "canceled",
+              "incomplete",
+              "incomplete_expired",
+              "unpaid",
+              "paused"
+            ],
+            "type": "string"
+          },
+          "currentPeriodEnd": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancelAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "When the subscription is scheduled to end; null if it is not."
+          },
+          "cancelAtPeriodEnd": {
+            "type": "boolean"
+          },
+          "paymentAttempts": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "canceledAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "stripeDashboardUrl": {
+            "type": "string",
+            "description": "Stripe Dashboard link. `/test` when `STRIPE_SECRET_KEY` starts with `sk_test_`."
+          }
+        },
+        "required": [
+          "id",
+          "stripeSubscriptionId",
+          "tenant",
+          "plan",
+          "period",
+          "status",
+          "currentPeriodEnd",
+          "cancelAt",
+          "cancelAtPeriodEnd",
+          "paymentAttempts",
+          "createdAt",
+          "canceledAt",
+          "stripeDashboardUrl"
+        ]
+      },
+      "AdminSubscriptionListResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminSubscriptionListItemDto"
+            }
+          },
+          "total": {
+            "type": "number"
+          },
+          "page": {
+            "type": "number"
+          },
+          "pageSize": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
+      "AdminSubscriptionDiscountDto": {
+        "type": "object",
+        "properties": {
+          "percentOff": {
+            "type": "number",
+            "nullable": true
+          },
+          "amountOff": {
+            "type": "number",
+            "nullable": true,
+            "description": "Fixed amount in cents when the coupon is not a percent."
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "percentOff",
+          "amountOff",
+          "currency"
+        ]
+      },
+      "AdminSubscriptionPriceDto": {
+        "type": "object",
+        "properties": {
+          "unitAmount": {
+            "type": "number",
+            "nullable": true
+          },
+          "currency": {
+            "type": "string"
+          },
+          "interval": {
+            "nullable": true,
+            "enum": [
+              "day",
+              "week",
+              "month",
+              "year",
+              null
+            ],
+            "type": "string"
+          },
+          "intervalCount": {
+            "type": "number",
+            "nullable": true
+          },
+          "discount": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminSubscriptionDiscountDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "unitAmount",
+          "currency",
+          "interval",
+          "intervalCount",
+          "discount"
+        ]
+      },
+      "AdminSubscriptionPaymentMethodDto": {
+        "type": "object",
+        "properties": {
+          "brand": {
+            "type": "string"
+          },
+          "last4": {
+            "type": "string"
+          },
+          "expMonth": {
+            "type": "number"
+          },
+          "expYear": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "brand",
+          "last4",
+          "expMonth",
+          "expYear"
+        ]
+      },
+      "AdminSubscriptionUpcomingInvoiceDto": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "nullable": true,
+            "description": "Next charge: `next_payment_attempt`, otherwise `due_date`, otherwise `period_end`."
+          }
+        },
+        "required": [
+          "total",
+          "currency",
+          "date"
+        ]
+      },
+      "AdminSubscriptionSchedulePhaseDto": {
+        "type": "object",
+        "properties": {
+          "plan": {
+            "nullable": true,
+            "enum": [
+              "basico",
+              "pro",
+              null
+            ],
+            "type": "string"
+          },
+          "priceId": {
+            "type": "string"
+          },
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "plan",
+          "priceId",
+          "start",
+          "end"
+        ]
+      },
+      "AdminSubscriptionScheduleDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "not_started",
+              "active",
+              "completed",
+              "released",
+              "canceled"
+            ],
+            "type": "string"
+          },
+          "phases": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminSubscriptionSchedulePhaseDto"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "phases"
+        ]
+      },
+      "AdminSubscriptionInvoiceDto": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "nullable": true,
+            "enum": [
+              "draft",
+              "open",
+              "paid",
+              "uncollectible",
+              "void",
+              null
+            ],
+            "type": "string"
+          },
+          "total": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "paidAt": {
+            "type": "string",
+            "nullable": true,
+            "description": "`status_transitions.paid_at`."
+          },
+          "hostedInvoiceUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "invoicePdf": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "number",
+          "status",
+          "total",
+          "currency",
+          "createdAt",
+          "paidAt",
+          "hostedInvoiceUrl",
+          "invoicePdf"
+        ]
+      },
+      "AdminSubscriptionStripeDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "enum": [
+              "active",
+              "trialing",
+              "past_due",
+              "canceled",
+              "incomplete",
+              "incomplete_expired",
+              "unpaid",
+              "paused"
+            ],
+            "type": "string"
+          },
+          "price": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminSubscriptionPriceDto"
+              }
+            ]
+          },
+          "paymentMethod": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminSubscriptionPaymentMethodDto"
+              }
+            ]
+          },
+          "upcomingInvoice": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminSubscriptionUpcomingInvoiceDto"
+              }
+            ]
+          },
+          "schedule": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminSubscriptionScheduleDto"
+              }
+            ]
+          },
+          "invoices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminSubscriptionInvoiceDto"
+            }
+          }
+        },
+        "required": [
+          "status",
+          "price",
+          "paymentMethod",
+          "upcomingInvoice",
+          "schedule",
+          "invoices"
+        ]
+      },
+      "AdminSubscriptionDetailDto": {
+        "type": "object",
+        "properties": {
+          "local": {
+            "$ref": "#/components/schemas/AdminSubscriptionListItemDto"
+          },
+          "stripe": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminSubscriptionStripeDto"
+              }
+            ]
+          },
+          "stripeError": {
+            "type": "string",
+            "nullable": true,
+            "enum": [
+              "unavailable",
+              null
+            ]
+          }
+        },
+        "required": [
+          "local",
+          "stripe",
+          "stripeError"
+        ]
+      },
+      "AdminCancelSubscriptionDto": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "enum": [
+              "period_end",
+              "now"
+            ],
+            "type": "string"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Motivo que queda en la auditoría y en la metadata de Stripe.",
+            "minLength": 3,
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "mode",
+          "reason"
+        ]
+      },
+      "AdminTemplateUsageDto": {
+        "type": "object",
+        "properties": {
+          "tenantsUsing": {
+            "type": "number"
+          },
+          "sitesPublished": {
+            "type": "number"
+          },
+          "payingTenants": {
+            "type": "number"
+          },
+          "trialTenants": {
+            "type": "number"
+          },
+          "archivedCount": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "tenantsUsing",
+          "sitesPublished",
+          "payingTenants",
+          "trialTenants",
+          "archivedCount"
+        ]
+      },
+      "AdminTemplateListItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "tier": {
+            "enum": [
+              "basic",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "active",
+              "retired"
+            ],
+            "type": "string"
+          },
+          "thumbnailUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "previewUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "sortOrder": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "featured": {
+            "type": "boolean"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "retiredAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "kitMeta": {
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": true
+          },
+          "usage": {
+            "$ref": "#/components/schemas/AdminTemplateUsageDto"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "category",
+          "tier",
+          "status",
+          "thumbnailUrl",
+          "previewUrl",
+          "sortOrder",
+          "createdAt",
+          "tags",
+          "featured",
+          "updatedAt",
+          "retiredAt",
+          "kitMeta",
+          "usage"
+        ]
+      },
+      "AdminTemplateListResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminTemplateListItemDto"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "AdminTemplateReorderDto": {
+        "type": "object",
+        "properties": {
+          "ids": {
+            "minItems": 1,
+            "maxItems": 500,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 120
+            }
+          }
+        },
+        "required": [
+          "ids"
+        ]
+      },
+      "AdminTemplateReorderResponseDto": {
+        "type": "object",
+        "properties": {
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "ids"
+        ]
+      },
+      "AdminTemplateTenantDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "plan": {
+            "enum": [
+              "none",
+              "basico",
+              "pro",
+              "trial"
+            ],
+            "type": "string"
+          },
+          "entitled": {
+            "type": "boolean"
+          },
+          "published": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "plan",
+          "entitled",
+          "published"
+        ]
+      },
+      "AdminTemplateDetailDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "tier": {
+            "enum": [
+              "basic",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "active",
+              "retired"
+            ],
+            "type": "string"
+          },
+          "thumbnailUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "previewUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "sortOrder": {
+            "type": "number"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "featured": {
+            "type": "boolean"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "retiredAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "kitMeta": {
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": true
+          },
+          "usage": {
+            "$ref": "#/components/schemas/AdminTemplateUsageDto"
+          },
+          "sectionCount": {
+            "type": "number",
+            "description": "Sections on the first GrapesJS page. The project JSON is not returned."
+          },
+          "tenants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminTemplateTenantDto"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "category",
+          "tier",
+          "status",
+          "thumbnailUrl",
+          "previewUrl",
+          "sortOrder",
+          "createdAt",
+          "tags",
+          "featured",
+          "updatedAt",
+          "retiredAt",
+          "kitMeta",
+          "usage",
+          "sectionCount",
+          "tenants"
+        ]
+      },
+      "AdminTemplateUpdateDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 500
+          },
+          "category": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "tags": {
+            "uniqueItems": true,
+            "maxItems": 10,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 24
+            }
+          },
+          "featured": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AdminTemplateRetireDto": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "reason"
+        ]
+      },
+      "AdminTemplateDeleteDto": {
+        "type": "object",
+        "properties": {
+          "confirmId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          }
+        },
+        "required": [
+          "confirmId"
+        ]
+      },
+      "AdminTrialSummaryDto": {
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "number"
+          },
+          "expiring": {
+            "type": "number"
+          },
+          "expired": {
+            "type": "number"
+          },
+          "converted": {
+            "type": "number"
+          },
+          "conversionRate30d": {
+            "type": "number",
+            "nullable": true,
+            "description": "Converted / started in the last 30 days. Null when none started."
+          },
+          "conversionRate90d": {
+            "type": "number",
+            "nullable": true,
+            "description": "Converted / started in the last 90 days. Null when none started."
+          },
+          "medianHoursToConvert": {
+            "type": "number",
+            "nullable": true,
+            "description": "Median hours from preview start to the first later subscription."
+          },
+          "trialDays": {
+            "type": "number"
+          },
+          "enabled": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "active",
+          "expiring",
+          "expired",
+          "converted",
+          "conversionRate30d",
+          "conversionRate90d",
+          "medianHoursToConvert",
+          "trialDays",
+          "enabled"
+        ]
+      },
+      "AdminTrialTenantDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "email"
+        ]
+      },
+      "AdminTrialTemplateDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "AdminTrialListItemDto": {
+        "type": "object",
+        "properties": {
+          "tenant": {
+            "$ref": "#/components/schemas/AdminTrialTenantDto"
+          },
+          "template": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AdminTrialTemplateDto"
+              }
+            ]
+          },
+          "previewStartedAt": {
+            "type": "string"
+          },
+          "previewExpiresAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "state": {
+            "enum": [
+              "active",
+              "expiring",
+              "expired",
+              "converted"
+            ],
+            "type": "string"
+          },
+          "convertedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "hoursToConvert": {
+            "type": "number",
+            "nullable": true
+          }
+        },
+        "required": [
+          "tenant",
+          "template",
+          "previewStartedAt",
+          "previewExpiresAt",
+          "state",
+          "convertedAt",
+          "hoursToConvert"
+        ]
+      },
+      "AdminTrialListResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminTrialListItemDto"
+            }
+          },
+          "total": {
+            "type": "number"
+          },
+          "page": {
+            "type": "number"
+          },
+          "pageSize": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
+      "MetricsMrrPlanDto": {
+        "type": "object",
+        "properties": {
+          "plan": {
+            "enum": [
+              "basico",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "mrrCents": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "plan",
+          "mrrCents"
+        ]
+      },
+      "MetricsMrrPeriodDto": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "enum": [
+              "monthly",
+              "annual",
+              "weekly"
+            ],
+            "type": "string"
+          },
+          "mrrCents": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "period",
+          "mrrCents"
+        ]
+      },
+      "MetricsMrrCurrencyDto": {
+        "type": "object",
+        "properties": {
+          "currency": {
+            "type": "string"
+          },
+          "mrrCents": {
+            "type": "number"
+          },
+          "arrCents": {
+            "type": "number"
+          },
+          "byPlan": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsMrrPlanDto"
+            }
+          },
+          "byPeriod": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsMrrPeriodDto"
+            }
+          }
+        },
+        "required": [
+          "currency",
+          "mrrCents",
+          "arrCents",
+          "byPlan",
+          "byPeriod"
+        ]
+      },
+      "MetricsCustomersDto": {
+        "type": "object",
+        "properties": {
+          "payingTenants": {
+            "type": "number"
+          },
+          "newPayingThisMonth": {
+            "type": "number"
+          },
+          "cancellationsThisMonth": {
+            "type": "number"
+          },
+          "churnRateThisMonth": {
+            "type": "number",
+            "nullable": true,
+            "description": "Cancelaciones del mes ÷ pagadores al inicio. Null si no había pagadores."
+          },
+          "atRisk": {
+            "type": "number",
+            "description": "past_due más cancelaciones programadas, un cliente cuenta una vez."
+          }
+        },
+        "required": [
+          "payingTenants",
+          "newPayingThisMonth",
+          "cancellationsThisMonth",
+          "churnRateThisMonth",
+          "atRisk"
+        ]
+      },
+      "MetricsTrialsDto": {
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "number"
+          },
+          "expiringWithin48h": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "active",
+          "expiringWithin48h"
+        ]
+      },
+      "MetricsRenewalsNext30DaysDto": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "number"
+          },
+          "expectedRevenueCents": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "count",
+          "expectedRevenueCents",
+          "currency"
+        ]
+      },
+      "MetricsProductDto": {
+        "type": "object",
+        "properties": {
+          "publishedSites": {
+            "type": "number"
+          },
+          "domainsPurchased": {
+            "type": "number"
+          },
+          "domainsConnected": {
+            "type": "number"
+          },
+          "renewalsOverdue": {
+            "type": "number"
+          },
+          "renewalsNext30Days": {
+            "$ref": "#/components/schemas/MetricsRenewalsNext30DaysDto"
+          }
+        },
+        "required": [
+          "publishedSites",
+          "domainsPurchased",
+          "domainsConnected",
+          "renewalsOverdue",
+          "renewalsNext30Days"
+        ]
+      },
+      "MetricsOverviewDto": {
+        "type": "object",
+        "properties": {
+          "mrrCents": {
+            "type": "number",
+            "nullable": true
+          },
+          "arrCents": {
+            "type": "number",
+            "nullable": true
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          },
+          "mrrByPlan": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsMrrPlanDto"
+            }
+          },
+          "mrrByPeriod": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsMrrPeriodDto"
+            }
+          },
+          "mrrByCurrency": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsMrrCurrencyDto"
+            }
+          },
+          "revenueError": {
+            "type": "string",
+            "nullable": true,
+            "enum": [
+              "unavailable",
+              null
+            ]
+          },
+          "customers": {
+            "$ref": "#/components/schemas/MetricsCustomersDto"
+          },
+          "trials": {
+            "$ref": "#/components/schemas/MetricsTrialsDto"
+          },
+          "product": {
+            "$ref": "#/components/schemas/MetricsProductDto"
+          },
+          "generatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "mrrCents",
+          "arrCents",
+          "currency",
+          "mrrByPlan",
+          "mrrByPeriod",
+          "mrrByCurrency",
+          "revenueError",
+          "customers",
+          "trials",
+          "product",
+          "generatedAt"
+        ]
+      },
+      "MetricsRevenueMonthDto": {
+        "type": "object",
+        "properties": {
+          "month": {
+            "type": "string"
+          },
+          "grossCents": {
+            "type": "number"
+          },
+          "feeCents": {
+            "type": "number"
+          },
+          "refundCents": {
+            "type": "number"
+          },
+          "netCents": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "month",
+          "grossCents",
+          "feeCents",
+          "refundCents",
+          "netCents",
+          "currency"
+        ]
+      },
+      "MetricsRevenueDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsRevenueMonthDto"
+            }
+          },
+          "months": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "items",
+          "months"
+        ]
+      },
+      "MetricsFunnelDto": {
+        "type": "object",
+        "properties": {
+          "days": {
+            "type": "number"
+          },
+          "signups": {
+            "type": "number"
+          },
+          "choseTemplate": {
+            "type": "number"
+          },
+          "published": {
+            "type": "number"
+          },
+          "paid": {
+            "type": "number"
+          },
+          "choseTemplateRate": {
+            "type": "number",
+            "nullable": true
+          },
+          "publishedRate": {
+            "type": "number",
+            "nullable": true
+          },
+          "paidRate": {
+            "type": "number",
+            "nullable": true
+          },
+          "medianHoursToPay": {
+            "type": "number",
+            "nullable": true
+          }
+        },
+        "required": [
+          "days",
+          "signups",
+          "choseTemplate",
+          "published",
+          "paid",
+          "choseTemplateRate",
+          "publishedRate",
+          "paidRate",
+          "medianHoursToPay"
+        ]
+      },
+      "MetricsTemplateRankDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "tier": {
+            "enum": [
+              "basic",
+              "pro"
+            ],
+            "type": "string"
+          },
+          "tenantsUsing": {
+            "type": "number"
+          },
+          "payingTenants": {
+            "type": "number"
+          },
+          "conversionRate": {
+            "type": "number",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "tier",
+          "tenantsUsing",
+          "payingTenants",
+          "conversionRate"
+        ]
+      },
+      "MetricsTemplatesDto": {
+        "type": "object",
+        "properties": {
+          "byAdoption": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsTemplateRankDto"
+            }
+          },
+          "byConversion": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsTemplateRankDto"
+            }
+          }
+        },
+        "required": [
+          "byAdoption",
+          "byConversion"
+        ]
+      },
+      "MetricsHistoryItemDto": {
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "string"
+          },
+          "mrrCents": {
+            "type": "number",
+            "nullable": true
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          },
+          "payingTenants": {
+            "type": "number"
+          },
+          "trialsActive": {
+            "type": "number"
+          },
+          "signups": {
+            "type": "number"
+          },
+          "newPaying": {
+            "type": "number"
+          },
+          "cancellations": {
+            "type": "number"
+          },
+          "publishedSites": {
+            "type": "number"
+          },
+          "capturedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "day",
+          "mrrCents",
+          "currency",
+          "payingTenants",
+          "trialsActive",
+          "signups",
+          "newPaying",
+          "cancellations",
+          "publishedSites",
+          "capturedAt"
+        ]
+      },
+      "MetricsHistoryDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricsHistoryItemDto"
+            }
+          },
+          "days": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "items",
+          "days"
+        ]
+      },
+      "DeletionPreviewStripeDto": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "nullable": true
+          },
+          "liveSubscriptionIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "balance": {
+            "type": "number"
+          },
+          "openInvoices": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "customerId",
+          "liveSubscriptionIds",
+          "balance",
+          "openInvoices"
+        ]
+      },
+      "DeletionPreviewDomainDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "dnsProvider": {
+            "type": "string",
+            "nullable": true
+          },
+          "dnsZoneId": {
+            "type": "string",
+            "nullable": true
+          },
+          "activeDnsProvider": {
+            "type": "string"
+          },
+          "zoneOnActiveProvider": {
+            "type": "boolean"
+          },
+          "vercelInProject": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "expiresAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "autoRenew": {
+            "type": "string",
+            "nullable": true
+          },
+          "renewalDate": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "name",
+          "source",
+          "dnsProvider",
+          "dnsZoneId",
+          "activeDnsProvider",
+          "zoneOnActiveProvider",
+          "vercelInProject",
+          "expiresAt",
+          "autoRenew",
+          "renewalDate"
+        ]
+      },
+      "DeletionPreviewAnalyticsDto": {
+        "type": "object",
+        "properties": {
+          "propertyId": {
+            "type": "string",
+            "nullable": true
+          },
+          "isMock": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "propertyId",
+          "isMock"
+        ]
+      },
+      "DeletionPreviewStorageDto": {
+        "type": "object",
+        "properties": {
+          "assetsBytes": {
+            "type": "number"
+          },
+          "brandingBytes": {
+            "type": "number"
+          },
+          "assetsObjects": {
+            "type": "number",
+            "description": "Last measured counts. `usageBytes` does not return an object count."
+          },
+          "brandingObjects": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "assetsBytes",
+          "brandingBytes",
+          "assetsObjects",
+          "brandingObjects"
+        ]
+      },
+      "DeletionPreviewDto": {
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "emailMasked": {
+            "type": "string",
+            "nullable": true
+          },
+          "stripe": {
+            "$ref": "#/components/schemas/DeletionPreviewStripeDto"
+          },
+          "domain": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DeletionPreviewDomainDto"
+              }
+            ]
+          },
+          "analytics": {
+            "$ref": "#/components/schemas/DeletionPreviewAnalyticsDto"
+          },
+          "storage": {
+            "$ref": "#/components/schemas/DeletionPreviewStorageDto"
+          },
+          "pendingEmails": {
+            "type": "number"
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "blocking": {
+            "type": "boolean"
+          },
+          "whatIsKept": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "tenantId",
+          "userId",
+          "slug",
+          "emailMasked",
+          "stripe",
+          "domain",
+          "analytics",
+          "storage",
+          "pendingEmails",
+          "warnings",
+          "blocking",
+          "whatIsKept"
+        ]
+      },
+      "StartTenantDeletionDto": {
+        "type": "object",
+        "properties": {
+          "confirmSlug": {
+            "type": "string",
+            "description": "Must equal the tenant slug.",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 500
+          },
+          "notifyCustomer": {
+            "type": "boolean",
+            "description": "Sends the account-deleted notice. Defaults to true.",
+            "default": true
+          }
+        },
+        "required": [
+          "confirmSlug",
+          "reason"
+        ]
+      },
+      "TenantDeletionAcceptedDto": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "jobId"
+        ]
+      },
+      "DeletionDomainSnapshotDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "registrarDomainId": {
+            "type": "string",
+            "nullable": true
+          },
+          "expiresAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "dnsProvider": {
+            "type": "string",
+            "nullable": true
+          },
+          "dnsZoneId": {
+            "type": "string",
+            "nullable": true
+          },
+          "autoRenew": {
+            "type": "string",
+            "nullable": true
+          },
+          "renewalDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "vercelInProject": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "required": [
+          "name",
+          "source",
+          "registrarDomainId",
+          "expiresAt",
+          "dnsProvider",
+          "dnsZoneId",
+          "autoRenew",
+          "renewalDate",
+          "vercelInProject"
+        ]
+      },
+      "DeletionSnapshotDto": {
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "emailMasked": {
+            "type": "string",
+            "nullable": true
+          },
+          "domain": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DeletionDomainSnapshotDto"
+              }
+            ]
+          },
+          "ga4PropertyId": {
+            "type": "string",
+            "nullable": true
+          },
+          "analyticsIsMock": {
+            "type": "boolean"
+          },
+          "stripeCustomerId": {
+            "type": "string",
+            "nullable": true
+          },
+          "subscriptionIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "r2Bytes": {
+            "type": "number"
+          },
+          "r2Objects": {
+            "type": "number"
+          },
+          "pendingEmails": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "tenantId",
+          "userId",
+          "slug",
+          "emailMasked",
+          "domain",
+          "ga4PropertyId",
+          "analyticsIsMock",
+          "stripeCustomerId",
+          "subscriptionIds",
+          "r2Bytes",
+          "r2Objects",
+          "pendingEmails"
+        ]
+      },
+      "DeletionStepDto": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "enum": [
+              "offline",
+              "stripe",
+              "domain",
+              "registrar",
+              "analytics",
+              "storage",
+              "emails",
+              "account",
+              "verify"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "running",
+              "done",
+              "skipped",
+              "manual",
+              "failed"
+            ],
+            "type": "string"
+          },
+          "startedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "finishedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "error": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "key",
+          "status",
+          "startedAt",
+          "finishedAt",
+          "detail",
+          "error"
+        ]
+      },
+      "DeletionJobDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "tenantId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "snapshot": {
+            "$ref": "#/components/schemas/DeletionSnapshotDto"
+          },
+          "notifyCustomer": {
+            "type": "boolean"
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "running",
+              "completed",
+              "completed_manual",
+              "failed"
+            ],
+            "type": "string"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeletionStepDto"
+            }
+          },
+          "reason": {
+            "type": "string"
+          },
+          "actorUserId": {
+            "type": "string"
+          },
+          "actorEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "finishedAt": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "tenantId",
+          "userId",
+          "slug",
+          "snapshot",
+          "notifyCustomer",
+          "status",
+          "steps",
+          "reason",
+          "actorUserId",
+          "actorEmail",
+          "createdAt",
+          "updatedAt",
+          "finishedAt"
+        ]
+      },
+      "DeletionJobListDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeletionJobDto"
+            }
+          },
+          "total": {
+            "type": "number"
+          },
+          "page": {
+            "type": "number"
+          },
+          "pageSize": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
+      "AnalyticsStatus": {
+        "type": "string",
+        "enum": [
+          "not_eligible",
+          "unavailable",
+          "provisioning",
+          "failed",
+          "ready"
         ]
       },
       "AnalyticsOverviewDto": {
@@ -3005,53 +9114,6 @@
           "tier"
         ]
       },
-      "DependencyStatusDto": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "mock",
-            "description": "Dependency name."
-          },
-          "status": {
-            "enum": [
-              "up",
-              "down"
-            ],
-            "type": "string",
-            "example": "up"
-          }
-        },
-        "required": [
-          "name",
-          "status"
-        ]
-      },
-      "HealthResponseDto": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "enum": [
-              "ok",
-              "degraded"
-            ],
-            "type": "string",
-            "example": "ok",
-            "description": "Overall service status."
-          },
-          "dependencies": {
-            "description": "Per-dependency probe results.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DependencyStatusDto"
-            }
-          }
-        },
-        "required": [
-          "status",
-          "dependencies"
-        ]
-      },
       "UserProfileDto": {
         "type": "object",
         "properties": {
@@ -3101,6 +9163,53 @@
           "email",
           "claims",
           "profile"
+        ]
+      },
+      "DependencyStatusDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "mock",
+            "description": "Dependency name."
+          },
+          "status": {
+            "enum": [
+              "up",
+              "down"
+            ],
+            "type": "string",
+            "example": "up"
+          }
+        },
+        "required": [
+          "name",
+          "status"
+        ]
+      },
+      "HealthResponseDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "enum": [
+              "ok",
+              "degraded"
+            ],
+            "type": "string",
+            "example": "ok",
+            "description": "Overall service status."
+          },
+          "dependencies": {
+            "description": "Per-dependency probe results.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DependencyStatusDto"
+            }
+          }
+        },
+        "required": [
+          "status",
+          "dependencies"
         ]
       },
       "SiteSchemaResponseDto": {

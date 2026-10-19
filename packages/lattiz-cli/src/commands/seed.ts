@@ -114,13 +114,16 @@ async function buildPlan(id: string): Promise<SeedPlan> {
   };
 }
 
-function printPlan(p: SeedPlan, deploy: boolean): void {
+function printPlan(p: SeedPlan, deploy: boolean, overwriteMeta: boolean): void {
   const row =
     p.existing === undefined
       ? c.gray('sin consultar (sin credenciales de Supabase o sin respuesta)')
       : p.existing === null
         ? `${c.green('INSERT')} (nueva, queda inactiva hasta tener preview y miniatura)`
-        : `${c.yellow('UPDATE')} por id (conserva is_active=${p.existing.is_active})`;
+        : `${c.yellow('UPDATE')} por id (conserva is_active=${p.existing.is_active}` +
+          (overwriteMeta
+            ? '; --overwrite-meta pisa nombre, descripción, categoría, orden y miniatura)'
+            : '; conserva nombre, descripción, categoría, orden y miniatura del admin)');
   log.plain(
     plan(`Seed de ${p.id}`, [
       [
@@ -130,9 +133,10 @@ function printPlan(p: SeedPlan, deploy: boolean): void {
       ['Supabase', `1 fila de public.templates (id = '${p.id}'): ${row}`],
       [
         'Campos',
-        'name, category, description, tier, grapesjs_json' +
-          c.gray(` (${p.jsonKb} KB antes de reescribir URLs)`) +
-          ', preview_url',
+        (overwriteMeta || !p.existing
+          ? 'name, description, category, sort_order, tier, grapesjs_json, preview_url, kit_meta'
+          : 'tier, grapesjs_json, preview_url, kit_meta') +
+          c.gray(` (${p.jsonKb} KB antes de reescribir URLs)`),
       ],
       [
         'R2',
@@ -163,8 +167,7 @@ async function verifyRow(id: string, tier: string): Promise<void> {
   if (row.tier !== tier)
     throw gate(`La fila quedó con tier ${row.tier}, se esperaba ${tier}.`);
   log.ok(
-    `Fila verificada: tier ${tierLabel(row.tier)} · is_active=${row.is_active} · created_at ${row.created_at}` +
-      c.gray(' (la tabla no tiene updated_at)'),
+    `Fila verificada: tier ${tierLabel(row.tier)} · is_active=${row.is_active} · created_at ${row.created_at}`,
   );
   if (row.preview_url) log.info(`preview_url: ${row.preview_url}`);
 }
@@ -176,7 +179,7 @@ async function verifyRow(id: string, tier: string): Promise<void> {
 export async function seedOne(
   ctx: Context,
   id: string,
-  opts: { dryRun: boolean; deploy: boolean },
+  opts: { dryRun: boolean; deploy: boolean; overwriteMeta: boolean },
 ): Promise<ExitCode> {
   log.title(`lattiz seed ${id}${opts.dryRun ? ' --dry-run' : ''}`);
   if (!opts.dryRun) requireSeedEnv();
@@ -190,7 +193,7 @@ export async function seedOne(
     );
   const p = await buildPlan(id);
   log.plain();
-  printPlan(p, opts.deploy);
+  printPlan(p, opts.deploy, opts.overwriteMeta);
   if (opts.dryRun) {
     log.plain();
     log.ok('Dry run: no se escribió nada en Supabase, R2 ni Vercel.');
@@ -206,7 +209,10 @@ export async function seedOne(
     log.warn('Cancelado: no se escribió nada.');
     return EXIT.GATE;
   }
-  const code = await templateSeed(id, opts.deploy ? [] : ['--no-deploy']);
+  const code = await templateSeed(id, [
+    ...(opts.deploy ? [] : ['--no-deploy']),
+    ...(opts.overwriteMeta ? ['--overwrite-meta'] : []),
+  ]);
   if (code !== 0)
     throw new CliError(
       `El seed falló (código ${code}).`,
@@ -233,17 +239,22 @@ export const seed: Command = {
   name: 'seed',
   summary:
     'Siembra UNA plantilla (fila + R2 + archivo de preview) con confirmación; --dry-run no escribe',
-  usage: 'seed <id> [--dry-run] [--deploy]',
+  usage: 'seed <id> [--dry-run] [--deploy] [--overwrite-meta]',
   help: [
     'Envuelve `pnpm template:seed -- --only <id>`. Primero corre siempre el dry-run del seed',
     '(compila, valida, tabla de Motion, assets), luego muestra exactamente qué escribirá y pide',
     'confirmación (--yes la salta). Después verifica la fila con una consulta de solo lectura.',
     '',
-    '  --dry-run   no escribe nada (ni Supabase, ni R2, ni Vercel)',
-    '  --deploy    también despliega previews, toma miniatura y activa (el seed de siempre);',
-    '              sin él, `pnpm lattiz deploy` termina esos pasos',
+    '  --dry-run          no escribe nada (ni Supabase, ni R2, ni Vercel)',
+    '  --deploy           también despliega previews, toma miniatura y activa (el seed de siempre);',
+    '                     sin él, `pnpm lattiz deploy` termina esos pasos',
+    '  --overwrite-meta   pisa nombre, descripción, categoría, orden y la miniatura del admin',
   ],
-  options: { 'dry-run': { type: 'boolean' }, deploy: { type: 'boolean' } },
+  options: {
+    'dry-run': { type: 'boolean' },
+    deploy: { type: 'boolean' },
+    'overwrite-meta': { type: 'boolean' },
+  },
   run(ctx) {
     const id = assertTemplate(ctx.positionals[0]);
     if (!bool(ctx.flags, 'dry-run')) assertRemoteWrite(ctx, `seed ${id}`);
@@ -252,6 +263,7 @@ export const seed: Command = {
     return seedOne(ctx, id, {
       dryRun: bool(ctx.flags, 'dry-run'),
       deploy: bool(ctx.flags, 'deploy'),
+      overwriteMeta: bool(ctx.flags, 'overwrite-meta'),
     });
   },
 };

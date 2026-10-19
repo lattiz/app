@@ -47,21 +47,27 @@ decide what happens to the Básico tenants it lists.
 
 Stages, each idempotent (re-running the same command resumes):
 
-| #   | Stage                                                                                                                                                                       | Side effect |
-| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| 1   | Validate JSON, `projectType: web`, exactly one page, id format                                                                                                              | —           |
-| 2   | Collect `cdn.grapesjs.com/workspaces/…` and legacy Supabase Storage URLs from the JSON and HTML                                                                             | —           |
-| 3   | Download (30 s timeout, 3 retries, ≤15 MB, image/video/font) and upload to R2 as `templates/<id>/<sha256[:16]>.<ext>` — all-or-nothing, existing objects skipped            | R2          |
-| 4   | Rewrite URLs; abort if any old URL remains                                                                                                                                  | —           |
-| 5   | Write `apps/template-previews/public/<id>/index.html` (adds `<title>` if missing, noindex meta)                                                                             | file        |
-| 6   | Upsert `public.templates`; new rows start `is_active=false`, existing rows keep `is_active`/`sort_order` unless flags are passed. Tenants' `site_schemas` are never touched | DB          |
-| 7   | `vercel deploy --prod` and wait for `<base>/<id>` to return 200                                                                                                             | Vercel      |
-| 8   | 1280×800 JPEG screenshot → R2 → `thumbnail_url`                                                                                                                             | R2, DB      |
-| 9   | `is_active=true` only if 7 and 8 succeeded                                                                                                                                  | DB          |
+| #   | Stage                                                                                                                                                                                                                                                                               | Side effect |
+| --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| 1   | Validate JSON, `projectType: web`, exactly one page, id format                                                                                                                                                                                                                      | —           |
+| 2   | Collect `cdn.grapesjs.com/workspaces/…` and legacy Supabase Storage URLs from the JSON and HTML                                                                                                                                                                                     | —           |
+| 3   | Download (30 s timeout, 3 retries, ≤15 MB, image/video/font) and upload to R2 as `templates/<id>/<sha256[:16]>.<ext>` — all-or-nothing, existing objects skipped                                                                                                                    | R2          |
+| 4   | Rewrite URLs; abort if any old URL remains                                                                                                                                                                                                                                          | —           |
+| 5   | Write `apps/template-previews/public/<id>/index.html` (adds `<title>` if missing, noindex meta)                                                                                                                                                                                     | file        |
+| 6   | Upsert `public.templates`. New rows start `is_active=false`. A re-seed always writes `grapesjs_json`, `tier`, `preview_url` and `kit_meta`; `name`, `description`, `category` and `sort_order` only on insert or with `--overwrite-meta`. Tenants' `site_schemas` are never touched | DB          |
+| 7   | `vercel deploy --prod` and wait for `<base>/<id>` to return 200                                                                                                                                                                                                                     | Vercel      |
+| 8   | 1280×800 JPEG → R2 → `thumbnail_url`, unless the current URL contains `/admin-thumb-` (kept, and still counts as ready, unless `--overwrite-meta`)                                                                                                                                  | R2, DB      |
+| 9   | `is_active=true` only if 7 and 8 succeeded and `retired_at` is null. A retired template is not reactivated                                                                                                                                                                          | DB          |
 
 Flags: `--dry-run` (stages 1–2 plus asset sizes, no writes), `--no-deploy` (batch
 several templates, then deploy once and re-run each without the flag),
-`--no-thumbnail`, `--no-preview`.
+`--no-thumbnail`, `--no-preview`, `--overwrite-meta`.
+
+After the first seed, name, description, category, sort order and the thumbnail
+belong to the admin. A re-seed still writes `grapesjs_json`, `tier`, `preview_url`
+and `kit_meta`, and leaves those fields alone — including a thumbnail whose URL
+contains `/admin-thumb-` — unless you pass `--overwrite-meta`. A template with
+`retired_at` set is not reactivated. `tier` still comes from the kit.
 
 ## 4. Verify, then commit
 

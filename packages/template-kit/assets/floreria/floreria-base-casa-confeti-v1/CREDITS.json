@@ -1,0 +1,19 @@
+{
+  "$lattiz": "GENERATED from specs/floreria-casa-confeti.spec.json (spec e112920bb92f, file 34298eecfed2). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "a9d34ae7f6d1563bbcc3cbd9a28626e95b9020c52e4d6ea3799c8a1f7207b059",
+      "url": "https://images.pexels.com/photos/12689074/pexels-photo-12689074.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/12689074/"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "url",
+      "sha256": "dfdf340805076eea7d78c559ec9c42029f6d0f601171061609d2b777622c940c",
+      "url": "https://images.pexels.com/photos/27788076/pexels-photo-27788076.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/27788076/"
+    }
+  ]
+}
