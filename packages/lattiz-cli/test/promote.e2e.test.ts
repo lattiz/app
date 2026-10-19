@@ -12,7 +12,7 @@ import { harvestFolder } from '../src/design/harvest';
 import { findCandidate, setStatus, writeJson } from '../src/design/library';
 import { promote } from '../src/design/promote';
 import { kitRunner, snapshotFailures } from '../src/design/promote/kit';
-import type { Candidate } from '../src/design/types';
+import type { Candidate, Harvest } from '../src/design/types';
 import { CliError } from '../src/lib/errors';
 
 /**
@@ -24,7 +24,7 @@ const KIT = resolve(import.meta.dirname, '../../template-kit');
 const FIX = resolve(import.meta.dirname, 'fixtures/executive-vision-dental');
 const read = (f: string) => readFileSync(join(KIT, f), 'utf8');
 
-const setup = (mutate?: (h: Record<string, any>) => void) => {
+const setup = (mutate?: (h: Harvest) => void) => {
   const lib = mkdtempSync(join(tmpdir(), 'design-e2e-'));
   process.env.LATTIZ_DESIGN_LIBRARY = lib;
   const dir = join(lib, 'stitch/dental/dental-executive-vision-01');
@@ -43,7 +43,7 @@ const setup = (mutate?: (h: Record<string, any>) => void) => {
   };
   writeJson(join(dir, 'candidate.json'), c);
   const h = harvestFolder(c, dir);
-  mutate?.(h as unknown as Record<string, any>);
+  mutate?.(h);
   writeJson(join(dir, 'harvest.json'), h);
   const loc = findCandidate(c.id);
   setStatus(loc, 'harvested');
