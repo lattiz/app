@@ -12,6 +12,7 @@ import {
   writeJson,
 } from '../design/library';
 import { harvestFolder } from '../design/harvest';
+import { promote } from '../design/promote';
 import type { Candidate, CandidateStatus } from '../design/types';
 import { GIROS } from '../../../template-kit/giros';
 import { bool, type Command, type Context, str } from '../lib/command';
@@ -132,6 +133,44 @@ function runHarvest(ctx: Context): ExitCode {
   return EXIT.OK;
 }
 
+function runPromote(ctx: Context): ExitCode {
+  const loc = findCandidate(ctx.positionals[1]);
+  const dryRun = bool(ctx.flags, 'dry-run');
+  const report = promote(loc, {
+    palette: bool(ctx.flags, 'palette'),
+    fonts: bool(ctx.flags, 'fonts'),
+    section: bool(ctx.flags, 'section'),
+    pattern: str(ctx.flags, 'pattern'),
+    regenerateManifest: bool(ctx.flags, 'regenerate-manifest'),
+    dryRun,
+  });
+  if (bool(ctx.flags, 'json')) {
+    console.log(JSON.stringify(report, null, 2));
+    return EXIT.OK;
+  }
+  log.title(`lattiz design promote ${loc.candidate.id}`);
+  for (const [kind, list] of Object.entries(report.gates)) {
+    log.plain(c.bold(kind));
+    for (const g of list) log.ok(g);
+  }
+  if (report.kept) {
+    log.ok(
+      `Promovido: ${Object.entries(report.refs)
+        .map(([k, v]) => `${k} ${v}`)
+        .join(' · ')}`,
+    );
+    log.hint(
+      'Revisa el diff y commitea los archivos del kit explícitos (git add por ruta).',
+    );
+  } else
+    log.info(
+      dryRun
+        ? 'Prueba en seco: pasó todas las compuertas y no quedó nada escrito.'
+        : 'Nada se conservó (una sección sin --regenerate-manifest es solo una prueba).',
+    );
+  return EXIT.OK;
+}
+
 /** `gen --import`: registers a candidate from files the MCP (or a person) already produced. */
 function runImport(ctx: Context): ExitCode {
   const giro = str(ctx.flags, 'giro');
@@ -205,6 +244,9 @@ export const design: Command = {
   help: [
     'design gen --giro <g> --import <html|md> [--design-md f] [--screenshot f] [--name n] [--tags a,b] [--spin s] [--direccion d] [--project id] [--screen id,id] [--reuse-of id]',
     '                          registra un candidato (collected) desde archivos locales',
+    'design promote <id> [--palette] [--fonts] [--section [--pattern slot/layout]] [--dry-run] [--regenerate-manifest]',
+    '                          pasa los borradores del harvest por las compuertas del kit; si una falla no queda nada',
+    '                          --section sin --regenerate-manifest es solo una prueba (esa bandera reescribe archivos generados de apps/api y apps/web)',
     'design list [--giro g] [--status s] [--tag t] [--spin s] [--json]',
     'design shelve|reject <id> [--note texto]     mueve la bandera',
     'design reindex            regenera design-library/index.json',
@@ -227,6 +269,12 @@ export const design: Command = {
     screen: { type: 'string' },
     'reuse-of': { type: 'string' },
     note: { type: 'string' },
+    palette: { type: 'boolean' },
+    fonts: { type: 'boolean' },
+    section: { type: 'boolean' },
+    pattern: { type: 'string' },
+    'dry-run': { type: 'boolean' },
+    'regenerate-manifest': { type: 'boolean' },
   },
   async run(ctx) {
     setQuiet(bool(ctx.flags, 'json'));
@@ -239,6 +287,8 @@ export const design: Command = {
         return runReindex();
       case 'harvest':
         return runHarvest(ctx);
+      case 'promote':
+        return runPromote(ctx);
       case 'shelve':
         return runFlag(ctx, 'shelved');
       case 'reject':

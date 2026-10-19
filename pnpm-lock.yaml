@@ -327,6 +327,9 @@ importers:
 
   packages/lattiz-cli:
     dependencies:
+      '@capsizecss/metrics':
+        specifier: 4.3.0
+        version: 4.3.0
       '@clack/prompts':
         specifier: ^1.8.1
         version: 1.8.1

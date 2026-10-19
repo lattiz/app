@@ -12,6 +12,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@capsizecss/metrics": "4.3.0",
     "@clack/prompts": "^1.8.1",
     "@supabase/supabase-js": "^2.108.0",
     "playwright": "^1.63.0"
