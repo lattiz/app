@@ -40,6 +40,49 @@ y te detienes **antes** de cualquier escritura remota. Todo pasa por un spec en
 8. **Paradas:** máximo 4 vueltas de validar/compilar/checar y 2 rondas de revisión visual. Si algo
    sigue fallando, detente y reporta qué falta.
 
+## Paso opcional: diseño con Stitch (antes del paso 1)
+
+Solo si el usuario pide explícitamente «usa Stitch» o si el giro está saturado de diseño
+(`pnpm lattiz kit capacity --giro <giro> --catalog extended --json` en 0 pares, o `giro show` sin
+`freeHueRanges` ni direcciones sin usar). Si no, sáltalo. Stitch alimenta el diseño, no la publicación:
+guía en `docs/design-stitch-flow.md`, detalle del MCP en la skill `/lattiz-design`.
+
+1. **Generar.** `pnpm lattiz design gen --giro <giro> --n 2 --direccion <dirección|unused> [--rigor loose|tight]`
+   deja `design.md`, `prompt.md` y `plan.json` en `.lattiz/stitch/`. Corre los pasos del plan con el MCP
+   de Stitch (solo diseño; `list_projects` primero) y registra cada pantalla con
+   `pnpm lattiz design gen --giro <giro> --import <html> --design-md <design.md> --screenshot <png> …`:
+   quedan 2 candidatos `collected`. `loose` (por defecto) deja explorar; `tight` exige la paleta y la
+   tipografía de la dirección (menos variedad, menos ajustes antes de promover).
+2. **Elegir.** Muestra las 2 capturas (`screenshot.png`) con un resumen breve de cada una; elige el
+   usuario. Si no quiere elegir, toma el más distinto de lo que el giro ya tiene (`pnpm lattiz list`,
+   direcciones usadas en `giro show`; después de `harvest`, la mayor `palette.distance` y más secciones
+   con `draft`).
+3. **Extraer.** `pnpm lattiz design harvest <id>` sobre el elegido.
+4. **Traducir y promover.** Con los borradores del harvest, promueve solo lo que cabe:
+   `pnpm lattiz design promote <id> --palette --fonts` (siempre primero con `--dry-run`). Una sección
+   (`--section`) solo si el usuario lo pidió, y `--regenerate-manifest` solo si pidió promover esa sección
+   concreta. Lo que falla una compuerta **no se promueve**: `pnpm lattiz design shelve <id> --note
+   "<compuerta que falló>"` y sigue con el kit actual.
+5. **Construir.** Sigue el flujo de abajo con el spec referenciando la dirección, la paleta, el par
+   tipográfico y las secciones (incluidas las recién promovidas, con `layout.variantOverrides`). Con
+   `layout.direction` el compilador elige la paleta de la dirección y **ignora** una paleta fija: para usar
+   la paleta promovida, fíjala sin `layout.direction` (o pide agregarla a la dirección, que es un cambio del
+   kit). Recordatorio: las secciones nuevas las inserta el compilador al construir desde el spec; **no son
+   bloques de GrapesJS**.
+
+**Lista de traducción** (de `harvest.json` a su destino; la skill nunca promueve ni publica algo que falle
+una compuerta y, en duda, deja el candidato `shelved`):
+
+| En el harvest                                   | Destino                                                                                      |
+| ----------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Mood y estilo (superficie, forma, densidad)     | Elegir la **dirección** más cercana; no se copia nada                                        |
+| `palette` con `aa.ok` y `distance[].ok`         | **Paleta** nueva (`promote --palette`); si el aviso de tono dice que choca, solo fijada a mano |
+| `typography.existingPair` / `delivery.ok`       | **Par tipográfico**: reutilizar el existente o `promote --fonts`; sin métricas o fuente de Google → descartar |
+| `sections[].existing`                           | Ya existe: usar esa variante (`layout.variantOverrides`), no se crea nada                    |
+| `sections[].draft`                              | **Sección nueva** (`promote --section`, solo si el usuario lo pide)                          |
+| `not_mappable`, JS (`interactivity`), iconos de fuente | Se descartan (JS → Motion Pro solo como recomendación); el candidato o ese elemento queda `shelved` |
+| `image_needs`                                   | Guían las fotos del flujo normal (`images[]` del spec, o un `IMAGES.md` si el proyecto lo usa); nunca se importa una imagen de Stitch |
+
 ## Flujo
 
 Comandos, flags y formas JSON: `references/commands.md`. Detalle de cada paso:

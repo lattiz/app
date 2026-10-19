@@ -1,7 +1,7 @@
 ---
 name: lattiz-design
 description: Genera candidatos de diseño con Google Stitch para un giro del kit, los guarda en la biblioteca (design-library/stitch/), extrae paleta, tipografía y patrones de sección (harvest) y, solo si piden promover, los pasa por las compuertas del kit. Úsala con «trae diseños de Stitch para <giro>», «coleccióname candidatos de <giro>», «extrae/promueve el candidato <id>», o con /lattiz-design.
-argument-hint: '<giro> [dirección] [n] | harvest <id> | promote <id> | list'
+argument-hint: '<giro> [dirección|unused] [n] [loose|tight] | harvest <id> | promote <id> | list'
 allowed-tools: Bash(pnpm lattiz design *) Bash(pnpm lattiz giro *) Bash(pnpm lattiz direccion *) Read Write(.lattiz/stitch/**)
 ---
 
@@ -35,12 +35,16 @@ Guía y reglas: `docs/design-stitch-flow.md`.
 ## Flujo
 
 1. **Giro y dirección.** `pnpm lattiz giro list --json` y `pnpm lattiz direccion list`; elige una
-   dirección que el giro use poco (`kit capacity`) y que vaya con el tono.
-2. **Plan.** `pnpm lattiz design gen --giro <g> --direccion <d> --n 2 [--brief archivo]` escribe
-   `design.md`, `prompt.md` y `plan.json` en `.lattiz/stitch/<giro>/<corrida>/`.
+   dirección que el giro use poco (`kit capacity`) y que vaya con el tono, o usa `--direccion unused`.
+2. **Plan.** `pnpm lattiz design gen --giro <g> --direccion <d|unused> --n 2 [--rigor loose|tight]
+   [--brief archivo]` escribe `design.md`, `prompt.md` y `plan.json` en `.lattiz/stitch/<giro>/<corrida>/`.
+   `loose` (por defecto) usa el sistema de diseño de la dirección, ya subido a Stitch
+   (`plan.json › stitch_design_system`: proyecto y `assets/<id>`; si es `null`, sube el `design.md` con
+   `upload_design_md` y `create_design_system_from_design_md`); `tight` exige la paleta y tipografía del giro.
 3. **Stitch (MCP).** `list_projects` (solo lectura) para confirmar que responde. Luego `create_project`,
-   `upload_design_md` con el `design.md` (base64) → `create_design_system_from_design_md`, y
-   `generate_screen_from_text` con `prompt.md` y ese `designSystem`, `deviceType: DESKTOP`, tantas veces
+   (solo si `stitch_design_system` es `null`) `upload_design_md` con el `design.md` (base64) →
+   `create_design_system_from_design_md`, y `generate_screen_from_text` con `prompt.md` y el
+   `designSystem` (el asset del plan o el recién creado), `deviceType: DESKTOP`, tantas veces
    como `--n` (no reintentes ante un timeout: usa `get_screen` cada 30 s hasta 10 veces). Con
    `get_screen` baja el HTML y la captura a la carpeta de la corrida.
 4. **Colecciona.** Por cada pantalla: `pnpm lattiz design gen --giro <g> --import <html> --design-md
@@ -56,6 +60,7 @@ Guía y reglas: `docs/design-stitch-flow.md`.
 
 ## Entrega
 
-Reporta ids, estado (`pnpm lattiz design list`), qué extrajo cada harvest, supuestos, y lo que dejaste en
+Para construir con lo promovido, la **lista de traducción** y el paso opcional están en la skill
+`/lattiz-template` («Paso opcional: diseño con Stitch»). Reporta ids, estado (`pnpm lattiz design list`), qué extrajo cada harvest, supuestos, y lo que dejaste en
 `.lattiz/stitch/`. No commitees ni promuevas sin que lo pidan. Para construir una landing con una
 paleta/sección promovida, cambia a `/lattiz-template`.
