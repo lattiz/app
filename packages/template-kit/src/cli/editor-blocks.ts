@@ -118,6 +118,22 @@ const SECTIONS: SectionSpec[] = [
     },
   },
   {
+    id: 'lzb-hero-photo-ribbon',
+    label: 'Portada con foto e insignia',
+    category: 'Portadas',
+    icon: 'hero',
+    slot: 'hero',
+    variant: 'photo-ribbon',
+    data: {
+      eyebrow: 'Tradición y oficio · {{city}}',
+      title: 'Lo que tu negocio hace mejor, en una frase',
+      text: 'Cuenta en dos líneas qué ofreces, para quién y por qué elegirte.',
+      ...CTA,
+      note: 'Sin anticipos · Respuesta en minutos',
+      imageAlt: 'Foto principal del negocio',
+    },
+  },
+  {
     id: 'lzb-cta-band',
     label: 'Llamado a la acción',
     category: 'Secciones',

@@ -1,6 +1,6 @@
 /* Full-bleed photo under a dark veil; the content sits left and vertically centered, never over the
    brightest part of the photo. The veil reads the theme's overlay tokens, so light themes work too. */
-.lz-hero-ribbon {
+.lz-hero-photo-ribbon {
   --lz-color-bg: var(--lz-color-overlay);
   --lz-color-text: var(--lz-color-on-overlay);
   position: relative;
@@ -11,19 +11,19 @@
   color: var(--lz-color-text);
 }
 
-.lz-hero-ribbon__media {
+.lz-hero-photo-ribbon__media {
   position: absolute;
   inset: 0;
 }
 
-.lz-hero-ribbon__image {
+.lz-hero-photo-ribbon__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   filter: var(--lz-hero-image-filter);
 }
 
-.lz-hero-ribbon__veil {
+.lz-hero-photo-ribbon__veil {
   position: absolute;
   inset: 0;
   background:
@@ -37,7 +37,7 @@
 }
 
 /* A cold hairline closes the section like the design's steel rule. */
-.lz-hero-ribbon::after {
+.lz-hero-photo-ribbon::after {
   content: '';
   position: absolute;
   inset: auto 0 0;
@@ -50,20 +50,20 @@
   );
 }
 
-.lz-hero-ribbon__inner {
+.lz-hero-photo-ribbon__inner {
   position: relative;
   z-index: 1;
   padding: clamp(64px, 8.5svh, 128px) 0 clamp(24px, 4.5svh, 72px);
 }
 
-.lz-hero-ribbon__content {
+.lz-hero-photo-ribbon__content {
   display: grid;
   justify-items: start;
   gap: calc(clamp(14px, 2.4svh, 22px) * var(--lz-space));
   max-width: 820px;
 }
 
-.lz-hero-ribbon__chip {
+.lz-hero-photo-ribbon__chip {
   display: inline-flex;
   align-items: center;
   gap: calc(10px * var(--lz-space));
@@ -81,12 +81,12 @@
 }
 
 /* Three poles of the barber ribbon, in the theme's own colors (no literal hex in a section). */
-.lz-hero-ribbon__stripes {
+.lz-hero-photo-ribbon__stripes {
   display: inline-flex;
   gap: 3px;
 }
 
-.lz-hero-ribbon__stripes i {
+.lz-hero-photo-ribbon__stripes i {
   display: block;
   width: 6px;
   height: 14px;
@@ -94,15 +94,15 @@
   background: var(--lz-color-accent);
 }
 
-.lz-hero-ribbon__stripes i:nth-child(2) {
+.lz-hero-photo-ribbon__stripes i:nth-child(2) {
   background: var(--lz-color-on-overlay);
 }
 
-.lz-hero-ribbon__stripes i:nth-child(3) {
+.lz-hero-photo-ribbon__stripes i:nth-child(3) {
   background: color-mix(in srgb, var(--lz-color-accent) 55%, var(--lz-color-overlay));
 }
 
-.lz-hero-ribbon__title {
+.lz-hero-photo-ribbon__title {
   margin: 0;
   font-size: calc(
     min(clamp(34px, 3.9vw, 64px), 8.6svh) * var(--lz-display-scale)
@@ -112,7 +112,7 @@
   text-wrap: balance;
 }
 
-.lz-hero-ribbon__text {
+.lz-hero-photo-ribbon__text {
   max-width: 56ch;
   margin: 0;
   color: color-mix(in srgb, var(--lz-color-on-overlay) 86%, transparent);
@@ -121,14 +121,14 @@
   text-wrap: pretty;
 }
 
-.lz-hero-ribbon__actions {
+.lz-hero-photo-ribbon__actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: calc(14px * var(--lz-space));
 }
 
-.lz-hero-ribbon__cta {
+.lz-hero-photo-ribbon__cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -136,17 +136,17 @@
   touch-action: manipulation;
 }
 
-.lz-hero-ribbon__icon {
+.lz-hero-photo-ribbon__icon {
   flex: none;
 }
 
-.lz-hero-ribbon__cta:active {
+.lz-hero-photo-ribbon__cta:active {
   transform: scale(var(--lz-press-scale, 0.97));
   transition: transform var(--lz-dur-press, 120ms)
     var(--lz-ease-out, cubic-bezier(0.23, 1, 0.32, 1));
 }
 
-.lz-hero-ribbon__note {
+.lz-hero-photo-ribbon__note {
   display: flex;
   align-items: center;
   gap: calc(8px * var(--lz-space));
@@ -155,7 +155,7 @@
   font-size: calc(14px * var(--lz-text-scale));
 }
 
-.lz-hero-ribbon__note::before {
+.lz-hero-photo-ribbon__note::before {
   content: '';
   flex: none;
   width: 6px;
@@ -165,28 +165,28 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lz-hero-ribbon__cta:active {
+  .lz-hero-photo-ribbon__cta:active {
     transform: none;
     transition: none;
   }
 }
 
 @media (max-width: 992px) {
-  .lz-hero-ribbon__inner {
+  .lz-hero-photo-ribbon__inner {
     padding: clamp(72px, 10svh, 120px) 0 clamp(28px, 5svh, 64px);
   }
 }
 
 @media (max-width: 480px) {
-  .lz-hero-ribbon__title {
+  .lz-hero-photo-ribbon__title {
     font-size: calc(
       min(clamp(30px, 8.6vw, 44px), 8svh) * var(--lz-display-scale)
     );
   }
-  .lz-hero-ribbon__text {
+  .lz-hero-photo-ribbon__text {
     font-size: calc(16px * var(--lz-text-scale));
   }
-  .lz-hero-ribbon__actions {
+  .lz-hero-photo-ribbon__actions {
     flex-direction: column;
     align-items: stretch;
   }
@@ -194,10 +194,10 @@
 
 /* Landscape phones and tiny windows: no fitting, natural flow. */
 @media (max-height: 560px) {
-  .lz-hero-ribbon {
+  .lz-hero-photo-ribbon {
     min-height: 0;
   }
-  .lz-hero-ribbon__title {
+  .lz-hero-photo-ribbon__title {
     font-size: calc(clamp(36px, 6vw, 72px) * var(--lz-display-scale));
   }
 }

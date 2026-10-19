@@ -17,6 +17,7 @@ describe('kit blocks (generated from the kit)', () => {
       'lzb-hero-rail',
       'lzb-hero-overlap',
       'lzb-hero-stack',
+      'lzb-hero-photo-ribbon',
       'lzb-cta-band',
       'lzb-btn',
       'lzb-tile',
