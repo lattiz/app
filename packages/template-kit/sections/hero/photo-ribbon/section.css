@@ -60,7 +60,7 @@
   display: grid;
   justify-items: start;
   gap: calc(clamp(14px, 2.4svh, 22px) * var(--lz-space));
-  max-width: 760px;
+  max-width: 820px;
 }
 
 .lz-hero-ribbon__chip {
@@ -105,7 +105,7 @@
 .lz-hero-ribbon__title {
   margin: 0;
   font-size: calc(
-    min(clamp(44px, 6.4vw, 104px), 8.6svh) * var(--lz-display-scale)
+    min(clamp(34px, 3.9vw, 64px), 8.6svh) * var(--lz-display-scale)
   );
   line-height: min(var(--lz-display-leading), 1.08);
   letter-spacing: var(--lz-display-tracking, 0.01em);
@@ -180,7 +180,7 @@
 @media (max-width: 480px) {
   .lz-hero-ribbon__title {
     font-size: calc(
-      min(clamp(40px, 12.5vw, 64px), 8svh) * var(--lz-display-scale)
+      min(clamp(30px, 8.6vw, 44px), 8svh) * var(--lz-display-scale)
     );
   }
   .lz-hero-ribbon__text {
