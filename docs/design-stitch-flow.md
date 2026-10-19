@@ -174,6 +174,23 @@ con `LATTIZ_DESIGN_E2E=1`, tres pruebas contra el kit real (~2 min: promoción e
 cercana restaurada, sección promovida y revertida con snapshot idéntico). No corren en `turbo test`
 porque escriben un momento en `palettes/` y `sections/`.
 
+## Prueba con el MCP real (2026-10-19)
+
+Se corrió el lazo con Stitch de verdad (`design gen --giro dental --direccion unused --n 2` → `marmol-sobrio`, `loose`):
+
+- `list_projects`, `create_project`, `upload_design_md` y `create_design_system_from_design_md` funcionan: los 6 sistemas de
+  dirección están subidos (`_design-systems/stitch-assets.json`).
+- `generate_screen_from_text` **se agota por tiempo** (lo esperado, la herramienta pide no reintentar) y, tras más de 15 minutos de
+  sondeo con `list_screens`, **no apareció ninguna pantalla** en ninguno de los dos intentos: (1) en el proyecto de sistemas con el
+  asset subido y (2) en un proyecto nuevo con el sistema resumido dentro del prompt. En ambos Stitch sí actualizó el tema del
+  proyecto y, en el segundo, generó su propio sistema (Playfair Display + Plus Jakarta Sans) y una miniatura; pero `list_screens`
+  y `get_project` quedaron sin pantallas, así que no hubo HTML que bajar ni candidato que registrar.
+- Stitch **reasigna tipografías**: nuestro Gilda Display salió como Playfair Display. `loose` puede salirse del par del kit; el
+  harvester registra lo que Stitch realmente usó (`typography.existingPair`/`delivery`).
+- Sin MCP el flujo sigue con `gen --import` (probado de punta a punta con el fixture).
+
+Pendiente: repetir cuando Stitch devuelva pantallas, o traer el HTML a mano desde la interfaz de Stitch.
+
 ## Límites conocidos y siguiente paso
 
 - Solo 4 patrones tienen generador de sección (`services/bento`, `services/card-grid`, `about/quote`, `cta/centered`); portadas y pies no (sus contratos son más estrictos) y quedan «ya existe» o `not_mappable`.
