@@ -1,0 +1,14 @@
+{
+  "project_id": "15072863134876415930",
+  "uploaded": "2026-10-19",
+  "rigor": "loose",
+  "note": "Un asset de Stitch por dirección (create_design_system_from_design_md). Si cambia el .md, súbelo de nuevo y actualiza el id.",
+  "assets": {
+    "cantera-editorial": "6fb20647e9ac48b18605ea76c68d299c",
+    "jardin-suave": "e6dc16c8dc1b422394054b7fee664928",
+    "marmol-sobrio": "d1e1575967a446ee9a80b0092371915d",
+    "neon-nocturno": "28102a336f9441fb8492f74cc87990cc",
+    "terracota-calida": "67fbffd1a8964c1e8d0d70c4a96a5b55",
+    "tinta-papel": "ea2cbcd610c94dd5b47d40b7fc63b5a8"
+  }
+}

@@ -15,7 +15,7 @@ import {
   type Rgba,
 } from '../../../template-kit/src/lib/color';
 import { usage } from '../lib/errors';
-import type { Runner } from './promote/kit';
+import { jsonOut, type Runner } from './promote/kit';
 import { entireMetricsCollection } from '@capsizecss/metrics/entireMetricsCollection';
 
 /**
@@ -141,12 +141,18 @@ function solid(value: string, text: string, bg: string): string {
   });
 }
 
-/** Warm = reds to yellows (and magentas); everything else reads cool. Neutrals count as cool. */
-const warm = (hex: string) => {
-  const c = parseColor(hex);
-  if (!c) return false;
-  const { hue, chroma } = hueOf(c);
-  return chroma > 0.08 && (hue < 70 || hue >= 320);
+/** Temperature of the accent, or of the ground when the accent is gray: warm, cool or neutral. */
+const temperature = (
+  accent: string,
+  ground: string,
+): 'warm' | 'cool' | 'neutral' => {
+  for (const hex of [accent, ground]) {
+    const c = parseColor(hex);
+    if (!c) continue;
+    const { hue, chroma } = hueOf(c);
+    if (chroma > 0.08) return hue < 70 || hue >= 320 ? 'warm' : 'cool';
+  }
+  return 'neutral';
 };
 
 const px = (n: number) => `${Math.round(n)}px`;
@@ -235,7 +241,7 @@ export function buildDesignMd(r: Resolved, rigor: Rigor = 'loose'): string {
   const palette =
     rigor === 'tight'
       ? `Use exactly these colors: ground ${c.bg}, text ${c.text}, accent ${c.accent} (as text: ${c['accent-text']}). Do not introduce other hues.`
-      : `Starting palette: ground ${c.bg}, text ${c.text}, accent ${c.accent} (as text: ${c['accent-text']}). You may propose closely related variants (shift tone or saturation) as long as the mood stays ${scheme} and ${warm(c.accent) ? 'warm' : 'cool'}. Neutral accents are welcome.`;
+      : `Starting palette: ground ${c.bg}, text ${c.text}, accent ${c.accent} (as text: ${c['accent-text']}). You may propose closely related variants (shift tone or saturation) as long as the mood stays ${scheme} and ${temperature(c.accent, c.bg)}. Neutral accents are welcome.`;
   const type =
     rigor === 'tight'
       ? `Use exactly ${r.display} for headlines and ${r.body} for everything else.`
@@ -297,8 +303,8 @@ export function unusedDirection(giro: string, info: Runner): string {
     throw usage(
       'No pude leer los datos del giro para elegir una dirección sin usar.',
     );
-  const dirs = (
-    JSON.parse(r.out) as { directions: { id: string; used: number }[] }
+  const dirs = jsonOut<{ directions: { id: string; used: number }[] }>(
+    r.out,
   ).directions;
   const least = Math.min(...dirs.map((d) => d.used));
   return dirs.find((d) => d.used === least)!.id;

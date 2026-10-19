@@ -96,4 +96,12 @@ describe('Stitch design system', () => {
       );
     },
   );
+
+  it('reads the giro info through pnpm banner and stderr noise', () => {
+    const noisy = () => ({
+      status: 0,
+      out: '$ tsx main.ts giro show dental --json\n{"directions":[{"id":"x","used":1},{"id":"y","used":0}]}\n(node:1) Warning: noise',
+    });
+    expect(unusedDirection('dental', noisy)).toBe('y');
+  });
 });

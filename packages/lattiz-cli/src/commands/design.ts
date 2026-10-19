@@ -295,10 +295,21 @@ function runPlan(ctx: Context): ExitCode {
         : buildDesignMd(resolveDirection(r.direction.id), 'loose');
   writeFileSync(join(dir, 'design.md'), designMd);
   writeFileSync(join(dir, 'prompt.md'), buildPrompt(r, brief, rigor));
+  const assets = join(systemsDir(), 'stitch-assets.json');
+  const stitchAsset: { project_id?: string; assets?: Record<string, string> } =
+    existsSync(assets) ? JSON.parse(readFileSync(assets, 'utf8')) : {};
   const plan = {
     giro,
     direction: r.direction.id,
     rigor,
+    // loose reuses the uploaded asset of the direction; tight needs a fresh upload of this design.md.
+    stitch_design_system:
+      rigor === 'loose' && stitchAsset.assets?.[r.direction.id]
+        ? {
+            project_id: stitchAsset.project_id,
+            asset: `assets/${stitchAsset.assets[r.direction.id]}`,
+          }
+        : null,
     palette: r.paletteId,
     font_pair: r.fontPairId,
     candidates: n,

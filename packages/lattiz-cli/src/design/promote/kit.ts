@@ -23,7 +23,7 @@ export const kitRunner: Runner = (args) => {
 
 /** `pnpm lattiz …` (probe) from the repo root. */
 export const lattizRunner: Runner = (args) => {
-  const r = spawnSync('pnpm', ['lattiz', ...args], {
+  const r = spawnSync('pnpm', ['-s', 'lattiz', ...args], {
     cwd: REPO_ROOT,
     encoding: 'utf8',
     maxBuffer: 1 << 26,
@@ -32,6 +32,14 @@ export const lattizRunner: Runner = (args) => {
 };
 
 /** LATTIZ_PROMOTE_KIT points the file writes at a copy of the kit (hermetic tests). */
+/** JSON from a `--json` command whose output pnpm wraps in banner or stderr lines. */
+export function jsonOut<T>(out: string): T {
+  const start = out.indexOf('{');
+  const end = out.lastIndexOf('}');
+  if (start < 0 || end < start) throw new Error('sin JSON en la salida');
+  return JSON.parse(out.slice(start, end + 1)) as T;
+}
+
 export const kitFile = (...parts: string[]) =>
   resolve(process.env.LATTIZ_PROMOTE_KIT ?? KIT, ...parts);
 export const tail = (out: string, lines = 12) =>

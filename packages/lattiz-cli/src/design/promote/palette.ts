@@ -13,6 +13,7 @@ import {
   changedFiles,
   commonGates,
   GateFailure,
+  jsonOut,
   kitFile,
   type Runner,
   repoRel,
@@ -72,11 +73,8 @@ export function usabilityNotes(
     if (r.status !== 0) continue;
     try {
       const used =
-        (
-          JSON.parse(r.out) as {
-            usedAccentHues?: { id: string; hue: number }[];
-          }
-        ).usedAccentHues ?? [];
+        jsonOut<{ usedAccentHues?: { id: string; hue: number }[] }>(r.out)
+          .usedAccentHues ?? [];
       const clash = used.find((u) => hueDistance(u.hue, hue) < 30);
       if (clash)
         notes.push(

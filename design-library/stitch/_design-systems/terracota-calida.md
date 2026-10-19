@@ -61,7 +61,7 @@ Rigor: loose. Explore: the tokens above are a guide, not a straitjacket.
 
 ## Colors
 
-Starting palette: ground #F5BFAE, text #24191A, accent #24191A (as text: #24191A). You may propose closely related variants (shift tone or saturation) as long as the mood stays light and cool. Neutral accents are welcome. Keep body text at WCAG AA contrast (4.5:1) on every surface.
+Starting palette: ground #F5BFAE, text #24191A, accent #24191A (as text: #24191A). You may propose closely related variants (shift tone or saturation) as long as the mood stays light and warm. Neutral accents are welcome. Keep body text at WCAG AA contrast (4.5:1) on every surface.
 
 ## Typography
 
