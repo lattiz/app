@@ -77,3 +77,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [bento-facts-visible-mobile](bento-facts-visible-mobile.md) — datos del bento visibles en móvil; display:none marcaba nojs
 - [twin-accent-hue-split](twin-accent-hue-split.md) — gemelos Pro/Básico necesitan tonos de acento ≥30° aparte; rango libre del giro
 - [template-art-directions](template-art-directions.md) — 6 direcciones como datos; ≥ 6 de 15 elecciones distintas; reglas = compuerta; deriva al gris
+- [stitch-design-source](stitch-design-source.md) — Stitch como fuente de diseño del kit; biblioteca, harvester, promote con compuertas
