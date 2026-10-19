@@ -1,0 +1,19 @@
+<section id="preguntas" data-lz-slot="faq" data-lz-variant="numbered-cards" class="lz-section lz-faq-numbered-cards">
+  <div class="lz-container">
+    <div class="lz-faq-numbered-cards__head">
+      <p class="lz-faq-numbered-cards__kicker" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-faq-numbered-cards__title" data-lz-key="title"></h2>
+      <p class="lz-faq-numbered-cards__intro" data-lz-if="intro" data-lz-key="intro"></p>
+    </div>
+    <div class="lz-faq-numbered-cards__grid">
+      <details open class="lz-faq-numbered-cards__card" data-lz-each="items">
+        <summary class="lz-faq-numbered-cards__summary">
+          <span class="lz-faq-numbered-cards__num" aria-hidden="true"></span>
+          <span class="lz-faq-numbered-cards__question" data-lz-key="question"></span>
+        </summary>
+        <p class="lz-faq-numbered-cards__answer" data-lz-key="answer"></p>
+      </details>
+    </div>
+    <a data-lz-if="cta" href="{{whatsappUrl:Hola, tengo una pregunta}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary lz-faq-numbered-cards__cta" data-lz-key="cta"></a>
+  </div>
+</section>

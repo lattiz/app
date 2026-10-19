@@ -134,6 +134,38 @@ const SECTIONS: SectionSpec[] = [
     },
   },
   {
+    id: 'lzb-faq-numbered-cards',
+    label: 'Preguntas en tarjetas numeradas',
+    category: 'Secciones',
+    icon: 'grid',
+    slot: 'faq',
+    variant: 'numbered-cards',
+    data: {
+      kicker: 'Sin dudas ni rodeos',
+      title: 'Preguntas frecuentes',
+      intro: 'Respuestas claras para que llegues con total certeza.',
+      items: [
+        {
+          question: '¿Necesito reservar?',
+          answer: 'Sí: escríbenos por WhatsApp y te confirmamos el horario.',
+        },
+        {
+          question: '¿Cuánto cuesta?',
+          answer:
+            'Los precios están en la carta; cada servicio indica su duración.',
+        },
+        {
+          question: '¿Qué formas de pago aceptan?',
+          answer: 'Efectivo, tarjeta y transferencia.',
+        },
+        {
+          question: '¿Puedo cambiar mi cita?',
+          answer: 'Avísanos con unas horas de anticipación y la movemos.',
+        },
+      ],
+    },
+  },
+  {
     id: 'lzb-cta-band',
     label: 'Llamado a la acción',
     category: 'Secciones',

@@ -1,0 +1,143 @@
+/* The reference keeps the block narrower than the page container. */
+.lz-faq-numbered-cards {
+  --lz-container: 1024px;
+  padding: var(--lz-section-pad) 0;
+  border-top: var(--lz-divider, none);
+}
+
+/* Centered header: kicker, title and one line, as in the reference design. */
+.lz-faq-numbered-cards__head {
+  display: grid;
+  justify-items: center;
+  gap: calc(14px * var(--lz-space));
+  max-width: 760px;
+  margin: 0 auto calc(48px * var(--lz-space));
+  text-align: center;
+}
+
+.lz-faq-numbered-cards__kicker {
+  margin: 0;
+  color: var(--lz-color-muted);
+  font-size: calc(14px * var(--lz-text-scale));
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.lz-faq-numbered-cards__title {
+  margin: 0;
+  font-size: calc(clamp(26px, 2.8vw, 40px) * var(--lz-display-scale));
+  letter-spacing: var(--lz-display-tracking, 0.01em);
+  text-wrap: balance;
+}
+
+.lz-faq-numbered-cards__intro {
+  max-width: 52ch;
+  margin: 0;
+  color: var(--lz-color-muted);
+  font-size: calc(16px * var(--lz-text-scale));
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.lz-faq-numbered-cards__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--lz-gap, 20px);
+  counter-reset: lz-faq-card;
+  align-items: stretch;
+}
+
+.lz-faq-numbered-cards__card {
+  counter-increment: lz-faq-card;
+  padding: calc(clamp(20px, 2.6vw, 32px) * var(--lz-space));
+  border: var(
+    --lz-card-border,
+    var(--lz-border-width) solid var(--lz-color-line)
+  );
+  border-radius: var(--lz-radius-card);
+  background: var(--lz-color-surface);
+  box-shadow: var(--lz-card-shadow, none);
+}
+
+.lz-faq-numbered-cards__summary {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: calc(14px * var(--lz-space));
+  min-height: 44px;
+  list-style: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.lz-faq-numbered-cards__summary::-webkit-details-marker {
+  display: none;
+}
+
+.lz-faq-numbered-cards__num::before {
+  content: counter(lz-faq-card, decimal-leading-zero) '.';
+  color: var(--lz-color-muted);
+  font-size: calc(15px * var(--lz-text-scale));
+  letter-spacing: 0.06em;
+}
+
+.lz-faq-numbered-cards__question {
+  color: var(--lz-color-text);
+  font-family: var(--lz-font-display);
+  font-size: calc(clamp(18px, 1.7vw, 22px) * var(--lz-text-scale));
+  font-weight: var(--lz-display-weight, 600);
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+/* Plain "+/−" so the card reads as openable without any script. */
+.lz-faq-numbered-cards__summary::after {
+  content: '+';
+  color: var(--lz-color-muted);
+  font-size: calc(22px * var(--lz-text-scale));
+  line-height: 1;
+}
+
+.lz-faq-numbered-cards__card[open] > .lz-faq-numbered-cards__summary::after {
+  content: '−';
+}
+
+.lz-faq-numbered-cards__answer {
+  margin: calc(12px * var(--lz-space)) 0 0;
+  padding-left: calc(36px * var(--lz-space));
+  color: var(--lz-color-muted);
+  font-size: calc(16px * var(--lz-text-scale));
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.lz-faq-numbered-cards__cta {
+  margin-top: calc(36px * var(--lz-space));
+  touch-action: manipulation;
+}
+
+.lz-faq-numbered-cards__cta:active {
+  transform: scale(var(--lz-press-scale, 0.97));
+  transition: transform var(--lz-dur-press, 120ms)
+    var(--lz-ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lz-faq-numbered-cards__cta:active {
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (max-width: 992px) {
+  .lz-faq-numbered-cards__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .lz-faq-numbered-cards__answer {
+    padding-left: 0;
+  }
+}
