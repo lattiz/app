@@ -71,8 +71,8 @@ export interface PaletteDraft {
   surface2?: string;
   onAccent?: string;
   accentText?: string;
-  photoTreatment: 'none' | 'grayscale' | 'warm' | 'cool' | 'duotone';
-  placeholder: 'rules' | 'blobs' | 'arches' | 'stripes';
+  photoTreatment: 'none' | 'grayscale' | 'warm' | 'duotone';
+  placeholder: 'grain' | 'rules' | 'stripes' | 'blobs' | 'arches' | 'dots';
   /** Stitch tokens each seed color came from. */
   from: Record<string, string>;
   /** Result of the AA derivation at harvest time (kit buildPalette). */
@@ -118,6 +118,8 @@ export interface SectionPattern {
   /** Surface treatment seen in the source (glass, flat, bordered, tinted). */
   surface: 'flat' | 'glass' | 'bordered' | 'tinted';
   heading?: string;
+  /** What the kit has to drop or replace to build it (a form becomes a button, say). */
+  notes?: string[];
   /** Mappable = fits the kit's roles and ranges; only these can be promoted. */
   mappable: true;
 }
