@@ -143,7 +143,14 @@ export type PatternLayout = (typeof PATTERN_LAYOUTS)[number];
 
 export interface SectionPattern {
   /** Kit slot this pattern maps to. */
-  slot: 'hero' | 'about' | 'services' | 'testimonials' | 'cta' | 'footer';
+  slot:
+    | 'hero'
+    | 'about'
+    | 'services'
+    | 'testimonials'
+    | 'faq'
+    | 'cta'
+    | 'footer';
   layout: PatternLayout;
   /** Anchor id or comment label the section had in the source. */
   ref: string;

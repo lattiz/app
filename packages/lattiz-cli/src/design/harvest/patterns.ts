@@ -30,10 +30,27 @@ const text = (el: Element | null | undefined) =>
 /** The comment right before a node ("<!-- Hero Section -->"), a human label for the source. */
 function labelBefore(el: Element): string | undefined {
   let n: Node | null = el.previousSibling;
-  while (n && n.nodeType === 3 && !(n.textContent ?? '').trim())
+  // Skip whitespace and separator comments ("=====") to the first one that says something.
+  while (
+    n &&
+    (n.nodeType === 3 ||
+      (n.nodeType === 8 && /^[\s=\-*#_~]*$/.test(n.textContent ?? '')))
+  )
     n = n.previousSibling;
   return n?.nodeType === 8 ? (n.textContent ?? '').trim() : undefined;
 }
+
+/** Real designs name their sections in the id or a comment (acerca, servicios, preguntas…). */
+const HINTS: [SectionPattern['slot'] | 'contact', RegExp][] = [
+  ['faq', /faq|pregunta|question|frecuent/i],
+  ['testimonials', /testimon|opini[oó]n|rese[ñn]a|review/i],
+  ['about', /about|acerca|nosotros|filosof|historia/i],
+  ['services', /servic|tratamient|cat[aá]logo|precio|price|menu/i],
+  ['contact', /contact|ubicaci[oó]n|location|visit/i],
+];
+
+const hintOf = (section: Element, ref: string) =>
+  HINTS.find(([, re]) => re.test(`${section.id} ${ref}`))?.[0];
 
 function gridOf(section: Element): Element | undefined {
   return [...section.querySelectorAll('*')].find(
@@ -125,6 +142,26 @@ function classify(section: Element, ref: string): SectionPattern | NotMappable {
       (columns >= 2 || /md:flex-row|lg:flex-row/.test(section.outerHTML));
     return make('hero', split ? 'split' : 'centered');
   }
+  const hint = hintOf(section, ref);
+  const ctaShaped =
+    Boolean(heading) &&
+    items < 3 &&
+    section.querySelectorAll('a, button').length >= 1 &&
+    section.querySelectorAll('p').length <= 3;
+  // A short "contact" block with one action is the closing CTA; the data block is the kit's locations.
+  if (hint === 'contact' && !ctaShaped)
+    return {
+      ref,
+      reason:
+        'contacto: el kit lo arma con locations/* y los datos del negocio, no desde el diseño',
+    };
+  if (hint === 'faq' || hint === 'testimonials')
+    return make(hint, grid || columns >= 2 ? 'card-grid' : 'list');
+  if (hint === 'about' && items >= 3 && grid)
+    return {
+      ref,
+      reason: 'about con tarjetas: el kit no tiene una variante equivalente',
+    };
   if (items >= 3 && grid) {
     const varied = spans.size >= 2 && columns >= 6;
     return make('services', varied ? 'bento' : 'card-grid');

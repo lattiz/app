@@ -13,6 +13,9 @@ const EXISTING: Record<string, string> = {
   'about/stat-row': 'about/stats-strip',
   'about/split': 'about/text-image-offset',
   'cta/band': 'cta/band',
+  'faq/list': 'faq/list',
+  'faq/card-grid': 'faq/grid',
+  'testimonials/card-grid': 'testimonials/cards',
 };
 
 export const folderExists = (key: string) =>

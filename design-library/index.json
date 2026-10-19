@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "count": 1,
+  "by_status": {
+    "collected": 0,
+    "harvested": 1,
+    "promoted": 0,
+    "shelved": 0,
+    "rejected": 0
+  },
+  "candidates": [
+    {
+      "id": "dental-arquimedes-polanco-01",
+      "giro": "dental",
+      "status": "harvested",
+      "tags": [
+        "marmol-sobrio",
+        "loose",
+        "claro"
+      ],
+      "spin": "ice-blue-editorial",
+      "created_at": "2026-10-19T07:40:39.549Z",
+      "harvested": true,
+      "path": "stitch/dental/dental-arquimedes-polanco-01"
+    }
+  ]
+}

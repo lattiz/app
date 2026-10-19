@@ -207,3 +207,44 @@ describe('harvest audit trail (Part 5)', () => {
     );
   });
 });
+
+describe('harvest of real Stitch output (Arquímedes Polanco, dental, marmol-sobrio loose)', () => {
+  const real = resolve(
+    import.meta.dirname,
+    'fixtures/arquimedes-polanco-dental',
+  );
+  const dir = mkdtempSync(join(tmpdir(), 'harvest-real-'));
+  copyFileSync(join(real, 'design.md'), join(dir, 'design.md'));
+  copyFileSync(join(real, 'source.html'), join(dir, 'source.html'));
+  const h = harvestFolder(candidate, dir);
+  const by = Object.fromEntries(
+    h.sections.map((s) => [`${s.slot}/${s.layout}`, s]),
+  );
+
+  it('names sections by their id, not by their grid: services, testimonials and faq stay apart', () => {
+    expect(by['services/card-grid'].existing).toBe('services/cards');
+    expect(by['testimonials/card-grid'].existing).toBe('testimonials/cards');
+    expect(by['faq/card-grid'].existing).toBe('faq/grid');
+    expect(h.sections.filter((s) => s.slot === 'services')).toHaveLength(1);
+  });
+
+  it('cleans separator comments from refs and flags what the kit cannot build', () => {
+    expect(h.sections.every((s) => !/^[=\-\s]+$/.test(s.ref))).toBe(true);
+    const nm = Object.fromEntries(h.not_mappable.map((n) => [n.ref, n.reason]));
+    expect(nm.contacto).toMatch(/locations/);
+    expect(nm.acerca).toMatch(/sin|no tiene/);
+  });
+
+  it('measures the palette against the giro and reports it too close (gate material)', () => {
+    expect(h.palette!.aa.ok).toBe(true);
+    const d = h.palette!.distance.find((x) => x.giro === 'dental')!;
+    expect(d.ok).toBe(false);
+    expect(d.distance).toBeLessThan(15);
+  });
+
+  it('reuses the existing type pair Stitch kept (Playfair Display is not ours; Plus Jakarta Sans is)', () => {
+    expect(h.typography.displayFamily).toBe('Playfair Display');
+    expect(h.typography.bodyFamily).toBe('Plus Jakarta Sans');
+    expect(h.typography.delivery.problems.join(' ')).not.toMatch(/Playfair/);
+  });
+});
