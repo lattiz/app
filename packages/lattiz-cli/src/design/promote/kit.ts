@@ -31,7 +31,9 @@ export const lattizRunner: Runner = (args) => {
   return { status: r.status ?? 1, out: `${r.stdout ?? ''}${r.stderr ?? ''}` };
 };
 
-export const kitFile = (...parts: string[]) => resolve(KIT, ...parts);
+/** LATTIZ_PROMOTE_KIT points the file writes at a copy of the kit (hermetic tests). */
+export const kitFile = (...parts: string[]) =>
+  resolve(process.env.LATTIZ_PROMOTE_KIT ?? KIT, ...parts);
 export const tail = (out: string, lines = 12) =>
   out.trim().split('\n').slice(-lines).join('\n');
 
