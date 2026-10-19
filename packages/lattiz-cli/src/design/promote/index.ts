@@ -9,7 +9,7 @@ import {
   type Runner,
   Undo,
 } from './kit';
-import { promotePalette } from './palette';
+import { type PaletteOverride, promotePalette } from './palette';
 import { promoteSection } from './section';
 
 export interface PromoteOptions {
@@ -19,6 +19,8 @@ export interface PromoteOptions {
   pattern?: string;
   regenerateManifest: boolean;
   dryRun: boolean;
+  /** `--set bg=#hex,accent=#hex`: adjustments to the palette draft, recorded on the candidate. */
+  paletteSet?: PaletteOverride;
 }
 
 export interface PromoteReport {
@@ -74,7 +76,14 @@ export function promote(
   let sectionKept = true;
   try {
     if (opts.palette) {
-      const r = promotePalette(c, harvest, runners.kit, undo, runners.lattiz);
+      const r = promotePalette(
+        c,
+        harvest,
+        runners.kit,
+        undo,
+        runners.lattiz,
+        opts.paletteSet,
+      );
       refs.palette = r.id;
       gates.palette = r.gates;
     }

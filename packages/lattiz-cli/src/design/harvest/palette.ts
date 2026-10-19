@@ -138,7 +138,7 @@ const ACCENT_ROLES = ['primary', 'tertiary', 'secondary'] as const;
  */
 export function paletteFromTokens(
   t: StitchTokens,
-  meta: { title: string; giro: string },
+  meta: { title: string; giro: string; accentRole?: string },
 ): PaletteDraft | null {
   const bg = pick(t, 'background', 'surface');
   const text = pick(t, 'on-background', 'on-surface');
@@ -147,10 +147,20 @@ export function paletteFromTokens(
   );
   if (!bg || !text || candidates.length === 0) return null;
   const chroma = (hex: string) => hueOf(rgb(hex)).chroma;
-  // The most chromatic role wins; a near-gray design keeps `primary` (the kit has neutral accents).
-  const best = candidates.reduce((a, b) =>
-    chroma(b.hex) > chroma(a.hex) + 0.08 ? b : a,
-  );
+  // `primary` is the brand accent in Material tokens. Only when it is near gray does the most
+  // chromatic other role (a highlight, say) take over; `accentRole` forces a choice (e.g. silver).
+  const primary = candidates.find((c) => c.name === 'primary');
+  const forced = meta.accentRole
+    ? candidates.find((c) => c.name === meta.accentRole)
+    : undefined;
+  if (meta.accentRole && !forced) return null;
+  const best =
+    forced ??
+    (primary && chroma(primary.hex) > 0.08
+      ? primary
+      : candidates.reduce((a, b) =>
+          chroma(b.hex) > chroma(a.hex) + 0.08 ? b : a,
+        ));
   const lum = luminance(rgb(bg.hex));
   const mode: PaletteDraft['mode'] =
     lum < 0.18

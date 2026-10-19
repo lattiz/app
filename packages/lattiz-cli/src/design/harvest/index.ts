@@ -14,7 +14,11 @@ import { typographyFromTokens } from './typography';
  * calls Stitch and never keeps an image URL. Tokens come from design.md when it has them (it is the
  * file Stitch treats as the design system), otherwise from the HTML's Tailwind config.
  */
-export function harvestFolder(candidate: Candidate, dir: string): Harvest {
+export function harvestFolder(
+  candidate: Candidate,
+  dir: string,
+  opts: { accentRole?: string } = {},
+): Harvest {
   const mdFile = join(dir, 'design.md');
   const htmlFile = join(dir, 'source.html');
   const md = existsSync(mdFile) ? readFileSync(mdFile, 'utf8') : null;
@@ -60,7 +64,11 @@ export function harvestFolder(candidate: Candidate, dir: string): Harvest {
       ? { file: 'design.md', kind: 'design-md' }
       : { file: 'source.html', kind: 'html' },
     palette: tokens
-      ? paletteFromTokens(tokens, { title, giro: candidate.giro })
+      ? paletteFromTokens(tokens, {
+          title,
+          giro: candidate.giro,
+          accentRole: opts.accentRole,
+        })
       : null,
     typography,
     sections: resolved.sections,

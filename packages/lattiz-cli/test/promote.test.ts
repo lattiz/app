@@ -257,3 +257,30 @@ describe('promote --palette (hermetic: fake runner, copied kit files)', () => {
     expect(msg).toMatch(/ya existe en el kit: usa hero\/split/);
   });
 });
+
+describe('palette adjustments (--set)', () => {
+  it('re-derives AA for the adjusted draft and records the manual change', () => {
+    const loc = findCandidate('dental-executive-vision-01');
+    const r = promote(
+      loc,
+      { ...base, paletteSet: { bg: '#0a1020' } },
+      runners(),
+    );
+    expect(r.kept).toBe(true);
+    expect(seeds()).toMatch(/bg: '#0a1020'/);
+    expect(seeds()).not.toMatch(/surface: '#101b33'/);
+  });
+
+  it('refuses an adjustment that breaks AA, without touching the seeds', () => {
+    const before = seeds();
+    const msg = gateError(() =>
+      promote(
+        findCandidate('dental-executive-vision-01'),
+        { ...base, paletteSet: { bg: '#808080', text: '#8a8a8a' } },
+        runners(),
+      ),
+    );
+    expect(msg).toMatch(/AA/);
+    expect(seeds()).toBe(before);
+  });
+});

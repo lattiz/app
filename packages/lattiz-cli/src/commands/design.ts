@@ -108,7 +108,14 @@ function runHarvest(ctx: Context): ExitCode {
   const loc = findCandidate(ctx.positionals[1]);
   if (loc.candidate.status === 'rejected')
     throw usage(`"${loc.candidate.id}" está rechazado: no se extrae.`);
-  const harvest = harvestFolder(loc.candidate, loc.dir);
+  const harvest = harvestFolder(loc.candidate, loc.dir, {
+    accentRole: str(ctx.flags, 'accent'),
+  });
+  if (str(ctx.flags, 'accent') && !harvest.palette)
+    throw usage(
+      `El rol de acento "${str(ctx.flags, 'accent')}" no existe en los tokens.`,
+      'Roles: primary, secondary, tertiary',
+    );
   writeJson(join(loc.dir, 'harvest.json'), harvest);
   // Idempotent: re-harvesting a harvested or promoted candidate only rewrites harvest.json.
   if (
@@ -184,6 +191,21 @@ function runHarvest(ctx: Context): ExitCode {
   return EXIT.OK;
 }
 
+const SET_KEYS = ['bg', 'text', 'accent', 'surface', 'surface2'];
+function parseSet(v: string | undefined) {
+  const out: Record<string, string> = {};
+  for (const part of (v ?? '').split(',').filter(Boolean)) {
+    const [k, hex] = part.split('=');
+    if (!SET_KEYS.includes(k) || !/^#[0-9a-fA-F]{6}$/.test(hex ?? ''))
+      throw usage(
+        `--set inválido: "${part}".`,
+        `Formato: bg=#1B2B23,accent=#C3C7CD (claves: ${SET_KEYS.join(', ')})`,
+      );
+    out[k] = hex;
+  }
+  return out;
+}
+
 function runPromote(ctx: Context): ExitCode {
   const loc = findCandidate(ctx.positionals[1]);
   const dryRun = bool(ctx.flags, 'dry-run');
@@ -194,6 +216,7 @@ function runPromote(ctx: Context): ExitCode {
     pattern: str(ctx.flags, 'pattern'),
     regenerateManifest: bool(ctx.flags, 'regenerate-manifest'),
     dryRun,
+    paletteSet: parseSet(str(ctx.flags, 'set')),
   });
   if (bool(ctx.flags, 'json')) {
     console.log(JSON.stringify(report, null, 2));
@@ -415,6 +438,7 @@ export const design: Command = {
     'design promote <id> [--palette] [--fonts] [--section [--pattern slot/layout]] [--dry-run] [--regenerate-manifest]',
     '                          pasa los borradores del harvest por las compuertas del kit; si una falla no queda nada',
     '                          --section sin --regenerate-manifest es solo una prueba (esa bandera reescribe archivos generados de apps/api y apps/web)',
+    'design harvest <id> [--accent primary|secondary|tertiary]   (acento por defecto: primary; fuerza otro rol, p. ej. la plata)',
     'design list [--giro g] [--status s] [--tag t] [--spin s] [--json]',
     'design shelve|reject <id> [--note texto]     mueve la bandera',
     'design reindex            regenera design-library/index.json',
@@ -439,6 +463,8 @@ export const design: Command = {
     note: { type: 'string' },
     n: { type: 'string' },
     rigor: { type: 'string' },
+    accent: { type: 'string' },
+    set: { type: 'string' },
     all: { type: 'boolean' },
     brief: { type: 'string' },
     out: { type: 'string' },

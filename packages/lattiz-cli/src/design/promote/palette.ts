@@ -8,6 +8,8 @@ import {
 import { EXTENDED_PALETTES } from '../../../../template-kit/palettes';
 import { PALETTE_SEEDS } from '../../../../template-kit/palettes/seeds';
 import { slugify } from '../library';
+import { seedFromDraft } from '../harvest/palette';
+import { buildPalette } from '../../../../template-kit/src/spec/palette-builder';
 import type { Candidate, Harvest } from '../types';
 import {
   changedFiles,
@@ -87,6 +89,34 @@ export function usabilityNotes(
   return notes;
 }
 
+export type PaletteOverride = Partial<
+  Record<'bg' | 'text' | 'accent' | 'surface' | 'surface2', string>
+>;
+
+/**
+ * A person nudging the harvested draft so it clears a gate (a ground that was too close to an
+ * existing palette, say). Surfaces follow the ground unless pinned; AA is derived again, so the
+ * adjusted palette is checked, not trusted.
+ */
+export function applyOverride(
+  draft: NonNullable<Harvest['palette']>,
+  o: PaletteOverride,
+): NonNullable<Harvest['palette']> {
+  if (Object.keys(o).length === 0) return draft;
+  const next = { ...draft, ...o };
+  if (o.bg && !o.surface) delete next.surface;
+  if (o.bg && !o.surface2) delete next.surface2;
+  const built = buildPalette(seedFromDraft(next));
+  return {
+    ...next,
+    aa: { ok: Boolean(built.palette), problems: built.problems },
+    from: {
+      ...draft.from,
+      ...Object.fromEntries(Object.keys(o).map((k) => [k, 'ajuste manual'])),
+    },
+  };
+}
+
 export interface PromoteOutcome {
   id: string;
   gates: string[];
@@ -102,10 +132,12 @@ export function promotePalette(
   run: Runner,
   undo: Undo,
   info: Runner = () => ({ status: 1, out: '' }),
+  override: PaletteOverride = {},
 ): PromoteOutcome {
-  const draft = harvest.palette;
-  if (!draft)
+  const harvested = harvest.palette;
+  if (!harvested)
     throw new GateFailure('paleta', 'El harvest no encontró una paleta.');
+  const draft = applyOverride(harvested, override);
   if (!draft.aa.ok)
     throw new GateFailure(
       'AA',
