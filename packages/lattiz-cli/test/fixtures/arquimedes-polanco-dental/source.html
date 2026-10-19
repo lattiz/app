@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="es-MX"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Consultorio Dental Arquímedes Polanco | Práctica Odontológica Especializada</title>
+<!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration Verbatim -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-fixed-dim": "#aec6ff",
+            "on-primary-fixed": "#001a42",
+            "tertiary-container": "#394247",
+            "on-tertiary-fixed": "#141d22",
+            "surface-container": "#e1f0fc",
+            "inverse-on-surface": "#e4f3ff",
+            "background": "#f5faff",
+            "outline": "#747781",
+            "on-surface": "#0f1d26",
+            "surface-bright": "#f5faff",
+            "on-error-container": "#93000a",
+            "error-container": "#ffdad6",
+            "inverse-surface": "#24323b",
+            "on-tertiary-container": "#a5aeb5",
+            "on-secondary": "#ffffff",
+            "on-surface-variant": "#434750",
+            "inverse-primary": "#aec6ff",
+            "outline-variant": "#c4c6d1",
+            "surface-container-low": "#eaf5ff",
+            "primary-fixed": "#d8e2ff",
+            "secondary": "#4e6072",
+            "primary-container": "#1d3f7a",
+            "on-primary-fixed-variant": "#244580",
+            "tertiary-fixed": "#dbe4eb",
+            "on-secondary-fixed-variant": "#374959",
+            "on-primary-container": "#8eacee",
+            "surface-dim": "#cddce8",
+            "secondary-fixed": "#d2e5f9",
+            "surface-container-high": "#dbeaf6",
+            "tertiary-fixed-dim": "#bfc8ce",
+            "surface": "#f5faff",
+            "on-error": "#ffffff",
+            "secondary-container": "#cfe2f6",
+            "secondary-fixed-dim": "#b6c9dd",
+            "on-primary": "#ffffff",
+            "surface-variant": "#d6e5f0",
+            "surface-tint": "#3f5d9a",
+            "error": "#ba1a1a",
+            "surface-container-highest": "#d6e5f0",
+            "on-tertiary-fixed-variant": "#3f484e",
+            "on-tertiary": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "primary": "#002860",
+            "tertiary": "#232c31",
+            "on-secondary-container": "#526576",
+            "on-background": "#0f1d26",
+            "on-secondary-fixed": "#0a1d2c"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "gutter-lg": "2.5rem",
+            "gutter-sm": "1rem",
+            "margin": "1.5rem",
+            "margin-lg": "3.5rem",
+            "space-xl": "2.5rem",
+            "space-xs": "0.25rem",
+            "margin-sm": "1rem",
+            "gutter": "1.5rem"
+          },
+          "fontFamily": {
+            "body-sm": ["Plus Jakarta Sans", "sans-serif"],
+            "label-md": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-xl-mobile": ["Playfair Display", "serif"],
+            "headline-lg": ["Playfair Display", "serif"],
+            "label-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "body-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "body-md": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-md": ["Playfair Display", "serif"],
+            "headline-lg-mobile": ["Playfair Display", "serif"],
+            "headline-xl": ["Playfair Display", "serif"],
+            "label-sm": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-sm": ["Playfair Display", "serif"]
+          },
+          "fontSize": {
+            "body-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "headline-xl-mobile": ["34px", { "lineHeight": "42px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "headline-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "body-lg": ["17px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-md": ["26px", { "lineHeight": "34px", "fontWeight": "600" }],
+            "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Custom architectural hairline and tactile elements */
+    .hairline-border {
+      border: 1px solid rgba(16, 34, 54, 0.12);
+    }
+    .hairline-divider {
+      background-color: rgba(16, 34, 54, 0.10);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased selection:bg-secondary-fixed selection:text-primary">
+<!-- ========================================================================= -->
+<!-- 1. Header / Barra de navegación (TopNavBar Shared Component Execution) -->
+<!-- ========================================================================= -->
+<header class="docked full-width top-0 sticky z-50 bg-surface border-b border-outline-variant flat no shadows transition-all duration-200">
+<div class="flex justify-between items-center w-full px-space-lg md:px-margin max-w-7xl mx-auto h-20">
+<!-- Logo Branding Anchor -->
+<a class="flex items-center gap-space-sm group" href="#hero">
+<div class="w-9 h-9 rounded bg-primary-container text-surface flex items-center justify-center font-headline-sm text-surface-bright shadow-sm">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M12 2C8 2 6 4 6 7c0 2 1 3.5 1.5 5.5.5 2 0 4.5.5 7.5.5 2 2 2 3 0 .5-1 1-3 1-5 0 2 .5 4 1 5 1 2 2.5 2 3 0 .5-3 0-5.5.5-7.5C17 10.5 18 9 18 7c0-3-2-5-6-5z"></path>
+</svg>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-primary tracking-tight leading-tight">
+            Consultorio Dental Arquímedes Polanco
+          </span>
+<span class="font-label-sm text-label-sm text-secondary tracking-widest uppercase">
+            Práctica Odontológica Especializada
+          </span>
+</div>
+</a>
+<!-- Desktop Smooth Jump Navigation Links -->
+<nav class="hidden lg:flex items-center space-x-8">
+<a class="text-primary font-label-md text-label-md border-b-2 border-primary pb-1 transition-colors duration-200 hover:text-primary-container" href="#acerca">
+          Filosofía y Protocolo
+        </a>
+<a class="text-secondary font-label-md text-label-md hover:text-primary transition-colors duration-200" href="#servicios">
+          Especialidades y Honorarios
+        </a>
+<a class="text-secondary font-label-md text-label-md hover:text-primary transition-colors duration-200" href="#testimonios">
+          Opiniones
+        </a>
+<a class="text-secondary font-label-md text-label-md hover:text-primary transition-colors duration-200" href="#preguntas">
+          Preguntas Clínicas
+        </a>
+<a class="text-secondary font-label-md text-label-md hover:text-primary transition-colors duration-200" href="#contacto">
+          Ubicación
+        </a>
+</nav>
+<!-- Primary Action CTA WhatsApp Directo -->
+<div class="flex items-center">
+<a class="inline-flex items-center gap-2 bg-primary-container hover:bg-primary text-surface-bright font-label-md text-label-md px-5 py-2.5 rounded-lg transition-colors duration-200 shadow-none" href="https://wa.me/525555550199?text=Estimado%20Doctor%2C%20deseo%20solicitar%20informaci%C3%B3n%20para%20una%20consulta%20de%20valoraci%C3%B3n" rel="noopener noreferrer" target="_blank">
+<svg class="w-4 h-4 fill-current text-surface-bright" viewbox="0 0 24 24">
+<path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.288.043.088.072.188.014.303-.058.116-.087.188-.173.289l-.26.303c-.087.087-.177.182-.076.355.101.174.449.741.964 1.201.662.591 1.221.774 1.394.861.174.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.202c.044.073.044.42-.1.825zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.66 1.434 5.174L2 22l4.966-1.393A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.2c-1.637 0-3.155-.49-4.433-1.331l-.317-.209-2.937.824.838-2.85-.229-.335C4.004 14.947 3.5 13.528 3.5 12c0-4.687 3.813-8.5 8.5-8.5s8.5 3.813 8.5 8.5-3.813 8.5-8.5 8.5z"></path>
+</svg>
+<span>WhatsApp Directo</span>
+</a>
+</div>
+</div>
+</header>
+<!-- ========================================================================= -->
+<!-- 2. Hero Section: Precision & Calm (12-Col Responsive Grid) -->
+<!-- ========================================================================= -->
+<section class="relative pt-12 pb-20 md:py-24 bg-surface border-b border-outline-variant" id="hero">
+<div class="max-w-7xl mx-auto px-space-lg md:px-margin">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<!-- Left Content Column -->
+<div class="lg:col-span-8 space-y-8">
+<!-- Editorial Category Badge -->
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-container rounded hairline-border">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="font-label-sm text-label-sm text-primary tracking-widest uppercase">
+              Polanco V Sección · Ciudad de México
+            </span>
+</div>
+<!-- Hero Main Title -->
+<h1 class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-surface tracking-tight max-w-3xl">
+            Ortodoncia con citas puntuales en Polanco
+          </h1>
+<!-- Editorial Subtitle -->
+<p class="font-body-lg text-body-lg text-secondary max-w-2xl leading-relaxed">
+            Atención odontológica integral y especializada. Planificamos su tratamiento con diagnóstico radiológico digital, tiempos de espera mínimos y explicaciones claras en cada etapa de su consulta.
+          </p>
+<!-- Single Primary CTA Action -->
+<div class="pt-2">
+<a class="inline-flex items-center justify-center px-8 py-3.5 rounded-lg bg-primary-container hover:bg-primary text-surface-bright font-label-lg text-label-lg transition-colors duration-200" href="#contacto">
+              Agendar consulta
+            </a>
+</div>
+<!-- Trust Badges (Capsules with 6px border-radius) -->
+<div class="pt-6 border-t border-outline-variant/60 flex flex-wrap gap-3">
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-[6px] bg-surface-container hairline-border">
+<svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="10"></circle>
+<polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+<span class="font-label-sm text-label-sm text-secondary font-medium">
+                Tiempo promedio de espera: menor a 10 min
+              </span>
+</div>
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-[6px] bg-surface-container hairline-border">
+<svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+<polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+<line x1="12" x2="12" y1="22.08" y2="12"></line>
+</svg>
+<span class="font-label-sm text-label-sm text-secondary font-medium">
+                Diagnóstico tomográfico 3D
+              </span>
+</div>
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-[6px] bg-surface-container hairline-border">
+<svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+</svg>
+<span class="font-label-sm text-label-sm text-secondary font-medium">
+                Colegiado ADM y certificación vigente
+              </span>
+</div>
+</div>
+</div>
+<!-- Right Architectural Graphic Panel -->
+<div class="lg:col-span-4">
+<div class="bg-surface-container rounded-xl p-6 md:p-8 hairline-border relative overflow-hidden">
+<div class="space-y-6">
+<div class="flex items-center justify-between border-b border-outline-variant/60 pb-4">
+<span class="font-label-md text-label-md text-secondary">Expediente Clínico Digital</span>
+<span class="font-label-sm text-label-sm text-primary px-2 py-0.5 rounded bg-surface">Activo</span>
+</div>
+<!-- Geometric Cephalometric & Dental Vector Representation -->
+<div class="py-4 flex justify-center">
+<svg class="w-56 h-48 text-primary/80" fill="none" stroke="currentColor" viewbox="0 0 240 200">
+<!-- Dental arch diagram -->
+<path d="M 40,160 C 40,60 200,60 200,160" opacity="0.6" stroke-dasharray="2 3" stroke-width="1.5"></path>
+<!-- Tooth nodes -->
+<circle cx="50" cy="150" fill="#1D3F7A" r="4"></circle>
+<circle cx="70" cy="115" fill="#1D3F7A" r="4"></circle>
+<circle cx="95" cy="88" fill="#1D3F7A" r="4"></circle>
+<circle cx="120" cy="78" fill="#1D3F7A" r="5"></circle>
+<circle cx="145" cy="88" fill="#1D3F7A" r="4"></circle>
+<circle cx="170" cy="115" fill="#1D3F7A" r="4"></circle>
+<circle cx="190" cy="150" fill="#1D3F7A" r="4"></circle>
+<!-- Precision alignment lines -->
+<line stroke="#1D3F7A" stroke-dasharray="4 2" stroke-width="1" x1="120" x2="120" y1="30" y2="175"></line>
+<line opacity="0.4" stroke="#747781" stroke-width="0.8" x1="40" x2="200" y1="120" y2="120"></line>
+<!-- Cephalometric angles -->
+<circle cx="120" cy="120" opacity="0.5" r="30" stroke="#1D3F7A" stroke-dasharray="2 2" stroke-width="0.75"></circle>
+<text fill="#1D3F7A" font-family="Plus Jakarta Sans" font-size="8" font-weight="600" x="125" y="65">EJE FACIAL 89.4°</text>
+<text fill="#4E6072" font-family="Plus Jakarta Sans" font-size="8" x="45" y="180">ARCADA SUPERIOR</text>
+</svg>
+</div>
+<div class="space-y-3 pt-2">
+<div class="flex justify-between items-center text-xs">
+<span class="font-body-sm text-body-sm text-secondary">Trazabilidad de instrumental:</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Lote #2024-C08</span>
+</div>
+<div class="flex justify-between items-center text-xs">
+<span class="font-body-sm text-body-sm text-secondary">Márgen entre citas:</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">20 min de bioseguridad</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- 3. Acerca del Consultorio (About Section) -->
+<!-- ========================================================================= -->
+<section class="py-20 md:py-24 bg-surface-container-low border-b border-outline-variant" id="acerca">
+<div class="max-w-7xl mx-auto px-space-lg md:px-margin space-y-12">
+<!-- Section Header -->
+<div class="max-w-3xl space-y-4">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold">
+          Filosofía y Rigor Clínico
+        </span>
+<h2 class="font-headline-md md:font-headline-lg text-headline-md md:text-headline-lg text-on-surface">
+          Práctica clínica fundamentada en el rigor y el respeto a su tiempo
+        </h2>
+<p class="font-body-lg text-body-lg text-secondary leading-relaxed">
+          Usted recibirá atención personalizada del mismo especialista a lo largo de su tratamiento. No delegamos procedimientos críticos ni saturamos la agenda.
+        </p>
+</div>
+<!-- 3 Pillars Cards: 12px radius, Background #E7F0F7, Hairline Border -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Pillar A -->
+<div class="bg-surface-container rounded-xl p-8 hairline-border flex flex-col justify-between space-y-6">
+<div class="space-y-4">
+<div class="w-12 h-12 rounded-lg bg-surface flex items-center justify-center hairline-border text-primary">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="10"></circle>
+<polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">FASE 01</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">
+              Protocolo de puntualidad estricta
+            </h3>
+<p class="font-body-md text-body-md text-secondary">
+              Bloques de cita de 60 a 90 minutos dedicados exclusivamente a usted. Planificamos cada intervención con holgura para jamás atenderlo apresuradamente.
+            </p>
+</div>
+<div class="pt-4 border-t border-outline-variant/40">
+<span class="font-label-sm text-label-sm text-secondary font-medium">Margen programado entre pacientes</span>
+</div>
+</div>
+<!-- Pillar B -->
+<div class="bg-surface-container rounded-xl p-8 hairline-border flex flex-col justify-between space-y-6">
+<div class="space-y-4">
+<div class="w-12 h-12 rounded-lg bg-surface flex items-center justify-center hairline-border text-primary">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+<path d="M9 12l2 2 4-4"></path>
+</svg>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">FASE 02</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">
+              Esterilización y bioseguridad hospitalaria
+            </h3>
+<p class="font-body-md text-body-md text-secondary">
+              Autoclave de vapor grado médico con trazabilidad de instrumental en empaque termosellado frente a usted. Control biológico semanal certificado.
+            </p>
+</div>
+<div class="pt-4 border-t border-outline-variant/40">
+<span class="font-label-sm text-label-sm text-secondary font-medium">Apertura de paquetes en gabinete</span>
+</div>
+</div>
+<!-- Pillar C -->
+<div class="bg-surface-container rounded-xl p-8 hairline-border flex flex-col justify-between space-y-6">
+<div class="space-y-4">
+<div class="w-12 h-12 rounded-lg bg-surface flex items-center justify-center hairline-border text-primary">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<rect height="14" rx="2" ry="2" width="20" x="2" y="3"></rect>
+<line x1="8" x2="16" y1="21" y2="21"></line>
+<line x1="12" x2="12" y1="17" y2="21"></line>
+</svg>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">FASE 03</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">
+              Consentimiento informado y visualización clínica
+            </h3>
+<p class="font-body-md text-body-md text-secondary">
+              Explicación previa de cada fase con microfotografía intraoral y radiografía digital antes de intervenir. Nada se ejecuta sin su comprensión absoluta.
+            </p>
+</div>
+<div class="pt-4 border-t border-outline-variant/40">
+<span class="font-label-sm text-label-sm text-secondary font-medium">Resolución digital de alta fidelidad</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- 4. Servicios con Honorarios Orientativos (Services & Pricing) -->
+<!-- ========================================================================= -->
+<section class="py-20 md:py-24 bg-surface border-b border-outline-variant" id="servicios">
+<div class="max-w-7xl mx-auto px-space-lg md:px-margin space-y-12">
+<!-- Header -->
+<div class="max-w-3xl space-y-4">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold">
+          Especialidades Odontológicas
+        </span>
+<h2 class="font-headline-md md:font-headline-lg text-headline-md md:text-headline-lg text-on-surface">
+          Servicios odontológicos y honorarios transparentes
+        </h2>
+<p class="font-body-lg text-body-lg text-secondary leading-relaxed">
+          Antes de iniciar cualquier procedimiento, usted conoce el plan de tratamiento detallado y el desglose de costos. Sin cargos imprevistos.
+        </p>
+</div>
+<!-- 4 Service Cards in Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8">
+<!-- Card 1: Ortodoncia Invisible y Brackets -->
+<div class="lg:col-span-6 bg-surface-container rounded-xl p-8 hairline-border flex flex-col justify-between space-y-6">
+<div class="space-y-5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary px-3 py-1 rounded bg-surface hairline-border">Especialidad Troncal</span>
+<span class="font-label-sm text-label-sm text-secondary">Polanco Studio</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">
+              Ortodoncia Invisible y Brackets
+            </h3>
+<div class="space-y-2">
+<span class="font-label-sm text-label-sm text-secondary tracking-wide uppercase">Secuencia clínica:</span>
+<p class="font-body-md text-body-md text-on-surface">
+                Diagnóstico cefalométrico <span class="text-primary font-semibold">→</span> Simulación 3D <span class="text-primary font-semibold">→</span> Ajustes periódicos cada 4 a 6 semanas.
+              </p>
+</div>
+</div>
+<div class="pt-6 border-t border-outline-variant/60 bg-surface/50 -mx-8 -mb-8 p-8 rounded-b-xl space-y-2">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Honorario orientativo</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">
+                Valoración inicial desde $1,200 MXN
+              </span>
+<span class="font-body-sm text-body-sm text-secondary">
+                Mensualidades desde $1,800 MXN según complejidad del caso clínico.
+              </span>
+</div>
+</div>
+</div>
+<!-- Card 2: Profilaxis y Limpieza Ultrasonido -->
+<div class="lg:col-span-6 bg-surface-container rounded-xl p-8 hairline-border flex flex-col justify-between space-y-6">
+<div class="space-y-5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary px-3 py-1 rounded bg-surface hairline-border">Prevención Periodontal</span>
+<span class="font-label-sm text-label-sm text-secondary">Higiene Clínica</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">
+              Profilaxis y Limpieza Ultrasonido
+            </h3>
+<div class="space-y-2">
+<span class="font-label-sm text-label-sm text-secondary tracking-wide uppercase">Secuencia clínica:</span>
+<p class="font-body-md text-body-md text-on-surface">
+                Remoción de sarro con cavitrón <span class="text-primary font-semibold">→</span> Pulido coronario pasta profiláctica <span class="text-primary font-semibold">→</span> Aplicación tópica de flúor mineral.
+              </p>
+</div>
+</div>
+<div class="pt-6 border-t border-outline-variant/60 bg-surface/50 -mx-8 -mb-8 p-8 rounded-b-xl space-y-2">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Honorario orientativo</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">
+                $1,400 MXN
+              </span>
+<span class="font-body-sm text-body-sm text-secondary">
+                Por sesión integral completa de 60 minutos.
+              </span>
+</div>
+</div>
+</div>
+<!-- Card 3: Endodoncia Microscópica -->
+<div class="lg:col-span-6 bg-surface-container rounded-xl p-8 hairline-border flex flex-col justify-between space-y-6">
+<div class="space-y-5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary px-3 py-1 rounded bg-surface hairline-border">Conservación Dental</span>
+<span class="font-label-sm text-label-sm text-secondary">Alta Magnificación</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">
+              Endodoncia Microscópica
+            </h3>
+<div class="space-y-2">
+<span class="font-label-sm text-label-sm text-secondary tracking-wide uppercase">Secuencia clínica:</span>
+<p class="font-body-md text-body-md text-on-surface">
+                Aislamiento absoluto con dique <span class="text-primary font-semibold">→</span> Limpieza y desinfección de conductos bajo magnificación <span class="text-primary font-semibold">→</span> Obturación termoplástica tridimensional.
+              </p>
+</div>
+</div>
+<div class="pt-6 border-t border-outline-variant/60 bg-surface/50 -mx-8 -mb-8 p-8 rounded-b-xl space-y-2">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Honorario orientativo</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">
+                Desde $4,800 MXN
+              </span>
+<span class="font-body-sm text-body-sm text-secondary">
+                Por órgano dentario multirradicular bajo microscopio óptico.
+              </span>
+</div>
+</div>
+</div>
+<!-- Card 4: Implantología y Prótesis Fija -->
+<div class="lg:col-span-6 bg-surface-container rounded-xl p-8 hairline-border flex flex-col justify-between space-y-6">
+<div class="space-y-5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary px-3 py-1 rounded bg-surface hairline-border">Rehabilitación Oral</span>
+<span class="font-label-sm text-label-sm text-secondary">Titanio y Zirconio</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">
+              Implantología y Prótesis Fija
+            </h3>
+<div class="space-y-2">
+<span class="font-label-sm text-label-sm text-secondary tracking-wide uppercase">Secuencia clínica:</span>
+<p class="font-body-md text-body-md text-on-surface">
+                Guía quirúrgica tomográfica <span class="text-primary font-semibold">→</span> Colocación de implante de titanio grado médico <span class="text-primary font-semibold">→</span> Oseointegración y corona de zirconio monolítico.
+              </p>
+</div>
+</div>
+<div class="pt-6 border-t border-outline-variant/60 bg-surface/50 -mx-8 -mb-8 p-8 rounded-b-xl space-y-2">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Honorario orientativo</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">
+                Fase protésica desde $16,500 MXN
+              </span>
+<span class="font-body-sm text-body-sm text-secondary">
+                Incluye aditamentos maquinados y corona de precisión en zirconio.
+              </span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- 5. Testimonios (Patient Experiences) -->
+<!-- ========================================================================= -->
+<section class="py-20 md:py-24 bg-surface-container-low border-b border-outline-variant" id="testimonios">
+<div class="max-w-7xl mx-auto px-space-lg md:px-margin space-y-12">
+<!-- Section Header -->
+<div class="max-w-3xl space-y-4">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold">
+          Evidencia de Satisfacción
+        </span>
+<h2 class="font-headline-md md:font-headline-lg text-headline-md md:text-headline-lg text-on-surface">
+          La experiencia de nuestros pacientes en Polanco
+        </h2>
+<p class="font-body-lg text-body-lg text-secondary">
+          Opiniones basadas en la estricta puntualidad de las citas, la claridad en el diagnóstico y un trato clínico reservado y formal.
+        </p>
+</div>
+<!-- Testimonial Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Review 1 -->
+<div class="bg-surface-container rounded-xl p-8 hairline-border flex flex-col justify-between space-y-6">
+<p class="font-body-lg text-body-lg text-on-surface italic leading-relaxed">
+            «Agradezco profundamente la puntualidad. En mi trabajo no puedo perder horas en salas de espera; aquí entro a la hora exacta de mi cita y el doctor explica cada ajuste con calma.»
+          </p>
+<div class="pt-6 border-t border-outline-variant/60 flex items-center justify-between">
+<div>
+<span class="font-label-md text-label-md text-on-surface block font-semibold">M. Armenta</span>
+<span class="font-body-sm text-body-sm text-secondary">Col. Polanco</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary bg-surface px-2.5 py-1 rounded hairline-border">Puntualidad</span>
+</div>
+</div>
+<!-- Review 2 -->
+<div class="bg-surface-container rounded-xl p-8 hairline-border flex flex-col justify-between space-y-6">
+<p class="font-body-lg text-body-lg text-on-surface italic leading-relaxed">
+            «El desglose de costos desde el primer día me dio total certidumbre. El tratamiento de ortodoncia invisible va exactamente como me lo mostraron en la simulación 3D.»
+          </p>
+<div class="pt-6 border-t border-outline-variant/60 flex items-center justify-between">
+<div>
+<span class="font-label-md text-label-md text-on-surface block font-semibold">L. Villaseñor</span>
+<span class="font-body-sm text-body-sm text-secondary">Campos Elíseos</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary bg-surface px-2.5 py-1 rounded hairline-border">Claridad</span>
+</div>
+</div>
+<!-- Review 3 -->
+<div class="bg-surface-container rounded-xl p-8 hairline-border flex flex-col justify-between space-y-6">
+<p class="font-body-lg text-body-lg text-on-surface italic leading-relaxed">
+            «Toda mi vida tuve aprensión a las endodoncias. La aplicación gradual de anestesia y el uso del microscopio hicieron que el procedimiento transcurriera con total tranquilidad.»
+          </p>
+<div class="pt-6 border-t border-outline-variant/60 flex items-center justify-between">
+<div>
+<span class="font-label-md text-label-md text-on-surface block font-semibold">R. Elizondo</span>
+<span class="font-body-sm text-body-sm text-secondary">Lomas de Chapultepec</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary bg-surface px-2.5 py-1 rounded hairline-border">Rigor Técnico</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- 6. Preguntas Frecuentes (FAQ) - TODAS ABIERTAS Y VISIBLES -->
+<!-- ========================================================================= -->
+<section class="py-20 md:py-24 bg-surface border-b border-outline-variant" id="preguntas">
+<div class="max-w-7xl mx-auto px-space-lg md:px-margin space-y-12">
+<!-- Section Header -->
+<div class="max-w-3xl space-y-4">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold">
+          Transparencia Médica y Administrativa
+        </span>
+<h2 class="font-headline-md md:font-headline-lg text-headline-md md:text-headline-lg text-on-surface">
+          Preguntas clínicas frecuentes
+        </h2>
+<p class="font-body-lg text-body-lg text-secondary">
+          Respuestas transparentes sobre nuestros protocolos de atención, facturación fiscal y esquemas de reembolso.
+        </p>
+</div>
+<!-- Open Visible FAQ List (No closed accordions) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Q1 -->
+<div class="bg-surface-container rounded-xl p-8 hairline-border space-y-3">
+<div class="flex items-start gap-3">
+<span class="font-headline-sm text-headline-sm text-primary">01</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface pt-0.5">
+              ¿Cómo garantizan la puntualidad en las citas?
+            </h3>
+</div>
+<p class="font-body-md text-body-md text-secondary pl-8 leading-relaxed">
+            Asignamos márgenes de seguridad de 20 minutos entre pacientes para desinfección profunda del gabinete y revisión de expedientes, evitando el empalme de agendas.
+          </p>
+</div>
+<!-- Q2 -->
+<div class="bg-surface-container rounded-xl p-8 hairline-border space-y-3">
+<div class="flex items-start gap-3">
+<span class="font-headline-sm text-headline-sm text-primary">02</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface pt-0.5">
+              ¿Qué incluye la primera consulta de valoración?
+            </h3>
+</div>
+<p class="font-body-md text-body-md text-secondary pl-8 leading-relaxed">
+            Incluye revisión clínica completa, registro fotográfico intraoral, análisis de mordida y la entrega de un presupuesto por escrito con las alternativas terapéuticas recomendadas.
+          </p>
+</div>
+<!-- Q3 -->
+<div class="bg-surface-container rounded-xl p-8 hairline-border space-y-3">
+<div class="flex items-start gap-3">
+<span class="font-headline-sm text-headline-sm text-primary">03</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface pt-0.5">
+              ¿Aceptan seguros de gastos médicos mayores o dentales?
+            </h3>
+</div>
+<p class="font-body-md text-body-md text-secondary pl-8 leading-relaxed">
+            Emitimos factura fiscal desglosada y llenamos los formatos de reembolso de las principales aseguradoras mexicanas (GNP, MetLife, Seguros Monterrey, AXA).
+          </p>
+</div>
+<!-- Q4 -->
+<div class="bg-surface-container rounded-xl p-8 hairline-border space-y-3">
+<div class="flex items-start gap-3">
+<span class="font-headline-sm text-headline-sm text-primary">04</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface pt-0.5">
+              ¿Qué métodos de pago tienen disponibles?
+            </h3>
+</div>
+<p class="font-body-md text-body-md text-secondary pl-8 leading-relaxed">
+            Aceptamos transferencias SPEI, tarjetas de débito y crédito bancarias con opciones de pagos diferidos en tratamientos ortodóncicos y quirúrgicos.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- 7. Contacto Directo (SIN FORMULARIOS, SOLO ENLACES Y BOTONES DIRECTOS) -->
+<!-- ========================================================================= -->
+<section class="py-20 md:py-24 bg-surface-container-low border-b border-outline-variant" id="contacto">
+<div class="max-w-7xl mx-auto px-space-lg md:px-margin space-y-12">
+<!-- Section Header -->
+<div class="max-w-3xl space-y-4">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest font-semibold">
+          Comunicación Inmediata
+        </span>
+<h2 class="font-headline-md md:font-headline-lg text-headline-md md:text-headline-lg text-on-surface">
+          Comuníquese directamente con nuestro consultorio
+        </h2>
+<p class="font-body-lg text-body-lg text-secondary leading-relaxed">
+          Coordinamos su cita según su disponibilidad de agenda. Escríbanos o llámenos directamente.
+        </p>
+</div>
+<!-- Action Grid: Strictly No Forms / No Inputs -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Channels Box -->
+<div class="lg:col-span-7 space-y-6">
+<!-- Direct WhatsApp Button -->
+<div class="bg-surface-container rounded-xl p-6 md:p-8 hairline-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+<div class="space-y-1">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Canal Ágil</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">WhatsApp Clínico</h3>
+<p class="font-body-sm text-body-sm text-secondary">Respuesta directa de nuestro equipo de recepción médica.</p>
+</div>
+<a class="inline-flex items-center gap-3 bg-primary-container hover:bg-primary text-surface-bright font-label-md text-label-md px-6 py-3.5 rounded-lg transition-colors duration-200 shrink-0" href="https://wa.me/525555550199?text=Estimado%20Doctor%2C%20deseo%20solicitar%20informaci%C3%B3n%20para%20una%20consulta%20de%20valoraci%C3%B3n" rel="noopener noreferrer" target="_blank">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+<path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.288.043.088.072.188.014.303-.058.116-.087.188-.173.289l-.26.303c-.087.087-.177.182-.076.355.101.174.449.741.964 1.201.662.591 1.221.774 1.394.861.174.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.202c.044.073.044.42-.1.825zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.66 1.434 5.174L2 22l4.966-1.393A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.2c-1.637 0-3.155-.49-4.433-1.331l-.317-.209-2.937.824.838-2.85-.229-.335C4.004 14.947 3.5 13.528 3.5 12c0-4.687 3.813-8.5 8.5-8.5s8.5 3.813 8.5 8.5-3.813 8.5-8.5 8.5z"></path>
+</svg>
+<span>Enviar mensaje por WhatsApp</span>
+</a>
+</div>
+<!-- Telephone Call & Schedules -->
+<div class="bg-surface-container rounded-xl p-6 md:p-8 hairline-border space-y-4">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Línea Fija del Gabinete</span>
+<a class="text-primary hover:text-primary-container font-headline-sm text-headline-sm font-bold transition-colors" href="tel:+525552801234">
+                +52 (55) 5280-1234
+              </a>
+</div>
+<div class="pt-3 border-t border-outline-variant/60 flex items-center gap-3 text-secondary">
+<svg class="w-5 h-5 text-primary shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="10"></circle>
+<polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+<p class="font-body-sm text-body-sm">
+                Lunes a viernes de 8:30 a 19:30 h | Sábados de 9:00 a 14:00 h
+              </p>
+</div>
+</div>
+<!-- Email Contact -->
+<div class="bg-surface-container rounded-xl p-6 md:p-8 hairline-border flex items-center justify-between">
+<div class="space-y-1">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Correspondencia Médica</span>
+<p class="font-body-md text-body-md text-on-surface">contacto@dentalarquimedes.mx</p>
+</div>
+<a class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-secondary/30 hover:bg-surface text-on-surface font-label-md text-label-md transition-colors" href="mailto:contacto@dentalarquimedes.mx">
+<svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+<polyline points="22,6 12,13 2,6"></polyline>
+</svg>
+<span>Escribir correo</span>
+</a>
+</div>
+</div>
+<!-- Location Box -->
+<div class="lg:col-span-5 bg-surface-container rounded-xl p-8 hairline-border flex flex-col justify-between space-y-6">
+<div class="space-y-4">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-surface rounded hairline-border">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wide">Ubicación Arquímedes Polanco</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">
+              Dirección del Consultorio
+            </h3>
+<p class="font-body-md text-body-md text-secondary leading-relaxed">
+              Av. Arquímedes 130, Piso 4, Consultorio 402, Polanco V Sección, Miguel Hidalgo, 11560 Ciudad de México, CDMX.
+            </p>
+<div class="p-4 bg-surface rounded-lg hairline-border space-y-2">
+<div class="flex items-center gap-2 text-primary font-semibold text-xs">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<rect height="13" width="15" x="1" y="3"></rect>
+<polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+<circle cx="5.5" cy="18.5" r="2.5"></circle>
+<circle cx="18.5" cy="18.5" r="2.5"></circle>
+</svg>
+<span>Servicio de Estacionamiento</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">
+                Estacionamiento con valet disponible en el acceso principal del edificio sobre Av. Arquímedes.
+              </p>
+</div>
+</div>
+<div class="pt-4 border-t border-outline-variant/60">
+<a class="inline-flex items-center justify-center w-full gap-2 px-5 py-3 rounded-lg border border-secondary/30 hover:bg-surface text-primary font-label-md text-label-md transition-colors" href="https://maps.google.com/?q=Av.+Arquimedes+130+Polanco+CDMX" rel="noopener noreferrer" target="_blank">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+</svg>
+<span>Abrir en Google Maps</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- 8. Footer (Footer Shared Component Execution) -->
+<!-- ========================================================================= -->
+<footer class="docked full-width bg-surface-container-high border-t border-outline-variant flat no shadows transition-colors duration-150">
+<div class="w-full px-space-lg md:px-margin py-space-xl max-w-7xl mx-auto space-y-12">
+<!-- Top Row Footer -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+<!-- Identity / Professional Credentials -->
+<div class="md:col-span-5 space-y-3">
+<span class="font-headline-sm text-headline-sm text-primary tracking-tight block">
+            Consultorio Dental Arquímedes Polanco
+          </span>
+<p class="font-body-sm text-body-sm text-secondary leading-relaxed">
+            Práctica odontológica privada dedicada a la ortodoncia de precisión y la rehabilitación oral integral en la Ciudad de México.
+          </p>
+<div class="pt-2 text-xs text-secondary font-label-sm space-y-1">
+<p>Responsable Sanitario: Dr. C. Mendoza Valdés</p>
+<p>Cédula Profesional Odontología: SEP 4892015</p>
+<p>Cédula de Especialidad en Ortodoncia: SEP 7102934</p>
+</div>
+</div>
+<!-- Links Hierarchy as defined in Shared Component JSON -->
+<div class="md:col-span-4 space-y-3">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider font-semibold block">
+            Normativa y Marco Legal
+          </span>
+<ul class="space-y-2">
+<li>
+<a class="text-secondary font-body-sm text-body-sm hover:text-primary transition-colors duration-200 block" href="#contacto">
+                Aviso de Privacidad Clínico
+              </a>
+</li>
+<li>
+<a class="text-secondary font-body-sm text-body-sm hover:text-primary transition-colors duration-200 block" href="#acerca">
+                Protocolos Sanitarios COFEPRIS
+              </a>
+</li>
+<li>
+<a class="text-secondary font-body-sm text-body-sm hover:text-primary transition-colors duration-200 block" href="#preguntas">
+                Reglamento de Citas y Cancelaciones
+              </a>
+</li>
+<li>
+<a class="text-secondary font-body-sm text-body-sm hover:text-primary transition-colors duration-200 block" href="#contacto">
+                Ubicación Arquímedes Polanco
+              </a>
+</li>
+</ul>
+</div>
+<!-- Accreditations & Regulators -->
+<div class="md:col-span-3 space-y-3">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider font-semibold block">
+            Certificaciones
+          </span>
+<div class="space-y-2 text-xs text-secondary font-body-sm">
+<p class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+              Aviso de Funcionamiento COFEPRIS: 24-09-015
+            </p>
+<p class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+              Miembro Activo Asociación Dental Mexicana (ADM)
+            </p>
+<p class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+              Colegio de Odontólogos del D.F. A.C.
+            </p>
+</div>
+</div>
+</div>
+<!-- Hairline Division -->
+<div class="hairline-divider h-px w-full"></div>
+<!-- Bottom Bar: Exact Copyright string from JSON -->
+<div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
+<p class="text-secondary font-body-sm text-body-sm">
+          © 2024 Consultorio Dental Arquímedes Polanco. Práctica odontológica certificada y colegiada en Ciudad de México.
+        </p>
+<span class="font-label-sm text-label-sm text-secondary">
+          Polanco V Sección · Ciudad de México
+        </span>
+</div>
+</div>
+</footer>
+</body></html>

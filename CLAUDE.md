@@ -9,6 +9,7 @@
 - `packages/api-client` — typed API client generated from `apps/api/openapi.json` via `@hey-api/openapi-ts`, with TanStack Query bindings.
 - `packages/template-kit` — templates as source (sections + themes + content packs) compiled into GrapesJS projects + previews; see its `CLAUDE.md`. Extended catalog (art directions, primitives, archetypes, new heroes, budgets, LCP policy): `docs/template-kit-catalog.md`, `docs/template-kit-lcp.md`.
 - `packages/lattiz-cli` — `pnpm lattiz`: template → `templates.lattiz.app` pipeline over the kit, the seed and the previews deploy; see `docs/lattiz-cli.md`.
+- `design-library/stitch/` + `lattiz design …` + `.claude/skills/lattiz-design` — Stitch as the design source for the kit: versioned candidates (data), a harvester (palette, type scale, section patterns) and a gated `promote` into the extended catalog; Stitch HTML/images are never served or imported; see `docs/design-stitch-flow.md`. Second path (Model D): a Stitch pattern the kit lacks is rebuilt by hand as a native section (+ editor block, Basic and Pro); `docs/stitch-native-sections.md`.
 - `.claude/skills/lattiz-template` — Claude Code skill (`/lattiz-template <negocio> en <ciudad>`): builds a Básico + Pro pair from a spec through the CLI and stops before anything remote; see `docs/lattiz-skill.md`.
 
 ## Architecture Invariants
@@ -59,7 +60,7 @@
 - `test` — `turbo run test`
 - `generate:api` — `turbo run generate:openapi generate:client` (API writes `openapi.json`, then `api-client` regenerates)
 - `template:dev <id>` / `template:shots <id>` / `template:seed -- --only <id> [--dry-run]` — template tuning loop; see `docs/template-workflow.md`
-- `lattiz <command>` — guided template pipeline (`doctor`, `list`, `giro`, `new`, `spec`, `build`, `freeze`, `unfreeze`, `dev`, `motion`, `check`, `review`, `seed`, `deploy`, `publish`, `ship`) in `packages/lattiz-cli`; see `docs/lattiz-cli.md` and, for spec-driven templates, `docs/template-spec.md`
+- `lattiz <command>` — guided template pipeline (`doctor`, `list`, `giro`, `new`, `spec`, `build`, `freeze`, `unfreeze`, `dev`, `motion`, `check`, `review`, `seed`, `deploy`, `publish`, `ship`, `design`) in `packages/lattiz-cli`; see `docs/lattiz-cli.md` and, for spec-driven templates, `docs/template-spec.md`
 - After any change to `packages/template-kit`: `pnpm --filter @lattiz/template-kit kit:verify-snapshot` and `kit:manifest --check` (the latter also runs in `pnpm lint`; regenerate with `kit:manifest`, which also writes the API plan slice and the editor/dashboard `*.generated.ts` files in `apps/web`). New templates enter the golden with `kit:snapshot:add`; byte budgets live in `packages/template-kit/budgets.json` — see `docs/template-kit-catalog.md`. Server-side plan guard: `docs/template-kit-plan-enforcement.md`
 
 **`apps/api`** (`pnpm --filter @lattiz/api <script>`):

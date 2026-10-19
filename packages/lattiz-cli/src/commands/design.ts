@@ -1,0 +1,588 @@
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  writeFileSync,
+} from 'node:fs';
+import { basename, join, resolve } from 'node:path';
+import {
+  candidateDir,
+  findCandidate,
+  LICENSE_REF,
+  nextId,
+  readHarvest,
+  readIndex,
+  reindex,
+  setStatus,
+  slugify,
+  workDir,
+  writeJson,
+} from '../design/library';
+import { harvestFolder } from '../design/harvest';
+import { measureFidelity, saveFidelity } from '../design/fidelity';
+import {
+  buildDesignMd,
+  buildPrompt,
+  RIGORS,
+  type Rigor,
+  resolveDirection,
+  resolveSystem,
+  unusedDirection,
+} from '../design/system';
+import { lattizRunner } from '../design/promote/kit';
+import { DIRECTIONS } from '../../../template-kit/directions';
+import { libraryRoot } from '../design/library';
+import { promote } from '../design/promote';
+import type { Candidate, CandidateStatus } from '../design/types';
+import { GIROS } from '../../../template-kit/giros';
+import { bool, type Command, type Context, str } from '../lib/command';
+import { EXIT, type ExitCode, usage } from '../lib/errors';
+import { c, log, setQuiet, table } from '../lib/ui';
+
+const csv = (v: string | undefined) =>
+  v
+    ? v
+        .split(',')
+        .map((x) => x.trim())
+        .filter(Boolean)
+    : [];
+
+function runList(ctx: Context): ExitCode {
+  const giro = str(ctx.flags, 'giro');
+  const status = str(ctx.flags, 'status');
+  const tag = str(ctx.flags, 'tag');
+  const spin = str(ctx.flags, 'spin');
+  const rows = readIndex().candidates.filter(
+    (e) =>
+      (!giro || e.giro === giro) &&
+      (!status || e.status === status) &&
+      (!tag || e.tags.includes(tag)) &&
+      (!spin || e.spin === spin),
+  );
+  if (bool(ctx.flags, 'json')) {
+    console.log(JSON.stringify(rows, null, 2));
+    return EXIT.OK;
+  }
+  log.title('lattiz design list');
+  if (rows.length === 0) {
+    log.plain(c.gray('  Sin candidatos con ese filtro.'));
+    return EXIT.OK;
+  }
+  log.plain(
+    table(
+      ['Id', 'Giro', 'Estado', 'Giro de estilo', 'Etiquetas'],
+      rows.map((e) => [
+        e.id,
+        e.giro,
+        e.harvested && e.status === 'collected' ? 'collected*' : e.status,
+        e.spin ?? '—',
+        e.tags.join(', ') || '—',
+      ]),
+    ),
+  );
+  return EXIT.OK;
+}
+
+function runReindex(): ExitCode {
+  const index = reindex();
+  log.ok(
+    `design-library/index.json: ${index.count} candidato(s) · ${Object.entries(
+      index.by_status,
+    )
+      .filter(([, n]) => n > 0)
+      .map(([s, n]) => `${s} ${n}`)
+      .join(' · ')}`,
+  );
+  return EXIT.OK;
+}
+
+function runFlag(ctx: Context, status: CandidateStatus): ExitCode {
+  const loc = findCandidate(ctx.positionals[1]);
+  const note = str(ctx.flags, 'note');
+  setStatus(loc, status, note ? { notes: note } : {});
+  reindex();
+  log.ok(`${loc.candidate.id} → ${status}`);
+  return EXIT.OK;
+}
+
+function runHarvest(ctx: Context): ExitCode {
+  const loc = findCandidate(ctx.positionals[1]);
+  if (loc.candidate.status === 'rejected')
+    throw usage(`"${loc.candidate.id}" está rechazado: no se extrae.`);
+  const harvest = harvestFolder(loc.candidate, loc.dir, {
+    accentRole: str(ctx.flags, 'accent'),
+  });
+  if (str(ctx.flags, 'accent') && !harvest.palette)
+    throw usage(
+      `El rol de acento "${str(ctx.flags, 'accent')}" no existe en los tokens.`,
+      'Roles: primary, secondary, tertiary',
+    );
+  writeJson(join(loc.dir, 'harvest.json'), harvest);
+  // Idempotent: re-harvesting a harvested or promoted candidate only rewrites harvest.json.
+  if (
+    loc.candidate.status === 'collected' ||
+    loc.candidate.status === 'shelved'
+  )
+    setStatus(loc, 'harvested');
+  reindex();
+  if (bool(ctx.flags, 'json')) {
+    console.log(JSON.stringify(harvest, null, 2));
+    return EXIT.OK;
+  }
+  log.title(`lattiz design harvest ${loc.candidate.id}`);
+  const p = harvest.palette;
+  if (p)
+    log.plain(
+      `${c.bold('Paleta')} ${p.mode} · fondo ${p.bg} · texto ${p.text} · acento ${p.accent} ${
+        p.aa.ok ? c.green('AA ✓') : c.red(`AA ✗ ${p.aa.problems.join('; ')}`)
+      }`,
+    );
+  else log.warn('Sin paleta: faltan tokens de color en la fuente.');
+  const t = harvest.typography;
+  log.plain(
+    `${c.bold('Tipografía')} ${t.displayFamily ?? '—'} + ${t.bodyFamily ?? '—'} · ${t.scale.length} niveles${
+      t.unsupportedFamilies.length
+        ? c.yellow(
+            ` · sin fuente utilizable: ${t.unsupportedFamilies.join(', ')}`,
+          )
+        : ''
+    }`,
+  );
+  for (const s of harvest.sections)
+    log.plain(
+      `${c.bold('Sección')} ${s.slot}/${s.layout} · ${s.ref} · ${
+        s.existing
+          ? c.gray(`ya existe (medido), usa ${s.existing}`)
+          : s.draft
+            ? c.green(
+                `borrador sections/${s.slot}/${s.draft.variant} (${s.draft.bytes.css_gzip} B css gzip)`,
+              )
+            : s.reuse_candidate
+              ? c.yellow(`¿${s.reuse_candidate}? sin medir (design fidelity)`)
+              : s.fidelity
+                ? c.cyan(
+                    `medida: distinta (mejor ${s.fidelity.best ?? '—'} a ${s.fidelity.structure})`,
+                  )
+                : ''
+      }${s.notes ? c.gray(` · ${s.notes.join('; ')}`) : ''}`,
+    );
+  for (const n of harvest.not_mappable)
+    log.plain(c.yellow(`No mapeable: ${n.ref} — ${n.reason}`));
+  for (const r of harvest.rebuild ?? [])
+    log.plain(
+      c.cyan(
+        `Reconstruir a mano: ${r.slot}/${r.layout} (${r.ref}) — ${r.reason}`,
+      ),
+    );
+  for (const i of harvest.interactivity)
+    log.plain(`${c.bold('JS')} ${i.kind}: ${i.recommendation}`);
+  for (const d of p?.distance ?? [])
+    log.plain(
+      `${c.bold('Distancia')} ${d.giro}: ${d.distance} a ${d.nearest} ${d.ok ? c.green('✓') : c.red(`✗ (mín ${d.min})`)}`,
+    );
+  const low = (p?.pairs ?? []).filter((x) => !x.aa_pass);
+  if (low.length)
+    log.plain(
+      c.yellow(
+        `Contraste bajo: ${low.map((x) => `${x.fg}/${x.bg} ${x.ratio}`).join(', ')}`,
+      ),
+    );
+  if (!harvest.typography.delivery.ok)
+    log.plain(
+      c.yellow(
+        `Tipografía: ${harvest.typography.delivery.problems.join('; ')}`,
+      ),
+    );
+  log.plain(
+    c.gray(
+      `${harvest.images_ignored} imagen(es) ignorada(s): nunca se copian.`,
+    ),
+  );
+  log.hint(
+    `Revisa y promueve: pnpm lattiz design promote ${loc.candidate.id} --palette`,
+  );
+  return EXIT.OK;
+}
+
+const SET_KEYS = ['bg', 'text', 'accent', 'surface', 'surface2'];
+function parseSet(v: string | undefined) {
+  const out: Record<string, string> = {};
+  for (const part of (v ?? '').split(',').filter(Boolean)) {
+    const [k, hex] = part.split('=');
+    if (!SET_KEYS.includes(k) || !/^#[0-9a-fA-F]{6}$/.test(hex ?? ''))
+      throw usage(
+        `--set inválido: "${part}".`,
+        `Formato: bg=#1B2B23,accent=#C3C7CD (claves: ${SET_KEYS.join(', ')})`,
+      );
+    out[k] = hex;
+  }
+  return out;
+}
+
+async function runFidelity(ctx: Context): Promise<ExitCode> {
+  const loc = findCandidate(ctx.positionals[1]);
+  const ref = ctx.positionals[2];
+  if (!ref)
+    throw usage(
+      'Falta la sección.',
+      'Ejemplo: pnpm lattiz design fidelity <id> preguntas',
+    );
+  const harvest = readHarvest(loc);
+  const found = harvest.sections.find((x) => x.ref === ref);
+  const slot = str(ctx.flags, 'slot') ?? found?.slot;
+  if (!slot)
+    throw usage(
+      `No sé a qué slot del kit corresponde "${ref}".`,
+      'Pasa --slot faq|services|…',
+    );
+  const entry = await measureFidelity({
+    candidateId: loc.candidate.id,
+    candidateDir: loc.dir,
+    giro: loc.candidate.giro,
+    ref,
+    slot,
+    variants: str(ctx.flags, 'variants')?.split(',').filter(Boolean),
+    theme: str(ctx.flags, 'theme'),
+    tier: str(ctx.flags, 'tier') === 'basic' ? 'basic' : 'pro',
+  });
+  saveFidelity(loc.dir, entry);
+  if (bool(ctx.flags, 'json')) {
+    console.log(JSON.stringify(entry, null, 2));
+    return EXIT.OK;
+  }
+  log.title(`lattiz design fidelity ${loc.candidate.id} ${ref}`);
+  log.plain(
+    table(
+      ['Variante', 'Estructura', 'Alto', 'Veredicto'],
+      entry.measured.map((m) => [
+        m.variant,
+        String(m.structure),
+        String(m.heightRatio),
+        m.match ? c.green('parecida') : c.gray('distinta'),
+      ]),
+    ),
+  );
+  log.plain(
+    entry.verdict === 'match'
+      ? c.green(`\nYa existe: usa ${entry.best}.`)
+      : c.yellow(
+          `\nNinguna variante se parece lo suficiente (estructura ≤ ${entry.thresholds.structure}): la sección es NUEVA.`,
+        ),
+  );
+  log.hint(
+    `Comparaciones: .lattiz/stitch/fidelity/${loc.candidate.id}/${ref}/vs-*.png`,
+  );
+  return EXIT.OK;
+}
+
+function runPromote(ctx: Context): ExitCode {
+  const loc = findCandidate(ctx.positionals[1]);
+  const dryRun = bool(ctx.flags, 'dry-run');
+  const report = promote(loc, {
+    palette: bool(ctx.flags, 'palette'),
+    fonts: bool(ctx.flags, 'fonts'),
+    section: bool(ctx.flags, 'section'),
+    pattern: str(ctx.flags, 'pattern'),
+    regenerateManifest: bool(ctx.flags, 'regenerate-manifest'),
+    allowSimilar: bool(ctx.flags, 'allow-similar'),
+    dryRun,
+    paletteSet: {
+      ...parseSet(str(ctx.flags, 'set')),
+      ...(str(ctx.flags, 'name') ? { label: str(ctx.flags, 'name') } : {}),
+    },
+  });
+  if (bool(ctx.flags, 'json')) {
+    console.log(JSON.stringify(report, null, 2));
+    return EXIT.OK;
+  }
+  log.title(`lattiz design promote ${loc.candidate.id}`);
+  for (const [kind, list] of Object.entries(report.gates)) {
+    log.plain(c.bold(kind));
+    for (const g of list) log.ok(g);
+  }
+  if (report.kept) {
+    log.ok(
+      `Promovido: ${Object.entries(report.refs)
+        .map(([k, v]) => `${k} ${v}`)
+        .join(' · ')}`,
+    );
+    log.hint(
+      'Revisa el diff y commitea los archivos del kit explícitos (git add por ruta).',
+    );
+  } else
+    log.info(
+      dryRun
+        ? 'Prueba en seco: pasó todas las compuertas y no quedó nada escrito.'
+        : 'Nada se conservó (una sección sin --regenerate-manifest es solo una prueba).',
+    );
+  return EXIT.OK;
+}
+
+const rigorOf = (ctx: Context): Rigor => {
+  const v = (str(ctx.flags, 'rigor') ?? 'loose') as Rigor;
+  if (!RIGORS.includes(v))
+    throw usage(`--rigor inválido: "${v}".`, `Opciones: ${RIGORS.join(', ')}`);
+  return v;
+};
+
+const systemsDir = () => join(libraryRoot(), 'stitch', '_design-systems');
+
+/** One versioned DESIGN.md per art direction (loose: a guide for Stitch, not a straitjacket). */
+function runSystem(ctx: Context): ExitCode {
+  const rigor = rigorOf(ctx);
+  if (bool(ctx.flags, 'all')) {
+    mkdirSync(systemsDir(), { recursive: true });
+    for (const id of Object.keys(DIRECTIONS)) {
+      const r = resolveDirection(id);
+      writeFileSync(join(systemsDir(), `${id}.md`), buildDesignMd(r, rigor));
+      log.ok(`_design-systems/${id}.md (${r.paletteId} · ${r.fontPairId})`);
+    }
+    return EXIT.OK;
+  }
+  const giro = str(ctx.flags, 'giro');
+  const dir = str(ctx.flags, 'direccion');
+  if (!giro && !dir)
+    throw usage(
+      'Falta --direccion o --giro (o --all).',
+      'Direcciones: pnpm lattiz direccion list',
+    );
+  const r = giro ? resolveSystem(giro, dir) : resolveDirection(dir!);
+  const md = buildDesignMd(r, rigor);
+  const out = str(ctx.flags, 'out');
+  if (out) {
+    mkdirSync(join(resolve(out), '..'), { recursive: true });
+    writeFileSync(resolve(out), md);
+    log.ok(
+      `${out} (${r.direction.id} · ${r.paletteId} · ${r.fontPairId} · ${rigor})`,
+    );
+  } else console.log(md);
+  return EXIT.OK;
+}
+
+/**
+ * `gen` without --import: the Stitch MCP is a Claude tool, not something this process can call, so
+ * the CLI prepares the design system and the prompt and the skill (or a person) runs the MCP steps,
+ * then registers each candidate with `gen --import`.
+ */
+function runPlan(ctx: Context): ExitCode {
+  const giro = str(ctx.flags, 'giro');
+  if (!giro) throw usage('Falta --giro.', 'Giros: pnpm lattiz giro list');
+  const n = Number(str(ctx.flags, 'n') ?? '2');
+  if (!Number.isInteger(n) || n < 1 || n > 6)
+    throw usage('--n debe ser un entero entre 1 y 6.');
+  const briefFile = str(ctx.flags, 'brief');
+  if (briefFile && !existsSync(briefFile))
+    throw usage(`No existe el brief: ${briefFile}`);
+  const rigor = rigorOf(ctx);
+  const wanted = str(ctx.flags, 'direccion');
+  const direccion =
+    wanted === 'unused' ? unusedDirection(giro, lattizRunner) : wanted;
+  const r = resolveSystem(giro, direccion);
+  const brief = briefFile ? readFileSync(briefFile, 'utf8') : undefined;
+  const dir = workDir(giro, new Date().toISOString().replace(/[:.]/g, '-'));
+  mkdirSync(dir, { recursive: true });
+  // loose: the direction's own versioned file; tight: this giro's exact palette and type.
+  const shared = join(systemsDir(), `${r.direction.id}.md`);
+  const designMd =
+    rigor === 'tight'
+      ? buildDesignMd(r, 'tight')
+      : existsSync(shared)
+        ? readFileSync(shared, 'utf8')
+        : buildDesignMd(resolveDirection(r.direction.id), 'loose');
+  writeFileSync(join(dir, 'design.md'), designMd);
+  writeFileSync(join(dir, 'prompt.md'), buildPrompt(r, brief, rigor));
+  const assets = join(systemsDir(), 'stitch-assets.json');
+  const stitchAsset: { project_id?: string; assets?: Record<string, string> } =
+    existsSync(assets) ? JSON.parse(readFileSync(assets, 'utf8')) : {};
+  const plan = {
+    giro,
+    direction: r.direction.id,
+    rigor,
+    // loose reuses the uploaded asset of the direction; tight needs a fresh upload of this design.md.
+    stitch_design_system:
+      rigor === 'loose' && stitchAsset.assets?.[r.direction.id]
+        ? {
+            project_id: stitchAsset.project_id,
+            asset: `assets/${stitchAsset.assets[r.direction.id]}`,
+          }
+        : null,
+    palette: r.paletteId,
+    font_pair: r.fontPairId,
+    candidates: n,
+    steps: [
+      'list_projects (solo lectura: confirma que el MCP responde)',
+      'create_project',
+      'upload_design_md con design.md → create_design_system_from_design_md',
+      `generate_screen_from_text × ${n} con prompt.md y el designSystem (deviceType DESKTOP)`,
+      'get_screen de cada pantalla: guardar html y captura en la carpeta de trabajo',
+      'por candidato: pnpm lattiz design gen --giro <g> --import <html> --design-md design.md --screenshot <png> --project <id> --screen <id>',
+    ],
+  };
+  writeJson(join(dir, 'plan.json'), plan);
+  if (bool(ctx.flags, 'json')) {
+    console.log(JSON.stringify({ dir, ...plan }, null, 2));
+    return EXIT.OK;
+  }
+  log.title(`lattiz design gen --giro ${giro}`);
+  log.ok(`Sistema de diseño y prompt listos en ${dir}`);
+  log.plain(
+    `${c.bold('Dirección')} ${r.direction.id} · ${r.paletteId} · ${r.fontPairId}`,
+  );
+  plan.steps.forEach((s, i) => log.plain(`  ${i + 1}. ${s}`));
+  log.hint('La skill /lattiz-design corre estos pasos con el MCP de Stitch.');
+  return EXIT.OK;
+}
+
+/** `gen --import`: registers a candidate from files the MCP (or a person) already produced. */
+function runImport(ctx: Context): ExitCode {
+  const giro = str(ctx.flags, 'giro');
+  const file = str(ctx.flags, 'import');
+  if (!giro || !GIROS[giro])
+    throw usage(
+      `Giro desconocido: "${giro ?? ''}".`,
+      `Giros: ${Object.keys(GIROS).join(', ')}`,
+    );
+  if (!file || !existsSync(file))
+    throw usage(`No existe el archivo a importar: ${file ?? ''}`);
+  const source = resolve(file);
+  const isMd = source.endsWith('.md');
+  const designMdFile = str(ctx.flags, 'design-md');
+  const text = readFileSync(source, 'utf8');
+  const title =
+    str(ctx.flags, 'name') ??
+    /<title>([^<]+)<\/title>/i.exec(text)?.[1] ??
+    /^name:\s*(.+)$/m.exec(text)?.[1] ??
+    basename(source).replace(/\.[^.]+$/, '');
+  const id = nextId(giro, slugify(title));
+  const dir = candidateDir(giro, id);
+  mkdirSync(dir, { recursive: true });
+  copyFileSync(source, join(dir, isMd ? 'design.md' : 'source.html'));
+  if (designMdFile) {
+    if (!existsSync(designMdFile))
+      throw usage(`No existe --design-md: ${designMdFile}`);
+    copyFileSync(designMdFile, join(dir, 'design.md'));
+  }
+  const shot = str(ctx.flags, 'screenshot');
+  if (shot) {
+    if (!existsSync(shot)) throw usage(`No existe --screenshot: ${shot}`);
+    copyFileSync(shot, join(dir, 'screenshot.png'));
+  }
+  const reuse = str(ctx.flags, 'reuse-of');
+  if (reuse) findCandidate(reuse);
+  const screens = csv(str(ctx.flags, 'screen'));
+  const candidate: Candidate = {
+    id,
+    giro,
+    source: 'stitch',
+    status: 'collected',
+    tags: csv(str(ctx.flags, 'tags')),
+    ...(str(ctx.flags, 'spin') ? { spin: str(ctx.flags, 'spin') } : {}),
+    license_ref: LICENSE_REF,
+    ...(reuse ? { reuse_of: reuse } : {}),
+    created_at: new Date().toISOString(),
+    stitch: {
+      ...(str(ctx.flags, 'project')
+        ? { project_id: str(ctx.flags, 'project') }
+        : {}),
+      ...(screens.length ? { screen_ids: screens } : {}),
+    },
+    ...(str(ctx.flags, 'direccion')
+      ? { direction: str(ctx.flags, 'direccion') }
+      : {}),
+  };
+  writeJson(join(dir, 'candidate.json'), candidate);
+  reindex();
+  log.ok(`Candidato ${c.bold(id)} (collected) en ${dir}`);
+  log.hint(`Siguiente: pnpm lattiz design harvest ${id}`);
+  return EXIT.OK;
+}
+
+export const design: Command = {
+  name: 'design',
+  summary:
+    'Biblioteca de diseños Stitch: traer, listar, extraer (harvest) y promover al kit',
+  usage:
+    'design gen|list|harvest|promote|shelve|reject|reindex|system [id] [opciones]',
+  help: [
+    'design gen --giro <g> [--n 2] [--direccion d|unused] [--rigor loose|tight] [--brief f]\n                          prepara design.md + prompt + plan para el MCP de Stitch (.lattiz/stitch/)',
+    'design system (--direccion d | --giro g [--direccion d] | --all) [--rigor loose|tight] [--out archivo]   imprime el DESIGN.md de Stitch',
+    'design gen --giro <g> --import <html|md> [--design-md f] [--screenshot f] [--name n] [--tags a,b] [--spin s] [--direccion d] [--project id] [--screen id,id] [--reuse-of id]',
+    '                          registra un candidato (collected) desde archivos locales',
+    'design promote <id> [--palette] [--fonts] [--section [--pattern slot/layout]] [--dry-run] [--regenerate-manifest]',
+    '                          pasa los borradores del harvest por las compuertas del kit; si una falla no queda nada',
+    '                          --section sin --regenerate-manifest es solo una prueba (esa bandera reescribe archivos generados de apps/api y apps/web)',
+    'design fidelity <id> <seccion> [--slot s] [--variants a/b,c/d] [--theme t] [--tier basic|pro]\n                          ¿ya existe en el kit, VISUALMENTE? renderiza la sección de Stitch y las variantes del slot y mide',
+    'design harvest <id> [--accent primary|secondary|tertiary]   (acento por defecto: primary; fuerza otro rol, p. ej. la plata)',
+    'design list [--giro g] [--status s] [--tag t] [--spin s] [--json]',
+    'design shelve|reject <id> [--note texto]     mueve la bandera',
+    'design reindex            regenera design-library/index.json',
+    '',
+    'Stitch no es parte del pipeline de publicación: solo alimenta el paso de diseño. Guía: docs/design-stitch-flow.md',
+  ],
+  options: {
+    json: { type: 'boolean' },
+    giro: { type: 'string' },
+    status: { type: 'string' },
+    tag: { type: 'string' },
+    tags: { type: 'string' },
+    spin: { type: 'string' },
+    import: { type: 'string' },
+    'design-md': { type: 'string' },
+    screenshot: { type: 'string' },
+    name: { type: 'string' },
+    direccion: { type: 'string' },
+    project: { type: 'string' },
+    screen: { type: 'string' },
+    'reuse-of': { type: 'string' },
+    note: { type: 'string' },
+    n: { type: 'string' },
+    rigor: { type: 'string' },
+    accent: { type: 'string' },
+    slot: { type: 'string' },
+    variants: { type: 'string' },
+    theme: { type: 'string' },
+    tier: { type: 'string' },
+    set: { type: 'string' },
+    all: { type: 'boolean' },
+    brief: { type: 'string' },
+    out: { type: 'string' },
+    palette: { type: 'boolean' },
+    fonts: { type: 'boolean' },
+    section: { type: 'boolean' },
+    pattern: { type: 'string' },
+    'dry-run': { type: 'boolean' },
+    'regenerate-manifest': { type: 'boolean' },
+    'allow-similar': { type: 'boolean' },
+  },
+  async run(ctx) {
+    setQuiet(bool(ctx.flags, 'json'));
+    const sub = ctx.positionals[0];
+    switch (sub) {
+      case 'list':
+      case undefined:
+        return runList(ctx);
+      case 'reindex':
+        return runReindex();
+      case 'harvest':
+        return runHarvest(ctx);
+      case 'fidelity':
+        return runFidelity(ctx);
+      case 'promote':
+        return runPromote(ctx);
+      case 'shelve':
+        return runFlag(ctx, 'shelved');
+      case 'reject':
+        return runFlag(ctx, 'rejected');
+      case 'gen':
+        return str(ctx.flags, 'import') ? runImport(ctx) : runPlan(ctx);
+      case 'system':
+        return runSystem(ctx);
+      default:
+        throw usage(
+          `Subcomando desconocido: "${sub}".`,
+          'pnpm lattiz design --help',
+        );
+    }
+  },
+};

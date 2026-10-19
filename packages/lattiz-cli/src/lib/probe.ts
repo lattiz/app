@@ -228,7 +228,7 @@ export async function probeBlueprint(tier: Tier): Promise<Blueprint> {
   return { ...real, roles, verticals } as unknown as Blueprint;
 }
 
-function sectionsFor(
+export function sectionsFor(
   tier: Tier,
   slot: string,
   variant: string,
@@ -291,10 +291,13 @@ export async function composePage(
   const packSections: Record<string, ContentObject> = {};
   for (const [s, v] of sections) {
     const m = await loadSectionMeta(s, v);
-    const data = sectionData(s, giro, business, mode, {
-      ...(m.sample ?? {}),
+    const data = {
+      ...sectionData(s, giro, business, mode, {
+        ...(m.sample ?? {}),
+        ...(input.extra?.[s] ?? {}),
+      }),
       ...(input.extra?.[s] ?? {}),
-    });
+    };
     if (s === 'navbar' || s === 'footer') data.links = links;
     packSections[s] = withBranch(data, giro.business.branch);
   }

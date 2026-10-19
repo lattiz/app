@@ -6,6 +6,7 @@ import { parseArgs } from 'node:util';
 import { build } from './commands/build';
 import { check } from './commands/check';
 import { deploy } from './commands/deploy';
+import { design } from './commands/design';
 import { direccion } from './commands/direccion';
 import { dev } from './commands/dev';
 import { doctor } from './commands/doctor';
@@ -29,6 +30,7 @@ const COMMANDS: Command[] = [
   list,
   giro,
   direccion,
+  design,
   kit,
   newTemplate,
   spec,

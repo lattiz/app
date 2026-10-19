@@ -1,0 +1,65 @@
+{
+  "$lattiz": "GENERATED from specs/barberia-gabinete-pinar-v1.spec.json (spec af41d063bb47, file 749f3f5be63d). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "placeholder",
+      "sha256": "f22c99d27a0b8a890fb2dbb33358744920137e19c8db19876ffcf6e63d8f053a"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "placeholder",
+      "sha256": "3ab4cb6421747b9f933cd8b8815738ccfe36cfaecb7b69fd5d8998de17d813c3"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "placeholder",
+      "sha256": "03d502876b6679b0c8f617f7e944c3a08809366986db9331be1767eeeceddae6"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "placeholder",
+      "sha256": "ecd7e857749423a2efa59b985cee89eca17001aebbdaad28f2a165da25e0da6b"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "placeholder",
+      "sha256": "ccd2b0d7c0f5063b4eb24be678ebdcc15e88872369997595bdbe61bfe897b31f"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "placeholder",
+      "sha256": "f0af655998a691d5b443c17a994cdb4ef7927d2edee087b94af4906fdb730a62"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "placeholder",
+      "sha256": "d0700dfc5017fbb4c7df59f246d311ae863638d8a605d51d393c7e0f00d3d756"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "placeholder",
+      "sha256": "a077c565e56afdea44c92a77fe00fd7df780a435ff69e72606803528fa057446"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "placeholder",
+      "sha256": "d86aa2a7fe877f473cdeeabcae120ede96259858ec1bf36e2960e2894850b6b6"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "placeholder",
+      "sha256": "4c78375f8d4ae2ac24f680bed9167d67ddc93006296a216851e08c903703cd59"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "placeholder",
+      "sha256": "16da60ce53bb70d894861faef4785d2f57805e0620786e6bf23511b9a40e5c0a"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "placeholder",
+      "sha256": "b1dfa76af67f5dbaa47d1228ef281d98d1a6ee8e83180d9033eb880606a7da96"
+    }
+  ]
+}

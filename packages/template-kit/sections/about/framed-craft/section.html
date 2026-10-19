@@ -1,0 +1,31 @@
+<section id="nosotros" data-lz-slot="about" data-lz-variant="framed-craft" class="lz-section lz-about-framed-craft">
+  <div class="lz-container">
+    <div class="lz-about-framed-craft__grid">
+      <div class="lz-about-framed-craft__copy">
+        <p class="lz-about-framed-craft__kicker" data-lz-if="kicker" data-lz-key="kicker"></p>
+        <h2 class="lz-title lz-about-framed-craft__title" data-lz-key="title"></h2>
+        <p class="lz-about-framed-craft__lead" data-lz-key="summary"></p>
+        <p class="lz-about-framed-craft__body" data-lz-if="body" data-lz-key="body"></p>
+        <ul class="lz-about-framed-craft__features">
+          <li class="lz-about-framed-craft__feature" data-lz-each="features">
+            <span class="lz-about-framed-craft__mark" aria-hidden="true"></span>
+            <div>
+              <h3 class="lz-about-framed-craft__feature-title" data-lz-key="title"></h3>
+              <p class="lz-about-framed-craft__feature-text" data-lz-key="text"></p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <figure class="lz-about-framed-craft__frame">
+        <img loading="lazy" width="1000" height="1000" class="lz-about-framed-craft__image" data-lz-attr-src="image" data-lz-attr-alt="imageAlt">
+        <figcaption class="lz-about-framed-craft__plate" data-lz-if="plateTitle">
+          <span class="lz-about-framed-craft__plate-text">
+            <span class="lz-about-framed-craft__plate-label" data-lz-if="plateLabel" data-lz-key="plateLabel"></span>
+            <span class="lz-about-framed-craft__plate-title" data-lz-key="plateTitle"></span>
+          </span>
+          <span class="lz-about-framed-craft__plate-aside" data-lz-if="plateAside" data-lz-key="plateAside"></span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>

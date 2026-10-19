@@ -1,0 +1,503 @@
+{
+  "$schema": "./spec.schema.json",
+  "specVersion": 1,
+  "idBase": "barberia-la-insignia",
+  "twin": true,
+  "giro": "barberia",
+  "business": {
+    "name": "La Insignia",
+    "shortName": "La Insignia",
+    "tagline": "Barbería de oficio",
+    "city": "Guadalajara",
+    "branch": "Americana",
+    "address": "Av. Chapultepec 118, Americana, Guadalajara, Jal.",
+    "hours": "Lun–Sáb 10:00–20:00",
+    "phone": "+52 33 0000 0000",
+    "whatsapp": "5213300000000",
+    "whatsappMessage": "Hola, quiero apartar una cita en La Insignia"
+  },
+  "brand": {
+    "catalog": "extended"
+  },
+  "layout": {
+    "direction": "insignia-musgo",
+    "variantOverrides": {
+      "hero": "photo-ribbon",
+      "faq": "numbered-cards",
+      "catalog": "ritual-cards",
+      "testimonials": "paper-trio",
+      "about": "framed-craft",
+      "contact": "booking-panel",
+      "footer": "signature-bar"
+    }
+  },
+  "sections": {
+    "pro": [
+      {
+        "role": "header"
+      },
+      {
+        "role": "hero"
+      },
+      {
+        "role": "marquee"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog"
+      },
+      {
+        "role": "proof"
+      },
+      {
+        "role": "contact"
+      },
+      {
+        "role": "team"
+      },
+      {
+        "role": "testimonials"
+      },
+      {
+        "role": "faq"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer"
+      }
+    ],
+    "basico": [
+      {
+        "role": "header"
+      },
+      {
+        "role": "hero"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog"
+      },
+      {
+        "role": "faq"
+      },
+      {
+        "role": "contact"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer"
+      }
+    ]
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "{{name}}, barbería de oficio en la Americana, Guadalajara. Corte clásico, afeitado a navaja y barba perfilada, con cita por WhatsApp."
+    },
+    "navbar": {
+      "cta": "Reservar cita"
+    },
+    "hero": {
+      "image": "hero.jpg",
+      "imageAlt": "Sillón de barbero de cuero en penumbra con vapor de toalla caliente",
+      "eyebrow": "Tradición y oficio · Guadalajara",
+      "title": "Oficio de navaja, toalla y paciencia",
+      "text": "Entras al sillón, la toalla va caliente, el filo no tiembla y sales en orden. El ritual de siempre, sin prisas ni poses.",
+      "primaryCta": "Reservar cita",
+      "secondaryCta": "Ver la carta",
+      "secondaryHref": "#servicios",
+      "note": "Sin anticipos · Respuesta en minutos"
+    },
+    "about": {
+      "kicker": "{{index}} — La casa",
+      "title": "Un oficio que se <span class=\"lz-title__serif\">aprende</span> mirando.",
+      "summary": "En {{shortName}} trabajamos como se hacía en las barberías de antes: vapor, aceite, navaja recta y una charla corta antes de empezar. Cada silla tiene su hora completa.",
+      "stats": [
+        {
+          "value": "Desde 2014",
+          "label": "En la colonia Americana"
+        },
+        {
+          "value": "3 barberos",
+          "label": "Con oficio propio"
+        },
+        {
+          "value": "+7,000 citas",
+          "label": "Atendidas en {{city}}"
+        }
+      ],
+      "statement": "La navaja no perdona la prisa: por eso cada afeitado empieza con vapor y termina con bálsamo frío.",
+      "image": "about.jpg",
+      "imageAlt": "Brocha, navaja recta y toalla doblada sobre una repisa de madera oscura",
+      "paragraphs": [
+        "{{shortName}} abrió con una sola silla de cuero y una regla: nadie se levanta sin haber sido escuchado.",
+        "Cortamos a tijera y a máquina, afeitamos a navaja libre y usamos productos de pequeña producción.",
+        "Sin pantallas ni fila. Una cita, tu silla y el tiempo que haga falta."
+      ],
+      "body": "Cortamos a tijera y a máquina, afeitamos a navaja libre y usamos productos de pequeña producción.",
+      "features": [
+        {
+          "title": "Vapor antes de cada afeitado",
+          "text": "Toalla caliente y aceite para abrir el poro antes de la hoja."
+        },
+        {
+          "title": "Navaja recta, hoja nueva",
+          "text": "Cada afeitado empieza con una hoja nueva, abierta frente a ti."
+        },
+        {
+          "title": "Bálsamo frío al terminar",
+          "text": "Cierra el poro y calma la piel, con productos de pequeña producción."
+        }
+      ],
+      "plateLabel": "Barbería de oficio",
+      "plateTitle": "Navaja recta y vapor",
+      "plateAside": "Desde 2014"
+    },
+    "services": {
+      "kicker": "{{index}} — La carta",
+      "title": "Cortes y <span class=\"lz-title__serif\">rituales</span>",
+      "intro": "Precios en pesos mexicanos. Todo ritual incluye consulta, toalla caliente y acabado con producto.",
+      "prices": [
+        {
+          "name": "Corte clásico",
+          "price": "$380",
+          "description": "Tijera y máquina, perfilado limpio y peinado con pomada mate.",
+          "duration": "45 minutos"
+        },
+        {
+          "name": "Afeitado a navaja",
+          "price": "$320",
+          "description": "Vapor, aceite pre-afeitado, navaja libre y bálsamo frío.",
+          "duration": "40 minutos"
+        },
+        {
+          "name": "Barba perfilada",
+          "price": "$260",
+          "description": "Forma y contornos a navaja, con tónico para la piel.",
+          "duration": "35 minutos"
+        },
+        {
+          "name": "Corte y barba",
+          "price": "$560",
+          "description": "El corte clásico con la barba perfilada en una sola cita.",
+          "duration": "75 minutos"
+        },
+        {
+          "name": "Ritual completo",
+          "price": "$720",
+          "description": "Corte, afeitado a navaja, mascarilla y una bebida de cortesía.",
+          "duration": "90 minutos",
+          "badge": "Ritual Insignia"
+        },
+        {
+          "name": "Limpieza de cuello y ceja",
+          "price": "$150",
+          "description": "Mantenimiento rápido de contornos a navaja entre citas.",
+          "duration": "20 minutos"
+        }
+      ],
+      "promos": [
+        {
+          "tag": "Nota",
+          "title": "Primera cita",
+          "text": "La consulta inicial dura quince minutos y va incluida.",
+          "cta": "Reservar",
+          "href": "{{whatsappUrl:Hola, es mi primera cita en La Insignia}}"
+        },
+        {
+          "tag": "Nota",
+          "title": "Pase mensual",
+          "text": "Dos cortes y un afeitado al mes por $1,100, con agenda preferente.",
+          "cta": "Preguntar",
+          "href": "{{whatsappUrl:Hola, quiero el pase mensual}}"
+        },
+        {
+          "tag": "Nota",
+          "title": "Grupos y bodas",
+          "text": "Atendemos al novio y a sus padrinos en la barbería.",
+          "cta": "Cotizar",
+          "href": "{{whatsappUrl:Hola, quiero cotizar un grupo}}"
+        }
+      ],
+      "note": "Cada servicio incluye café negro recién colado o agua fría de cortesía.",
+      "noteCta": "Consultar horarios disponibles →"
+    },
+    "faq": {
+      "kicker": "{{index}} — Preguntas",
+      "title": "Antes de <span class=\"lz-title__serif\">venir</span>",
+      "intro": "Lo que conviene saber antes de sentarte. Si falta algo, escríbenos.",
+      "cta": "Escribir por WhatsApp",
+      "items": [
+        {
+          "question": "¿Cómo aparto mi cita?",
+          "answer": "Escríbenos por WhatsApp con un día de anticipación. Cada silla se reserva con su hora completa."
+        },
+        {
+          "question": "¿Cuánto cuesta cada servicio?",
+          "answer": "El corte clásico cuesta $380, el afeitado a navaja $320 y el ritual completo $720."
+        },
+        {
+          "question": "¿Cómo puedo pagar?",
+          "answer": "Efectivo, tarjeta o transferencia. La propina se comparte con quien te atendió y con el resto del equipo."
+        },
+        {
+          "question": "¿Y si necesito cambiar la cita?",
+          "answer": "Si necesitas moverla, avísanos con 12 horas y te damos otro horario sin costo."
+        }
+      ]
+    },
+    "locations": {
+      "kicker": "{{index}} — Visítanos",
+      "title": "Pasa por la <span class=\"lz-title__serif\">Americana</span>",
+      "hoursLabel": "Horario",
+      "whatsappCta": "Agendar por WhatsApp",
+      "callCta": "Llamar",
+      "directionsLabel": "Cómo llegar",
+      "contactText": "Contestamos de lunes a sábado dentro del horario. Para grupos, usa el correo.",
+      "whatsappLabel": "WhatsApp",
+      "whatsappValue": "Reservar cita",
+      "callLabel": "Teléfono",
+      "emailLabel": "Correo",
+      "whatsappNote": "Atención rápida para apartar tu turno",
+      "callNote": "Llamada directa al mostrador",
+      "emailNote": "Para grupos y eventos privados"
+    },
+    "floating-whatsapp": {
+      "label": "Escribir a La Insignia"
+    },
+    "footer": {
+      "about": "Barbería de oficio en Guadalajara. Corte clásico, afeitado a navaja y barba perfilada, con cita.",
+      "branchesTitle": "La casa",
+      "linksTitle": "Secciones",
+      "contactTitle": "Contacto",
+      "monogram": "LI",
+      "motto": "Oficio · Navaja · Barrio"
+    },
+    "team": {
+      "kicker": "{{index}} — Los barberos",
+      "title": "Las manos <span class=\"lz-title__serif\">detrás</span>",
+      "members": [
+        {
+          "name": "Ramiro Cuevas",
+          "role": "Fundador · navaja libre",
+          "tags": [
+            "Afeitado",
+            "Toalla caliente"
+          ],
+          "image": "team-1.jpg",
+          "imageAlt": "Retrato de Ramiro Cuevas con una navaja recta"
+        },
+        {
+          "name": "Abel Ocampo",
+          "role": "Corte clásico",
+          "tags": [
+            "Tijera",
+            "Fade clásico"
+          ],
+          "image": "team-2.jpg",
+          "imageAlt": "Retrato de Abel Ocampo con peine y tijera"
+        },
+        {
+          "name": "Nicolás Paredes",
+          "role": "Barba y perfilado",
+          "tags": [
+            "Perfilado",
+            "Tónicos"
+          ],
+          "image": "team-3.jpg",
+          "imageAlt": "Retrato de Nicolás Paredes perfilando una barba"
+        }
+      ]
+    },
+    "gallery": {
+      "kicker": "{{index}} — La casa en fotos",
+      "title": "Cuaderno de <span class=\"lz-title__serif\">cortes</span>",
+      "items": [
+        {
+          "image": "gallery-01.jpg",
+          "caption": "Sillón de cuero",
+          "alt": "Sillón de barbero de cuero con estructura cromada"
+        },
+        {
+          "image": "gallery-02.jpg",
+          "caption": "Navaja libre",
+          "alt": "Navaja recta de acero sobre una toalla"
+        },
+        {
+          "image": "gallery-03.jpg",
+          "caption": "Corte en curso",
+          "alt": "Barbero trabajando un corte con tijera"
+        },
+        {
+          "image": "gallery-04.jpg",
+          "caption": "Vapor",
+          "alt": "Toalla caliente humeante lista para el afeitado"
+        },
+        {
+          "image": "gallery-05.jpg",
+          "caption": "Instrumental",
+          "alt": "Tijeras y peines ordenados sobre madera"
+        },
+        {
+          "image": "gallery-06.jpg",
+          "caption": "Perfilado",
+          "alt": "Barba perfilada con navaja"
+        },
+        {
+          "image": "gallery-07.jpg",
+          "caption": "Pomada mate",
+          "alt": "Frascos de pomada sobre la repisa"
+        },
+        {
+          "image": "gallery-08.jpg",
+          "caption": "La casa",
+          "alt": "Dos sillones y luz tenue en la barbería"
+        }
+      ]
+    },
+    "testimonials": {
+      "kicker": "Clientela habitual",
+      "score": "4.9",
+      "summary": "Opiniones de ejemplo",
+      "allReviewsCta": "Leer todas",
+      "writeReviewCta": "Escribir una opinión",
+      "reviews": [
+        {
+          "text": "Ramiro afeita como pocos: la toalla a punto y cero prisa. Llevo cuatro años viniendo cada mes.",
+          "author": "Héctor V.",
+          "place": "Cliente desde 2021"
+        },
+        {
+          "text": "Me corté el pelo y la barba en una cita y salí con tiempo de sobra. Todo en orden.",
+          "author": "Emiliano S.",
+          "place": "Colonia Roma"
+        },
+        {
+          "text": "El ritual completo es un buen regalo. Me trataron con calma de principio a fin.",
+          "author": "Daniel R.",
+          "place": "San Rafael"
+        }
+      ],
+      "title": "Palabra de barrio",
+      "intro": "Testimonios directos de quienes no cambian de barbero por nada."
+    },
+    "marquee": {
+      "label": "Especialidades de la barbería",
+      "items": [
+        "Navaja libre",
+        "Vapor y toalla",
+        "Corte clásico",
+        "Barba perfilada",
+        "Solo con cita"
+      ]
+    }
+  },
+  "images": [
+    {
+      "key": "hero",
+      "source": {
+        "url": "https://images.pexels.com/photos/37764947/pexels-photo-37764947.jpeg"
+      }
+    },
+    {
+      "key": "about",
+      "source": {
+        "url": "https://images.pexels.com/photos/9280243/pexels-photo-9280243.jpeg"
+      }
+    },
+    {
+      "key": "team-1",
+      "source": {
+        "url": "https://images.pexels.com/photos/8552627/pexels-photo-8552627.jpeg"
+      }
+    },
+    {
+      "key": "team-2",
+      "source": {
+        "url": "https://images.pexels.com/photos/18483772/pexels-photo-18483772.jpeg"
+      }
+    },
+    {
+      "key": "team-3",
+      "source": {
+        "url": "https://images.pexels.com/photos/12946033/pexels-photo-12946033.jpeg"
+      }
+    },
+    {
+      "key": "gallery-01",
+      "source": {
+        "url": "https://images.pexels.com/photos/4625630/pexels-photo-4625630.jpeg"
+      }
+    },
+    {
+      "key": "gallery-02",
+      "source": {
+        "url": "https://images.pexels.com/photos/39559308/pexels-photo-39559308.jpeg"
+      }
+    },
+    {
+      "key": "gallery-03",
+      "source": {
+        "url": "https://images.pexels.com/photos/7518734/pexels-photo-7518734.jpeg"
+      }
+    },
+    {
+      "key": "gallery-04",
+      "source": {
+        "url": "https://images.pexels.com/photos/2775272/pexels-photo-2775272.jpeg"
+      }
+    },
+    {
+      "key": "gallery-05",
+      "source": {
+        "url": "https://images.pexels.com/photos/7781844/pexels-photo-7781844.jpeg"
+      }
+    },
+    {
+      "key": "gallery-06",
+      "source": {
+        "url": "https://images.pexels.com/photos/9146943/pexels-photo-9146943.jpeg"
+      }
+    },
+    {
+      "key": "gallery-07",
+      "source": {
+        "url": "https://images.pexels.com/photos/14011984/pexels-photo-14011984.jpeg"
+      }
+    },
+    {
+      "key": "gallery-08",
+      "source": {
+        "url": "https://images.pexels.com/photos/7922651/pexels-photo-7922651.jpeg"
+      }
+    }
+  ],
+  "motion": {
+    "preset": "calm",
+    "progress": true
+  },
+  "todo": [
+    "business: dirección, colonia, horario, teléfono y WhatsApp reales (hoy son de demostración)",
+    "copy: precios, equipo, reseñas y preguntas del negocio",
+    "images: fotos reales ({ \"file\": \"…\" }) o `pnpm lattiz build <id> --images pexels`",
+    "brand: paleta, tipografía y forma (spec schema → opciones; `kit:spec presets` las lista)"
+  ],
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Corte limpio, afeitado a navaja",
+          "text": "Cortes clásicos y afeitado con toalla caliente en la colonia Americana, con cita por WhatsApp."
+        }
+      }
+    }
+  }
+}

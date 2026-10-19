@@ -625,4 +625,16 @@ export const PALETTE_SEEDS: Record<string, PaletteSeed> = {
     photoTreatment: 'none',
     placeholder: 'stripes',
   },
+  // Stitch: barberia-don-porfirio-01
+  'pal-musgo-y-plata': {
+    label: 'Musgo y plata (Stitch, oscuro)',
+    mode: 'dark',
+    mood: ['nocturno', 'stitch'],
+    affinity: ['barberia'],
+    bg: '#2C3E24',
+    text: '#e1e3e1',
+    accent: '#c3c7cd',
+    photoTreatment: 'none',
+    placeholder: 'rules',
+  },
 };

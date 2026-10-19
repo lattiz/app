@@ -77,13 +77,7 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [bento-facts-visible-mobile](bento-facts-visible-mobile.md) — datos del bento visibles en móvil; display:none marcaba nojs
 - [twin-accent-hue-split](twin-accent-hue-split.md) — gemelos Pro/Básico necesitan tonos de acento ≥30° aparte; rango libre del giro
 - [template-art-directions](template-art-directions.md) — 6 direcciones como datos; ≥ 6 de 15 elecciones distintas; reglas = compuerta; deriva al gris
+- [stitch-design-source](stitch-design-source.md) — Stitch como fuente de diseño del kit; biblioteca, harvester, promote con compuertas
 - [editor-plan-catalog](editor-plan-catalog.md) — plan de bloques del editor derivado del manifiesto; misma lista que la API
 - [editor-kit-blocks](editor-kit-blocks.md) — bloques del kit en el editor; solo el CSS usado; tokens en :where(html)
-- [admin-architecture](admin-architecture.md) — admin = módulo /admin aditivo en la API + SPA apps/admin; esquema admin cerrado
-- [admin-auth-members-mfa](admin-auth-members-mfa.md) — AdminGuard: miembro activo + aal2 + rol; sin @AdminRoles solo owner; auditoría
-- [admin-kpi-definitions](admin-kpi-definitions.md) — MRR en vivo de Stripe, churn, en riesgo, embudo y kpi_daily; sin internos
-- [openapi-nullable-enums](openapi-nullable-enums.md) — enum nulo en un DTO: null dentro del array enum; nullable:true solo no llega al cliente
-- [admin-layout-min-w-0](admin-layout-min-w-0.md) — SidebarInset de shadcn necesita min-w-0 o una tabla ancha desborda toda la página
-- [template-metadata-ownership](template-metadata-ownership.md) — tras el primer seed, nombre/descr./categoría/orden/miniatura son del admin; el kit manda el resto
-- [stripe-idempotency-key-per-call](stripe-idempotency-key-per-call.md) — una idempotencyKey por llamada a Stripe; reusarla entre update y cancel falla siempre
-- [admin-tenant-purge](admin-tenant-purge.md) — borrado completo de un tenant desde el admin: qué se borra en cada proveedor y qué se conserva
+- [stitch-native-reconstruction](stitch-native-reconstruction.md) — patrones de Stitch como secciones nativas; frenos anti-inflación; compuerta de foto de portada

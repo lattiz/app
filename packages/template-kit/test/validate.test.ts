@@ -45,12 +45,15 @@ describe('validator on the library templates', () => {
     expect(pro?.similarity.map((s) => s.other).sort()).toEqual([
       'barberia-abeto-v1',
       'barberia-concreto-v1',
+      'barberia-gabinete-pinar-v1',
+      'barberia-la-insignia-v1',
       'barberia-oxido-v1',
     ]);
     const basic = reports.get('barberia-base-claro-v1');
     expect(basic?.similarityLimit).toBe(TIERS.basic.similarityLimit);
     expect(basic?.similarity.map((s) => s.other).sort()).toEqual([
       'barberia-base-abeto-v1',
+      'barberia-base-la-insignia-v1',
       'barberia-base-oscuro-v1',
       'barberia-base-solar-v1',
     ]);

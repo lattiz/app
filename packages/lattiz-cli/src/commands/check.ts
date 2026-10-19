@@ -1,3 +1,4 @@
+import { heroPhotoMessage, heroPlaceholderOf } from '../lib/hero-photo';
 import { spawn, spawnSync } from 'node:child_process';
 import {
   existsSync,
@@ -94,6 +95,7 @@ const RULES = {
   lighthouse: 'Lighthouse',
   cwv: `Web Vitals lab (LCP ≤ ${LCP_MS / 1000} s, CLS ≤ ${CLS_MAX})`,
   credits: 'créditos de fotos',
+  'hero-photo': 'foto de portada',
 } as const;
 type RuleId = keyof typeof RULES;
 
@@ -665,7 +667,17 @@ export async function runCheck(
   const dist = readDist(id);
   const tier = dist.meta.tier;
   const credits = creditsResult(dist.manifest.vertical, dist.manifest.theme);
+  const heroPhoto = heroPlaceholderOf(id);
   if (credits) results.push(credits);
+  if (heroPhoto)
+    results.push(
+      result(
+        'hero-photo',
+        GLOBAL,
+        'WARN',
+        `${heroPhotoMessage(id, heroPhoto.file)} En la vista previa es solo un aviso; ship y publish no lo permiten.`,
+      ),
+    );
   // The .grapesjs carries the {{lz:*}} tokens; dist/index.html already shows the demo data.
   const projectFile = resolve(dist.dir, `${id}.grapesjs`);
   const sourceTokens = existsSync(projectFile)

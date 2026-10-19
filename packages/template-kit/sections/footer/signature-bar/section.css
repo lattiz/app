@@ -1,0 +1,118 @@
+.lz-footer-signature-bar {
+  padding: calc(60px * var(--lz-space)) 0;
+  border-top: var(--lz-border-width) solid var(--lz-color-line);
+  background: var(--lz-color-bg);
+}
+
+.lz-footer-signature-bar__inner {
+  display: grid;
+  gap: calc(40px * var(--lz-space));
+}
+
+.lz-footer-signature-bar__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: calc(32px * var(--lz-space));
+  border-bottom: var(--lz-border-width) solid var(--lz-color-line);
+}
+
+.lz-footer-signature-bar__brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+}
+
+.lz-footer-signature-bar__monogram {
+  display: grid;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 4px;
+  place-items: center;
+  border: var(--lz-border-width) solid var(--lz-color-accent);
+  border-radius: calc(var(--lz-radius-card) / 2);
+  background: var(--lz-color-surface);
+  font-family: var(--lz-font-display);
+  font-size: calc(14px * var(--lz-text-scale));
+}
+
+.lz-footer-signature-bar__name {
+  font-family: var(--lz-font-display);
+  font-size: calc(clamp(17px, 1.7vw, 22px) * var(--lz-display-scale));
+  letter-spacing: var(--lz-display-tracking, 0.06em);
+  text-transform: uppercase;
+}
+
+.lz-footer-signature-bar__motto {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  color: var(--lz-color-muted);
+  font-size: calc(12px * var(--lz-text-scale));
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Barber ribbon in the theme's own colors: diagonal bands, no literal color in a section. */
+.lz-footer-signature-bar__ribbon {
+  width: 64px;
+  height: 4px;
+  border-radius: 1px;
+  background: repeating-linear-gradient(
+    135deg,
+    var(--lz-color-accent) 0 4px,
+    var(--lz-color-text) 4px 8px,
+    color-mix(in srgb, var(--lz-color-accent) 55%, var(--lz-color-bg)) 8px 12px
+  );
+  opacity: 0.8;
+}
+
+.lz-footer-signature-bar__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 32px;
+  font-size: calc(14px * var(--lz-text-scale));
+}
+
+.lz-footer-signature-bar__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lz-footer-signature-bar__link {
+  display: inline-flex;
+  align-items: center;
+  min-width: 44px;
+  padding-block: 12px;
+  margin-block: -12px;
+  color: var(--lz-color-muted);
+}
+
+.lz-footer-signature-bar__link:hover,
+.lz-footer-signature-bar__link:focus-visible {
+  color: var(--lz-color-text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.lz-footer-signature-bar__legal {
+  margin: 0;
+  color: var(--lz-color-muted);
+  text-align: right;
+}
+
+@media (max-width: 992px) {
+  .lz-footer-signature-bar__legal {
+    text-align: left;
+  }
+}

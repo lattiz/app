@@ -1,0 +1,12 @@
+{
+  "$lattiz": "GENERATED from specs/barberia-la-insignia.spec.json (spec 023c9502fca0, file c32e2037dbf1). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "e1e976251c99527bd645583cc5e8a366869214c0325232bcf0809d659e229d02",
+      "url": "https://images.pexels.com/photos/37764947/pexels-photo-37764947.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/37764947/"
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import cantera from './cantera-editorial';
+import insignia from './insignia-musgo';
 import jardin from './jardin-suave';
 import marmol from './marmol-sobrio';
 import neon from './neon-nocturno';
@@ -14,5 +15,5 @@ export type { ArtDirection, DirectionRule } from './types';
  * writing directions/<id>.ts and listing it here; ids are stable.
  */
 export const DIRECTIONS: Record<string, ArtDirection> = Object.fromEntries(
-  [cantera, neon, jardin, tinta, terracota, marmol].map((d) => [d.id, d]),
+  [cantera, neon, jardin, tinta, terracota, marmol, insignia].map((d) => [d.id, d]),
 );

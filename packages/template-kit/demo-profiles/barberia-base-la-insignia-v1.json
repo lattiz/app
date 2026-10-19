@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/barberia-la-insignia.spec.json (spec 023c9502fca0, file 8ceca62e4de4). Do not edit: use the spec, or freeze.",
+  "name": "La Insignia",
+  "category": "barbershop",
+  "phone": "+523300000000",
+  "whatsapp": "+5213300000000",
+  "email": "hola@lainsignia.mx",
+  "address": {
+    "street": "Av. Chapultepec 118, Americana, Guadalajara, Jal.",
+    "city": "Guadalajara",
+    "country": "MX"
+  },
+  "hours": {
+    "tue": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "sun": [
+      {
+        "open": "11:00",
+        "close": "16:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}

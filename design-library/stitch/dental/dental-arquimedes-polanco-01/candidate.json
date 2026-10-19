@@ -1,0 +1,21 @@
+{
+  "id": "dental-arquimedes-polanco-01",
+  "giro": "dental",
+  "source": "stitch",
+  "status": "harvested",
+  "tags": [
+    "marmol-sobrio",
+    "loose",
+    "claro"
+  ],
+  "spin": "ice-blue-editorial",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-19T07:40:39.549Z",
+  "stitch": {
+    "project_id": "13661894303252949276",
+    "screen_ids": [
+      "cf0741f3acc542bc9eb2664cc69d4ac6"
+    ]
+  },
+  "direction": "marmol-sobrio"
+}

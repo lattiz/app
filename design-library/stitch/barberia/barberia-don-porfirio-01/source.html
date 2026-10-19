@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+
+<html class="dark scroll-smooth" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Barbería Don Porfirio · Corte Limpio, Barba en Orden</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-fixed": "#171c20",
+            "secondary-container": "#454a4f",
+            "on-tertiary-fixed": "#410002",
+            "secondary-fixed": "#dfe3e9",
+            "inverse-surface": "#e1e3e1",
+            "primary-container": "#314b3e",
+            "on-primary-container": "#9dbaa9",
+            "tertiary-container": "#91000a",
+            "surface-bright": "#373a39",
+            "background": "#111413",
+            "primary-fixed": "#ccead8",
+            "on-tertiary-fixed-variant": "#93000b",
+            "surface-variant": "#323534",
+            "on-primary-fixed-variant": "#324c3f",
+            "on-tertiary-container": "#ff978c",
+            "surface-container": "#1d201f",
+            "surface-dim": "#111413",
+            "primary": "#b0cdbc",
+            "surface-container-highest": "#323534",
+            "outline-variant": "#424844",
+            "error": "#ffb4ab",
+            "surface-container-lowest": "#0c0f0e",
+            "outline": "#8c928d",
+            "surface": "#111413",
+            "on-primary-fixed": "#062015",
+            "on-surface-variant": "#c2c8c2",
+            "on-error-container": "#ffdad6",
+            "on-surface": "#e1e3e1",
+            "on-secondary-container": "#b4b9bf",
+            "surface-container-high": "#282b29",
+            "surface-tint": "#b0cdbc",
+            "tertiary": "#ffb4ab",
+            "on-background": "#e1e3e1",
+            "on-tertiary": "#690005",
+            "on-error": "#690005",
+            "inverse-on-surface": "#2e3130",
+            "inverse-primary": "#496456",
+            "tertiary-fixed": "#ffdad6",
+            "surface-container-low": "#191c1b",
+            "on-secondary": "#2c3136",
+            "on-secondary-fixed-variant": "#43474c",
+            "tertiary-fixed-dim": "#ffb4ab",
+            "on-primary": "#1c3529",
+            "error-container": "#93000a",
+            "secondary": "#c3c7cd",
+            "primary-fixed-dim": "#b0cdbc",
+            "secondary-fixed-dim": "#c3c7cd"
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          spacing: {
+            "space-md": "1rem",
+            "gutter-mobile": "1rem",
+            "margin": "3rem",
+            "space-sm": "0.5rem",
+            "margin-mobile": "1.25rem",
+            "space-xl": "2.5rem",
+            "space-lg": "1.5rem",
+            "gutter": "1.5rem",
+            "space-xs": "0.25rem"
+          },
+          fontFamily: {
+            "label-lg": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Playfair Display"],
+            "body-md": ["Plus Jakarta Sans"],
+            "headline-sm": ["Playfair Display"],
+            "headline-xl": ["Playfair Display"],
+            "label-md": ["Plus Jakarta Sans"],
+            "headline-lg": ["Playfair Display"],
+            "headline-md": ["Playfair Display"],
+            "headline-xl-mobile": ["Playfair Display"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "title-md": ["Playfair Display"]
+          },
+          fontSize: {
+            "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.1em", fontWeight: "600" }],
+            "headline-lg-mobile": ["26px", { lineHeight: "34px", letterSpacing: "0.12em", fontWeight: "600" }],
+            "body-md": ["15px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "400" }],
+            "headline-sm": ["20px", { lineHeight: "28px", letterSpacing: "0.10em", fontWeight: "600" }],
+            "headline-xl": ["48px", { lineHeight: "56px", letterSpacing: "0.15em", fontWeight: "700" }],
+            "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.12em", fontWeight: "600" }],
+            "headline-lg": ["36px", { lineHeight: "44px", letterSpacing: "0.15em", fontWeight: "600" }],
+            "headline-md": ["24px", { lineHeight: "32px", letterSpacing: "0.12em", fontWeight: "600" }],
+            "headline-xl-mobile": ["32px", { lineHeight: "40px", letterSpacing: "0.12em", fontWeight: "700" }],
+            "body-sm": ["13px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "400" }],
+            "label-sm": ["10px", { lineHeight: "14px", letterSpacing: "0.14em", fontWeight: "700" }],
+            "body-lg": ["18px", { lineHeight: "28px", letterSpacing: "0.01em", fontWeight: "400" }],
+            "title-md": ["18px", { lineHeight: "26px", letterSpacing: "0.08em", fontWeight: "500" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary-container selection:text-white antialiased overflow-x-hidden">
+<!-- Barber Pole Top Accent Line -->
+<div class="h-1 w-full bg-[linear-gradient(45deg,#b91c1c_25%,#f4f4f0_25%,#f4f4f0_50%,#1d4ed8_50%,#1d4ed8_75%,#b91c1c_75%)] bg-[length:24px_24px] fixed top-0 left-0 z-50"></div>
+<!-- 1. FIXED HEADER -->
+<header class="fixed top-1 left-0 w-full z-40 bg-surface-container-lowest/90 backdrop-blur-md border-b border-outline-variant/40 shadow-2xl transition-all duration-300">
+<div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+<!-- Monogram & Emblem -->
+<a class="flex items-center gap-3 group" href="#">
+<div class="w-10 h-10 rounded border border-secondary/40 bg-surface-container flex items-center justify-center relative overflow-hidden group-hover:border-primary transition-colors">
+<span class="font-headline-sm text-headline-sm font-semibold tracking-widest text-on-surface">DP</span>
+<div class="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-secondary to-transparent opacity-60"></div>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm font-semibold tracking-widest text-on-surface uppercase">Barbería Don Porfirio</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant/80">Ciudad de México · Desde 1948</span>
+</div>
+</a>
+<!-- Desktop Navigation -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors" href="#experiencia">Experiencia</a>
+<a class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors" href="#servicios">Servicios</a>
+<a class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors" href="#maestros">Maestros</a>
+<a class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors" href="#resenas">Reseñas</a>
+<a class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors" href="#preguntas">Preguntas</a>
+<a class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors" href="#contacto">Contacto</a>
+</nav>
+<!-- Primary Action CTA -->
+<div class="flex items-center gap-4">
+<a class="relative inline-flex items-center justify-center border border-secondary/60 bg-primary-container hover:bg-primary-container/80 text-white font-label-md text-label-md font-semibold px-5 py-2.5 rounded uppercase tracking-wider shadow-md transition-all active:scale-[0.98]" href="https://wa.me/525541928830?text=Hola,%20deseo%20apartar%20un%20turno%20en%20Don%20Porfirio" rel="noopener noreferrer" target="_blank">
+<span class="relative z-10 flex items-center gap-2">
+<!-- Steel Razor Blade SVG Icon -->
+<svg class="w-3.5 h-3.5 text-secondary" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879a3 3 0 11-4.242-4.242L10.757 7.757" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+            Apartar turno
+          </span>
+<div class="absolute inset-0 rounded bg-gradient-to-tr from-white/10 via-transparent to-white/5 pointer-events-none"></div>
+</a>
+</div>
+</div>
+</header>
+<!-- 2. HERO SECTION -->
+<section class="relative min-h-[92vh] flex items-center pt-24 pb-16 overflow-hidden" id="experiencia">
+<!-- Background Image Asset with Dark Forest / Obsidian Overlay -->
+<div class="absolute inset-0 z-0">
+<img alt="Interior tradicional Barbería Don Porfirio" class="w-full h-full object-cover object-center scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKwKMsSV8YlH6fOW3-PsIetuFXKn8mfYdSLetl0dFnmfAtEwc0QJJLHgbAujHvj_wgIPPpLeFDGjrxrH_kcDciOMEgo1d74Z9UvAkJx-vCb5s0VWSu68ri05ucz1TEW-68aa83VuhW9hPtK63pb7rTSaj9AmrhcClVHS_MrryQFCtPI-ThYcCE7k255-p3fUnmzdKBkkzrjquWaKytGjxI43zQB6lq29O_YSjWZ4o_MZCP55LyTKg29MXim9p2NmZvGmRkSYoZGDgL"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-surface-container-lowest/80 to-primary-container/75"></div>
+<div class="absolute inset-0 bg-background/50"></div>
+</div>
+<div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full pt-12">
+<div class="max-w-3xl">
+<!-- Subtle Vintage Badge with Barber Ribbon -->
+<div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded border border-outline-variant/60 bg-surface-container-lowest/90 backdrop-blur-md mb-8">
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-3.5 bg-[#b91c1c] rounded-xs"></span>
+<span class="w-1.5 h-3.5 bg-[#f4f4f0] rounded-xs"></span>
+<span class="w-1.5 h-3.5 bg-[#1d4ed8] rounded-xs"></span>
+</div>
+<span class="font-label-md text-label-md uppercase tracking-wider text-secondary">
+            TRADICIÓN &amp; OFICIO DESDE 1948 · CDMX
+          </span>
+</div>
+<!-- Single H1 Title -->
+<h1 class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl uppercase text-on-surface font-bold tracking-[0.15em] mb-6 leading-tight">
+          CORTE LIMPIO, BARBA EN ORDEN.
+        </h1>
+<!-- Direct Barrio Tone Subtitle -->
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mb-10 leading-relaxed">
+          Aquí no hay prisas ni poses. Entras al sillón, toalla hirviendo al rostro, filo de acero que no tiembla y sales impecable. El ritual de siempre, como debe ser.
+        </p>
+<!-- Primary Action & Microcopy -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+<a class="group relative inline-flex items-center justify-center px-8 py-4 bg-primary-container text-white font-label-lg text-label-lg uppercase tracking-wider rounded border border-secondary/60 hover:bg-[#253a30] transition-all shadow-xl active:scale-[0.98]" href="https://wa.me/525541928830?text=Buenas%20tardes,%20quiero%20apartar%20mi%20turno%20en%20el%20sillón" rel="noopener noreferrer" target="_blank">
+<span class="relative z-10 flex items-center gap-3">
+<!-- WhatsApp SVG Direct -->
+<svg class="w-5 h-5 text-secondary" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12.031 2C6.496 2 2 6.494 2 12.029c0 1.767.461 3.491 1.336 5.01L2 22l5.127-1.344a10.009 10.009 0 004.904 1.272h.005c5.533 0 10.029-4.494 10.029-10.03 0-2.679-1.043-5.197-2.937-7.091A9.972 9.972 0 0012.031 2zm5.836 14.195c-.244.686-1.42 1.309-1.956 1.393-.509.079-1.173.112-3.805-.98-3.364-1.397-5.524-4.834-5.692-5.059-.168-.225-1.365-1.817-1.365-3.465 0-1.648.865-2.459 1.173-2.796.308-.337.673-.421.897-.421.225 0 .449.002.646.012.207.01.485-.078.759.58.281.674.954 2.333 1.037 2.502.084.168.14.365.028.59-.112.224-.168.365-.337.561-.168.197-.354.439-.506.59-.168.169-.344.352-.148.689.196.337.873 1.439 1.874 2.33 1.288 1.147 2.373 1.503 2.71 1.671.337.169.534.141.73-.085.197-.225.842-.982 1.066-1.319.225-.337.449-.281.758-.168.309.112 1.964.927 2.301 1.096.337.168.561.253.645.393.084.14.084.814-.16 1.5z"></path>
+</svg>
+              Apartar turno
+            </span>
+<div class="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-transparent pointer-events-none"></div>
+</a>
+<div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+            Sin anticipos raros · Respuesta en minutos
+          </div>
+</div>
+</div>
+</div>
+<!-- Cold Steel Hairline Border Buffer -->
+<div class="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-outline-variant to-transparent"></div>
+</section>
+<!-- 3. ABOUT / LA TRADICIÓN SECTION -->
+<section class="py-24 max-w-7xl mx-auto px-6 lg:px-12 relative" id="maestros">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+<!-- Narrative Left Column -->
+<div class="lg:col-span-6 flex flex-col justify-center">
+<!-- Section Tag -->
+<div class="flex items-center gap-3 mb-4">
+<div class="w-6 h-px bg-secondary"></div>
+<span class="font-label-md text-label-md uppercase tracking-wider text-primary">EL OFICIO · RESPETO AL FILO</span>
+</div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase text-on-surface tracking-[0.15em] font-semibold mb-6">
+          Dos generaciones afeitando barbas duras.
+        </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-6 leading-relaxed">
+          El sillón de cuero no miente. Respetamos el tiempo del cliente y el filo de la hoja. Dos generaciones afeitando barbas duras con espuma tibia batida a brocha y toalla al vapor.
+        </p>
+<p class="font-body-md text-body-md text-on-surface-variant/80 mb-10 leading-relaxed">
+          No somos franquicia rápida ni estudio de vanidad. Aquí el maestro barbero inspecciona el remolino del cabello, templa la navaja con piedra fina y te devuelve la presencia de quien respeta su propia imagen.
+        </p>
+<!-- 3 Quality Seals with Monochromatic Steel SVG Icons -->
+<div class="space-y-4 pt-4 border-t border-outline-variant/40">
+<!-- Seal 1 -->
+<div class="flex items-center gap-4 p-3 rounded bg-surface-container-low border border-outline-variant/30">
+<div class="w-10 h-10 rounded border border-secondary/30 bg-surface-container flex items-center justify-center shrink-0">
+<!-- Shaving Brush SVG -->
+<svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M12 2v4m0 0a4 4 0 014 4v2H8v-2a4 4 0 014-4zm-3 8v6a3 3 0 006 0v-6H9z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg uppercase tracking-wider text-on-surface">Espuma batida a mano</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Con brocha de cerda natural en tazón de peltre tibio.</p>
+</div>
+</div>
+<!-- Seal 2 -->
+<div class="flex items-center gap-4 p-3 rounded bg-surface-container-low border border-outline-variant/30">
+<div class="w-10 h-10 rounded border border-secondary/30 bg-surface-container flex items-center justify-center shrink-0">
+<!-- Straight Razor Flame SVG -->
+<svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg uppercase tracking-wider text-on-surface">Navaja de un solo uso desinfectada al fuego</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Hojas de acero japonés abiertas directamente en tu presencia.</p>
+</div>
+</div>
+<!-- Seal 3 -->
+<div class="flex items-center gap-4 p-3 rounded bg-surface-container-low border border-outline-variant/30">
+<div class="w-10 h-10 rounded border border-secondary/30 bg-surface-container flex items-center justify-center shrink-0">
+<!-- Laurel Lotion Bottle SVG -->
+<svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg uppercase tracking-wider text-on-surface">Loción artesanal de laurel y menta</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Fórmula clásica que cierra el poro y apaga la irritación.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Integrated Still Life Image -->
+<div class="lg:col-span-6 relative">
+<div class="relative p-2 rounded bg-surface-container border border-outline-variant/40 shadow-2xl">
+<img alt="Navajas y tijeras tradicionales de acero pulido" class="w-full h-[520px] object-cover rounded filter contrast-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB61e7-sI5eL4FKXHRpRCuxA3O1BCEJHpjeWMH7u-EKWzvhLnI7bcjAsw7o05r74J2lCZlgSW3-zcNZtG3jxhv1AnbcvT9g8ao69Rw2qfOiXwYs-8M-jgdnUnuzBb9j5uuIKNWgJM8cwwjtXBonPvq0-Iq4SC-X_1RdNcgpJwOwBq1X62UF1OQd3CoI_X4E5va6OZWBsrOhWkDtiQwPIi8DFxzNNC3_Zfdi_5rmeBZW5cgGwhAn6t-CGp6Ezu_TTIhwPakiBeo4EXnx"/>
+<!-- Steel Corner Accents -->
+<div class="absolute top-4 left-4 w-3 h-3 border-t-2 border-l-2 border-secondary/70"></div>
+<div class="absolute top-4 right-4 w-3 h-3 border-t-2 border-r-2 border-secondary/70"></div>
+<div class="absolute bottom-4 left-4 w-3 h-3 border-b-2 border-l-2 border-secondary/70"></div>
+<div class="absolute bottom-4 right-4 w-3 h-3 border-b-2 border-r-2 border-secondary/70"></div>
+<!-- Discrete Floating Brass-free Heritage Tag -->
+<div class="absolute bottom-6 left-6 right-6 p-4 bg-surface-container-lowest/90 backdrop-blur-md border border-outline-variant/40 rounded flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary">Instrumentos Certificados</span>
+<p class="font-title-md text-title-md text-on-surface">Acero quirúrgico templado</p>
+</div>
+<div class="h-8 w-px bg-outline-variant/60"></div>
+<span class="font-label-md text-label-md text-secondary tracking-widest">CDMX</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. SERVICIOS Y RITUALES SECTION -->
+<section class="py-24 bg-surface-container-lowest relative border-y border-outline-variant/40" id="servicios">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+<div>
+<div class="flex items-center gap-3 mb-3">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-md text-label-md uppercase tracking-wider text-primary">CARTA DE SERVICIOS</span>
+</div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase text-on-surface tracking-[0.15em] font-semibold">
+            RITUALES &amp; TARIFA CLARA
+          </h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm">
+          Precios netos en moneda nacional. Sin añadidos forzados. El servicio dura lo que tenga que durar.
+        </p>
+</div>
+<!-- 3-Column Bento Grid of Services -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Service Card A -->
+<div class="group p-6 rounded bg-[#1A1D1C] border-t-2 border-t-primary-container border-x border-b border-outline-variant/30 hover:border-secondary/50 transition-all flex flex-col justify-between shadow-lg">
+<div>
+<div class="flex justify-between items-baseline mb-4">
+<h3 class="font-title-md text-title-md text-on-surface font-semibold">Corte Ejecutivo &amp; Textura</h3>
+<span class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight">$350 <span class="text-xs font-normal text-on-surface-variant">MXN</span></span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-6">
+              Lavado con agua fría, corte a tijera y máquina, peinado con pomada mate tradicional.
+            </p>
+</div>
+<div class="pt-4 border-t border-outline-variant/30 flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">45 MINUTOS</span>
+<a class="font-label-md text-label-md uppercase tracking-wider text-secondary group-hover:text-white flex items-center gap-1.5 transition-colors" href="https://wa.me/525541928830?text=Hola,%20deseo%20apartar%20el%20servicio:%20Corte%20Ejecutivo%20y%20Textura%20($350%20MXN)" rel="noopener noreferrer" target="_blank">
+              Elegir servicio
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</a>
+</div>
+</div>
+<!-- Service Card B -->
+<div class="group p-6 rounded bg-[#1A1D1C] border-t-2 border-t-primary-container border-x border-b border-outline-variant/30 hover:border-secondary/50 transition-all flex flex-col justify-between shadow-lg">
+<div>
+<div class="flex justify-between items-baseline mb-4">
+<h3 class="font-title-md text-title-md text-on-surface font-semibold">Afeitado Tradicional a Navaja</h3>
+<span class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight">$320 <span class="text-xs font-normal text-on-surface-variant">MXN</span></span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-6">
+              Tres toallas calientes con vapor de eucalipto, espuma densa, navaja libre y bálsamo calmante de piedra alumbre.
+            </p>
+</div>
+<div class="pt-4 border-t border-outline-variant/30 flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">40 MINUTOS</span>
+<a class="font-label-md text-label-md uppercase tracking-wider text-secondary group-hover:text-white flex items-center gap-1.5 transition-colors" href="https://wa.me/525541928830?text=Hola,%20deseo%20apartar%20el%20servicio:%20Afeitado%20Tradicional%20a%20Navaja%20($320%20MXN)" rel="noopener noreferrer" target="_blank">
+              Elegir servicio
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</a>
+</div>
+</div>
+<!-- Service Card C -->
+<div class="group p-6 rounded bg-[#1A1D1C] border-t-2 border-t-primary-container border-x border-b border-outline-variant/30 hover:border-secondary/50 transition-all flex flex-col justify-between shadow-lg">
+<div>
+<div class="flex justify-between items-baseline mb-4">
+<h3 class="font-title-md text-title-md text-on-surface font-semibold">Perfilado &amp; Arreglo de Barba</h3>
+<span class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight">$280 <span class="text-xs font-normal text-on-surface-variant">MXN</span></span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-6">
+              Alineado con navaja, rebajado simétrico, aceite hidratante de jojoba y cepillado.
+            </p>
+</div>
+<div class="pt-4 border-t border-outline-variant/30 flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">35 MINUTOS</span>
+<a class="font-label-md text-label-md uppercase tracking-wider text-secondary group-hover:text-white flex items-center gap-1.5 transition-colors" href="https://wa.me/525541928830?text=Hola,%20deseo%20apartar%20el%20servicio:%20Perfilado%20y%20Arreglo%20de%20Barba%20($280%20MXN)" rel="noopener noreferrer" target="_blank">
+              Elegir servicio
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</a>
+</div>
+</div>
+<!-- Service Card D (Featured Parchment Slip Style) -->
+<div class="group p-6 rounded bg-primary-container/20 border-t-2 border-t-secondary border-x border-b border-outline-variant/40 hover:border-secondary transition-all flex flex-col justify-between relative shadow-xl">
+<div class="absolute -top-3 right-4 px-2.5 py-0.5 bg-primary-container text-white border border-secondary/40 rounded-xs font-label-sm text-label-sm uppercase tracking-widest">
+            Ritual Insignia
+          </div>
+<div>
+<div class="flex justify-between items-baseline mb-4">
+<h3 class="font-title-md text-title-md text-on-surface font-semibold">Ritual Don Porfirio (Completo)</h3>
+<span class="font-headline-sm text-headline-sm text-white font-bold tracking-tight">$580 <span class="text-xs font-normal text-on-surface-variant">MXN</span></span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-6">
+              Corte artesanal, afeitado a navaja, exfoliación facial con toalla tibia y tónico mentolado.
+            </p>
+</div>
+<div class="pt-4 border-t border-outline-variant/30 flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">75 MINUTOS</span>
+<a class="font-label-md text-label-md uppercase tracking-wider text-white flex items-center gap-1.5 font-semibold" href="https://wa.me/525541928830?text=Hola,%20deseo%20apartar%20el%20Ritual%20Don%20Porfirio%20Completo%20($580%20MXN)" rel="noopener noreferrer" target="_blank">
+              Elegir servicio
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</a>
+</div>
+</div>
+<!-- Service Card E -->
+<div class="group p-6 rounded bg-[#1A1D1C] border-t-2 border-t-primary-container border-x border-b border-outline-variant/30 hover:border-secondary/50 transition-all flex flex-col justify-between shadow-lg">
+<div>
+<div class="flex justify-between items-baseline mb-4">
+<h3 class="font-title-md text-title-md text-on-surface font-semibold">Corte Infantil Clásico</h3>
+<span class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight">$260 <span class="text-xs font-normal text-on-surface-variant">MXN</span></span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-6">
+              Para los herederos del estilo. Sin jalones, corte limpio a tijera con paciencia y respeto.
+            </p>
+</div>
+<div class="pt-4 border-t border-outline-variant/30 flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">35 MINUTOS</span>
+<a class="font-label-md text-label-md uppercase tracking-wider text-secondary group-hover:text-white flex items-center gap-1.5 transition-colors" href="https://wa.me/525541928830?text=Hola,%20deseo%20apartar%20el%20servicio:%20Corte%20Infantil%20Clásico%20($260%20MXN)" rel="noopener noreferrer" target="_blank">
+              Elegir servicio
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</a>
+</div>
+</div>
+<!-- Service Card F -->
+<div class="group p-6 rounded bg-[#1A1D1C] border-t-2 border-t-primary-container border-x border-b border-outline-variant/30 hover:border-secondary/50 transition-all flex flex-col justify-between shadow-lg">
+<div>
+<div class="flex justify-between items-baseline mb-4">
+<h3 class="font-title-md text-title-md text-on-surface font-semibold">Limpieza de Cuello &amp; Ceja</h3>
+<span class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight">$150 <span class="text-xs font-normal text-on-surface-variant">MXN</span></span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-6">
+              Mantenimiento rápido de contornos a navaja entre citas.
+            </p>
+</div>
+<div class="pt-4 border-t border-outline-variant/30 flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">20 MINUTOS</span>
+<a class="font-label-md text-label-md uppercase tracking-wider text-secondary group-hover:text-white flex items-center gap-1.5 transition-colors" href="https://wa.me/525541928830?text=Hola,%20deseo%20apartar%20el%20servicio:%20Limpieza%20de%20Cuello%20y%20Ceja%20($150%20MXN)" rel="noopener noreferrer" target="_blank">
+              Elegir servicio
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</a>
+</div>
+</div>
+</div>
+<!-- Service Bottom Guarantee Strip -->
+<div class="mt-12 p-4 rounded bg-surface-container border border-outline-variant/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="font-body-sm text-body-sm text-on-surface">Cada servicio incluye café negro recién colado o agua fría de cortesía.</span>
+</div>
+<a class="font-label-md text-label-md uppercase tracking-wider text-primary hover:underline underline-offset-4 shrink-0" href="https://wa.me/525541928830?text=Hola,%20quiero%20consultar%20disponibilidad%20de%20horario" rel="noopener noreferrer" target="_blank">
+          Consultar horarios disponibles →
+        </a>
+</div>
+</div>
+</section>
+<!-- 5. TESTIMONIOS SECTION (Voz Real de Barrio) -->
+<section class="py-24 max-w-7xl mx-auto px-6 lg:px-12 relative" id="resenas">
+<div class="text-center max-w-2xl mx-auto mb-16">
+<div class="inline-flex items-center gap-2 mb-3">
+<span class="w-4 h-px bg-secondary"></span>
+<span class="font-label-md text-label-md uppercase tracking-wider text-primary">CLIENTELA HABITUAL</span>
+<span class="w-4 h-px bg-secondary"></span>
+</div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase text-on-surface tracking-[0.15em] font-semibold">
+        PALABRA DE BARRIO
+      </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-3">
+        Testimonios directos de quienes no cambian de barbero por nada.
+      </p>
+</div>
+<!-- Testimonial Cards: High Contrast Parchment & Cold Steel Layout -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Testimonial 1 (Parchment High-Contrast Card) -->
+<div class="p-8 rounded bg-[#F4F4F0] text-[#121615] border border-secondary shadow-xl flex flex-col justify-between relative">
+<div class="text-secondary/40 text-4xl font-headline-xl leading-none mb-3">“</div>
+<p class="font-body-lg text-body-lg italic leading-relaxed text-[#1A1D1C] mb-8">
+          Llevo cuatro años viniendo cada quincena antes de abrir el taller. Don Toño no falla un solo trazo. Salgo listo para lo que venga.
+        </p>
+<div class="pt-4 border-t border-[#D1D5DB]">
+<h4 class="font-title-md text-title-md font-bold uppercase tracking-wider text-[#121615]">Rogelio Morales</h4>
+<span class="font-label-sm text-label-sm text-[#4B5563] uppercase tracking-wider">Santa María la Ribera</span>
+</div>
+</div>
+<!-- Testimonial 2 (Dark Reserve Card with Brushed Edge) -->
+<div class="p-8 rounded bg-[#1A1D1C] border border-outline-variant/40 shadow-xl flex flex-col justify-between relative">
+<div class="text-secondary/30 text-4xl font-headline-xl leading-none mb-3">“</div>
+<p class="font-body-lg text-body-lg italic leading-relaxed text-on-surface mb-8">
+          La toalla caliente y el filo son de otro calibre. No te inventan cortes raros; te dejan como hombre de palabra.
+        </p>
+<div class="pt-4 border-t border-outline-variant/40">
+<h4 class="font-title-md text-title-md font-bold uppercase tracking-wider text-on-surface">Carlos Valenzuela</h4>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Colonia Roma</span>
+</div>
+</div>
+<!-- Testimonial 3 (Parchment High-Contrast Card) -->
+<div class="p-8 rounded bg-[#F4F4F0] text-[#121615] border border-secondary shadow-xl flex flex-col justify-between relative">
+<div class="text-secondary/40 text-4xl font-headline-xl leading-none mb-3">“</div>
+<p class="font-body-lg text-body-lg italic leading-relaxed text-[#1A1D1C] mb-8">
+          Puntuales, pulcros y con música tranquila. Aquí se viene a relajarse y a salir bien arreglado.
+        </p>
+<div class="pt-4 border-t border-[#D1D5DB]">
+<h4 class="font-title-md text-title-md font-bold uppercase tracking-wider text-[#121615]">David S. Menéndez</h4>
+<span class="font-label-sm text-label-sm text-[#4B5563] uppercase tracking-wider">San Rafael</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. PREGUNTAS FRECUENTES (FAQ - TODAS VISIBLES SIN ACORDEONES) -->
+<section class="py-24 bg-surface-container-lowest border-t border-outline-variant/40" id="preguntas">
+<div class="max-w-5xl mx-auto px-6 lg:px-12">
+<div class="text-center mb-16">
+<span class="font-label-md text-label-md uppercase tracking-wider text-primary">SIN DUDAS NI RODEOS</span>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase text-on-surface tracking-[0.15em] font-semibold mt-2">
+          PREGUNTAS FRECUENTES
+        </h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2">
+          Respuestas transparentes para que llegues con total certeza.
+        </p>
+</div>
+<!-- Direct Fully-Expanded FAQ Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- FAQ 1 -->
+<div class="p-6 rounded bg-[#1A1D1C] border border-outline-variant/40 flex flex-col justify-between">
+<div>
+<div class="flex items-start gap-3 mb-3">
+<span class="font-label-md text-label-md text-primary font-bold">01.</span>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold">¿Tengo que apartar turno o puedo llegar directo?</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed pl-7">
+              Aceptamos gente al paso si hay sillón libre, pero los turnos apartados por WhatsApp tienen prioridad absoluta para que no hagas antesala.
+            </p>
+</div>
+</div>
+<!-- FAQ 2 -->
+<div class="p-6 rounded bg-[#1A1D1C] border border-outline-variant/40 flex flex-col justify-between">
+<div>
+<div class="flex items-start gap-3 mb-3">
+<span class="font-label-md text-label-md text-primary font-bold">02.</span>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold">¿Qué método de afeitado utilizan?</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed pl-7">
+              Navaja libre clásica con hoja desechable nueva abierta frente a tus ojos, espuma tibia artesanal y doble toalla al vapor.
+            </p>
+</div>
+</div>
+<!-- FAQ 3 -->
+<div class="p-6 rounded bg-[#1A1D1C] border border-outline-variant/40 flex flex-col justify-between">
+<div>
+<div class="flex items-start gap-3 mb-3">
+<span class="font-label-md text-label-md text-primary font-bold">03.</span>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold">¿Qué métodos de pago reciben?</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed pl-7">
+              Efectivo, tarjetas de débito/crédito y transferencias SPEI al momento.
+            </p>
+</div>
+</div>
+<!-- FAQ 4 -->
+<div class="p-6 rounded bg-[#1A1D1C] border border-outline-variant/40 flex flex-col justify-between">
+<div>
+<div class="flex items-start gap-3 mb-3">
+<span class="font-label-md text-label-md text-primary font-bold">04.</span>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold">¿Cuánto dura el servicio completo?</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed pl-7">
+              Entre 40 y 55 minutos. No aceleramos el proceso; cada barba y cada cráneo tienen su tiempo justo.
+            </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. CONTACTO DIRECTO (SIN FORMULARIOS) -->
+<section class="py-24 max-w-7xl mx-auto px-6 lg:px-12 relative" id="contacto">
+<div class="p-8 md:p-14 rounded bg-[#1A1D1C] border border-secondary/40 shadow-2xl relative overflow-hidden">
+<!-- Background Ambient Metallic Sheen -->
+<div class="absolute -right-20 -top-20 w-96 h-96 bg-primary-container/20 rounded-full blur-3xl pointer-events-none"></div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
+<!-- Left Column: Direct Info -->
+<div class="lg:col-span-7">
+<div class="inline-flex items-center gap-2 mb-3">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-md text-label-md uppercase tracking-wider text-primary">SIN INTERMEDIARIOS</span>
+</div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase text-on-surface tracking-[0.15em] font-bold mb-6">
+            LLEGA O APARTA TU SILLÓN
+          </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10 leading-relaxed">
+            Sin formularios lentos que nadie contesta. Escríbenos directamente o llámanos para tener tu turno confirmado de inmediato.
+          </p>
+<!-- Contact Channels List -->
+<div class="space-y-6">
+<!-- WhatsApp Item -->
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded border border-secondary/30 bg-surface-container flex items-center justify-center shrink-0">
+<svg class="w-6 h-6 text-primary" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12.031 2C6.496 2 2 6.494 2 12.029c0 1.767.461 3.491 1.336 5.01L2 22l5.127-1.344a10.009 10.009 0 004.904 1.272h.005c5.533 0 10.029-4.494 10.029-10.03 0-2.679-1.043-5.197-2.937-7.091A9.972 9.972 0 0012.031 2zm5.836 14.195c-.244.686-1.42 1.309-1.956 1.393-.509.079-1.173.112-3.805-.98-3.364-1.397-5.524-4.834-5.692-5.059-.168-.225-1.365-1.817-1.365-3.465 0-1.648.865-2.459 1.173-2.796.308-.337.673-.421.897-.421.225 0 .449.002.646.012.207.01.485-.078.759.58.281.674.954 2.333 1.037 2.502.084.168.14.365.028.59-.112.224-.168.365-.337.561-.168.197-.354.439-.506.59-.168.169-.344.352-.148.689.196.337.873 1.439 1.874 2.33 1.288 1.147 2.373 1.503 2.71 1.671.337.169.534.141.73-.085.197-.225.842-.982 1.066-1.319.225-.337.449-.281.758-.168.309.112 1.964.927 2.301 1.096.337.168.561.253.645.393.084.14.084.814-.16 1.5z"></path>
+</svg>
+</div>
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">WhatsApp Directo</span>
+<p class="font-title-md text-title-md text-white font-semibold">+52 55 4192 8830</p>
+<span class="font-body-sm text-body-sm text-secondary">Atención rápida para apartado de turnos</span>
+</div>
+</div>
+<!-- Phone Direct Item -->
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded border border-secondary/30 bg-surface-container flex items-center justify-center shrink-0">
+<svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Teléfono de Cabina</span>
+<p class="font-title-md text-title-md text-white font-semibold">(55) 5547-0921</p>
+<span class="font-body-sm text-body-sm text-secondary">Llamada directa al mostrador</span>
+</div>
+</div>
+<!-- Email Direct Item -->
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded border border-secondary/30 bg-surface-container flex items-center justify-center shrink-0">
+<svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Correo Electrónico</span>
+<p class="font-title-md text-title-md text-white font-semibold">citas@barberiadonporfirio.mx</p>
+<span class="font-body-sm text-body-sm text-secondary">Para eventos privados y servicios de novios</span>
+</div>
+</div>
+</div>
+<!-- Direct WhatsApp Button -->
+<div class="mt-8">
+<a class="inline-flex items-center gap-3 px-8 py-3.5 bg-primary-container hover:bg-[#253a30] text-white font-label-lg text-label-lg uppercase tracking-wider rounded border border-secondary/60 shadow-lg transition-all active:scale-[0.98]" href="https://wa.me/525541928830?text=Hola,%20deseo%20apartar%20mi%20cita%20con%20Don%20Porfirio" rel="noopener noreferrer" target="_blank">
+<svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12.031 2C6.496 2 2 6.494 2 12.029c0 1.767.461 3.491 1.336 5.01L2 22l5.127-1.344a10.009 10.009 0 004.904 1.272h.005c5.533 0 10.029-4.494 10.029-10.03 0-2.679-1.043-5.197-2.937-7.091A9.972 9.972 0 0012.031 2zm5.836 14.195c-.244.686-1.42 1.309-1.956 1.393-.509.079-1.173.112-3.805-.98-3.364-1.397-5.524-4.834-5.692-5.059-.168-.225-1.365-1.817-1.365-3.465 0-1.648.865-2.459 1.173-2.796.308-.337.673-.421.897-.421.225 0 .449.002.646.012.207.01.485-.078.759.58.281.674.954 2.333 1.037 2.502.084.168.14.365.028.59-.112.224-.168.365-.337.561-.168.197-.354.439-.506.59-.168.169-.344.352-.148.689.196.337.873 1.439 1.874 2.33 1.288 1.147 2.373 1.503 2.71 1.671.337.169.534.141.73-.085.197-.225.842-.982 1.066-1.319.225-.337.449-.281.758-.168.309.112 1.964.927 2.301 1.096.337.168.561.253.645.393.084.14.084.814-.16 1.5z"></path>
+</svg>
+              Escribir por WhatsApp ahora
+            </a>
+</div>
+</div>
+<!-- Right Column: Location & Hours Card -->
+<div class="lg:col-span-5 flex flex-col justify-between p-6 rounded bg-surface-container border border-outline-variant/50">
+<div>
+<div class="flex items-center gap-2 mb-4">
+<svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold">Ubicación &amp; Horarios</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-6 leading-relaxed">
+              Calle Dr. Atl 148, Col. Santa María la Ribera, Cuauhtémoc, 06400 Ciudad de México, CDMX.
+            </p>
+<div class="space-y-3 pt-4 border-t border-outline-variant/40 mb-6">
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-on-surface font-medium">Lunes a Sábado</span>
+<span class="text-primary font-semibold">09:00 - 20:00 hrs</span>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-on-surface-variant">Domingos</span>
+<span class="text-secondary font-medium">Cerrado por descanso</span>
+</div>
+</div>
+</div>
+<div>
+<!-- Google Maps Direct Action Button -->
+<a class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded bg-[#1A1D1C] hover:bg-surface-variant text-secondary hover:text-white border border-outline-variant/60 font-label-md text-label-md uppercase tracking-wider transition-colors" href="https://maps.google.com/?q=Calle+Dr.+Atl+148+Santa+Maria+la+Ribera+CDMX" rel="noopener noreferrer" target="_blank">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+              Abrir en Google Maps
+            </a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 8. FOOTER SECTION -->
+<footer class="w-full bg-[#0D1110] border-t border-[#314B3E]/40 text-on-surface-variant">
+<div class="max-w-7xl mx-auto px-6 lg:px-12 py-16 flex flex-col gap-10">
+<!-- Top Row: Logo & Stylized Barber Ribbon -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-b border-outline-variant/40 pb-8">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 rounded border border-secondary/40 bg-surface-container flex items-center justify-center">
+<span class="font-headline-sm text-headline-sm font-semibold tracking-widest text-on-surface">DP</span>
+</div>
+<span class="font-headline-sm text-headline-sm font-semibold tracking-widest text-on-surface uppercase">Barbería Don Porfirio</span>
+</div>
+<!-- Stylized Silver Barber Pole Icon & Micro Accent -->
+<div class="flex items-center gap-3">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary">Oficio · Filo · Tradición</span>
+<div class="w-16 h-1 bg-[linear-gradient(45deg,#b91c1c_25%,#f4f4f0_25%,#f4f4f0_50%,#1d4ed8_50%,#1d4ed8_75%,#b91c1c_75%)] bg-[length:12px_12px] rounded-xs opacity-70"></div>
+</div>
+</div>
+<!-- Links & Copyright Row -->
+<div class="flex flex-col md:flex-row justify-between items-center gap-6 font-body-sm text-body-sm">
+<!-- Quick Nav & Privacy Links -->
+<div class="flex flex-wrap gap-6 items-center">
+<a class="hover:text-primary transition-colors" href="#servicios">Servicios</a>
+<a class="hover:text-primary transition-colors" href="#experiencia">Historia</a>
+<a class="hover:text-primary transition-colors" href="#maestros">Maestros</a>
+<a class="hover:text-primary transition-colors" href="#resenas">Reseñas</a>
+<a class="hover:text-primary transition-colors" href="#contacto">Ubicación</a>
+<a class="hover:text-primary transition-colors" href="#">Aviso de Privacidad</a>
+<a class="hover:text-primary transition-colors" href="#">Términos de Servicio</a>
+</div>
+<p class="text-on-surface-variant/80 text-center md:text-right">
+          © 2024 Barbería Don Porfirio. Todos los derechos reservados.
+        </p>
+</div>
+</div>
+</footer>
+</body></html>

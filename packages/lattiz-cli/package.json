@@ -9,17 +9,20 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "node --import tsx --test ../../scripts/lib/*.test.ts"
+    "test": "vitest run"
   },
   "dependencies": {
+    "@capsizecss/metrics": "4.3.0",
     "@clack/prompts": "^1.8.1",
     "@supabase/supabase-js": "^2.108.0",
-    "playwright": "^1.63.0"
+    "playwright": "^1.63.0",
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@types/node": "^24.13.1",
     "axe-core": "^4.14.0",
     "tsx": "^4.23.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^5.0.3"
   }
 }

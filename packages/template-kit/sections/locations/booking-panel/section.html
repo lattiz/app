@@ -1,0 +1,57 @@
+<section id="sucursales" data-lz-slot="locations" data-lz-variant="booking-panel" class="lz-section lz-locations-booking-panel">
+  <div class="lz-container">
+    <div class="lz-locations-booking-panel__card">
+      <div class="lz-locations-booking-panel__main">
+        <p class="lz-locations-booking-panel__kicker" data-lz-if="kicker" data-lz-key="kicker"></p>
+        <h2 class="lz-title lz-locations-booking-panel__title" data-lz-key="title"></h2>
+        <p class="lz-locations-booking-panel__text" data-lz-key="contactText"></p>
+        <ul class="lz-locations-booking-panel__channels">
+          <li>
+            <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-locations-booking-panel__channel">
+              <span class="lz-locations-booking-panel__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3s.8-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.7 1.1 1.5 1.8 1 .9 1.8 1.2 2.1 1.3.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.6-.1 1.2Z"/></svg></span>
+              <span class="lz-locations-booking-panel__channel-text">
+                <span class="lz-locations-booking-panel__label" data-lz-key="whatsappLabel"></span>
+                <span class="lz-locations-booking-panel__value" data-lz-key="whatsappValue"></span>
+                <span class="lz-locations-booking-panel__note" data-lz-if="whatsappNote" data-lz-key="whatsappNote"></span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="{{phoneUrl}}" class="lz-locations-booking-panel__channel">
+              <span class="lz-locations-booking-panel__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg></span>
+              <span class="lz-locations-booking-panel__channel-text">
+                <span class="lz-locations-booking-panel__label" data-lz-key="callLabel"></span>
+                <span class="lz-locations-booking-panel__value">{{phone}}</span>
+                <span class="lz-locations-booking-panel__note" data-lz-if="callNote" data-lz-key="callNote"></span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="{{emailUrl}}" class="lz-locations-booking-panel__channel">
+              <span class="lz-locations-booking-panel__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+              <span class="lz-locations-booking-panel__channel-text">
+                <span class="lz-locations-booking-panel__label" data-lz-key="emailLabel"></span>
+                <span class="lz-locations-booking-panel__value lz-locations-booking-panel__value--small">{{email}}</span>
+                <span class="lz-locations-booking-panel__note" data-lz-if="emailNote" data-lz-key="emailNote"></span>
+              </span>
+            </a>
+          </li>
+        </ul>
+        <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary lz-locations-booking-panel__cta" data-lz-key="whatsappCta"></a>
+      </div>
+      <div class="lz-locations-booking-panel__aside">
+        <article class="lz-locations-booking-panel__branch" data-lz-each="branches">
+          <div>
+            <h3 class="lz-locations-booking-panel__branch-name" data-lz-key="name"></h3>
+            <p class="lz-locations-booking-panel__address" data-lz-key="address"></p>
+            <p class="lz-locations-booking-panel__hours">
+              <span class="lz-locations-booking-panel__hours-label" data-lz-if="hoursLabel" data-lz-key="hoursLabel"></span>
+              <span class="lz-locations-booking-panel__hours-value" data-lz-key="hours"></span>
+            </p>
+          </div>
+          <a target="_blank" rel="noopener noreferrer" class="lz-locations-booking-panel__map" data-lz-attr-href="directionsUrl" data-lz-key="directionsLabel"></a>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
