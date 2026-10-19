@@ -22,6 +22,7 @@ import {
   snapshotFailures,
   tail,
   Undo,
+  MANIFEST_ALLOWED,
 } from './kit';
 
 const q = (v: string) => `'${v.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`;
@@ -187,12 +188,7 @@ export function promotePalette(
       run,
       undo,
       baseline,
-      [
-        repoRel(seeds),
-        repoRel(library),
-        repoRel(kitFile('catalog/catalog.manifest.json')),
-        'apps/api/src/modules/sites/plan-catalog.generated.ts',
-      ],
+      [repoRel(seeds), repoRel(library), ...MANIFEST_ALLOWED],
       before,
     ),
   ];

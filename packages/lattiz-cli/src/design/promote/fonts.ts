@@ -13,6 +13,7 @@ import {
   snapshotFailures,
   tail,
   Undo,
+  MANIFEST_ALLOWED,
 } from './kit';
 import type { PromoteOutcome } from './palette';
 
@@ -161,11 +162,7 @@ export function promoteFonts(
         run,
         undo,
         baseline,
-        [
-          repoRel(file),
-          repoRel(kitFile('catalog/catalog.manifest.json')),
-          'apps/api/src/modules/sites/plan-catalog.generated.ts',
-        ],
+        [repoRel(file), ...MANIFEST_ALLOWED],
         before,
       ),
     ],

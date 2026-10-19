@@ -20,7 +20,7 @@ import {
 } from '../src/design/library';
 import { promote, type Runners } from '../src/design/promote';
 import type { Runner } from '../src/design/promote/kit';
-import type { Candidate } from '../src/design/types';
+import type { Candidate, Harvest } from '../src/design/types';
 import { CliError } from '../src/lib/errors';
 
 const KIT = resolve(import.meta.dirname, '../../template-kit');
@@ -292,19 +292,19 @@ describe('palette adjustments (--set)', () => {
       pattern: 'about/quote',
       regenerateManifest: true,
     };
-    const edit = (fn: (h: any) => void) => {
+    const edit = (fn: (h: Harvest) => void) => {
       const file = join(
         libraryRoot(),
         'stitch/dental/dental-executive-vision-01/harvest.json',
       );
-      const h = JSON.parse(readFileSync(file, 'utf8'));
+      const h = JSON.parse(readFileSync(file, 'utf8')) as Harvest;
       fn(h);
       writeFileSync(file, JSON.stringify(h));
     };
 
     it('refuses a draft when the kit already has a similar variant, unless it is allowed', () => {
       edit((h) => {
-        h.sections.find((s: any) => s.layout === 'quote').similar = [
+        h.sections.find((s) => s.layout === 'quote').similar = [
           'about/statement',
         ];
       });
@@ -322,7 +322,7 @@ describe('palette adjustments (--set)', () => {
 
     it('refuses a draft above the CSS budget', () => {
       edit((h) => {
-        h.sections.find((s: any) => s.layout === 'quote').draft.bytes.css_gzip =
+        h.sections.find((s) => s.layout === 'quote').draft.bytes.css_gzip =
           5000;
       });
       expect(

@@ -18,6 +18,7 @@ import {
   snapshotFailures,
   tail,
   Undo,
+  MANIFEST_ALLOWED,
 } from './kit';
 import type { PromoteOutcome } from './palette';
 import { folderExists } from '../harvest/resolve';
@@ -214,13 +215,7 @@ export function promoteSection(
       run,
       undo,
       baseline,
-      [
-        repoRel(dir),
-        repoRel(kitFile('catalog/catalog.manifest.json')),
-        'apps/api/src/modules/sites/plan-catalog.generated.ts',
-        'apps/web/src/features/editor/blocks',
-        'apps/web/src/features/templates',
-      ],
+      [repoRel(dir), ...MANIFEST_ALLOWED],
       before,
     ),
   );

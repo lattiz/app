@@ -72,10 +72,13 @@ export class Undo {
   }
 }
 
-/** Generated files `kit:manifest` rewrites for any palette or font change (hash lines). */
+/** Generated files `kit:manifest` rewrites for any kit change (manifest, API plan slice, web plan/blocks/identity). */
 export const MANIFEST_FILES = [
   'catalog/catalog.manifest.json',
   '../../apps/api/src/modules/sites/plan-catalog.generated.ts',
+  '../../apps/web/src/features/editor/blocks/plan-catalog.generated.ts',
+  '../../apps/web/src/features/editor/blocks/kit-blocks.generated.ts',
+  '../../apps/web/src/features/templates/template-identity.generated.ts',
 ] as const;
 
 /** Failing lines of `kit:verify-snapshot`: the gate compares them before and after, not to zero. */
@@ -149,3 +152,12 @@ export function commonGates(
 }
 
 export const repoRel = (file: string) => relative(REPO_ROOT, file);
+
+/** What `kit:manifest` may touch besides the promoted files themselves (repo-relative). */
+export const MANIFEST_ALLOWED = [
+  'packages/template-kit/catalog/catalog.manifest.json',
+  'apps/api/src/modules/sites/plan-catalog.generated.ts',
+  'apps/web/src/features/editor/blocks/plan-catalog.generated.ts',
+  'apps/web/src/features/editor/blocks/kit-blocks.generated.ts',
+  'apps/web/src/features/templates/template-identity.generated.ts',
+];
