@@ -1,4 +1,10 @@
 import { readFileSync, writeFileSync } from 'node:fs';
+import {
+  hueDistance,
+  hueOf,
+  parseColor,
+  type Rgba,
+} from '../../../../template-kit/src/lib/color';
 import { EXTENDED_PALETTES } from '../../../../template-kit/palettes';
 import { PALETTE_SEEDS } from '../../../../template-kit/palettes/seeds';
 import { slugify } from '../library';
@@ -48,6 +54,41 @@ export function seedSource(id: string, d: NonNullable<Harvest['palette']>) {
   return `  ${q(id)}: {\n${rows.map((r) => `    ${r},`).join('\n')}\n  },\n`;
 }
 
+/**
+ * Informational, not a gate: a palette that passes ΔE can still sit < 30° from every free accent
+ * hue of its giro, so the compiler would never pick it there (it keeps its place for `custom`).
+ */
+export function usabilityNotes(
+  accent: string,
+  giros: string[],
+  info: Runner,
+): string[] {
+  const c = parseColor(accent) as Rgba;
+  const { hue, chroma } = hueOf(c);
+  if (chroma <= 0.08) return [];
+  const notes: string[] = [];
+  for (const giro of giros) {
+    const r = info(['giro', 'show', giro, '--json']);
+    if (r.status !== 0) continue;
+    try {
+      const used =
+        (
+          JSON.parse(r.out) as {
+            usedAccentHues?: { id: string; hue: number }[];
+          }
+        ).usedAccentHues ?? [];
+      const clash = used.find((u) => hueDistance(u.hue, hue) < 30);
+      if (clash)
+        notes.push(
+          `aviso: en ${giro} el acento (${Math.round(hue)}°) está a < 30° de ${clash.id} (${Math.round(clash.hue)}°); el compilador no la elegirá ahí salvo que se fije a mano`,
+        );
+    } catch {
+      // Unreadable giro info: no note rather than a wrong one.
+    }
+  }
+  return notes;
+}
+
 export interface PromoteOutcome {
   id: string;
   gates: string[];
@@ -62,6 +103,7 @@ export function promotePalette(
   harvest: Harvest,
   run: Runner,
   undo: Undo,
+  info: Runner = () => ({ status: 1, out: '' }),
 ): PromoteOutcome {
   const draft = harvest.palette;
   if (!draft)
@@ -124,5 +166,8 @@ export function promotePalette(
       before,
     ),
   ];
-  return { id, gates };
+  return {
+    id,
+    gates: [...gates, ...usabilityNotes(draft.accent, draft.affinity, info)],
+  };
 }

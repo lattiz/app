@@ -74,7 +74,7 @@ export function promote(
   let sectionKept = true;
   try {
     if (opts.palette) {
-      const r = promotePalette(c, harvest, runners.kit, undo);
+      const r = promotePalette(c, harvest, runners.kit, undo, runners.lattiz);
       refs.palette = r.id;
       gates.palette = r.gates;
     }
