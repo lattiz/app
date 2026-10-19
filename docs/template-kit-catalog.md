@@ -35,6 +35,14 @@ sigue pendiente: registrar el rol `cta` y las variantes nuevas de `about`/`locat
 blueprints, mover el copy de `archetypes/verticals.ts` y los `sample` de cada `meta.ts` a
 `giros/<giro>.ts`, y dejar que un spec `extended` elija arquetipo y módulos.
 
+### Fases posteriores
+
+| Fase             | Qué                                                                                          | Estado   | Detalle                      |
+| ---------------- | -------------------------------------------------------------------------------------------- | -------- | ---------------------------- |
+| Phase B / Stitch | Stitch como fuente de diseño: biblioteca de candidatos, harvester y `promote` con compuertas | en curso | `docs/design-stitch-flow.md` |
+
+Rama `feat/stitch-design-flow` (desde `main`). No toca `apps/tenant-sites`, Motion, seed ni plantillas existentes.
+
 ### Fase A1: estabilizar y habilitar (rama `feat/kit-phase-a1`, desde `c2af6cb`)
 
 Antes de cualquier trabajo de diseño nuevo (Fase A2). Estado al 2026-10-14:

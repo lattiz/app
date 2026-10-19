@@ -71,6 +71,13 @@ Direction proofs: `pnpm lattiz kit gallery --directions`. Full reference: `docs/
 («Ajustes finos») and `docs/template-kit-lcp.md`. If a direction lands on a palette without its mood, add a palette
 (`palettes/seeds.ts`); never relax a direction rule or a validator limit.
 
+## Stitch candidates (design source)
+
+Palettes, font pairs and section variants can come from Google Stitch through `pnpm lattiz design …` (library in `design-library/stitch/`,
+guide `docs/design-stitch-flow.md`). `design promote` is the only way they enter the kit: it appends to `palettes/seeds.ts` /
+`font-pairs/library.ts` / `sections/` through the same gates (AA, ΔE00 between palettes, extended-sections contract, `kit probe`, unchanged
+`kit:verify-snapshot`, `kit:manifest`) and restores everything if one fails. Never import Stitch HTML or images, and never hand-edit what it generated.
+
 ## Generated templates
 
 Files whose first line (TS) or `$lattiz` key (JSON) says `GENERATED from specs/…` come from a spec: edit the
