@@ -1,5 +1,6 @@
 import { bool, type Command, type Context } from '../lib/command';
 import { CliError, EXIT, type ExitCode, usage } from '../lib/errors';
+import { assertHeroPhotos } from '../lib/hero-photo';
 import { assertRemoteWrite, confirm } from '../lib/prompt';
 import { previewUrl, waitFor200 } from '../lib/remote';
 import { writeState } from '../lib/state';
@@ -25,6 +26,7 @@ async function pipeline(
 ): Promise<ExitCode> {
   if (new Set(ids).size !== ids.length)
     throw usage('Los ids deben ser distintos.');
+  assertHeroPhotos(ids);
   requireSeedEnv();
   requireDeployTooling();
   const started = Date.now();
