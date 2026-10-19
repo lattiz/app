@@ -1,4 +1,10 @@
-import { copyFileSync, existsSync, mkdirSync, readFileSync } from 'node:fs';
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  writeFileSync,
+} from 'node:fs';
 import { basename, join, resolve } from 'node:path';
 import {
   candidateDir,
@@ -9,9 +15,11 @@ import {
   reindex,
   setStatus,
   slugify,
+  workDir,
   writeJson,
 } from '../design/library';
 import { harvestFolder } from '../design/harvest';
+import { buildDesignMd, buildPrompt, resolveSystem } from '../design/system';
 import { promote } from '../design/promote';
 import type { Candidate, CandidateStatus } from '../design/types';
 import { GIROS } from '../../../template-kit/giros';
@@ -171,6 +179,70 @@ function runPromote(ctx: Context): ExitCode {
   return EXIT.OK;
 }
 
+function runSystem(ctx: Context): ExitCode {
+  const giro = str(ctx.flags, 'giro');
+  if (!giro) throw usage('Falta --giro.', 'Giros: pnpm lattiz giro list');
+  const r = resolveSystem(giro, str(ctx.flags, 'direccion'));
+  const md = buildDesignMd(r);
+  const out = str(ctx.flags, 'out');
+  if (out) {
+    mkdirSync(join(resolve(out), '..'), { recursive: true });
+    writeFileSync(resolve(out), md);
+    log.ok(`${out} (${r.direction.id} · ${r.paletteId} · ${r.fontPairId})`);
+  } else console.log(md);
+  return EXIT.OK;
+}
+
+/**
+ * `gen` without --import: the Stitch MCP is a Claude tool, not something this process can call, so
+ * the CLI prepares the design system and the prompt and the skill (or a person) runs the MCP steps,
+ * then registers each candidate with `gen --import`.
+ */
+function runPlan(ctx: Context): ExitCode {
+  const giro = str(ctx.flags, 'giro');
+  if (!giro) throw usage('Falta --giro.', 'Giros: pnpm lattiz giro list');
+  const n = Number(str(ctx.flags, 'n') ?? '2');
+  if (!Number.isInteger(n) || n < 1 || n > 6)
+    throw usage('--n debe ser un entero entre 1 y 6.');
+  const briefFile = str(ctx.flags, 'brief');
+  if (briefFile && !existsSync(briefFile))
+    throw usage(`No existe el brief: ${briefFile}`);
+  const r = resolveSystem(giro, str(ctx.flags, 'direccion'));
+  const brief = briefFile ? readFileSync(briefFile, 'utf8') : undefined;
+  const dir = workDir(giro, new Date().toISOString().replace(/[:.]/g, '-'));
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, 'design.md'), buildDesignMd(r));
+  writeFileSync(join(dir, 'prompt.md'), buildPrompt(r, brief));
+  const plan = {
+    giro,
+    direction: r.direction.id,
+    palette: r.paletteId,
+    font_pair: r.fontPairId,
+    candidates: n,
+    steps: [
+      'list_projects (solo lectura: confirma que el MCP responde)',
+      'create_project',
+      'upload_design_md con design.md → create_design_system_from_design_md',
+      `generate_screen_from_text × ${n} con prompt.md y el designSystem (deviceType DESKTOP)`,
+      'get_screen de cada pantalla: guardar html y captura en la carpeta de trabajo',
+      'por candidato: pnpm lattiz design gen --giro <g> --import <html> --design-md design.md --screenshot <png> --project <id> --screen <id>',
+    ],
+  };
+  writeJson(join(dir, 'plan.json'), plan);
+  if (bool(ctx.flags, 'json')) {
+    console.log(JSON.stringify({ dir, ...plan }, null, 2));
+    return EXIT.OK;
+  }
+  log.title(`lattiz design gen --giro ${giro}`);
+  log.ok(`Sistema de diseño y prompt listos en ${dir}`);
+  log.plain(
+    `${c.bold('Dirección')} ${r.direction.id} · ${r.paletteId} · ${r.fontPairId}`,
+  );
+  plan.steps.forEach((s, i) => log.plain(`  ${i + 1}. ${s}`));
+  log.hint('La skill /lattiz-design corre estos pasos con el MCP de Stitch.');
+  return EXIT.OK;
+}
+
 /** `gen --import`: registers a candidate from files the MCP (or a person) already produced. */
 function runImport(ctx: Context): ExitCode {
   const giro = str(ctx.flags, 'giro');
@@ -242,6 +314,8 @@ export const design: Command = {
   usage:
     'design gen|list|harvest|promote|shelve|reject|reindex|system [id] [opciones]',
   help: [
+    'design gen --giro <g> [--n 2] [--direccion d] [--brief f]\n                          prepara design.md + prompt + plan para el MCP de Stitch (.lattiz/stitch/)',
+    'design system --giro <g> [--direccion d] [--out archivo]   imprime el DESIGN.md de Stitch',
     'design gen --giro <g> --import <html|md> [--design-md f] [--screenshot f] [--name n] [--tags a,b] [--spin s] [--direccion d] [--project id] [--screen id,id] [--reuse-of id]',
     '                          registra un candidato (collected) desde archivos locales',
     'design promote <id> [--palette] [--fonts] [--section [--pattern slot/layout]] [--dry-run] [--regenerate-manifest]',
@@ -269,6 +343,9 @@ export const design: Command = {
     screen: { type: 'string' },
     'reuse-of': { type: 'string' },
     note: { type: 'string' },
+    n: { type: 'string' },
+    brief: { type: 'string' },
+    out: { type: 'string' },
     palette: { type: 'boolean' },
     fonts: { type: 'boolean' },
     section: { type: 'boolean' },
@@ -294,8 +371,9 @@ export const design: Command = {
       case 'reject':
         return runFlag(ctx, 'rejected');
       case 'gen':
-        if (str(ctx.flags, 'import')) return runImport(ctx);
-        throw usage('design gen necesita --import <archivo> por ahora.');
+        return str(ctx.flags, 'import') ? runImport(ctx) : runPlan(ctx);
+      case 'system':
+        return runSystem(ctx);
       default:
         throw usage(
           `Subcomando desconocido: "${sub}".`,
