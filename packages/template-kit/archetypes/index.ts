@@ -132,7 +132,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     sections: {
       pro: [
         s('header', 'centered-logo'),
-        s('hero', 'framed', 'stack', 'image-bg'),
+        s('hero', 'framed', 'stack', 'image-bg', 'photo-ribbon'),
         s('marquee', 'ticker'),
         s('about', 'text-image-offset'),
         s('catalog', 'cards', 'product-grid'),
@@ -146,7 +146,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
       ],
       basic: [
         s('header', 'centered-logo', 'inline'),
-        s('hero', 'framed', 'image-bg'),
+        s('hero', 'framed', 'image-bg', 'photo-ribbon'),
         s('catalog', 'cards', 'price-list'),
         s('faq', 'list'),
         s('cta', 'band'),
@@ -338,7 +338,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     sections: {
       pro: [
         s('header', 'inline'),
-        s('hero', 'poster', 'image-bg'),
+        s('hero', 'poster', 'image-bg', 'photo-ribbon'),
         s('marquee', 'ticker'),
         s('about', 'stats-strip', 'text-image-offset'),
         s('catalog', 'menu-columns', 'price-list'),
@@ -352,7 +352,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
       ],
       basic: [
         s('header', 'inline'),
-        s('hero', 'poster', 'image-bg'),
+        s('hero', 'poster', 'image-bg', 'photo-ribbon'),
         s('catalog', 'menu-columns', 'price-list'),
         s('faq', 'list'),
         s('cta', 'band'),

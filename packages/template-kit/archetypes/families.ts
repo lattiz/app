@@ -23,6 +23,7 @@ export const FAMILIES: Record<string, Family> = {
   'hero/image-bg': 'full-media',
   'hero/framed': 'full-media',
   'hero/poster': 'full-media',
+  'hero/photo-ribbon': 'full-media',
   'hero/columns': 'type',
   'hero/centered-arch': 'type',
   'hero/offset-card': 'type',
