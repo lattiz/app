@@ -26,8 +26,10 @@ Guía y reglas: `docs/design-stitch-flow.md`.
 4. **Solo `design-library/`, `.lattiz/stitch/` y `lattiz design …`.** No edites a mano el kit, specs,
    plantillas, `tenant-sites`, Motion, la API, validadores ni rangos. Si algo lo exige, detente y dilo.
 5. **Promover es decisión humana.** `harvest` es seguro; `promote` solo si el usuario lo pide con el id,
-   y siempre primero con `--dry-run`. Una sección solo se conserva con `--regenerate-manifest`
-   (reescribe archivos generados de `apps/api` y `apps/web`): pídelo explícito y no lo uses por tu cuenta.
+   y siempre primero con `--dry-run`. Una sección solo se conserva con `--regenerate-manifest`, que
+   reescribe archivos generados de `apps/api` y `apps/web`: el usuario lo aprobó (2026-10-19) para
+   secciones promovidas a petición suya; úsalo solo cuando pida promover una sección concreta y
+   reporta el diff generado.
 6. **Sin secretos** en la salida ni en `candidate.json`.
 
 ## Flujo

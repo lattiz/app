@@ -121,7 +121,7 @@ Notas:
   línea `manifestHash` de `apps/api/.../plan-catalog.generated.ts`. Es el procedimiento de siempre del kit
   ("tras cambiar el kit, `kit:manifest`").
 - **Una sección nueva cambia datos reales**: aparece en el manifiesto y, por el plan de bloques, en
-  `apps/api` y `apps/web`. Por eso `--section` es **solo una prueba** (se restaura todo) salvo que se pase
+  `apps/api` y `apps/web`. Santi aprobó el uso de `--regenerate-manifest` (2026-10-19); probado: añade el bloque al manifiesto y cambia solo la línea `manifestHash` de la API. Por eso `--section` es **solo una prueba** (se restaura todo) salvo que se pase
   `--regenerate-manifest`, y no se combina con `--palette`/`--fonts` sin esa bandera. Decisión de producto
   pendiente: las secciones de Stitch deben insertarlas el compilador desde el spec, no ser bloques del
   editor; hoy el manifiesto las listaría también como bloques.
