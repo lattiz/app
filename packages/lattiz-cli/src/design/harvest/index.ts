@@ -3,7 +3,9 @@ import { join } from 'node:path';
 import { usage } from '../../lib/errors';
 import type { Candidate, Harvest } from '../types';
 import { paletteFromTokens } from './palette';
+import { interactivityOf } from './interactivity';
 import { sectionPatterns } from './patterns';
+import { resolvePatterns } from './resolve';
 import { tokensFromDesignMd, tokensFromHtml } from './tokens';
 import { typographyFromTokens } from './typography';
 
@@ -31,7 +33,8 @@ export function harvestFolder(candidate: Candidate, dir: string): Harvest {
     candidate.id;
   const patterns = html
     ? sectionPatterns(html)
-    : { sections: [], notMappable: [], imagesIgnored: 0 };
+    : { sections: [], notMappable: [], imagesIgnored: 0, imageNeeds: [] };
+  const resolved = resolvePatterns(patterns.sections, candidate.id);
   const typography = tokens
     ? typographyFromTokens({
         ...tokens,
@@ -42,11 +45,17 @@ export function harvestFolder(candidate: Candidate, dir: string): Harvest {
           ]),
         ],
       })
-    : { scale: [], googleFamilies: [], unsupportedFamilies: [] };
+    : {
+        scale: [],
+        googleFamilies: [],
+        unsupportedFamilies: [],
+        excludedFamilies: [],
+        metrics: {},
+        delivery: { ok: false, problems: ['sin tokens tipográficos'] },
+      };
   return {
     version: 1,
     candidate_id: candidate.id,
-    harvested_at: new Date().toISOString(),
     input: fromMd
       ? { file: 'design.md', kind: 'design-md' }
       : { file: 'source.html', kind: 'html' },
@@ -54,8 +63,10 @@ export function harvestFolder(candidate: Candidate, dir: string): Harvest {
       ? paletteFromTokens(tokens, { title, giro: candidate.giro })
       : null,
     typography,
-    sections: patterns.sections,
-    not_mappable: patterns.notMappable,
+    sections: resolved.sections,
+    not_mappable: [...patterns.notMappable, ...resolved.notMappable],
+    interactivity: html ? interactivityOf(html) : [],
+    image_needs: patterns.imageNeeds,
     images_ignored: patterns.imagesIgnored,
   };
 }

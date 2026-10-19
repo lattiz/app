@@ -77,6 +77,35 @@ export interface PaletteDraft {
   from: Record<string, string>;
   /** Result of the AA derivation at harvest time (kit buildPalette). */
   aa: { ok: boolean; problems: string[] };
+  /** Stitch color names grouped by role; the kit never inherits those names. */
+  roles: {
+    surface: string[];
+    text: string[];
+    accent: string[];
+    border: string[];
+  };
+  /** The palette as the kit's tokens (`--lz-color-*`), derived by buildPalette; empty when AA fails. */
+  lz: Record<string, string>;
+  /** Contrast of every text/background pair the design uses. */
+  pairs: ContrastPair[];
+  /** ΔE00 distance (ground + accent) to the closest palette of each giro it fits (A2 method). */
+  distance: PaletteDistance[];
+}
+
+export interface ContrastPair {
+  fg: string;
+  bg: string;
+  ratio: number;
+  min: number;
+  aa_pass: boolean;
+}
+
+export interface PaletteDistance {
+  giro: string;
+  nearest: string;
+  distance: number;
+  min: number;
+  ok: boolean;
 }
 
 export interface TypographyDraft {
@@ -87,6 +116,14 @@ export interface TypographyDraft {
   googleFamilies: string[];
   /** Families without one, never promoted. */
   unsupportedFamilies: string[];
+  /** Icon webfonts (Material Symbols…): never a dependency, icons become inline SVG. */
+  excludedFamilies: string[];
+  /** Capsize metrics present (metric-matched fallback, CLS ≈ 0) per family. */
+  metrics: Record<string, boolean>;
+  /** Kit pair that already uses both faces, if any. */
+  existingPair?: string;
+  /** Compatible with how the kit delivers fonts (two Google families with metrics). */
+  delivery: { ok: boolean; problems: string[] };
   radiusPx?: number;
   spacing?: Record<string, string>;
 }
@@ -120,8 +157,43 @@ export interface SectionPattern {
   heading?: string;
   /** What the kit has to drop or replace to build it (a form becomes a button, say). */
   notes?: string[];
+  /** The kit already has it: `slot/variant`. Nothing is created. */
+  existing?: string;
+  /** New but mappable: files for an additive extended variant (promote writes them). */
+  draft?: SectionDraft;
   /** Mappable = fits the kit's roles and ranges; only these can be promoted. */
   mappable: true;
+}
+
+export interface SectionDraft {
+  variant: string;
+  html: string;
+  css: string;
+  /** Source of meta.ts. */
+  meta_ts: string;
+  /** Raw and gzip bytes of what the variant adds to a page that uses it. */
+  bytes: { html: number; css: number; css_gzip: number };
+}
+
+export type InteractivityKind =
+  | 'reveal-on-scroll'
+  | 'sticky-header'
+  | 'parallax'
+  | 'other-js';
+
+export interface Interactivity {
+  kind: InteractivityKind;
+  /** What the source does (selectors, no code). */
+  detail: string;
+  /** What the kit does instead; JS from Stitch is never imported. */
+  recommendation: string;
+}
+
+export interface ImageNeed {
+  ref: string;
+  slot: SectionPattern['slot'];
+  orientation: 'portrait' | 'landscape' | 'square' | 'unspecified';
+  use: 'foreground' | 'background';
 }
 
 export interface NotMappable {
@@ -132,12 +204,15 @@ export interface NotMappable {
 export interface Harvest {
   version: 1;
   candidate_id: string;
-  harvested_at: string;
   input: { file: string; kind: 'html' | 'design-md' };
   palette: PaletteDraft | null;
   typography: TypographyDraft;
   sections: SectionPattern[];
   not_mappable: NotMappable[];
+  /** JS behaviors seen in the source and what replaces them. */
+  interactivity: Interactivity[];
+  /** What each slot's photo has to be (for IMAGES.md); never a URL. */
+  image_needs: ImageNeed[];
   /** Images found in the source and deliberately dropped (never copied or linked). */
   images_ignored: number;
 }

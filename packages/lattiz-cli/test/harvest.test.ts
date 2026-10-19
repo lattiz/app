@@ -116,3 +116,94 @@ describe('harvest from HTML only (Stitch MCP down, light tokens)', () => {
     );
   });
 });
+
+describe('harvest audit trail (Part 5)', () => {
+  const dir = folder({
+    'design.md': 'design.md',
+    'source.html': 'screen.html',
+  });
+  const h = harvestFolder(candidate, dir);
+
+  it('groups colors into roles and maps them to --lz-* tokens, not Material names', () => {
+    const p = h.palette!;
+    expect(p.roles.text).toContain('on-surface');
+    expect(p.roles.accent).toContain('primary');
+    expect(p.roles.border).toContain('outline');
+    expect(Object.keys(p.lz)).toContain('--lz-color-accent-text');
+    expect(p.lz['--lz-color-bg'].toLowerCase()).toBe('#08132a');
+    expect(JSON.stringify(p.lz)).not.toMatch(/surface-container|on-primary/);
+  });
+
+  it('computes contrast per text/background pair with aa_pass', () => {
+    const pair = h.palette!.pairs.find(
+      (x) => x.fg === 'on-surface' && x.bg === 'surface',
+    )!;
+    expect(pair.ratio).toBeGreaterThan(10);
+    expect(pair.aa_pass).toBe(true);
+    expect(h.palette!.pairs.every((x) => typeof x.aa_pass === 'boolean')).toBe(
+      true,
+    );
+  });
+
+  it('reports the distance to the closest palette of the giro (A2 method)', () => {
+    const d = h.palette!.distance.find((x) => x.giro === 'dental')!;
+    expect(d.min).toBe(15);
+    expect(d.ok).toBe(d.distance >= 15);
+    expect(d.nearest).toMatch(/^(dental:|pal-)/);
+  });
+
+  it('says "already exists" for what the kit has and drafts only what is new', () => {
+    const by = Object.fromEntries(
+      h.sections.map((s) => [`${s.slot}/${s.layout}`, s]),
+    );
+    expect(by['hero/split'].existing).toBe('hero/split');
+    expect(by['footer/link-columns'].existing).toBe('footer/columns');
+    expect(by['hero/split'].draft).toBeUndefined();
+    for (const key of ['about/quote', 'services/bento', 'cta/centered']) {
+      const d = by[key].draft!;
+      expect(d.html).toContain(`data-lz-variant="${d.variant}"`);
+      expect(d.html).not.toMatch(/<script|<form|style=|https?:/);
+      expect(d.css).not.toMatch(/#[0-9a-f]{3,8}\b|@import|https?:/i);
+      expect(d.meta_ts).toContain('satisfies SectionMeta');
+      expect(d.bytes.css_gzip).toBeGreaterThan(100);
+    }
+  });
+
+  it('turns JS behaviors into Motion recommendations without keeping code', () => {
+    const kinds = h.interactivity.map((i) => i.kind).sort();
+    expect(kinds).toEqual(['parallax', 'reveal-on-scroll', 'sticky-header']);
+    expect(JSON.stringify(h.interactivity)).not.toMatch(
+      /addEventListener|function|=>/,
+    );
+    expect(
+      h.interactivity.find((i) => i.kind === 'reveal-on-scroll')!
+        .recommendation,
+    ).toMatch(/Pro/);
+  });
+
+  it('records what each photo has to be, never where it came from', () => {
+    const hero = h.image_needs.find((n) => n.slot === 'hero')!;
+    expect(hero).toMatchObject({ orientation: 'portrait', use: 'foreground' });
+    expect(h.image_needs.some((n) => n.use === 'background')).toBe(true);
+  });
+
+  it('excludes icon fonts and checks the delivery of the type pair', () => {
+    const t = h.typography;
+    expect(t.delivery).toEqual({ ok: true, problems: [] });
+    expect(t.existingPair).toBe('playfair-display+inter');
+    expect(t.metrics).toEqual({ 'Playfair Display': true, Inter: true });
+    const fromHtml = harvestFolder(
+      candidate,
+      folder({ 'source.html': 'screen.html' }),
+    );
+    expect(fromHtml.typography.googleFamilies).not.toContain(
+      'Material Symbols Outlined',
+    );
+  });
+
+  it('is deterministic: harvesting twice gives byte-identical harvest.json', () => {
+    expect(JSON.stringify(harvestFolder(candidate, dir))).toBe(
+      JSON.stringify(h),
+    );
+  });
+});

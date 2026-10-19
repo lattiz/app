@@ -1,10 +1,16 @@
 import { parseDocument } from '../../../../template-kit/src/lib/dom';
-import type { NotMappable, PatternLayout, SectionPattern } from '../types';
+import type {
+  ImageNeed,
+  NotMappable,
+  PatternLayout,
+  SectionPattern,
+} from '../types';
 
 export interface PatternResult {
   sections: SectionPattern[];
   notMappable: NotMappable[];
   imagesIgnored: number;
+  imageNeeds: ImageNeed[];
 }
 
 const classes = (el: Element) => (el.getAttribute('class') ?? '').split(/\s+/);
@@ -97,6 +103,10 @@ function classify(section: Element, ref: string): SectionPattern | NotMappable {
     notes.push(
       'form: el kit no tiene formularios; se vuelve botón de WhatsApp o correo',
     );
+  if (/material-symbols|material-icons/.test(section.outerHTML))
+    notes.push(
+      'iconos de fuente (Material Symbols): el kit usa SVG en línea; se omiten',
+    );
   const make = (slot: SectionPattern['slot'], layout: PatternLayout) => ({
     ...base,
     slot,
@@ -125,13 +135,48 @@ function classify(section: Element, ref: string): SectionPattern | NotMappable {
   if (heading && buttons >= 1 && section.querySelectorAll('p').length <= 3)
     return make(
       'cta',
-      /bg-|glass|border/.test(section.outerHTML) ? 'band' : 'centered',
+      /text-center/.test(section.outerHTML) ? 'centered' : 'band',
     );
   if (hasImage && columns >= 2) return make('about', 'split');
   return {
     ref,
     reason: 'no encaja en ningún rol del kit (hero, about, catálogo, cta, pie)',
   };
+}
+
+/** What each photo has to be, from the markup's shape; never the picture or its URL. */
+function imagesOf(section: Element, p: SectionPattern): ImageNeed[] {
+  return [...section.querySelectorAll('img')].map((img) => {
+    let ratio: number | undefined;
+    for (
+      let n: Element | null = img;
+      n && n !== section.parentElement;
+      n = n.parentElement
+    ) {
+      const m = /aspect-\[(\d+)\/(\d+)\]/.exec(n.getAttribute('class') ?? '');
+      if (m) {
+        ratio = Number(m[1]) / Number(m[2]);
+        break;
+      }
+    }
+    const cls = img.getAttribute('class') ?? '';
+    return {
+      ref: p.ref,
+      slot: p.slot,
+      orientation:
+        ratio === undefined
+          ? 'unspecified'
+          : ratio < 0.95
+            ? 'portrait'
+            : ratio > 1.05
+              ? 'landscape'
+              : 'square',
+      use:
+        /\babsolute\b/.test(cls) && /\binset-0\b/.test(cls)
+          ? 'background'
+          : 'foreground',
+    };
+  });
 }
 
 export function sectionPatterns(html: string): PatternResult {
@@ -145,12 +190,15 @@ export function sectionPatterns(html: string): PatternResult {
   ];
   const sections: SectionPattern[] = [];
   const notMappable: NotMappable[] = [];
+  const imageNeeds: ImageNeed[] = [];
   roots.forEach((el, i) => {
     const ref =
       el.id || labelBefore(el) || `${el.tagName.toLowerCase()}-${i + 1}`;
     const r = classify(el, ref);
-    if ('slot' in r) sections.push(r);
-    else notMappable.push(r);
+    if ('slot' in r) {
+      sections.push(r);
+      imageNeeds.push(...imagesOf(el, r));
+    } else notMappable.push(r);
   });
-  return { sections, notMappable, imagesIgnored };
+  return { sections, notMappable, imagesIgnored, imageNeeds };
 }

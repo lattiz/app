@@ -14,7 +14,8 @@ import {
   Undo,
 } from './kit';
 import type { PromoteOutcome } from './palette';
-import { scaffoldFor, supportedPatterns } from './section-templates';
+import { folderExists } from '../harvest/resolve';
+import { type Scaffold, supportedPatterns } from './section-templates';
 
 export const sectionKey = (p: SectionPattern) => `${p.slot}/${p.layout}`;
 
@@ -33,7 +34,7 @@ const lit = (v: unknown): string => JSON.stringify(v, null, 2);
 export function metaSource(
   slot: string,
   variant: string,
-  s: NonNullable<ReturnType<typeof scaffoldFor>>,
+  s: Scaffold,
   candidateId: string,
 ): string {
   return `import type { SectionMeta } from '../../../src/types';
@@ -66,22 +67,45 @@ export function pickPattern(harvest: Harvest, pick?: string): SectionPattern {
     ? /^\d+$/.test(pick)
       ? found[Number(pick)]
       : found.find((p) => sectionKey(p) === pick)
-    : found.find((p) => supportedPatterns().includes(sectionKey(p)));
-  if (!chosen)
+    : found.find((p) => p.draft);
+  if (chosen?.existing)
     throw new GateFailure(
       'patrón',
-      `No hay un patrón mapeable${pick ? ` «${pick}»` : ' con generador'}. Soportados: ${supportedPatterns().join(', ')}.\nEn el harvest: ${found.map(sectionKey).join(', ') || '(ninguno)'}.`,
+      `${sectionKey(chosen)} ya existe en el kit: usa ${chosen.existing}. No se crea nada.`,
+    );
+  if (!chosen?.draft)
+    throw new GateFailure(
+      'patrón',
+      `No hay un patrón nuevo y mapeable${pick ? ` «${pick}»` : ''}.\nEn el harvest: ${found.map((p) => `${sectionKey(p)}${p.existing ? ` (ya existe: ${p.existing})` : p.draft ? ' (borrador)' : ''}`).join(', ') || '(ninguno)'}.\nGeneradores: ${supportedPatterns().join(', ')}.`,
     );
   return chosen;
 }
 
+/** The kit's hard rules for a draft, before anything is written: no JS, no new dependencies. */
+export function draftProblems(
+  d: NonNullable<SectionPattern['draft']>,
+): string[] {
+  const out: string[] = [];
+  if (/<script|<iframe|<form|\sstyle=|\son\w+=/i.test(d.html))
+    out.push(
+      'el HTML lleva script, iframe, form, style="" o manejadores en línea',
+    );
+  if (/https?:\/\//.test(d.html + d.css) || /@import/.test(d.css))
+    out.push('hay URLs o @import: el draft no puede traer dependencias');
+  if (/#[0-9a-fA-F]{3,8}\b|rgba?\(/.test(d.css))
+    out.push('colores literales fuera de :root (solo tokens --lz-*)');
+  if (/class="[^"]*\b(flex|grid-cols-\d+|px-\d+|md:[\w-]+)\b/.test(d.html))
+    out.push('clases de Tailwind en el markup (solo lz-*)');
+  return out;
+}
+
 /**
- * Pattern → new extended variant folder, then the kit's own contract (extended-sections tests),
- * `kit probe` (real page, three themes, overflow/contrast/tap targets) and an untouched golden
- * snapshot. The manifest is only rewritten with `regenerateManifest`.
+ * Draft (from harvest.json) → new extended variant folder, then the kit's own contract
+ * (extended-sections tests), `kit probe` (real page, three themes, overflow/contrast/tap targets)
+ * and an untouched golden snapshot. The manifest is only rewritten with `regenerateManifest`.
  */
 export function promoteSection(
-  candidate: Candidate,
+  _candidate: Candidate,
   harvest: Harvest,
   opts: SectionOptions,
   run: Runner,
@@ -89,12 +113,18 @@ export function promoteSection(
   undo: Undo,
 ): PromoteOutcome {
   const pattern = pickPattern(harvest, opts.pick);
-  const variant = variantName(pattern);
-  const scaffold = scaffoldFor(variant, pattern);
-  if (!scaffold)
+  const draft = pattern.draft!;
+  const variant = draft.variant;
+  if (folderExists(`${pattern.slot}/${variant}`))
     throw new GateFailure(
-      'generador',
-      `Sin generador para ${sectionKey(pattern)}.`,
+      'patrón',
+      `sections/${pattern.slot}/${variant} ya existe (¿ya se promovió?). Vuelve a correr harvest.`,
+    );
+  const problems = draftProblems(draft);
+  if (problems.length)
+    throw new GateFailure(
+      'borrador dentro de las reglas del kit',
+      problems.join('\n'),
     );
   const dirty = changedFiles().filter((f) =>
     /packages\/template-kit\/(sections|catalog)\//.test(f),
@@ -109,12 +139,9 @@ export function promoteSection(
   const dir = kitFile('sections', pattern.slot, variant);
   undo.made(dir);
   mkdirSync(dir, { recursive: true });
-  writeFileSync(join(dir, 'section.html'), scaffold.html);
-  writeFileSync(join(dir, 'section.css'), scaffold.css);
-  writeFileSync(
-    join(dir, 'meta.ts'),
-    metaSource(pattern.slot, variant, scaffold, candidate.id),
-  );
+  writeFileSync(join(dir, 'section.html'), draft.html);
+  writeFileSync(join(dir, 'section.css'), draft.css);
+  writeFileSync(join(dir, 'meta.ts'), draft.meta_ts);
   const key = `${pattern.slot}/${variant}`;
   const contract = run(['test', 'extended-sections']);
   if (contract.status !== 0)
@@ -126,6 +153,7 @@ export function promoteSection(
   if (probed.status !== 0)
     throw new GateFailure('kit probe', tail(probed.out, 20));
   const gates = [
+    `borrador dentro de las reglas del kit (sin JS ni dependencias; ${draft.bytes.css_gzip} B de CSS gzip)`,
     'contrato extended-sections (tiers, intent, imágenes con alt, sin form/script/iframe)',
     `kit probe ${key} (3 temas, copy demo y largo, overflow, texto, táctiles, contraste)`,
   ];

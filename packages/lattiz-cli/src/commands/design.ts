@@ -99,7 +99,12 @@ function runHarvest(ctx: Context): ExitCode {
     throw usage(`"${loc.candidate.id}" está rechazado: no se extrae.`);
   const harvest = harvestFolder(loc.candidate, loc.dir);
   writeJson(join(loc.dir, 'harvest.json'), harvest);
-  setStatus(loc, 'harvested');
+  // Idempotent: re-harvesting a harvested or promoted candidate only rewrites harvest.json.
+  if (
+    loc.candidate.status === 'collected' ||
+    loc.candidate.status === 'shelved'
+  )
+    setStatus(loc, 'harvested');
   reindex();
   if (bool(ctx.flags, 'json')) {
     console.log(JSON.stringify(harvest, null, 2));
@@ -126,10 +131,37 @@ function runHarvest(ctx: Context): ExitCode {
   );
   for (const s of harvest.sections)
     log.plain(
-      `${c.bold('Sección')} ${s.slot}/${s.layout} · ${s.ref} · ${s.items} ítem(s) · ${s.surface}${s.notes ? c.gray(` · ${s.notes.join('; ')}`) : ''}`,
+      `${c.bold('Sección')} ${s.slot}/${s.layout} · ${s.ref} · ${
+        s.existing
+          ? c.gray(`ya existe, usa ${s.existing}`)
+          : s.draft
+            ? c.green(
+                `borrador sections/${s.slot}/${s.draft.variant} (${s.draft.bytes.css_gzip} B css gzip)`,
+              )
+            : ''
+      }${s.notes ? c.gray(` · ${s.notes.join('; ')}`) : ''}`,
     );
   for (const n of harvest.not_mappable)
     log.plain(c.yellow(`No mapeable: ${n.ref} — ${n.reason}`));
+  for (const i of harvest.interactivity)
+    log.plain(`${c.bold('JS')} ${i.kind}: ${i.recommendation}`);
+  for (const d of p?.distance ?? [])
+    log.plain(
+      `${c.bold('Distancia')} ${d.giro}: ${d.distance} a ${d.nearest} ${d.ok ? c.green('✓') : c.red(`✗ (mín ${d.min})`)}`,
+    );
+  const low = (p?.pairs ?? []).filter((x) => !x.aa_pass);
+  if (low.length)
+    log.plain(
+      c.yellow(
+        `Contraste bajo: ${low.map((x) => `${x.fg}/${x.bg} ${x.ratio}`).join(', ')}`,
+      ),
+    );
+  if (!harvest.typography.delivery.ok)
+    log.plain(
+      c.yellow(
+        `Tipografía: ${harvest.typography.delivery.problems.join('; ')}`,
+      ),
+    );
   log.plain(
     c.gray(
       `${harvest.images_ignored} imagen(es) ignorada(s): nunca se copian.`,

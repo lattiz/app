@@ -239,4 +239,21 @@ describe('promote --palette (hermetic: fake runner, copied kit files)', () => {
       ),
     ).toMatch(/--regenerate-manifest/);
   });
+
+  it('refuses to create a section the kit already has and says which to use', () => {
+    const msg = gateError(() =>
+      promote(
+        findCandidate('dental-executive-vision-01'),
+        {
+          ...base,
+          palette: false,
+          section: true,
+          pattern: 'hero/split',
+          regenerateManifest: true,
+        },
+        runners(),
+      ),
+    );
+    expect(msg).toMatch(/ya existe en el kit: usa hero\/split/);
+  });
 });
