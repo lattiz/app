@@ -78,3 +78,5 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [twin-accent-hue-split](twin-accent-hue-split.md) — gemelos Pro/Básico necesitan tonos de acento ≥30° aparte; rango libre del giro
 - [template-art-directions](template-art-directions.md) — 6 direcciones como datos; ≥ 6 de 15 elecciones distintas; reglas = compuerta; deriva al gris
 - [stitch-design-source](stitch-design-source.md) — Stitch como fuente de diseño del kit; biblioteca, harvester, promote con compuertas
+- [editor-plan-catalog](editor-plan-catalog.md) — plan de bloques del editor derivado del manifiesto; misma lista que la API
+- [editor-kit-blocks](editor-kit-blocks.md) — bloques del kit en el editor; solo el CSS usado; tokens en :where(html)

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { templateCardState } from '@/features/templates/template-access';
 import { templateAccessCopy as copy } from '@/features/templates/template-access.copy';
+import { identityFor } from '@/features/templates/template-identity';
 import { cn } from '@/lib/utils';
 import { TemplatePreviewFrame } from './TemplatePreviewFrame';
 
@@ -18,6 +19,8 @@ interface TemplateCardProps {
   /** The site's current template is above the plan (after a downgrade). */
   siteLocked?: boolean;
   onSelect: (templateId: string) => void;
+  /** A Pro feature chip on a template the plan doesn't include: open the upgrade prompt. */
+  onLockedFeature?: (feature: string) => void;
 }
 
 export function TemplateCard({
@@ -27,7 +30,9 @@ export function TemplateCard({
   changeLocked = false,
   siteLocked = false,
   onSelect,
+  onLockedFeature,
 }: TemplateCardProps) {
+  const identity = identityFor(template.id);
   const state = templateCardState(template, {
     isCurrent: isCurrentTemplate,
     isSelecting,
@@ -69,6 +74,57 @@ export function TemplateCard({
                 .filter(Boolean)
                 .join(' · ')}
             </p>
+          )}
+          {identity && (
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <span
+                className="flex overflow-hidden rounded-full border"
+                role="img"
+                aria-label={`${copy.palette}: ${identity.swatches.join(', ')}`}
+              >
+                {identity.swatches.map((color, i) => (
+                  <span
+                    key={i}
+                    className="size-3.5"
+                    style={{ backgroundColor: color }}
+                  />
+                ))}
+              </span>
+              <span>
+                {[identity.giroLabel, identity.direction?.name]
+                  .filter(Boolean)
+                  .join(' · ')}
+              </span>
+            </div>
+          )}
+          {identity && identity.proFeatures.length > 0 && (
+            <ul
+              className="flex flex-wrap gap-1.5"
+              aria-label={copy.proFeatures}
+            >
+              {identity.proFeatures.map((feature) => (
+                <li key={feature}>
+                  {template.accessible ? (
+                    <Badge variant="outline">{feature}</Badge>
+                  ) : (
+                    <button
+                      type="button"
+                      className="inline-flex"
+                      title={copy.proFeature.lockedLabel}
+                      onClick={() => onLockedFeature?.(feature)}
+                    >
+                      <Badge
+                        variant="outline"
+                        className="gap-1 text-muted-foreground"
+                      >
+                        <LockIcon className="size-3" />
+                        {feature}
+                      </Badge>
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ul>
           )}
           {state.hint && (
             <p className="flex items-center gap-1.5 text-xs text-muted-foreground">

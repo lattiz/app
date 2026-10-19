@@ -5,6 +5,7 @@
 `lattiz` — pnpm workspace + Turborepo monorepo, deploy target undecided (deferred; `turbo run build` is the only precondition).
 - `apps/api` — NestJS 11 resource server, hexagonal architecture, Supabase JWT verification, Drizzle ORM over Supabase Postgres.
 - `apps/web` — React 19 + Vite 8 SPA, TanStack Query, Tailwind CSS v4 + shadcn/ui (`base-luma` style), Supabase Auth client.
+  Editor blocks and their plan (Básico/Pro) come from the kit: `features/editor/blocks/` (`plan.ts`, `*.generated.ts`); the template picker reads `features/templates/template-identity.generated.ts`. See «Fase C» in `docs/template-kit-catalog.md`.
 - `packages/api-client` — typed API client generated from `apps/api/openapi.json` via `@hey-api/openapi-ts`, with TanStack Query bindings.
 - `packages/template-kit` — templates as source (sections + themes + content packs) compiled into GrapesJS projects + previews; see its `CLAUDE.md`. Extended catalog (art directions, primitives, archetypes, new heroes, budgets, LCP policy): `docs/template-kit-catalog.md`, `docs/template-kit-lcp.md`.
 - `packages/lattiz-cli` — `pnpm lattiz`: template → `templates.lattiz.app` pipeline over the kit, the seed and the previews deploy; see `docs/lattiz-cli.md`.
@@ -60,7 +61,7 @@
 - `generate:api` — `turbo run generate:openapi generate:client` (API writes `openapi.json`, then `api-client` regenerates)
 - `template:dev <id>` / `template:shots <id>` / `template:seed -- --only <id> [--dry-run]` — template tuning loop; see `docs/template-workflow.md`
 - `lattiz <command>` — guided template pipeline (`doctor`, `list`, `giro`, `new`, `spec`, `build`, `freeze`, `unfreeze`, `dev`, `motion`, `check`, `review`, `seed`, `deploy`, `publish`, `ship`, `design`) in `packages/lattiz-cli`; see `docs/lattiz-cli.md` and, for spec-driven templates, `docs/template-spec.md`
-- After any change to `packages/template-kit`: `pnpm --filter @lattiz/template-kit kit:verify-snapshot` and `kit:manifest --check` (the latter also runs in `pnpm lint`; regenerate with `kit:manifest`). New templates enter the golden with `kit:snapshot:add`; byte budgets live in `packages/template-kit/budgets.json` — see `docs/template-kit-catalog.md`. Server-side plan guard: `docs/template-kit-plan-enforcement.md`
+- After any change to `packages/template-kit`: `pnpm --filter @lattiz/template-kit kit:verify-snapshot` and `kit:manifest --check` (the latter also runs in `pnpm lint`; regenerate with `kit:manifest`, which also writes the API plan slice and the editor/dashboard `*.generated.ts` files in `apps/web`). New templates enter the golden with `kit:snapshot:add`; byte budgets live in `packages/template-kit/budgets.json` — see `docs/template-kit-catalog.md`. Server-side plan guard: `docs/template-kit-plan-enforcement.md`
 
 **`apps/api`** (`pnpm --filter @lattiz/api <script>`):
 - `dev` — `nest start --watch`

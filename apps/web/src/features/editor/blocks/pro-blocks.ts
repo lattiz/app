@@ -30,8 +30,37 @@ function stat(value: string, prefix: string, suffix: string, label: string) {
   };
 }
 
+// Gallery is Pro-only in the kit; Básico sites that already have one keep it (only adding is gated).
+const galleryGrid: SectionBlock = {
+  id: 'lzb-gallery-grid',
+  kitVariant: 'gallery/grid',
+  label: 'Galería en cuadrícula',
+  category: CATEGORY,
+  media: ICONS.gallery,
+  content: {
+    tagName: 'section',
+    classes: ['lzb', 'lzb-gallery'],
+    attributes: { 'data-lz-section': 'gallery' },
+    styles: `${BASE_CSS}
+.lzb-gallery__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:32px}
+.lzb-gallery__grid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:var(--lzb-radius);transition:transform .4s ease}
+.lzb-gallery__grid img:hover{transform:scale(1.03)}
+@media (max-width:480px){.lzb-gallery__grid{grid-template-columns:repeat(2,1fr)}}
+@media (prefers-reduced-motion:reduce){.lzb-gallery__grid img{transition:none}}`,
+    components: `
+<div class="lzb__inner">
+  <p class="lzb__eyebrow">Galería</p>
+  <h2 class="lzb__title">Nuestro trabajo</h2>
+  <div class="lzb-gallery__grid">
+    ${[1, 2, 3, 4, 5, 6].map((n) => img(600, 600, `Trabajo ${n}`)).join('\n    ')}
+  </div>
+</div>`,
+  },
+};
+
 const heroEditorial: SectionBlock = {
   id: 'lzb-hero-editorial',
+  kitVariant: 'hero/columns',
   label: 'Portada editorial',
   category: CATEGORY,
   media: ICONS.hero,
@@ -62,6 +91,7 @@ const heroEditorial: SectionBlock = {
 
 const marquee: SectionBlock = {
   id: 'lzb-marquee',
+  kitVariant: 'marquee/ticker',
   label: 'Cinta en movimiento',
   category: CATEGORY,
   media: ICONS.marquee,
@@ -87,6 +117,7 @@ const marquee: SectionBlock = {
 
 const stackedCards: SectionBlock = {
   id: 'lzb-stacked-cards',
+  editorOnly: true,
   label: 'Tarjetas apiladas',
   category: CATEGORY,
   media: ICONS.stack,
@@ -118,6 +149,7 @@ const stackedCards: SectionBlock = {
 
 const snapGallery: SectionBlock = {
   id: 'lzb-snap-gallery',
+  kitVariant: 'gallery/strip',
   label: 'Galería deslizable',
   category: CATEGORY,
   media: ICONS.snap,
@@ -143,6 +175,7 @@ const snapGallery: SectionBlock = {
 
 const beforeAfter: SectionBlock = {
   id: 'lzb-before-after',
+  editorOnly: true,
   label: 'Antes y después',
   category: CATEGORY,
   media: ICONS.compare,
@@ -169,6 +202,7 @@ const beforeAfter: SectionBlock = {
 
 const statsCounters: SectionBlock = {
   id: 'lzb-stats',
+  kitVariant: 'about/stats-strip',
   label: 'Cifras animadas',
   category: CATEGORY,
   media: ICONS.stats,
@@ -210,6 +244,7 @@ const countdownDefault = new Date(Date.now() + 14 * 86_400_000)
 
 const promoBar: SectionBlock = {
   id: 'lzb-promo-bar',
+  kitVariant: 'navbar/notice-bar',
   label: 'Barra de promoción',
   category: CATEGORY,
   media: ICONS.promo,
@@ -263,6 +298,7 @@ const promoBar: SectionBlock = {
 
 const openNowBadge: SectionBlock = {
   id: 'lzb-open-now',
+  editorOnly: true,
   label: 'Abierto ahora',
   category: CATEGORY,
   media: ICONS.clock,
@@ -281,6 +317,7 @@ const openNowBadge: SectionBlock = {
 
 const whatsappCards: SectionBlock = {
   id: 'lzb-whatsapp-cards',
+  kitVariant: 'services/menu-columns',
   label: 'Menú con pedido por WhatsApp',
   category: CATEGORY,
   media: ICONS.whatsapp,
@@ -321,6 +358,7 @@ export const PRO_BLOCKS: SectionBlock[] = [
   heroEditorial,
   marquee,
   stackedCards,
+  galleryGrid,
   snapGallery,
   beforeAfter,
   statsCounters,
