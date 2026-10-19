@@ -13,3 +13,7 @@ packages/template-kit/sections/**/*.html
 packages/template-kit/fixtures
 packages/template-kit/extracted
 packages/template-kit/golden
+
+# Stitch design flow: HTML fixtures and the design library (screenshots, harvest output)
+packages/lattiz-cli/test/fixtures
+design-library

@@ -28,6 +28,8 @@ export default tseslint.config(
       // GrapesJS spike scripts (CommonJS, no package.json); kept as reference, never run by the build.
       'packages/fixtures/**',
       'packages/template-kit/extracted/**',
+      // Stitch HTML fixtures for the harvester tests (third-party markup, never linted).
+      'packages/lattiz-cli/test/fixtures/**',
     ],
   },
   js.configs.recommended,
