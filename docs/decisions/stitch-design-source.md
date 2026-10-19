@@ -23,6 +23,11 @@ existentes. Hallazgos que fijaron el diseño:
 - Una sección nueva aparece en `catalog.manifest.json` y, por el plan de bloques, en `apps/api`/`apps/web`: `--section` es una
   prueba (se restaura todo) salvo `--regenerate-manifest`. Pendiente de producto: que el compilador las inserte sin volverlas
   bloques del editor.
+- El harvest es la bitácora auditable: roles → `--lz-*`, contraste por par, distancia por giro, secciones «ya existe / borrador /
+  no mapeable» (el borrador vive en harvest.json y `promote` lo escribe), recomendaciones de Motion y necesidades de foto; sin fecha,
+  idempotente. `--rigor loose|tight` y un DESIGN.md versionado por dirección (`_design-systems/`, subidos a Stitch).
+- Un `--json` de `pnpm` trae líneas de más: parsear solo del primer `{` al último `}`. El aviso de tono de `promote` estuvo
+  muerto (try/catch silencioso) hasta que se probó de punta a punta.
 - Las compuertas atraparon bugs reales del scaffold (`{{index}}` sin `numbered`, `lz-index` < 14 px, contraste de `muted`/`accent-text`).
 
 **How to apply:** guía en `docs/design-stitch-flow.md`. Nada entra al kit sin `design promote`; `--dry-run` primero. Tests:

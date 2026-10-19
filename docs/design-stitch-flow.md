@@ -80,27 +80,55 @@ sobre archivos locales. El estado intermedio vive en `.lattiz/stitch/` (no versi
 
 ## El sistema de diseño que se le da a Stitch
 
-`design system` traduce una dirección de arte (`directions/<id>.ts`) a un DESIGN.md de Stitch: colores
-(Material-3-like, con los hex de nuestra paleta), dos familias (las del par tipográfico), `rounded` de la
-forma (`SHAPE_RADII`), espaciado de la densidad y un bloque de restricciones del kit (sin formularios, sin
-carruseles ni video, copy en es-MX). Así los candidatos nacen cerca de lo que el kit puede construir. El
-harvester mapea **a `--lz-*`**; nunca copia los nombres de Stitch. `test/system.test.ts` comprueba que el
-DESIGN.md de cada giro × dirección vuelve a leerse por el harvester con el mismo fondo.
+Un DESIGN.md por dirección de arte, versionado en `design-library/stitch/_design-systems/<dirección>.md`
+(se regeneran con `pnpm lattiz design system --all`; un test falla si el archivo quedó viejo) y ya subido
+a un proyecto privado de Stitch (`stitch-assets.json`: un asset por dirección). Traduce la dirección
+(`directions/<id>.ts`) a colores (Material-3-like con los hex de nuestra paleta), dos familias, `rounded`
+de la forma, espaciado de la densidad y una cuadrícula de 12 columnas.
+
+`--rigor` decide cuánto se le deja a Stitch:
+
+- **`loose`** (por defecto): la paleta es un punto de partida (se permiten variantes cercanas mientras el
+  ánimo —claro/oscuro, cálido/frío/neutro— se mantenga), la tipografía son **ejemplos de estilo** (una
+  display + una de texto, no una lista cerrada), se permiten bento, encimados y apilados. Más variedad y más
+  candidatos que piden ajustes antes de `promote`. La compuerta real está en `promote`, no al generar.
+- **`tight`**: exige exactamente la paleta y las familias del giro (usa el DESIGN.md del giro, no el de la
+  dirección; hay que subirlo a Stitch).
+
+Restricciones **duras** en ambos (para que el harvester pueda mapear): sin degradados como fondo del texto
+principal y texto con contraste alto; íconos como SVG en línea (nada de fuentes de íconos como Material
+Symbols); estructura semántica por sección (encabezado, portada con un h1, prueba social, servicios,
+testimonios, FAQ, CTA, contacto, pie); una columna en móvil; sin formularios, carruseles, video, iframes ni
+canvas; sin copy de marcas reales ni imágenes de personas reales identificables; copy es-MX.
+`--direccion unused` elige la dirección que menos usan las plantillas del giro (`giro show`).
+`design-library/stitch/_design-systems/` no es un candidato: el listado lo ignora.
 
 ## El harvester
 
 Entrada: `design.md` (preferido: es el sistema de diseño de Stitch) y/o `source.html` (la config de
-Tailwind se lee **sin evaluarla**). Salida `harvest.json`:
+Tailwind se lee **sin evaluarla**; ningún JS se ejecuta ni se copia). Salida: `harvest.json`,
+**determinista e idempotente** (sin fecha; volver a correrlo da los mismos bytes y no cambia la bandera de
+un candidato ya `harvested` o `promoted`). Solo genera borradores; nunca promueve.
 
 - **Paleta**: fondo, texto y acento (el rol más cromático entre `primary`/`tertiary`/`secondary`; casi gris
-  deja `primary`), superficies, modo claro/oscuro/teñido. Se deriva con `buildPalette` del kit y se
-  guarda el resultado AA (`aa.ok`).
-- **Tipografía**: escala (rol, familia, tamaño, peso, interlineado), familias con fuente de Google y las
-  que no (SF Pro, Google Sans, Helvetica…: nunca se promueven).
-- **Patrones de sección**: `slot` + `layout` (`split`, `bento`, `card-grid`, `quote`, `stat-row`,
-  `link-columns`, `band`…), ítems, superficie (flat/glass/bordered/tinted), notas (un formulario se vuelve
-  botón de WhatsApp). Lo que el kit no puede construir (iframe, video, canvas, tabla, carrusel o sin
-  patrón reconocible) va a `not_mappable` y se queda guardado: el kit no se fuerza.
+  deja `primary`), superficies, modo. Se agrupan los colores por rol (`roles`: superficie, texto, acento,
+  borde), se mapean a **`--lz-color-*`** (`lz`, derivados con `buildPalette`; nunca los nombres de Stitch),
+  se calcula el contraste de cada par texto/fondo (`pairs[].aa_pass`) y la **distancia ΔE00** al palette más
+  cercano de cada giro afín con el método de A2 (`distance[]`), para que `promote` decida.
+- **Tipografía**: escala (rol, familia, tamaño, peso, interlineado), familias de Google con métricas
+  Capsize (`metrics`), fuentes de íconos excluidas (`excludedFamilies`), el par del kit que ya usa esas
+  caras (`existingPair`) y `delivery` (¿cabe en cómo el kit entrega fuentes?: dos familias, de Google, con
+  métricas).
+- **Patrones de sección**: `slot` + `layout`, ítems y superficie. Cada uno cae en una de tres: **ya existe**
+  (`existing`: «usa `hero/split`», no se crea nada), **borrador** (`draft`: `section.html` con clases `lz-*`,
+  `section.css` solo con lo que el markup usa y tokens, `meta.ts`, y bytes; sin Tailwind, sin CDN, sin
+  `<script>`) o **no mapeable** (`not_mappable` con la razón: iframe, video, canvas, tabla, carrusel, o
+  sin variante equivalente ni generador). No se fuerza el kit.
+- **Interactividad** (`interactivity`): detecta revelado al hacer scroll, encabezado que cambia y parallax y
+  los traduce a una recomendación (Motion solo Pro con preset calm; encabezado: omitir; parallax:
+  descartado o fade suave). Nunca importa código.
+- **Imágenes**: no importa URLs. `image_needs` anota por sección qué foto pide el diseño (orientación y si va
+  de fondo) y `images_ignored` cuántas descartó.
 
 ## Compuertas de `promote`
 
@@ -135,7 +163,7 @@ Ejecutada con el fixture «Executive Vision – Dental» (`packages/lattiz-cli/t
 
 1. `design gen --giro dental --import …/screen.html --design-md …/design.md` → `collected`.
 2. `design harvest` → paleta oscura AA (`#08132a` / `#d9e2ff` / `#b9c7e4`), Playfair Display + Inter,
-   patrones `hero/split`, `about/quote`, `services/bento`, `cta/band`, `footer/link-columns`, 2 imágenes ignoradas.
+   patrones `hero/split` y `footer/link-columns` (ya existen: `hero/split`, `footer/columns`) y borradores `about/tinted-quote`, `services/glass-bento`, `cta/glass-centered`; tres recomendaciones de JS y 2 imágenes ignoradas.
 3. `design promote --palette` → pasa todas las compuertas (`pal-clinical-eminence`).
 4. Spec de veterinaria con `brand.palette.preset: "pal-clinical-eminence"` (dental no tiene tono libre cerca
    de 220°) → `lattiz build --out` → `check` (kit:validate PASS, axe PASS) y `review`.
@@ -148,7 +176,7 @@ porque escriben un momento en `palettes/` y `sections/`.
 
 ## Límites conocidos y siguiente paso
 
-- Solo 5 patrones tienen generador de sección; portadas y pies no (sus contratos son más estrictos).
+- Solo 4 patrones tienen generador de sección (`services/bento`, `services/card-grid`, `about/quote`, `cta/centered`); portadas y pies no (sus contratos son más estrictos) y quedan «ya existe» o `not_mappable`.
 - Las paletas de giros saturados en tono solo se usan fijadas a mano o con acento neutro.
 - Falta el enlace del foro en «Licencia».
 - Siguiente: decidir cómo se registran las secciones de Stitch para que el compilador las inserte sin
