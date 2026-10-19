@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { DIRECTIONS } from '../../template-kit/directions';
 import { GIROS } from '../../template-kit/giros';
@@ -6,7 +8,9 @@ import { tokensFromDesignMd } from '../src/design/harvest/tokens';
 import {
   buildDesignMd,
   buildPrompt,
+  resolveDirection,
   resolveSystem,
+  unusedDirection,
 } from '../src/design/system';
 
 const cases = Object.keys(GIROS).flatMap((g) =>
@@ -42,4 +46,54 @@ describe('Stitch design system', () => {
       /Dirección desconocida/,
     );
   });
+
+  it.each(Object.keys(DIRECTIONS))(
+    'direction %s: a versionable file with the hard constraints, in both rigors',
+    (dir) => {
+      const r = resolveDirection(dir);
+      for (const rigor of ['loose', 'tight'] as const) {
+        const md = buildDesignMd(r, rigor);
+        expect(tokensFromDesignMd(md)).not.toBeNull();
+        expect(md).toMatch(/Rigor: (loose|tight)/);
+        expect(md).toMatch(/Icons are inline SVG only/);
+        expect(md).toMatch(/Single-column layout on mobile/);
+        expect(md).toMatch(/identifiable real people/);
+        expect(md).toMatch(/No gradients as the background of primary text/);
+      }
+      expect(buildDesignMd(r, 'loose')).toMatch(/closely related variants/);
+      expect(buildDesignMd(r, 'tight')).toMatch(/Use exactly these colors/);
+      expect(buildDesignMd(r)).toBe(buildDesignMd(r, 'loose'));
+    },
+  );
+
+  it('picks the least-used direction for --direccion unused', () => {
+    const info = () => ({
+      status: 0,
+      out: JSON.stringify({
+        directions: [
+          { id: 'a', used: 2 },
+          { id: 'b', used: 0 },
+          { id: 'c', used: 0 },
+        ],
+      }),
+    });
+    expect(unusedDirection('dental', info)).toBe('b');
+    expect(() =>
+      unusedDirection('dental', () => ({ status: 1, out: '' })),
+    ).toThrow();
+  });
+
+  it.each(Object.keys(DIRECTIONS))(
+    'design-library/stitch/_design-systems/%s.md is current (run: pnpm lattiz design system --all)',
+    (dir) => {
+      const file = resolve(
+        import.meta.dirname,
+        '../../../design-library/stitch/_design-systems',
+        `${dir}.md`,
+      );
+      expect(readFileSync(file, 'utf8')).toBe(
+        buildDesignMd(resolveDirection(dir), 'loose'),
+      );
+    },
+  );
 });

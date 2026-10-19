@@ -19,7 +19,18 @@ import {
   writeJson,
 } from '../design/library';
 import { harvestFolder } from '../design/harvest';
-import { buildDesignMd, buildPrompt, resolveSystem } from '../design/system';
+import {
+  buildDesignMd,
+  buildPrompt,
+  RIGORS,
+  type Rigor,
+  resolveDirection,
+  resolveSystem,
+  unusedDirection,
+} from '../design/system';
+import { lattizRunner } from '../design/promote/kit';
+import { DIRECTIONS } from '../../../template-kit/directions';
+import { libraryRoot } from '../design/library';
 import { promote } from '../design/promote';
 import type { Candidate, CandidateStatus } from '../design/types';
 import { GIROS } from '../../../template-kit/giros';
@@ -211,16 +222,43 @@ function runPromote(ctx: Context): ExitCode {
   return EXIT.OK;
 }
 
+const rigorOf = (ctx: Context): Rigor => {
+  const v = (str(ctx.flags, 'rigor') ?? 'loose') as Rigor;
+  if (!RIGORS.includes(v))
+    throw usage(`--rigor inválido: "${v}".`, `Opciones: ${RIGORS.join(', ')}`);
+  return v;
+};
+
+const systemsDir = () => join(libraryRoot(), 'stitch', '_design-systems');
+
+/** One versioned DESIGN.md per art direction (loose: a guide for Stitch, not a straitjacket). */
 function runSystem(ctx: Context): ExitCode {
+  const rigor = rigorOf(ctx);
+  if (bool(ctx.flags, 'all')) {
+    mkdirSync(systemsDir(), { recursive: true });
+    for (const id of Object.keys(DIRECTIONS)) {
+      const r = resolveDirection(id);
+      writeFileSync(join(systemsDir(), `${id}.md`), buildDesignMd(r, rigor));
+      log.ok(`_design-systems/${id}.md (${r.paletteId} · ${r.fontPairId})`);
+    }
+    return EXIT.OK;
+  }
   const giro = str(ctx.flags, 'giro');
-  if (!giro) throw usage('Falta --giro.', 'Giros: pnpm lattiz giro list');
-  const r = resolveSystem(giro, str(ctx.flags, 'direccion'));
-  const md = buildDesignMd(r);
+  const dir = str(ctx.flags, 'direccion');
+  if (!giro && !dir)
+    throw usage(
+      'Falta --direccion o --giro (o --all).',
+      'Direcciones: pnpm lattiz direccion list',
+    );
+  const r = giro ? resolveSystem(giro, dir) : resolveDirection(dir!);
+  const md = buildDesignMd(r, rigor);
   const out = str(ctx.flags, 'out');
   if (out) {
     mkdirSync(join(resolve(out), '..'), { recursive: true });
     writeFileSync(resolve(out), md);
-    log.ok(`${out} (${r.direction.id} · ${r.paletteId} · ${r.fontPairId})`);
+    log.ok(
+      `${out} (${r.direction.id} · ${r.paletteId} · ${r.fontPairId} · ${rigor})`,
+    );
   } else console.log(md);
   return EXIT.OK;
 }
@@ -239,15 +277,28 @@ function runPlan(ctx: Context): ExitCode {
   const briefFile = str(ctx.flags, 'brief');
   if (briefFile && !existsSync(briefFile))
     throw usage(`No existe el brief: ${briefFile}`);
-  const r = resolveSystem(giro, str(ctx.flags, 'direccion'));
+  const rigor = rigorOf(ctx);
+  const wanted = str(ctx.flags, 'direccion');
+  const direccion =
+    wanted === 'unused' ? unusedDirection(giro, lattizRunner) : wanted;
+  const r = resolveSystem(giro, direccion);
   const brief = briefFile ? readFileSync(briefFile, 'utf8') : undefined;
   const dir = workDir(giro, new Date().toISOString().replace(/[:.]/g, '-'));
   mkdirSync(dir, { recursive: true });
-  writeFileSync(join(dir, 'design.md'), buildDesignMd(r));
-  writeFileSync(join(dir, 'prompt.md'), buildPrompt(r, brief));
+  // loose: the direction's own versioned file; tight: this giro's exact palette and type.
+  const shared = join(systemsDir(), `${r.direction.id}.md`);
+  const designMd =
+    rigor === 'tight'
+      ? buildDesignMd(r, 'tight')
+      : existsSync(shared)
+        ? readFileSync(shared, 'utf8')
+        : buildDesignMd(resolveDirection(r.direction.id), 'loose');
+  writeFileSync(join(dir, 'design.md'), designMd);
+  writeFileSync(join(dir, 'prompt.md'), buildPrompt(r, brief, rigor));
   const plan = {
     giro,
     direction: r.direction.id,
+    rigor,
     palette: r.paletteId,
     font_pair: r.fontPairId,
     candidates: n,
@@ -346,8 +397,8 @@ export const design: Command = {
   usage:
     'design gen|list|harvest|promote|shelve|reject|reindex|system [id] [opciones]',
   help: [
-    'design gen --giro <g> [--n 2] [--direccion d] [--brief f]\n                          prepara design.md + prompt + plan para el MCP de Stitch (.lattiz/stitch/)',
-    'design system --giro <g> [--direccion d] [--out archivo]   imprime el DESIGN.md de Stitch',
+    'design gen --giro <g> [--n 2] [--direccion d|unused] [--rigor loose|tight] [--brief f]\n                          prepara design.md + prompt + plan para el MCP de Stitch (.lattiz/stitch/)',
+    'design system (--direccion d | --giro g [--direccion d] | --all) [--rigor loose|tight] [--out archivo]   imprime el DESIGN.md de Stitch',
     'design gen --giro <g> --import <html|md> [--design-md f] [--screenshot f] [--name n] [--tags a,b] [--spin s] [--direccion d] [--project id] [--screen id,id] [--reuse-of id]',
     '                          registra un candidato (collected) desde archivos locales',
     'design promote <id> [--palette] [--fonts] [--section [--pattern slot/layout]] [--dry-run] [--regenerate-manifest]',
@@ -376,6 +427,8 @@ export const design: Command = {
     'reuse-of': { type: 'string' },
     note: { type: 'string' },
     n: { type: 'string' },
+    rigor: { type: 'string' },
+    all: { type: 'boolean' },
     brief: { type: 'string' },
     out: { type: 'string' },
     palette: { type: 'boolean' },
