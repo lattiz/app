@@ -55,6 +55,7 @@ export const FAMILIES: Record<string, Family> = {
   'team/spotlight': 'media-text',
   'testimonials/cards': 'cells',
   'testimonials/paper-trio': 'cells',
+  'testimonials/feature-stack': 'cells',
   'testimonials/quote-feature': 'quote',
   'testimonials/rating-wall': 'quote',
   'faq/list': 'rows',
