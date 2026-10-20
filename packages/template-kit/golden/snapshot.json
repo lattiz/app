@@ -905,24 +905,24 @@
         "html": "16a379810498196a",
         "css": "81999319d80be5c0",
         "rootCss": "82f49a1d0134793f",
-        "theme": "5837fb5046dff31e",
+        "theme": "82bb227f72bf006f",
         "pack": "a93bc9be6fffeb44",
         "meta": "3768c8f77b1c2f9f",
-        "assets": "b0209098caa84b5a"
+        "assets": "7ac419650c4f1d16"
       },
       "assets": 1,
       "size": {
         "css": {
           "raw": 24920,
-          "gzip": 4946
+          "gzip": 4944
         },
         "html": {
           "raw": 18244,
-          "gzip": 5041
+          "gzip": 5080
         },
         "index": {
           "raw": 43180,
-          "gzip": 9862
+          "gzip": 9934
         }
       }
     },
@@ -1073,24 +1073,24 @@
         "html": "b4f512471bd395a6",
         "css": "cd8fa1280f3af69a",
         "rootCss": "f241dfee89917ccd",
-        "theme": "bd8c241ae5f6d5d7",
+        "theme": "4fc2bda861efa3ef",
         "pack": "a93bc9be6fffeb44",
         "meta": "9c4a312379a6286b",
-        "assets": "106d57134542a49a"
+        "assets": "2d238a5c9b6bb1ee"
       },
       "assets": 13,
       "size": {
         "css": {
           "raw": 38988,
-          "gzip": 7135
+          "gzip": 7142
         },
         "html": {
           "raw": 28384,
-          "gzip": 7028
+          "gzip": 7050
         },
         "index": {
           "raw": 67388,
-          "gzip": 14035
+          "gzip": 14107
         }
       }
     },
@@ -1641,7 +1641,7 @@
         "restaurante-la-nota-azul-v1",
         "restaurante-base-la-nota-azul-v1"
       ],
-      "specHash": "c42ddb64df57",
+      "specHash": "c02e8c9d8f8c",
       "files": {
         "templates/restaurante-la-nota-azul-v1.ts": "6a4e09871d37",
         "themes/restaurante-la-nota-azul-v1.json": "cebda031d187",
