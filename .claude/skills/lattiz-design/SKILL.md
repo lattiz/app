@@ -90,4 +90,4 @@ paleta/sección promovida, cambia a `/lattiz-template`.
 similar · contraste AA · sin efectos caros (backdrop-filter, parallax) · dentro de presupuesto (hero ≤ 120 KiB, CSS ≤ 1.2 KB
 gzip) · `kit probe` 16/16 · lo que se aproximó queda anotado en el reporte.
 
-**Disciplina anti-inflación:** tope de 6 secciones nacidas de Stitch; `--allow-similar` solo con una razón escrita.
+**Disciplina anti-inflación:** tope de 6 secciones nacidas de Stitch **por candidato** (marcador `// Stitch: <id>` en `meta.ts`); `--allow-similar` solo con una razón escrita.

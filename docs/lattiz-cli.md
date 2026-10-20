@@ -266,7 +266,9 @@ Al elegir una plantilla, la API copia `templates.grapesjs_json` al sitio del cli
 sitios de quienes ya la adoptaron**: solo la ven los que la elijan desde ahora (y el preview y la
 miniatura). Lo único que se inyecta al servir y llega a todos es lo de `route.ts` (tokens, SEO,
 JSON-LD, analítica y el runtime de Motion para Pro). Si cambias el tier de una plantilla en uso, el
-seed avisa cuántos sitios la usan.
+seed avisa cuántos sitios la usan. Si la plantilla renueva otra (spec `renews`), el plan del seed avisa
+si la vieja sigue activa y cuántos sitios la usan; retírala en `/admin` cuando la nueva esté verificada
+(el seed no la toca).
 
 ## Fase 4 (hecha): skill de Claude Code y más giros
 

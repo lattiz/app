@@ -78,7 +78,9 @@ que cambiar de plantilla (pierde su contenido, que queda archivado) o hacerlo é
   **Cambios grandes** (estructura, otra composición del hero, quitar o reordenar secciones): id nuevo
   (`-v2`) y nueva fila. Como los clientes reciben una **copia** al elegir (§3), los que ya usan la
   `-v1` no ven ningún arreglo de la plantilla; la `-v2` deja claro qué versión tiene cada quien. El
-  seed nunca desactiva otra plantilla.
+  seed nunca desactiva otra plantilla. Con un spec: `version: 2` + `renews` hereda paleta y tipografía de
+  la `-v1` y la exime de las compuertas de unicidad mientras conviven; la `-v1` se retira a mano en
+  `/admin` y luego se borra del repo (`docs/template-spec.md` «Renovar una plantilla»).
 - **Pro/Básico**: `tier` del manifiesto → `template.meta.json` → `templates.tier`. Qué planes la
   pueden usar se calcula en la API al leer (`modules/templates/template-access.policy.ts`). Un tema
   Pro solo sirve a plantillas Pro (lo valida `kit:validate`).
