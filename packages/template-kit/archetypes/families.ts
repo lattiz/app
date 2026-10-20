@@ -67,6 +67,7 @@ export const FAMILIES: Record<string, Family> = {
   'locations/single-card': 'cells',
   'locations/with-contact': 'split-panel',
   'locations/booking-panel': 'split-panel',
+  'locations/arch-visit': 'split-panel',
   'locations/map-link': 'split-panel',
   'locations/cards': 'cells',
   'cta/band': 'band',
