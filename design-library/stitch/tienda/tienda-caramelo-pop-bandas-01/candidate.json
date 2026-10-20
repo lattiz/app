@@ -1,0 +1,23 @@
+{
+  "id": "tienda-caramelo-pop-bandas-01",
+  "giro": "tienda",
+  "source": "stitch",
+  "status": "harvested",
+  "tags": [
+    "caramelo-pop",
+    "renovacion",
+    "jardin-suave",
+    "rosa",
+    "loose"
+  ],
+  "spin": "caramelo-bandas-alternas",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-20T21:02:33.129Z",
+  "stitch": {
+    "project_id": "13782150808295850706",
+    "screen_ids": [
+      "b9442cca0501402f9b2507c9a927c9b0"
+    ]
+  },
+  "direction": "jardin-suave"
+}

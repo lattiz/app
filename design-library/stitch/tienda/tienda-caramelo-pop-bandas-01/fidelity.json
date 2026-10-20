@@ -1,0 +1,180 @@
+{
+  "galeria": {
+    "ref": "galeria",
+    "slot": "gallery",
+    "theme": "tienda-caramelo-pop-v1",
+    "measured": [
+      {
+        "variant": "gallery/collage",
+        "structure": 0.449,
+        "heightRatio": 1.6,
+        "match": false
+      }
+    ],
+    "best": "gallery/collage",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "preguntas": {
+    "ref": "preguntas",
+    "slot": "faq",
+    "theme": "tienda-caramelo-pop-v1",
+    "measured": [
+      {
+        "variant": "faq/column-panels",
+        "structure": 0.925,
+        "heightRatio": 0.47,
+        "match": false
+      }
+    ],
+    "best": "faq/column-panels",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "contacto": {
+    "ref": "contacto",
+    "slot": "locations",
+    "theme": "tienda-caramelo-pop-v1",
+    "measured": [
+      {
+        "variant": "locations/arch-visit",
+        "structure": 0.432,
+        "heightRatio": 1.26,
+        "match": false
+      }
+    ],
+    "best": "locations/arch-visit",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "hero": {
+    "ref": "hero",
+    "slot": "hero",
+    "theme": "tienda-caramelo-pop-v1",
+    "measured": [
+      {
+        "variant": "hero/arch-sticker",
+        "structure": 0.664,
+        "heightRatio": 1.32,
+        "match": false
+      }
+    ],
+    "best": "hero/arch-sticker",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "testimonios": {
+    "ref": "testimonios",
+    "slot": "testimonials",
+    "theme": "tienda-caramelo-pop-v1",
+    "measured": [
+      {
+        "variant": "testimonials/feature-stack",
+        "structure": 0.273,
+        "heightRatio": 1.15,
+        "match": false
+      }
+    ],
+    "best": "testimonials/feature-stack",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "footer": {
+    "ref": "footer",
+    "slot": "footer",
+    "theme": "tienda-caramelo-pop-v1",
+    "measured": [
+      {
+        "variant": "footer/columns",
+        "structure": 0.341,
+        "heightRatio": 1.6,
+        "match": false
+      },
+      {
+        "variant": "footer/big-wordmark",
+        "structure": 0.41,
+        "heightRatio": 2.98,
+        "match": false
+      },
+      {
+        "variant": "footer/ledger",
+        "structure": 0.429,
+        "heightRatio": 2.1,
+        "match": false
+      },
+      {
+        "variant": "footer/minimal-centered",
+        "structure": 0.793,
+        "heightRatio": 1.73,
+        "match": false
+      },
+      {
+        "variant": "footer/signature-bar",
+        "structure": 0.853,
+        "heightRatio": 0.82,
+        "match": false
+      }
+    ],
+    "best": "footer/columns",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "catalogo": {
+    "ref": "catalogo",
+    "slot": "services",
+    "theme": "tienda-caramelo-pop-v1",
+    "measured": [
+      {
+        "variant": "services/alternating-bands",
+        "structure": 0.409,
+        "heightRatio": 1.02,
+        "match": false
+      }
+    ],
+    "best": "services/alternating-bands",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  }
+}
