@@ -1,0 +1,593 @@
+{
+  "$schema": "./spec.schema.json",
+  "specVersion": 1,
+  "idBase": "tienda-caramelo-pop",
+  "twin": true,
+  "giro": "tienda",
+  "business": {
+    "name": "Caramelo Pop",
+    "shortName": "Caramelo",
+    "tagline": "Dulces americanos",
+    "city": "CDMX",
+    "branch": "Clavería",
+    "address": "Calle Gomita 17, Col. Clavería, Azcapotzalco, CDMX",
+    "hours": "Lun–Sáb 10:00–20:00 · Dom 11:00–18:00",
+    "phone": "+52 55 0000 0000",
+    "whatsapp": "5215500000000",
+    "whatsappMessage": "Hola, quiero pedir una caja de dulces"
+  },
+  "brand": {
+    "catalog": "extended",
+    "fontPair": "fredoka+nunito",
+    "palette": {
+      "custom": {
+        "bg": "#FFEAF3",
+        "accent": "#35C4E6",
+        "text": "#14213D"
+      }
+    }
+  },
+  "layout": {
+    "direction": "jardin-suave",
+    "archetype": "soft",
+    "variantOverrides": {
+      "hero": "arch-sticker",
+      "catalog": "alternating-bands",
+      "proof": "collage",
+      "testimonials": "feature-stack",
+      "faq": "column-panels"
+    }
+  },
+  "sections": {
+    "pro": [
+      {
+        "role": "header",
+        "variant": "inline"
+      },
+      {
+        "role": "hero",
+        "variant": "arch-sticker"
+      },
+      {
+        "role": "about",
+        "variant": "statement"
+      },
+      {
+        "role": "catalog",
+        "variant": "alternating-bands"
+      },
+      {
+        "role": "proof",
+        "variant": "collage"
+      },
+      {
+        "role": "testimonials",
+        "variant": "feature-stack"
+      },
+      {
+        "role": "faq",
+        "variant": "column-panels"
+      },
+      {
+        "role": "contact",
+        "variant": "arch-visit"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer",
+        "variant": "minimal-centered"
+      }
+    ],
+    "basico": [
+      {
+        "role": "header",
+        "variant": "centered-logo"
+      },
+      {
+        "role": "hero",
+        "variant": "arch-sticker"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog",
+        "variant": "alternating-bands"
+      },
+      {
+        "role": "faq",
+        "variant": "column-panels"
+      },
+      {
+        "role": "contact",
+        "variant": "single"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer",
+        "variant": "minimal-centered"
+      }
+    ]
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "{{name}} en {{city}}: dulces importados de Estados Unidos, cajas armadas y pedidos por WhatsApp."
+    },
+    "navbar": {
+      "cta": "Pide tu caja"
+    },
+    "hero": {
+      "image": "hero.jpg",
+      "imageAlt": "Frascos y bolsas de dulces de colores en un estante de tienda",
+      "eyebrow": "Tienda de dulces · {{branch}}",
+      "title": "Dulces de allá, caja armada aquí",
+      "text": "Chocolates, gomitas, sodas y snacks importados de Estados Unidos. Arma tu caja o llévate una bolsa.",
+      "primaryCta": "Pide tu caja",
+      "secondaryCta": "Ver categorías",
+      "secondaryHref": "#servicios",
+      "sticker": "Importados",
+      "facts": [
+        {
+          "value": "Chocolates",
+          "label": "Con maní, caramelo y relleno"
+        },
+        {
+          "value": "Gomitas",
+          "label": "Ácidas, suaves y de frutas"
+        },
+        {
+          "value": "Sodas",
+          "label": "Importadas de Estados Unidos"
+        }
+      ],
+      "note": "Pedidos por WhatsApp"
+    },
+    "about": {
+      "kicker": "{{index}} — Nosotros",
+      "title": "Dulces de otro lado, en tu colonia",
+      "summary": "En {{shortName}} juntamos dulces importados de Estados Unidos y los vendemos por pieza, en bolsa o en caja.",
+      "statement": "Dulces para probar, regalar y compartir. Elige uno o arma la caja completa.",
+      "image": "about.jpg",
+      "imageAlt": "Mostrador con frascos de dulces y una caja de regalo abierta",
+      "sticker": "Por pieza o en caja",
+      "paragraphs": [
+        "{{shortName}} empezó con un estante y hoy hay pasillos de gomitas, chocolates y sodas.",
+        "Cambiamos las novedades por temporada: Halloween, Navidad y lo que llegue.",
+        "Si no sabes qué probar, armamos una caja de prueba con un poco de todo."
+      ],
+      "stats": [
+        {
+          "value": "6 categorías",
+          "label": "De dulces y snacks"
+        },
+        {
+          "value": "Temporada",
+          "label": "Halloween y Navidad"
+        },
+        {
+          "value": "Cajas",
+          "label": "A tu medida"
+        }
+      ]
+    },
+    "services": {
+      "kicker": "{{index}} — Categorías",
+      "title": "Cuatro formas de <span class=\"lz-title__serif\">endulzar</span> el día",
+      "intro": "Precios de referencia en pesos. Existencias y envíos se confirman por WhatsApp.",
+      "cta": "Pedir",
+      "products": [
+        {
+          "name": "Chocolates",
+          "price": "Desde $35",
+          "description": "Con maní, caramelo o relleno cremoso.",
+          "image": "product-01.jpg",
+          "imageAlt": "Barras de chocolate con envoltura sobre una mesa",
+          "href": "{{whatsappUrl:Hola, quiero chocolates}}",
+          "tag": "Más pedido",
+          "chips": [
+            "Con maní",
+            "Caramelo",
+            "Relleno"
+          ]
+        },
+        {
+          "name": "Gomitas",
+          "price": "Desde $30",
+          "description": "Ácidas, suaves y de frutas, en bolsa.",
+          "image": "product-02.jpg",
+          "imageAlt": "Tazón con gomitas de colores",
+          "href": "{{whatsappUrl:Hola, quiero gomitas}}",
+          "tag": "Favoritas",
+          "chips": [
+            "Ácidas",
+            "Suaves",
+            "Frutas"
+          ]
+        },
+        {
+          "name": "Sodas importadas",
+          "price": "Desde $38",
+          "description": "Importadas de Estados Unidos, en lata y botella.",
+          "image": "product-03.jpg",
+          "imageAlt": "Vaso de refresco con hielo y popote",
+          "href": "{{whatsappUrl:Hola, quiero sodas importadas}}",
+          "tag": "Importadas",
+          "chips": [
+            "Lata",
+            "Botella",
+            "Edición limitada"
+          ]
+        },
+        {
+          "name": "Snacks",
+          "price": "Desde $40",
+          "description": "Salados y dulces para compartir.",
+          "image": "product-04.jpg",
+          "imageAlt": "Palomitas de maíz en un recipiente",
+          "href": "{{whatsappUrl:Hola, quiero snacks}}",
+          "tag": "Para compartir",
+          "chips": [
+            "Dulces",
+            "Salados",
+            "Mezcla"
+          ]
+        }
+      ],
+      "prices": [
+        {
+          "name": "Chocolates",
+          "price": "Desde $35",
+          "description": "Con maní, caramelo o relleno cremoso."
+        },
+        {
+          "name": "Gomitas",
+          "price": "Desde $30",
+          "description": "Ácidas, suaves y de frutas, en bolsa."
+        },
+        {
+          "name": "Sodas importadas",
+          "price": "Desde $38",
+          "description": "Importadas de Estados Unidos, en lata y botella."
+        },
+        {
+          "name": "Snacks",
+          "price": "Desde $40",
+          "description": "Salados y dulces para compartir."
+        }
+      ],
+      "promos": [
+        {
+          "tag": "Arma tu caja",
+          "title": "Caja de regalo o para llevar",
+          "text": "Elige 8, 12 o 20 piezas y la armamos.",
+          "cta": "Pide tu caja",
+          "href": "{{whatsappUrl:Hola, quiero armar una caja de dulces}}"
+        },
+        {
+          "tag": "Fiestas",
+          "title": "Mesas de dulces y mayoreo",
+          "text": "Cotiza para fiestas, eventos y tiendas.",
+          "cta": "Cotizar",
+          "href": "{{whatsappUrl:Hola, quiero cotizar una mesa de dulces}}"
+        }
+      ]
+    },
+    "gallery": {
+      "kicker": "{{index}} — La tienda",
+      "title": "Un vistazo a los <span class=\"lz-title__serif\">pasillos</span>",
+      "items": [
+        {
+          "image": "gallery-01.jpg",
+          "caption": "Gomitas a granel",
+          "alt": "Contenedores con gomitas de colores"
+        },
+        {
+          "image": "gallery-02.jpg",
+          "caption": "Dulces surtidos",
+          "alt": "Dulces de colores variados en exhibición"
+        },
+        {
+          "image": "gallery-03.jpg",
+          "caption": "Postres para regalar",
+          "alt": "Cupcakes con crema y decoración de dulces"
+        },
+        {
+          "image": "gallery-04.jpg",
+          "caption": "Caja armada",
+          "alt": "Dulces y chocolates surtidos"
+        },
+        {
+          "image": "gallery-05.jpg",
+          "caption": "Mesa de dulces",
+          "alt": "Mesa con macarons y postres rosas"
+        },
+        {
+          "image": "gallery-06.jpg",
+          "caption": "Paletas de pastel",
+          "alt": "Paletas de pastel decoradas"
+        },
+        {
+          "image": "gallery-07.jpg",
+          "caption": "Cereales",
+          "alt": "Tazón de cereal con leche"
+        },
+        {
+          "image": "gallery-08.jpg",
+          "caption": "Novedades de temporada",
+          "alt": "Dulces de temporada de color naranja y amarillo"
+        }
+      ],
+      "intro": "Un vistazo a los estantes, las cajas y las novedades de temporada."
+    },
+    "testimonials": {
+      "kicker": "{{index}} — Clientes",
+      "allReviewsCta": "Ver reseñas en Google",
+      "writeReviewCta": "Dejar reseña en Google",
+      "reviews": [
+        {
+          "text": "Armé una caja para el cumpleaños de mi sobrino y estuvo lista el mismo día.",
+          "author": "Daniela R.",
+          "initials": "DR",
+          "place": "Azcapotzalco",
+          "stars": "5"
+        },
+        {
+          "text": "Pedí por WhatsApp y me dijeron qué había en existencia antes de pagar.",
+          "author": "Miguel A."
+        },
+        {
+          "text": "Probamos varias gomitas para una mesa de dulces y nos ayudaron a elegir sin prisa.",
+          "author": "Paola S."
+        }
+      ],
+      "title": "Lo que dicen <span class=\"lz-title__serif\">nuestros clientes</span>"
+    },
+    "faq": {
+      "kicker": "{{index}} — Preguntas",
+      "title": "Antes de <span class=\"lz-title__serif\">pedir</span>",
+      "intro": "Respuestas cortas para ir directo al dulce.",
+      "cta": "Preguntar por WhatsApp",
+      "items": [
+        {
+          "question": "¿Cómo hago un pedido?",
+          "answer": "Escríbenos por WhatsApp con lo que quieres. Te confirmamos existencias y precio."
+        },
+        {
+          "question": "¿Hacen envíos?",
+          "answer": "Sí. El costo y el tiempo se confirman por WhatsApp según tu zona."
+        },
+        {
+          "question": "¿De dónde son los dulces?",
+          "answer": "Importados de Estados Unidos. Las existencias cambian según la temporada."
+        },
+        {
+          "question": "¿Venden al mayoreo?",
+          "answer": "Sí. Cotizamos fiestas, eventos y tiendas. Escríbenos con la cantidad aproximada."
+        },
+        {
+          "question": "¿Hay alérgenos?",
+          "answer": "Revisa la etiqueta de cada producto. Si tienes alguna alergia, pregúntanos antes de comprar."
+        },
+        {
+          "question": "¿Pueden armar una caja de regalo?",
+          "answer": "Sí. Dinos el presupuesto y los gustos, y la armamos."
+        }
+      ]
+    },
+    "locations": {
+      "kicker": "{{index}} — Pedidos",
+      "title": "Pide tu caja",
+      "contactText": "Compras y pedidos por WhatsApp. Envíos y existencias se confirman por mensaje.",
+      "whatsappLabel": "WhatsApp",
+      "whatsappValue": "Pide tu caja",
+      "callLabel": "Teléfono",
+      "emailLabel": "Correo",
+      "directionsLabel": "Cómo llegar",
+      "hoursLabel": "Horario",
+      "whatsappCta": "Pedir por WhatsApp",
+      "callCta": "Llamar",
+      "image": "about.jpg",
+      "imageAlt": "Frascos de vidrio con dulces de colores",
+      "imageCaption": "Pasa por tu bolsa",
+      "imageNote": "Abierto hoy"
+    },
+    "floating-whatsapp": {
+      "label": "Pedir por WhatsApp"
+    },
+    "footer": {
+      "about": "Tienda de dulces americanos en {{branch}}, {{city}}. Pedidos y envíos por WhatsApp.",
+      "branchesTitle": "Dónde estamos",
+      "linksTitle": "Explorar",
+      "contactTitle": "Contacto"
+    }
+  },
+  "images": [
+    {
+      "key": "hero",
+      "source": {
+        "search": "pink and blue candy jars shelf sweet shop"
+      }
+    },
+    {
+      "key": "about",
+      "source": {
+        "search": "candy jars"
+      }
+    },
+    {
+      "key": "product-01",
+      "source": {
+        "search": "chocolate bars candy pile"
+      }
+    },
+    {
+      "key": "product-02",
+      "source": {
+        "search": "colorful gummy candy pile"
+      }
+    },
+    {
+      "key": "product-03",
+      "source": {
+        "search": "soda pop"
+      }
+    },
+    {
+      "key": "product-04",
+      "source": {
+        "search": "popcorn"
+      }
+    },
+    {
+      "key": "gallery-01",
+      "source": {
+        "search": "gummy candy bulk bins"
+      }
+    },
+    {
+      "key": "gallery-02",
+      "source": {
+        "search": "chocolate candy bars display"
+      }
+    },
+    {
+      "key": "gallery-03",
+      "source": {
+        "search": "hard candy swirl"
+      }
+    },
+    {
+      "key": "gallery-04",
+      "source": {
+        "search": "candy gift box ribbon"
+      }
+    },
+    {
+      "key": "gallery-05",
+      "source": {
+        "search": "candy buffet table party"
+      }
+    },
+    {
+      "key": "gallery-06",
+      "source": {
+        "search": "lollipops colorful cup"
+      }
+    },
+    {
+      "key": "gallery-07",
+      "source": {
+        "search": "colorful cereal boxes shelf"
+      }
+    },
+    {
+      "key": "gallery-08",
+      "source": {
+        "search": "candy corn"
+      }
+    }
+  ],
+  "motion": {
+    "preset": "calm",
+    "progress": false
+  },
+  "todo": [],
+  "overrides": {
+    "basico": {
+      "brand": {
+        "fontPair": "unbounded+manrope",
+        "palette": {
+          "custom": {
+            "bg": "#E6F6FF",
+            "accent": "#FF5FA2",
+            "text": "#14213D"
+          }
+        }
+      },
+      "copy": {
+        "hero": {
+          "title": "Dulces americanos",
+          "text": "Gomitas, chocolates y sodas importadas. Pasa por tu bolsa o pide por WhatsApp.",
+          "detailImage": "basico-product-01.jpg",
+          "detailAlt": "Detalle de una bolsa de gomitas de colores"
+        },
+        "services": {
+          "products": [
+            {
+              "name": "Chocolates",
+              "price": "Desde $35",
+              "description": "Con maní, caramelo o relleno cremoso.",
+              "image": "basico-product-01.jpg",
+              "imageAlt": "Barras de chocolate con envoltura sobre una mesa",
+              "href": "{{whatsappUrl:Hola, quiero chocolates}}",
+              "tag": "Más pedido",
+              "chips": [
+                "Con maní",
+                "Caramelo",
+                "Relleno"
+              ]
+            },
+            {
+              "name": "Gomitas",
+              "price": "Desde $30",
+              "description": "Ácidas, suaves y de frutas, en bolsa.",
+              "image": "basico-product-01.jpg",
+              "imageAlt": "Tazón con gomitas de colores",
+              "href": "{{whatsappUrl:Hola, quiero gomitas}}",
+              "tag": "Favoritas",
+              "chips": [
+                "Ácidas",
+                "Suaves",
+                "Frutas"
+              ]
+            },
+            {
+              "name": "Sodas importadas",
+              "price": "Desde $38",
+              "description": "Importadas de Estados Unidos, en lata y botella.",
+              "image": "basico-product-01.jpg",
+              "imageAlt": "Vaso de refresco con hielo y popote",
+              "href": "{{whatsappUrl:Hola, quiero sodas importadas}}",
+              "tag": "Importadas",
+              "chips": [
+                "Lata",
+                "Botella",
+                "Edición limitada"
+              ]
+            },
+            {
+              "name": "Snacks",
+              "price": "Desde $40",
+              "description": "Salados y dulces para compartir.",
+              "image": "basico-product-01.jpg",
+              "imageAlt": "Palomitas de maíz en un recipiente",
+              "href": "{{whatsappUrl:Hola, quiero snacks}}",
+              "tag": "Para compartir",
+              "chips": [
+                "Dulces",
+                "Salados",
+                "Mezcla"
+              ]
+            }
+          ],
+          "title": "Cuatro formas de endulzar el día"
+        },
+        "about": {
+          "image": "basico-about.jpg"
+        },
+        "faq": {
+          "title": "Antes de pedir"
+        }
+      }
+    }
+  },
+  "version": 2,
+  "renews": {
+    "spec": "tienda-caramelo-pop"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$lattiz": "GENERATED from specs/tienda-caramelo-pop-v2.spec.json (spec 8e0f9df6d256, file 7e102fdd9598). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "a2dc8630bea48b0f7fa10b22229c52c9d1903d17f311140d01db74087f556d3a",
+      "query": "pink and blue candy jars shelf sweet shop",
+      "providerId": 7036390,
+      "pageUrl": "https://pixabay.com/photos/candies-sweets-food-background-7036390/",
+      "photographer": "Ylanite",
+      "photographerUrl": "https://pixabay.com/users/2218222/",
+      "tags": "candies, full hd wallpaper, desktop backgrounds, hd wallpaper, wallpaper 4k, beautiful wallpaper, free wallpaper, 4k wallpaper 1920x1080, free background, cool backgrounds, sweets, laptop wallpaper, food, background, mac wallpaper, treats, snack, windows wallpaper, 4k wallpaper, wallpaper hd, assorted"
+    },
+    {
+      "file": "basico-product-01.jpg",
+      "source": "placeholder",
+      "sha256": "89bcb1518fe63072680dbb1571eaafd86eb227c23898b86a5eeae311cd8c513c"
+    }
+  ]
+}
