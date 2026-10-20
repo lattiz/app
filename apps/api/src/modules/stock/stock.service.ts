@@ -17,7 +17,7 @@ import {
   type StockPhoto,
   type StockPhotoProviderPort,
 } from './domain/stock-photo-provider.port';
-import { PEXELS_IMAGE_HOST } from './infrastructure/pexels-stock-photo.adapter';
+import { PIXABAY_IMAGE_HOSTS } from './infrastructure/pixabay-stock-photo.adapter';
 import { LruCache } from './lru-cache';
 import {
   STOCK_MAX_PER_PAGE,
@@ -36,9 +36,9 @@ const MAX_DOWNLOAD_BYTES = 15 * 1024 * 1024;
 const DOWNLOAD_TIMEOUT_MS = 30_000;
 // Identical searches from many tenants (e.g. the "barbería" chip) are served from memory.
 const SEARCH_CACHE_ENTRIES = 200;
-const SEARCH_CACHE_TTL_MS = 60 * 60 * 1000;
+const SEARCH_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
 // Searches stop while this many provider calls remain, so imports can still finish.
-const SEARCH_QUOTA_RESERVE = 20;
+const SEARCH_QUOTA_RESERVE = 10;
 
 @Injectable()
 export class StockService {
@@ -107,7 +107,7 @@ export class StockService {
         tenantId,
         userSub,
         path,
-        `pexels-${photo.id}`,
+        `pixabay-${photo.id}`,
       );
       await this.recordAttribution(tenantId, photo, asset);
       return asset;
@@ -124,10 +124,13 @@ export class StockService {
     throw new StockQuotaLowException(Math.ceil(waitMs / 1000));
   }
 
-  /** Streams to disk with a hard byte cap; only https on the Pexels image CDN, no redirects. */
+  /** Streams to disk with a hard byte cap; only https on Pixabay image hosts, no redirects. */
   private async download(url: string, path: string): Promise<void> {
     const parsed = new URL(url);
-    if (parsed.protocol !== 'https:' || parsed.hostname !== PEXELS_IMAGE_HOST) {
+    if (
+      parsed.protocol !== 'https:' ||
+      !PIXABAY_IMAGE_HOSTS.has(parsed.hostname)
+    ) {
       throw new StockProviderUnavailableException();
     }
     let res: Response;
@@ -184,7 +187,7 @@ export class StockService {
     await this.db.execute(
       sql`INSERT INTO public.tenant_stock_assets
             (tenant_id, provider, provider_photo_id, photographer, photographer_url, photo_url, asset_id, src)
-          VALUES (${tenantId}::uuid, 'pexels', ${photo.id}, ${photo.photographer},
+          VALUES (${tenantId}::uuid, 'pixabay', ${photo.id}, ${photo.photographer},
                   ${photo.photographerUrl}, ${photo.pageUrl}, ${asset.id}::uuid, ${asset.src})`,
     );
   }

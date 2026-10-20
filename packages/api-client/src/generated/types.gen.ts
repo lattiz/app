@@ -1602,7 +1602,7 @@ export type ChangeTemplateResponseDto = {
 
 export type StockStatusDto = {
     /**
-     * False when the API has no PEXELS_API_KEY; the dashboard hides "Fotos gratuitas".
+     * False when the API has no PIXABAY_API_KEY; the dashboard hides "Fotos gratuitas".
      */
     enabled: boolean;
 };
@@ -1616,11 +1616,11 @@ export type StockPhotoDto = {
     photographer: string;
     photographerUrl: string;
     /**
-     * The photo's page on pexels.com (attribution link).
+     * The photo's page on pixabay.com (attribution link).
      */
     pageUrl: string;
     /**
-     * Small preview for the results grid (served by Pexels).
+     * Small preview for the results grid (served by Pixabay).
      */
     thumbUrl: string;
 };
@@ -1635,7 +1635,7 @@ export type StockSearchResponseDto = {
 
 export type ImportStockPhotoDto = {
     /**
-     * Pexels photo id from GET /stock/photos; the server fetches the image itself.
+     * Pixabay photo id from GET /stock/photos; the server fetches the image itself.
      */
     photoId: string;
 };

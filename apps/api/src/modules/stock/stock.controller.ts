@@ -52,7 +52,7 @@ export class StockController {
     return this.stock.status();
   }
 
-  /** Searches Pexels through the API (the key never reaches the browser). */
+  /** Searches Pixabay through the API (the key never reaches the browser). */
   @Get('photos')
   @UseGuards(StockRateLimitGuard)
   @StockRateLimit('search')

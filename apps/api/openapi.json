@@ -9410,7 +9410,7 @@
         "properties": {
           "enabled": {
             "type": "boolean",
-            "description": "False when the API has no PEXELS_API_KEY; the dashboard hides \"Fotos gratuitas\"."
+            "description": "False when the API has no PIXABAY_API_KEY; the dashboard hides \"Fotos gratuitas\"."
           }
         },
         "required": [
@@ -9444,11 +9444,11 @@
           },
           "pageUrl": {
             "type": "string",
-            "description": "The photo's page on pexels.com (attribution link)."
+            "description": "The photo's page on pixabay.com (attribution link)."
           },
           "thumbUrl": {
             "type": "string",
-            "description": "Small preview for the results grid (served by Pexels)."
+            "description": "Small preview for the results grid (served by Pixabay)."
           }
         },
         "required": [
@@ -9498,7 +9498,7 @@
         "properties": {
           "photoId": {
             "type": "string",
-            "description": "Pexels photo id from GET /stock/photos; the server fetches the image itself.",
+            "description": "Pixabay photo id from GET /stock/photos; the server fetches the image itself.",
             "pattern": "^\\d{1,12}$",
             "example": "3998429"
           }

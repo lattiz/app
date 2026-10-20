@@ -40,9 +40,9 @@ export class StockSearchQueryDto {
 }
 
 export class ImportStockPhotoDto {
-  /** Pexels photo id from GET /stock/photos; the server fetches the image itself. */
+  /** Pixabay photo id from GET /stock/photos; the server fetches the image itself. */
   @ApiProperty({ example: '3998429' })
-  @Matches(/^\d{1,12}$/, { message: 'photoId must be a Pexels photo id' })
+  @Matches(/^\d{1,12}$/, { message: 'photoId must be a Pixabay photo id' })
   photoId!: string;
 }
 
@@ -68,11 +68,11 @@ export class StockPhotoDto {
   @ApiProperty()
   photographerUrl!: string;
 
-  /** The photo's page on pexels.com (attribution link). */
+  /** The photo's page on pixabay.com (attribution link). */
   @ApiProperty()
   pageUrl!: string;
 
-  /** Small preview for the results grid (served by Pexels). */
+  /** Small preview for the results grid (served by Pixabay). */
   @ApiProperty()
   thumbUrl!: string;
 }
@@ -95,7 +95,7 @@ export class StockSearchResponseDto {
 }
 
 export class StockStatusDto {
-  /** False when the API has no PEXELS_API_KEY; the dashboard hides "Fotos gratuitas". */
+  /** False when the API has no PIXABAY_API_KEY; the dashboard hides "Fotos gratuitas". */
   @ApiProperty()
   enabled!: boolean;
 }

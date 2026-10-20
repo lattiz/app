@@ -1,7 +1,7 @@
 import { HttpStatus } from '@nestjs/common';
 import { DomainException } from '../../common/exceptions/domain.exception';
 
-/** PEXELS_API_KEY is not configured on this API. */
+/** PIXABAY_API_KEY is not configured on this API. */
 export class StockPhotosDisabledException extends DomainException {
   readonly code = 'STOCK_PHOTOS_DISABLED';
   readonly status = HttpStatus.SERVICE_UNAVAILABLE;

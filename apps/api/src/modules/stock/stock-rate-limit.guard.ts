@@ -17,7 +17,7 @@ import { MINUTE_MS } from '../../common/throttling/rate-limits';
 const STOCK_RATE_LIMIT_KIND = 'stockRateLimitKind';
 type StockRateLimitKind = 'search' | 'import';
 
-// Per user (= per tenant): the Pexels quota is shared by every tenant, so one must not drain it.
+// Per user (= per tenant): the Pixabay quota is shared by every tenant, so one must not drain it.
 const LIMITS: Record<StockRateLimitKind, number> = { search: 30, import: 10 };
 
 export const StockRateLimit = (kind: StockRateLimitKind): MethodDecorator =>
