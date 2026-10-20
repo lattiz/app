@@ -7,13 +7,13 @@
   "tiers": {
     "restaurante-casa-rosa-mantequilla-v1": {
       "tier": "pro",
-      "palette": "pal-cantera",
-      "fontPair": "gloock+onest",
+      "palette": "custom",
+      "fontPair": "playfair-display+inter",
       "shape": "suave",
       "archetype": "editorial-atelier",
       "sections": [
         { "role": "header", "slot": "navbar", "variant": "inline" },
-        { "role": "hero", "slot": "hero", "variant": "rail" },
+        { "role": "hero", "slot": "hero", "variant": "photo-ribbon" },
         { "role": "about", "slot": "about", "variant": "framed-craft" },
         { "role": "catalog", "slot": "services", "variant": "price-list" },
         { "role": "proof", "slot": "gallery", "variant": "mosaic" },
@@ -31,12 +31,12 @@
         },
         { "role": "footer", "slot": "footer", "variant": "big-wordmark" }
       ],
-      "layout": { "direction": "cantera-editorial", "archetype": "editorial" }
+      "layout": { "archetype": "editorial" }
     },
     "restaurante-base-casa-rosa-mantequilla-v1": {
       "tier": "basico",
-      "palette": "pal-adobe-tinta",
-      "fontPair": "libre-caslon-display+schibsted-grotesk",
+      "palette": "custom",
+      "fontPair": "gilda-display+hanken-grotesk",
       "shape": "sutil",
       "archetype": "essential",
       "sections": [
@@ -53,7 +53,7 @@
         },
         { "role": "footer", "slot": "footer", "variant": "big-wordmark" }
       ],
-      "layout": { "direction": "cantera-editorial", "archetype": "editorial" }
+      "layout": { "archetype": "editorial" }
     }
   }
 }

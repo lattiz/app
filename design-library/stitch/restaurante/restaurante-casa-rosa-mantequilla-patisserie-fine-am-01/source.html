@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Casa Rosa Mantequilla — Pâtisserie Fine &amp; Repostería Artesanal en Puebla</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-highest": "#ffdadd",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#380a1b",
+            "secondary-container": "#e5e0ef",
+            "inverse-primary": "#feb1c5",
+            "surface-variant": "#ffdadd",
+            "on-primary-container": "#6e3547",
+            "on-background": "#2a1619",
+            "on-tertiary-fixed": "#1e1c12",
+            "secondary-fixed-dim": "#c9c4d3",
+            "tertiary-container": "#bcb6a6",
+            "primary-container": "#eca1b5",
+            "secondary-fixed": "#e5e0ef",
+            "tertiary-fixed-dim": "#ccc6b6",
+            "on-tertiary": "#ffffff",
+            "on-tertiary-container": "#4b473b",
+            "surface-dim": "#f6d1d5",
+            "surface-container-low": "#fff0f1",
+            "on-surface-variant": "#514346",
+            "inverse-on-surface": "#ffeced",
+            "primary-fixed-dim": "#feb1c5",
+            "surface-tint": "#894c5e",
+            "outline": "#847376",
+            "on-secondary": "#ffffff",
+            "on-tertiary-fixed-variant": "#4a473b",
+            "on-error-container": "#93000a",
+            "surface-container": "#ffe9ea",
+            "on-secondary-fixed-variant": "#474551",
+            "on-secondary-container": "#65636f",
+            "background": "#fff8f7",
+            "secondary": "#5f5d69",
+            "primary-fixed": "#ffd9e1",
+            "tertiary": "#625e51",
+            "on-error": "#ffffff",
+            "on-surface": "#2a1619",
+            "on-secondary-fixed": "#1c1a25",
+            "surface-bright": "#fff8f7",
+            "outline-variant": "#d6c2c5",
+            "surface": "#fff8f7",
+            "tertiary-fixed": "#e9e2d2",
+            "error-container": "#ffdad6",
+            "primary": "#894c5e",
+            "surface-container-high": "#ffe1e4",
+            "on-primary": "#ffffff",
+            "inverse-surface": "#412a2d",
+            "on-primary-fixed-variant": "#6d3546",
+            "error": "#ba1a1a"
+          },
+          "borderRadius": {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xs": "0.25rem",
+            "space-xl": "2.5rem",
+            "space-md": "1rem",
+            "space-sm": "0.5rem",
+            "gutter-mobile": "1rem",
+            "margin-mobile": "1.25rem",
+            "margin": "3rem",
+            "space-lg": "1.5rem",
+            "gutter": "1.5rem"
+          },
+          "fontFamily": {
+            "body-md": ["Plus Jakarta Sans"],
+            "headline-sm": ["Playfair Display"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Playfair Display"],
+            "headline-lg": ["Playfair Display"],
+            "label-lg": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "display-mobile": ["Playfair Display"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Playfair Display"],
+            "display": ["Playfair Display"]
+          },
+          "fontSize": {
+            "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-sm": ["22px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "headline-md": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "headline-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "700" }],
+            "display-mobile": ["38px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "600" }],
+            "headline-lg-mobile": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "display": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary-container selection:text-on-primary-container antialiased overflow-x-hidden">
+<!-- 1. HEADER (Shared Components TopNavBar compliant) -->
+<header class="bg-surface/90 dark:bg-inverse-surface/90 backdrop-blur-md text-primary dark:text-inverse-primary docked full-width top sticky top-0 z-50 border-b border-outline-variant/30 dark:border-outline-variant/10 shadow-[0_4px_20px_-2px_rgba(58,36,39,0.04)]">
+<div class="flex justify-between items-center w-full px-6 md:px-12 max-w-7xl mx-auto h-20">
+<!-- Brand Logo -->
+<a class="font-headline-md text-headline-md text-primary dark:text-inverse-primary tracking-tight font-semibold flex items-center gap-2" href="#">
+<svg class="w-6 h-6 text-primary flex-shrink-0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" viewbox="0 0 24 24">
+<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+</svg>
+<span>Casa Rosa Mantequilla</span>
+</a>
+<!-- Desktop Navigation Links -->
+<nav class="hidden lg:flex items-center space-x-8 text-label-lg font-label-lg">
+<a class="border-b-2 border-primary text-primary dark:text-inverse-primary pb-1 font-semibold transition-colors duration-200" href="#reposteria">La Pâtisserie</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#menu">Menú Artesanal</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#galeria">Galería</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#historia">Nuestra Historia</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#faq">Preguntas</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#contacto">Contacto</a>
+</nav>
+<!-- Trailing Action -->
+<div class="flex items-center space-x-4">
+<a class="hidden sm:inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-primary-container text-on-primary-fixed font-label-lg text-label-lg hover:bg-inverse-primary transition-all duration-200 active:scale-95 shadow-[0_4px_16px_-2px_rgba(236,161,181,0.35)]" href="https://wa.me/522223458912" rel="noopener noreferrer" target="_blank">
+<!-- WhatsApp Delicate Inline SVG -->
+<svg class="w-4 h-4 fill-current text-on-primary-fixed" viewbox="0 0 24 24">
+<path d="M12.031 2C6.495 2 2 6.494 2 12.03c0 1.97.57 3.81 1.558 5.372L2 22l4.757-1.523A9.97 9.97 0 0 0 12.03 22c5.536 0 10.03-4.494 10.03-10.03C22.062 6.494 17.568 2 12.031 2zm0 18.283c-1.636 0-3.155-.472-4.444-1.288l-.318-.2-2.825.905.922-2.753-.207-.328A8.25 8.25 0 0 1 3.748 12.03c0-4.568 3.716-8.283 8.283-8.283 4.568 0 8.283 3.715 8.283 8.283 0 4.568-3.715 8.283-8.283 8.283zm4.536-6.195c-.249-.125-1.472-.727-1.7-.81-.228-.083-.394-.125-.56.125-.166.25-.644.81-.79 1-.145.187-.29.208-.539.083-.25-.125-1.053-.388-2.007-1.238-.742-.662-1.243-1.48-1.388-1.73-.146-.25-.016-.385.109-.509.112-.112.25-.29.374-.436.125-.145.166-.25.25-.415.083-.166.041-.312-.021-.437-.063-.125-.56-1.35-.768-1.85-.203-.487-.41-.42-.56-.428l-.478-.008c-.166 0-.436.063-.664.312-.229.25-.873.853-.873 2.08 0 1.227.894 2.412 1.019 2.58.125.166 1.76 2.688 4.264 3.768.596.258 1.061.412 1.424.528.598.19 1.143.163 1.573.099.48-.072 1.472-.602 1.68-1.184.208-.582.208-1.08.146-1.184-.063-.105-.229-.167-.478-.292z"></path>
+</svg>
+<span>Hacer pedido</span>
+</a>
+<a aria-label="Ver carrito y pedidos" class="p-2.5 rounded-full hover:bg-surface-container-high transition-colors text-primary" href="#menu">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</a>
+</div>
+</div>
+</header>
+<main>
+<!-- 2. HERO (Layout A - Editorial split) -->
+<section class="relative pt-8 pb-16 md:pt-16 md:pb-24 px-6 md:px-12 max-w-7xl mx-auto overflow-hidden">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+<!-- Hero Text (Left) -->
+<div class="lg:col-span-6 space-y-6 md:space-y-8">
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-high/60 border border-outline-variant/30 text-on-surface-variant font-label-md text-label-md">
+<span class="w-2 h-2 rounded-full bg-primary inline-block"></span>
+<span>Taller repostero en Centro Histórico de Puebla</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg md:text-display text-on-surface tracking-tight leading-[1.12]">
+            Pastelería artesanal hecha con calma y mantequilla pura en Puebla
+          </h1>
+<p class="font-body-lg text-body-lg text-secondary max-w-xl leading-relaxed">
+            Elaboración diaria y cuidadosa de pasteles por encargo, viennoiserie tradicional hojaldrada y confitería fina. Respetamos los tiempos lentos de reposo en frío y el origen de cada ingrediente natural.
+          </p>
+<div class="pt-2 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-primary-container text-on-primary-fixed font-label-lg text-label-lg hover:bg-inverse-primary transition-all duration-200 active:scale-95 shadow-[0_8px_24px_-4px_rgba(236,161,181,0.45)]" href="https://wa.me/522223458912" rel="noopener noreferrer" target="_blank">
+<svg class="w-5 h-5 fill-current text-on-primary-fixed" viewbox="0 0 24 24">
+<path d="M12.031 2C6.495 2 2 6.494 2 12.03c0 1.97.57 3.81 1.558 5.372L2 22l4.757-1.523A9.97 9.97 0 0 0 12.03 22c5.536 0 10.03-4.494 10.03-10.03C22.062 6.494 17.568 2 12.031 2zm0 18.283c-1.636 0-3.155-.472-4.444-1.288l-.318-.2-2.825.905.922-2.753-.207-.328A8.25 8.25 0 0 1 3.748 12.03c0-4.568 3.716-8.283 8.283-8.283 4.568 0 8.283 3.715 8.283 8.283 0 4.568-3.715 8.283-8.283 8.283zm4.536-6.195c-.249-.125-1.472-.727-1.7-.81-.228-.083-.394-.125-.56.125-.166.25-.644.81-.79 1-.145.187-.29.208-.539.083-.25-.125-1.053-.388-2.007-1.238-.742-.662-1.243-1.48-1.388-1.73-.146-.25-.016-.385.109-.509.112-.112.25-.29.374-.436.125-.145.166-.25.25-.415.083-.166.041-.312-.021-.437-.063-.125-.56-1.35-.768-1.85-.203-.487-.41-.42-.56-.428l-.478-.008c-.166 0-.436.063-.664.312-.229.25-.873.853-.873 2.08 0 1.227.894 2.412 1.019 2.58.125.166 1.76 2.688 4.264 3.768.596.258 1.061.412 1.424.528.598.19 1.143.163 1.573.099.48-.072 1.472-.602 1.68-1.184.208-.582.208-1.08.146-1.184-.063-.105-.229-.167-.478-.292z"></path>
+</svg>
+<span>Hacer pedido por WhatsApp</span>
+</a>
+<div class="flex items-center gap-2 text-secondary font-body-sm text-body-sm pl-1">
+<svg class="w-4 h-4 text-primary flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="10"></circle>
+<polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+<span>Anticipación requerida: mínimo 48 horas</span>
+</div>
+</div>
+</div>
+<!-- Hero Photo (Right) -->
+<div class="lg:col-span-6 relative">
+<div class="relative p-3 rounded-xl bg-surface-container-high/40 border border-primary-container/30 shadow-[0_12px_32px_-4px_rgba(58,36,39,0.08),0_4px_12px_-2px_rgba(236,161,181,0.12)]">
+<div class="overflow-hidden rounded-lg aspect-[4/3] sm:aspect-[5/4] relative">
+<img alt="Pastel artesanal con crema de mantequilla rosada, fresas y pétalos comestibles" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1WcsvOp87RGLhGfmQ1sbWxSpQ_qebUsrwgpjJ-FHS2THS89KdYsXwImvTwb_xCKNJZufv2gGa6Vd6MQk3sKdZ4zS0Us0913FMwJM9vOEql4Np97xBcwETIMQtCQC-_kr5qf0aFvBa4R9vHE1LcMmLX4FRDRnbi7ehM8Cg7jPMiJSYTFIiYZgbH4NP3uVlbtfxkh_LJ7zeVJU2fB_qErZ7YvD7YQAzlQQJfB3eLORmmnBqDksiktf_Wz75M"/>
+</div>
+<!-- Floating Editorial Tag -->
+<div class="absolute -bottom-4 -left-3 sm:bottom-6 sm:-left-6 backdrop-blur-md bg-surface-container-lowest/95 border border-outline-variant/30 rounded-full px-5 py-3 shadow-[0_8px_20px_rgba(58,36,39,0.06)] flex items-center gap-3">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-headline-sm text-headline-sm text-primary text-sm sm:text-base">Pastel de Vainilla y Fresa</span>
+<span class="text-xs text-secondary border-l border-outline-variant/40 pl-3">Edición de Temporada</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. SOBRE LA PASTELERÍA (About) -->
+<section class="py-20 bg-surface-container-low/60 border-y border-outline-variant/20" id="historia">
+<div class="max-w-7xl mx-auto px-6 md:px-12">
+<div class="max-w-3xl mx-auto text-center space-y-4 mb-16">
+<span class="font-label-sm text-label-sm text-primary tracking-widest uppercase">Oficio &amp; Origen</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Horneado lento en el corazón de Puebla</h2>
+<div class="w-12 h-0.5 bg-primary-container mx-auto"></div>
+<p class="font-body-lg text-body-lg text-secondary leading-relaxed pt-2">
+            Trabajamos con ingredientes limpios de pequeños productores: mantequilla de rancho con 82% de materia grasa, vainilla natural en vaina proveniente de Papantla Veracruz, fresas de huertos locales y harinas no blanqueadas. No empleamos saborizantes ni conservadores sintéticos. Las masas hojaldradas descansan 72 horas para lograr una estructura liviana y crujiente, mientras decoramos cada creación con pétalos orgánicos deshidratados a mano.
+          </p>
+</div>
+<!-- Metric Badges in Soft Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="p-8 rounded-lg bg-surface-container-lowest/90 border border-outline-variant/30 shadow-[0_4px_20px_-2px_rgba(58,36,39,0.04)] text-center space-y-3">
+<div class="w-12 h-12 mx-auto rounded-full bg-secondary-container flex items-center justify-center text-primary">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="10"></circle>
+<path d="M12 6v6l4 2"></path>
+</svg>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">72 horas de laminado</h3>
+<p class="font-body-sm text-body-sm text-secondary">
+              Fermentación lenta y reposo en frío que otorgan al hojaldre ligereza, aroma profundo y alveolos definidos.
+            </p>
+</div>
+<div class="p-8 rounded-lg bg-surface-container-lowest/90 border border-outline-variant/30 shadow-[0_4px_20px_-2px_rgba(58,36,39,0.04)] text-center space-y-3">
+<div class="w-12 h-12 mx-auto rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+</svg>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">100% Mantequilla natural</h3>
+<p class="font-body-sm text-body-sm text-secondary">
+              Mantequilla de rancho con 82% de grasa láctea pura, sin grasas vegetales hidrogenadas ni sucedáneos.
+            </p>
+</div>
+<div class="p-8 rounded-lg bg-surface-container-lowest/90 border border-outline-variant/30 shadow-[0_4px_20px_-2px_rgba(58,36,39,0.04)] text-center space-y-3">
+<div class="w-12 h-12 mx-auto rounded-full bg-secondary-container flex items-center justify-center text-primary">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+</svg>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Sin conservadores ni colorantes artificiales</h3>
+<p class="font-body-sm text-body-sm text-secondary">
+              Coloraciones obtenidas exclusivamente a partir de frutos rojos, flores de bugambilia y cacao de origen.
+            </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. MENÚ CON PRECIOS EXACTOS -->
+<section class="py-24 max-w-7xl mx-auto px-6 md:px-12" id="menu">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+<div>
+<span class="font-label-sm text-label-sm text-primary tracking-widest uppercase">Repostería Diaria</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1">Selección de la casa</h2>
+</div>
+<p class="font-body-sm text-body-sm text-secondary max-w-md">
+          Elaboramos volúmenes moderados cada mañana para preservar el punto exacto de frescura. Recomendamos realizar encargos con dos días de margen.
+        </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Card 1: Pastel de vainilla y fresa ($680) -->
+<article class="flex flex-col justify-between p-8 rounded-lg bg-surface-container-lowest border border-primary-container/20 shadow-[0_4px_20px_-2px_rgba(58,36,39,0.04)] hover:shadow-[0_12px_32px_-4px_rgba(58,36,39,0.08)] transition-all duration-300">
+<div>
+<div class="flex justify-between items-start gap-4 mb-6">
+<span class="px-3.5 py-1 rounded-full bg-surface-container-low text-primary font-label-sm text-label-sm">8 a 10 porciones</span>
+<span class="font-headline-md text-headline-md text-primary font-semibold">$680</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-3">Pastel de vainilla y fresa</h3>
+<p class="font-body-md text-body-md text-secondary leading-relaxed">
+              Bizcocho húmedo infusionado con vaina de Papantla, relleno de compota de fresas frescas y crema batida ligera de mascarpone.
+            </p>
+<div class="mt-6 pt-6 border-t border-outline-variant/20 space-y-2">
+<div class="flex items-center text-secondary text-body-sm gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>Cobertura en buttercream de mantequilla de rancho</span>
+</div>
+<div class="flex items-center text-secondary text-body-sm gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>Decorado con fresas orgánicas y pétalos deshidratados</span>
+</div>
+</div>
+</div>
+<div class="pt-8">
+<a class="w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full bg-surface-container-high/60 hover:bg-primary-container text-on-surface font-label-lg text-label-lg transition-colors duration-200" href="https://wa.me/522223458912?text=Hola,%20quisiera%20encargar%20un%20Pastel%20de%20vainilla%20y%20fresa%20($680)" rel="noopener noreferrer" target="_blank">
+<span>Encargar este pastel</span>
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</a>
+</div>
+</article>
+<!-- Card 2: Croissant de mantequilla ($48) -->
+<article class="flex flex-col justify-between p-8 rounded-lg bg-surface-container-lowest border border-primary-container/20 shadow-[0_4px_20px_-2px_rgba(58,36,39,0.04)] hover:shadow-[0_12px_32px_-4px_rgba(58,36,39,0.08)] transition-all duration-300">
+<div>
+<div class="flex justify-between items-start gap-4 mb-6">
+<span class="px-3.5 py-1 rounded-full bg-secondary-container text-secondary font-label-sm text-label-sm">Pieza individual</span>
+<span class="font-headline-md text-headline-md text-primary font-semibold">$48</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-3">Croissant de mantequilla</h3>
+<p class="font-body-md text-body-md text-secondary leading-relaxed">
+              Laminado tradicional de 27 capas, masa madre reposada en frío por tres días, acabado crujiente y dorado.
+            </p>
+<div class="mt-6 pt-6 border-t border-outline-variant/20 space-y-2">
+<div class="flex items-center text-secondary text-body-sm gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>Mantequilla de 82% sin añadidos</span>
+</div>
+<div class="flex items-center text-secondary text-body-sm gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>Horneado en dos tandas diarias (9:00 y 15:30)</span>
+</div>
+</div>
+</div>
+<div class="pt-8">
+<a class="w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full bg-surface-container-high/60 hover:bg-primary-container text-on-surface font-label-lg text-label-lg transition-colors duration-200" href="https://wa.me/522223458912?text=Hola,%20quisiera%20reservar%20croissants%20de%20mantequilla%20($48%20c/u)" rel="noopener noreferrer" target="_blank">
+<span>Reservar piezas</span>
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</a>
+</div>
+</article>
+<!-- Card 3: Caja de 6 macarons ($210) -->
+<article class="flex flex-col justify-between p-8 rounded-lg bg-surface-container-lowest border border-primary-container/20 shadow-[0_4px_20px_-2px_rgba(58,36,39,0.04)] hover:shadow-[0_12px_32px_-4px_rgba(58,36,39,0.08)] transition-all duration-300">
+<div>
+<div class="flex justify-between items-start gap-4 mb-6">
+<span class="px-3.5 py-1 rounded-full bg-surface-container-low text-primary font-label-sm text-label-sm">Caja de regalo</span>
+<span class="font-headline-md text-headline-md text-primary font-semibold">$210</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-3">Caja de 6 macarons</h3>
+<p class="font-body-md text-body-md text-secondary leading-relaxed">
+              Conchas de almendra fina con ganache de pétalos de rosa, lavanda francesa, pistache tostado y chocolate blanco.
+            </p>
+<div class="mt-6 pt-6 border-t border-outline-variant/20 space-y-2">
+<div class="flex items-center text-secondary text-body-sm gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>Harina de almendra pura 100% libre de gluten</span>
+</div>
+<div class="flex items-center text-secondary text-body-sm gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>Presentación en estuche rosado con lazo de satén</span>
+</div>
+</div>
+</div>
+<div class="pt-8">
+<a class="w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full bg-surface-container-high/60 hover:bg-primary-container text-on-surface font-label-lg text-label-lg transition-colors duration-200" href="https://wa.me/522223458912?text=Hola,%20quisiera%20encargar%20una%20Caja%20de%206%20macarons%20($210)" rel="noopener noreferrer" target="_blank">
+<span>Encargar caja</span>
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</a>
+</div>
+</article>
+</div>
+</section>
+<!-- 5. GALERÍA DE FOTOS (Pastry gallery) -->
+<section class="py-20 bg-surface-container-low/40 border-t border-outline-variant/20" id="galeria">
+<div class="max-w-7xl mx-auto px-6 md:px-12">
+<div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+<span class="font-label-sm text-label-sm text-primary tracking-widest uppercase">El Taller en Imágenes</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Vitrina &amp; Creaciones</h2>
+<p class="font-body-md text-body-md text-secondary">
+            Detalles de nuestras preparaciones semanales, desde el corte matutino hasta el empaque final.
+          </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
+<!-- Large Showcase: Cake -->
+<div class="md:col-span-7 flex flex-col justify-between p-4 rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-[0_4px_20px_-2px_rgba(58,36,39,0.04)]">
+<div class="overflow-hidden rounded-lg aspect-[16/11] relative">
+<img alt="Pastel rosa artesanal con fresas naturales y pétalos secos" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida/AEtjO1WcsvOp87RGLhGfmQ1sbWxSpQ_qebUsrwgpjJ-FHS2THS89KdYsXwImvTwb_xCKNJZufv2gGa6Vd6MQk3sKdZ4zS0Us0913FMwJM9vOEql4Np97xBcwETIMQtCQC-_kr5qf0aFvBa4R9vHE1LcMmLX4FRDRnbi7ehM8Cg7jPMiJSYTFIiYZgbH4NP3uVlbtfxkh_LJ7zeVJU2fB_qErZ7YvD7YQAzlQQJfB3eLORmmnBqDksiktf_Wz75M"/>
+</div>
+<div class="pt-4 px-2 flex justify-between items-center">
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Pastel ceremonial de fresas</h4>
+<p class="font-body-sm text-body-sm text-secondary">Montaje sobre pedestal de cerámica y acabado rústico en crema</p>
+</div>
+<span class="text-xs text-primary font-semibold px-3 py-1 rounded-full bg-surface-container-high">Por encargo</span>
+</div>
+</div>
+<!-- Vertical stack: Croissants & Macarons -->
+<div class="md:col-span-5 flex flex-col gap-8">
+<div class="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-[0_4px_20px_-2px_rgba(58,36,39,0.04)]">
+<div class="overflow-hidden rounded-lg aspect-[16/10] relative">
+<img alt="Croissants hojaldrados dorados reposando sobre lino en barra de madera" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida/AEtjO1WNk0twofe8bCfMw1LziJ4Qj3BBK1Ccf-WkV9KCvHXIgSi-jBv56l8X4qSiwPvnH3XdGCW_Lu8NtmVOCriaEfYpLGPHs1MWUObxUVfkRLctjQBbjT7JwNTa-IaaXmuxWQmTNFYIk1ReAYpZQdTHmd_TSMUhwYOpfw3-jlKU4Pzp4qLvYWQAA8t6WlMuzB0sEzXkK4o_VT4hwMiPPJsP7kfYp5tVmN1kMyu19MYHnWLuCii91nJiPTVwu8A"/>
+</div>
+<div class="pt-3 px-2">
+<h4 class="font-headline-sm text-headline-sm text-on-surface text-base">Viennoiserie pura de mantequilla</h4>
+<p class="font-body-sm text-body-sm text-secondary">Hojaldrado de 27 pliegues sobre lino natural</p>
+</div>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-[0_4px_20px_-2px_rgba(58,36,39,0.04)]">
+<div class="overflow-hidden rounded-lg aspect-[16/10] relative">
+<img alt="Caja abierta con macarons en tonos pastel junto a ramitas de lavanda" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida/AEtjO1XUDmfTd9wcCOt8wugXjA_RRRir2nSE92Yes7y3fbq7aHMGodhew5spBvX3hghULNZdY1eyW84pM_sXnt6q-QzIKpS4v59Z61knWczRRIjAdRWK8LoIpgqdFeSk6KQ5u-AmTowc8xQhaBs4r0YaeyJYuKALaUweORO3af7Pe-nM_jehSOZjfry-nUHjzKjYhOYZ1dUkeQEayPs7DgmJjW8QQ_I4Aqve8de7aJAzB7ZspZs2Hw8XNu16Vg4"/>
+</div>
+<div class="pt-3 px-2">
+<h4 class="font-headline-sm text-headline-sm text-on-surface text-base">Confitería fina &amp; Macarons</h4>
+<p class="font-body-sm text-body-sm text-secondary">Infusiones de lavanda, pétalos y almendra</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. TESTIMONIOS -->
+<section class="py-24 max-w-7xl mx-auto px-6 md:px-12">
+<div class="text-center max-w-xl mx-auto mb-16 space-y-2">
+<span class="font-label-sm text-label-sm text-primary tracking-widest uppercase">Opiniones Reales</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Palabras de quienes nos eligen</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="p-8 rounded-lg bg-surface-container-lowest border border-outline-variant/25 shadow-[0_4px_20px_-2px_rgba(58,36,39,0.04)] flex flex-col justify-between">
+<p class="font-body-md text-body-md text-secondary leading-relaxed italic">
+            "Pedimos el pastel de vainilla y fresa para el cumpleaños de mi madre en San Andrés Cholula. El nivel de dulzor es exacto, nada empalagoso, y la consistencia de la crema de mantequilla se mantuvo intacta durante el traslado."
+          </p>
+<div class="pt-6 mt-6 border-t border-outline-variant/20">
+<h4 class="font-headline-sm text-headline-sm text-on-surface text-base">Mariana S.</h4>
+<span class="font-body-sm text-body-sm text-outline">San Andrés Cholula, Pue.</span>
+</div>
+</div>
+<div class="p-8 rounded-lg bg-surface-container-lowest border border-outline-variant/25 shadow-[0_4px_20px_-2px_rgba(58,36,39,0.04)] flex flex-col justify-between">
+<p class="font-body-md text-body-md text-secondary leading-relaxed italic">
+            "Paso por croissants los sábados temprano por la mañana. Se nota de inmediato la calidad de la mantequilla auténtica en las capas hojaldradas y el aroma que despiden recién salidos del horno."
+          </p>
+<div class="pt-6 mt-6 border-t border-outline-variant/20">
+<h4 class="font-headline-sm text-headline-sm text-on-surface text-base">Rodrigo V.</h4>
+<span class="font-body-sm text-body-sm text-outline">Colonia La Paz, Puebla</span>
+</div>
+</div>
+<div class="p-8 rounded-lg bg-surface-container-lowest border border-outline-variant/25 shadow-[0_4px_20px_-2px_rgba(58,36,39,0.04)] flex flex-col justify-between">
+<p class="font-body-md text-body-md text-secondary leading-relaxed italic">
+            "Encargué dos cajas de macarons para una reunión en el Centro Histórico. Llegaron en vehículo climatizado a la hora acordada y los sabores de lavanda y pistache estaban perfectamente logrados."
+          </p>
+<div class="pt-6 mt-6 border-t border-outline-variant/20">
+<h4 class="font-headline-sm text-headline-sm text-on-surface text-base">Sofía L.</h4>
+<span class="font-body-sm text-body-sm text-outline">Centro Histórico, Puebla</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. FAQ (Preguntas Frecuentes - Todas visibles) -->
+<section class="py-20 bg-surface-container-low/50 border-t border-outline-variant/20" id="faq">
+<div class="max-w-4xl mx-auto px-6 md:px-12">
+<div class="text-center mb-16 space-y-2">
+<span class="font-label-sm text-label-sm text-primary tracking-widest uppercase">Resolución de Dudas</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Preguntas Frecuentes</h2>
+<p class="font-body-sm text-body-sm text-secondary">Información sobre logística, ingredientes y conservación</p>
+</div>
+<div class="space-y-6">
+<div class="p-6 md:p-8 rounded-lg bg-surface-container-lowest border border-outline-variant/25 shadow-[0_2px_12px_rgba(58,36,39,0.03)]">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">¿Con cuánta anticipación debo hacer mi encargo?</h3>
+<p class="font-body-md text-body-md text-secondary leading-relaxed">
+              Mínimo 48 horas para pasteles enteros y pedidos especiales de confitería. Esto nos permite hornear con bizcocho reposado e infusiones frías adecuadas. Para piezas de viennoiserie individual, atendemos pedidos según la disponibilidad del horneado del día.
+            </p>
+</div>
+<div class="p-6 md:p-8 rounded-lg bg-surface-container-lowest border border-outline-variant/25 shadow-[0_2px_12px_rgba(58,36,39,0.03)]">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">¿Hacen entregas a domicilio?</h3>
+<p class="font-body-md text-body-md text-secondary leading-relaxed">
+              Sí, contamos con cobertura en la ciudad de Puebla, San Andrés y San Pedro Cholula, y zona Angelópolis. Las entregas se realizan mediante chofer en transporte privado con aire acondicionado para asegurar que la estructura y decoración del pastel no sufran por el calor ni el movimiento.
+            </p>
+</div>
+<div class="p-6 md:p-8 rounded-lg bg-surface-container-lowest border border-outline-variant/25 shadow-[0_2px_12px_rgba(58,36,39,0.03)]">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">¿Manejan opciones sin lácteos o sin gluten?</h3>
+<p class="font-body-md text-body-md text-secondary leading-relaxed">
+              Nuestras cajas de macarons se elaboran con harina pura de almendra y no contienen gluten en su receta base. No obstante, nuestros pasteles y viennoiserie están formulados fundamentalmente con mantequilla de vaca al 82% y harinas de trigo no blanqueadas, por lo que contienen lácteos y gluten.
+            </p>
+</div>
+<div class="p-6 md:p-8 rounded-lg bg-surface-container-lowest border border-outline-variant/25 shadow-[0_2px_12px_rgba(58,36,39,0.03)]">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">¿Cómo conservo mi pastel antes del evento?</h3>
+<p class="font-body-md text-body-md text-secondary leading-relaxed">
+              Debe conservarse en refrigeración dentro de su caja de entrega. Recomendamos retirarlo del frío entre 15 y 20 minutos antes de servirlo para que la crema de mantequilla y la compota alcancen su consistencia sedosa y temperatura ideal de corte.
+            </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 8. CONTACTO -->
+<section class="py-24 max-w-7xl mx-auto px-6 md:px-12" id="contacto">
+<div class="max-w-2xl mb-16">
+<span class="font-label-sm text-label-sm text-primary tracking-widest uppercase">Canales Directos</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1">Visite el taller o escriba directamente</h2>
+<p class="font-body-md text-body-md text-secondary mt-2">
+          Atendemos personalmente consultas sobre diseños de temporada, mesas de postres para bodas o eventos familiares en Puebla.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- WhatsApp -->
+<a class="p-6 rounded-lg bg-surface-container-lowest border border-primary-container/30 hover:border-primary transition-all duration-200 group flex flex-col justify-between" href="https://wa.me/522223458912" rel="noopener noreferrer" target="_blank">
+<div class="space-y-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+<path d="M12.031 2C6.495 2 2 6.494 2 12.03c0 1.97.57 3.81 1.558 5.372L2 22l4.757-1.523A9.97 9.97 0 0 0 12.03 22c5.536 0 10.03-4.494 10.03-10.03C22.062 6.494 17.568 2 12.031 2zm0 18.283c-1.636 0-3.155-.472-4.444-1.288l-.318-.2-2.825.905.922-2.753-.207-.328A8.25 8.25 0 0 1 3.748 12.03c0-4.568 3.716-8.283 8.283-8.283 4.568 0 8.283 3.715 8.283 8.283 0 4.568-3.715 8.283-8.283 8.283zm4.536-6.195c-.249-.125-1.472-.727-1.7-.81-.228-.083-.394-.125-.56.125-.166.25-.644.81-.79 1-.145.187-.29.208-.539.083-.25-.125-1.053-.388-2.007-1.238-.742-.662-1.243-1.48-1.388-1.73-.146-.25-.016-.385.109-.509.112-.112.25-.29.374-.436.125-.145.166-.25.25-.415.083-.166.041-.312-.021-.437-.063-.125-.56-1.35-.768-1.85-.203-.487-.41-.42-.56-.428l-.478-.008c-.166 0-.436.063-.664.312-.229.25-.873.853-.873 2.08 0 1.227.894 2.412 1.019 2.58.125.166 1.76 2.688 4.264 3.768.596.258 1.061.412 1.424.528.598.19 1.143.163 1.573.099.48-.072 1.472-.602 1.68-1.184.208-.582.208-1.08.146-1.184-.063-.105-.229-.167-.478-.292z"></path>
+</svg>
+</div>
+<div>
+<span class="text-xs text-secondary font-label-md block">WhatsApp de Pedidos</span>
+<p class="font-headline-sm text-headline-sm text-on-surface text-base mt-1">+52 (222) 345-8912</p>
+</div>
+</div>
+<span class="mt-4 text-xs font-semibold text-primary inline-flex items-center gap-1">
+            Iniciar chat directo →
+          </span>
+</a>
+<!-- Teléfono -->
+<div class="p-6 rounded-lg bg-surface-container-lowest border border-outline-variant/25 flex flex-col justify-between">
+<div class="space-y-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+</svg>
+</div>
+<div>
+<span class="text-xs text-secondary font-label-md block">Línea del Taller</span>
+<p class="font-headline-sm text-headline-sm text-on-surface text-base mt-1">(222) 234-5678</p>
+</div>
+</div>
+<span class="mt-4 text-xs text-outline">Atención durante horneado</span>
+</div>
+<!-- Dirección -->
+<div class="p-6 rounded-lg bg-surface-container-lowest border border-outline-variant/25 flex flex-col justify-between">
+<div class="space-y-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+<circle cx="12" cy="10" r="3"></circle>
+</svg>
+</div>
+<div>
+<span class="text-xs text-secondary font-label-md block">Ubicación y Retiro</span>
+<p class="font-body-sm text-body-sm text-on-surface font-semibold mt-1">Calle 5 Oriente 412</p>
+<p class="text-xs text-secondary">Centro Histórico, 72000 Puebla, Pue.</p>
+</div>
+</div>
+<span class="mt-4 text-xs text-outline">Zona con estacionamiento cercano</span>
+</div>
+<!-- Horarios -->
+<div class="p-6 rounded-lg bg-surface-container-lowest border border-outline-variant/25 flex flex-col justify-between">
+<div class="space-y-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="10"></circle>
+<polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+</div>
+<div>
+<span class="text-xs text-secondary font-label-md block">Taller y Recolección</span>
+<p class="font-body-sm text-body-sm text-on-surface font-semibold mt-1">Mar a Sáb: 9:00 a 19:00</p>
+<p class="text-xs text-secondary">Domingos: 10:00 a 15:00</p>
+</div>
+</div>
+<span class="mt-4 text-xs text-primary font-medium">Lunes cerrado por reposo de masas</span>
+</div>
+</div>
+<!-- Additional Email Banner -->
+<div class="mt-8 p-6 rounded-lg bg-surface-container-low border border-outline-variant/20 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<div class="flex items-center gap-3">
+<svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+<polyline points="22,6 12,13 2,6"></polyline>
+</svg>
+<span class="text-body-sm font-medium text-on-surface">Para cotizaciones de eventos o pedidos especiales por escrito:</span>
+</div>
+<a class="font-label-lg text-label-lg text-primary hover:underline" href="mailto:hola@casarosamantequilla.mx">
+          hola@casarosamantequilla.mx
+        </a>
+</div>
+</section>
+</main>
+<!-- 9. FOOTER (Shared Components Footer compliant) -->
+<footer class="bg-surface-container-low dark:bg-inverse-surface text-primary dark:text-inverse-primary full-width border-t border-outline-variant/30 dark:border-outline-variant/10">
+<div class="flex flex-col items-center justify-center w-full px-6 py-16 max-w-7xl mx-auto gap-8">
+<!-- Brand Logo -->
+<div class="text-center space-y-2">
+<span class="font-headline-md text-headline-md text-primary dark:text-inverse-primary tracking-tight font-semibold block">
+          Casa Rosa Mantequilla
+        </span>
+<p class="text-body-sm font-body-sm text-secondary dark:text-secondary-fixed-dim">
+          Repostería fina, fermentación lenta y mantequilla pura de rancho.
+        </p>
+</div>
+<!-- Links matching JSON -->
+<nav class="flex flex-wrap justify-center gap-x-8 gap-y-3 text-label-md font-label-md">
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#menu">Menú de Temporada</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#contacto">Catering &amp; Eventos</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#contacto">Pedidos Especiales</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">Aviso de Privacidad</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">Términos y Condiciones</a>
+</nav>
+<!-- Copyright Text -->
+<div class="text-center pt-4 border-t border-outline-variant/20 w-full max-w-md">
+<p class="text-body-sm font-body-sm text-secondary dark:text-secondary-fixed-dim">
+          © 2024 Casa Rosa Mantequilla. Pâtisserie Fine &amp; Confectionery Puebla, México.
+        </p>
+</div>
+</div>
+</footer>
+</body></html>

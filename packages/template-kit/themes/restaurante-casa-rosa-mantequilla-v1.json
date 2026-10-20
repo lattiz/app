@@ -1,45 +1,35 @@
 {
-  "$lattiz": "GENERATED from specs/restaurante-casa-rosa-mantequilla.spec.json (spec 812e459d198f, file 8babfad5f4b0). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/restaurante-casa-rosa-mantequilla.spec.json (spec 29bd20df6baf, file 56e136257080). Do not edit: use the spec, or freeze.",
   "name": "restaurante-casa-rosa-mantequilla-v1",
   "label": "Casa Rosa Mantequilla · Pro",
   "tier": "pro",
-  "fontPair": "gloock+onest",
+  "fontPair": "playfair-display+inter",
   "colors": {
-    "bg": "#E9E5DE",
-    "surface": "#F5F3F0",
-    "surface-2": "#DBD7D1",
-    "text": "#26231F",
-    "muted": "#5D5954",
-    "accent": "#4A4540",
+    "bg": "#FFF8EA",
+    "surface": "#FFFCF7",
+    "surface-2": "#F0E8DB",
+    "text": "#2A1619",
+    "muted": "#756562",
+    "accent": "#8150A0",
     "on-accent": "#FFFFFF",
-    "accent-text": "#4A4540",
+    "accent-text": "#8150A0",
     "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
     "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
-    "overlay": "#E9E5DE",
-    "on-overlay": "#26231F",
+    "overlay": "#FFF8EA",
+    "on-overlay": "#2A1619",
     "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
-    "ink": "#26231F"
+    "ink": "#2A1619"
   },
   "fonts": {
-    "display": "'Gloock', serif",
-    "serif": "'Gloock', serif",
-    "body": "'Onest', sans-serif",
-    "googleFonts": "family=Gloock&family=Onest:wght@400..600",
+    "display": "'Playfair Display', serif",
+    "serif": "'Playfair Display', serif",
+    "body": "'Inter', sans-serif",
+    "googleFonts": "family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600",
     "displayTransform": "none",
-    "displayLeading": "1.02",
-    "displayWeight": "400",
-    "displayScale": "1.06",
-    "accentStyle": "normal",
-    "accentTransform": "none",
-    "mood": ["lujo", "editorial"],
-    "affinity": ["estetica", "floreria", "restaurante", "barberia"],
-    "case": "none",
-    "tracking": "tight",
-    "typeScale": "expressive",
-    "licenses": {
-      "Gloock": "OFL-1.1",
-      "Onest": "OFL-1.1"
-    }
+    "displayLeading": "1.04",
+    "displayWeight": "500",
+    "accentStyle": "italic",
+    "accentTransform": "none"
   },
   "shape": {
     "radiusCard": "22px",
@@ -47,32 +37,17 @@
     "border": "1px",
     "shadow": "soft"
   },
-  "density": "airy",
-  "photoTreatment": "grayscale",
-  "placeholder": "grain",
+  "density": "regular",
+  "photoTreatment": "none",
+  "placeholder": "dots",
   "accentWords": "color",
-  "container": "1280px",
+  "container": "1200px",
   "effects": {
     "mapFilter": "grayscale(.6) contrast(1.05)",
     "heroImageFilter": "brightness(1.08) saturate(.85)"
   },
   "style": {
     "shape": "round",
-    "surface": "tinted",
-    "density": "airy",
-    "divider": "hairline",
-    "imageTreatment": "offset",
-    "typeScale": "expressive",
-    "displayCase": "none",
-    "tracking": "tight"
-  },
-  "primitives": {
-    "button": "underline",
-    "card": "flat",
-    "tag": "plain",
-    "frame": "offset",
-    "number": "plain",
-    "quote": "rule",
-    "divider": "hairline"
+    "surface": "tinted"
   }
 }

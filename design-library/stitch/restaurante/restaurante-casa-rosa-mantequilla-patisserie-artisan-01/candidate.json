@@ -1,0 +1,21 @@
+{
+  "id": "restaurante-casa-rosa-mantequilla-patisserie-artisan-01",
+  "giro": "restaurante",
+  "source": "stitch",
+  "status": "shelved",
+  "tags": [
+    "pastel",
+    "reposteria",
+    "rosa"
+  ],
+  "spin": "casa-rosa-v2",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-20T06:46:54.058Z",
+  "stitch": {
+    "project_id": "3193422593802008426",
+    "screen_ids": [
+      "f588a33d515542cb9b0aa96a11679bc0"
+    ]
+  },
+  "notes": "Compuerta paletas: ΔE00 13.3 a pal-granada (mín 15); se usa pal-rosa-mantequilla ya existente"
+}

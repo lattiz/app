@@ -1,44 +1,44 @@
 {
-  "$lattiz": "GENERATED from specs/restaurante-casa-rosa-mantequilla.spec.json (spec 812e459d198f, file e1f67542e613). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/restaurante-casa-rosa-mantequilla.spec.json (spec 29bd20df6baf, file c0e8bbfb383a). Do not edit: use the spec, or freeze.",
   "name": "restaurante-base-casa-rosa-mantequilla-v1",
   "label": "Casa Rosa Mantequilla · Básico",
   "tier": "basic",
-  "fontPair": "libre-caslon-display+schibsted-grotesk",
+  "fontPair": "gilda-display+hanken-grotesk",
   "colors": {
-    "bg": "#D9906F",
-    "surface": "#E9BFAB",
-    "surface-2": "#CC8768",
-    "text": "#1E120C",
-    "muted": "#3C261C",
-    "accent": "#1E120C",
+    "bg": "#FFF1F2",
+    "surface": "#FFF9FA",
+    "surface-2": "#F0E2E3",
+    "text": "#2A1619",
+    "muted": "#756365",
+    "accent": "#574649",
     "on-accent": "#FFFFFF",
-    "accent-text": "#1E120C",
+    "accent-text": "#574649",
     "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
     "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
-    "overlay": "#D9906F",
-    "on-overlay": "#1E120C",
+    "overlay": "#FFF1F2",
+    "on-overlay": "#2A1619",
     "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
-    "ink": "#1E120C"
+    "ink": "#2A1619"
   },
   "fonts": {
-    "display": "'Libre Caslon Display', serif",
-    "serif": "'Libre Caslon Display', serif",
-    "body": "'Schibsted Grotesk', sans-serif",
-    "googleFonts": "family=Libre+Caslon+Display&family=Schibsted+Grotesk:wght@400..600",
+    "display": "'Gilda Display', serif",
+    "serif": "'Gilda Display', serif",
+    "body": "'Hanken Grotesk', sans-serif",
+    "googleFonts": "family=Gilda+Display&family=Hanken+Grotesk:wght@400..600",
     "displayTransform": "none",
-    "displayLeading": "1.02",
+    "displayLeading": "1.04",
     "displayWeight": "400",
-    "displayScale": "1.29",
+    "displayScale": "1.14",
     "accentStyle": "normal",
     "accentTransform": "none",
-    "mood": ["lujo", "editorial"],
-    "affinity": ["estetica", "despacho", "tienda", "floreria"],
+    "mood": ["lujo", "suave"],
+    "affinity": ["estetica", "floreria", "tienda", "despacho"],
     "case": "none",
-    "tracking": "normal",
+    "tracking": "wide",
     "typeScale": "expressive",
     "licenses": {
-      "Libre Caslon Display": "OFL-1.1",
-      "Schibsted Grotesk": "OFL-1.1"
+      "Gilda Display": "OFL-1.1",
+      "Hanken Grotesk": "OFL-1.1"
     }
   },
   "shape": {
@@ -47,32 +47,17 @@
     "border": "1px",
     "shadow": "none"
   },
-  "density": "airy",
-  "photoTreatment": "warm",
-  "placeholder": "blobs",
+  "density": "regular",
+  "photoTreatment": "none",
+  "placeholder": "dots",
   "accentWords": "color",
-  "container": "1280px",
+  "container": "1200px",
   "effects": {
     "mapFilter": "grayscale(.6) contrast(1.05)",
     "heroImageFilter": "brightness(1.08) saturate(.85)"
   },
   "style": {
     "shape": "round",
-    "surface": "tinted",
-    "density": "airy",
-    "divider": "hairline",
-    "imageTreatment": "offset",
-    "typeScale": "expressive",
-    "displayCase": "none",
-    "tracking": "tight"
-  },
-  "primitives": {
-    "button": "underline",
-    "card": "flat",
-    "tag": "plain",
-    "frame": "offset",
-    "number": "plain",
-    "quote": "rule",
-    "divider": "hairline"
+    "surface": "tinted"
   }
 }

@@ -1,75 +1,115 @@
 {
-  "$lattiz": "GENERATED from specs/restaurante-casa-rosa-mantequilla.spec.json (spec 812e459d198f, file bf9433980eda). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/restaurante-casa-rosa-mantequilla.spec.json (spec 29bd20df6baf, file 633810281369). Do not edit: use the spec, or freeze.",
   "images": [
     {
       "file": "hero.jpg",
-      "source": "url",
-      "sha256": "1ae20ce149d32cdc52d13ff7cf0a117dcb7c04b12e4edf4ba7d892bd38c4e00b",
-      "url": "https://images.pexels.com/photos/37249269/pexels-photo-37249269.jpeg",
-      "pageUrl": "https://www.pexels.com/photo/37249269/"
+      "source": "pixabay",
+      "sha256": "c008a9792efd7352b60fc7354937d93d4371707426ac35a381544687520f780d",
+      "query": "pink buttercream cake bakery",
+      "providerId": 905377,
+      "pageUrl": "https://pixabay.com/photos/cake-birthday-cake-sweet-food-905377/",
+      "photographer": "JillWellington",
+      "photographerUrl": "https://pixabay.com/users/334088/",
+      "tags": "cake, birthday cake, sweet, food, dessert, happy birthday, icing, colorful, frosting, sugar, aqua, celebration, treat"
     },
     {
       "file": "about.jpg",
-      "source": "url",
-      "sha256": "7a0b673423ce3deb959c7772d0ef5eb988789826bf6300056643465b51de9005",
-      "url": "https://images.pexels.com/photos/14996841/pexels-photo-14996841.jpeg",
-      "pageUrl": "https://www.pexels.com/photo/14996841/"
+      "source": "pixabay",
+      "sha256": "b880b5f1e901a3dac849b70eca331ad0d343cb601acf249e3316c5ed7d0c77ae",
+      "query": "pastry chef hands dough",
+      "providerId": 5813413,
+      "pageUrl": "https://pixabay.com/photos/chef-flour-dough-baking-5813413/",
+      "photographer": "hiendh",
+      "photographerUrl": "https://pixabay.com/users/16325291/",
+      "tags": "chef, flour, dough, baking, dusting flour, dust, food preparation, wheat flour, wheat, yeast, carbohydrates, bread making"
     },
     {
       "file": "gallery-01.jpg",
-      "source": "url",
-      "sha256": "1d144b7cd7d00dabe1ee34ff823e8fcef44d4fe89854f4089c38f66f63bbc648",
-      "url": "https://images.pexels.com/photos/6587810/pexels-photo-6587810.jpeg",
-      "pageUrl": "https://www.pexels.com/photo/6587810/"
+      "source": "pixabay",
+      "sha256": "0c07a5900e364cd55f099813db824f0eff9ad08b9ee228508f79f63c7721133c",
+      "query": "pink rose cake",
+      "providerId": 8214486,
+      "pageUrl": "https://pixabay.com/photos/strawberry-cake-birthday-bakery-8214486/",
+      "photographer": "PixelPerfectMom",
+      "photographerUrl": "https://pixabay.com/users/39067011/",
+      "tags": "strawberry, happy birthday, cake, bakery, pastry, sweets, snack, food, custom, top view, flat lay, pink"
     },
     {
       "file": "gallery-02.jpg",
-      "source": "url",
-      "sha256": "5b69192c0717cf9bfec5aa2099183bc9cd41fc85acf7ab5677a94d30ce849891",
-      "url": "https://images.pexels.com/photos/37970767/pexels-photo-37970767.jpeg",
-      "pageUrl": "https://www.pexels.com/photo/37970767/"
+      "source": "pixabay",
+      "sha256": "1f5e9838e9fc625ef35c6df8a24acff2f93d7d1fa4e6095aac00695e965c931b",
+      "query": "croissants bakery",
+      "providerId": 101636,
+      "pageUrl": "https://pixabay.com/photos/bread-croissant-food-breakfast-101636/",
+      "photographer": "herryway",
+      "photographerUrl": "https://pixabay.com/users/29985/",
+      "tags": "bread, croissant, food, breakfast, snack, baked, bakery, tasty, delicious"
     },
     {
       "file": "gallery-03.jpg",
-      "source": "url",
-      "sha256": "fd5e23fdc04bb31b60604b8adbf5b70063dda23b7e2b7efdc0730f00e108e839",
-      "url": "https://images.pexels.com/photos/37727732/pexels-photo-37727732.jpeg",
-      "pageUrl": "https://www.pexels.com/photo/37727732/"
+      "source": "pixabay",
+      "sha256": "f4e00be02fc543932634e8fd8f5052e2e41a76d0f09e5f7005296a7c2f7c8f1c",
+      "query": "macarons pastel",
+      "providerId": 4851545,
+      "pageUrl": "https://pixabay.com/photos/macaroons-pink-desserts-sweets-4851545/",
+      "photographer": "luiza_83",
+      "photographerUrl": "https://pixabay.com/users/7899109/",
+      "tags": "macaroons, pink, desserts, sweets, cookies, phone wallpaper, meringues, pastries, treats, food, edible, baked goods, food photography, aesthetic wallpaper, iphone wallpaper"
     },
     {
       "file": "gallery-04.jpg",
-      "source": "url",
-      "sha256": "ae3e704067ddb43b0dd770578fdef4daa48a935887fc140c98f9e593df7ea44e",
-      "url": "https://images.pexels.com/photos/7669768/pexels-photo-7669768.jpeg",
-      "pageUrl": "https://www.pexels.com/photo/7669768/"
+      "source": "pixabay",
+      "sha256": "edc618d0793fcb741ff3b9b6c355748093b1c257bfb09d5c399685fda5dab1b6",
+      "query": "strawberry shortcake cake",
+      "providerId": 683928,
+      "pageUrl": "https://pixabay.com/photos/strawberry-shortcake-food-dessert-683928/",
+      "photographer": "genniebee512",
+      "photographerUrl": "https://pixabay.com/users/870104/",
+      "tags": "strawberry, shortcake, food, dessert, cake, sweet, cream, delicious, white, red, baked, unhealthy, fancy, homemade, sugar, whipped, indulgence"
     },
     {
       "file": "gallery-05.jpg",
-      "source": "url",
-      "sha256": "c674a8140cb04e62783a405925b89f3dcb3adcf243a8cb0b07694da8dc262453",
-      "url": "https://images.pexels.com/photos/26598639/pexels-photo-26598639.jpeg",
-      "pageUrl": "https://www.pexels.com/photo/26598639/"
+      "source": "pixabay",
+      "sha256": "33844cd66ff8bc41d9d9ed28aa661cb20131d5b80d237ddaea291ba5bd46147b",
+      "query": "fruit tart",
+      "providerId": 1283822,
+      "pageUrl": "https://pixabay.com/photos/tart-raspberries-whipped-cream-1283822/",
+      "photographer": "Pexels",
+      "photographerUrl": "https://pixabay.com/users/2286921/",
+      "tags": "tart, raspberries, whipped cream, raspberry tart, fruit tart, dessert, fruits, pastry, sweet, healthy, delicious, custard, plate, fresh berries, food, food photography"
     },
     {
       "file": "gallery-06.jpg",
-      "source": "url",
-      "sha256": "230e2d38f8c356c5bd29ef1bdaabe8de1eedc31a34805ebb91ea8105cc4e7232",
-      "url": "https://images.pexels.com/photos/20009388/pexels-photo-20009388.jpeg",
-      "pageUrl": "https://www.pexels.com/photo/20009388/"
+      "source": "pixabay",
+      "sha256": "fe65f4a9b4dc709aed3369f0dd078d353f82c52106b1725d89fbc48198ff8ea7",
+      "query": "decorated cookies",
+      "providerId": 3984154,
+      "pageUrl": "https://pixabay.com/photos/valentines-day-valentine-cookies-3984154/",
+      "photographer": "JillWellington",
+      "photographerUrl": "https://pixabay.com/users/334088/",
+      "tags": "valentine's day, valentine, cookies, hearts, love, romantic, romance, heart, pink, wedding, sweets, flat lay, happyvalentine's"
     },
     {
       "file": "gallery-07.jpg",
-      "source": "url",
-      "sha256": "db6ff0f15326eab5b14e855682f7e74d80c4f781ecac02856b927bb1033be307",
-      "url": "https://images.pexels.com/photos/7965984/pexels-photo-7965984.jpeg",
-      "pageUrl": "https://www.pexels.com/photo/7965984/"
+      "source": "pixabay",
+      "sha256": "40aaedf104a5a72defee4976b0a4840a48de47901f7e311da9d79f175a1e6c64",
+      "query": "cupcakes pink frosting",
+      "providerId": 3257019,
+      "pageUrl": "https://pixabay.com/photos/cakes-dessert-sugar-muffin-cupcake-3257019/",
+      "photographer": "Jacob-Medien",
+      "photographerUrl": "https://pixabay.com/users/1025066/",
+      "tags": "cakes, dessert, sugar, muffin, cupcake, sweets, sprinkles, bakery, pink, meal"
     },
     {
       "file": "gallery-08.jpg",
-      "source": "url",
-      "sha256": "f1b395aaf4ece96f27db63d7d12eb787a16daabd1be5aa5f5592803833e8ff1b",
-      "url": "https://images.pexels.com/photos/16135140/pexels-photo-16135140.jpeg",
-      "pageUrl": "https://www.pexels.com/photo/16135140/"
+      "source": "pixabay",
+      "sha256": "a273bd69d96728c63cef2fbb052673a94c461d475d03797b0f8e715c83015be4",
+      "query": "pastry shop display window",
+      "providerId": 767204,
+      "pageUrl": "https://pixabay.com/photos/bakery-exhibition-glass-display-767204/",
+      "photographer": "fudowakira0",
+      "photographerUrl": "https://pixabay.com/users/762613/",
+      "tags": "bakery, exhibition, glass, display, ornament, bread, confectionery, baking, baguette, behind glass, shop"
     }
   ]
 }

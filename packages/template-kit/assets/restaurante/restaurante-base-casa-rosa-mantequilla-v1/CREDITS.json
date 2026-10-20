@@ -1,12 +1,16 @@
 {
-  "$lattiz": "GENERATED from specs/restaurante-casa-rosa-mantequilla.spec.json (spec 812e459d198f, file 572f079a8cd2). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/restaurante-casa-rosa-mantequilla.spec.json (spec 29bd20df6baf, file e90a5340c54a). Do not edit: use the spec, or freeze.",
   "images": [
     {
       "file": "hero.jpg",
-      "source": "url",
-      "sha256": "b1a863b38a94c80a1ab5b35b627b7b48b6c00cd92aa24280a6a06024e171a767",
-      "url": "https://images.pexels.com/photos/37249269/pexels-photo-37249269.jpeg",
-      "pageUrl": "https://www.pexels.com/photo/37249269/"
+      "source": "pixabay",
+      "sha256": "8c7fa44324efd56ab6bb8252eb252d329ae82cbe9da05457d50eb761fc679736",
+      "query": "pink buttercream cake bakery",
+      "providerId": 968724,
+      "pageUrl": "https://pixabay.com/photos/pie-sweet-dessert-cake-shop-cream-968724/",
+      "photographer": "jaraquefotografia0",
+      "photographerUrl": "https://pixabay.com/users/1435270/",
+      "tags": "pie, sweet, happy birthday, dessert, cake shop, cream"
     }
   ]
 }

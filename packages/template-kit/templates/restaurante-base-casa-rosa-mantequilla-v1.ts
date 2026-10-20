@@ -1,4 +1,4 @@
-// GENERATED from specs/restaurante-casa-rosa-mantequilla.spec.json (spec 812e459d198f, file 63fa166ea100). Do not edit: use the spec, or freeze.
+// GENERATED from specs/restaurante-casa-rosa-mantequilla.spec.json (spec 29bd20df6baf, file eedaa67efea3). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
@@ -42,6 +42,8 @@ export default {
       slot: 'hero',
       variant: 'columns',
       props: {
+        imageAlt:
+          'Pastel con rosetas de crema rosa y turquesa sobre un pedestal de cristal',
         title: 'Pasteles y croissants de mantequilla',
         text: 'Repostería artesanal en La Paz, Puebla. Encarga tu pastel por WhatsApp y recógelo en tienda.',
       },

@@ -1,4 +1,4 @@
-// GENERATED from specs/restaurante-casa-rosa-mantequilla.spec.json (spec 812e459d198f, file c94baebdce7c). Do not edit: use the spec, or freeze.
+// GENERATED from specs/restaurante-casa-rosa-mantequilla.spec.json (spec 29bd20df6baf, file 6fd9fde39abb). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
@@ -20,7 +20,7 @@ export default {
     },
     {
       slot: 'hero',
-      variant: 'rail',
+      variant: 'photo-ribbon',
     },
     {
       slot: 'about',

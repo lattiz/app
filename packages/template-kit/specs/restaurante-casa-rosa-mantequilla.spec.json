@@ -19,13 +19,21 @@
   },
   "brand": {
     "catalog": "extended",
+    "palette": {
+      "custom": {
+        "bg": "#FFF8EA",
+        "text": "#2A1619",
+        "accent": "#8150A0",
+        "scheme": "light"
+      }
+    },
+    "fontPair": "playfair-display+inter",
     "style": {
       "shape": "round",
       "surface": "tinted"
     }
   },
   "layout": {
-    "direction": "cantera-editorial",
     "archetype": "editorial",
     "variantOverrides": {
       "faq": "numbered-cards",
@@ -40,7 +48,8 @@
         "role": "header"
       },
       {
-        "role": "hero"
+        "role": "hero",
+        "variant": "photo-ribbon"
       },
       {
         "role": "about"
@@ -104,14 +113,15 @@
     },
     "hero": {
       "image": "hero.jpg",
-      "imageAlt": "Pastel de vainilla con glaseado rosa y flores de azúcar sobre una base de cerámica crema",
+      "imageAlt": "Pastel de crema turquesa con volantes sobre un pedestal, junto a un ramo de gerberas rosas",
       "eyebrow": "Repostería artesanal · {{branch}}",
       "title": "Mantequilla, masa y <span class=\"lz-title__serif\">tiempo</span>.",
       "text": "Pasteles, croissants y macarons hechos cada mañana en {{branch}}. Encarga por WhatsApp y recoge en tienda.",
       "primaryCta": "Hacer pedido",
       "secondaryCta": "Ver la carta",
       "secondaryHref": "#servicios",
-      "sticker": "Horneado hoy"
+      "sticker": "Horneado hoy",
+      "note": "Anticipo del 50 % · Respuesta en minutos"
     },
     "about": {
       "kicker": "{{index}} — El obrador",
@@ -119,7 +129,7 @@
       "summary": "En {{shortName}} laminamos la masa a mano, usamos mantequilla y horneamos cada mañana. Los pasteles se hacen por encargo, con el tiempo que pide cada capa.",
       "statement": "Cada pieza lleva mantequilla, masa reposada y un acabado a mano: así se hornea en {{shortName}}.",
       "image": "about.jpg",
-      "imageAlt": "Manos laminando masa de hojaldre con mantequilla sobre una mesa de mármol",
+      "imageAlt": "Manos de repostero espolvoreando harina sobre la masa, con unas varillas al fondo",
       "sticker": "Desde 2018",
       "paragraphs": [
         "{{shortName}} abrió como un horno pequeño en La Paz, con una mesa de mármol y una receta de croissant.",
@@ -218,43 +228,43 @@
       "items": [
         {
           "image": "gallery-01.jpg",
-          "caption": "Pastel de vainilla",
-          "alt": "Pastel de dos pisos con crema blanca y rosas de azúcar"
+          "caption": "Pastel de pétalos",
+          "alt": "Pastel de frutos rojos con pétalos rosas, visto desde arriba, junto a una taza de café"
         },
         {
           "image": "gallery-02.jpg",
           "caption": "Croissants del día",
-          "alt": "Croissants dorados recién horneados sobre una charola"
+          "alt": "Croissants dorados de mantequilla apilados"
         },
         {
           "image": "gallery-03.jpg",
-          "caption": "Masa laminada",
-          "alt": "Masa de hojaldre extendida con capas de mantequilla"
+          "caption": "Macarons rosa",
+          "alt": "Macarons rosas apilados sobre un fondo rosa"
         },
         {
           "image": "gallery-04.jpg",
-          "caption": "Glaseado rosa",
-          "alt": "Pastel cubierto con glaseado rosa brillante"
+          "caption": "Fresas con crema",
+          "alt": "Postre de fresas con crema batida y mermelada en un plato"
         },
         {
           "image": "gallery-05.jpg",
-          "caption": "Macarons",
-          "alt": "Macarons rosas y lavanda en una caja"
+          "caption": "Tarta de frambuesa",
+          "alt": "Tarta con crema pastelera, frambuesas y crema batida"
         },
         {
           "image": "gallery-06.jpg",
-          "caption": "Tarta de frutos",
-          "alt": "Tarta de frutos rojos sobre una base crujiente"
+          "caption": "Galletas decoradas",
+          "alt": "Galletas en forma de corazón con glaseado real en rosa, verde y azul"
         },
         {
           "image": "gallery-07.jpg",
-          "caption": "Galletas decoradas",
-          "alt": "Galletas de vainilla con glaseado real y flores"
+          "caption": "Cupcakes rosa",
+          "alt": "Cupcakes con glaseado rosa y corazones de azúcar"
         },
         {
           "image": "gallery-08.jpg",
           "caption": "El mostrador",
-          "alt": "Mostrador de vidrio con pasteles y charolas de pan"
+          "alt": "Vitrina de vidrio con pan y bollería"
         }
       ]
     },
@@ -338,61 +348,61 @@
     {
       "key": "hero",
       "source": {
-        "url": "https://images.pexels.com/photos/37249269/pexels-photo-37249269.jpeg"
+        "search": "pink buttercream cake bakery"
       }
     },
     {
       "key": "about",
       "source": {
-        "url": "https://images.pexels.com/photos/14996841/pexels-photo-14996841.jpeg"
+        "search": "pastry chef hands dough"
       }
     },
     {
       "key": "gallery-01",
       "source": {
-        "url": "https://images.pexels.com/photos/6587810/pexels-photo-6587810.jpeg"
+        "search": "pink rose cake"
       }
     },
     {
       "key": "gallery-02",
       "source": {
-        "url": "https://images.pexels.com/photos/37970767/pexels-photo-37970767.jpeg"
+        "search": "croissants bakery"
       }
     },
     {
       "key": "gallery-03",
       "source": {
-        "url": "https://images.pexels.com/photos/37727732/pexels-photo-37727732.jpeg"
+        "search": "macarons pastel"
       }
     },
     {
       "key": "gallery-04",
       "source": {
-        "url": "https://images.pexels.com/photos/7669768/pexels-photo-7669768.jpeg"
+        "search": "strawberry shortcake cake"
       }
     },
     {
       "key": "gallery-05",
       "source": {
-        "url": "https://images.pexels.com/photos/26598639/pexels-photo-26598639.jpeg"
+        "search": "fruit tart"
       }
     },
     {
       "key": "gallery-06",
       "source": {
-        "url": "https://images.pexels.com/photos/20009388/pexels-photo-20009388.jpeg"
+        "search": "decorated cookies"
       }
     },
     {
       "key": "gallery-07",
       "source": {
-        "url": "https://images.pexels.com/photos/7965984/pexels-photo-7965984.jpeg"
+        "search": "cupcakes pink frosting"
       }
     },
     {
       "key": "gallery-08",
       "source": {
-        "url": "https://images.pexels.com/photos/16135140/pexels-photo-16135140.jpeg"
+        "search": "pastry shop display window"
       }
     }
   ],
@@ -405,8 +415,20 @@
       "copy": {
         "hero": {
           "title": "Pasteles y croissants de mantequilla",
-          "text": "Repostería artesanal en La Paz, Puebla. Encarga tu pastel por WhatsApp y recógelo en tienda."
+          "text": "Repostería artesanal en La Paz, Puebla. Encarga tu pastel por WhatsApp y recógelo en tienda.",
+          "imageAlt": "Pastel con rosetas de crema rosa y turquesa sobre un pedestal de cristal"
         }
+      },
+      "brand": {
+        "palette": {
+          "custom": {
+            "bg": "#FFF1F2",
+            "text": "#2A1619",
+            "accent": "#574649",
+            "scheme": "light"
+          }
+        },
+        "fontPair": "gilda-display+hanken-grotesk"
       }
     }
   }

@@ -1,4 +1,4 @@
-// GENERATED from specs/restaurante-casa-rosa-mantequilla.spec.json (spec 812e459d198f, file 78e84a6183ab). Do not edit: use the spec, or freeze.
+// GENERATED from specs/restaurante-casa-rosa-mantequilla.spec.json (spec 29bd20df6baf, file 35c31b307b2f). Do not edit: use the spec, or freeze.
 import type { ContentPack } from '../src/types';
 
 export default {
@@ -55,23 +55,10 @@ export default {
       ],
     },
     hero: {
-      details: [
-        {
-          label: 'Horario',
-          value: 'Lun a sáb, 9:00 a 19:00',
-        },
-        {
-          label: 'Dónde',
-          value: 'A dos calles del metro',
-        },
-        {
-          label: 'Citas',
-          value: 'Por WhatsApp, el mismo día',
-        },
-      ],
+      note: 'Anticipo del 50 % · Respuesta en minutos',
       image: 'hero.jpg',
       imageAlt:
-        'Pastel de vainilla con glaseado rosa y flores de azúcar sobre una base de cerámica crema',
+        'Pastel de crema turquesa con volantes sobre un pedestal, junto a un ramo de gerberas rosas',
       eyebrow: 'Repostería artesanal · La Paz',
       title: 'Mantequilla, masa y <span class="lz-title__serif">tiempo</span>.',
       text: 'Pasteles, croissants y macarons hechos cada mañana en La Paz. Encarga por WhatsApp y recoge en tienda.',
@@ -98,7 +85,7 @@ export default {
         'En {{shortName}} laminamos la masa a mano, usamos mantequilla y horneamos cada mañana. Los pasteles se hacen por encargo, con el tiempo que pide cada capa.',
       body: 'Laminamos la masa a mano, horneamos por tandas y decoramos cada pastel a la medida del encargo.',
       imageAlt:
-        'Manos laminando masa de hojaldre con mantequilla sobre una mesa de mármol',
+        'Manos de repostero espolvoreando harina sobre la masa, con unas varillas al fondo',
       plateLabel: 'Obrador de repostería',
       plateTitle: 'Hojaldre y mantequilla',
       plateAside: 'Desde 2018',
@@ -204,43 +191,43 @@ export default {
       items: [
         {
           image: 'gallery-01.jpg',
-          caption: 'Pastel de vainilla',
-          alt: 'Pastel de dos pisos con crema blanca y rosas de azúcar',
+          caption: 'Pastel de pétalos',
+          alt: 'Pastel de frutos rojos con pétalos rosas, visto desde arriba, junto a una taza de café',
         },
         {
           image: 'gallery-02.jpg',
           caption: 'Croissants del día',
-          alt: 'Croissants dorados recién horneados sobre una charola',
+          alt: 'Croissants dorados de mantequilla apilados',
         },
         {
           image: 'gallery-03.jpg',
-          caption: 'Masa laminada',
-          alt: 'Masa de hojaldre extendida con capas de mantequilla',
+          caption: 'Macarons rosa',
+          alt: 'Macarons rosas apilados sobre un fondo rosa',
         },
         {
           image: 'gallery-04.jpg',
-          caption: 'Glaseado rosa',
-          alt: 'Pastel cubierto con glaseado rosa brillante',
+          caption: 'Fresas con crema',
+          alt: 'Postre de fresas con crema batida y mermelada en un plato',
         },
         {
           image: 'gallery-05.jpg',
-          caption: 'Macarons',
-          alt: 'Macarons rosas y lavanda en una caja',
+          caption: 'Tarta de frambuesa',
+          alt: 'Tarta con crema pastelera, frambuesas y crema batida',
         },
         {
           image: 'gallery-06.jpg',
-          caption: 'Tarta de frutos',
-          alt: 'Tarta de frutos rojos sobre una base crujiente',
+          caption: 'Galletas decoradas',
+          alt: 'Galletas en forma de corazón con glaseado real en rosa, verde y azul',
         },
         {
           image: 'gallery-07.jpg',
-          caption: 'Galletas decoradas',
-          alt: 'Galletas de vainilla con glaseado real y flores',
+          caption: 'Cupcakes rosa',
+          alt: 'Cupcakes con glaseado rosa y corazones de azúcar',
         },
         {
           image: 'gallery-08.jpg',
           caption: 'El mostrador',
-          alt: 'Mostrador de vidrio con pasteles y charolas de pan',
+          alt: 'Vitrina de vidrio con pan y bollería',
         },
       ],
     },
