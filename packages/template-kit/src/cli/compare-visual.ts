@@ -21,6 +21,7 @@ import {
   visualDistance,
   type Raster,
 } from '../lib/visual';
+import { renewalPair } from '../lib/similarity';
 
 interface Shot {
   dir: string;
@@ -28,6 +29,7 @@ interface Shot {
   vertical: string;
   tier: string;
   theme: string;
+  renews?: string;
   thumbnail: string;
   fold: Raster;
   page: Raster;
@@ -50,7 +52,13 @@ async function loadShot(dir: string): Promise<Shot> {
         `${f} is missing; run kit:build (or kit:compile + kit:shoot) first.`,
       );
   const raw = JSON.parse(readFileSync(snapshot, 'utf8')) as {
-    manifest: { id: string; vertical: string; tier?: string; theme: string };
+    manifest: {
+      id: string;
+      vertical: string;
+      tier?: string;
+      theme: string;
+      renews?: string;
+    };
   };
   return {
     dir,
@@ -58,6 +66,7 @@ async function loadShot(dir: string): Promise<Shot> {
     vertical: raw.manifest.vertical,
     tier: raw.manifest.tier ?? '—',
     theme: raw.manifest.theme,
+    ...(raw.manifest.renews ? { renews: raw.manifest.renews } : {}),
     thumbnail,
     fold: await loadRaster(thumbnail, FOLD_SIZE.width, FOLD_SIZE.height),
     page: await loadRaster(full, PAGE_SIZE.width, PAGE_SIZE.height),
@@ -122,6 +131,13 @@ async function main(): Promise<void> {
         const [a, b] = [group[i], group[j]];
         const fold = visualDistance(a.fold, b.fold);
         const page = visualDistance(a.page, b.page);
+        // A renewal and the template it replaces may look alike until the old one is retired.
+        if (renewalPair(a, b)) {
+          console.log(
+            `  ↻ ${a.id} ~ ${b.id}: ${fold.toFixed(3)} · ${page.toFixed(3)} (renueva; no cuenta)`,
+          );
+          continue;
+        }
         const pass = fold >= MIN_VISUAL_DISTANCE;
         ok = ok && pass;
         console.log(

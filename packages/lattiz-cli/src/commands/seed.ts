@@ -82,6 +82,12 @@ interface SeedPlan {
   jsonKb: number;
   existing: { tier: string; is_active: boolean } | null | undefined;
   tenants: number | null;
+  /** Spec `renews`: the template this one replaces (retired by hand in /admin, never by the seed). */
+  renews?: {
+    id: string;
+    existing: { is_active: boolean } | null | undefined;
+    tenants: number | null;
+  };
 }
 
 async function buildPlan(id: string): Promise<SeedPlan> {
@@ -101,6 +107,18 @@ async function buildPlan(id: string): Promise<SeedPlan> {
   } catch (error) {
     log.warn(`No pude leer la fila actual: ${(error as Error).message}`);
   }
+  let renews: SeedPlan['renews'];
+  if (dist.manifest.renews) {
+    renews = { id: dist.manifest.renews, existing: undefined, tenants: null };
+    try {
+      renews.existing = await remoteTemplate(renews.id);
+      if (renews.existing) renews.tenants = await tenantsUsing(renews.id);
+    } catch (error) {
+      log.warn(
+        `No pude leer la fila de ${renews.id}: ${(error as Error).message}`,
+      );
+    }
+  }
   return {
     id,
     tier: dist.meta.tier,
@@ -111,6 +129,7 @@ async function buildPlan(id: string): Promise<SeedPlan> {
     jsonKb: existsSync(project) ? Math.round(statSync(project).size / 1024) : 0,
     existing,
     tenants,
+    ...(renews ? { renews } : {}),
   };
 }
 
@@ -150,6 +169,17 @@ function printPlan(p: SeedPlan, deploy: boolean, overwriteMeta: boolean): void {
       ['Otras plantillas', 'no se tocan'],
     ]),
   );
+  if (p.renews) {
+    const r = p.renews;
+    if (r.existing === null) log.info(`Renueva ${r.id} (no está sembrada).`);
+    else if (r.existing && !r.existing.is_active)
+      log.info(`Renueva ${r.id} (ya está inactiva).`);
+    else
+      log.warn(
+        `Renueva ${r.id}${r.existing ? `, que sigue activa con ${r.tenants ?? '?'} sitio(s)` : ''}. ` +
+          `Cuando ${p.id} esté publicada y verificada, retira ${r.id} en /admin (Plantillas → Retirar); el seed no la toca y sus clientes conservan su copia.`,
+      );
+  }
   if (p.existing && p.existing.tier !== p.tier) {
     log.warn(
       `Cambia el tier ${tierLabel(p.existing.tier)} → ${tierLabel(p.tier)}; ${p.tenants ?? '?'} sitio(s) la usan. ` +

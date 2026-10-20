@@ -191,8 +191,17 @@ async function specEntries(
       failures.push(`${key}: el lock ya no existe o no se puede leer`);
     const plan = await planSpec(spec, lib, lock);
     const own = new Set('tiers' in plan ? plan.tiers.map((t) => t.id) : []);
+    const renewed = new Set(
+      'tiers' in plan ? plan.tiers.map((t) => t.renews) : [],
+    );
     const peers = lib
-      .filter((f) => f.vertical === spec.giro && !own.has(f.id))
+      .filter(
+        (f) =>
+          f.vertical === spec.giro &&
+          !own.has(f.id) &&
+          !renewed.has(f.id) &&
+          !(f.renews && own.has(f.renews)),
+      )
       .map((f) => f.id)
       .sort();
     const inputs = { peers, ...(locked ? { locked: true } : {}) };

@@ -445,6 +445,35 @@ export const SpecSchema = z
       .boolean()
       .optional()
       .describe('true: genera el par Básico + Pro desde este spec.'),
+    version: z
+      .number()
+      .int()
+      .min(2)
+      .max(99)
+      .optional()
+      .describe(
+        'Con `idBase` + `twin`: versión de los ids (`…-v2`); el spec vive en `specs/<idBase>-v<N>.spec.json`. Sin ella, `-v1`.',
+      ),
+    renews: z
+      .strictObject({
+        spec: z
+          .string()
+          .regex(/^[a-z0-9][a-z0-9-]*$/)
+          .describe(
+            'Stem del spec que esta plantilla renueva (p. ej. `barberia-la-insignia`).',
+          ),
+        keep: z
+          .array(z.enum(['palette', 'fontPair']))
+          .min(1)
+          .optional()
+          .describe(
+            'Qué hereda del lock de ese spec, por tier; por defecto paleta y par tipográfico.',
+          ),
+      })
+      .optional()
+      .describe(
+        'Renovación: hereda la identidad del spec viejo y sus plantillas no cuentan como pares en las compuertas de unicidad mientras conviven (docs/template-spec.md «Renovar una plantilla»).',
+      ),
     tier: z
       .enum(['pro', 'basico', 'ambos'])
       .optional()
@@ -509,6 +538,11 @@ export const SpecSchema = z
       issue('tier', 'con `twin: true` el tier es `ambos`');
     if (spec.id && spec.tier !== 'pro' && spec.tier !== 'basico')
       issue('tier', 'con `id` indica `tier`: "pro" o "basico"');
+    if (spec.version !== undefined && !spec.idBase)
+      issue(
+        'version',
+        '`version` va con `idBase` + `twin`; con `id` escribe la versión en el id',
+      );
   });
 
 export type Spec = z.infer<typeof SpecSchema>;

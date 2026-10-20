@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { existsSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { ARCHETYPES, type Archetype, type ArchetypeId } from '../../archetypes';
 import { DIRECTIONS, type ArtDirection } from '../../directions';
@@ -8,7 +8,7 @@ import { hueDistance, hueOf, parseColor } from '../lib/color';
 import { MIN_PALETTE_DISTANCE, paletteDistance } from '../lib/delta-e';
 import { interpolate, mapsEmbedUrl, mapsLinkUrl } from '../lib/content';
 import { loadBlueprint, loadSectionMeta } from '../lib/load';
-import { paths } from '../lib/paths';
+import { KIT_ROOT, paths } from '../lib/paths';
 import { streetOf } from '../lib/profile';
 import {
   fingerprint,
@@ -36,12 +36,13 @@ import {
   type GiroPalette,
   type ShapePreset,
 } from './presets';
-import type {
-  Spec,
-  SpecBrand,
-  SpecLayout,
-  SpecProblem,
-  SpecTier,
+import {
+  parseSpec,
+  type Spec,
+  type SpecBrand,
+  type SpecLayout,
+  type SpecProblem,
+  type SpecTier,
 } from './schema';
 import {
   densityFromDial,
@@ -61,7 +62,7 @@ import {
   type Catalog,
 } from './catalog';
 import { missingPaths } from './copy-keys';
-import type { SpecLock, TierLock } from './lock';
+import { lockPathFor, readLock, type SpecLock, type TierLock } from './lock';
 import { composeTheme, customPalette, resolveFontPair } from './theme';
 
 /**
@@ -219,15 +220,19 @@ export function specTargets(spec: Spec): SpecTarget[] {
   const name = base.startsWith(`${spec.giro}-`)
     ? base.slice(spec.giro.length + 1)
     : base;
+  const v = `v${spec.version ?? 1}`;
   return [
-    { tier: 'pro', id: `${spec.giro}-${name}-v1` },
-    { tier: 'basico', id: `${spec.giro}-base-${name}-v1` },
+    { tier: 'pro', id: `${spec.giro}-${name}-${v}` },
+    { tier: 'basico', id: `${spec.giro}-base-${name}-${v}` },
   ];
 }
 
-/** `specs/<stem>.spec.json`: the id (one tier) or the idBase (twin). */
+/** `specs/<stem>.spec.json`: the id (one tier), the idBase (twin) or `<idBase>-v<N>` (a versioned twin). */
 export function specStem(spec: Spec): string {
-  return (spec.id ?? spec.idBase) as string;
+  if (spec.id) return spec.id;
+  return spec.version
+    ? `${spec.idBase as string}-v${spec.version}`
+    : (spec.idBase as string);
 }
 
 export function contentName(spec: Spec): string {
@@ -236,6 +241,87 @@ export function contentName(spec: Spec): string {
     ? stem.slice(spec.giro.length + 1)
     : stem;
   return `${spec.giro}.${voice}.es-MX`;
+}
+
+// ── Renewal (`renews`) ──────────────────────────────────────────────────────
+
+export type RenewKeep = 'palette' | 'fontPair';
+
+/** What a `renews` spec takes from the spec it replaces. */
+export interface Renewal {
+  stem: string;
+  keep: RenewKeep[];
+  /** Replaced id per tier: from this spec's lock, else from the old spec. */
+  ids: Partial<Record<SpecTier, string>>;
+  /** The old spec's lock tier, per tier (absent once the old spec is gone). */
+  inherited: Partial<Record<SpecTier, TierLock>>;
+}
+
+/**
+ * Reads `specs/<renews.spec>.spec.json` and its lock. Once this spec's own lock exists the old files
+ * are optional, so the old template can be deleted after it's retired.
+ */
+export function loadRenewal(
+  spec: Spec,
+  lock: SpecLock | undefined,
+  specsDir = resolve(KIT_ROOT, 'specs'),
+): Renewal | { problems: SpecProblem[] } | undefined {
+  if (!spec.renews) return undefined;
+  const stem = spec.renews.spec;
+  const fail = (message: string, hint?: string) => ({
+    problems: [
+      {
+        level: 'error' as const,
+        path: 'renews.spec',
+        message,
+        ...(hint ? { hint } : {}),
+      },
+    ],
+  });
+  if (stem === specStem(spec))
+    return fail('`renews` no puede apuntar al mismo spec');
+  const file = resolve(specsDir, `${stem}.spec.json`);
+  let old: Spec | undefined;
+  if (existsSync(file)) {
+    let raw: unknown;
+    try {
+      raw = JSON.parse(readFileSync(file, 'utf8'));
+    } catch {
+      return fail(`specs/${stem}.spec.json no es JSON válido`);
+    }
+    const parsed = parseSpec(raw);
+    if (!parsed.ok) return fail(`specs/${stem}.spec.json no es un spec válido`);
+    old = parsed.spec;
+    if (old.giro !== spec.giro)
+      return fail(
+        `\`renews\` apunta a un spec de otro giro (${old.giro}); una renovación es del mismo giro`,
+      );
+  }
+  const oldLock = old ? readLock(lockPathFor(file)) : undefined;
+  const oldTargets = old ? specTargets(old) : [];
+  const ids: Renewal['ids'] = {};
+  const inherited: Renewal['inherited'] = {};
+  for (const { tier, id } of specTargets(spec)) {
+    const recorded = lock?.tiers[id]?.renews;
+    const target = oldTargets.find((t) => t.tier === tier)?.id;
+    const renewed = recorded ?? target;
+    if (renewed) ids[tier] = renewed;
+    const oldTier = target ? oldLock?.tiers[target] : undefined;
+    if (oldTier) inherited[tier] = oldTier;
+    if (!lock?.tiers[id] && !oldTier)
+      return fail(
+        `no encuentro el lock de specs/${stem} para heredar la identidad de ${TIER_LABEL[tier]}`,
+        old
+          ? `Corre \`pnpm lattiz spec lock ${stem}\` primero.`
+          : `Restaura specs/${stem}.spec.json y su lock, o crea el lock de este spec antes de borrarlos.`,
+      );
+  }
+  return {
+    stem,
+    keep: spec.renews.keep ?? ['palette', 'fontPair'],
+    ids,
+    inherited,
+  };
 }
 
 // ── Library fingerprints ────────────────────────────────────────────────────
@@ -271,6 +357,8 @@ export interface TierPlan {
   /** Layout specs: the art direction and page archetype that drove the picks. */
   layout?: { direction?: string; archetype?: ArchetypeId };
   sections: ResolvedSection[];
+  /** `renews`: the id of the same tier this template replaces. */
+  renews?: string;
 }
 
 export interface SpecPlan {
@@ -725,6 +813,7 @@ export async function planSpec(
   spec: Spec,
   library: Fingerprint[],
   lock?: SpecLock,
+  options: { specsDir?: string } = {},
 ): Promise<SpecPlan | { problems: SpecProblem[] }> {
   const giro = GIROS[spec.giro];
   if (!giro)
@@ -769,8 +858,16 @@ export async function planSpec(
   const targets = specTargets(spec);
   const twin = targets.length === 2;
   const ownIds = new Set(targets.map((t) => t.id));
+  const renewal = loadRenewal(spec, useLock, options.specsDir);
+  if (renewal && 'problems' in renewal) return renewal;
+  // A template and the one it renews coexist until the old one is retired: they aren't peers.
+  const renewedIds = new Set(Object.values(renewal?.ids ?? {}));
   const peers: Peer[] = library.filter(
-    (f) => f.vertical === giro.id && !ownIds.has(f.id),
+    (f) =>
+      f.vertical === giro.id &&
+      !ownIds.has(f.id) &&
+      !renewedIds.has(f.id) &&
+      !(f.renews && ownIds.has(f.renews)),
   );
   const business = businessOf(spec, giro);
   const branches = branchesOf(spec, giro);
@@ -784,6 +881,16 @@ export async function planSpec(
     const seed = seedOf(id);
     const choices: string[] = [];
     const locked = useLock?.tiers[id];
+    const renewedId = renewal?.ids[tier];
+    const inherited = locked ? undefined : renewal?.inherited[tier];
+    const lockedPaletteId =
+      locked?.palette ??
+      (renewal?.keep.includes('palette') ? inherited?.palette : undefined);
+    const lockedFontId =
+      locked?.fontPair ??
+      (renewal?.keep.includes('fontPair') ? inherited?.fontPair : undefined);
+    const renewHint = (keep: RenewKeep) =>
+      `\`renews\` hereda esto de ${renewedId}: quita "${keep}" de \`renews.keep\` o fíjalo en el spec.`;
     const heroPrefs = heroPreferences(
       kitTier,
       direction,
@@ -851,14 +958,28 @@ export async function planSpec(
         ? brand.palette.preset
         : undefined;
     const presetValue = presetId ? paletteById(giro, presetId) : undefined;
+    if (
+      inherited &&
+      lockedPaletteId === 'custom' &&
+      !palettePick &&
+      !pinnedBrand(spec, tier, 'palette', twin)
+    ) {
+      problems.push({
+        level: 'error',
+        path: 'brand.palette',
+        message: `${renewedId} usa una paleta propia y este spec no la trae`,
+        hint: `Copia \`brand.palette.custom\` del spec ${renewal?.stem}, o ${renewHint('palette')}`,
+      });
+      continue;
+    }
     const lockedPalette =
       !palettePick &&
       !pinnedBrand(spec, tier, 'palette', twin) &&
-      locked &&
-      paletteById(giro, locked.palette)
+      lockedPaletteId &&
+      paletteById(giro, lockedPaletteId)
         ? {
-            id: locked.palette,
-            value: paletteById(giro, locked.palette) as GiroPalette,
+            id: lockedPaletteId,
+            value: paletteById(giro, lockedPaletteId) as GiroPalette,
             pinned: true,
           }
         : undefined;
@@ -929,8 +1050,10 @@ export async function planSpec(
       problems.push({
         level: 'error',
         path: 'brand.palette',
-        message: `el lock fija la paleta "${lockedPalette.id}" para ${id}, pero ya choca con otra plantilla del giro`,
-        hint: lockHint,
+        message: locked
+          ? `el lock fija la paleta "${lockedPalette.id}" para ${id}, pero ya choca con otra plantilla del giro`
+          : `la paleta heredada "${lockedPalette.id}" (de ${renewedId}) choca con otra plantilla del giro${direction ? ` o no cumple la dirección ${direction.id}` : ''}`,
+        hint: locked ? lockHint : renewHint('palette'),
       });
       continue;
     }
@@ -950,7 +1073,9 @@ export async function planSpec(
     } else if (!paletteChoice.pinned)
       choices.push(`paleta: "${paletteChoice.id}" (elegida)`);
     else if (lockedPalette)
-      choices.push(`paleta: "${paletteChoice.id}" (del lock)`);
+      choices.push(
+        `paleta: "${paletteChoice.id}" (${locked ? 'del lock' : `heredada de ${renewedId}`})`,
+      );
 
     // Font pair: unique in the giro.
     const takenFonts = new Set(peers.map((p) => p.fonts));
@@ -964,11 +1089,11 @@ export async function planSpec(
       });
     const lockedFont =
       !pinnedBrand(spec, tier, 'fontPair', twin) &&
-      locked &&
-      fontPairById(locked.fontPair)
+      lockedFontId &&
+      fontPairById(lockedFontId)
         ? {
-            id: locked.fontPair,
-            value: fontPairById(locked.fontPair) as FontPairPreset,
+            id: lockedFontId,
+            value: fontPairById(lockedFontId) as FontPairPreset,
             pinned: true,
           }
         : undefined;
@@ -1018,8 +1143,10 @@ export async function planSpec(
       problems.push({
         level: 'error',
         path: 'brand.fontPair',
-        message: `el lock fija la tipografía "${lockedFont.id}" para ${id}, pero ya la usa otra plantilla del giro`,
-        hint: lockHint,
+        message: locked
+          ? `el lock fija la tipografía "${lockedFont.id}" para ${id}, pero ya la usa otra plantilla del giro`
+          : `la tipografía heredada "${lockedFont.id}" (de ${renewedId}) ya la usa otra plantilla del giro${direction ? ` o no cumple la dirección ${direction.id}` : ''}`,
+        hint: locked ? lockHint : renewHint('fontPair'),
       });
       continue;
     }
@@ -1030,7 +1157,9 @@ export async function planSpec(
     else if (!fontChoice.pinned)
       choices.push(`tipografía: "${fontChoice.id}" (elegida)`);
     else if (lockedFont)
-      choices.push(`tipografía: "${fontChoice.id}" (del lock)`);
+      choices.push(
+        `tipografía: "${fontChoice.id}" (${locked ? 'del lock' : `heredada de ${renewedId}`})`,
+      );
 
     // Shape: no hard rule; it weighs in similarity.
     const shapeId =
@@ -1190,6 +1319,7 @@ export async function planSpec(
       content: contentName(spec),
       sections: sections.map((s) => ({ slot: s.slot, variant: s.variant })),
       ...(motion ? { motion } : {}),
+      ...(renewedId ? { renews: renewedId } : {}),
     };
 
     // Similarity: swap unpinned variants until the tier's limit holds.
@@ -1276,6 +1406,7 @@ export async function planSpec(
         shape: shapeId,
       },
       sections,
+      ...(renewedId ? { renews: renewedId } : {}),
       ...(layout
         ? {
             layout: {
