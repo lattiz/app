@@ -61,7 +61,7 @@ interface StockPhotosDialogProps {
   onUse: (asset: UploadedAssetResponseDto, photo: StockPhotoDto) => void;
 }
 
-/** Pexels search through the API; "Usar" imports by id so the site never hotlinks Pexels. */
+/** Pixabay search through the API; "Usar" imports by id so the site never hotlinks Pixabay. */
 export function StockPhotosDialog({
   tenantId,
   open,
@@ -108,12 +108,12 @@ export function StockPhotosDialog({
           <DialogDescription>
             Fotos proporcionadas por{' '}
             <a
-              href="https://www.pexels.com"
+              href="https://pixabay.com/"
               target="_blank"
               rel="noreferrer"
               className="font-medium underline underline-offset-2"
             >
-              Pexels
+              Pixabay
             </a>
             . Al usarla se optimiza y se guarda en tu sitio.
           </DialogDescription>
@@ -164,12 +164,14 @@ export function StockPhotosDialog({
               {results.data?.photos.map((photo) => (
                 <li key={photo.id} className="group flex flex-col gap-1">
                   <div
-                    className="relative aspect-[4/3] overflow-hidden rounded-lg"
-                    style={{ backgroundColor: photo.avgColor ?? undefined }}
+                    className="relative aspect-[4/3] overflow-hidden rounded-lg bg-muted"
+                    {...(photo.avgColor
+                      ? { style: { backgroundColor: photo.avgColor } }
+                      : {})}
                   >
                     <img
                       src={photo.thumbUrl}
-                      alt={photo.alt}
+                      alt={photo.alt || 'Foto de Pixabay'}
                       loading="lazy"
                       className="size-full object-cover"
                     />
@@ -190,7 +192,7 @@ export function StockPhotosDialog({
                     </Button>
                   </div>
                   <p className="truncate text-xs text-muted-foreground">
-                    Foto de{' '}
+                    por{' '}
                     <a
                       href={photo.photographerUrl}
                       target="_blank"
@@ -206,7 +208,7 @@ export function StockPhotosDialog({
                       rel="noreferrer"
                       className="underline underline-offset-2"
                     >
-                      Pexels
+                      Pixabay
                     </a>
                   </p>
                 </li>
