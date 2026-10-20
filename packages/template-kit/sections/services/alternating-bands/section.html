@@ -1,0 +1,29 @@
+<section id="servicios" data-lz-slot="services" data-lz-variant="alternating-bands" class="lz-section lz-services-bands">
+  <div class="lz-container">
+    <div class="lz-services-bands__head">
+      <p class="lz-services-bands__kicker" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-services-bands__title" data-lz-key="title"></h2>
+      <p class="lz-services-bands__intro" data-lz-if="intro" data-lz-key="intro"></p>
+    </div>
+    <div class="lz-services-bands__list">
+      <article class="lz-services-bands__band" data-lz-each="products">
+        <img loading="lazy" width="800" height="800" class="lz-services-bands__image" data-lz-attr-src="image" data-lz-attr-alt="imageAlt">
+        <div class="lz-services-bands__body">
+          <p class="lz-services-bands__tag">
+            <span class="lz-services-bands__num" aria-hidden="true"></span>
+            <span data-lz-if="tag" data-lz-key="tag"></span>
+          </p>
+          <h3 class="lz-services-bands__name" data-lz-key="name"></h3>
+          <p class="lz-services-bands__desc" data-lz-key="description"></p>
+          <ul class="lz-services-bands__chips" data-lz-if="chips">
+            <li data-lz-each="chips" data-lz-key="."></li>
+          </ul>
+          <div class="lz-services-bands__foot">
+            <p class="lz-services-bands__price" data-lz-key="price"></p>
+            <a target="_blank" rel="noopener noreferrer" class="lz-services-bands__pick" data-lz-attr-href="href"><span data-lz-key="cta"></span><span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,376 @@
+{
+  "version": 1,
+  "candidate_id": "tienda-caramelo-pop-menu-pildora-01",
+  "input": {
+    "file": "design.md",
+    "kind": "design-md"
+  },
+  "palette": {
+    "label": "Local business · Jardín suave (Stitch, claro)",
+    "mode": "light",
+    "mood": [
+      "sobrio",
+      "stitch"
+    ],
+    "affinity": [
+      "tienda"
+    ],
+    "bg": "#FFEAF3",
+    "text": "#14213D",
+    "accent": "#35C4E6",
+    "surface": "#FFF4F9",
+    "surface2": "#FBD6E8",
+    "photoTreatment": "none",
+    "placeholder": "blobs",
+    "from": {
+      "bg": "background",
+      "text": "on-background",
+      "accent": "tertiary",
+      "surface": "surface-container-low",
+      "surface2": "surface-container-high"
+    },
+    "aa": {
+      "ok": true,
+      "problems": []
+    },
+    "roles": {
+      "surface": [
+        "background",
+        "surface",
+        "surface-container-low",
+        "surface-container-high"
+      ],
+      "text": [
+        "on-background",
+        "on-surface",
+        "on-surface-variant"
+      ],
+      "accent": [
+        "primary",
+        "tertiary"
+      ],
+      "border": [
+        "outline",
+        "outline-variant"
+      ]
+    },
+    "lz": {
+      "--lz-color-bg": "#FFEAF3",
+      "--lz-color-surface": "#FFF4F9",
+      "--lz-color-surface-2": "#FBD6E8",
+      "--lz-color-text": "#14213D",
+      "--lz-color-muted": "#5A5D74",
+      "--lz-color-accent": "#35C4E6",
+      "--lz-color-on-accent": "#14213D",
+      "--lz-color-accent-text": "#2A90B0",
+      "--lz-color-line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+      "--lz-color-line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+      "--lz-color-overlay": "#14213D",
+      "--lz-color-on-overlay": "#FFEAF3",
+      "--lz-color-navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+      "--lz-color-ink": "#14213D"
+    },
+    "pairs": [
+      {
+        "fg": "on-background",
+        "bg": "background",
+        "ratio": 13.93,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface",
+        "bg": "surface",
+        "ratio": 13.93,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-primary",
+        "bg": "primary",
+        "ratio": 15.97,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface",
+        "bg": "background",
+        "ratio": 13.93,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "background",
+        "ratio": 7.69,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "surface",
+        "ratio": 7.69,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface",
+        "bg": "surface-container-low",
+        "ratio": 14.88,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "surface-container-low",
+        "ratio": 8.21,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface",
+        "bg": "surface-container-high",
+        "ratio": 12.08,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "surface-container-high",
+        "ratio": 6.67,
+        "min": 4.5,
+        "aa_pass": true
+      }
+    ],
+    "distance": [
+      {
+        "giro": "tienda",
+        "nearest": "pal-turquesa-claro",
+        "distance": 39.9,
+        "min": 15,
+        "ok": true
+      }
+    ]
+  },
+  "typography": {
+    "scale": [
+      {
+        "token": "display-lg",
+        "role": "display",
+        "family": "Fredoka",
+        "sizePx": 72,
+        "weight": 700,
+        "lineHeightPx": 78
+      },
+      {
+        "token": "headline-md",
+        "role": "headline",
+        "family": "Fredoka",
+        "sizePx": 36,
+        "weight": 600,
+        "lineHeightPx": 42
+      },
+      {
+        "token": "body-lg",
+        "role": "body",
+        "family": "Nunito",
+        "sizePx": 20,
+        "weight": 400,
+        "lineHeightPx": 32
+      },
+      {
+        "token": "body-md",
+        "role": "body",
+        "family": "Nunito",
+        "sizePx": 16,
+        "weight": 400,
+        "lineHeightPx": 26
+      },
+      {
+        "token": "label-caps",
+        "role": "label",
+        "family": "Nunito",
+        "sizePx": 14,
+        "weight": 600,
+        "lineHeightPx": 20,
+        "letterSpacingEm": 0.08
+      }
+    ],
+    "displayFamily": "Fredoka",
+    "bodyFamily": "Nunito",
+    "googleFamilies": [
+      "Fredoka",
+      "Nunito",
+      "Nunito Sans"
+    ],
+    "unsupportedFamilies": [],
+    "excludedFamilies": [],
+    "metrics": {
+      "Fredoka": true,
+      "Nunito": true,
+      "Nunito Sans": true
+    },
+    "existingPair": "fredoka+nunito",
+    "delivery": {
+      "ok": true,
+      "problems": []
+    },
+    "radiusPx": 32,
+    "spacing": {
+      "container-max": "1200px",
+      "gutter": "32px",
+      "section-gap": "144px",
+      "stack-md": "28px"
+    }
+  },
+  "sections": [
+    {
+      "ref": "2. HERO (Variant B)",
+      "columns": 0,
+      "items": 0,
+      "hasImage": true,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "bordered",
+      "heading": "Dulces de allá, caja armada aquí",
+      "mappable": true,
+      "slot": "hero",
+      "layout": "centered",
+      "similar": [
+        "hero/columns",
+        "hero/centered-arch",
+        "hero/offset-card",
+        "hero/rail"
+      ]
+    },
+    {
+      "ref": "6. TESTIMONIALS (\"Amor de Barrio\")",
+      "columns": 3,
+      "items": 3,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": true,
+      "surface": "bordered",
+      "heading": "Amor de Barrio",
+      "mappable": true,
+      "slot": "testimonials",
+      "layout": "card-grid",
+      "reuse_candidate": "testimonials/cards",
+      "similar": [
+        "testimonials/cards",
+        "testimonials/paper-trio"
+      ]
+    },
+    {
+      "ref": "preguntas",
+      "columns": 0,
+      "items": 0,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "bordered",
+      "heading": "Dudas Frecuentes",
+      "mappable": true,
+      "slot": "faq",
+      "layout": "list",
+      "reuse_candidate": "faq/list",
+      "similar": [
+        "faq/list"
+      ]
+    },
+    {
+      "ref": "visitanos",
+      "columns": 0,
+      "items": 0,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "bordered",
+      "heading": "Ven a Conocernos o Escríbenos",
+      "mappable": true,
+      "slot": "cta",
+      "layout": "centered",
+      "draft": {
+        "variant": "bordered-centered",
+        "html": "<section id=\"cita\" data-lz-slot=\"cta\" data-lz-variant=\"bordered-centered\" class=\"lz-section lz-cta-bordered-centered\">\n  <div class=\"lz-container\">\n    <div class=\"lz-cta-bordered-centered__card\">\n      <h2 class=\"lz-title lz-cta-bordered-centered__title\" data-lz-key=\"title\"></h2>\n      <p class=\"lz-cta-bordered-centered__text\" data-lz-if=\"text\" data-lz-key=\"text\"></p>\n      <div class=\"lz-cta-bordered-centered__actions\">\n        <a href=\"{{whatsappUrl}}\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"lz-button lz-button--primary lz-cta-bordered-centered__cta\" data-lz-key=\"primaryCta\"></a>\n        <a data-lz-if=\"secondaryCta\" class=\"lz-button lz-button--secondary lz-cta-bordered-centered__cta\" data-lz-attr-href=\"secondaryHref\" data-lz-key=\"secondaryCta\"></a>\n      </div>\n    </div>\n  </div>\n</section>\n",
+        "css": ".lz-cta-bordered-centered {\n  padding: var(--lz-section-pad) 0;\n}\n\n.lz-cta-bordered-centered__card {\n  display: grid;\n  justify-items: center;\n  gap: calc(20px * var(--lz-space));\n  max-width: calc(760px * var(--lz-space));\n  margin: 0 auto;\n  padding: calc(64px * var(--lz-space));\n  border-radius: var(--lz-radius-card);\n  color: var(--lz-color-text);\n  text-align: center;\n  background: var(--lz-color-surface);\n  border: var(--lz-border-width, 1px) solid var(--lz-color-line);\n}\n\n.lz-cta-bordered-centered__title {\n  margin: 0;\n  font-size: calc(\n    min(clamp(32px, 4.4vw, 60px), 10svh) * var(--lz-display-scale)\n  );\n  text-wrap: balance;\n}\n\n.lz-cta-bordered-centered__text {\n  max-width: 46ch;\n  margin: 0;\n  color: var(--lz-color-muted);\n  font-size: calc(18px * var(--lz-text-scale));\n  line-height: 1.55;\n}\n\n.lz-cta-bordered-centered__actions {\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: center;\n  gap: calc(12px * var(--lz-space));\n}\n\n.lz-cta-bordered-centered__cta {\n  touch-action: manipulation;\n}\n\n.lz-cta-bordered-centered__cta:active {\n  transform: scale(var(--lz-press-scale, 0.97));\n  transition: transform var(--lz-dur-press, 120ms)\n    var(--lz-ease-out, cubic-bezier(0.23, 1, 0.32, 1));\n}\n\n@media (prefers-reduced-motion: reduce) {\n  .lz-cta-bordered-centered__cta:active {\n    transform: none;\n    transition: none;\n  }\n}\n\n@media (max-width: 480px) {\n  .lz-cta-bordered-centered__card {\n    padding: calc(32px * var(--lz-space)) calc(24px * var(--lz-space));\n  }\n}\n",
+        "meta_ts": "import type { SectionMeta } from '../../../src/types';\n\n// Stitch: tienda-caramelo-pop-menu-pildora-01\nexport default {\n  slot: \"cta\",\n  variant: \"bordered-centered\",\n  label: \"Llamada a la acción\",\n  region: 'main',\n  description: \"Tarjeta centrada con filete con titular, una línea y el CTA de WhatsApp (más uno secundario opcional). Cuenta como sección.\",\n  tiers: [\n  \"basic\",\n  \"pro\"\n],\n  intent: \"Un cierre contenido en una sola tarjeta centrada, a partir de un patrón de Stitch (su formulario se vuelve botón de WhatsApp).\",\n  archetypes: [\n  \"booking\",\n  \"bold\",\n  \"soft\"\n],\n  contentKeys: [\n  \"title\",\n  \"text?\",\n  \"primaryCta\",\n  \"secondaryCta?\",\n  \"secondaryHref?\"\n],\n  sample: {\n  \"title\": \"Hablemos de tu <span class=\\\"lz-title__serif\\\">primera visita</span>\",\n  \"text\": \"Escríbenos y te decimos qué horarios hay libres esta semana.\",\n  \"primaryCta\": \"Escribir por WhatsApp\",\n  \"secondaryCta\": \"Ver preguntas\",\n  \"secondaryHref\": \"#preguntas\"\n},\n} satisfies SectionMeta;\n",
+        "bytes": {
+          "html": 815,
+          "css": 1499,
+          "css_gzip": 566
+        }
+      }
+    },
+    {
+      "ref": "9. FOOTER (Shared Components JSON Anchor)",
+      "columns": 0,
+      "items": 0,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "flat",
+      "mappable": true,
+      "slot": "footer",
+      "layout": "link-columns",
+      "reuse_candidate": "footer/columns",
+      "similar": [
+        "footer/big-wordmark",
+        "footer/columns",
+        "footer/minimal-centered",
+        "footer/ledger",
+        "footer/signature-bar"
+      ]
+    }
+  ],
+  "not_mappable": [
+    {
+      "ref": "historia",
+      "reason": "no encaja en ningún rol del kit (hero, about, catálogo, cta, pie)"
+    },
+    {
+      "ref": "dulces",
+      "reason": "no encaja en ningún rol del kit (hero, about, catálogo, cta, pie)"
+    },
+    {
+      "ref": "5. GALLERY (Editorial Organic Cluster with Central Arch)",
+      "reason": "no encaja en ningún rol del kit (hero, about, catálogo, cta, pie)"
+    }
+  ],
+  "rebuild": [
+    {
+      "ref": "2. HERO (Variant B)",
+      "slot": "hero",
+      "layout": "centered",
+      "reason": "sin medir: corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
+    },
+    {
+      "ref": "6. TESTIMONIALS (\"Amor de Barrio\")",
+      "slot": "testimonials",
+      "layout": "card-grid",
+      "reason": "sin medir (¿testimonials/cards?): corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
+    },
+    {
+      "ref": "preguntas",
+      "slot": "faq",
+      "layout": "list",
+      "reason": "sin medir (¿faq/list?): corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
+    },
+    {
+      "ref": "9. FOOTER (Shared Components JSON Anchor)",
+      "slot": "footer",
+      "layout": "link-columns",
+      "reason": "sin medir (¿footer/columns?): corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
+    }
+  ],
+  "interactivity": [],
+  "image_needs": [
+    {
+      "ref": "2. HERO (Variant B)",
+      "slot": "hero",
+      "orientation": "unspecified",
+      "use": "foreground"
+    }
+  ],
+  "images_ignored": 10
+}

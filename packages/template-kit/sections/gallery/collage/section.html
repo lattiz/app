@@ -1,0 +1,15 @@
+<section id="galeria" data-lz-slot="gallery" data-lz-variant="collage" class="lz-section lz-gallery-collage">
+  <div class="lz-container">
+    <div class="lz-gallery-collage__head">
+      <p class="lz-gallery-collage__kicker" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-gallery-collage__title" data-lz-key="title"></h2>
+      <p class="lz-gallery-collage__intro" data-lz-if="intro" data-lz-key="intro"></p>
+    </div>
+    <div class="lz-gallery-collage__grid">
+      <figure class="lz-gallery-collage__item" data-lz-each="items">
+        <img loading="lazy" width="1200" height="1200" class="lz-gallery-collage__image" data-lz-attr-src="image" data-lz-attr-alt="alt">
+        <figcaption class="lz-gallery-collage__caption" data-lz-key="caption"></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>

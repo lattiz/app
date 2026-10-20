@@ -1,0 +1,159 @@
+{
+  "$lattiz": "GENERATED from specs/tienda-caramelo-pop-v2.spec.json (spec 8e0f9df6d256, file cec577e6c1d5). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "d48f37e91c5ce81dcba02ccba46f40190d1e6b3bb5baec11544c889b85d1c6c8",
+      "query": "pink and blue candy jars shelf sweet shop",
+      "providerId": 7036390,
+      "pageUrl": "https://pixabay.com/photos/candies-sweets-food-background-7036390/",
+      "photographer": "Ylanite",
+      "photographerUrl": "https://pixabay.com/users/2218222/",
+      "tags": "candies, full hd wallpaper, desktop backgrounds, hd wallpaper, wallpaper 4k, beautiful wallpaper, free wallpaper, 4k wallpaper 1920x1080, free background, cool backgrounds, sweets, laptop wallpaper, food, background, mac wallpaper, treats, snack, windows wallpaper, 4k wallpaper, wallpaper hd, assorted"
+    },
+    {
+      "file": "about.jpg",
+      "source": "pixabay",
+      "sha256": "962e1811db126a7aa9e1b1e115a09a53bc3ef38b5c0cdb8bb58fea7d42964545",
+      "query": "candy jars",
+      "providerId": 1961538,
+      "pageUrl": "https://pixabay.com/photos/candy-sweetmeats-jar-candy-jar-1961538/",
+      "photographer": "Daria-Yakovleva",
+      "photographerUrl": "https://pixabay.com/users/3938704/",
+      "tags": "candy, sweetmeats, jar, candy jar, sweets, dessert, food, colorful, bright, multi colored, delicious, sweet, sugar, treats"
+    },
+    {
+      "file": "product-01.jpg",
+      "source": "pixabay",
+      "sha256": "d73c995a22a6519b9193ad35d79e2af7b4576f5bcf8ab5bb6e96f08c3c1c1217",
+      "query": "chocolate bars candy pile",
+      "providerId": 5356291,
+      "pageUrl": "https://pixabay.com/photos/chocolate-food-milk-chocolate-5356291/",
+      "photographer": "Achuki",
+      "photographerUrl": "https://pixabay.com/users/9042909/",
+      "tags": "chocolate, food, milk chocolate, wrapper, candy bar, cocoa, table"
+    },
+    {
+      "file": "product-02.jpg",
+      "source": "pixabay",
+      "sha256": "1a0b77d969371b5f5803cce69f843ac85c29336855bbe4477b7874196b1ba0a5",
+      "query": "colorful gummy candy pile",
+      "providerId": 6169916,
+      "pageUrl": "https://pixabay.com/photos/gummies-candy-sweets-bowl-colorful-6169916/",
+      "photographer": "cybertotte",
+      "photographerUrl": "https://pixabay.com/users/6886848/",
+      "tags": "gummies, candy, sweets, bowl, colorful"
+    },
+    {
+      "file": "product-03.jpg",
+      "source": "pixabay",
+      "sha256": "849dba691a48df03d03b3cdb482865e0061549e19943fd36c0af570b73bae47e",
+      "query": "soda pop",
+      "providerId": 4519113,
+      "pageUrl": "https://pixabay.com/photos/glass-metal-straw-drink-cold-4519113/",
+      "photographer": "7303458",
+      "photographerUrl": "https://pixabay.com/users/7303458/",
+      "tags": "glass, metal straw, drink, cold, refreshing, fizzy, ice, thirsty, soda, refreshment, carbonated, pop, purple"
+    },
+    {
+      "file": "product-04.jpg",
+      "source": "pixabay",
+      "sha256": "e937432625a60bc921dcd5878a033739f525bd7ece33f6ebae8a4c0451b79962",
+      "query": "popcorn",
+      "providerId": 6211115,
+      "pageUrl": "https://pixabay.com/photos/popcorn-food-snack-tasty-delicious-6211115/",
+      "photographer": "OdinReyna",
+      "photographerUrl": "https://pixabay.com/users/2960690/",
+      "tags": "popcorn, food, snack, tasty, delicious, dark, closeup, food photography"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "pixabay",
+      "sha256": "6870bbf9e2d7967307066229ee08d33ec35982261f8fae576c695885e7da747f",
+      "query": "gummy candy bulk bins",
+      "providerId": 171342,
+      "pageUrl": "https://pixabay.com/photos/candies-gummies-sweets-171342/",
+      "photographer": "Shirley810",
+      "photographerUrl": "https://pixabay.com/users/9355/",
+      "tags": "candies, gummies, sweets, gummy candies, gummy worms, confectionery, treat, tasty, candy store, confectionery store"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "pixabay",
+      "sha256": "2cbc24144e96753b9da397cf9015d735ca88d3d777e8e7e8bc201aa91642de1e",
+      "query": "chocolate candy bars display",
+      "providerId": 1284475,
+      "pageUrl": "https://pixabay.com/photos/colorful-candies-sweets-confections-1284475/",
+      "photographer": "Pexels",
+      "photographerUrl": "https://pixabay.com/users/2286921/",
+      "tags": "colorful, candies, sweets, confections, confectionery, assorted, assortment, candy shop, candy store, jelly candies, fair, jelly confectionery, bonbon, sugar, many, selection"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "pixabay",
+      "sha256": "c2ce7d683e18a0ad6be06d9e871d0ad02caeb07edc97ec7d2830a934e7e0d4ed",
+      "query": "hard candy swirl",
+      "providerId": 1133146,
+      "pageUrl": "https://pixabay.com/photos/cupcakes-dessert-food-muffins-1133146/",
+      "photographer": "cegoh",
+      "photographerUrl": "https://pixabay.com/users/94852/",
+      "tags": "cupcakes, dessert, food, muffins, cream, icing, sweet, whipped cream, candy, bake, pastry, pastries, food photography"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "pixabay",
+      "sha256": "37d6d2c5c66d03922c4d1e29b1793faa01ddcba785c8d18542de48f158aa6d6a",
+      "query": "candy gift box ribbon",
+      "providerId": 2597169,
+      "pageUrl": "https://pixabay.com/photos/food-sweets-chocolate-desserts-2597169/",
+      "photographer": "StockSnap",
+      "photographerUrl": "https://pixabay.com/users/894430/",
+      "tags": "food, sweets, chocolate, desserts"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "pixabay",
+      "sha256": "c63af742750fda7bfc3845c82e4e126694f93d8961152b0530c8d1af30563240",
+      "query": "candy buffet table party",
+      "providerId": 6279697,
+      "pageUrl": "https://pixabay.com/photos/macarons-pastries-sweets-desserts-6279697/",
+      "photographer": "JillWellington",
+      "photographerUrl": "https://pixabay.com/users/334088/",
+      "tags": "macarons, pastries, sweets, desserts, buffet, dessert buffet, food, eat, treats, baby girl shower, pink, dessert table, baby shower, sweets table, food photography"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "pixabay",
+      "sha256": "0e38e09fff0dc28770c471eede0ac3fd2db7dacfa4c0f11f2198daa45c78dd88",
+      "query": "lollipops colorful cup",
+      "providerId": 693645,
+      "pageUrl": "https://pixabay.com/photos/cake-pops-pastries-food-dessert-693645/",
+      "photographer": "Hans",
+      "photographerUrl": "https://pixabay.com/users/2/",
+      "tags": "cake pops, pastries, food, dessert, sweet, lolly, chocolate, chocolate praline, balls, nibble, candy, tasty, delicious, confectionery"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "pixabay",
+      "sha256": "22ca6ae83f19bd0a2c34865fbc75bd9a97b6beaccf55d3ef62b17243d8071409",
+      "query": "colorful cereal boxes shelf",
+      "providerId": 1444495,
+      "pageUrl": "https://pixabay.com/photos/cereal-spoon-milk-cheerios-morning-1444495/",
+      "photographer": "ponce_photography",
+      "photographerUrl": "https://pixabay.com/users/2473530/",
+      "tags": "cereal, spoon, milk, cheerios, morning, food, breakfast, eating, meal, childhood, nutrition, bowl, colorful"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "pixabay",
+      "sha256": "16e53594840587300f9e37740b4b7183d8014f81c53ae73ac82976ae1282c380",
+      "query": "candy corn",
+      "providerId": 7498514,
+      "pageUrl": "https://pixabay.com/photos/candy-corn-candy-corn-background-7498514/",
+      "photographer": "HGDesigns",
+      "photographerUrl": "https://pixabay.com/users/61085/",
+      "tags": "candy corn, candy corn background, halloween, halloween background, candy background, digital background, digital scrapbook, scrapbook paper, scrapbook halloween, autumn, halloween texture, halloween pattern, pattern background"
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+.lz-gallery-collage {
+  padding: var(--lz-section-pad) 0;
+}
+
+.lz-gallery-collage__head {
+  display: grid;
+  justify-items: center;
+  gap: calc(12px * var(--lz-space));
+  max-width: 620px;
+  margin: 0 auto calc(48px * var(--lz-space));
+  text-align: center;
+}
+
+.lz-gallery-collage__kicker {
+  margin: 0;
+  padding: calc(5px * var(--lz-space)) calc(14px * var(--lz-space));
+  border-radius: var(--lz-radius-pill);
+  background: var(--lz-color-text);
+  color: var(--lz-color-bg);
+  font-size: calc(14px * var(--lz-text-scale));
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.lz-gallery-collage__title {
+  margin: 0;
+  font-size: calc(clamp(28px, 3.4vw, 44px) * var(--lz-display-scale));
+  letter-spacing: var(--lz-display-tracking, 0.01em);
+  text-wrap: balance;
+}
+
+.lz-gallery-collage__intro {
+  margin: 0;
+  color: var(--lz-color-muted);
+  font-size: calc(17px * var(--lz-text-scale));
+  line-height: 1.55;
+}
+
+/* Five shapes that repeat: arch, circle, tall card, wide pill, small arch. */
+.lz-gallery-collage__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: center;
+  gap: calc(24px * var(--lz-space));
+}
+
+.lz-gallery-collage__item {
+  position: relative;
+  grid-column: span 4;
+  margin: 0;
+  overflow: hidden;
+  border: calc(4px * var(--lz-space)) solid var(--lz-color-surface);
+  border-radius: var(--lz-radius-card);
+  background: var(--lz-color-surface-2);
+  box-shadow: var(--lz-shadow-sm);
+  aspect-ratio: 5 / 6;
+}
+
+.lz-gallery-collage__item:nth-child(5n + 1) {
+  aspect-ratio: 6 / 7;
+  border-radius: 999px 999px var(--lz-radius-card) var(--lz-radius-card);
+}
+
+.lz-gallery-collage__item:nth-child(5n + 2) {
+  aspect-ratio: 1;
+  width: 100%;
+  max-width: 340px;
+  justify-self: center;
+  border-radius: 50%;
+}
+
+.lz-gallery-collage__item:nth-child(5n + 4) {
+  grid-column: span 8;
+  aspect-ratio: 29 / 10;
+  border-radius: var(--lz-radius-pill);
+}
+
+.lz-gallery-collage__item:nth-child(5n) {
+  aspect-ratio: 7 / 5;
+  border-radius: 999px 999px var(--lz-radius-card) var(--lz-radius-card);
+}
+
+.lz-gallery-collage__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: var(--lz-photo-filter);
+  transition: transform var(--lz-dur-ui, 0.3s) var(--lz-ease-out, ease);
+}
+
+.lz-gallery-collage__caption {
+  position: absolute;
+  right: calc(16px * var(--lz-space));
+  bottom: calc(16px * var(--lz-space));
+  left: calc(16px * var(--lz-space));
+  padding: calc(6px * var(--lz-space)) calc(14px * var(--lz-space));
+  border-radius: var(--lz-radius-pill);
+  background: var(--lz-color-surface);
+  font-family: var(--lz-font-display);
+  font-size: calc(14px * var(--lz-text-scale));
+  font-weight: 700;
+  text-align: center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lz-gallery-collage__item:hover .lz-gallery-collage__image {
+    transform: scale(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lz-gallery-collage__image {
+    transition: none;
+  }
+  .lz-gallery-collage__item:hover .lz-gallery-collage__image {
+    transform: none;
+  }
+}
+
+@media (max-width: 992px) {
+  .lz-gallery-collage__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .lz-gallery-collage__item,
+  .lz-gallery-collage__item:nth-child(5n + 4) {
+    grid-column: auto;
+  }
+  .lz-gallery-collage__item:nth-child(5n + 4) {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 480px) {
+  .lz-gallery-collage__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .lz-gallery-collage__item:nth-child(5n + 4) {
+    grid-column: auto;
+    aspect-ratio: 3 / 2;
+  }
+}

@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Caramelo Pop | Dulces y golosinas importadas en Clavería, Azcapotzalco</title>
+<!-- Fonts: Fredoka & Nunito Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&amp;family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration with Design System Tokens -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-container": "#a58359",
+            "on-surface-variant": "#3F4A66",
+            "on-primary-fixed": "#0d1b36",
+            "on-background": "#14213D",
+            "surface-container": "#f0edf0",
+            "surface-container-highest": "#e4e2e5",
+            "surface-container-high": "#FBD6E8",
+            "on-secondary": "#ffffff",
+            "surface-bright": "#fbf8fb",
+            "outline-variant": "#E9B8CD",
+            "on-primary": "#FFFFFF",
+            "inverse-primary": "#b9c6ea",
+            "secondary-fixed-dim": "#4fd6f9",
+            "primary-fixed-dim": "#b9c6ea",
+            "error-container": "#ffdad6",
+            "on-primary-fixed-variant": "#3a4664",
+            "tertiary-container": "#321d00",
+            "tertiary-fixed": "#ffddb6",
+            "surface-container-low": "#FFF4F9",
+            "secondary": "#00677c",
+            "secondary-fixed": "#b1ecff",
+            "surface-variant": "#e4e2e5",
+            "inverse-on-surface": "#f2f0f3",
+            "surface-tint": "#525e7d",
+            "outline": "#6B7391",
+            "on-error": "#ffffff",
+            "primary-container": "#14213d",
+            "inverse-surface": "#303033",
+            "primary-fixed": "#d9e2ff",
+            "secondary-container": "#35C4E6",
+            "on-surface": "#14213D",
+            "on-tertiary": "#14213D",
+            "tertiary": "#35C4E6",
+            "background": "#FFEAF3",
+            "on-secondary-container": "#14213D",
+            "on-secondary-fixed-variant": "#004e5e",
+            "on-error-container": "#93000a",
+            "surface-container-lowest": "#ffffff",
+            "surface": "#FFEAF3",
+            "on-tertiary-fixed": "#2a1800",
+            "on-primary-container": "#7c89aa",
+            "tertiary-fixed-dim": "#e7c092",
+            "error": "#ba1a1a",
+            "primary": "#14213D",
+            "on-tertiary-fixed-variant": "#5c421e",
+            "on-secondary-fixed": "#001f27",
+            "surface-dim": "#dbd9dc"
+          },
+          "borderRadius": {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-md": "1.75rem",
+            "space-sm": "1rem",
+            "margin": "2rem",
+            "space-xs": "0.5rem",
+            "space-xl": "9rem",
+            "space-lg": "3.5rem",
+            "gutter": "2rem"
+          },
+          "fontFamily": {
+            "display-lg": ["Fredoka", "sans-serif"],
+            "body-md": ["Nunito Sans", "sans-serif"],
+            "body-lg": ["Nunito Sans", "sans-serif"],
+            "label-caps": ["Nunito Sans", "sans-serif"],
+            "headline-md": ["Fredoka", "sans-serif"]
+          },
+          "fontSize": {
+            "display-lg": ["72px", { "lineHeight": "78px", "fontWeight": "700" }],
+            "body-md": ["16px", { "lineHeight": "26px", "fontWeight": "400" }],
+            "body-lg": ["20px", { "lineHeight": "32px", "fontWeight": "400" }],
+            "label-caps": ["14px", { "lineHeight": "20px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+            "headline-md": ["36px", { "lineHeight": "42px", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-primary font-body-md text-body-md antialiased overflow-x-hidden selection:bg-tertiary selection:text-primary">
+<!-- ==========================================
+       1. TopNavBar (Sticky Shared Component)
+  =========================================== -->
+<header class="w-full bg-surface/90 backdrop-blur-md sticky top-0 z-50">
+<div class="w-full max-w-[1200px] mx-auto px-gutter py-space-sm flex items-center justify-between">
+<!-- Brand Logo Wordmark -->
+<a class="font-headline-md text-headline-md font-semibold text-primary tracking-tight transition-transform duration-200 active:scale-95 flex items-center gap-2" href="#">
+<span>Caramelo Pop</span>
+<span class="inline-block w-3 h-3 rounded-full bg-tertiary"></span>
+</a>
+<!-- Desktop Nav Items -->
+<nav class="hidden md:flex items-center gap-8 text-label-caps font-label-caps">
+<a class="text-on-surface-variant transition-colors duration-200 hover:text-primary" href="#nosotros">Nosotros</a>
+<a class="text-primary font-semibold hover:text-primary" href="#catalogo">Catálogo</a>
+<a class="text-on-surface-variant transition-colors duration-200 hover:text-primary" href="#galeria">Galería</a>
+<a class="text-on-surface-variant transition-colors duration-200 hover:text-primary" href="#preguntas">Preguntas</a>
+<a class="text-on-surface-variant transition-colors duration-200 hover:text-primary" href="#contacto">Contacto</a>
+</nav>
+<!-- Trailing Action: WhatsApp Pill Button -->
+<div class="flex items-center">
+<a class="inline-flex items-center gap-2 bg-primary text-on-primary font-label-caps text-label-caps px-6 py-3 rounded-full transition-all duration-200 hover:bg-on-surface-variant active:scale-95 shadow-sm" href="https://api.whatsapp.com/send?phone=525553418920&amp;text=Hola%20Caramelo%20Pop!%20Quiero%20armar%20una%20cajita%20dulce" rel="noopener noreferrer" target="_blank">
+<svg class="w-5 h-5 text-tertiary fill-current" viewbox="0 0 24 24">
+<path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm0 18.06c-1.5 0-2.97-.4-4.24-1.16l-.3-.18-3.12.82.83-3.04-.2-.31a8.03 8.03 0 0 1-1.23-4.28c0-4.44 3.61-8.06 8.06-8.06 2.15 0 4.18.84 5.7 2.36a7.994 7.994 0 0 1 2.36 5.7c0 4.45-3.62 8.05-8.06 8.05zm4.41-6.03c-.24-.12-1.43-.71-1.65-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.01-.37.11-.49.11-.11.24-.28.36-.43.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.33-.76-1.82-.2-.48-.41-.41-.56-.42l-.48-.01c-.16 0-.43.06-.66.31-.22.24-.86.84-.86 2.05s.88 2.38 1 2.54c.12.16 1.73 2.65 4.2 3.71.59.25 1.05.4 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.43-.59 1.63-1.15.2-.57.2-1.05.14-1.15-.06-.11-.22-.17-.46-.29z"></path>
+</svg>
+<span>Pedir por WhatsApp</span>
+</a>
+</div>
+</div>
+</header>
+<main>
+<!-- ==========================================
+         2. Hero Section (Split Layout)
+    =========================================== -->
+<section class="w-full max-w-[1200px] mx-auto px-gutter pt-8 pb-16 md:pt-14 md:pb-24">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<!-- Left Side: Copy and CTAs -->
+<div class="lg:col-span-7 flex flex-col items-start gap-6">
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-high text-primary font-label-caps text-label-caps">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+<span>Clavería, Azcapotzalco</span>
+</div>
+<h1 class="font-display-lg text-4xl sm:text-5xl md:text-6xl lg:text-display-lg text-primary tracking-tight font-bold">
+            Dulces de allá, caja armada aquí
+          </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+            Traemos tus golosinas favoritas del otro lado para armarte la cajita más mona de Clavería. Tú eliges qué se te antoja, nosotros te lo empacamos con mucho cariño.
+          </p>
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2 w-full sm:w-auto">
+<a class="inline-flex justify-center items-center gap-3 bg-primary text-on-primary font-label-caps text-label-caps px-8 py-4 rounded-full transition-all duration-200 hover:bg-on-surface-variant active:scale-95 shadow-md" href="https://api.whatsapp.com/send?phone=525553418920&amp;text=Hola!%20Quiero%20pedir%20mi%20caja%20de%20dulces" rel="noopener noreferrer" target="_blank">
+<span>Pide tu caja</span>
+<svg class="w-4 h-4 text-tertiary fill-current" viewbox="0 0 24 24">
+<path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</a>
+<a class="inline-flex justify-center items-center gap-2 bg-surface-container-low text-primary font-label-caps text-label-caps px-6 py-4 rounded-full border border-outline-variant/60 hover:bg-white transition-all duration-200" href="#catalogo">
+<span>Explorar catálogo</span>
+</a>
+</div>
+<div class="flex items-center gap-3 pt-2 text-on-surface-variant font-body-md text-sm">
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-secondary-container text-primary">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24">
+<polyline points="20 6 9 17 4 12"></polyline>
+</svg>
+</span>
+<span class="font-semibold text-primary">Entrega rápida en CDMX y envíos a todo México</span>
+</div>
+</div>
+<!-- Right Side: Arch Photo Container + Turquoise Sticker Badge -->
+<div class="lg:col-span-5 relative flex justify-center">
+<div class="w-full max-w-[380px] rounded-t-full aspect-[4/5] overflow-hidden bg-surface-container-high border-4 border-white shadow-xl relative">
+<img class="w-full h-full object-cover object-center" data-alt="An enticing, vibrant custom gift box overflowing with colorful pastel American candies, neon gummy strips, artisanal chocolate bars, and a chilled retro soda can nestled in crinkly pink paper shreds. Bright, soft photographic studio lighting highlights the glossy textures and playful candy colors against a clean, warm background. The aesthetic reflects a joyous, modern confectionery boutique with cheerful tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbLnaQfcMPw_xVYReBU-lkC8uLxDL_YGMSyaeAkonSPA4lqeIvFdaWqZjEN95FnOf3fHFtXZBXMKbTxHaPNM0N1aKzuk7Q7AEAnRrGneWGBSh231uTVUVHyHvhBuTTJgI5P0-kiEic6CYTn1GlK9dqvvScfG1r4XK-t9AZA03-Ia8oAnQMZ486-wExSV9PnRHOPdCyeHp18ZYgvp75Omggm4kIveDiANYcQJb0-FPLmfSBYjbfB6EkcA5ylaMOniHe2LJzxv1lYfCs"/>
+</div>
+<!-- Floating Turquoise Sticker Badge -->
+<div class="absolute -bottom-4 -left-2 md:-left-6 w-28 h-28 rounded-full bg-[#35C4E6] flex items-center justify-center text-center p-2 font-bold text-sm text-[#14213D] shadow-md rotate-12 select-none border-2 border-white">
+<div class="leading-tight font-display-lg font-bold">
+              Importados<br/>de EE. UU.
+            </div>
+</div>
+</div>
+</div>
+</section>
+<!-- ==========================================
+         3. About ('Nosotros')
+    =========================================== -->
+<section class="w-full max-w-[1200px] mx-auto px-gutter py-16 md:py-24" id="nosotros">
+<div class="bg-surface-container-low rounded-3xl p-8 md:p-14 border border-outline-variant/40">
+<div class="max-w-2xl mb-12">
+<span class="inline-block text-tertiary bg-primary font-label-caps text-xs px-3.5 py-1 rounded-full mb-3 uppercase tracking-wider font-bold">
+            Nuestra historia
+          </span>
+<h2 class="font-headline-md text-3xl sm:text-4xl text-primary font-bold tracking-tight mb-4">
+            Un pedacito dulce en el corazón de Azcapotzalco
+          </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+            Caramelo Pop nació de paseos nostálgicos y antojos compartidos. Nos fascinan los empaques llamativos, el olor a crema de maní recién abierta, las gomitas que te hacen fruncir la nariz y esas sodas burbujeantes que solo veíamos en series. Decidimos abrir un rinconcito en Clavería para que no tengas que viajar lejos ni esperar semanas: aquí armas tu cajita con tus caprichos favoritos listos para saborear.
+          </p>
+</div>
+<!-- 3 Rounded Pill Feature Highlights -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-white rounded-full py-5 px-7 flex items-center gap-4 shadow-sm border border-outline-variant/30 transition-transform duration-200 hover:-translate-y-0.5">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center shrink-0 text-primary">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+</svg>
+</div>
+<span class="font-bold text-primary font-headline-md text-base">100% auténticos y fresquecitos</span>
+</div>
+<div class="bg-white rounded-full py-5 px-7 flex items-center gap-4 shadow-sm border border-outline-variant/30 transition-transform duration-200 hover:-translate-y-0.5">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center shrink-0 text-primary">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"></path>
+</svg>
+</div>
+<span class="font-bold text-primary font-headline-md text-base">Arma tu mix a tu antojo</span>
+</div>
+<div class="bg-white rounded-full py-5 px-7 flex items-center gap-4 shadow-sm border border-outline-variant/30 transition-transform duration-200 hover:-translate-y-0.5">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center shrink-0 text-primary">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+<path d="M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.05 0-1.96.54-2.5 1.35l-.5.65-.5-.65C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1h-2l1.3-1.73C14.47 4.1 14.72 4 15 4zm-6 0c.28 0 .53.1.7.27L11 6H9c-.55 0-1-.45-1-1s.45-1 1-1zm11 15H4V8h16v11z"></path>
+</svg>
+</div>
+<span class="font-bold text-primary font-headline-md text-base">Empaque listo para regalo</span>
+</div>
+</div>
+</div>
+</section>
+<!-- ==========================================
+         4. Catalog ('Catálogo de golosinas')
+         STRICT: 4 alternating full-width bands
+    =========================================== -->
+<section class="w-full max-w-[1200px] mx-auto px-gutter py-16 md:py-24" id="catalogo">
+<div class="text-center max-w-xl mx-auto mb-16">
+<span class="inline-block text-tertiary bg-primary font-label-caps text-xs px-3.5 py-1 rounded-full mb-3 uppercase tracking-wider font-bold">
+          Nuestras delicias
+        </span>
+<h2 class="font-headline-md text-3xl sm:text-4xl text-primary font-bold tracking-tight">
+          Catálogo de golosinas
+        </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">
+          Explora los sabores más pedidos y agrega tus favoritos a tu pedido directo por WhatsApp.
+        </p>
+</div>
+<!-- Band 1: Image Left, Text Right -->
+<div class="bg-surface-container-low rounded-3xl p-8 md:p-12 mb-8 flex flex-col md:flex-row items-center gap-10 border border-outline-variant/30">
+<div class="w-full md:w-1/2 flex justify-center">
+<div class="w-full max-w-sm rounded-t-full aspect-square overflow-hidden bg-surface-container-high border-4 border-white shadow-md relative">
+<img class="w-full h-full object-cover" data-alt="Rich chocolate confectionery showcase featuring thick peanut butter bars, decadent white chocolate wafers, and wrapped imported caramel chocolate bars placed artistically. High-key natural lighting reveals smooth gloss and creamy textured fillings. Soft pastel background with subtle candy sprinkles reinforcing a friendly, high-quality sweet shop atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkAb2XLdIE1hLTBfnZJb0zH1hTZryJ7_McZ0syq6GuU1nToabYXzo8AKHp7Vv3zGgZUNMYlgX2y1xqC2-fVPZtNhChuYFuFCxBYqDBSl2ag5OaQOaWpeYEadl1gmxaVsc4PxPcMG3RCX5iEfC2Bgqs2EOkPdA0M6Rz-MTiXWumND5E39kHU6yzCes9-s1Lt_FPRVBMcGtzchj6yrFHgjygqaXfabvY3Ox2YjdUo6v8211s9ND2cr1eaukExeEYRxThm2jVRoNvkD7r"/>
+</div>
+</div>
+<div class="w-full md:w-1/2 flex flex-col items-start gap-4">
+<div class="flex items-center gap-3">
+<span class="text-tertiary bg-primary px-3 py-1 rounded-full text-xs font-label-caps font-bold">01</span>
+<span class="font-label-caps text-label-caps text-primary uppercase font-bold">Favoritos de siempre</span>
+</div>
+<h3 class="font-headline-md text-2xl sm:text-3xl text-primary font-bold">
+            Chocolates y barras cremosas
+          </h3>
+<p class="font-body-md text-on-surface-variant">
+            Barras de crema de cacahuate, tabletas rellenas, obleas crujientes y chispas de mantequilla. ¡El dulce abrazo que te mereces!
+          </p>
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-4 py-1.5 rounded-full bg-white text-primary text-xs font-semibold border border-outline-variant/40">Crema de maní</span>
+<span class="px-4 py-1.5 rounded-full bg-white text-primary text-xs font-semibold border border-outline-variant/40">Caramelo salado</span>
+<span class="px-4 py-1.5 rounded-full bg-white text-primary text-xs font-semibold border border-outline-variant/40">Chocolate blanco</span>
+</div>
+<div class="flex items-center gap-4 pt-4">
+<span class="inline-block px-5 py-2 rounded-full bg-secondary-container text-primary font-bold font-headline-md text-sm">
+              Desde $45 MXN
+            </span>
+<a class="text-primary hover:underline font-bold text-sm" href="https://api.whatsapp.com/send?phone=525553418920&amp;text=Hola!%20Me%20interesan%20los%20Chocolates%20y%20barras%20cremosas" rel="noopener noreferrer" target="_blank">
+              Pedir este tipo →
+            </a>
+</div>
+</div>
+</div>
+<!-- Band 2: Text Left, Image Right -->
+<div class="bg-white rounded-3xl p-8 md:p-12 mb-8 flex flex-col-reverse md:flex-row items-center gap-10 border border-outline-variant/30 shadow-sm">
+<div class="w-full md:w-1/2 flex flex-col items-start gap-4">
+<div class="flex items-center gap-3">
+<span class="text-tertiary bg-primary px-3 py-1 rounded-full text-xs font-label-caps font-bold">02</span>
+<span class="font-label-caps text-label-caps text-primary uppercase font-bold">Sensación extrema</span>
+</div>
+<h3 class="font-headline-md text-2xl sm:text-3xl text-primary font-bold">
+            Gomitas aciditas y dulces
+          </h3>
+<p class="font-body-md text-on-surface-variant">
+            De esas que te hacen guiñar el ojo de lo ricas. Tiras confitadas, ositos suaves, aros frutales y sandías con toque cítrico irresistible.
+          </p>
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-4 py-1.5 rounded-full bg-surface-container-low text-primary text-xs font-semibold border border-outline-variant/40">Frutos rojos</span>
+<span class="px-4 py-1.5 rounded-full bg-surface-container-low text-primary text-xs font-semibold border border-outline-variant/40">Cítricos extremos</span>
+<span class="px-4 py-1.5 rounded-full bg-surface-container-low text-primary text-xs font-semibold border border-outline-variant/40">Malvaviscos suaves</span>
+</div>
+<div class="flex items-center gap-4 pt-4">
+<span class="inline-block px-5 py-2 rounded-full bg-secondary-container text-primary font-bold font-headline-md text-sm">
+              Desde $38 MXN
+            </span>
+<a class="text-primary hover:underline font-bold text-sm" href="https://api.whatsapp.com/send?phone=525553418920&amp;text=Hola!%20Me%20interesan%20las%20Gomitas%20aciditas%20y%20dulces" rel="noopener noreferrer" target="_blank">
+              Pedir este tipo →
+            </a>
+</div>
+</div>
+<div class="w-full md:w-1/2 flex justify-center">
+<div class="w-full max-w-sm rounded-[32px] aspect-square overflow-hidden bg-surface-container-high border-4 border-surface-container-low shadow-md relative">
+<img class="w-full h-full object-cover" data-alt="Mouthwatering close-up of colorful translucent sour gummy candies coated in fine sparkling sugar crystals. Vibrant hues of cherry red, lime green, and electric blue scattered gently on a pristine pastel pink tabletop. Soft, bright ambient daylight brings out the bouncy, juicy textures with cheerful gourmet candy aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDG35V0jMoYrpZMWulUgHGix2nMiukpS0PIHFyHQRVubX2YqRuVW73TOG9K8PdcryTTeCe9jgEXmBJ4-kQOq26E_I7XBliQbar7JroEEoi6xbV6JLfgrQcZA4_GhJVsExvYxtH9PzDwKGpIwr89qvYAb9MQwdfzv9r8FrpPvny5X_iR2HQMKGZth2u-wxYCOgTXNezb8zbLKZp7nBx-0cxwPvGXE4yilpYka_wOPxtkUjdS2oH6iZPCyCwbORgbsFldRkmru9_qyDB8"/>
+</div>
+</div>
+</div>
+<!-- Band 3: Image Left, Text Right -->
+<div class="bg-surface-container-low rounded-3xl p-8 md:p-12 mb-8 flex flex-col md:flex-row items-center gap-10 border border-outline-variant/30">
+<div class="w-full md:w-1/2 flex justify-center">
+<div class="w-full max-w-sm rounded-t-full aspect-square overflow-hidden bg-surface-container-high border-4 border-white shadow-md relative">
+<img class="w-full h-full object-cover" data-alt="Retro collectible American soda cans arranged on a chilled pastel surface, showcasing refreshing frosty water droplets on vintage labels. Flavors like grape pop, creamy vanilla, and crisp wild cherry with lively typography. Cheerful, clean lighting accentuates metallic sheen and bubbly nostalgia with modern artisanal charm." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVTRBbAfA1j4OtQi_4SySf_hPBx9gc8F78PSQrURLecCR_mIrPih12lHlBLwhQKD6LG97zZHxfPRuOGIQoMEp-3kgG9CVLTo6JHUqmGyWRkCfgQ3-wjQ_-UMepBlDwIlPYrFfizxuHToAUTmdIuM1MY6107aA4CaxEJHU8vxVUpPTHdeT5ikiZlkcM8Hw43j7iXAertQJNz_JBNivI5j7vx6X1OhkT7jUXs3OIOtj7CK9oOUkhrEadRyD8MIM3FzNumgavIZ5qsrOB"/>
+</div>
+</div>
+<div class="w-full md:w-1/2 flex flex-col items-start gap-4">
+<div class="flex items-center gap-3">
+<span class="text-tertiary bg-primary px-3 py-1 rounded-full text-xs font-label-caps font-bold">03</span>
+<span class="font-label-caps text-label-caps text-primary uppercase font-bold">Burbujas retro</span>
+</div>
+<h3 class="font-headline-md text-2xl sm:text-3xl text-primary font-bold">
+            Sodas y refrescos de lata pop
+          </h3>
+<p class="font-body-md text-on-surface-variant">
+            Sabores de uva helada, vainilla cremosa, cereza silvestre y durazno en burbujas cristalinas directo del refri.
+          </p>
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-4 py-1.5 rounded-full bg-white text-primary text-xs font-semibold border border-outline-variant/40">Refresco de uva</span>
+<span class="px-4 py-1.5 rounded-full bg-white text-primary text-xs font-semibold border border-outline-variant/40">Cherry cola</span>
+<span class="px-4 py-1.5 rounded-full bg-white text-primary text-xs font-semibold border border-outline-variant/40">Cream soda</span>
+</div>
+<div class="flex items-center gap-4 pt-4">
+<span class="inline-block px-5 py-2 rounded-full bg-secondary-container text-primary font-bold font-headline-md text-sm">
+              Desde $55 MXN
+            </span>
+<a class="text-primary hover:underline font-bold text-sm" href="https://api.whatsapp.com/send?phone=525553418920&amp;text=Hola!%20Me%20interesan%20las%20Sodas%20y%20refrescos%20pop" rel="noopener noreferrer" target="_blank">
+              Pedir este tipo →
+            </a>
+</div>
+</div>
+</div>
+<!-- Band 4: Text Left, Image Right -->
+<div class="bg-white rounded-3xl p-8 md:p-12 mb-8 flex flex-col-reverse md:flex-row items-center gap-10 border border-outline-variant/30 shadow-sm">
+<div class="w-full md:w-1/2 flex flex-col items-start gap-4">
+<div class="flex items-center gap-3">
+<span class="text-tertiary bg-primary px-3 py-1 rounded-full text-xs font-label-caps font-bold">04</span>
+<span class="font-label-caps text-label-caps text-primary uppercase font-bold">Para maratonear</span>
+</div>
+<h3 class="font-headline-md text-2xl sm:text-3xl text-primary font-bold">
+            Snacks salados y crujientes
+          </h3>
+<p class="font-body-md text-on-surface-variant">
+            Palomitas con queso extra, totopos horneados con especias de allá y pretzels cubiertos de delicia para tus tardes de maratón.
+          </p>
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-4 py-1.5 rounded-full bg-surface-container-low text-primary text-xs font-semibold border border-outline-variant/40">Queso cheddar picante</span>
+<span class="px-4 py-1.5 rounded-full bg-surface-container-low text-primary text-xs font-semibold border border-outline-variant/40">Pretzels cubiertos</span>
+<span class="px-4 py-1.5 rounded-full bg-surface-container-low text-primary text-xs font-semibold border border-outline-variant/40">Maíz inflado</span>
+</div>
+<div class="flex items-center gap-4 pt-4">
+<span class="inline-block px-5 py-2 rounded-full bg-secondary-container text-primary font-bold font-headline-md text-sm">
+              Desde $42 MXN
+            </span>
+<a class="text-primary hover:underline font-bold text-sm" href="https://api.whatsapp.com/send?phone=525553418920&amp;text=Hola!%20Me%20interesan%20los%20Snacks%20salados%20y%20crujientes" rel="noopener noreferrer" target="_blank">
+              Pedir este tipo →
+            </a>
+</div>
+</div>
+<div class="w-full md:w-1/2 flex justify-center">
+<div class="w-full max-w-sm rounded-[32px] aspect-square overflow-hidden bg-surface-container-high border-4 border-surface-container-low shadow-md relative">
+<img class="w-full h-full object-cover" data-alt="Gourmet snack collection of golden cheesy puffed corn bites, sea salt twisted pretzels dipped in creamy sweet frosting, and spicy tortilla crisps. Staged in charming pastel ceramic bowls under warm diffused sunlight. The composition celebrates crunch, comfort, and delightful snacking rituals in a stylish light pink setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFDK_Y3fl4wCxmz79dRUzvgFXMUzidA-Eb1nlGG2-8YOsT1hx4X8mGASF8cwznCE7tKge6zBn8kcuGOk_9NcwYqJcqrn0Ngwtc9-oKGZvoaJtjR88BIsPrjhOCSd8bQf6hdNT6VHwciPZ5NOgxIzcIwN6Kc9frI2Rh_hG5o4svB6HiElcROHRcsRhndEQbxMJkFSVimAQiTEDqylBgh60Z9y9C7pesER4jeoFPq5gB0GO_7dKYTas6J39o9Li0BMZ-nkCvcv1afga2"/>
+</div>
+</div>
+</div>
+</section>
+<!-- ==========================================
+         5. Gallery ('Galería de antojos')
+         STRICT: Asymmetric editorial mosaic
+    =========================================== -->
+<section class="w-full max-w-[1200px] mx-auto px-gutter py-16 md:py-24" id="galeria">
+<div class="text-center max-w-xl mx-auto mb-16">
+<span class="inline-block text-tertiary bg-primary font-label-caps text-xs px-3.5 py-1 rounded-full mb-3 uppercase tracking-wider font-bold">
+          Momentos felices
+        </span>
+<h2 class="font-headline-md text-3xl sm:text-4xl text-primary font-bold tracking-tight">
+          Galería de antojos
+        </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">
+          Echa un vistazo a cómo preparamos cada cajita y los tesoros que esperan por ti.
+        </p>
+</div>
+<!-- Asymmetric Editorial Mosaic Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+<!-- Item 1: Arch-shaped tall card (rounded-t-full) -->
+<div class="md:col-span-4 rounded-t-full rounded-b-3xl overflow-hidden bg-white border-4 border-white shadow-md relative group h-[440px]">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Handcrafted artisanal candy gift box tied with a cheerful pastel ribbon, showing vibrant imported sweets neatly nestled in decorative crinkle paper. Illuminated by soft studio daylight highlighting the immaculate packaging presentation. High-key aesthetic with delightful pink and turquoise accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSx3i_XEBceeYsgYszlUMGdrDe_8jMF2TExEdET6Gnsj8zipACq6iBop9OHr6N2eUVI5x0oM_gzYoZkkD5Ca6kzKsIDNiETK1gIOY5oskXs5tBOxiXyA1liWqR-fdam9iu6PUeNJd1e88huzMuQjhCuz9PkWixzo4yAw3UOdtHIgIVYF0Aq6yQjfHwUy1bNc2C3NbYjwF5NMF0OBk_ZuIwOSHl19Uk_R0qYz_9kxMB4YOb5LXECTiwKz03i248NtrLkmWdHLX2gztq"/>
+<div class="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-2xl text-center">
+<span class="font-headline-md font-bold text-sm text-primary">Caja especial de cumpleaños</span>
+</div>
+</div>
+<!-- Item 2: Large circular photo card (rounded-full aspect-square) -->
+<div class="md:col-span-4 flex justify-center">
+<div class="w-full max-w-[340px] aspect-square rounded-full overflow-hidden bg-surface-container-high border-4 border-white shadow-lg relative group">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Top-down circular view of an array of rainbow sour gummies, gummy worms, and citrus belts forming a colorful kaleidoscopic swirl. Soft bright lighting brings out glistening sugar crystal details. A fun, whimsical presentation reflecting the joyful, playful vibe of Caramelo Pop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhQjA7x1nspVQCi14cY8nbpfzQzlz6ANBUUSNJYFdr9u99EiiF6O3mb91rP8mOxol9PSx0vDL9lgZgRD-M9QF_7UxC5CIla6C9doERDaqyk6u0w7mP4eSDZxz2dKhkVEBTpQo00YE_YpkcGoml5R131-RxrcHFICd1OWxYdvOJYgIMx99YP2uQ8IJugQxWiYr8r8MT_aeL_1uvN_z2pyELl9ui4bAa1qhGgfWqAPdA2fFSZqHms29kMl6dKelfrAWHXjYqJWJSTMg6"/>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<span class="bg-tertiary text-primary font-headline-md font-bold text-xs px-4 py-1.5 rounded-full shadow-md">
+                ¡Puro sabor ácido!
+              </span>
+</div>
+</div>
+</div>
+<!-- Item 3: Tall rounded rectangle card (rounded-3xl h-[380px]) -->
+<div class="md:col-span-4 rounded-3xl overflow-hidden bg-white border-4 border-white shadow-md relative group h-[380px]">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Chilled retro American soda cans placed in a soft pastel pink cooler with clean clear ice cubes glistening in sunlight. Eye-catching vintage typefaces, condensation beads running down colorful aluminum cans. Modern, cheerful commercial product styling with gentle tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOa03MdH3GDqHCKoGTno7J3qiIVw-dugs_dZMN-nE6PBl-qVQ4zf79MniAH3NWauU6v-1OYInRKy-WVzJD9xOsRM8s1SJE9hgzf4ug4vD7xkdPV2jJFefvZq9Y2ahssGPc3C5jz60mW0vqPdv3_RfQwu_AAEC87c5jFdJ9VDZ6cZfcLYMy3TWJ7V0p5nX7Q50eJMyOI6cDcZzpurirGFEkwIIxTj5_Wh7JA-Buzgs_ckRIQePAv4ISFBCRRf05m1nwTwUpfcGrH93e"/>
+<div class="absolute top-4 right-4 bg-primary text-tertiary font-label-caps text-xs px-3 py-1 rounded-full font-bold">
+            Edición limitada
+          </div>
+</div>
+<!-- Item 4: Wide horizontal pill-card showing personalized gift boxes with ribbons -->
+<div class="md:col-span-8 rounded-[32px] overflow-hidden bg-white border-4 border-white shadow-md relative group h-[260px]">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A row of customized pastel gift boxes with satin ribbons and personalized handwritten gift cards ready for neighborhood delivery. Soft, warm daylight spills over the neat arrangement in a welcoming boutique candy store. Refined, tactile, and thoroughly heartwarming ambiance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtYivp0RdWHME8jhN3gRtcnoFSEAdsxCZaF96zsDuGYTJziTk7iy7EbnoJJV3S2CfzD1cdeuNu3bTLJ9b1xaAU6qgJZE6a26GJ1NF52_wlfGpD1KDMlSMF_4sHEVBS7SjSyOmFq1obLhLzwKdQ8E4hQJEFKetdZM1O5oyV4SCMJ3GICRkft_iBE73lSCRkTPP5LewSLwFrlNM4swOnTTTU7g5VvTaLUjxMJvZXC-luFgaYQLCuIXgxHmZr59AK-9Lz1uCQ2B80KNGB"/>
+<div class="absolute bottom-4 left-6 bg-white/95 backdrop-blur-sm px-5 py-2 rounded-full">
+<p class="font-headline-md font-bold text-sm text-primary">Listas para sorprender a quien más quieres</p>
+</div>
+</div>
+<!-- Item 5: Compact arch card showing party snack favors -->
+<div class="md:col-span-4 rounded-t-full rounded-b-3xl overflow-hidden bg-white border-4 border-white shadow-md relative group h-[260px]">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Individual colorful party favor snack bags filled with imported cookies, candy necklaces, and sour drops, tied with pastel blue twine. Crisp, high-key studio lighting emphasizes playful details and party festive joy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvh-Dg23-tlU-FNCX0EMDHoeiFK_Pw-N3dQGtX1vSzBEv03u76lvc7KD7vNqa5DLPgcOdiGCAYwtp69pEjaSTrTbTA17Mlf6ha8XOysae67dnrwIt7If-1ClJ5Q-rYlTPs9qmjK2-eu34AbdLTLjSN1oJeNTMUW2fW1bF9GxWlxWlNanTwzWZgbJiQgPaU8AoYJFJHovvE5eqlijyJP8OIzyX8mnKf4xP9Gm-leioElnFaz9GNbCAVAqfoHN4BVqkN5XoRHmnSM0pY"/>
+<div class="absolute bottom-3 left-3 right-3 text-center bg-white/90 backdrop-blur-sm py-1.5 px-3 rounded-full">
+<span class="font-headline-md text-xs font-bold text-primary">Para tus eventos y mesas</span>
+</div>
+</div>
+</div>
+</section>
+<!-- ==========================================
+         6. Testimonials ('Lo que dicen los vecinos')
+         STRICT: One large featured quote + two smaller tinted cards
+    =========================================== -->
+<section class="w-full max-w-[1200px] mx-auto px-gutter py-16 md:py-24">
+<div class="text-center max-w-xl mx-auto mb-16">
+<span class="inline-block text-tertiary bg-primary font-label-caps text-xs px-3.5 py-1 rounded-full mb-3 uppercase tracking-wider font-bold">
+          Comunidad dulce
+        </span>
+<h2 class="font-headline-md text-3xl sm:text-4xl text-primary font-bold tracking-tight">
+          Lo que dicen los vecinos golosos
+        </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">
+          La alegría de abrir una cajita de Caramelo Pop en voz de quienes ya la probaron.
+        </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+<!-- Large Featured Quote Card -->
+<div class="lg:col-span-7 bg-white rounded-3xl p-8 md:p-12 border border-outline-variant/40 shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="text-6xl md:text-8xl font-display-lg text-surface-container-high leading-none absolute top-4 right-6 select-none pointer-events-none">
+            “
+          </div>
+<div class="relative z-10">
+<div class="flex items-center gap-1 text-tertiary mb-6">
+<!-- Star SVGs -->
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+</div>
+<p class="font-body-lg text-xl md:text-2xl text-primary font-medium leading-relaxed mb-8">
+              “Pedí una caja surtida para el cumple de mi hermano con puras gomitas de sandía y sodas de cereza. Llegó impecable a Clavería y todos en la fiesta querían saber dónde los conseguí. ¡Son los mejores!”
+            </p>
+</div>
+<div class="flex items-center gap-4 relative z-10 border-t border-outline-variant/30 pt-6">
+<div class="w-12 h-12 rounded-full bg-surface-container-high text-primary font-headline-md font-bold flex items-center justify-center">
+              MR
+            </div>
+<div>
+<h4 class="font-headline-md font-bold text-primary text-base">Mariana R.</h4>
+<p class="text-on-surface-variant text-sm">Vecina de Azcapotzalco</p>
+</div>
+</div>
+</div>
+<!-- Two Smaller Tinted Cards -->
+<div class="lg:col-span-5 flex flex-col gap-6 justify-between">
+<!-- Small Card 1 -->
+<div class="bg-surface-container-low rounded-3xl p-6 md:p-8 border border-outline-variant/30 shadow-sm flex flex-col justify-between flex-1">
+<p class="font-body-md text-primary text-base leading-relaxed mb-6">
+              “Los chocolates con crema de cacahuate son adictivos. Siempre que paso por la tienda salgo con dos bolsitas.”
+            </p>
+<div class="flex items-center gap-3 border-t border-outline-variant/20 pt-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-primary font-headline-md font-bold text-sm flex items-center justify-center">
+                CT
+              </div>
+<div>
+<h4 class="font-headline-md font-bold text-primary text-sm">Carlos T.</h4>
+<p class="text-on-surface-variant text-xs">Lindavista</p>
+</div>
+</div>
+</div>
+<!-- Small Card 2 -->
+<div class="bg-surface-container-low rounded-3xl p-6 md:p-8 border border-outline-variant/30 shadow-sm flex flex-col justify-between flex-1">
+<p class="font-body-md text-primary text-base leading-relaxed mb-6">
+              “La atención por WhatsApp es súper rápida y te recomiendan combinaciones bien ricas para regalar.”
+            </p>
+<div class="flex items-center gap-3 border-t border-outline-variant/20 pt-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-primary font-headline-md font-bold text-sm flex items-center justify-center">
+                SM
+              </div>
+<div>
+<h4 class="font-headline-md font-bold text-primary text-sm">Sofía M.</h4>
+<p class="text-on-surface-variant text-xs">San Álvaro</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ==========================================
+         7. FAQ ('Preguntas frecuentes')
+         STRICT: Single centered column (max-w-3xl),
+         all answers visible (no collapsed accordions)
+    =========================================== -->
+<section class="w-full max-w-[1200px] mx-auto px-gutter py-16 md:py-24" id="preguntas">
+<div class="text-center max-w-xl mx-auto mb-16">
+<span class="inline-block text-tertiary bg-primary font-label-caps text-xs px-3.5 py-1 rounded-full mb-3 uppercase tracking-wider font-bold">
+          Dudas resueltas
+        </span>
+<h2 class="font-headline-md text-3xl sm:text-4xl text-primary font-bold tracking-tight">
+          Preguntas frecuentes
+        </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">
+          Todo lo que quieres saber sobre cómo pedir, recoger o enviar tus dulces.
+        </p>
+</div>
+<div class="max-w-3xl mx-auto flex flex-col gap-4">
+<!-- FAQ Item 1 -->
+<div class="bg-white/80 rounded-3xl p-6 md:p-8 border border-outline-variant/30 shadow-sm">
+<div class="flex items-start gap-4">
+<span class="w-8 h-8 rounded-full bg-secondary-container text-primary font-bold font-headline-md flex items-center justify-center shrink-0 text-sm mt-0.5">
+              1
+            </span>
+<div>
+<h3 class="font-headline-md text-lg sm:text-xl text-primary font-bold mb-2">
+                ¿Cómo puedo armar mi cajita personalizada?
+              </h3>
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+                Solo escríbenos por WhatsApp con los dulces o sabores que más se te antojen (chocolates, gomitas, sodas o botanas). Te mandamos fotos de lo que hay en tienda y te preparamos la caja con la dedicatoria que quieras.
+              </p>
+</div>
+</div>
+</div>
+<!-- FAQ Item 2 -->
+<div class="bg-white/80 rounded-3xl p-6 md:p-8 border border-outline-variant/30 shadow-sm">
+<div class="flex items-start gap-4">
+<span class="w-8 h-8 rounded-full bg-secondary-container text-primary font-bold font-headline-md flex items-center justify-center shrink-0 text-sm mt-0.5">
+              2
+            </span>
+<div>
+<h3 class="font-headline-md text-lg sm:text-xl text-primary font-bold mb-2">
+                ¿Hacen entregas en Azcapotzalco y resto de CDMX?
+              </h3>
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+                ¡Sí! Puedes pasar a recoger tu pedido directamente a nuestra tienda en Clavería, o te lo enviamos por mensajería local a cualquier punto de la Ciudad de México y Área Metropolitana. También hacemos envíos a toda la República.
+              </p>
+</div>
+</div>
+</div>
+<!-- FAQ Item 3 -->
+<div class="bg-white/80 rounded-3xl p-6 md:p-8 border border-outline-variant/30 shadow-sm">
+<div class="flex items-start gap-4">
+<span class="w-8 h-8 rounded-full bg-secondary-container text-primary font-bold font-headline-md flex items-center justify-center shrink-0 text-sm mt-0.5">
+              3
+            </span>
+<div>
+<h3 class="font-headline-md text-lg sm:text-xl text-primary font-bold mb-2">
+                ¿Los dulces son auténticos de Estados Unidos?
+              </h3>
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+                Totalmente. Traemos lotes continuos de importación directa para asegurar que los productos estén frescos, en su empaque original y en óptimas condiciones para disfrutar.
+              </p>
+</div>
+</div>
+</div>
+<!-- FAQ Item 4 -->
+<div class="bg-white/80 rounded-3xl p-6 md:p-8 border border-outline-variant/30 shadow-sm">
+<div class="flex items-start gap-4">
+<span class="w-8 h-8 rounded-full bg-secondary-container text-primary font-bold font-headline-md flex items-center justify-center shrink-0 text-sm mt-0.5">
+              4
+            </span>
+<div>
+<h3 class="font-headline-md text-lg sm:text-xl text-primary font-bold mb-2">
+                ¿Tienen opciones para eventos, mesas de dulces o piñatas?
+              </h3>
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+                Claro que sí. Cuéntanos cuántos invitados tienes y armamos bolsitas individuales o paquetes a granel con temática colorida y divertida.
+              </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ==========================================
+         8. Contact ('Ven a visitarnos o escríbenos')
+         STRICT: Direct pill buttons, NO forms/inputs
+    =========================================== -->
+<section class="w-full max-w-[1200px] mx-auto px-gutter py-16 md:py-24" id="contacto">
+<div class="bg-surface-container-low rounded-3xl p-8 md:p-14 border border-outline-variant/40">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<div class="lg:col-span-7 flex flex-col items-start gap-6">
+<span class="inline-block text-tertiary bg-primary font-label-caps text-xs px-3.5 py-1 rounded-full uppercase tracking-wider font-bold">
+              Estamos cerca de ti
+            </span>
+<h2 class="font-headline-md text-3xl sm:text-4xl text-primary font-bold tracking-tight">
+              Ven a visitarnos o escríbenos
+            </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+              Pasa a saludarnos por nuestra tienda en Clavería o contáctanos directamente para apartar tus golosinas antes de que se acaben.
+            </p>
+<!-- Direct Contact Pill Actions -->
+<div class="flex flex-wrap gap-4 pt-2">
+<a class="inline-flex items-center gap-3 bg-primary text-on-primary font-label-caps text-label-caps px-7 py-4 rounded-full transition-all duration-200 hover:bg-on-surface-variant active:scale-95 shadow-md" href="https://api.whatsapp.com/send?phone=525553418920&amp;text=Hola%20Caramelo%20Pop!%20Quiero%20hacer%20un%20pedido" rel="noopener noreferrer" target="_blank">
+<svg class="w-5 h-5 text-tertiary fill-current" viewbox="0 0 24 24">
+<path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm0 18.06c-1.5 0-2.97-.4-4.24-1.16l-.3-.18-3.12.82.83-3.04-.2-.31a8.03 8.03 0 0 1-1.23-4.28c0-4.44 3.61-8.06 8.06-8.06 2.15 0 4.18.84 5.7 2.36a7.994 7.994 0 0 1 2.36 5.7c0 4.45-3.62 8.05-8.06 8.05zm4.41-6.03c-.24-.12-1.43-.71-1.65-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.01-.37.11-.49.11-.11.24-.28.36-.43.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.33-.76-1.82-.2-.48-.41-.41-.56-.42l-.48-.01c-.16 0-.43.06-.66.31-.22.24-.86.84-.86 2.05s.88 2.38 1 2.54c.12.16 1.73 2.65 4.2 3.71.59.25 1.05.4 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.43-.59 1.63-1.15.2-.57.2-1.05.14-1.15-.06-.11-.22-.17-.46-.29z"></path>
+</svg>
+<span>Mándanos un WhatsApp</span>
+</a>
+<a class="inline-flex items-center gap-2 bg-white text-primary font-label-caps text-label-caps px-6 py-4 rounded-full border border-outline-variant/60 hover:bg-surface-container-high transition-colors" href="tel:5553418920">
+<svg class="w-4 h-4 text-primary fill-current" viewbox="0 0 24 24">
+<path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"></path>
+</svg>
+<span>Llámanos: (55) 5341-8920</span>
+</a>
+<a class="inline-flex items-center gap-2 bg-white text-primary font-label-caps text-label-caps px-6 py-4 rounded-full border border-outline-variant/60 hover:bg-surface-container-high transition-colors" href="mailto:hola@caramelopop.mx">
+<svg class="w-4 h-4 text-primary fill-current" viewbox="0 0 24 24">
+<path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"></path>
+</svg>
+<span>hola@caramelopop.mx</span>
+</a>
+</div>
+<!-- Address and Hours Info Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full pt-4">
+<div class="bg-white p-5 rounded-2xl border border-outline-variant/30">
+<div class="flex items-center gap-2 mb-2 text-primary font-bold font-headline-md text-sm">
+<svg class="w-4 h-4 text-tertiary fill-current" viewbox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path></svg>
+<span>Ubicación</span>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed">
+                  Calle Palestina esq. Av. Clavería, Col. Clavería, Azcapotzalco, 02080, Ciudad de México.
+                </p>
+</div>
+<div class="bg-white p-5 rounded-2xl border border-outline-variant/30">
+<div class="flex items-center gap-2 mb-2 text-primary font-bold font-headline-md text-sm">
+<svg class="w-4 h-4 text-tertiary fill-current" viewbox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path></svg>
+<span>Horario de tienda</span>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed">
+                  Lunes a Sábado: 11:00 am – 8:30 pm<br/>
+                  Domingos: 12:00 pm – 6:00 pm
+                </p>
+</div>
+</div>
+</div>
+<!-- Playful Location Card with Arch Illustration -->
+<div class="lg:col-span-5 flex justify-center">
+<div class="w-full max-w-sm rounded-t-full aspect-[4/5] overflow-hidden bg-white border-4 border-white shadow-xl relative">
+<img class="w-full h-full object-cover" data-alt="Charming exterior facade of a boutique confectionery shop located on a leafy corner of Claveria, Azcapotzalco, Mexico City. The storefront features a soft pastel pink sign with Caramelo Pop typography, clean glass windows displaying colorful candy stacks, and warm interior lighting in pleasant daytime atmosphere." data-location="Ciudad de México" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAU-z2uJxjf28DS9xefVd0N0pKjWFBlbtII-9UNMQ66LnTFfPtTPCIil-x3cmX5_6eCmsUxUYJW_D3tkDF3rf7t0h55VAF1_UOjOBatWo_Hw3OZa11MfYOGoCu_b-X-hZFnkkFpouS87jLFpq5ngnCLWqqcNEj7NAAR3qmDwZZN8dPQ8Us3P-EyJWZ9HpVlN5Mtt25TRRs-Zxncuvk9v4mLV782yl-wAObTzqqgNjDBRpz9stDjHY9Y4vIiiT7ofvxRSDUb_pB2l4Eb"/>
+<div class="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md p-4 rounded-2xl text-center shadow-sm">
+<span class="font-headline-md font-bold text-sm text-primary block">¡Ven a conocernos!</span>
+<span class="text-xs text-on-surface-variant">A 3 cuadras del Parque de la China</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- ==========================================
+       9. Footer (Shared Component)
+  =========================================== -->
+<footer class="w-full bg-surface-container-low rounded-t-xl mt-16 border-t border-outline-variant/30">
+<div class="w-full max-w-[1200px] mx-auto px-gutter py-space-lg flex flex-col md:flex-row justify-between items-start gap-gutter">
+<!-- Wordmark and Address info -->
+<div class="flex flex-col gap-3 max-w-sm">
+<a class="font-headline-md text-headline-md font-semibold text-primary tracking-tight" href="#">
+          Caramelo Pop
+        </a>
+<p class="font-body-md text-on-surface-variant text-sm">
+          Dulces de allá, cajitas armadas con amor en el corazón de Clavería, Azcapotzalco.
+        </p>
+<p class="text-xs text-on-surface-variant/80 pt-2">
+          Calle Palestina esq. Av. Clavería, Azcapotzalco, CDMX.
+        </p>
+</div>
+<!-- Links Cluster -->
+<div class="flex flex-col sm:flex-row gap-8 sm:gap-16 font-label-caps text-label-caps text-sm">
+<div class="flex flex-col gap-3">
+<span class="font-bold text-primary font-headline-md text-base">Explora</span>
+<a class="text-on-surface-variant transition-colors duration-200 hover:text-primary hover:underline" href="#nosotros">Nosotros</a>
+<a class="text-on-surface-variant transition-colors duration-200 hover:text-primary hover:underline" href="#catalogo">Catálogo de Dulces</a>
+<a class="text-on-surface-variant transition-colors duration-200 hover:text-primary hover:underline" href="#galeria">Galería de Cajas</a>
+</div>
+<div class="flex flex-col gap-3">
+<span class="font-bold text-primary font-headline-md text-base">Atención</span>
+<a class="text-on-surface-variant transition-colors duration-200 hover:text-primary hover:underline" href="#preguntas">Preguntas Frecuentes</a>
+<a class="text-on-surface-variant transition-colors duration-200 hover:text-primary hover:underline" href="#contacto">Contacto directo</a>
+<a class="text-on-surface-variant transition-colors duration-200 hover:text-primary hover:underline" href="#">Aviso de Privacidad</a>
+</div>
+</div>
+</div>
+<!-- Copyright Bar -->
+<div class="w-full max-w-[1200px] mx-auto px-gutter py-6 border-t border-outline-variant/30 text-center md:text-left text-xs text-on-surface-variant">
+      © 2024 Caramelo Pop. Todos los derechos reservados. Clavería, Azcapotzalco, CDMX.
+    </div>
+</footer>
+</body></html>

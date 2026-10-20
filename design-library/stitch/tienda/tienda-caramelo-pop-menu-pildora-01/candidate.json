@@ -1,0 +1,23 @@
+{
+  "id": "tienda-caramelo-pop-menu-pildora-01",
+  "giro": "tienda",
+  "source": "stitch",
+  "status": "harvested",
+  "tags": [
+    "caramelo-pop",
+    "renovacion",
+    "jardin-suave",
+    "rosa",
+    "loose"
+  ],
+  "spin": "caramelo-menu-pildora",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-20T21:02:34.400Z",
+  "stitch": {
+    "project_id": "13782150808295850706",
+    "screen_ids": [
+      "b63e4ff008334840b27a764f6262d7fa"
+    ]
+  },
+  "direction": "jardin-suave"
+}
