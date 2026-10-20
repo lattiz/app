@@ -62,6 +62,7 @@ export const FAMILIES: Record<string, Family> = {
   'faq/two-col': 'split-panel',
   'faq/grid': 'cells',
   'faq/numbered-cards': 'cells',
+  'faq/column-panels': 'rows',
   'locations/single': 'media-text',
   'locations/single-card': 'cells',
   'locations/with-contact': 'split-panel',
