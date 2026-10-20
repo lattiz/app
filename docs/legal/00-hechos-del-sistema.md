@@ -47,7 +47,7 @@ Sin valores. Categorías que el sistema guarda o hace guardar a un tercero.
 |---|---|---|---|
 | SIT-1 | El cliente elige una plantilla, edita en el panel y publica HTML. El sitio público se sirve en un subdominio de Lattiz o, si hay dominio conectado y vigente, en ese dominio. | `apps/tenant-sites/lib/tenant-data.ts` `resolveTenantSite` | CONFIRMADO |
 | SIT-2 | Las imágenes del cliente van a almacenamiento de objetos. El código puede usar el almacenamiento del proyecto o Cloudflare R2 servido en `assets.lattiz.app`. Hay una migración que reescribe direcciones antiguas hacia R2. El orquestador vio un depósito público de plantillas y reportó que los archivos de clientes ya están en R2. Qué proveedor está activo en el servidor de producción no se leyó. | `apps/api/.env.example` `STORAGE_PROVIDER`, `R2_PUBLIC_URL`; MCP (orquestador, 2026-10-11) | DESCONOCIDO |
-| SIT-3 | No hay importación de fotos de stock (Pexels u otro). Las plantillas actuales traen sus propias imágenes. | búsqueda en el repo; `packages/template-kit/templates/` | NO IMPLEMENTADO |
+| SIT-3 | El editor permite buscar fotos de stock de Pixabay e importarlas al sitio: la API las descarga, las optimiza a WebP y las guarda en R2 (sin hotlink), registrando autor y página de origen en `tenant_stock_assets`. Las plantillas también se compilan con fotos de Pixabay. | `apps/api/src/modules/stock`, `packages/template-kit/src/spec/images.ts` | CONFIRMADO |
 | SIT-4 | No se redimensionan las fotos del cliente al subirlas. Sí se comprueba que el archivo sea una imagen (PNG, JPEG, WebP o GIF) por su contenido, no por el nombre. | `apps/api/src/modules/sites/asset-magic.ts` | CONFIRMADO |
 | SIT-5 | La prueba gratuita y el subdominio temporal están en el tema 4. Las vistas previas de plantillas (`templates.lattiz.app`) son páginas estáticas de demostración, con `noindex`. | `apps/template-previews/public/`; `docs/decisions/launch-plan-decisions.md` | CONFIRMADO |
 | SIT-6 | Las plantillas de producto que compila el sistema hoy son seis de barbería. No llevan formulario. El contacto es WhatsApp, teléfono, correo o un mapa. | `packages/template-kit/CLAUDE.md`; `packages/template-kit/templates/` | CONFIRMADO |
@@ -200,7 +200,7 @@ La landing se verifica en su repo. El orquestador ya vio Vercel Analytics instal
 | PRO-8 | Analítica: Google Analytics 4, cuenta de Lattiz. Región del tratamiento: panel de Google. | `ga4.gateway.ts` | DESCONOCIDO |
 | PRO-9 | Fuentes y mapas: Google (tema 10). Mensajería de contacto y soporte Pro: WhatsApp. | `compile.ts`; `support.ts` | CONFIRMADO |
 | PRO-10 | La API corre en una sola máquina virtual, detrás de un proxy HTTPS. Región de esa máquina: no está en el código. | `docs/decisions/launch-plan-decisions.md`; `deploy/docker-compose.prod.yml` | DESCONOCIDO |
-| PRO-11 | No se usan Pexels, Cloudinary, Facebook Login ni Sign in with Apple en este repositorio. | búsqueda en dependencias y en `auth.ts` | CONFIRMADO |
+| PRO-11 | Pixabay es el proveedor de fotos de stock (API con clave del servidor; licencia de contenido de Pixabay). No se usan Cloudinary, Facebook Login ni Sign in with Apple en este repositorio. | búsqueda en dependencias y en `auth.ts` | CONFIRMADO |
 
 ## 13. Seguridad (huecos, sin ampliar)
 

@@ -190,7 +190,7 @@ rubro de la base, así que `kit:validate` falla para el clon y para el resto del
    placeholders dentro de `assets/`.
 6. Placeholders con motivos del giro (hoy siempre barbería).
 7. Marcas de archivo generado, detección de ediciones a mano y congelado.
-8. Fotos de Pexels con caché, créditos y rutas del kit.
+8. Fotos de Pixabay con caché, créditos y rutas del kit.
 9. Perfiles demo (`demo-profiles/`).
 
 ## Cómo se usa (resumen)
@@ -211,15 +211,15 @@ Del lado del kit: `pnpm --filter @lattiz/template-kit kit:spec build|validate|sc
 
 Qué genera un spec (`<stem>` = `id` o `idBase`; los dos tiers de un par comparten el copy):
 
-| Archivo                                        | Qué es                                                               |
-| ---------------------------------------------- | -------------------------------------------------------------------- |
-| `packages/template-kit/specs/<stem>.spec.json` | **la fuente** (lo único que se edita)                                |
-| `templates/<id>.ts`                            | manifiesto (Básico: `props` con lo que difiere de la Pro)            |
-| `themes/<id>.json`                             | tema propio de cada plantilla (nombre = id)                          |
-| `content/<giro>.<nombre>.es-MX.ts`             | pack de copy compartido                                              |
-| `demo-profiles/<id>.json`                      | perfil demo para `lattiz dev`/`check` (JSON-LD, «Abierto ahora»)     |
-| `assets/<giro>/<id>/*.jpg` + `CREDITS.json`    | imágenes (placeholders, archivos o Pexels) y de dónde salió cada una |
-| `dist/<id>/`                                   | lo de siempre (`kit:compile`), no se commitea                        |
+| Archivo                                        | Qué es                                                                      |
+| ---------------------------------------------- | --------------------------------------------------------------------------- |
+| `packages/template-kit/specs/<stem>.spec.json` | **la fuente** (lo único que se edita)                                       |
+| `templates/<id>.ts`                            | manifiesto (Básico: `props` con lo que difiere de la Pro)                   |
+| `themes/<id>.json`                             | tema propio de cada plantilla (nombre = id)                                 |
+| `content/<giro>.<nombre>.es-MX.ts`             | pack de copy compartido                                                     |
+| `demo-profiles/<id>.json`                      | perfil demo para `lattiz dev`/`check` (JSON-LD, «Abierto ahora»)            |
+| `assets/<giro>/<id>/*.jpg` + `CREDITS.json`    | imágenes (placeholders, archivos, URLs o Pixabay) y de dónde salió cada una |
+| `dist/<id>/`                                   | lo de siempre (`kit:compile`), no se commitea                               |
 
 Cada archivo generado empieza con
 `GENERATED from specs/<stem>.spec.json (spec <hash>, file <hash>). Do not edit: use the spec, or freeze.`
@@ -410,7 +410,7 @@ lo demás sale del giro.
     }
   },
   "images": [
-    { "key": "hero", "source": { "pexels": "ramo de flores papel kraft" } }
+    { "key": "hero", "source": { "search": "kraft paper flower bouquet" } }
   ]
 }
 ```
@@ -656,25 +656,25 @@ validador y la similitud entre plantillas. Lo que haría un override va en el pa
   Son deterministas y se regeneran si cambia el tema.
 - `{ "file": "ruta" }` en `images`: se recorta al tamaño de la variante (sharp, `cover`) y se copia.
 - `{ "url": "https://…" }` en `images` (**sin API key**): una foto pública de `images.pexels.com`,
-  `images.unsplash.com` o `cdn.pixabay.com` (https; cualquier otro host, o una redirección fuera de la
-  lista, se rechaza). El build la descarga una vez a `.lattiz/cache/images/` (pide 2000 px a Pexels y
-  Unsplash; máx. 15 MB, solo imágenes), la recorta como `file` y la guarda en `assets/<giro>/<id>/`;
-  `CREDITS.json` anota `source: "url"`, la URL y, en Pexels, la página de la foto. Mismo spec → mismos
-  bytes (también con la caché vacía). En `copy` va el nombre local (`"image": "hero.jpg"`); una URL ahí
-  es error de `spec validate` con la corrección exacta. Es la vía mientras no haya `PEXELS_API_KEY`.
-- `--images pexels`: para cada imagen que usan las secciones busca en Pexels (la consulta del spec o
-  la del giro, con la orientación de la variante), toma la primera foto no usada en la plantilla, la
-  recorta y la guarda en `assets/<giro>/<id>/`. Lee `PEXELS_API_KEY` de la terminal, `.env` o
-  `apps/api/.env` (donde ya la tiene el proxy de stock de la API); nunca la imprime. Respeta el límite
-  (200/hora, pausa entre llamadas, se detiene en 429) y guarda búsquedas y descargas en
-  `.lattiz/cache/pexels/` (no se commitea). Después, el seed convierte a WebP ≤ 2000 px como siempre.
+  `images.unsplash.com`, `pixabay.com` o `cdn.pixabay.com` (https; cualquier otro host, o una
+  redirección fuera de la lista, se rechaza). El build la descarga una vez a `.lattiz/cache/images/`
+  (máx. 15 MB, solo imágenes), la recorta como `file` y la guarda en `assets/<giro>/<id>/`;
+  `CREDITS.json` anota `source: "url"` y la URL. En `copy` va el nombre local (`"image": "hero.jpg"`);
+  una URL ahí es error de `spec validate` con la corrección exacta.
+- `--images pixabay` (**por defecto si existe `PIXABAY_API_KEY`**): para cada imagen que usan las
+  secciones busca en Pixabay (`{ "search": "…" }` del spec —`{ "pexels": "…" }` se acepta como alias
+  legado— o la consulta del giro, con la orientación de la variante y `min_width` del recorte), descarta
+  fotos generadas por IA o de baja calidad, toma la primera no usada en la plantilla (la de proporción
+  más cercana entre las primeras), la recorta y la guarda en `assets/<giro>/<id>/`. Lee la clave de la
+  terminal, `.env` o `apps/api/.env`; nunca la imprime. Pixabay da hasta 1280 px (el hero nuevo se queda
+  en ≤ 1200 px) y exige cachear 24 h: búsquedas y descargas quedan en `.lattiz/cache/pixabay/` (no se
+  commitea); 100 llamadas por minuto, pausa entre llamadas y error claro en 429.
 - `--images none`: no toca imágenes.
-- `assets/<giro>/<id>/CREDITS.json` registra cada imagen (`placeholder`, `file` o `pexels` con
-  fotógrafo, URL de la foto y búsqueda) y su hash. Una foto que alguien puso a mano (hash distinto)
-  **nunca** se sobrescribe; una de Pexels se conserva en builds posteriores sin `--images pexels`.
-  `lattiz check` lista los créditos como INFO.
-- **Decisión pendiente (Santi):** si y dónde mostrar los créditos de Pexels en el sitio publicado. La
-  licencia de Pexels no exige atribución, pero la agradece; hoy solo quedan en `CREDITS.json`.
+- `assets/<giro>/<id>/CREDITS.json` registra cada imagen (`placeholder`, `file`, `url`, `pixabay` con
+  autor, página, búsqueda y `tags`, o `pexels` legado) y su hash. Una foto que alguien puso a mano (hash
+  distinto) **nunca** se sobrescribe; una de Pixabay (o Pexels legado) se conserva mientras su búsqueda
+  no cambie. `lattiz check` lista los créditos como INFO. La licencia de Pixabay no exige atribución en
+  el sitio publicado; los créditos quedan en `CREDITS.json`.
 
 ## Ciclo de venta con spec
 
@@ -682,7 +682,7 @@ validador y la similitud entre plantillas. Lo que haría un override va en el pa
 2. `pnpm lattiz spec init --giro <giro> --nombre "<negocio>" --twin` → `specs/<giro>-<nombre>.spec.json`.
 3. Edita el spec: `business` (dirección, colonia, horario, teléfono, WhatsApp), el copy (precios,
    equipo, reseñas, preguntas), la marca y las fotos; vacía `todo`. `pnpm lattiz spec validate <stem>`.
-4. `pnpm lattiz build <stem>` (`--dry-run --diff` para ver antes; `--images pexels` para fotos).
+4. `pnpm lattiz build <stem>` (`--dry-run --diff` para ver antes; con `PIXABAY_API_KEY` trae las fotos solo).
 5. `pnpm lattiz dev <id>` para cada una (7 tamaños, Motion solo en Pro).
 6. `pnpm lattiz motion <idPro>` y, si hace falta, `motion.overrides` en el spec + `build`.
 7. `pnpm lattiz check <id>` para cada una, **una a la vez** (~25–40 s, ~1 GiB), hasta que no haya FAIL.
@@ -726,7 +726,6 @@ remoto sin pedido explícito.
 - **Capacidad por giro:** con 5 paletas curadas y acentos a ≥ 30°, un giro admite ~2 pares con
   paletas curadas; después el compilador pide `brand.palette.custom` (la skill la elige con
   `giro show → freeHueRanges`). Si un giro se vende mucho, agrega paletas curadas.
-- Créditos de Pexels en el sitio (arriba).
 - Sitio adoptado **sin** «Datos del negocio»: los tokens vacíos dejan etiquetas sin valor
   («Teléfono:»), botones de WhatsApp que apuntan a `?text=…`, `tel:`/`mailto:` vacíos, el mapa en
   `?q=` y frases como «Consultorio médico en .». Conviene pedir teléfono/WhatsApp y dirección antes
@@ -752,4 +751,4 @@ remoto sin pedido explícito.
   no; `freeze` → el build se niega con diff; `unfreeze` pide `--yes`; después el build regenera.
 - **Tiempos:** `build` de una gemela ≈ 4.7 s (incluye `kit:compile` de las dos); `--dry-run` ≈ 2 s;
   `check` ≈ 24–27 s y ~0.9–1.1 GiB por plantilla.
-- **No verificado:** `--images pexels` (la clave de `apps/api/.env` responde 401), seed y deploy.
+- **No verificado:** seed y deploy. `--images pixabay` verificado con la clave real (2026-10-20).

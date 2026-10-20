@@ -57,7 +57,7 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [lattiz-template-skill](lattiz-template-skill.md) — skill /lattiz-template sobre un contrato headless del CLI; nunca escribe en remoto
 - [cli-exit-after-stdout-flush](cli-exit-after-stdout-flush.md) — process.exit() corta stdout por tubería a 64 KiB; salir tras vaciar stdout
 - [navbar-mobile-menu-target](navbar-mobile-menu-target.md) — menú móvil sin JS con #menu + :target; Básico tarjeta, Pro pantalla completa
-- [spec-image-url-source](spec-image-url-source.md) — fotos por URL pegada en images[] (sin API key); se descargan en el build, nunca hotlink
+- [spec-image-url-source](spec-image-url-source.md) — fotos por URL pegada en images[]; plan B de Pixabay; se descargan en el build, nunca hotlink
 - [template-catalog-versioning](template-catalog-versioning.md) — extender sin mutar: catálogo legacy/extended, lock por spec, snapshot dorado
 - [placeholder-bytes-host-dependent](placeholder-bytes-host-dependent.md) — un build en otra máquina reescribe JPEG de placeholder; restaurarlos
 - [template-style-tokens](template-style-tokens.md) — presets de estilo opt-in en extended (brand.style); var() con el look de hoy de respaldo
@@ -81,3 +81,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [editor-plan-catalog](editor-plan-catalog.md) — plan de bloques del editor derivado del manifiesto; misma lista que la API
 - [editor-kit-blocks](editor-kit-blocks.md) — bloques del kit en el editor; solo el CSS usado; tokens en :where(html)
 - [stitch-native-reconstruction](stitch-native-reconstruction.md) — patrones de Stitch como secciones nativas; frenos anti-inflación; compuerta de foto de portada
+- [pixabay-stock-photos](pixabay-stock-photos.md) — Pixabay único proveedor de fotos (editor y build); reglas de su API

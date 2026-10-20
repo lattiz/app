@@ -31,12 +31,14 @@ y te detienes **antes** de cualquier escritura remota. Todo pasa por un spec en
 6. **Nada remoto.** No corras `seed`, `deploy`, `publish` ni `ship` (ni `--confirm-remote`) salvo que el
    usuario lo pida **explícitamente en esta conversación**. Tampoco `build --force`, `unfreeze --yes`,
    `git push` ni commits si no te lo piden.
-7. **Fotos:** placeholders por defecto. Si el usuario pega URLs de fotos, van en `images[]` como
-   `{ "key": "hero", "source": { "url": "https://images.pexels.com/…" } }` (solo `images.pexels.com`,
-   `images.unsplash.com`, `cdn.pixabay.com`; sin API key); en `copy` queda el nombre local
-   (`"image": "hero.jpg"`, `team-1.jpg`, `gallery-01.jpg`…), nunca la URL. `--images pexels` solo si el
-   usuario lo pide y hay key (no la pidas ni la muestres). Revisa que cada `alt`/pie describa la foto
-   real y que `team-*` sean retratos; si no, quita la sección opcional o pide otras URLs.
+7. **Fotos:** con `PIXABAY_API_KEY` (`pnpm lattiz doctor` dice si está; nunca la muestres) `build` las
+   trae solo de Pixabay: escribe en `images[]` búsquedas en inglés concretas al negocio
+   (`{ "key": "hero", "source": { "search": "pink frosted layer cake bakery" } }`). Tras el build lee los
+   `tags` de cada foto en `assets/<giro>/<id>/CREDITS.json`, mira las fotos y ajusta `alt`/pies a lo que
+   muestran; si una no sirve, cambia su búsqueda y recompila (la foto se queda mientras la búsqueda no
+   cambie). `team-*` deben ser retratos; si no, quita la sección opcional. Sin clave: placeholders, o
+   URLs que pegue el usuario como `{ "url": "https://…" }` (`images.pexels.com`, `images.unsplash.com`,
+   `pixabay.com`, `cdn.pixabay.com`). En `copy` queda siempre el nombre local (`"image": "hero.jpg"`).
 8. **Paradas:** máximo 4 vueltas de validar/compilar/checar y 2 rondas de revisión visual. Si algo
    sigue fallando, detente y reporta qué falta.
 
@@ -62,7 +64,7 @@ guía en `docs/design-stitch-flow.md`, detalle del MCP en la skill `/lattiz-desi
    `pnpm lattiz design promote <id> --palette --fonts` (siempre primero con `--dry-run`). Una sección
    (`--section`) solo si el usuario lo pidió, y `--regenerate-manifest` solo si pidió promover esa sección
    concreta. Lo que falla una compuerta **no se promueve**: `pnpm lattiz design shelve <id> --note
-   "<compuerta que falló>"` y sigue con el kit actual.
+"<compuerta que falló>"` y sigue con el kit actual.
 5. **Construir.** Sigue el flujo de abajo con el spec referenciando la dirección, la paleta, el par
    tipográfico y las secciones (incluidas las recién promovidas, con `layout.variantOverrides`). Con
    `layout.direction` el compilador elige la paleta de la dirección y **ignora** una paleta fija: para usar
@@ -74,15 +76,15 @@ guía en `docs/design-stitch-flow.md`, detalle del MCP en la skill `/lattiz-desi
 **Lista de traducción** (de `harvest.json` a su destino; la skill nunca promueve ni publica algo que falle
 una compuerta y, en duda, deja el candidato `shelved`):
 
-| En el harvest                                   | Destino                                                                                      |
-| ----------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| Mood y estilo (superficie, forma, densidad)     | Elegir la **dirección** más cercana; no se copia nada                                        |
-| `palette` con `aa.ok` y `distance[].ok`         | **Paleta** nueva (`promote --palette`); si el aviso de tono dice que choca, solo fijada a mano |
-| `typography.existingPair` / `delivery.ok`       | **Par tipográfico**: reutilizar el existente o `promote --fonts`; sin métricas o fuente de Google → descartar |
-| `sections[].existing`                           | Ya existe: usar esa variante (`layout.variantOverrides`), no se crea nada                    |
-| `sections[].draft`                              | **Sección nueva** (`promote --section`, solo si el usuario lo pide)                          |
-| `not_mappable`, JS (`interactivity`), iconos de fuente | Se descartan (JS → Motion Pro solo como recomendación); el candidato o ese elemento queda `shelved` |
-| `image_needs`                                   | Guían las fotos del flujo normal (`images[]` del spec, o un `IMAGES.md` si el proyecto lo usa); nunca se importa una imagen de Stitch |
+| En el harvest                                          | Destino                                                                                                                               |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Mood y estilo (superficie, forma, densidad)            | Elegir la **dirección** más cercana; no se copia nada                                                                                 |
+| `palette` con `aa.ok` y `distance[].ok`                | **Paleta** nueva (`promote --palette`); si el aviso de tono dice que choca, solo fijada a mano                                        |
+| `typography.existingPair` / `delivery.ok`              | **Par tipográfico**: reutilizar el existente o `promote --fonts`; sin métricas o fuente de Google → descartar                         |
+| `sections[].existing`                                  | Ya existe: usar esa variante (`layout.variantOverrides`), no se crea nada                                                             |
+| `sections[].draft`                                     | **Sección nueva** (`promote --section`, solo si el usuario lo pide)                                                                   |
+| `not_mappable`, JS (`interactivity`), iconos de fuente | Se descartan (JS → Motion Pro solo como recomendación); el candidato o ese elemento queda `shelved`                                   |
+| `image_needs`                                          | Guían las fotos del flujo normal (`images[]` del spec, o un `IMAGES.md` si el proyecto lo usa); nunca se importa una imagen de Stitch |
 
 ## Flujo
 

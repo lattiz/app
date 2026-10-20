@@ -73,7 +73,7 @@ pliegue, revisión visual con la rúbrica, y una entrega con ids, comandos y sup
 **Lo que nunca hace:** imprimir secretos; editar archivos generados, secciones o código; correr
 `seed`, `deploy`, `publish` o `ship` sin que se lo pidas en esa conversación (sin terminal, el CLI
 además exige `--yes --confirm-remote`); `build --force`; commits o `git push` no pedidos; usar
-negocios, marcas, personas o teléfonos reales; Pexels sin que lo pidas.
+negocios, marcas, personas o teléfonos reales.
 
 ## El ciclo del fundador
 
@@ -82,7 +82,7 @@ negocios, marcas, personas o teléfonos reales; Pexels sin que lo pidas.
 2. Mírala: `pnpm lattiz dev <idPro>` y `pnpm lattiz dev <idBásico>` (7 tamaños, Motion en Pro).
 3. Ajusta lo que quieras **en el spec** (o pídeselo a Claude: «cambia el titular», «otra paleta más
    cálida») y `pnpm lattiz build <stem>`.
-4. Fotos reales: ponlas en `images` con `{ "file": "…" }` o `pnpm lattiz build <stem> --images pexels`.
+4. Fotos reales: con `PIXABAY_API_KEY` el build las trae de Pixabay; si no, ponlas en `images` con `{ "file": "…" }` o `{ "url": "…" }`.
 5. Publica tú: `pnpm lattiz ship <idBásico> <idPro>` (cuando el primer seed/deploy real haya
    funcionado de punta a punta). Commitea el spec y lo generado.
 
@@ -132,7 +132,7 @@ La rúbrica agrega silueta propia y diversidad contra el giro. Sigue editando so
 
 ## Límites conocidos
 
-- Nombres, personas, reseñas y cifras son ficticios; las fotos son placeholders (o Pexels si se
+- Nombres, personas, reseñas y cifras son ficticios; las fotos vienen de Pixabay si hay clave (o placeholders; o URLs si se
   pide): el cliente real las cambia en el editor.
 - El copy pasa el linter, pero merece una lectura humana antes de vender (sobre todo en giros
   regulados: dental y despacho).
