@@ -84,3 +84,5 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [pixabay-stock-photos](pixabay-stock-photos.md) — Pixabay único proveedor de fotos (editor y build); reglas de su API
 - [restaurante-accent-hues-exhausted](restaurante-accent-hues-exhausted.md) — restaurante casi sin tonos de acento libres; Stitch pastel bloqueado por ΔE00
 - [manifest-gzip-host-dependent](manifest-gzip-host-dependent.md) — gzip del manifiesto depende del zlib de la máquina; fuera del hash y del --check
+- [template-renewal-flag](template-renewal-flag.md) — rehacer = spec -v2 con version + renews; hereda paleta/par; v1 se retira en /admin
+- [stitch-section-cap-per-candidate](stitch-section-cap-per-candidate.md) — tope de 6 secciones de Stitch por candidato, no global
