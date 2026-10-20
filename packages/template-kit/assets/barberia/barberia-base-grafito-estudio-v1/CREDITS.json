@@ -1,0 +1,12 @@
+{
+  "$lattiz": "GENERATED from specs/barberia-grafito-estudio.spec.json (spec e41ae60c038f, file ed8614aec7cc). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "1a0f467f3847c245dd14c55a8fc5492885c550c2889570f71e90340214baaf39",
+      "url": "https://images.pexels.com/photos/34123323/pexels-photo-34123323.png",
+      "pageUrl": "https://www.pexels.com/photo/34123323/"
+    }
+  ]
+}
