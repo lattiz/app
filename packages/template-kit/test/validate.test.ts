@@ -19,8 +19,20 @@ import {
 
 describe('validator on the library templates', () => {
   const reports = new Map<string, ValidationReport>();
+  let library: Awaited<ReturnType<typeof libraryFingerprints>> = [];
+  const peersOf = (id: string) => {
+    const mine = library.find((f) => f.id === id);
+    return library
+      .filter(
+        (f) =>
+          f.id !== id && f.vertical === mine?.vertical && f.tier === mine?.tier,
+      )
+      .map((f) => f.id)
+      .sort();
+  };
   beforeAll(async () => {
     const others = await libraryFingerprints();
+    library = others;
     for (const id of [
       'barberia-oxido-v1',
       'barberia-norte-v1',
@@ -42,21 +54,24 @@ describe('validator on the library templates', () => {
   it("scores similarity only within the same vertical and tier, with that tier's limit", () => {
     const pro = reports.get('barberia-norte-v1');
     expect(pro?.similarityLimit).toBe(TIERS.pro.similarityLimit);
-    expect(pro?.similarity.map((s) => s.other).sort()).toEqual([
-      'barberia-abeto-v1',
-      'barberia-concreto-v1',
-      'barberia-gabinete-pinar-v1',
-      'barberia-la-insignia-v1',
-      'barberia-oxido-v1',
-    ]);
+    expect(pro?.similarity.map((s) => s.other).sort()).toEqual(
+      peersOf('barberia-norte-v1'),
+    );
+    expect(pro?.similarity.map((s) => s.other)).toContain('barberia-oxido-v1');
+    expect(pro?.similarity.map((s) => s.other)).not.toContain(
+      'barberia-base-claro-v1',
+    );
     const basic = reports.get('barberia-base-claro-v1');
     expect(basic?.similarityLimit).toBe(TIERS.basic.similarityLimit);
-    expect(basic?.similarity.map((s) => s.other).sort()).toEqual([
-      'barberia-base-abeto-v1',
-      'barberia-base-la-insignia-v1',
+    expect(basic?.similarity.map((s) => s.other).sort()).toEqual(
+      peersOf('barberia-base-claro-v1'),
+    );
+    expect(basic?.similarity.map((s) => s.other)).toContain(
       'barberia-base-oscuro-v1',
-      'barberia-base-solar-v1',
-    ]);
+    );
+    expect(basic?.similarity.map((s) => s.other)).not.toContain(
+      'barberia-norte-v1',
+    );
     for (const report of reports.values())
       for (const s of report.similarity)
         expect(s.score).toBeLessThanOrEqual(report.similarityLimit);
