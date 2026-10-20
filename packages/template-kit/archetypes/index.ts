@@ -390,7 +390,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     sections: {
       pro: [
         s('header', 'centered-logo'),
-        s('hero', 'duo-arch', 'overlap', 'centered-arch'),
+        s('hero', 'duo-arch', 'overlap', 'centered-arch', 'arch-sticker'),
         s('about', 'text-image-offset'),
         s('catalog', 'cards'),
         s('team', 'grid'),
@@ -403,7 +403,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
       ],
       basic: [
         s('header', 'centered-logo', 'inline'),
-        s('hero', 'duo-arch', 'centered-arch'),
+        s('hero', 'duo-arch', 'centered-arch', 'arch-sticker'),
         s('about', 'brief'),
         s('catalog', 'cards', 'price-list'),
         s('faq', 'two-col', 'grid'),

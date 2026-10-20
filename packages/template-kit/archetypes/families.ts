@@ -27,6 +27,7 @@ export const FAMILIES: Record<string, Family> = {
   'hero/columns': 'type',
   'hero/centered-arch': 'type',
   'hero/offset-card': 'type',
+  'hero/arch-sticker': 'media-text',
   'hero/rail': 'type',
   'hero/bento': 'cells',
   'hero/overlap': 'media-text',
