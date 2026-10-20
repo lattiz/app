@@ -1,0 +1,12 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-casa-rosa-mantequilla.spec.json (spec 812e459d198f, file 572f079a8cd2). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "b1a863b38a94c80a1ab5b35b627b7b48b6c00cd92aa24280a6a06024e171a767",
+      "url": "https://images.pexels.com/photos/37249269/pexels-photo-37249269.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/37249269/"
+    }
+  ]
+}

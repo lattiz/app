@@ -1,0 +1,59 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/restaurante-casa-rosa-mantequilla.spec.json",
+  "catalog": "extended",
+  "catalogVersion": 2,
+  "tiers": {
+    "restaurante-casa-rosa-mantequilla-v1": {
+      "tier": "pro",
+      "palette": "pal-cantera",
+      "fontPair": "gloock+onest",
+      "shape": "suave",
+      "archetype": "editorial-atelier",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "rail" },
+        { "role": "about", "slot": "about", "variant": "framed-craft" },
+        { "role": "catalog", "slot": "services", "variant": "price-list" },
+        { "role": "proof", "slot": "gallery", "variant": "mosaic" },
+        {
+          "role": "testimonials",
+          "slot": "testimonials",
+          "variant": "quote-feature"
+        },
+        { "role": "faq", "slot": "faq", "variant": "numbered-cards" },
+        { "role": "contact", "slot": "locations", "variant": "with-contact" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "big-wordmark" }
+      ],
+      "layout": { "direction": "cantera-editorial", "archetype": "editorial" }
+    },
+    "restaurante-base-casa-rosa-mantequilla-v1": {
+      "tier": "basico",
+      "palette": "pal-adobe-tinta",
+      "fontPair": "libre-caslon-display+schibsted-grotesk",
+      "shape": "sutil",
+      "archetype": "essential",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "columns" },
+        { "role": "about", "slot": "about", "variant": "brief" },
+        { "role": "catalog", "slot": "services", "variant": "price-list" },
+        { "role": "faq", "slot": "faq", "variant": "numbered-cards" },
+        { "role": "contact", "slot": "locations", "variant": "single" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "big-wordmark" }
+      ],
+      "layout": { "direction": "cantera-editorial", "archetype": "editorial" }
+    }
+  }
+}

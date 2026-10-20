@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-casa-rosa-mantequilla.spec.json (spec 812e459d198f, file 68d6e8b8bef2). Do not edit: use the spec, or freeze.",
+  "name": "Casa Rosa Mantequilla",
+  "category": "restaurant",
+  "phone": "+522220000000",
+  "whatsapp": "+5212220000000",
+  "email": "hola@casarosamantequilla.example",
+  "address": {
+    "street": "Calle 5 Poniente 0000, La Paz, Puebla, Pue.",
+    "city": "Puebla",
+    "country": "MX"
+  },
+  "hours": {
+    "tue": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "sun": [
+      {
+        "open": "13:00",
+        "close": "18:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}

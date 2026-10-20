@@ -1,0 +1,75 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-casa-rosa-mantequilla.spec.json (spec 812e459d198f, file bf9433980eda). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "1ae20ce149d32cdc52d13ff7cf0a117dcb7c04b12e4edf4ba7d892bd38c4e00b",
+      "url": "https://images.pexels.com/photos/37249269/pexels-photo-37249269.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/37249269/"
+    },
+    {
+      "file": "about.jpg",
+      "source": "url",
+      "sha256": "7a0b673423ce3deb959c7772d0ef5eb988789826bf6300056643465b51de9005",
+      "url": "https://images.pexels.com/photos/14996841/pexels-photo-14996841.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/14996841/"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "url",
+      "sha256": "1d144b7cd7d00dabe1ee34ff823e8fcef44d4fe89854f4089c38f66f63bbc648",
+      "url": "https://images.pexels.com/photos/6587810/pexels-photo-6587810.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/6587810/"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "url",
+      "sha256": "5b69192c0717cf9bfec5aa2099183bc9cd41fc85acf7ab5677a94d30ce849891",
+      "url": "https://images.pexels.com/photos/37970767/pexels-photo-37970767.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/37970767/"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "url",
+      "sha256": "fd5e23fdc04bb31b60604b8adbf5b70063dda23b7e2b7efdc0730f00e108e839",
+      "url": "https://images.pexels.com/photos/37727732/pexels-photo-37727732.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/37727732/"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "url",
+      "sha256": "ae3e704067ddb43b0dd770578fdef4daa48a935887fc140c98f9e593df7ea44e",
+      "url": "https://images.pexels.com/photos/7669768/pexels-photo-7669768.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/7669768/"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "url",
+      "sha256": "c674a8140cb04e62783a405925b89f3dcb3adcf243a8cb0b07694da8dc262453",
+      "url": "https://images.pexels.com/photos/26598639/pexels-photo-26598639.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/26598639/"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "url",
+      "sha256": "230e2d38f8c356c5bd29ef1bdaabe8de1eedc31a34805ebb91ea8105cc4e7232",
+      "url": "https://images.pexels.com/photos/20009388/pexels-photo-20009388.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/20009388/"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "url",
+      "sha256": "db6ff0f15326eab5b14e855682f7e74d80c4f781ecac02856b927bb1033be307",
+      "url": "https://images.pexels.com/photos/7965984/pexels-photo-7965984.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/7965984/"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "url",
+      "sha256": "f1b395aaf4ece96f27db63d7d12eb787a16daabd1be5aa5f5592803833e8ff1b",
+      "url": "https://images.pexels.com/photos/16135140/pexels-photo-16135140.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/16135140/"
+    }
+  ]
+}

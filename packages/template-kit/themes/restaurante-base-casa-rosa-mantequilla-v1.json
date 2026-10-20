@@ -1,0 +1,78 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-casa-rosa-mantequilla.spec.json (spec 812e459d198f, file e1f67542e613). Do not edit: use the spec, or freeze.",
+  "name": "restaurante-base-casa-rosa-mantequilla-v1",
+  "label": "Casa Rosa Mantequilla · Básico",
+  "tier": "basic",
+  "fontPair": "libre-caslon-display+schibsted-grotesk",
+  "colors": {
+    "bg": "#D9906F",
+    "surface": "#E9BFAB",
+    "surface-2": "#CC8768",
+    "text": "#1E120C",
+    "muted": "#3C261C",
+    "accent": "#1E120C",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#1E120C",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#D9906F",
+    "on-overlay": "#1E120C",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#1E120C"
+  },
+  "fonts": {
+    "display": "'Libre Caslon Display', serif",
+    "serif": "'Libre Caslon Display', serif",
+    "body": "'Schibsted Grotesk', sans-serif",
+    "googleFonts": "family=Libre+Caslon+Display&family=Schibsted+Grotesk:wght@400..600",
+    "displayTransform": "none",
+    "displayLeading": "1.02",
+    "displayWeight": "400",
+    "displayScale": "1.29",
+    "accentStyle": "normal",
+    "accentTransform": "none",
+    "mood": ["lujo", "editorial"],
+    "affinity": ["estetica", "despacho", "tienda", "floreria"],
+    "case": "none",
+    "tracking": "normal",
+    "typeScale": "expressive",
+    "licenses": {
+      "Libre Caslon Display": "OFL-1.1",
+      "Schibsted Grotesk": "OFL-1.1"
+    }
+  },
+  "shape": {
+    "radiusCard": "22px",
+    "radiusPill": "999px",
+    "border": "1px",
+    "shadow": "none"
+  },
+  "density": "airy",
+  "photoTreatment": "warm",
+  "placeholder": "blobs",
+  "accentWords": "color",
+  "container": "1280px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(1.08) saturate(.85)"
+  },
+  "style": {
+    "shape": "round",
+    "surface": "tinted",
+    "density": "airy",
+    "divider": "hairline",
+    "imageTreatment": "offset",
+    "typeScale": "expressive",
+    "displayCase": "none",
+    "tracking": "tight"
+  },
+  "primitives": {
+    "button": "underline",
+    "card": "flat",
+    "tag": "plain",
+    "frame": "offset",
+    "number": "plain",
+    "quote": "rule",
+    "divider": "hairline"
+  }
+}
