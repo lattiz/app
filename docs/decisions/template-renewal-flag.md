@@ -22,5 +22,9 @@ presupuestos solo avisan) y relajar compuertas para un caso. No se heredan forma
 diseño nuevo. Verificado: La Insignia v2 con la v1 presente compila sin choques de unicidad; solo fallan
 los presupuestos de bytes (correcto para id nuevo).
 **How to apply:** `docs/template-spec.md` «Renovar una plantilla». El seed nunca desactiva la vieja: avisa
-si sigue activa y se retira en `/admin`; luego se borran sus archivos (no los objetos de R2). Gemelos
-[[twin-accent-hue-split]] y lock [[template-catalog-versioning]] siguen igual.
+si sigue activa y se retira en `/admin`; luego se borran sus archivos (no los objetos de R2). Antes de borrar la
+v1, busca su id en `golden/snapshot.json`: `kit:snapshot:add` graba los pares vivos del giro, y un spec que
+la tenga en `peers` falla al verificar si desaparece ([[snapshot-recorded-inputs]]). Re-grabar ese spec
+con sus pares de antes (como se hizo con la-nota-azul, `b51a83b`) o sacarla de su lista con una razón en el
+commit. La v2 no la graba: `renews` la excluye. Gemelos [[twin-accent-hue-split]] y lock
+[[template-catalog-versioning]] siguen igual.
