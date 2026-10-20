@@ -394,7 +394,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
         s('about', 'text-image-offset'),
         s('catalog', 'cards', 'alternating-bands'),
         s('team', 'grid'),
-        s('proof', 'mosaic'),
+        s('proof', 'mosaic', 'collage'),
         s('testimonials', 'quote-feature'),
         s('faq', 'grid'),
         s('contact', 'with-contact'),
