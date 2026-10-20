@@ -43,6 +43,7 @@ export const FAMILIES: Record<string, Family> = {
   'services/editorial-table': 'rows',
   'services/cards': 'cells',
   'services/ritual-cards': 'cells',
+  'services/alternating-bands': 'media-text',
   'services/product-grid': 'cells',
   'gallery/grid': 'full-media',
   'gallery/mosaic': 'full-media',
