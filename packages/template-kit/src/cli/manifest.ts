@@ -96,6 +96,8 @@ function accentHue(p: GiroPalette): number | null {
   return h && h.chroma > 0.08 ? Math.round(h.hue) : null;
 }
 
+const withoutGzip = (text: string) => text.replace(/("gzip":\s*)\d+/g, '$1#');
+
 const bytes = (file: string) => {
   const text = readFileSync(file, 'utf8');
   return {
@@ -343,8 +345,12 @@ export async function buildManifest(): Promise<CatalogManifest> {
       fontPairs: [...g.fontPairs],
     })),
   };
+  // gzip sizes vary with the host's zlib build; they stay informational and out of the hash.
+  const hashed = JSON.parse(
+    JSON.stringify(body, (key, value) => (key === 'gzip' ? undefined : value)),
+  );
   const contentHash = createHash('sha256')
-    .update(canonicalJson(body))
+    .update(canonicalJson(hashed))
     .digest('hex')
     .slice(0, 16);
   const { $comment, manifestVersion, ...rest } = body;
@@ -407,7 +413,8 @@ async function main(): Promise<void> {
   if (flags.has('check')) {
     const stale = outputs.filter(
       ([file, text]) =>
-        (existsSync(file) ? readFileSync(file, 'utf8') : '') !== text,
+        withoutGzip(existsSync(file) ? readFileSync(file, 'utf8') : '') !==
+        withoutGzip(text),
     );
     for (const [file] of stale)
       console.error(

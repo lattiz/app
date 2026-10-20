@@ -22,6 +22,8 @@ export interface Fingerprint {
   /** Resolved ground and accent (hex): the extended picker keeps palettes of a giro ΔE-apart. */
   bg?: string | null;
   accent?: string | null;
+  /** The template this one renews (manifest `renews`): never a peer of it. */
+  renews?: string;
 }
 
 /** Lowercase letters and digits only: "Corte de <b>lujo</b>.<br>Actitud" → "corte de lujo actitud". */
@@ -64,6 +66,7 @@ export function fingerprint(
       return bg ? toHex(bg) : null;
     })(),
     accent: accent ? toHex(accent) : null,
+    ...(manifest.renews ? { renews: manifest.renews } : {}),
   };
 }
 
@@ -135,4 +138,12 @@ export function similarity(
     Object.keys(SIMILARITY_WEIGHTS) as (keyof typeof SIMILARITY_WEIGHTS)[]
   ).reduce((sum, k) => sum + SIMILARITY_WEIGHTS[k] * parts[k], 0);
   return { score: Math.round(score * 1000) / 1000, ...parts };
+}
+
+/** A template and the one it renews coexist until the old one is retired; neither is the other's peer. */
+export function renewalPair(
+  a: Pick<Fingerprint, 'id' | 'renews'>,
+  b: Pick<Fingerprint, 'id' | 'renews'>,
+): boolean {
+  return a.renews === b.id || b.renews === a.id;
 }

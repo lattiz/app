@@ -16,7 +16,7 @@ LCP, nojs y presupuestos. Lo que se aprendió al hacerlo:
 - «Ya existe» se decide **midiendo** (`design fidelity`: layout de la sección de Stitch contra cada variante del slot con la misma
   copy; match ≤ 0.15), no por slot + tipo de layout. La primera versión confundió unas preguntas en tarjetas numeradas con `faq/grid`
   y dejó el cuerpo de La Insignia con variantes genéricas. Lo no medido es `reuse_candidate`; lo distinto va a `rebuild`. `promote
-  --section` bloquea lo no medido, el tope de 6 secciones de Stitch y el CSS > 1.2 KB gzip.
+  --section` bloquea lo no medido, el tope de 6 secciones de Stitch por candidato y el CSS > 1.2 KB gzip.
 - Un giro puede estar saturado para una paleta (verde + plata en barbería): la compuerta de la biblioteca mira paletas, no
   plantillas; la paleta se aprovecha en otros giros y la dirección aporta portada, tipografía, estilo y voz.
 - Roles de Stitch (Material): `primary` es el acento de marca, no «el más cromático».

@@ -290,7 +290,11 @@ export async function buildSpec(opts: BuildOptions): Promise<BuildReport> {
       Awaited<ReturnType<typeof compileManifest>>
     >();
     const credits = new Map<string, ImageCredit[]>();
-    const others = library.filter((f) => !report.ids.includes(f.id));
+    // The template a `renews` spec replaces isn't a peer either (planSpec leaves it out too).
+    const renewed = new Set(plan.tiers.map((t) => t.renews));
+    const others = library.filter(
+      (f) => !report.ids.includes(f.id) && !renewed.has(f.id),
+    );
     for (const t of plan.tiers) {
       const manifestFile = resolve(scratch, 'kit/templates', `${t.id}.ts`);
       mkdirSync(dirname(manifestFile), { recursive: true });

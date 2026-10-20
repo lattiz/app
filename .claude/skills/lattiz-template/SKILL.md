@@ -86,6 +86,25 @@ una compuerta y, en duda, deja el candidato `shelved`):
 | `not_mappable`, JS (`interactivity`), iconos de fuente | Se descartan (JS → Motion Pro solo como recomendación); el candidato o ese elemento queda `shelved`                                   |
 | `image_needs`                                          | Guían las fotos del flujo normal (`images[]` del spec, o un `IMAGES.md` si el proyecto lo usa); nunca se importa una imagen de Stitch |
 
+## Modo renovación (rehacer una plantilla que ya existe)
+
+Cuando pidan «renueva / rehaz <plantilla>» con un diseño nuevo, **no** uses `spec init` ni toques el spec viejo:
+
+1. Copia `specs/<stem>.spec.json` a `specs/<stem>-v2.spec.json` y añade `"version": 2` y
+   `"renews": { "spec": "<stem>" }` (hereda paleta y tipografía por tier; `keep` las limita). Si el viejo
+   usa paleta propia, conserva su `brand.palette.custom`.
+2. Cambia solo lo que trae el diseño nuevo: `layout` (dirección, arquetipo, `variantOverrides`), `sections`
+   por tier y copy de las secciones nuevas en la misma voz. Quita las URLs de `images[]` si hay
+   `PIXABAY_API_KEY` (búsquedas o las del giro) y vacía `todo`.
+3. Sigue el flujo de abajo desde el paso 5 (`spec validate <stem>-v2 --strict`, `build`, `check`, `review`).
+   La salida debe decir `(heredada de <id viejo>)`; si una herencia choca, detente y dilo (no la fuerces).
+   Los presupuestos de bytes cuentan como plantilla nueva.
+4. Entrega `pnpm lattiz ship <idBásico-v2> <idPro-v2>` sin correrlo y recuerda: tras publicar y verificar,
+   la `-v1` se retira a mano en `/admin` y sus archivos se borran en un commit aparte. Si faltan secciones
+   nativas para el diseño, eso es trabajo del kit (`/lattiz-design`, «Flujo Stitch nativo»): detente y dilo.
+
+Detalle: `docs/template-spec.md` «Renovar una plantilla».
+
 ## Flujo
 
 Comandos, flags y formas JSON: `references/commands.md`. Detalle de cada paso:

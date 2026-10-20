@@ -25,6 +25,8 @@ export interface TierLock {
   sections: { role: Role; slot: string; variant: string }[];
   /** Layout specs: the art direction and page archetype (absent for every other spec). */
   layout?: { direction?: string; archetype?: string };
+  /** `renews` specs: the replaced id, so the old spec can be deleted once retired. */
+  renews?: string;
 }
 
 export interface SpecLock {
@@ -83,6 +85,7 @@ export function lockFromPlan(plan: SpecPlan, specPath: string): SpecLock {
             variant: s.variant,
           })),
           ...(t.layout ? { layout: t.layout } : {}),
+          ...(t.renews ? { renews: t.renews } : {}),
         },
       ]),
     ),

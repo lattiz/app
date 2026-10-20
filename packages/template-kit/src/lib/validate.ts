@@ -13,7 +13,12 @@ import { countedSlots, isTier, TIERS, type Role } from '../tiers';
 import { parseDocument, parseFragment } from './dom';
 import { KIT_ROOT } from './paths';
 import { hueDistance } from './color';
-import { fingerprint, similarity, type Fingerprint } from './similarity';
+import {
+  fingerprint,
+  renewalPair,
+  similarity,
+  type Fingerprint,
+} from './similarity';
 import { tokenColor } from './theme';
 
 export type RuleId =
@@ -774,7 +779,8 @@ function checkUniqueness(
   out: Finding[],
 ): void {
   const peers = others.filter(
-    (o) => o.id !== mine.id && o.vertical === mine.vertical,
+    (o) =>
+      o.id !== mine.id && o.vertical === mine.vertical && !renewalPair(mine, o),
   );
   const at = (pattern: RegExp) => manifestRef(t, pattern);
   for (const o of peers) {
@@ -858,7 +864,8 @@ export function validateTarget(
       (o) =>
         o.id !== mine.id &&
         o.vertical === mine.vertical &&
-        o.tier === mine.tier,
+        o.tier === mine.tier &&
+        !renewalPair(mine, o),
     )
     .map((o) => ({ other: o.id, score: similarity(mine, o).score }));
   for (const s of scores) {

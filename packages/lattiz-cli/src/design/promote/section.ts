@@ -24,19 +24,22 @@ import type { PromoteOutcome } from './palette';
 import { folderExists } from '../harvest/resolve';
 import { type Scaffold, supportedPatterns } from './section-templates';
 
-/** Anti-inflation: a Stitch design adds at most this many sections before the kit is deduped. */
+/** Anti-inflation: one Stitch candidate adds at most this many sections (counted by its `// Stitch: <id>` marker). */
 export const MAX_STITCH_SECTIONS = 6;
 /** The largest existing extended variant is ~1 KB of gzip CSS; a draft above this is not "budgeted". */
 export const SECTION_CSS_GZIP_MAX = 1200;
 
-export function stitchSectionCount(): number {
+export function stitchSectionCount(candidateId: string): number {
   const root = kitFile('sections');
+  const marker = new RegExp(
+    `^// Stitch: ${candidateId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:\\s|$)`,
+    'm',
+  );
   let n = 0;
   for (const slot of readdirSync(root))
     for (const variant of readdirSync(join(root, slot))) {
       const meta = join(root, slot, variant, 'meta.ts');
-      if (existsSync(meta) && /^\/\/ Stitch:/m.test(readFileSync(meta, 'utf8')))
-        n += 1;
+      if (existsSync(meta) && marker.test(readFileSync(meta, 'utf8'))) n += 1;
     }
   return n;
 }
@@ -131,7 +134,7 @@ export function draftProblems(
  * and an untouched golden snapshot. The manifest is only rewritten with `regenerateManifest`.
  */
 export function promoteSection(
-  _candidate: Candidate,
+  candidate: Candidate,
   harvest: Harvest,
   opts: SectionOptions,
   run: Runner,
@@ -156,11 +159,11 @@ export function promoteSection(
       'anti-inflación (¿ya existe algo parecido?)',
       `El kit tiene ${[pattern.reuse_candidate, ...(pattern.similar ?? [])].filter(Boolean).join(', ')} en la misma familia de composición y no se midió si esta sección es distinta.\nCorre «lattiz design fidelity <id> ${pattern.ref}»: si es distinta (estructura > 0.15) se puede crear; si no, reutiliza la variante. O confirma a ciegas con --allow-similar.`,
     );
-  const count = stitchSectionCount();
+  const count = stitchSectionCount(candidate.id);
   if (count >= MAX_STITCH_SECTIONS)
     throw new GateFailure(
       'tope de secciones de Stitch',
-      `Ya hay ${count} secciones nacidas de Stitch (tope ${MAX_STITCH_SECTIONS}). Haz un repaso de duplicados antes de sumar otra.`,
+      `${candidate.id} ya aportó ${count} secciones (tope ${MAX_STITCH_SECTIONS} por candidato). Reutiliza variantes que ya existen (mídelas con «lattiz design fidelity») antes de sumar otra.`,
     );
   if (draft.bytes.css_gzip > SECTION_CSS_GZIP_MAX)
     throw new GateFailure(

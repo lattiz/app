@@ -237,6 +237,8 @@ traen `"$schema": "./spec.schema.json"` para autocompletar en el editor.
 | `specVersion`             | `1`                                                                                                                                       | obligatorio                                                                                                                                                                                                                                                                             |
 | `id` + `tier`             | id + `"pro"` \| `"basico"`                                                                                                                | un solo tier                                                                                                                                                                                                                                                                            |
 | `idBase` + `twin: true`   | `<giro>-<nombre>`                                                                                                                         | el par: `<giro>-<nombre>-v1` (Pro) y `<giro>-base-<nombre>-v1` (Básico)                                                                                                                                                                                                                 |
+| `version`                 | entero ≥ 2                                                                                                                                | solo con `idBase` + `twin`: el par sale `-v<N>` y el spec vive en `specs/<idBase>-v<N>.spec.json` (con su lock). Sin el campo, `-v1` y nada cambia                                                                                                                                      |
+| `renews`                  | `{ "spec": "<stem>", "keep?": ["palette", "fontPair"] }`                                                                                  | renovación: hereda del lock de ese spec, por tier, lo que diga `keep` (por defecto paleta y par) y la pareja vieja ↔ nueva no cuenta en las compuertas de unicidad. Ver «Renovar una plantilla»                                                                                         |
 | `giro`                    | `barberia` \| `clinica` \| `dental` \| `despacho` \| `estetica` \| `floreria` \| `gimnasio` \| `restaurante` \| `tienda` \| `veterinaria` | registro en `packages/template-kit/giros/`                                                                                                                                                                                                                                              |
 | `name`, `description`     | texto                                                                                                                                     | nombre y descripción de la galería; por defecto el nombre del negocio y la descripción del giro                                                                                                                                                                                         |
 | `business`                | objeto                                                                                                                                    | `name` (obligatorio), `shortName`, `tagline`, `city`, `branch` (colonia), `address`, `hours`, `phone`, `whatsapp` (dígitos), `whatsappMessage`, `email`, `year`, redes, `googleReviewsUrl`, `googleReviewUrl`, `branches[]` (`name`, `address`, `shortAddress?`, `hours`, `mapsQuery?`) |
@@ -614,6 +616,40 @@ nada (`--force` escribe de todos modos y lo avisa en grande).
 
 Fuera de `kit:validate` queda `kit:compare-visual` (distancia ≥ 0.33 en la mitad superior): corre
 `pnpm --filter @lattiz/template-kit kit:compare-visual dist/<id>…` y mira el contact sheet.
+
+## Renovar una plantilla (`version` + `renews`)
+
+Para un **cambio grande** (otra estructura, otras secciones, otra portada; `docs/template-workflow.md` §5) de una
+plantilla que ya existe, sin perder su identidad. Ejemplo, La Insignia rehecha con secciones nativas de Stitch:
+
+```jsonc
+// specs/barberia-la-insignia-v2.spec.json: copia de specs/barberia-la-insignia.spec.json, más
+{
+  "idBase": "barberia-la-insignia",
+  "twin": true,
+  "version": 2, // → barberia-la-insignia-v2 y barberia-base-la-insignia-v2
+  "renews": { "spec": "barberia-la-insignia" }, // keep por defecto: ["palette", "fontPair"]
+  "layout": { "direction": "…", "variantOverrides": { "…": "…" } },
+}
+```
+
+- **Qué hereda:** por tier (Pro ← Pro, Básico ← Básico), la paleta y el par tipográfico del lock del spec viejo,
+  por el mismo camino que un lock: si ya chocan con otra plantilla del giro o la dirección de arte no los admite,
+  el build **falla** (nunca cambia en silencio); la salida dice `paleta: "…" (heredada de <id viejo>)`. Lo que el
+  spec fija explícitamente gana. Copy, nombre, negocio y perfil demo vienen solos porque el spec es una copia; forma,
+  estilo y secciones salen del diseño nuevo. Si el viejo usa paleta propia (`custom`), el spec nuevo debe traer su
+  `brand.palette.custom`.
+- **Qué exime:** mientras conviven, la plantilla vieja y la nueva no son pares entre sí en `planSpec`, `kit:validate`
+  (tema, par, tono, titular, portada, similitud), `kit:compare-visual` (sale como `↻ … (renueva; no cuenta)`) ni en
+  los pares que graba el snapshot. Contra **el resto** del giro se aplican todas las compuertas, y los presupuestos
+  de bytes cuentan como plantilla nueva (FAIL).
+- **Lo que queda escrito:** el manifiesto (`renews: '<id viejo>'`) y el lock (`tiers.<id>.renews`). Con el lock del
+  spec nuevo, el viejo ya no hace falta: se puede borrar tras retirarlo y el nuevo compila igual.
+- **Publicar y retirar:** `lattiz seed`/`publish` avisan si la fila vieja sigue activa (y cuántos sitios la usan);
+  el seed **nunca** la toca. Cuando la nueva esté publicada y verificada, la vieja se retira a mano en `/admin`
+  (Plantillas → Retirar). Sus clientes conservan su copia. Después, en un commit aparte, se borran el spec, el lock,
+  `templates/`, `themes/`, `demo-profiles/`, `assets/`, el pack de `content/` si nadie más lo usa y
+  `apps/template-previews/public/<id viejo>/`; los objetos de R2 se quedan (las copias de los clientes apuntan ahí).
 
 ## Dónde ajustar (de lo amplio a lo puntual)
 

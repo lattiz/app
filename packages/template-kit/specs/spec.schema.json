@@ -25,6 +25,39 @@
       "description": "true: genera el par Básico + Pro desde este spec.",
       "type": "boolean"
     },
+    "version": {
+      "description": "Con `idBase` + `twin`: versión de los ids (`…-v2`); el spec vive en `specs/<idBase>-v<N>.spec.json`. Sin ella, `-v1`.",
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 99
+    },
+    "renews": {
+      "description": "Renovación: hereda la identidad del spec viejo y sus plantillas no cuentan como pares en las compuertas de unicidad mientras conviven (docs/template-spec.md «Renovar una plantilla»).",
+      "type": "object",
+      "properties": {
+        "spec": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$",
+          "description": "Stem del spec que esta plantilla renueva (p. ej. `barberia-la-insignia`)."
+        },
+        "keep": {
+          "description": "Qué hereda del lock de ese spec, por tier; por defecto paleta y par tipográfico.",
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "palette",
+              "fontPair"
+            ]
+          }
+        }
+      },
+      "required": [
+        "spec"
+      ],
+      "additionalProperties": false
+    },
     "tier": {
       "description": "Con `id`: pro o basico. Con `twin`: ambos.",
       "type": "string",

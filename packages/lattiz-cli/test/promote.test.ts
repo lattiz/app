@@ -20,6 +20,7 @@ import {
 } from '../src/design/library';
 import { promote, type Runners } from '../src/design/promote';
 import type { Runner } from '../src/design/promote/kit';
+import { stitchSectionCount } from '../src/design/promote/section';
 import type { Candidate, Harvest } from '../src/design/types';
 import { CliError } from '../src/lib/errors';
 
@@ -343,15 +344,25 @@ describe('palette adjustments (--set)', () => {
       ).toMatch(/presupuesto de la sección/);
     });
 
-    it('stops at the cap of Stitch-born sections', () => {
-      for (let i = 0; i < 6; i += 1) {
-        const dir = join(kit, 'sections/hero', `stub-${i}`);
+    it('stops at the cap of Stitch-born sections, counted per candidate', () => {
+      const stub = (name: string, marker: string) => {
+        const dir = join(kit, 'sections/hero', name);
         mkdirSync(dir, { recursive: true });
-        writeFileSync(
-          join(dir, 'meta.ts'),
-          '// Stitch: x\nexport default {};\n',
+        writeFileSync(join(dir, 'meta.ts'), `${marker}\nexport default {};\n`);
+      };
+      for (let i = 0; i < 6; i += 1)
+        stub(
+          `other-${i}`,
+          '// Stitch: other-candidate-01 (hero), rebuilt by hand',
         );
-      }
+      stub('prefix', '// Stitch: dental-executive-vision-010 (hero)');
+      expect(stitchSectionCount('dental-executive-vision-01')).toBe(0);
+      expect(stitchSectionCount('other-candidate-01')).toBe(6);
+      for (let i = 0; i < 6; i += 1)
+        stub(
+          `own-${i}`,
+          `// Stitch: dental-executive-vision-01${i % 2 ? ' (hero), rebuilt by hand' : ''}`,
+        );
       expect(
         gateError(() =>
           promote(
@@ -360,7 +371,7 @@ describe('palette adjustments (--set)', () => {
             runners(),
           ),
         ),
-      ).toMatch(/tope de secciones de Stitch/);
+      ).toMatch(/dental-executive-vision-01 ya aportó 6 secciones/);
     });
   });
 });

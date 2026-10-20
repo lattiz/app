@@ -200,14 +200,23 @@ export type MotionSectionType =
   | 'cta'
   | 'footer'
   | 'none';
-export type MotionPattern = 'cascade' | 'alternate' | 'converge' | 'center-out' | 'wave' | 'none';
+export type MotionPattern =
+  | 'cascade'
+  | 'alternate'
+  | 'converge'
+  | 'center-out'
+  | 'wave'
+  | 'none';
 
 /** Lattiz Motion for the seed (docs/lattiz-motion.md); copied to template.meta.json. */
 export interface ManifestMotion {
   /** Default `--motion` preset when the seed command doesn't pass one. */
   preset?: MotionPreset;
   /** Manual corrections that beat the seed's classifier. Key: slot name, `#id` or section index. */
-  sections?: Record<string, MotionSectionType | { type?: MotionSectionType; pattern?: MotionPattern }>;
+  sections?: Record<
+    string,
+    MotionSectionType | { type?: MotionSectionType; pattern?: MotionPattern }
+  >;
   /** Scroll progress bar on Pro sites (data-lz-progress on the root wrapper). */
   progress?: boolean;
 }
@@ -228,6 +237,8 @@ export interface Manifest {
   head?: Partial<HeadContent>;
   sections: ManifestSection[];
   motion?: ManifestMotion;
+  /** Id of the template this one renews (spec `renews`): the pair is exempt from the uniqueness gates. */
+  renews?: string;
 }
 
 export interface BlueprintRole {

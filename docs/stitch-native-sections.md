@@ -87,7 +87,8 @@ variantes genéricas. Era un error de criterio, y la regla anti-inflación empuj
 - Lo que no coincide va a `rebuild` en el harvest (antes caía en «no mapeable»): secciones a **reconstruir a mano**, con la
   razón y los números. `not_mappable` queda para lo que el kit no admite (iframe, video, carrusel…).
 - `promote --section` ya no bloquea lo parecido: bloquea lo **no medido** (pide correr `design fidelity`) y deja crear lo
-  medido como distinto. Siguen el tope de 6 secciones de Stitch por proyecto y el presupuesto de CSS (1.2 KB gzip).
+  medido como distinto. Siguen el tope de 6 secciones de Stitch **por candidato** (se cuentan los `meta.ts` con `// Stitch: <id>`) y el
+  presupuesto de CSS (1.2 KB gzip).
 
 Primer caso: **`faq/numbered-cards`** (cabecera centrada con antetítulo, tarjetas numeradas con contador CSS en dos
 columnas de igual alto, pregunta en la fuente de titulares; cada tarjeta es un `<details open>` que se abre y cierra sola;
@@ -118,6 +119,15 @@ tras comparar). Se aproxima o difiere, por presupuesto o por reglas del kit:
   y voz con la paleta que elija el compilador. La compuerta de la biblioteca mira paletas, no plantillas.
 - Los roles de Stitch son Material: `primary` es el acento de marca; `tertiary` suele ser un resaltado.
 - `kit:manifest` valida dirección ↔ diales (airy ⇒ densidad ≤ 3): lo atrapó la regeneración, no las pruebas.
+
+## Renovación de plantillas
+
+Para rehacer una plantilla que ya existe con secciones nativas de un diseño nuevo (sin clonar el cuerpo de otra):
+candidato nuevo → harvest → `fidelity` por sección → reconstruir a mano lo que salga `rebuild` (máximo 6 por
+candidato) → spec `<stem>-v2.spec.json` copiado del viejo con `version: 2` y `renews` (hereda paleta y
+tipografía, exime a la vieja de las compuertas mientras conviven) → build, check, review, contact sheet →
+`kit:snapshot:add` → entregar `ship` sin correrlo → retirar la vieja en `/admin` → borrar sus archivos.
+Detalle en `docs/template-spec.md` «Renovar una plantilla».
 
 ## No verificado
 
