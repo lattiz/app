@@ -1,0 +1,59 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/barberia-grafito-estudio.spec.json",
+  "catalog": "extended",
+  "catalogVersion": 2,
+  "tiers": {
+    "barberia-grafito-estudio-v1": {
+      "tier": "pro",
+      "palette": "pal-tinta-hueso",
+      "fontPair": "oswald+source-sans-3",
+      "shape": "urbano",
+      "archetype": "editorial-atelier",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "centered-logo" },
+        { "role": "hero", "slot": "hero", "variant": "framed" },
+        { "role": "about", "slot": "about", "variant": "framed-craft" },
+        { "role": "catalog", "slot": "services", "variant": "ritual-cards" },
+        { "role": "proof", "slot": "gallery", "variant": "mosaic" },
+        { "role": "contact", "slot": "locations", "variant": "booking-panel" },
+        {
+          "role": "testimonials",
+          "slot": "testimonials",
+          "variant": "paper-trio"
+        },
+        { "role": "faq", "slot": "faq", "variant": "numbered-cards" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "signature-bar" }
+      ],
+      "layout": { "archetype": "showcase" }
+    },
+    "barberia-base-grafito-estudio-v1": {
+      "tier": "basico",
+      "palette": "pal-cacao-crema",
+      "fontPair": "syne+karla",
+      "shape": "redondo",
+      "archetype": "essential",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "image-bg" },
+        { "role": "about", "slot": "about", "variant": "brief" },
+        { "role": "catalog", "slot": "services", "variant": "ritual-cards" },
+        { "role": "faq", "slot": "faq", "variant": "numbered-cards" },
+        { "role": "contact", "slot": "locations", "variant": "single" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "signature-bar" }
+      ],
+      "layout": { "archetype": "showcase" }
+    }
+  }
+}

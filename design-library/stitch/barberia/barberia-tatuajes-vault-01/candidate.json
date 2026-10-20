@@ -1,0 +1,22 @@
+{
+  "id": "barberia-tatuajes-vault-01",
+  "giro": "barberia",
+  "source": "stitch",
+  "status": "shelved",
+  "tags": [
+    "tatuajes",
+    "galeria",
+    "acero"
+  ],
+  "spin": "tatuajes-galeria-acero",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-19T22:39:12.160Z",
+  "stitch": {
+    "project_id": "7078349500793544640",
+    "screen_ids": [
+      "a73dfdbc971a45a6a974a273316832c0"
+    ]
+  },
+  "direction": "neon-nocturno",
+  "notes": "paleta lima (d=0 vs pal-carbon-lima) no pasa la compuerta; secciones sin medir; se usa como referencia de mood"
+}

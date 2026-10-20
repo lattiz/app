@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/barberia-grafito-estudio.spec.json (spec e41ae60c038f, file f472c1e923fd). Do not edit: use the spec, or freeze.",
+  "name": "Grafito Estudio",
+  "category": "barbershop",
+  "phone": "+525500000000",
+  "whatsapp": "+5215500000000",
+  "email": "hola@grafitoestudio.mx",
+  "address": {
+    "street": "Calle Tabasco 212, Roma Norte, Cuauhtémoc",
+    "city": "CDMX",
+    "country": "MX"
+  },
+  "hours": {
+    "tue": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "sun": [
+      {
+        "open": "11:00",
+        "close": "16:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}

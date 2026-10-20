@@ -1,0 +1,75 @@
+{
+  "$lattiz": "GENERATED from specs/barberia-grafito-estudio.spec.json (spec e41ae60c038f, file f8849f402b22). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "88f2e46d19d0e94b2da9ebb297a7cd5b111c040702d9799e1000ad2fc2824b0d",
+      "url": "https://images.pexels.com/photos/34123323/pexels-photo-34123323.png",
+      "pageUrl": "https://www.pexels.com/photo/34123323/"
+    },
+    {
+      "file": "about.jpg",
+      "source": "url",
+      "sha256": "bbe5ac4b8d0ed645099e4b44cdd9ea28a5c78970e9999820c29421aca2346c6c",
+      "url": "https://images.pexels.com/photos/14584993/pexels-photo-14584993.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/14584993/"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "url",
+      "sha256": "c3cff1b5533dacff3a895d0b9eb7e955200f5f2dc4be1c14cefa3998216baeaf",
+      "url": "https://images.pexels.com/photos/3396041/pexels-photo-3396041.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/3396041/"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "url",
+      "sha256": "694af06c21e6639312c41289a9834f0120c6c5430267d96e0b6b182975f0d4ca",
+      "url": "https://images.pexels.com/photos/30579165/pexels-photo-30579165.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/30579165/"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "url",
+      "sha256": "ac286a7ff58a0224e3e9348e018b59806daa76f1bc87ff0c4824671ed251245c",
+      "url": "https://images.pexels.com/photos/26936499/pexels-photo-26936499.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/26936499/"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "url",
+      "sha256": "3d462ede2747f90b7e9ac20f0954957014c95cf83e581349e07d13fbf04acc86",
+      "url": "https://images.pexels.com/photos/3738457/pexels-photo-3738457.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/3738457/"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "url",
+      "sha256": "a75e268e21f6b5f5e27644a637be72c4104c9b7ae5b47a4cee922b16a6447098",
+      "url": "https://images.pexels.com/photos/7147751/pexels-photo-7147751.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/7147751/"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "url",
+      "sha256": "0dd65a431032cb6100039e0f3b3e2e38681776ee92a85343eabf58ca516e7351",
+      "url": "https://images.pexels.com/photos/29491039/pexels-photo-29491039.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/29491039/"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "url",
+      "sha256": "c0bd6005fb95429bb65a36cf81cd85f434de594840da59b3830bbb22ba149cf5",
+      "url": "https://images.pexels.com/photos/37023011/pexels-photo-37023011.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/37023011/"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "url",
+      "sha256": "adfe9234a4eb59d9c2ee949c8e31515e7860c44fe2545d21b0f87f25874929b2",
+      "url": "https://images.pexels.com/photos/16650203/pexels-photo-16650203.jpeg",
+      "pageUrl": "https://www.pexels.com/photo/16650203/"
+    }
+  ]
+}

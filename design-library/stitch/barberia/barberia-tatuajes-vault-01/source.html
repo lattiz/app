@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+
+<html class="dark scroll-smooth" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VAULT / ROMA NORTE — Arte Corporal Contemporáneo &amp; Perforación Clínica</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@200;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-highest": "#353436",
+            "tertiary-fixed-dim": "#ffb3ae",
+            "secondary-fixed": "#dfe3e8",
+            "on-surface": "#e5e2e3",
+            "primary": "#ffffff",
+            "on-primary-fixed-variant": "#44474a",
+            "surface-container-low": "#1c1b1c",
+            "primary-container": "#e0e3e6",
+            "surface-container-high": "#2a2a2b",
+            "inverse-primary": "#5b5f61",
+            "surface-bright": "#3a393a",
+            "on-secondary-fixed-variant": "#43474b",
+            "primary-fixed": "#e0e3e6",
+            "error": "#ffb4ab",
+            "tertiary": "#ffffff",
+            "on-error": "#690005",
+            "inverse-on-surface": "#313031",
+            "on-surface-variant": "#c4c7c9",
+            "on-primary-container": "#626567",
+            "secondary": "#c3c7cc",
+            "surface-variant": "#353436",
+            "error-container": "#93000a",
+            "on-tertiary-container": "#cb0022",
+            "on-tertiary-fixed-variant": "#930015",
+            "surface-container-lowest": "#0e0e0f",
+            "on-primary-fixed": "#191c1e",
+            "secondary-fixed-dim": "#c3c7cc",
+            "tertiary-fixed": "#ffdad7",
+            "outline": "#8e9194",
+            "on-error-container": "#ffdad6",
+            "secondary-container": "#454a4e",
+            "background": "#131314",
+            "on-secondary": "#2c3135",
+            "on-background": "#e5e2e3",
+            "surface": "#131314",
+            "on-primary": "#2d3133",
+            "surface-tint": "#c4c7ca",
+            "surface-dim": "#131314",
+            "on-tertiary": "#68000c",
+            "outline-variant": "#44474a",
+            "on-secondary-fixed": "#171c20",
+            "inverse-surface": "#e5e2e3",
+            "primary-fixed-dim": "#c4c7ca",
+            "on-tertiary-fixed": "#410004",
+            "tertiary-container": "#ffdad7",
+            "on-secondary-container": "#b5b9be",
+            "surface-container": "#201f20"
+          },
+          "borderRadius": {
+            "DEFAULT": "0rem",
+            "none": "0rem",
+            "sm": "0rem",
+            "md": "0rem",
+            "lg": "0rem",
+            "xl": "0rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-md": "1rem",
+            "space-xl": "4rem",
+            "gutter": "1.5rem",
+            "margin-mobile": "1.25rem",
+            "margin": "3rem",
+            "gutter-mobile": "1rem",
+            "space-xs": "0.25rem",
+            "space-lg": "2rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-lg": ["Inter", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "headline-md": ["Bebas Neue", "sans-serif"],
+            "display-xl": ["Bebas Neue", "sans-serif"],
+            "headline-lg": ["Bebas Neue", "sans-serif"],
+            "label-caps": ["Inter", "sans-serif"],
+            "display-xl-mobile": ["Bebas Neue", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "display-lg-mobile": ["Bebas Neue", "sans-serif"],
+            "headline-sm": ["Bebas Neue", "sans-serif"],
+            "label-mono": ["Inter", "monospace"],
+            "display-lg": ["Bebas Neue", "sans-serif"]
+          },
+          "fontSize": {
+            "body-lg": ["16px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "300" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "headline-md": ["28px", { "lineHeight": "32px", "letterSpacing": "0.08em", "fontWeight": "400" }],
+            "display-xl": ["96px", { "lineHeight": "92px", "letterSpacing": "0.15em", "fontWeight": "400" }],
+            "headline-lg": ["36px", { "lineHeight": "40px", "letterSpacing": "0.1em", "fontWeight": "400" }],
+            "label-caps": ["11px", { "lineHeight": "14px", "letterSpacing": "0.18em", "fontWeight": "500" }],
+            "display-xl-mobile": ["52px", { "lineHeight": "54px", "letterSpacing": "0.12em", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "300" }],
+            "display-lg-mobile": ["40px", { "lineHeight": "42px", "letterSpacing": "0.1em", "fontWeight": "400" }],
+            "headline-sm": ["22px", { "lineHeight": "26px", "letterSpacing": "0.06em", "fontWeight": "400" }],
+            "label-mono": ["10px", { "lineHeight": "12px", "letterSpacing": "0.2em", "fontWeight": "600" }],
+            "display-lg": ["64px", { "lineHeight": "64px", "letterSpacing": "0.12em", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Surgical hairline crosshairs and clinical styling */
+    .crosshair-grid {
+      background-image: radial-gradient(rgba(196, 199, 201, 0.12) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .steel-rule-h {
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(196, 199, 201, 0.3) 25%, rgba(196, 199, 201, 0.3) 75%, transparent 100%);
+    }
+    .spec-bracket {
+      position: relative;
+    }
+    .spec-bracket::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      width: 8px;
+      height: 8px;
+      border-top: 1px solid #c4c7ca;
+      border-left: 1px solid #c4c7ca;
+    }
+    .spec-bracket::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 8px;
+      height: 8px;
+      border-bottom: 1px solid #c4c7ca;
+      border-right: 1px solid #c4c7ca;
+    }
+  </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface antialiased selection:bg-primary selection:text-surface-container-lowest font-body-md min-h-screen">
+<!-- ========================================== -->
+<!-- 1. FIXED TOP APP BAR / HEADER              -->
+<!-- ========================================== -->
+<header class="fixed top-0 left-0 w-full z-50 rounded-none bg-surface/95 border-b border-outline-variant backdrop-blur-none">
+<div class="flex justify-between items-center w-full px-6 lg:px-12 py-4 max-w-full mx-auto">
+<!-- Studio Wordmark -->
+<div class="flex items-center gap-4">
+<a class="text-headline-sm font-headline-sm tracking-widest text-primary uppercase flex items-center gap-3" href="#hero">
+<span>VAULT / ROMA NORTE</span>
+<span class="text-outline-variant font-body-sm font-light">·</span>
+<span class="font-label-mono text-label-mono text-secondary tracking-widest">CDMX</span>
+</a>
+<div class="hidden sm:flex items-center gap-2 pl-3 border-l border-outline-variant">
+<span class="w-1.5 h-1.5 bg-[#E11D2E] inline-block animate-pulse"></span>
+<span class="font-label-mono text-label-mono text-[#E11D2E] uppercase">ESTUDIO PRIVADO</span>
+</div>
+</div>
+<!-- Navigation Anchor Links -->
+<nav class="hidden md:flex items-center space-x-8">
+<a class="font-label-caps text-label-caps uppercase text-secondary hover:text-primary pb-1 transition-none" href="#servicios">Servicios</a>
+<a class="font-label-caps text-label-caps uppercase text-secondary hover:text-primary pb-1 transition-none" href="#protocolo">Protocolo</a>
+<a class="font-label-caps text-label-caps uppercase text-secondary hover:text-primary pb-1 transition-none" href="#galeria">Galería</a>
+<a class="font-label-caps text-label-caps uppercase text-secondary hover:text-primary pb-1 transition-none" href="#artistas">Artistas</a>
+<a class="font-label-caps text-label-caps uppercase text-secondary hover:text-primary pb-1 transition-none" href="#preguntas">Preguntas</a>
+<a class="font-label-caps text-label-caps uppercase text-secondary hover:text-primary pb-1 transition-none" href="#coordenadas">Contacto</a>
+</nav>
+<!-- Trailing Action -->
+<div class="flex items-center gap-4">
+<a class="inline-block px-4 py-2 border border-outline hover:border-primary text-primary font-label-caps text-label-caps uppercase bg-transparent hover:bg-surface-container-low transition-none" href="https://wa.me/525541928830?text=Hola,%20solicito%20información%20para%20una%20sesión%20en%20VAULT%20Roma%20Norte" rel="noopener noreferrer" target="_blank">
+          Agendar cita
+        </a>
+</div>
+</div>
+</header>
+<!-- ========================================== -->
+<!-- 2. FULL-BLEED HERO                         -->
+<!-- ========================================== -->
+<section class="relative min-h-screen pt-28 pb-16 flex flex-col justify-between border-b border-outline-variant overflow-hidden crosshair-grid" id="hero">
+<!-- Atmospheric Visual Veil Background -->
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center grayscale contrast-125 opacity-25" data-alt="Monochrome architectural photograph of a high-end minimalist brutalist gallery space in Mexico City with polished dark concrete walls, surgical stainless steel tray tables, sterile task lighting casting dramatic shadows, and sharp architectural angles. High contrast, museum-level serenity, luxury brutalism aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDUNkt_V3w889Ap7AoG3wosh0E__4h-wZoLdLYUcTOJQQTCHcqGPvWeKh6b_CaKWge-kDDDE88AQizwa7GUiS3AScyhtl-i8MC0X1hvEOouvKXi6e8UX7eK7X2EBmBERoDaR6yqtsfcs0MAQEZNJgL8CbWjRZKr-4FJ6iUyiKZgEWAyiF-7CJ0WhaPEtQJsFnTpYF-zGQ3cvpkzS2csgtWo8osBpt9g7gFPdvMPK20ewV6mGoHC6xXGvZ1oCWgRr6za9GINqMBnLrY')"></div>
+<div class="absolute inset-0 bg-surface-container-lowest/85"></div>
+<div class="absolute top-1/4 right-12 w-64 h-64 border border-outline-variant/30 pointer-events-none hidden lg:block">
+<div class="absolute top-2 left-2 font-label-mono text-label-mono text-outline">LAT. 19.4187° N</div>
+<div class="absolute bottom-2 right-2 font-label-mono text-label-mono text-outline">LON. 99.1622° W</div>
+</div>
+</div>
+<!-- Hero Content -->
+<div class="relative z-10 w-full px-6 lg:px-12 max-w-7xl mx-auto my-auto pt-12 pb-8">
+<!-- Clinical Identifier Tag -->
+<div class="inline-flex items-center gap-3 px-3 py-1 bg-surface-container-low border border-outline-variant mb-6">
+<span class="w-2 h-2 bg-[#E11D2E]"></span>
+<span class="font-label-mono text-label-mono tracking-widest uppercase text-secondary">CLINICAL VAULT ARCHITECTURE · ROMA NORTE CDMX</span>
+</div>
+<!-- Main Headline -->
+<h1 class="font-display-xl-mobile lg:font-display-xl text-display-xl-mobile lg:text-display-xl text-primary uppercase max-w-5xl tracking-widest mb-6">
+        Arte Corporal Contemporáneo &amp; Perforación Clínica
+      </h1>
+<!-- Tagline -->
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl font-light mb-10 leading-relaxed">
+        Espacio de creación privada en Roma Norte. Rigor hospitalario, piezas irrepetibles y curaduría anatómica bajo estrictos estándares asépticos.
+      </p>
+<!-- Primary CTA Area -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+<a class="inline-flex items-center gap-4 bg-primary text-surface-container-lowest font-label-caps text-label-caps uppercase px-8 py-4 font-semibold hover:bg-secondary transition-none" href="https://wa.me/525541928830?text=Hola,%20deseo%20iniciar%20consulta%20para%20un%20proyecto" rel="noopener noreferrer" target="_blank">
+<span>Contactar por WhatsApp</span>
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="square" stroke-linejoin="miter" stroke-width="2"></path>
+</svg>
+</a>
+<div class="font-label-mono text-label-mono text-secondary flex items-center gap-2">
+<svg class="w-4 h-4 text-outline" fill="currentColor" viewbox="0 0 24 24">
+<path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"></path>
+</svg>
+<span>TEL DIRECTO: +52 55 4192 8830</span>
+</div>
+</div>
+</div>
+<!-- Trust Proof Steel Footer -->
+<div class="relative z-10 w-full px-6 lg:px-12 border-t border-outline-variant bg-surface-container-lowest/90 py-4">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 font-label-mono text-label-mono text-outline">
+<div class="flex items-center gap-3">
+<span class="w-1.5 h-1.5 bg-outline"></span>
+<span>AUTOCLAVE CLASE B CERTIFICADO</span>
+</div>
+<div class="hidden md:block text-outline-variant">|</div>
+<div class="flex items-center gap-3">
+<span class="w-1.5 h-1.5 bg-outline"></span>
+<span>DISEÑO ANATÓMICO A MEDIDA</span>
+</div>
+<div class="hidden md:block text-outline-variant">|</div>
+<div class="flex items-center gap-3">
+<span class="w-1.5 h-1.5 bg-outline"></span>
+<span>SESIONES PRIVADAS POR CITA PREVIA</span>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================== -->
+<!-- 3. RATE CARDS (TARIFARIO & SERVICIOS)       -->
+<!-- ========================================== -->
+<section class="py-24 px-6 lg:px-12 border-b border-outline-variant bg-surface-container-lowest" id="servicios">
+<div class="max-w-7xl mx-auto">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 border-b border-outline-variant pb-8">
+<div>
+<span class="font-label-mono text-label-mono text-outline uppercase block mb-2">[ SECCIÓN 01 · SERVICIOS ]</span>
+<h2 class="font-headline-lg text-headline-lg text-primary uppercase tracking-widest">TARIFARIO CURADO</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md mt-4 md:mt-0 font-light">
+          Transparencia de inversión. Material estéril de grado quirúrgico incluido en cada intervención.
+        </p>
+</div>
+<!-- Rate Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Card 1 -->
+<div class="bg-surface-container-low border border-outline-variant border-t-2 border-t-[#C9CDD2] p-6 flex flex-col justify-between group hover:border-[#C9CDD2] transition-none">
+<div>
+<div class="flex justify-between items-center mb-4">
+<span class="font-label-mono text-label-mono text-outline">COD. 01-FLM</span>
+<span class="font-label-mono text-label-mono text-secondary">1.5 HRS</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary uppercase tracking-wider mb-2">Flash &amp; Micro-tatuaje</h3>
+<div class="font-headline-lg text-headline-lg text-primary tracking-wide mb-4">$2,200 <span class="font-label-mono text-label-mono text-outline">MXN</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-light leading-relaxed mb-6">
+              Piezas minimalistas de línea fina y alta precisión sobre piel virgen o diseñada. Agujas descartables de calibre fino.
+            </p>
+</div>
+<div class="pt-4 border-t border-outline-variant">
+<a class="font-label-caps text-label-caps uppercase text-primary flex items-center justify-between group-hover:text-secondary" href="https://wa.me/525541928830?text=Solicito%20Flash%20y%20Micro-tatuaje">
+<span>Elegir servicio</span>
+<span>→</span>
+</a>
+</div>
+</div>
+<!-- Card 2 (Featured with Autor Badge) -->
+<div class="bg-surface-container-high border border-[#E11D2E]/40 border-t-2 border-t-[#E11D2E] p-6 flex flex-col justify-between relative group hover:border-[#E11D2E] transition-none">
+<div class="absolute -top-3 right-4 px-2 py-0.5 bg-[#E11D2E] text-surface-container-lowest font-label-mono text-label-mono font-bold tracking-widest uppercase">
+            Pieza de autor
+          </div>
+<div>
+<div class="flex justify-between items-center mb-4">
+<span class="font-label-mono text-label-mono text-[#E11D2E]">COD. 02-GFM</span>
+<span class="font-label-mono text-label-mono text-secondary">4 A 6 HRS</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary uppercase tracking-wider mb-2">Gran Formato a Medida</h3>
+<div class="font-headline-lg text-headline-lg text-primary tracking-wide mb-4">$6,500 <span class="font-label-mono text-label-mono text-outline">MXN / SESIÓN</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-light leading-relaxed mb-6">
+              Desarrollo conceptual exclusivo, estudio anatómico previo y sesión continua sin prisas en cabina privada aislada.
+            </p>
+</div>
+<div class="pt-4 border-t border-outline-variant">
+<a class="font-label-caps text-label-caps uppercase text-primary flex items-center justify-between text-primary font-semibold" href="https://wa.me/525541928830?text=Solicito%20Gran%20Formato%20Personalizado">
+<span>Elegir servicio</span>
+<span>→</span>
+</a>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-low border border-outline-variant border-t-2 border-t-[#C9CDD2] p-6 flex flex-col justify-between group hover:border-[#C9CDD2] transition-none">
+<div>
+<div class="flex justify-between items-center mb-4">
+<span class="font-label-mono text-label-mono text-outline">COD. 03-PRC</span>
+<span class="font-label-mono text-label-mono text-secondary">45 MIN</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary uppercase tracking-wider mb-2">Perforación Aséptica</h3>
+<div class="font-headline-lg text-headline-lg text-primary tracking-wide mb-4">$1,400 <span class="font-label-mono text-label-mono text-outline">MXN</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-light leading-relaxed mb-6">
+              Procedimiento needle-only con catéter desechable, incluye pieza inicial de titanio grado implante ASTM F136 pulido a espejo.
+            </p>
+</div>
+<div class="pt-4 border-t border-outline-variant">
+<a class="font-label-caps text-label-caps uppercase text-primary flex items-center justify-between group-hover:text-secondary" href="https://wa.me/525541928830?text=Solicito%20Perforación%20Aséptica">
+<span>Elegir servicio</span>
+<span>→</span>
+</a>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-low border border-outline-variant border-t-2 border-t-[#C9CDD2] p-6 flex flex-col justify-between group hover:border-[#C9CDD2] transition-none">
+<div>
+<div class="flex justify-between items-center mb-4">
+<span class="font-label-mono text-label-mono text-outline">COD. 04-EAR</span>
+<span class="font-label-mono text-label-mono text-secondary">2 HRS</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary uppercase tracking-wider mb-2">Ear Styling Curado</h3>
+<div class="font-headline-lg text-headline-lg text-primary tracking-wide mb-4">$3,800 <span class="font-label-mono text-label-mono text-outline">MXN</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-light leading-relaxed mb-6">
+              Plan integral de perforación anatómica múltiple y selección curada de piezas en oro blanco de 14k y titanio biocompatible.
+            </p>
+</div>
+<div class="pt-4 border-t border-outline-variant">
+<a class="font-label-caps text-label-caps uppercase text-primary flex items-center justify-between group-hover:text-secondary" href="https://wa.me/525541928830?text=Solicito%20Curaduría%20Ear%20Styling">
+<span>Elegir servicio</span>
+<span>→</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Clinical Bottom Banner -->
+<div class="mt-8 p-4 border border-outline-variant bg-surface-container flex items-center gap-4">
+<span class="w-2 h-2 bg-[#E11D2E]"></span>
+<p class="font-label-mono text-label-mono text-secondary uppercase">
+          Nota clínica: Toda sesión incluye consulta previa de diseño sin costo y formulario médico confidencial obligatorio previo a ingresar a cabina.
+        </p>
+</div>
+</div>
+</section>
+<!-- ========================================== -->
+<!-- 4. PROCESS & HYGIENE (PROTOCOLO)           -->
+<!-- ========================================== -->
+<section class="py-24 px-6 lg:px-12 border-b border-outline-variant bg-surface" id="protocolo">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<!-- Left Column: Specs and Methods -->
+<div class="lg:col-span-7">
+<span class="font-label-mono text-label-mono text-outline uppercase block mb-2">[ SECCIÓN 02 · BIOSEGURIDAD ]</span>
+<h2 class="font-headline-lg text-headline-lg text-primary uppercase tracking-widest mb-8">
+            ESTERILIZACIÓN HOSPITALARIA &amp; MÉTODO
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-12 font-light">
+            Operamos bajo la premisa de cero contaminación cruzada. Cada instrumento sigue una cadena aséptica trazable respaldada por pruebas de esporas biológicas de laboratorio.
+          </p>
+<div class="space-y-8">
+<!-- Protocol 1 -->
+<div class="flex items-start gap-6 pb-6 border-b border-outline-variant">
+<div class="w-12 h-12 flex-shrink-0 border border-outline flex items-center justify-center bg-surface-container-high text-primary">
+<!-- Autoclave / Shield SVG -->
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5"></path>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-3 mb-1">
+<span class="font-label-mono text-label-mono text-outline">PROT-01</span>
+<h3 class="font-headline-sm text-headline-sm text-primary uppercase">Esterilización Autoclave Clase B</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-light leading-relaxed">
+                  Monitoreo biológico con esporas e integradores químicos en cada ciclo de vacío fraccionado. Todo instrumental es embolsado y desprecintado exclusivamente frente a la vista del cliente.
+                </p>
+</div>
+</div>
+<!-- Protocol 2 -->
+<div class="flex items-start gap-6 pb-6 border-b border-outline-variant">
+<div class="w-12 h-12 flex-shrink-0 border border-outline flex items-center justify-center bg-surface-container-high text-primary">
+<!-- Anatomy / Caliper SVG -->
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 7v10m16-10v10M7 4h10M7 20h10M9 9h6m-6 6h6" stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5"></path>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-3 mb-1">
+<span class="font-label-mono text-label-mono text-outline">PROT-02</span>
+<h3 class="font-headline-sm text-headline-sm text-primary uppercase">Diseño y Adaptación Anatómica</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-light leading-relaxed">
+                  Consulta previa presencial o remota. Cada pieza respeta la musculatura, la tensión dérmica, los ejes de flexión articular y la longevidad del pigmento bajo envejecimiento natural.
+                </p>
+</div>
+</div>
+<!-- Protocol 3 -->
+<div class="flex items-start gap-6">
+<div class="w-12 h-12 flex-shrink-0 border border-outline flex items-center justify-center bg-surface-container-high text-primary">
+<!-- Medical Followup SVG -->
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5"></path>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-3 mb-1">
+<span class="font-label-mono text-label-mono text-outline">PROT-03</span>
+<h3 class="font-headline-sm text-headline-sm text-primary uppercase">Cuidado y Seguimiento Post-procedimiento</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-light leading-relaxed">
+                  Kit médico de curación incluido con parche dérmico de poliuretano transpirable, solución salina estéril y cita de revisión física sin costo a los 21 días post-intervención.
+                </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Framed Clinical Visual -->
+<div class="lg:col-span-5">
+<div class="p-4 border border-outline-variant bg-surface-container-low spec-bracket relative">
+<div class="relative aspect-square w-full border border-outline-variant overflow-hidden">
+<div class="w-full h-full bg-cover bg-center grayscale contrast-125" data-alt="A pristine high-contrast black and white photograph of an industrial medical autoclave inside a clinical tattoo studio, illuminated by crisp steel directional lighting, stainless steel instruments in sealed pouches, zero dust, surgical brutalist aesthetic in Mexico City." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB-rmYh4xl5wcWqj8c6yG1B5tiNPFnLbdtw5C0zKYfpW-uuxj-QnChS6yRDmf92MtqNkvwh3_fM2-toWdX-5juEQajgH5aisNl5H7Cy2LFVX64KaHgqncXeManwKNGhEK6mYNlryas_ZxQWK03g4gUur5uNV95YFXnwa_2paCsVyNoR0Y7RtFKxklBm7dGZHY73orXqbh1TL8mfbKpwqLQ93QPSNXbcHSMzRXvTz_CfbJ5MbmjlCj3iZxttD9DJSyLkr50lBmYMsUw')"></div>
+<!-- Steel Spec Plate -->
+<div class="absolute bottom-4 left-4 right-4 bg-surface-container-high/90 border border-outline p-3 backdrop-blur-none">
+<div class="flex items-center justify-between">
+<div>
+<div class="font-label-mono text-label-mono text-primary font-bold">ESTERILIZACIÓN CERTIFICADA · CDMX</div>
+<div class="font-label-mono text-label-mono text-outline">REG. SANITARIO COFEPRIS VIGENTE № 2209-A</div>
+</div>
+<span class="w-2 h-2 bg-[#E11D2E]"></span>
+</div>
+</div>
+</div>
+<!-- Technical readout specs -->
+<div class="mt-4 grid grid-cols-2 gap-2 font-label-mono text-label-mono text-outline border-t border-outline-variant pt-3">
+<div>TEMPERATURA: 134°C (2.1 BAR)</div>
+<div>TIEMPO VACÍO: 18 MIN</div>
+<div>TITANIO: ASTM F136 IMPLANT</div>
+<div>AGUJAS: EO GAS STERILE 0.25MM</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================== -->
+<!-- 5. ASYMMETRIC GALLERY GRID (ARCHIVO)       -->
+<!-- ========================================== -->
+<section class="py-24 px-6 lg:px-12 border-b border-outline-variant bg-surface-container-lowest" id="galeria">
+<div class="max-w-7xl mx-auto">
+<!-- Section Header with Curatorial Filters -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-outline-variant pb-6">
+<div>
+<span class="font-label-mono text-label-mono text-outline uppercase block mb-2">[ SECCIÓN 03 · EXPOSICIÓN ]</span>
+<h2 class="font-headline-lg text-headline-lg text-primary uppercase tracking-widest">ARCHIVO VISUAL / PIEZAS RECIENTES</h2>
+</div>
+<div class="flex flex-wrap gap-2 mt-4 md:mt-0 font-label-mono text-label-mono">
+<span class="px-3 py-1 bg-surface-container text-primary border border-outline">TODOS</span>
+<span class="px-3 py-1 bg-transparent text-secondary border border-outline-variant hover:border-outline cursor-pointer">FINE LINE</span>
+<span class="px-3 py-1 bg-transparent text-secondary border border-outline-variant hover:border-outline cursor-pointer">BLACKWORK</span>
+<span class="px-3 py-1 bg-transparent text-secondary border border-outline-variant hover:border-outline cursor-pointer">HEAVY PIERCING</span>
+<span class="px-3 py-1 bg-transparent text-secondary border border-outline-variant hover:border-outline cursor-pointer">MICRO-REALISMO</span>
+</div>
+</div>
+<!-- Asymmetric Bento-style Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Piece 01: Tall Lead Piece -->
+<div class="md:col-span-7 bg-surface-container border border-outline-variant hover:border-outline transition-none group">
+<div class="aspect-[16/10] md:aspect-[16/11] overflow-hidden">
+<div class="w-full h-full bg-cover bg-center grayscale contrast-125 group-hover:scale-[1.02] transition-none" data-alt="Monochrome sharp photography of a dense blackwork and fine line tattoo with sacred brutalist geometries and architectural symmetry across human shoulder blades, stark lighting against deep black background in a contemporary art space in Mexico City." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBSXL_BlZaGxinVSunyyohviG8Kn0Zod-0cJWdKgr_3j8Se1Y_sNVjlqUmpTPTJI2hRNznYPg02ItRVGBHAcn-GimwP9BfOAIsXc_fq1CKBSMnMEouWL4ZSHrfzrodhfhVvxmcefKEBpBbqF0t2iq8GbbgUYxo7PAWY9PaJDOKOH6RDuFEXGd4w2uPm6qLokRoOILWDOIRYnDQ7qKuXbHj6l3hSer9YykOqjOwTADEknQylrF4QmIcBhXIAGYb2VGRqBAQXiLDD4JI')"></div>
+</div>
+<div class="p-4 border-t border-outline-variant flex justify-between items-center bg-surface-container-low">
+<span class="font-label-mono text-label-mono text-primary font-medium uppercase">01. GEOMETRÍA TORÁCICA · TINTA CARBÓN</span>
+<span class="font-label-mono text-label-mono text-outline">MATEO DURÁN · 2024</span>
+</div>
+</div>
+<!-- Piece 02: Piercing Focus -->
+<div class="md:col-span-5 bg-surface-container border border-outline-variant hover:border-outline transition-none group">
+<div class="aspect-[16/10] md:aspect-[16/11] overflow-hidden">
+<div class="w-full h-full bg-cover bg-center grayscale contrast-125 group-hover:scale-[1.02] transition-none" data-alt="Clean clinical macro shot of an ear helix curation featuring polished implant grade ASTM F136 titanium studs and seamless white gold rings on human cartilage, high key clinical illumination, sharp macro details, sterile aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAxtFvhWH_iEkdOMNUX3KaPXftonyG646RRkSIvGUUPFQs3tKb7a5XV3dOgDXoHMmue0r7zgBqSG28hDeLTgfmsJBOidzNi5JPLGqqlo-ofGMgDfjr7NsDXew1IoWuH2ylBNlUY8kb-NFMqjnCGFHkWaZLBJ2V1t0uHKZk16bgzTS9msOxWv-L0mIuuUHYQO7jLO0MNXMBC99X3IXFo3qGRFRnjvVqkbElcynWWFB517pG9ofpIOP0sDDqNplHbLmdn1zgQtfabAF8')"></div>
+</div>
+<div class="p-4 border-t border-outline-variant flex justify-between items-center bg-surface-container-low">
+<span class="font-label-mono text-label-mono text-primary font-medium uppercase">02. CURADURÍA HÉLICE · TITANIO F136</span>
+<span class="font-label-mono text-label-mono text-outline">IÑAKI SOTO · 2024</span>
+</div>
+</div>
+<!-- Piece 03: Fine Line Botanical -->
+<div class="md:col-span-4 bg-surface-container border border-outline-variant hover:border-outline transition-none group">
+<div class="aspect-square overflow-hidden">
+<div class="w-full h-full bg-cover bg-center grayscale contrast-125 group-hover:scale-[1.02] transition-none" data-alt="Micro fine line tattoo of an anatomical Mexican botanical specimen tattooed on the inner forearm, sharp razor line weights, sterile skin finish, high-contrast monochrome studio lighting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCzuGBdZJtzlWVI0BZ3SPzpskUi7bhDf1R1RD9sTMd0O9citOQ3q8w7Lqw0IVXNIlVowxcFYvI0cZTAjfHGXkVO-wWEst7rGxEP4xi6L-61UfLczSDc9_GGxqkiVtikbE4vw-Rf9gdNUZBurX77AsptFfyq6OfBWWZKnyWAw5DqhcGtvrm5sRTM7kLvOPrQcb1D9JwTBNCwKopoKZAiR7f1PG75inkW-S2TwuMxi_tFWiaSebopZgfzc5ih6ezRNQ3SoTR417bOrec')"></div>
+</div>
+<div class="p-4 border-t border-outline-variant flex justify-between items-center bg-surface-container-low">
+<span class="font-label-mono text-label-mono text-primary font-medium uppercase">03. BOTÁNICA FÓSIL · 0.20MM</span>
+<span class="font-label-mono text-label-mono text-outline">VALERIA CRUZ</span>
+</div>
+</div>
+<!-- Piece 04: Industrial Piercing Composition -->
+<div class="md:col-span-4 bg-surface-container border border-outline-variant hover:border-outline transition-none group">
+<div class="aspect-square overflow-hidden">
+<div class="w-full h-full bg-cover bg-center grayscale contrast-125 group-hover:scale-[1.02] transition-none" data-alt="Clinical close up photography of a custom daith and conch piercing assembly with solid white gold bar and mirror polished titanium ball studs on pristine clean ear, studio shadows, medical elegance." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC4lQTV6qEJkfjrTY50dxW-qzUJ3xJqdyMuJdxjAxd8ZtFJjqxWb7hElpQ8wDoBJhfD_1dX5NzT2aPAJ3eLP3f54Xl6Co62T0gofLr36a_HW5P8luFl8U0PMLvaSouAkfBBJycXeDnReOEZ68YjJoc5WXlajdudUSvxSDG3iEnHXHO5UC_vtojp4_ockhWMTzkm9SG3ADO40bvZJH-tuy22-l2K8ikoDa9hNoAJ-NUaPH0xpT5D4EhYrskSUFofUJxTl46ukez0nUM')"></div>
+</div>
+<div class="p-4 border-t border-outline-variant flex justify-between items-center bg-surface-container-low">
+<span class="font-label-mono text-label-mono text-primary font-medium uppercase">04. CONCH &amp; DAITH · ORO BLANCO 14K</span>
+<span class="font-label-mono text-label-mono text-outline">IÑAKI SOTO</span>
+</div>
+</div>
+<!-- Piece 05: Medieval Engraving Blackwork -->
+<div class="md:col-span-4 bg-surface-container border border-outline-variant hover:border-outline transition-none group">
+<div class="aspect-square overflow-hidden">
+<div class="w-full h-full bg-cover bg-center grayscale contrast-125 group-hover:scale-[1.02] transition-none" data-alt="High-contrast dark blackwork tattoo inspired by medieval woodcut engraving techniques on a forearm, heavy black inks, clean skin breaks, architectural linework, contemporary Mexico City gallery lighting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBLkYQER9eZUd9HmHujW8iUoaUskd18ZKL0lXjTyd5ApCPvlFVjnV55VTOeOjWrmQRybDOxeqwKabnXjRm-xv-6yxf4p69OtN8J8Dw5halbL0kfK7wLFsJtnOlTtGLHI7dQJ9T7cflxphjgmZ2oRcE_KENLnEcCwGAulZGC2PgGX5VP1PlDhzJXyTCC-w96tBevAVANVYxvfb8UDQbdzvP68OZ5kIBAC_n2jh3NycicKQupyRwGn9xeFZ9ME17MUTVs3LZNyTNa4uY')"></div>
+</div>
+<div class="p-4 border-t border-outline-variant flex justify-between items-center bg-surface-container-low">
+<span class="font-label-mono text-label-mono text-primary font-medium uppercase">05. GRABADO MONÁSTICO · BLACKWORK</span>
+<span class="font-label-mono text-label-mono text-outline">MATEO DURÁN</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================== -->
+<!-- 6. ARTISTS (RESIDENTES)                    -->
+<!-- ========================================== -->
+<section class="py-24 px-6 lg:px-12 border-b border-outline-variant bg-surface" id="artistas">
+<div class="max-w-7xl mx-auto">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 border-b border-outline-variant pb-8">
+<div>
+<span class="font-label-mono text-label-mono text-outline uppercase block mb-2">[ SECCIÓN 04 · CURADURÍA HUMANA ]</span>
+<h2 class="font-headline-lg text-headline-lg text-primary uppercase tracking-widest">ARTISTAS RESIDENTES</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md mt-4 md:mt-0 font-light">
+          Voces visuales independientes bajo el mismo rigor aséptico y compromiso anatómico.
+        </p>
+</div>
+<!-- Artists Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Artist 1 -->
+<div class="border border-outline-variant bg-surface-container-low flex flex-col group hover:border-[#C9CDD2] transition-none">
+<div class="aspect-[4/5] overflow-hidden border-b border-outline-variant relative">
+<div class="w-full h-full bg-cover bg-center grayscale contrast-125" data-alt="Black and white portrait of a Mexican male tattoo artist in dark attire, serious expression, dramatic rim light, minimalist concrete wall behind him, luxury brutalist gallery mood." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjsoHAlLpupVRU_78S1aZ_t-qYPn1qDVRRXjd0CwrKnHIzUHn_GN9zTmGk1esIqXvrAl-xf7FSFvh7IwQxKXyBBXZrQqGRN1zYCc29hhfdpfKSIbS6o_Bk38bH77a_XpA83P7ZqeC7cybhL1OVl35fmYAf8hw30PGlIGcuaQf2x02brxKrQpVnO5DhLd6dMMq_P8d1BOMnxBVjL7TatbMV1DtItP3hEh4yYg-TPAqlQJvQs2pQf6_brxeaA_yh4BsmdMvbDCXWEsQ')"></div>
+<div class="absolute top-3 left-3 px-2 py-0.5 bg-surface-container-lowest font-label-mono text-label-mono text-secondary border border-outline-variant">
+              01 / RESIDENTE
+            </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<h3 class="font-headline-md text-headline-md text-primary uppercase tracking-wider mb-1">Mateo Durán</h3>
+<div class="font-label-caps text-label-caps text-outline uppercase mb-4">Blackwork &amp; Grabado Medieval</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-light mb-6 leading-relaxed">
+                Especialista en contraste duro e imaginería medieval reinterpretada sobre proporciones anatómicas contemporáneas. Piezas de alto impacto y trazo denso.
+              </p>
+</div>
+<div class="pt-4 border-t border-outline-variant flex items-center justify-between font-label-mono text-label-mono">
+<span class="text-secondary">AGENDA: ABIERTA</span>
+<a class="text-primary hover:text-secondary uppercase" href="https://wa.me/525541928830?text=Consulta%20con%20Mateo%20Duran">Consultar →</a>
+</div>
+</div>
+</div>
+<!-- Artist 2 -->
+<div class="border border-outline-variant bg-surface-container-low flex flex-col group hover:border-[#C9CDD2] transition-none">
+<div class="aspect-[4/5] overflow-hidden border-b border-outline-variant relative">
+<div class="w-full h-full bg-cover bg-center grayscale contrast-125" data-alt="Black and white editorial studio portrait of a Mexican female tattoo artist with focused gaze, minimalist black clothing, sharp side lighting against raw concrete texture in Roma Norte." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBeZByirGkiqBnHvhbI6OKa7MblQdTB5HTBr2S2hzlSJkvvuAA0aUjysQXZDGv_KZ5kVN8teDQ6FylLJ-hK_DIsd0EWrwbjEorMKhsWFilhZopBTCGvZqHvjKoN2B39P3xKa-Bcer9mgWRKe7Dk_H6t-ckboFcp22LzGmhJX1XVUmv_4_ApVpYb7obTZT4MsovUCn4k7KXYCDaT5O8lpDvu650GhjB1nuHhQdwWf6DuETi2k9npTydpDprHyXpFm0u__GsL75S8h0M')"></div>
+<div class="absolute top-3 left-3 px-2 py-0.5 bg-surface-container-lowest font-label-mono text-label-mono text-secondary border border-outline-variant">
+              02 / RESIDENTE
+            </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<h3 class="font-headline-md text-headline-md text-primary uppercase tracking-wider mb-1">Valeria Cruz</h3>
+<div class="font-label-caps text-label-caps text-outline uppercase mb-4">Fine Line &amp; Botánica Médica</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-light mb-6 leading-relaxed">
+                Trazo microscópico y composiciones anatómicas sutiles. Enfoque en botánica autóctona, litografías científicas del siglo XIX y tipografía quirúrgica.
+              </p>
+</div>
+<div class="pt-4 border-t border-outline-variant flex items-center justify-between font-label-mono text-label-mono">
+<span class="text-secondary">AGENDA: ÚLTIMAS CITAS</span>
+<a class="text-primary hover:text-secondary uppercase" href="https://wa.me/525541928830?text=Consulta%20con%20Valeria%20Cruz">Consultar →</a>
+</div>
+</div>
+</div>
+<!-- Artist 3 -->
+<div class="border border-outline-variant bg-surface-container-low flex flex-col group hover:border-[#C9CDD2] transition-none">
+<div class="aspect-[4/5] overflow-hidden border-b border-outline-variant relative">
+<div class="w-full h-full bg-cover bg-center grayscale contrast-125" data-alt="Black and white portrait of a professional male body piercer in clinical surgical attire, holding surgical caliper, sterile ambiance, confident gaze, Mexico City luxury studio lighting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBrGR52v8bxmBcpV5WxhQ4_k5mMsfXvr-QmVkMS9Mr4b3ED_bQao18PUlGBVBBxqVedfGaL2vRELe_sjpwnLFI32CHndITn_RoKii_zWwz7hdnm-5wopXnRnqDMzjMc-qnjPDdcBxyTDk8_R9BYAYkT9fg9rpPbO7X0g6GRPKBe8DBhMJka64cWFl56i4g4ar__u4IH2Ixhr-XHzBUp8CVzjQpgnbN2lqmMnHUgowrKMHNAKgGjbtEYglsH7bt-UBB1U5ziM4a2ra0')"></div>
+<div class="absolute top-3 left-3 px-2 py-0.5 bg-surface-container-lowest font-label-mono text-label-mono text-secondary border border-outline-variant">
+              03 / ESPECIALISTA
+            </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<h3 class="font-headline-md text-headline-md text-primary uppercase tracking-wider mb-1">Iñaki Soto</h3>
+<div class="font-label-caps text-label-caps text-outline uppercase mb-4">Piercing Clínico &amp; Joyería F136</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-light mb-6 leading-relaxed">
+                Especialista en cartílago complejo, angulación anatómica y selección de joyería biocompatible de titanio anodizado y oro macizo libre de níquel.
+              </p>
+</div>
+<div class="pt-4 border-t border-outline-variant flex items-center justify-between font-label-mono text-label-mono">
+<span class="text-secondary">AGENDA: DISPONIBLE</span>
+<a class="text-primary hover:text-secondary uppercase" href="https://wa.me/525541928830?text=Consulta%20con%20Iñaki%20Soto">Consultar →</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================== -->
+<!-- 7. TESTIMONIALS (DIÁLOGOS)                 -->
+<!-- ========================================== -->
+<section class="py-24 px-6 lg:px-12 border-b border-outline-variant bg-surface-container-lowest">
+<div class="max-w-7xl mx-auto">
+<!-- Section Header -->
+<div class="mb-16 border-b border-outline-variant pb-6">
+<span class="font-label-mono text-label-mono text-outline uppercase block mb-2">[ SECCIÓN 05 · REGISTRO EXPERIENCIAL ]</span>
+<h2 class="font-headline-lg text-headline-lg text-primary uppercase tracking-widest">DIÁLOGOS &amp; TESTIMONIOS</h2>
+</div>
+<!-- Testimonial Cards: Alternating Finishes -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card 1: Dark Graphite #1C1E21 -->
+<div class="bg-surface-container-low border border-outline-variant p-8 flex flex-col justify-between">
+<div>
+<div class="font-headline-lg text-headline-lg text-outline leading-none mb-4">“</div>
+<p class="font-body-lg text-body-lg text-on-surface italic font-light leading-relaxed mb-8">
+              La experiencia se aleja por completo de un estudio tradicional. El silencio, la precisión casi quirúrgica y el respeto por el espacio personal hacen que el proceso sea casi meditativo.
+            </p>
+</div>
+<div class="pt-4 border-t border-outline-variant flex items-center justify-between font-label-mono text-label-mono">
+<span class="text-primary font-bold">CAMILA R.</span>
+<span class="text-outline">ROMA NORTE</span>
+</div>
+</div>
+<!-- Card 2: Light Paper High-Contrast #F5F7FA -->
+<div class="bg-primary text-surface-container-lowest border border-primary p-8 flex flex-col justify-between">
+<div>
+<div class="font-headline-lg text-headline-lg text-surface-container-lowest/60 leading-none mb-4">“</div>
+<p class="font-body-lg text-body-lg text-surface-container-lowest font-normal italic leading-relaxed mb-8">
+              Iñaki diseñó la curaduría de mi oreja izquierda con una exactitud geométrica impresionante. Cero inflamación gracias a la técnica needle-only y el titanio F136. No vuelvo a otro lugar.
+            </p>
+</div>
+<div class="pt-4 border-t border-surface-container-lowest/20 flex items-center justify-between font-label-mono text-label-mono">
+<span class="text-surface-container-lowest font-bold">DAVID M.</span>
+<span class="text-surface-container-lowest/70">CONDESA</span>
+</div>
+</div>
+<!-- Card 3: Dark Slate #2A2D31 -->
+<div class="bg-surface-container-high border border-outline-variant p-8 flex flex-col justify-between">
+<div>
+<div class="font-headline-lg text-headline-lg text-outline leading-none mb-4">“</div>
+<p class="font-body-lg text-body-lg text-on-surface italic font-light leading-relaxed mb-8">
+              El proceso de consulta previa con Mateo cambió radicalmente la idea que tenía para mi antebrazo. El resultado es una pieza de museo que respeta la musculatura al mover la muñeca.
+            </p>
+</div>
+<div class="pt-4 border-t border-outline-variant flex items-center justify-between font-label-mono text-label-mono">
+<span class="text-primary font-bold">SOFÍA T.</span>
+<span class="text-outline">JUÁREZ</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================== -->
+<!-- 8. FAQ (RESOLUCIÓN DE DUDAS)               -->
+<!-- ========================================== -->
+<section class="py-24 px-6 lg:px-12 border-b border-outline-variant bg-surface" id="preguntas">
+<div class="max-w-7xl mx-auto">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 border-b border-outline-variant pb-8">
+<div>
+<span class="font-label-mono text-label-mono text-outline uppercase block mb-2">[ SECCIÓN 06 · TRANSPARENCIA OPERATIVA ]</span>
+<h2 class="font-headline-lg text-headline-lg text-primary uppercase tracking-widest">RESOLUCIÓN DE DUDAS</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md mt-4 md:mt-0 font-light">
+          Todas las respuestas visibles sin fricción para una decisión informada.
+        </p>
+</div>
+<!-- FAQ Numbered Cards: Visible Answers -->
+<div class="space-y-4">
+<!-- FAQ 01 -->
+<div class="p-6 bg-surface-container-low border border-outline-variant grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+<div class="md:col-span-1 font-headline-md text-headline-md text-outline">01</div>
+<div class="md:col-span-4">
+<h3 class="font-headline-sm text-headline-sm text-primary uppercase">Nivel de molestia y manejo del dolor</h3>
+</div>
+<div class="md:col-span-7">
+<p class="font-body-md text-body-md text-on-surface-variant font-light leading-relaxed">
+              Trabajamos con protocolos de respiración guiada, pausas programadas cada 60 minutos y técnicas de punción rápida que reducen la fatiga tisular. No recomendamos el uso de anestésicos tópicos externos ya que alteran la textura dérmica y comprometen la retención del pigmento.
+            </p>
+</div>
+</div>
+<!-- FAQ 02 -->
+<div class="p-6 bg-surface-container-low border border-outline-variant grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+<div class="md:col-span-1 font-headline-md text-headline-md text-outline">02</div>
+<div class="md:col-span-4">
+<h3 class="font-headline-sm text-headline-sm text-primary uppercase">Cuidados posteriores y cicatrización</h3>
+</div>
+<div class="md:col-span-7">
+<p class="font-body-md text-body-md text-on-surface-variant font-light leading-relaxed">
+              Cada sesión incluye apósitos dérmicos transpirables impermeables (segunda piel médica) para las primeras 72 horas. Descartamos por completo pomadas grasas derivadas del petróleo; facilitamos solución fisiológica y cremas antisépticas ligeras en nuestro kit de recuperación.
+            </p>
+</div>
+</div>
+<!-- FAQ 03 -->
+<div class="p-6 bg-surface-container-low border border-outline-variant grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+<div class="md:col-span-1 font-headline-md text-headline-md text-outline">03</div>
+<div class="md:col-span-4">
+<h3 class="font-headline-sm text-headline-sm text-primary uppercase">Retoques y ajustes garantizados</h3>
+</div>
+<div class="md:col-span-7">
+<p class="font-body-md text-body-md text-on-surface-variant font-light leading-relaxed">
+              Toda pieza de autor incluye una sesión de valoración y retoque gratuito durante los primeros 60 días tras la cita inicial, una vez completado el ciclo biológico de regeneración celular dérmica.
+            </p>
+</div>
+</div>
+<!-- FAQ 04 -->
+<div class="p-6 bg-surface-container-low border border-outline-variant grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+<div class="md:col-span-1 font-headline-md text-headline-md text-outline">04</div>
+<div class="md:col-span-4">
+<h3 class="font-headline-sm text-headline-sm text-primary uppercase">Edad mínima y requisitos legales</h3>
+</div>
+<div class="md:col-span-7">
+<p class="font-body-md text-body-md text-on-surface-variant font-light leading-relaxed">
+              Exclusivo para personas mayores de 18 años con identificación oficial vigente con fotografía (INE o Pasaporte). No realizamos procedimientos en menores de edad bajo ninguna excepción o consentimiento parental.
+            </p>
+</div>
+</div>
+<!-- FAQ 05 -->
+<div class="p-6 bg-surface-container-low border border-outline-variant grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+<div class="md:col-span-1 font-headline-md text-headline-md text-outline">05</div>
+<div class="md:col-span-4">
+<h3 class="font-headline-sm text-headline-sm text-primary uppercase">Reagendamiento y depósitos</h3>
+</div>
+<div class="md:col-span-7">
+<p class="font-body-md text-body-md text-on-surface-variant font-light leading-relaxed">
+              Las fechas se reservan mediante un anticipo no reembolsable deducible del costo total. Se permite reprogramar sin costo adicional notificando con un mínimo de 48 horas previas al horario pactado.
+            </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================== -->
+<!-- 9. CONTACT & COORDINATES (NO FORMS)        -->
+<!-- ========================================== -->
+<section class="py-24 px-6 lg:px-12 border-b border-outline-variant bg-surface-container-lowest" id="coordenadas">
+<div class="max-w-7xl mx-auto">
+<!-- Section Header -->
+<div class="mb-16 border-b border-outline-variant pb-6">
+<span class="font-label-mono text-label-mono text-outline uppercase block mb-2">[ SECCIÓN 07 · ACCESO ]</span>
+<h2 class="font-headline-lg text-headline-lg text-primary uppercase tracking-widest">COORDENADAS &amp; CONTACTO DIRECTO</h2>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Framed Card: Direct Comms -->
+<div class="lg:col-span-7 bg-surface-container-low border border-outline-variant p-8 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-3 mb-6">
+<span class="w-2 h-2 bg-[#E11D2E]"></span>
+<span class="font-label-mono text-label-mono text-secondary tracking-widest uppercase">CANAL PREFERENTE / RESPUESTA INMEDIATA</span>
+</div>
+<div class="space-y-6">
+<!-- WhatsApp Row -->
+<div class="p-4 border border-outline-variant bg-surface-container flex items-start gap-4">
+<div class="p-2 border border-outline text-primary">
+<!-- WhatsApp SVG -->
+<svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.173.086.274.072.376-.043.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824z"></path>
+</svg>
+</div>
+<div>
+<div class="font-label-mono text-label-mono text-outline">WHATSAPP CONCIERGE</div>
+<a class="font-body-lg text-body-lg text-primary hover:underline font-normal block" href="https://wa.me/525541928830">
+                    +52 55 4192 8830
+                  </a>
+<span class="font-label-mono text-label-mono text-secondary">Respuesta promedio en menos de 2 horas</span>
+</div>
+</div>
+<!-- Phone Direct Row -->
+<div class="p-4 border border-outline-variant bg-surface-container flex items-start gap-4">
+<div class="p-2 border border-outline text-primary">
+<!-- Phone SVG -->
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5"></path>
+</svg>
+</div>
+<div>
+<div class="font-label-mono text-label-mono text-outline">ATENCIÓN TELEFÓNICA</div>
+<a class="font-body-lg text-body-lg text-primary hover:underline font-normal block" href="tel:+525552860411">
+                    +52 55 5286 0411
+                  </a>
+<span class="font-label-mono text-label-mono text-secondary">Horario de estudio: Mar a Sáb 11:00 — 20:00 hrs</span>
+</div>
+</div>
+<!-- Email Row -->
+<div class="p-4 border border-outline-variant bg-surface-container flex items-start gap-4">
+<div class="p-2 border border-outline text-primary">
+<!-- Mail SVG -->
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5"></path>
+</svg>
+</div>
+<div>
+<div class="font-label-mono text-label-mono text-outline">DOSSIER &amp; PROYECTOS DE AUTOR</div>
+<a class="font-body-lg text-body-lg text-primary hover:underline font-normal block" href="mailto:citas@vault-romanorte.mx">
+                    citas@vault-romanorte.mx
+                  </a>
+<span class="font-label-mono text-label-mono text-secondary">Recepción de referencias y propuestas de formato extendido</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8">
+<a class="w-full inline-flex items-center justify-center gap-3 bg-primary text-surface-container-lowest font-label-caps text-label-caps uppercase py-4 font-bold hover:bg-secondary transition-none" href="https://wa.me/525541928830?text=Hola,%20deseo%20iniciar%20conversación%20con%20VAULT" rel="noopener noreferrer" target="_blank">
+<span>Iniciar conversación por WhatsApp</span>
+<span>→</span>
+</a>
+</div>
+</div>
+<!-- Right Side Panel: Studio Coordinates -->
+<div class="lg:col-span-5 bg-surface-container-high border border-outline-variant p-8 flex flex-col justify-between">
+<div>
+<div class="font-label-mono text-label-mono text-outline uppercase mb-2">LOCALIZACIÓN EXACTA</div>
+<h3 class="font-headline-md text-headline-md text-primary uppercase tracking-wider mb-6">VAULT ROMA NORTE</h3>
+<div class="space-y-6">
+<div>
+<div class="font-label-mono text-label-mono text-secondary mb-1">DIRECCIÓN:</div>
+<p class="font-body-md text-body-md text-primary font-light">
+                  Calle Colima 184, Interior 2B<br/>
+                  Colonia Roma Norte, Cuauhtémoc<br/>
+                  06700 Ciudad de México, CDMX
+                </p>
+</div>
+<div class="border-t border-outline-variant pt-4">
+<div class="font-label-mono text-label-mono text-secondary mb-1">HORARIOS DE CABINA:</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-light leading-relaxed">
+<span class="text-primary font-medium">Martes a Sábado:</span> 11:00 — 20:00 hrs<br/>
+<span class="text-primary font-medium">Domingos y Lunes:</span> Exclusivo sesiones privadas
+                </p>
+</div>
+<div class="border-t border-outline-variant pt-4">
+<div class="font-label-mono text-label-mono text-secondary mb-1">ACCESO &amp; SEGURIDAD:</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-light">
+                  Timbre privado con interfón. Acceso únicamente con confirmación previa y registro en bitácora. No se admiten acompañantes múltiples sin aviso.
+                </p>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant">
+<a class="inline-flex items-center gap-2 font-label-caps text-label-caps uppercase text-primary hover:text-secondary border-b border-primary pb-1" href="https://maps.google.com/?q=Colima+184+Roma+Norte+CDMX" rel="noopener noreferrer" target="_blank">
+<span>Abrir en Google Maps</span>
+<span class="text-xs">↗</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ========================================== -->
+<!-- 10. SOBER FOOTER                           -->
+<!-- ========================================== -->
+<footer class="w-full px-6 lg:px-12 py-16 flex flex-col justify-between border-t border-outline-variant bg-surface-container-lowest text-primary">
+<div class="max-w-7xl mx-auto w-full">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-outline-variant">
+<!-- Left Brand Identity -->
+<div class="md:col-span-6">
+<div class="font-headline-lg text-headline-lg text-primary tracking-widest uppercase mb-2">
+            V // RN
+          </div>
+<div class="font-label-mono text-label-mono text-secondary uppercase tracking-widest mb-4">
+            VAULT CONTEMPORARY ART &amp; CLINICAL PIERCING
+          </div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm font-light">
+            Silencio, precisión y permanencia en el corazón de la Roma Norte. Práctica rigurosa de arte corporal libre de adornos superfluos.
+          </p>
+</div>
+<!-- Links Anchor Group -->
+<div class="md:col-span-3">
+<div class="font-label-mono text-label-mono text-outline uppercase tracking-widest mb-4">MAPA DEL SITIO</div>
+<ul class="space-y-2 font-label-mono text-label-mono text-on-surface-variant">
+<li><a class="hover:text-primary uppercase tracking-widest" href="#servicios">Servicios &amp; Tarifas</a></li>
+<li><a class="hover:text-primary uppercase tracking-widest" href="#protocolo">Protocolo Bioseguridad</a></li>
+<li><a class="hover:text-primary uppercase tracking-widest" href="#galeria">Archivo Visual</a></li>
+<li><a class="hover:text-primary uppercase tracking-widest" href="#artistas">Artistas Residentes</a></li>
+<li><a class="hover:text-primary uppercase tracking-widest" href="#coordenadas">Coordenadas</a></li>
+</ul>
+</div>
+<!-- Compliance & Autoclave Registry -->
+<div class="md:col-span-3">
+<div class="font-label-mono text-label-mono text-outline uppercase tracking-widest mb-4">ESTÁNDAR &amp; NORMATIVA</div>
+<ul class="space-y-2 font-label-mono text-label-mono text-on-surface-variant">
+<li class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 bg-[#E11D2E]"></span>
+<span>AUTOCLAVE LOGS ACTIVO</span>
+</li>
+<li><span>NORMA OFICIAL NOM-017-SSA2</span></li>
+<li><span>TITANIO BIOCOMPATIBLE F136</span></li>
+<li><span>DESECHOS RPBI CERTIFICADOS</span></li>
+<li><span>ESPACIO LIBRE DE HUMO</span></li>
+</ul>
+</div>
+</div>
+<!-- Legal Bottom Line -->
+<div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 font-label-mono text-label-mono text-outline">
+<p>© MMXXIV VAULT CONTEMPORARY ART &amp; CLINICAL PIERCING. COAHUILA 58 / COLIMA 184, ROMA NORTE, CDMX. ALL RIGHTS RESERVED.</p>
+<div class="flex gap-6 uppercase">
+<span class="hover:text-primary cursor-pointer">Protocol Specs</span>
+<span class="hover:text-primary cursor-pointer">Legal Terms</span>
+<span class="hover:text-primary cursor-pointer">Biohazard Compliance</span>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
