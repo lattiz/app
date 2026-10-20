@@ -82,3 +82,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [editor-kit-blocks](editor-kit-blocks.md) — bloques del kit en el editor; solo el CSS usado; tokens en :where(html)
 - [stitch-native-reconstruction](stitch-native-reconstruction.md) — patrones de Stitch como secciones nativas; frenos anti-inflación; compuerta de foto de portada
 - [pixabay-stock-photos](pixabay-stock-photos.md) — Pixabay único proveedor de fotos (editor y build); reglas de su API
+- [restaurante-accent-hues-exhausted](restaurante-accent-hues-exhausted.md) — restaurante casi sin tonos de acento libres; Stitch pastel bloqueado por ΔE00
