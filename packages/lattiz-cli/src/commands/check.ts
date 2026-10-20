@@ -592,16 +592,27 @@ function creditsResult(vertical: string, theme: string): RuleResult | null {
   const dir = resolve(KIT, 'assets', vertical, theme);
   if (!existsSync(resolve(dir, CREDITS_FILE))) return null;
   const images = readCredits(dir).images;
+  const pixabay = images.filter((i) => i.source === 'pixabay');
   const pexels = images.filter((i) => i.source === 'pexels');
+  const stock = [...pixabay, ...pexels];
   const urls = images.filter((i) => i.source === 'url');
   const placeholders = images.filter((i) => i.source === 'placeholder').length;
+  const stockLabel = [
+    pixabay.length ? `${pixabay.length} foto(s) de Pixabay` : '',
+    pexels.length ? `${pexels.length} de Pexels (legado)` : '',
+  ]
+    .filter(Boolean)
+    .join(', ');
   return result(
     'credits',
     GLOBAL,
     'INFO',
-    `${pexels.length} foto(s) de Pexels, ${urls.length} por URL, ${placeholders} placeholder(s) · ${relative(REPO_ROOT, resolve(dir, CREDITS_FILE))}`,
+    `${stockLabel || '0 foto(s) de stock'}, ${urls.length} por URL, ${placeholders} placeholder(s) · ${relative(REPO_ROOT, resolve(dir, CREDITS_FILE))}`,
     [
-      ...pexels.map((p) => `${p.file}: ${p.photographer} (${p.pexelsUrl})`),
+      ...stock.map(
+        (p) =>
+          `${p.file}: ${p.photographer} (${p.pageUrl ?? p.pexelsUrl ?? ''})`,
+      ),
       ...urls.map((u) => `${u.file}: ${u.pageUrl ?? u.url}`),
     ],
   );

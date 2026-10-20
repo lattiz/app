@@ -166,7 +166,8 @@ export function printBuild(report: BuildReport): void {
           `  similitud vs ${s.other}: ${s.score} (límite ${t.similarityLimit})`,
         ),
       );
-    const photos = t.images.filter((i) => i.source === 'pexels').length;
+    const pixabay = t.images.filter((i) => i.source === 'pixabay').length;
+    const pexels = t.images.filter((i) => i.source === 'pexels').length;
     const files = t.images.filter((i) => i.source === 'file').length;
     const urls = t.images.filter((i) => i.source === 'url').length;
     const placeholders = t.images.filter(
@@ -174,7 +175,7 @@ export function printBuild(report: BuildReport): void {
     ).length;
     log.plain(
       c.gray(
-        `  imágenes: ${placeholders} placeholder(s)${photos ? `, ${photos} de Pexels` : ''}${files ? `, ${files} archivo(s)` : ''}${urls ? `, ${urls} por URL` : ''}`,
+        `  imágenes: ${placeholders} placeholder(s)${pixabay ? `, ${pixabay} de Pixabay` : ''}${pexels ? `, ${pexels} de Pexels` : ''}${files ? `, ${files} archivo(s)` : ''}${urls ? `, ${urls} por URL` : ''}`,
       ),
     );
     for (const n of t.imageNotes) log.info(n);

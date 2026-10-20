@@ -125,7 +125,7 @@ export function initSpec(opts: {
     copy: { head: { ...giro.head }, ...strip(giro.copy) },
     images: imageKeys.map((key) => ({
       key,
-      source: { pexels: giro.images[key].query },
+      source: { search: giro.images[key].query },
     })),
     ...(tiers.includes('pro')
       ? {
@@ -140,7 +140,7 @@ export function initSpec(opts: {
     todo: [
       'business: dirección, colonia, horario, teléfono y WhatsApp reales (hoy son de demostración)',
       'copy: precios, equipo, reseñas y preguntas del negocio',
-      'images: fotos reales ({ "file": "…" }) o `pnpm lattiz build <id> --images pexels`',
+      'images: con PIXABAY_API_KEY el build trae las fotos solo; o { "file": "…" } / { "url": "…" }',
       'brand: paleta, tipografía y forma (spec schema → opciones; `kit:spec presets` las lista)',
     ],
   };

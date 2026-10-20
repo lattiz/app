@@ -32,10 +32,9 @@ export const heroPhotoMessage = (id: string, file: string) =>
 export const HERO_PHOTO_HINT = (id: string) => {
   const spec =
     readState(id).spec?.file ?? 'packages/template-kit/specs/<spec>.spec.json';
-  return `En ${spec} pon { "key": "hero", "source": { "url": "https://images.pexels.com/…" } } (o { "file": "…" }) y corre pnpm lattiz build ${spec
-    .split('/')
-    .pop()
-    ?.replace(/\.spec\.json$/, '')}. Archivo: ${CREDITS_FILE}.`;
+  const stem =
+    spec.split('/').pop()?.replace(/\.spec\.json$/, '') ?? '<stem>';
+  return `Primero: pnpm lattiz build ${stem} --images pixabay. Plan B: en ${spec} pon { "key": "hero", "source": { "url": "https://…" } } (o { "file": "…" }). Archivo: ${CREDITS_FILE}.`;
 };
 
 /** ship / publish: a template whose hero is still a placeholder is not published. */

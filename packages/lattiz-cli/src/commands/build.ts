@@ -2,29 +2,39 @@ import {
   buildSpec,
   type BuildReport,
 } from '../../../template-kit/src/spec/build';
-import type { ImageMode } from '../../../template-kit/src/spec/images';
+import {
+  IMAGE_MODES,
+  resolveImageMode,
+} from '../../../template-kit/src/spec/images';
 import { bool, type Command, type Context, str } from '../lib/command';
 import { type ExitCode, usage } from '../lib/errors';
 import { nextCommands, printBuild, rel, resolveSpecArg } from '../lib/spec';
 import { writeState } from '../lib/state';
 import { c, duration, log, setQuiet } from '../lib/ui';
 
-const IMAGE_MODES: ImageMode[] = ['placeholder', 'none', 'pexels'];
-
 /** Builds one spec, records it in .lattiz/state and prints (or returns) the report. */
 export async function runBuild(
   ctx: Context,
   specPath: string,
 ): Promise<{ code: ExitCode; report: BuildReport }> {
-  const images = (str(ctx.flags, 'images') ?? 'placeholder') as ImageMode;
-  if (!IMAGE_MODES.includes(images))
+  const json = bool(ctx.flags, 'json');
+  let resolved;
+  try {
+    resolved = resolveImageMode(str(ctx.flags, 'images'));
+  } catch (error) {
     throw usage(
-      `--images inválido: "${images}".`,
-      `Opciones: ${IMAGE_MODES.join(', ')}`,
+      (error as Error).message,
+      (error as Error).message.includes('Pexels')
+        ? undefined
+        : `Opciones: ${IMAGE_MODES.join(', ')}`,
     );
+  }
+  const images = resolved.mode;
   const dryRun = bool(ctx.flags, 'dry-run');
-  if (!bool(ctx.flags, 'json'))
+  if (!json)
     log.title(`lattiz build ${rel(specPath)}${dryRun ? ' --dry-run' : ''}`);
+  if (json) console.error(resolved.note);
+  else log.info(resolved.note);
   const report = await buildSpec({
     spec: specPath,
     dryRun,
@@ -86,7 +96,7 @@ export const build: Command = {
     '',
     '  --dry-run   muestra el plan; no escribe nada',
     '  --diff      además, el diff contra los archivos actuales',
-    '  --images placeholder|none|pexels   (por defecto placeholder; pexels usa PEXELS_API_KEY)',
+    '  --images placeholder|none|pixabay   (por defecto pixabay si hay PIXABAY_API_KEY; si no, placeholder)',
     '  --force     escribe aunque kit:validate tenga hallazgos o haya ediciones a mano (nunca sobre',
     '              archivos congelados: `pnpm lattiz unfreeze <id>`)',
     '  --json      salida JSON (el reporte completo)',

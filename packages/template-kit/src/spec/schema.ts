@@ -16,6 +16,7 @@ export const ID_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 export const IMAGE_URL_HOSTS = [
   'images.pexels.com',
   'images.unsplash.com',
+  'pixabay.com',
   'cdn.pixabay.com',
 ] as const;
 
@@ -320,7 +321,14 @@ export const BusinessSchema = z
 const ImageSourceSchema = z.union([
   z.literal('placeholder'),
   z.strictObject({
-    pexels: z.string().trim().min(2).describe('Búsqueda en Pexels.'),
+    search: z.string().trim().min(2).describe('Búsqueda en Pixabay.'),
+  }),
+  z.strictObject({
+    pexels: z
+      .string()
+      .trim()
+      .min(2)
+      .describe('Alias legado de `search` (specs anteriores).'),
   }),
   z.strictObject({
     file: z.string().trim().min(1).describe('Ruta local (relativa al spec).'),
@@ -636,7 +644,7 @@ export function zodProblems(error: z.ZodError): SpecProblem[] {
             : path.endsWith('fontPair')
               ? 'Usa un id curado ("lora+figtree") o { "display": "Lora", "body": "Figtree" }.'
               : path.endsWith('source')
-                ? 'Usa "placeholder", { "pexels": "búsqueda" } o { "file": "ruta.jpg" }.'
+                ? 'Usa "placeholder", { "search": "búsqueda" }, { "file": "ruta.jpg" } o { "url": "https://…" }.'
                 : undefined,
         });
         break;

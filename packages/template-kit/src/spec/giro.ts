@@ -26,7 +26,7 @@ export type DemoHours = Partial<
 >;
 
 export interface GiroImage {
-  /** Pexels search (Spanish or English); `--images pexels` downloads the first unused result. */
+  /** Pixabay search (Spanish or English); `--images pixabay` downloads the first unused result. */
   query: string;
   orientation: 'landscape' | 'portrait' | 'square';
 }

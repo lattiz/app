@@ -11,30 +11,40 @@ import { parseEnv } from 'node:util';
 import sharp from 'sharp';
 import { REPO_ROOT } from '../lib/paths';
 import type { GiroDefinition, GiroImage } from './giro';
-import { isAllowedImageUrl, type Spec } from './schema';
+import { isAllowedImageUrl, type Spec, type SpecImage } from './schema';
 
 /**
  * Where each image of a generated template comes from: a placeholder (default), a local file, a
- * public photo URL from an allowed host (downloaded once, no API key) or a Pexels search
- * (`--images pexels`, needs PEXELS_API_KEY). Real photos already in the folder are never overwritten: the
+ * public photo URL from an allowed host (downloaded once, no API key) or a Pixabay search
+ * (`--images pixabay`, needs PIXABAY_API_KEY). Real photos already in the folder are never overwritten: the
  * credits file records the hash of what the build wrote, and anything else is hand-placed.
  */
 
-export type ImageMode = 'placeholder' | 'none' | 'pexels';
+export type ImageMode = 'placeholder' | 'none' | 'pixabay';
+
+export const IMAGE_MODES: readonly ImageMode[] = [
+  'placeholder',
+  'none',
+  'pixabay',
+];
 
 export interface ImageCredit {
   file: string;
-  source: 'placeholder' | 'pexels' | 'file' | 'url';
+  /** `pexels` is read-only (legacy CREDITS.json); new stock photos are `pixabay`. */
+  source: 'placeholder' | 'pexels' | 'pixabay' | 'file' | 'url';
   sha256: string;
   query?: string;
-  pexelsId?: number;
-  pexelsUrl?: string;
+  providerId?: number;
+  pageUrl?: string;
   photographer?: string;
   photographerUrl?: string;
+  tags?: string;
+  /** Legacy Pexels fields, kept so old CREDITS.json still parse. */
+  pexelsId?: number;
+  pexelsUrl?: string;
   path?: string;
   /** `url` source: what the spec pasted, and the photo's page when the host has one (Pexels). */
   url?: string;
-  pageUrl?: string;
 }
 
 export interface CreditsFile {
@@ -42,6 +52,11 @@ export interface CreditsFile {
 }
 
 export const CREDITS_FILE = 'CREDITS.json';
+
+const PIXABAY_DOWNLOAD_HOSTS = new Set(['pixabay.com', 'cdn.pixabay.com']);
+const SEARCH_TTL_MS = 24 * 60 * 60 * 1000;
+const SEARCH_GAP_MS = 700;
+const DEFAULT_CACHE = resolve(REPO_ROOT, '.lattiz/cache/pixabay');
 
 export function sha256File(path: string): string {
   return createHash('sha256').update(readFileSync(path)).digest('hex');
@@ -58,82 +73,207 @@ export function readCredits(dir: string): CreditsFile {
   }
 }
 
-/** PEXELS_API_KEY from the shell, ./.env or apps/api/.env (where the API's stock proxy keeps it). Never logged. */
-export function pexelsKey(): { key: string; origin: string } | null {
-  if (process.env.PEXELS_API_KEY?.trim())
-    return { key: process.env.PEXELS_API_KEY.trim(), origin: 'shell' };
+/** PIXABAY_API_KEY from the shell, ./.env or apps/api/.env. Never logged. */
+export function pixabayKey(): { key: string; origin: string } | null {
+  if (process.env.PIXABAY_API_KEY?.trim())
+    return { key: process.env.PIXABAY_API_KEY.trim(), origin: 'shell' };
+  if (process.env.VITEST) return null; // tests: env only; never open .env*
   for (const rel of ['.env', 'apps/api/.env']) {
     const file = resolve(REPO_ROOT, rel);
     if (!existsSync(file)) continue;
-    const value = parseEnv(readFileSync(file, 'utf8')).PEXELS_API_KEY?.trim();
+    const value = parseEnv(readFileSync(file, 'utf8')).PIXABAY_API_KEY?.trim();
     if (value) return { key: value, origin: rel };
   }
   return null;
 }
 
-interface PexelsPhoto {
-  id: number;
-  url: string;
-  photographer: string;
-  photographer_url: string;
-  src: { original: string };
+export function resolveImageMode(
+  flag: string | undefined,
+  opts: { defaultPixabayIfKey?: boolean } = {},
+): { mode: ImageMode; note: string } {
+  if (flag === 'pexels')
+    throw new Error('Pexels ya no se usa; usa --images pixabay');
+  if (flag) {
+    if (!(IMAGE_MODES as readonly string[]).includes(flag))
+      throw new Error(
+        `--images inválido: "${flag}". Opciones: ${IMAGE_MODES.join(', ')}`,
+      );
+    const mode = flag as ImageMode;
+    const note =
+      mode === 'pixabay'
+        ? 'fotos: Pixabay (--images pixabay)'
+        : mode === 'none'
+          ? 'fotos: ninguna (--images none)'
+          : 'fotos: placeholders (--images placeholder)';
+    return { mode, note };
+  }
+  const found = pixabayKey();
+  if (opts.defaultPixabayIfKey !== false && found)
+    return {
+      mode: 'pixabay',
+      note: `fotos: Pixabay (PIXABAY_API_KEY presente en ${found.origin})`,
+    };
+  return {
+    mode: 'placeholder',
+    note: found
+      ? 'fotos: placeholders'
+      : 'fotos: placeholders (no hay PIXABAY_API_KEY; pasa --images pixabay cuando la tengas)',
+  };
 }
 
-const CACHE = resolve(REPO_ROOT, '.lattiz/cache/pexels');
+export interface PixabayHit {
+  id: number;
+  pageURL: string;
+  tags: string;
+  largeImageURL: string;
+  imageWidth: number;
+  imageHeight: number;
+  user: string;
+  user_id: number;
+  userURL: string;
+  isAiGenerated?: boolean;
+  isLowQuality?: boolean;
+}
+
+interface SearchCache {
+  fetchedAt: number;
+  hits: PixabayHit[];
+}
+
 const cacheKey = (text: string) =>
   createHash('sha256').update(text).digest('hex').slice(0, 16);
 
+function pixabayOrientation(
+  orientation: GiroImage['orientation'],
+): 'horizontal' | 'vertical' | 'all' {
+  if (orientation === 'portrait') return 'vertical';
+  if (orientation === 'square') return 'all';
+  return 'horizontal';
+}
+
+export function usablePixabayHits(hits: PixabayHit[]): PixabayHit[] {
+  return hits.filter((h) => !h.isAiGenerated && !h.isLowQuality);
+}
+
 let lastCall = 0;
-async function pexelsSearch(
+async function searchOnce(
   query: string,
   orientation: GiroImage['orientation'],
   key: string,
-): Promise<PexelsPhoto[]> {
+  minWidth: number | undefined,
+  cacheDir: string,
+): Promise<PixabayHit[]> {
   const file = resolve(
-    CACHE,
-    `search-${cacheKey(`${query}|${orientation}`)}.json`,
+    cacheDir,
+    `search-${cacheKey(`${query}|${orientation}|${minWidth ?? ''}`)}.json`,
   );
-  if (existsSync(file))
-    return JSON.parse(readFileSync(file, 'utf8')) as PexelsPhoto[];
-  // Pexels allows 200 requests/hour; space calls out and stop on 429.
-  const wait = lastCall + 400 - Date.now();
+  if (existsSync(file)) {
+    try {
+      const cached = JSON.parse(readFileSync(file, 'utf8')) as SearchCache;
+      if (
+        typeof cached.fetchedAt === 'number' &&
+        Date.now() - cached.fetchedAt < SEARCH_TTL_MS &&
+        Array.isArray(cached.hits)
+      )
+        return cached.hits;
+    } catch {
+      // stale or corrupt cache: fetch again
+    }
+  }
+  const gap = process.env.VITEST ? 0 : SEARCH_GAP_MS;
+  const wait = lastCall + gap - Date.now();
   if (wait > 0) await new Promise((r) => setTimeout(r, wait));
   lastCall = Date.now();
-  const url = `https://api.pexels.com/v1/search?${new URLSearchParams({
-    query,
-    orientation,
-    per_page: '15',
-    size: 'large',
-  })}`;
-  const res = await fetch(url, {
-    headers: { Authorization: key },
+  const params = new URLSearchParams({
+    key,
+    q: query,
+    lang: 'en',
+    image_type: 'photo',
+    orientation: pixabayOrientation(orientation),
+    safesearch: 'true',
+    per_page: '20',
+  });
+  if (minWidth && minWidth > 0) params.set('min_width', String(minWidth));
+  const res = await fetch(`https://pixabay.com/api/?${params}`, {
     signal: AbortSignal.timeout(15_000),
   });
   if (res.status === 429)
     throw new Error(
-      'límite de Pexels alcanzado (200 por hora); lo descargado queda en .lattiz/cache/pexels, reintenta más tarde',
+      'límite de Pixabay alcanzado (100 por 60 s); lo descargado queda en .lattiz/cache/pixabay, reintenta más tarde',
     );
-  if (!res.ok) throw new Error(`Pexels respondió ${res.status} a "${query}"`);
-  const photos =
-    ((await res.json()) as { photos?: PexelsPhoto[] }).photos ?? [];
-  mkdirSync(CACHE, { recursive: true });
-  writeFileSync(file, JSON.stringify(photos));
-  return photos;
+  if (!res.ok) throw new Error(`Pixabay respondió ${res.status} a "${query}"`);
+  const body = (await res.json()) as { hits?: PixabayHit[] };
+  const hits = Array.isArray(body.hits) ? body.hits : [];
+  mkdirSync(cacheDir, { recursive: true });
+  writeFileSync(
+    file,
+    JSON.stringify({ fetchedAt: Date.now(), hits } satisfies SearchCache),
+  );
+  return hits;
 }
 
-async function pexelsDownload(photo: PexelsPhoto): Promise<Buffer> {
-  const file = resolve(CACHE, `${photo.id}.jpg`);
-  if (existsSync(file)) return readFileSync(file);
-  const res = await fetch(
-    `${photo.src.original}?auto=compress&cs=tinysrgb&w=2000`,
-    {
+export async function pixabaySearch(
+  query: string,
+  orientation: GiroImage['orientation'],
+  key: string,
+  minWidth?: number,
+  cacheDir: string = DEFAULT_CACHE,
+): Promise<PixabayHit[]> {
+  const hits = await searchOnce(query, orientation, key, minWidth, cacheDir);
+  if (hits.length === 0 && minWidth != null)
+    return searchOnce(query, orientation, key, undefined, cacheDir);
+  return hits;
+}
+
+function assertPixabayDownloadUrl(raw: string): URL {
+  let parsed: URL;
+  try {
+    parsed = new URL(raw);
+  } catch {
+    throw new Error('images: URL de Pixabay inválida');
+  }
+  if (
+    parsed.protocol !== 'https:' ||
+    !PIXABAY_DOWNLOAD_HOSTS.has(parsed.hostname)
+  )
+    throw new Error('images: la foto de Pixabay no está en un host permitido');
+  return parsed;
+}
+
+async function fetchPixabayAsset(raw: string): Promise<Buffer> {
+  let current = assertPixabayDownloadUrl(raw).toString();
+  for (let hop = 0; hop < 5; hop += 1) {
+    const res = await fetch(current, {
+      redirect: 'manual',
       signal: AbortSignal.timeout(60_000),
-    },
-  );
-  if (!res.ok)
-    throw new Error(`no pude descargar la foto ${photo.id} (${res.status})`);
-  const buffer = Buffer.from(await res.arrayBuffer());
-  mkdirSync(CACHE, { recursive: true });
+    });
+    const loc = res.headers.get('location');
+    if (res.status >= 300 && res.status < 400 && loc) {
+      current = assertPixabayDownloadUrl(
+        new URL(loc, current).toString(),
+      ).toString();
+      continue;
+    }
+    if (!res.ok)
+      throw new Error(`no pude descargar la foto de Pixabay (${res.status})`);
+    if (!/^image\//.test(res.headers.get('content-type') ?? ''))
+      throw new Error('images: la descarga de Pixabay no es una imagen');
+    const buffer = Buffer.from(await res.arrayBuffer());
+    if (buffer.length > MAX_DOWNLOAD_BYTES)
+      throw new Error('images: la foto de Pixabay pesa más de 15 MB');
+    return buffer;
+  }
+  throw new Error('images: demasiadas redirecciones en la foto de Pixabay');
+}
+
+export async function pixabayDownload(
+  hit: PixabayHit,
+  cacheDir: string = DEFAULT_CACHE,
+): Promise<Buffer> {
+  const file = resolve(cacheDir, `${hit.id}.jpg`);
+  if (existsSync(file)) return readFileSync(file);
+  const buffer = await fetchPixabayAsset(hit.largeImageURL);
+  mkdirSync(cacheDir, { recursive: true });
   writeFileSync(file, buffer);
   return buffer;
 }
@@ -184,6 +324,47 @@ async function downloadImageUrl(raw: string): Promise<Buffer> {
   return buffer;
 }
 
+export function imageSearchQuery(
+  source: SpecImage['source'] | undefined,
+): string | undefined {
+  if (!source || typeof source !== 'object') return undefined;
+  if ('search' in source) return source.search;
+  if ('pexels' in source) return source.pexels;
+  return undefined;
+}
+
+function pickHit(
+  hits: PixabayHit[],
+  used: Set<number>,
+  width: number,
+  height: number,
+): PixabayHit | undefined {
+  const unused = usablePixabayHits(hits).filter((h) => !used.has(h.id));
+  const pool = unused.slice(0, 5);
+  if (pool.length === 0) return undefined;
+  const target = width / height;
+  let best = pool[0];
+  let bestDelta = Infinity;
+  for (const h of pool) {
+    const ratio =
+      h.imageWidth > 0 && h.imageHeight > 0
+        ? h.imageWidth / h.imageHeight
+        : target;
+    const delta = Math.abs(ratio - target);
+    if (delta < bestDelta) {
+      best = h;
+      bestDelta = delta;
+    }
+  }
+  return best;
+}
+
+function isStockSource(
+  source: ImageCredit['source'] | undefined,
+): source is 'pixabay' | 'pexels' {
+  return source === 'pixabay' || source === 'pexels';
+}
+
 export interface ImageJob {
   /** `hero.jpg`, `gallery-03.jpg`… */
   name: string;
@@ -210,16 +391,18 @@ export async function sourceImages(opts: {
   tempDir: string;
   /** New templates only (A2 LCP policy): the hero photo at most this wide, at this JPEG quality. */
   hero?: { maxWidth: number; quality: number };
+  cacheDir?: string;
 }): Promise<ImagePlanResult> {
   const { spec, giro, mode, jobs, kitDir, tempDir } = opts;
+  const cacheDir = opts.cacheDir ?? DEFAULT_CACHE;
   const previous = new Map(readCredits(kitDir).images.map((c) => [c.file, c]));
   const credits: ImageCredit[] = [];
   const notes: string[] = [];
   const used = new Set<number>();
-  const key = mode === 'pexels' ? pexelsKey() : null;
-  if (mode === 'pexels' && !key)
+  const key = mode === 'pixabay' ? pixabayKey() : null;
+  if (mode === 'pixabay' && !key)
     throw new Error(
-      'falta PEXELS_API_KEY (en la terminal, .env o apps/api/.env); usa --images placeholder',
+      'falta PIXABAY_API_KEY (en la terminal, .env o apps/api/.env); usa --images placeholder',
     );
   for (const job of jobs) {
     const imageKey = job.name.replace(/\.jpg$/, '');
@@ -286,57 +469,71 @@ export async function sourceImages(opts: {
       continue;
     }
     const query =
-      specImage &&
-      typeof specImage.source === 'object' &&
-      'pexels' in specImage.source
-        ? specImage.source.pexels
-        : giro.images[imageKey]?.query;
+      imageSearchQuery(specImage?.source) ?? giro.images[imageKey]?.query;
     const wantsPhoto = specImage?.source !== 'placeholder' && Boolean(query);
-    // A photo from an earlier pexels run stays until the spec asks for something else.
-    if (
-      mode !== 'pexels' &&
-      prior?.source === 'pexels' &&
-      wantsPhoto &&
-      existsSync(kitFile)
-    ) {
+    const priorStock =
+      isStockSource(prior?.source) && wantsPhoto && existsSync(kitFile);
+    // A photo from an earlier stock run stays until the spec asks for something else.
+    if (mode !== 'pixabay' && priorStock && prior) {
       copyFileSync(kitFile, tempFile);
       credits.push(prior);
+      const id = prior.providerId ?? prior.pexelsId;
+      if (id) used.add(id);
       continue;
     }
-    if (mode === 'pexels' && wantsPhoto && key) {
-      if (
-        prior?.source === 'pexels' &&
-        prior.query === query &&
-        existsSync(kitFile)
-      ) {
+    if (mode === 'pixabay' && wantsPhoto && key) {
+      if (priorStock && prior?.query === query && prior) {
         copyFileSync(kitFile, tempFile);
         credits.push(prior);
-        if (prior.pexelsId) used.add(prior.pexelsId);
+        const id = prior.providerId ?? prior.pexelsId;
+        if (id) used.add(id);
         continue;
       }
       const orientation =
         specImage?.orientation ??
         giro.images[imageKey]?.orientation ??
         'landscape';
-      const photos = await pexelsSearch(query as string, orientation, key.key);
-      const photo = photos.find((p) => !used.has(p.id));
-      if (!photo) {
+      const hits = await pixabaySearch(
+        query as string,
+        orientation,
+        key.key,
+        job.width,
+        cacheDir,
+      );
+      const hit = pickHit(hits, used, job.width, job.height);
+      if (!hit) {
         notes.push(
-          `${job.name}: Pexels no devolvió fotos para "${query}"; queda el placeholder`,
+          `${job.name}: Pixabay no devolvió fotos para "${query}"; queda el placeholder`,
         );
       } else {
-        used.add(photo.id);
-        writeFileSync(tempFile, await fit(await pexelsDownload(photo)));
+        used.add(hit.id);
+        mkdirSync(dirname(tempFile), { recursive: true });
+        writeFileSync(
+          tempFile,
+          await fit(await pixabayDownload(hit, cacheDir)),
+        );
+        const tags = [
+          ...new Set(
+            (hit.tags ?? '')
+              .split(',')
+              .map((t) => t.trim())
+              .filter(Boolean),
+          ),
+        ].join(', ');
         credits.push({
           file: job.name,
-          source: 'pexels',
+          source: 'pixabay',
           sha256: sha256File(tempFile),
           query,
-          pexelsId: photo.id,
-          pexelsUrl: photo.url,
-          photographer: photo.photographer,
-          photographerUrl: photo.photographer_url,
+          providerId: hit.id,
+          pageUrl: hit.pageURL,
+          photographer: hit.user,
+          ...(hit.userURL ? { photographerUrl: hit.userURL } : {}),
+          ...(tags ? { tags } : {}),
         });
+        notes.push(
+          `${job.name} ← Pixabay #${hit.id}${tags ? ` «${tags}»` : ''}`,
+        );
         continue;
       }
     }

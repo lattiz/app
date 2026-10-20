@@ -661,10 +661,24 @@
               {
                 "type": "object",
                 "properties": {
+                  "search": {
+                    "type": "string",
+                    "minLength": 2,
+                    "description": "Búsqueda en Pixabay."
+                  }
+                },
+                "required": [
+                  "search"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
                   "pexels": {
                     "type": "string",
                     "minLength": 2,
-                    "description": "Búsqueda en Pexels."
+                    "description": "Alias legado de `search` (specs anteriores)."
                   }
                 },
                 "required": [

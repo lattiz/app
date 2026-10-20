@@ -6,6 +6,7 @@ import { browserPath } from '../lib/browser';
 import type { Command } from '../lib/command';
 import { EXIT } from '../lib/errors';
 import { paths, REPO_ROOT } from '../lib/paths';
+import { pixabayKey } from '../../../template-kit/src/spec/images';
 import {
   env,
   hasEnv,
@@ -153,6 +154,21 @@ async function diagnose(): Promise<Finding[]> {
         : 'no definida (opcional)',
     });
   }
+
+  const pixabay = pixabayKey();
+  out.push(
+    pixabay
+      ? {
+          area: 'PIXABAY_API_KEY',
+          status: 'PASS',
+          detail: `presente (${pixabay.origin}) — fotos automáticas en build`,
+        }
+      : {
+          area: 'PIXABAY_API_KEY',
+          status: 'INFO',
+          detail: 'no definida (opcional; fotos automáticas en build)',
+        },
+  );
 
   if (hasEnv('SUPABASE_URL') && hasEnv('SUPABASE_SERVICE_ROLE_KEY')) {
     try {

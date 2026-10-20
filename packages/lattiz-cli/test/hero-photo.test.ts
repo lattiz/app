@@ -17,8 +17,8 @@ describe('hero photo gate', () => {
       'hero.webp',
     );
   });
-  it('lets a real photo through (url, file or pexels)', () => {
-    for (const source of ['url', 'file', 'pexels'] as const)
+  it('lets a real photo through (url, file, pixabay or legacy pexels)', () => {
+    for (const source of ['url', 'file', 'pixabay', 'pexels'] as const)
       expect(heroPlaceholder([credit('hero.jpg', source)])).toBeUndefined();
   });
   it('only cares about the hero: other placeholders are not the gate', () => {

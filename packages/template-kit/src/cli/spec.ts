@@ -1,7 +1,7 @@
 /**
  * Template specs from the kit's side (the guided version is `pnpm lattiz spec|build`).
  *
- *   pnpm --filter @lattiz/template-kit kit:spec build <specs/x.spec.json> [--dry-run] [--diff] [--images placeholder|none|pexels] [--force] [--out dir] [--json]
+ *   pnpm --filter @lattiz/template-kit kit:spec build <specs/x.spec.json> [--dry-run] [--diff] [--images placeholder|none|pixabay] [--force] [--out dir] [--json]
  *   pnpm --filter @lattiz/template-kit kit:spec validate <specs/x.spec.json>
  *   pnpm --filter @lattiz/template-kit kit:spec schema [--write]     (JSON Schema → stdout or specs/spec.schema.json)
  *   pnpm --filter @lattiz/template-kit kit:spec presets              (curated palettes: contrast and accent hues)
@@ -15,7 +15,7 @@ import { EXTENDED_PALETTES } from '../../palettes';
 import { hueOf, parseColor } from '../lib/color';
 import { KIT_ROOT } from '../lib/paths';
 import { buildSpec, readSpecFile } from '../spec/build';
-import type { ImageMode } from '../spec/images';
+import { resolveImageMode } from '../spec/images';
 import { specJsonSchema, type SpecProblem } from '../spec/schema';
 import { paletteFindings } from '../spec/theme';
 import { validateSpec } from '../spec/validate';
@@ -99,12 +99,21 @@ async function main(): Promise<number> {
     console.log(errors ? `✗ ${errors} error(es)` : '✓ spec válido');
     return errors ? 2 : 0;
   }
+  let images;
+  try {
+    images = resolveImageMode(flags.get('images'), {
+      defaultPixabayIfKey: false,
+    }).mode;
+  } catch (error) {
+    console.error((error as Error).message);
+    return 2;
+  }
   const report = await buildSpec({
     spec: file,
     dryRun: flags.has('dry-run'),
     diff: flags.has('diff'),
     force: flags.has('force'),
-    images: (flags.get('images') as ImageMode | undefined) ?? 'placeholder',
+    images,
     out: flags.get('out'),
   });
   if (flags.has('json')) {

@@ -223,7 +223,7 @@ export const newTemplate: Command = {
     '                            paleta, tipografía, forma y portada salen de ella en vez de fijarse',
     '  --modo spec|clon          sin terminal: spec solo con --spec o --modo spec',
     '  --twin                    el par Básico + Pro (igual que --tier ambos)',
-    '  --images placeholder|none|pexels · --dry-run · --json (como en build)',
+    '  --images placeholder|none|pixabay · --dry-run · --json (como en build)',
     '',
     'Clonar una base (legacy, Fase 1): copia un manifiesto existente en packages/template-kit/templates/<id>.ts',
     'y reescribe id, nombre, categoría, descripción, nombre del negocio y (Pro) motion. No reescribe el copy',
