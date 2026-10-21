@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/estetica-alheli-v2.spec.json (spec 7eb4508f9aa2, file 2a94f7e72ef0). Do not edit: use the spec, or freeze.",
+  "name": "Alhelí Nail Atelier",
+  "category": "beauty_salon",
+  "phone": "+525500000000",
+  "whatsapp": "+5215500000000",
+  "email": "hola@alhelinails.mx",
+  "address": {
+    "street": "Calle Rosal 45, Col. San Álvaro, Azcapotzalco, 02090 CDMX",
+    "city": "Azcapotzalco",
+    "country": "MX"
+  },
+  "hours": {
+    "tue": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "10:00",
+        "close": "20:00"
+      }
+    ],
+    "sun": [
+      {
+        "open": "10:00",
+        "close": "15:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}

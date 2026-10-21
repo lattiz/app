@@ -1,0 +1,38 @@
+{
+  "$lattiz": "GENERATED from specs/estetica-alheli-v2.spec.json (spec 7eb4508f9aa2, file 8be1445e69e7). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "137556edfc785bc029261c4e258f31ed3bd86bff7cae43f6e345331b836c991d",
+      "query": "nail polish bottles pastel row",
+      "providerId": 5653459,
+      "pageUrl": "https://pixabay.com/photos/nail-art-manicure-nails-nail-polish-5653459/",
+      "photographer": "Mounthive",
+      "photographerUrl": "https://pixabay.com/users/6291643/",
+      "tags": "nail art, flower background, manicure, nails, nail polish, cuticles, red manicure, red nail art, floral nail art, flower wallpaper, floral nails, flowers, beautiful flowers, fingernails, color, polish, woman, hand, nail spa, nature, style, glamour, female, natural nails, elegant nails"
+    },
+    {
+      "file": "product-01.jpg",
+      "source": "pixabay",
+      "sha256": "df758369bab7cda6aad9fbe00cf17debcffacfd8f013ba02e5ff3d81e5e66119",
+      "query": "matte nude manicure minimal",
+      "providerId": 3161974,
+      "pageUrl": "https://pixabay.com/photos/hand-nail-thumb-leather-manicure-3161974/",
+      "photographer": "Alehandra13",
+      "photographerUrl": "https://pixabay.com/users/1817807/",
+      "tags": "hand, nail, thumb, leather, manicure, nails, nail polish, nails hybrid, toiletry bag, painted, varnishing, woman, lacquer, hybrid lacquer, care"
+    },
+    {
+      "file": "product-03.jpg",
+      "source": "pixabay",
+      "sha256": "bad23db3140ce1fd19bcfa3739d9cf9da9309485a1e8a2d6832c19a51ba484d5",
+      "query": "glossy nude nails pink manicure",
+      "providerId": 870857,
+      "pageUrl": "https://pixabay.com/photos/manicure-pedicure-cosmetics-care-870857/",
+      "photographer": "Bru-nO",
+      "photographerUrl": "https://pixabay.com/users/1161770/",
+      "tags": "manicure, pedicure, cosmetics, care, nails, fingernails, toe nails, nail varnish, paint, color, beauty"
+    }
+  ]
+}

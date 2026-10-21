@@ -1,0 +1,54 @@
+{
+  "$lattiz": "GENERATED from specs/estetica-alheli-v2.spec.json (spec 7eb4508f9aa2, file 85943af8a8db). Do not edit: use the spec, or freeze.",
+  "name": "estetica-alheli-v2",
+  "label": "Alhelí Nail Atelier · Pro",
+  "tier": "pro",
+  "fontPair": "bodoni-moda+karla",
+  "colors": {
+    "bg": "#F8F1EC",
+    "surface": "#FCF9F7",
+    "surface-2": "#E9E2DD",
+    "text": "#1E1D1C",
+    "muted": "#6A6765",
+    "accent": "#7D6420",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#7D6420",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#F8F1EC",
+    "on-overlay": "#1E1D1C",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#1E1D1C"
+  },
+  "fonts": {
+    "display": "'Bodoni Moda', serif",
+    "serif": "'Bodoni Moda', serif",
+    "body": "'Karla', sans-serif",
+    "googleFonts": "family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,600;1,6..96,500&family=Karla:wght@400;500;600",
+    "displayTransform": "none",
+    "displayLeading": "1.02",
+    "displayWeight": "500",
+    "accentStyle": "italic",
+    "accentTransform": "none"
+  },
+  "shape": {
+    "radiusCard": "24px",
+    "radiusPill": "999px",
+    "border": "1px",
+    "shadow": "none"
+  },
+  "density": "regular",
+  "photoTreatment": "none",
+  "placeholder": "dots",
+  "accentWords": "color",
+  "container": "1200px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(1.08) saturate(.85)"
+  },
+  "style": {
+    "surface": "tinted",
+    "density": "cozy",
+    "imageTreatment": "arch"
+  }
+}

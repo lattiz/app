@@ -1,0 +1,69 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/estetica-alheli-v2.spec.json",
+  "catalog": "extended",
+  "catalogVersion": 2,
+  "tiers": {
+    "estetica-alheli-v2": {
+      "tier": "pro",
+      "palette": "custom",
+      "fontPair": "bodoni-moda+karla",
+      "shape": "organico",
+      "archetype": "editorial-atelier",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "centered-logo" },
+        { "role": "hero", "slot": "hero", "variant": "framed" },
+        { "role": "about", "slot": "about", "variant": "text-image-offset" },
+        {
+          "role": "catalog",
+          "slot": "services",
+          "variant": "collection-cards"
+        },
+        { "role": "proof", "slot": "gallery", "variant": "collage" },
+        {
+          "role": "testimonials",
+          "slot": "testimonials",
+          "variant": "feature-stack"
+        },
+        { "role": "faq", "slot": "faq", "variant": "column-panels" },
+        { "role": "contact", "slot": "locations", "variant": "arch-visit" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "ledger" }
+      ],
+      "layout": { "archetype": "soft" },
+      "renews": "estetica-alheli-v1"
+    },
+    "estetica-base-alheli-v2": {
+      "tier": "basico",
+      "palette": "custom",
+      "fontPair": "playfair-display+inter",
+      "shape": "filete",
+      "archetype": "essential",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "centered-arch" },
+        { "role": "about", "slot": "about", "variant": "booking-steps" },
+        {
+          "role": "catalog",
+          "slot": "services",
+          "variant": "collection-cards"
+        },
+        { "role": "faq", "slot": "faq", "variant": "list" },
+        { "role": "contact", "slot": "locations", "variant": "single" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "minimal-centered" }
+      ],
+      "layout": { "archetype": "soft" },
+      "renews": "estetica-base-alheli-v1"
+    }
+  }
+}
