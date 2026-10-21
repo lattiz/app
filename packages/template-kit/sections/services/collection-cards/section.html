@@ -1,0 +1,27 @@
+<section id="servicios" data-lz-slot="services" data-lz-variant="collection-cards" class="lz-section lz-services-collection-cards">
+  <div class="lz-container">
+    <div class="lz-services-collection-cards__head">
+      <p class="lz-services-collection-cards__kicker" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-services-collection-cards__title" data-lz-key="title"></h2>
+      <span class="lz-services-collection-cards__rule" aria-hidden="true"></span>
+      <p class="lz-services-collection-cards__intro" data-lz-if="intro" data-lz-key="intro"></p>
+    </div>
+    <div class="lz-services-collection-cards__grid">
+      <article class="lz-services-collection-cards__card" data-lz-each="prices">
+        <div class="lz-services-collection-cards__media" data-lz-if="image">
+          <img loading="lazy" width="800" height="640" class="lz-services-collection-cards__image" data-lz-attr-src="image" data-lz-attr-alt="imageAlt">
+          <span class="lz-services-collection-cards__num" aria-hidden="true"></span>
+        </div>
+        <div class="lz-services-collection-cards__body">
+          <h3 class="lz-services-collection-cards__name" data-lz-key="name"></h3>
+          <p class="lz-services-collection-cards__desc" data-lz-key="description"></p>
+          <div class="lz-services-collection-cards__foot">
+            <span class="lz-services-collection-cards__duration" data-lz-if="duration" data-lz-key="duration"></span>
+            <p class="lz-services-collection-cards__price" data-lz-key="price"></p>
+          </div>
+        </div>
+        <a class="lz-services-collection-cards__hit" data-lz-if="href" data-lz-attr-href="href" data-lz-attr-aria-label="name" target="_blank" rel="noopener noreferrer"></a>
+      </article>
+    </div>
+  </div>
+</section>
