@@ -494,6 +494,16 @@ export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
     proFeatures: [],
   },
   {
+    id: 'gimnasio-base-pulso-deportivo-v2',
+    tier: 'basic',
+    giro: 'gimnasio',
+    giroLabel: 'Gimnasio / estudio',
+    direction: null,
+    swatches: ['#F3F5F7', '#FAFBFC', '#5B3DD6', '#1D1D1E'],
+    dark: false,
+    proFeatures: [],
+  },
+  {
     id: 'gimnasio-nave-norte-v1',
     tier: 'pro',
     giro: 'gimnasio',
@@ -531,6 +541,16 @@ export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
       'Contacto con mapa',
       'Animaciones',
     ],
+  },
+  {
+    id: 'gimnasio-pulso-deportivo-v2',
+    tier: 'pro',
+    giro: 'gimnasio',
+    giroLabel: 'Gimnasio / estudio',
+    direction: null,
+    swatches: ['#F7F9FB', '#FCFDFD', '#08758C', '#1E1E1E'],
+    dark: false,
+    proFeatures: ['Galería', 'Testimonios', 'Animaciones'],
   },
   {
     id: 'restaurante-base-casa-comal-v1',

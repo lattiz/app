@@ -1,0 +1,104 @@
+{
+  "$lattiz": "GENERATED from specs/gimnasio-pulso-deportivo-v2.spec.json (spec 9fbf17764e1c, file 3fbef7e57120). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "28adf7c9357fa5acafb0f71132e346092dd0ce91aedb131ce07ef7b1e98b48f2",
+      "query": "woman lifting barbell bright gym",
+      "providerId": 594143,
+      "pageUrl": "https://pixabay.com/photos/fitness-dumbbells-training-gym-594143/",
+      "photographer": "markusspiske",
+      "photographerUrl": "https://pixabay.com/users/670330/",
+      "tags": "fitness, dumbbells, training, gym, weights, weightlifting, weight training, gym equipment, fitness studio, studio, weight, exercise, many, train, fit"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "pixabay",
+      "sha256": "79981ee6ea2a3d0a989b12a0c6ef98d898655c608687ec987b02c708ca1200fd",
+      "query": "free weights dumbbell rack gym",
+      "providerId": 485908,
+      "pageUrl": "https://pixabay.com/photos/dumbbells-weights-fitness-485908/",
+      "photographer": "422737",
+      "photographerUrl": "https://pixabay.com/users/422737/",
+      "tags": "dumbbells, weights, fitness, weight training, gym, training"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "pixabay",
+      "sha256": "03f624c6e43825090c4fa70419d7de020f2aae440934337f855321081323ec33",
+      "query": "group workout gym class",
+      "providerId": 6888635,
+      "pageUrl": "https://pixabay.com/photos/strength-gym-fitness-exercise-6888635/",
+      "photographer": "moveprivatefitness",
+      "photographerUrl": "https://pixabay.com/users/24944004/",
+      "tags": "strength, gym, fitness, exercise, workout, training, fit"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "pixabay",
+      "sha256": "f6fa9465dec46781d6c60c1e9c8dc2f12061b890b055fe459b9a20071e2e478c",
+      "query": "spinning class indoor cycling",
+      "providerId": 1962574,
+      "pageUrl": "https://pixabay.com/photos/sports-indoor-cycling-fitness-gym-1962574/",
+      "photographer": "valkovav",
+      "photographerUrl": "https://pixabay.com/users/4210846/",
+      "tags": "sports, indoor cycling, fitness, gym, trenazhor, bicycle"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "pixabay",
+      "sha256": "5df115f197016ffdddd7554c01bb5db017c08d891acd6bdc5ec6d60fc77241a3",
+      "query": "yoga class studio indoor",
+      "providerId": 682326,
+      "pageUrl": "https://pixabay.com/photos/yoga-meditation-exercise-health-682326/",
+      "photographer": "532Yoga",
+      "photographerUrl": "https://pixabay.com/users/867605/",
+      "tags": "yoga, meditation, exercise, health, body, healthy, relaxation, wellness, fitness, relax, meditating, calm, lotus, pose, spiritual, silhouette, zen, energy, peace, spirituality, meditate, peaceful, brown health, brown fitness, brown yoga, brown meditation, brown exercise, brown relax, brown healthy, brown energy, brown calm, brown workout, brown peace, brown wellness, brown body, United States, Virginia, Alexandria"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "pixabay",
+      "sha256": "c39f235fcd64d5376db0c42ae15fa5d2950b317c4ebde93735118be83c073ad9",
+      "query": "boxing gloves hanging gym",
+      "providerId": 2005912,
+      "pageUrl": "https://pixabay.com/photos/boxing-gloves-wall-boxing-2005912/",
+      "photographer": "kalhh",
+      "photographerUrl": "https://pixabay.com/users/86169/",
+      "tags": "boxing gloves, wall, boxing, kick boxing, battle, muay thai"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "pixabay",
+      "sha256": "98fc24dd9baa87a215d97e4a0519785ce8a90905460f18dce9cf6b7c9886f6f8",
+      "query": "kettlebells gym floor",
+      "providerId": 4006937,
+      "pageUrl": "https://pixabay.com/photos/fitness-gym-exercise-workout-fit-4006937/",
+      "photographer": "Hipcravo",
+      "photographerUrl": "https://pixabay.com/users/11655529/",
+      "tags": "fitness, gym, exercise, workout, fit, training, healthy, woman, sport, female, body, athlete, health, young, active, lifestyle, person, strength, girl, strong, athletic, bodybuilding, people, pilates, yoga, black health, black fitness, black yoga, black gym, black exercise, black training, black healthy, black workout, black sports, black body"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "pixabay",
+      "sha256": "5337b731c45524d87821ada028442cee5ed30a4ee3d7932a62195d1ebf4e7585",
+      "query": "battle ropes workout gym",
+      "providerId": 6053524,
+      "pageUrl": "https://pixabay.com/photos/man-cross-training-battle-rope-6053524/",
+      "photographer": "krisward2018",
+      "photographerUrl": "https://pixabay.com/users/16780754/",
+      "tags": "man, cross training, battle rope, exercise, fitness, workout, bodybuilder, training, strong, fit, male, athlete, person, strength, active, lifestyle"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "pixabay",
+      "sha256": "8fba417a7c6685997aa963fca5dba4a6d25562c0bebd7b51be581b13e9051d89",
+      "query": "dumbbells rack close up",
+      "providerId": 8246972,
+      "pageUrl": "https://pixabay.com/photos/weights-dumbbells-strength-force-8246972/",
+      "photographer": "Engin_Akyurt",
+      "photographerUrl": "https://pixabay.com/users/3656355/",
+      "tags": "weights, dumbbells, strength, force, exercise, sport, fitness, wrist, hand, muscle, body, health"
+    }
+  ]
+}

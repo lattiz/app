@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/gimnasio-pulso-deportivo-v2.spec.json (spec 9fbf17764e1c, file 25f80ba23ed0). Do not edit: use the spec, or freeze.",
+  "name": "Pulso Deportivo",
+  "category": "other",
+  "phone": "+525500000000",
+  "whatsapp": "+5215500000000",
+  "email": "hola@pulsodeportivo.mx",
+  "address": {
+    "street": "Calle Hilo 88, Col. Clavería",
+    "city": "CDMX",
+    "country": "MX"
+  },
+  "hours": {
+    "mon": [
+      {
+        "open": "06:00",
+        "close": "22:00"
+      }
+    ],
+    "tue": [
+      {
+        "open": "06:00",
+        "close": "22:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "06:00",
+        "close": "22:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "06:00",
+        "close": "22:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "06:00",
+        "close": "22:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "08:00",
+        "close": "14:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}
