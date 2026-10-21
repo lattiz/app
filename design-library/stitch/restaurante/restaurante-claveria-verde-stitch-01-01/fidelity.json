@@ -1,0 +1,94 @@
+{
+  "especialidades": {
+    "ref": "especialidades",
+    "slot": "services",
+    "theme": "restaurante-casa-comal-v1",
+    "measured": [
+      {
+        "variant": "services/menu-columns",
+        "structure": 0.573,
+        "heightRatio": 1.2,
+        "match": false
+      },
+      {
+        "variant": "services/cards",
+        "structure": 0.628,
+        "heightRatio": 1.31,
+        "match": false
+      },
+      {
+        "variant": "services/ritual-cards",
+        "structure": 0.659,
+        "heightRatio": 1.21,
+        "match": false
+      },
+      {
+        "variant": "services/editorial-table",
+        "structure": 0.674,
+        "heightRatio": 1.58,
+        "match": false
+      },
+      {
+        "variant": "services/price-list",
+        "structure": 0.691,
+        "heightRatio": 1.44,
+        "match": false
+      }
+    ],
+    "best": "services/menu-columns",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "menu": {
+    "ref": "menu",
+    "slot": "services",
+    "theme": "restaurante-casa-comal-v1",
+    "measured": [
+      {
+        "variant": "services/menu-columns",
+        "structure": 0.253,
+        "heightRatio": 0.59,
+        "match": false
+      },
+      {
+        "variant": "services/cards",
+        "structure": 0.364,
+        "heightRatio": 0.64,
+        "match": false
+      },
+      {
+        "variant": "services/price-list",
+        "structure": 0.453,
+        "heightRatio": 0.71,
+        "match": false
+      },
+      {
+        "variant": "services/ritual-cards",
+        "structure": 0.554,
+        "heightRatio": 0.59,
+        "match": false
+      },
+      {
+        "variant": "services/editorial-table",
+        "structure": 0.572,
+        "heightRatio": 0.78,
+        "match": false
+      }
+    ],
+    "best": "services/menu-columns",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "id": "restaurante-claveria-verde-stitch-01-01",
+  "giro": "restaurante",
+  "source": "stitch",
+  "status": "harvested",
+  "tags": [
+    "renew",
+    "claveria",
+    "platillo-estrella"
+  ],
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-21T17:07:07.667Z",
+  "stitch": {
+    "project_id": "14000113898118545432",
+    "screen_ids": [
+      "8f421a2ec381445faa3270dabd73ebec"
+    ]
+  },
+  "direction": "jardin-suave"
+}
