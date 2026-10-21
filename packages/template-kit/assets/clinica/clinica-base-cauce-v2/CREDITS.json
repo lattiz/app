@@ -1,0 +1,16 @@
+{
+  "$lattiz": "GENERATED from specs/clinica-cauce-v2.spec.json (spec 22a6ba4f9bc5, file 59fedf540d7d). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "3af18eb89aca8906a37010e3ca9b4ded7444ed02a9a4560be21c95629d602f12",
+      "query": "physical therapy patient",
+      "providerId": 10309879,
+      "pageUrl": "https://pixabay.com/photos/knee-orthopedics-therapy-pain-10309879/",
+      "photographer": "kumarsu6745_",
+      "photographerUrl": "https://pixabay.com/users/4844249/",
+      "tags": "knee, orthopedics, therapy, pain, medical, health, physiotherapy, joint, arthritis, exercise, muscles, physiotherapist, treatment, healthcare, rehabilitation, orthopedic, examination, elderly, diagnosis, caregiver, nursing"
+    }
+  ]
+}

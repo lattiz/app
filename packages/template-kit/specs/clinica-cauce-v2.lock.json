@@ -1,0 +1,56 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/clinica-cauce-v2.spec.json",
+  "catalog": "extended",
+  "catalogVersion": 2,
+  "tiers": {
+    "clinica-cauce-v2": {
+      "tier": "pro",
+      "palette": "custom",
+      "fontPair": "instrument-serif+instrument-sans",
+      "shape": "organico",
+      "archetype": "editorial-atelier",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "framed" },
+        { "role": "about", "slot": "about", "variant": "care-pathway" },
+        { "role": "catalog", "slot": "services", "variant": "treatment-rows" },
+        { "role": "team", "slot": "team", "variant": "list" },
+        { "role": "proof", "slot": "gallery", "variant": "mosaic" },
+        { "role": "testimonials", "slot": "testimonials", "variant": "cards" },
+        { "role": "faq", "slot": "faq", "variant": "grid" },
+        { "role": "contact", "slot": "locations", "variant": "booking-panel" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "minimal-centered" }
+      ],
+      "renews": "clinica-cauce-v1"
+    },
+    "clinica-base-cauce-v2": {
+      "tier": "basico",
+      "palette": "custom",
+      "fontPair": "sora+inter",
+      "shape": "suave",
+      "archetype": "essential",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "panel" },
+        { "role": "about", "slot": "about", "variant": "booking-steps" },
+        { "role": "catalog", "slot": "services", "variant": "menu-columns" },
+        { "role": "faq", "slot": "faq", "variant": "list" },
+        { "role": "contact", "slot": "locations", "variant": "single" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "minimal-centered" }
+      ],
+      "renews": "clinica-base-cauce-v1"
+    }
+  }
+}

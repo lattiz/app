@@ -238,6 +238,16 @@ export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
     proFeatures: [],
   },
   {
+    id: 'clinica-base-cauce-v2',
+    tier: 'basic',
+    giro: 'clinica',
+    giroLabel: 'Clínica / consultorio',
+    direction: null,
+    swatches: ['#F6F8F5', '#FBFCFB', '#4A7A3A', '#1E1E1D'],
+    dark: false,
+    proFeatures: [],
+  },
+  {
     id: 'clinica-brote-v1',
     tier: 'pro',
     giro: 'clinica',
@@ -270,6 +280,16 @@ export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
       'Contacto con mapa',
       'Animaciones',
     ],
+  },
+  {
+    id: 'clinica-cauce-v2',
+    tier: 'pro',
+    giro: 'clinica',
+    giroLabel: 'Clínica / consultorio',
+    direction: null,
+    swatches: ['#F4F8F5', '#FBFCFB', '#2C6395', '#1D1E1D'],
+    dark: false,
+    proFeatures: ['Equipo', 'Galería', 'Testimonios', 'Animaciones'],
   },
   {
     id: 'dental-arboleda-v1',
