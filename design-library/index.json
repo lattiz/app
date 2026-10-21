@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "count": 9,
+  "count": 10,
   "by_status": {
     "collected": 0,
-    "harvested": 5,
+    "harvested": 6,
     "promoted": 1,
     "shelved": 3,
     "rejected": 0
@@ -51,6 +51,20 @@
       "created_at": "2026-10-19T07:40:39.549Z",
       "harvested": true,
       "path": "stitch/dental/dental-arquimedes-polanco-01"
+    },
+    {
+      "id": "floreria-botanical-editorial-system-01",
+      "giro": "floreria",
+      "status": "harvested",
+      "tags": [
+        "dark",
+        "editorial",
+        "framed"
+      ],
+      "spin": "bosque-editorial-enmarcado",
+      "created_at": "2026-10-21T05:49:35.304Z",
+      "harvested": true,
+      "path": "stitch/floreria/floreria-botanical-editorial-system-01"
     },
     {
       "id": "restaurante-casa-rosa-mantequilla-patisserie-artisan-01",

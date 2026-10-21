@@ -1,0 +1,20 @@
+<section id="galeria" data-lz-slot="gallery" data-lz-variant="staggered-frames" class="lz-section lz-gallery-staggered-frames">
+  <div class="lz-container">
+    <div class="lz-gallery-staggered-frames__head">
+      <p class="lz-gallery-staggered-frames__kicker" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-title--section lz-gallery-staggered-frames__title" data-lz-key="title"></h2>
+      <p class="lz-gallery-staggered-frames__intro" data-lz-if="intro" data-lz-key="intro"></p>
+    </div>
+    <div class="lz-gallery-staggered-frames__grid">
+      <figure class="lz-gallery-staggered-frames__item" data-lz-each="items">
+        <div class="lz-gallery-staggered-frames__frame">
+          <img loading="lazy" width="800" height="1000" class="lz-gallery-staggered-frames__image" data-lz-attr-src="image" data-lz-attr-alt="alt">
+        </div>
+        <figcaption class="lz-gallery-staggered-frames__caption">
+          <span class="lz-gallery-staggered-frames__name" data-lz-key="caption"></span>
+          <span class="lz-gallery-staggered-frames__tag" data-lz-if="tag" data-lz-key="tag"></span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>

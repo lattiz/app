@@ -51,6 +51,7 @@ export const FAMILIES: Record<string, Family> = {
   'gallery/bento': 'full-media',
   'gallery/strip': 'cells',
   'gallery/collage': 'full-media',
+  'gallery/staggered-frames': 'full-media',
   'team/grid': 'cells',
   'team/list': 'rows',
   'team/spotlight': 'media-text',
