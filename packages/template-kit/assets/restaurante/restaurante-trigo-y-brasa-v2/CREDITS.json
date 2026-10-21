@@ -1,0 +1,126 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-trigo-y-brasa-v2.spec.json (spec 5c84ecf59d40, file 523ae5a9874d). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "21ae71fd32a3a7cfa079418a587f333d73701136290c01cfbbc744c940f07544",
+      "query": "rustic sourdough bread loaf wooden table",
+      "providerId": 2817388,
+      "pageUrl": "https://pixabay.com/photos/loaf-bread-bread-crust-crispy-2817388/",
+      "photographer": "Couleur",
+      "photographerUrl": "https://pixabay.com/users/1195798/",
+      "tags": "loaf, bread, bread crust, crispy, baked, fresh, cut, bread slices, meal, natural product, baked goods, food, nourishment, calories, carbohydrates, energy, staple food"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "pixabay",
+      "sha256": "82655aa3459ee97690336bcbe89045135bf7e3792fb70fcb5e96a27c625900d2",
+      "query": "bakery display bread shelf",
+      "providerId": 8128550,
+      "pageUrl": "https://pixabay.com/photos/bread-loaves-food-bakery-craft-8128550/",
+      "photographer": "wal_172619",
+      "photographerUrl": "https://pixabay.com/users/12138562/",
+      "tags": "bread, loaves, food, bakery, craft, shelf"
+    },
+    {
+      "file": "product-01.jpg",
+      "source": "pixabay",
+      "sha256": "f560d9268b0338c18f72fc5fa83ddfcd61db27a568b6c4f6efb64ff59ab7b332",
+      "query": "sourdough loaf crusty bread",
+      "providerId": 2824597,
+      "pageUrl": "https://pixabay.com/photos/loaf-to-bake-crust-baked-goods-2824597/",
+      "photographer": "webandi",
+      "photographerUrl": "https://pixabay.com/users/1460261/",
+      "tags": "loaf, to bake, crust, baked goods, crispy, grain, bread time, baking bread, baker, food, meal, farmers bread, bread crust, loaf of bread, flour, fresh"
+    },
+    {
+      "file": "product-02.jpg",
+      "source": "pixabay",
+      "sha256": "1729f874a9b9ca446e4f151b900e3226134604459b96ff902d99c90aaa2ca8fa",
+      "query": "baguette bread",
+      "providerId": 1378049,
+      "pageUrl": "https://pixabay.com/photos/baguette-bread-herb-baguette-fresh-1378049/",
+      "photographer": "Couleur",
+      "photographerUrl": "https://pixabay.com/users/1195798/",
+      "tags": "baguette, bread, herb baguette, fresh, delicious, baked goods, freshly baked, sliced bread, french baguette, french bread, close up, food, eat"
+    },
+    {
+      "file": "product-03.jpg",
+      "source": "pixabay",
+      "sha256": "f8ed83b462c5d1973f7a04264746ab5d0c75ee96386780c304c9fec032272315",
+      "query": "seeded bread loaf",
+      "providerId": 7445434,
+      "pageUrl": "https://pixabay.com/photos/loaf-evening-bread-bread-crust-7445434/",
+      "photographer": "bennopic",
+      "photographerUrl": "https://pixabay.com/users/13363608/",
+      "tags": "loaf, evening bread, bread, crust, breakfast, abendbrot, grain bread, sesame seeds"
+    },
+    {
+      "file": "product-04.jpg",
+      "source": "pixabay",
+      "sha256": "6ea13c2e6ffdd86ca3d9c191e9df4a2a919a7fbbb8ca6b4ebb9a2244ceafbf3c",
+      "query": "croissants golden butter",
+      "providerId": 569075,
+      "pageUrl": "https://pixabay.com/photos/croissants-jam-breakfast-knife-569075/",
+      "photographer": "JESHOOTS-com",
+      "photographerUrl": "https://pixabay.com/users/264599/",
+      "tags": "croissants, jam, breakfast, knife, butter knife, breakfast meal, meal, food, breakfast food, bread, plate, jelly, fruit jelly, fruit jam, plate of croissants, danish bread, puff pastry, flaky pastry, baked, bakery, eat, food photography, baked goods, dish, pastries, wooden table"
+    },
+    {
+      "file": "product-05.jpg",
+      "source": "pixabay",
+      "sha256": "8c80d3b566007e5cc900106f1a48275ec963ea96e4238607a4c18f102ddcb190",
+      "query": "king cake dessert",
+      "providerId": 3641851,
+      "pageUrl": "https://pixabay.com/photos/plums-crumble-cake-pastry-3641851/",
+      "photographer": "NoName_13",
+      "photographerUrl": "https://pixabay.com/users/2364555/",
+      "tags": "plums, crumble cake, pastry, streuselkuchen, food, sweet, pie, cake, fruit cake, plum cake, sweet dish, fruits, baked, baked goods, fruity, delicious, tasty, closeup"
+    },
+    {
+      "file": "product-06.jpg",
+      "source": "pixabay",
+      "sha256": "94b74b76fb41b4ac9b3178ff1a4a485699a34d0e80c1b172284e4f828714a6d3",
+      "query": "cappuccino cup wooden table",
+      "providerId": 4618705,
+      "pageUrl": "https://pixabay.com/photos/coffee-cup-caffeine-espresso-4618705/",
+      "photographer": "13758299",
+      "photographerUrl": "https://pixabay.com/users/13758299/",
+      "tags": "coffee, cup, caffeine, espresso, brown coffee, coffee cup, brown cup"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "pixabay",
+      "sha256": "bb5a01ff079cfc774226817ec7a139b156851826a013ccbca7fcb5de1a2b4a5a",
+      "query": "artisan bread loaves bakery",
+      "providerId": 4642686,
+      "pageUrl": "https://pixabay.com/photos/bread-loaf-white-bread-baked-food-4642686/",
+      "photographer": "congerdesign",
+      "photographerUrl": "https://pixabay.com/users/509903/",
+      "tags": "bread, loaf, white bread, baked, food, baked goods, nutrition, staple food, pastries, crust, cereals, carbohydrates, tasty, eat"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "pixabay",
+      "sha256": "047dd888ec2bac13d71fd15defbab26ee8f9760132c771e1cf9da4935a2bd855",
+      "query": "baker oven peel bread",
+      "providerId": 2885963,
+      "pageUrl": "https://pixabay.com/photos/bread-baker-oven-homemade-cooking-2885963/",
+      "photographer": "jackmac34",
+      "photographerUrl": "https://pixabay.com/users/483877/",
+      "tags": "bread, baker, oven, homemade, cooking"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "pixabay",
+      "sha256": "d5435e3ad1c145dba6524da31439a3fb35d11188f3cee11a3c77b19c3126e53a",
+      "query": "bread dough rising bowl",
+      "providerId": 3082589,
+      "pageUrl": "https://pixabay.com/photos/dough-knead-to-bake-food-cakes-3082589/",
+      "photographer": "webandi",
+      "photographerUrl": "https://pixabay.com/users/1460261/",
+      "tags": "dough, knead, to bake, food, cakes, meal, yummy, flour, handwork, cook, nourishment, sugar, preparation, baked goods, lighter dough, craft, bake it yourself, yeast, yeast dough, staple food, self baked, crispy, hefekranz, loaf, farmers bread, baker, fresh, child, hand, pizza, pizza dough"
+    }
+  ]
+}

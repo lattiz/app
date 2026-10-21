@@ -1,0 +1,521 @@
+{
+  "$schema": "./spec.schema.json",
+  "specVersion": 1,
+  "idBase": "restaurante-trigo-y-brasa",
+  "twin": true,
+  "giro": "restaurante",
+  "business": {
+    "name": "Trigo y Brasa",
+    "shortName": "Trigo",
+    "tagline": "Panadería",
+    "city": "CDMX",
+    "branch": "Clavería",
+    "address": "Av. Cuitláhuac 000, Col. Clavería, CDMX",
+    "hours": "Mar–Dom 07:00–16:00 · Lun cerrado",
+    "phone": "+52 55 0000 0000",
+    "whatsapp": "5215500000000",
+    "whatsappMessage": "Hola, quiero hacer un encargo de pan"
+  },
+  "brand": {
+    "catalog": "extended",
+    "palette": {
+      "preset": "pal-mostaza"
+    },
+    "fontPair": "fraunces+nunito-sans"
+  },
+  "layout": {
+    "direction": "terracota-calida",
+    "dials": {
+      "density": 7
+    }
+  },
+  "sections": {
+    "pro": [
+      {
+        "role": "header",
+        "variant": "inline"
+      },
+      {
+        "role": "hero",
+        "variant": "overlap"
+      },
+      {
+        "role": "about",
+        "variant": "booking-steps"
+      },
+      {
+        "role": "catalog",
+        "variant": "photo-rows"
+      },
+      {
+        "role": "cta",
+        "variant": "included-panel"
+      },
+      {
+        "role": "proof",
+        "variant": "grid"
+      },
+      {
+        "role": "testimonials",
+        "variant": "cards"
+      },
+      {
+        "role": "faq",
+        "variant": "grid"
+      },
+      {
+        "role": "contact",
+        "variant": "with-contact"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer",
+        "variant": "minimal-centered"
+      }
+    ],
+    "basico": [
+      {
+        "role": "header",
+        "variant": "inline"
+      },
+      {
+        "role": "hero",
+        "variant": "split"
+      },
+      {
+        "role": "about",
+        "variant": "booking-steps"
+      },
+      {
+        "role": "catalog",
+        "variant": "photo-rows"
+      },
+      {
+        "role": "faq",
+        "variant": "list"
+      },
+      {
+        "role": "contact",
+        "variant": "single"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer",
+        "variant": "minimal-centered"
+      }
+    ]
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "{{name}}, panadería de masa madre en {{branch}}, {{city}}: hogazas, pan dulce y café. Aparta tu pan o haz tu encargo por WhatsApp."
+    },
+    "navbar": {
+      "cta": "Hacer encargo",
+      "notice": "Horneamos de 07:00 a 16:00 · Mar a Dom"
+    },
+    "hero": {
+      "image": "hero.jpg",
+      "imageAlt": "Rebanadas de pan de masa madre sobre una mesa de madera con espigas de trigo",
+      "eyebrow": "Masa madre · {{branch}}",
+      "title": "Masa madre, tanda a tanda",
+      "text": "Harina, agua, sal y tiempo. Aparta tu pieza por WhatsApp y pasa por ella.",
+      "primaryCta": "Apartar mi pan",
+      "secondaryCta": "Ver el pan de hoy",
+      "secondaryHref": "#servicios",
+      "sticker": "Pan del día",
+      "detailImage": "gallery-02.jpg",
+      "detailAlt": "Estante de madera con hogazas de masa madre"
+    },
+    "about": {
+      "kicker": "{{index}} — Tandas",
+      "title": "Tandas del <span class=\"lz-title__serif\">día</span>",
+      "summary": "Horneamos en tres tandas y lo que sale primero es lo que mejor se vende. Aparta tu pieza y pasa por ella.",
+      "steps": [
+        {
+          "title": "07:00 · Hogazas de masa madre",
+          "text": "La primera tanda: 24 horas de fermentación y corteza firme. Ideal para el desayuno."
+        },
+        {
+          "title": "10:00 · Pan dulce y centeno",
+          "text": "Conchas, cuernos y hogazas de centeno con semillas, todavía tibios."
+        },
+        {
+          "title": "13:00 · Focaccia y bollería",
+          "text": "Focaccia de romero y croissants de mantequilla; de la última tanda queda poco."
+        }
+      ],
+      "primaryCta": "Apartar mi pan",
+      "statement": "Masa hecha a mano, sin prisa en la mesa ni en el horno.",
+      "paragraphs": [
+        "{{shortName}} es una panadería de barrio con un horno, una mesa de trabajo y una barra de café.",
+        "La masa madre se alimenta a diario y la fermentación dura lo que tiene que durar.",
+        "Llega temprano: lo primero que sale es lo primero que se acaba."
+      ],
+      "stats": [
+        {
+          "value": "24 h",
+          "label": "De fermentación"
+        },
+        {
+          "value": "7:00",
+          "label": "Primera tanda"
+        },
+        {
+          "value": "3",
+          "label": "Tandas al día"
+        }
+      ],
+      "image": "hero.jpg",
+      "imageAlt": "Pan de masa madre recién horneado en la mesa del taller"
+    },
+    "services": {
+      "kicker": "{{index}} — Vitrina",
+      "title": "Nuestros <span class=\"lz-title__serif\">panes</span>",
+      "intro": "Precios de muestra en pesos, con IVA. Pregunta qué salió en la última tanda.",
+      "prices": [
+        {
+          "name": "Hogaza de masa madre",
+          "price": "$95",
+          "description": "800 g de corteza crujiente y miga abierta.",
+          "image": "product-01.jpg",
+          "imageAlt": "Hogaza de masa madre con corteza marcada",
+          "tags": [
+            "Masa madre",
+            "Del día"
+          ]
+        },
+        {
+          "name": "Pan de ajo y hierbas",
+          "price": "$70",
+          "description": "Barra de corteza fina con mantequilla de hierbas; sale caliente.",
+          "image": "product-02.jpg",
+          "imageAlt": "Barra de pan abierta con mantequilla de ajo y hierbas",
+          "tags": [
+            "Del día"
+          ]
+        },
+        {
+          "name": "Pan de semillas",
+          "price": "$110",
+          "description": "Girasol, ajonjolí y linaza; dura toda la semana.",
+          "image": "product-03.jpg",
+          "imageAlt": "Hogaza cubierta de semillas sobre una tabla de madera",
+          "tags": [
+            "Semillas"
+          ]
+        },
+        {
+          "name": "Croissant de mantequilla",
+          "price": "$45",
+          "description": "Horneado al amanecer; con mermelada o solo.",
+          "image": "product-04.jpg",
+          "imageAlt": "Croissant dorado junto a un tazón de mermelada",
+          "tags": [
+            "Mantequilla",
+            "Mañana"
+          ]
+        },
+        {
+          "name": "Pastel de ciruela",
+          "price": "$55",
+          "description": "Con migajas de mantequilla; por rebanada o entero por encargo.",
+          "image": "product-05.jpg",
+          "imageAlt": "Pastel de ciruela con migajas de mantequilla",
+          "tags": [
+            "Temporada"
+          ]
+        },
+        {
+          "name": "Café de la casa",
+          "price": "$40",
+          "description": "Espresso, capuchino o filtrado, en taza.",
+          "image": "product-06.jpg",
+          "imageAlt": "Tres tazas de café con espuma sobre una mesa de madera",
+          "tags": [
+            "Caliente"
+          ]
+        }
+      ],
+      "promos": [
+        {
+          "tag": "Encargos",
+          "title": "Roscas y pasteles",
+          "text": "Con 48 horas de anticipación.",
+          "cta": "Hacer encargo",
+          "href": "{{whatsappUrl:Hola, quiero hacer un encargo de pan}}"
+        },
+        {
+          "tag": "Eventos",
+          "title": "Mesas de pan",
+          "text": "Para reuniones de hasta 40 personas.",
+          "cta": "Cotizar",
+          "href": "{{whatsappUrl:Hola, quiero cotizar una mesa de pan}}"
+        }
+      ]
+    },
+    "testimonials": {
+      "kicker": "{{index}} — Clientes",
+      "allReviewsCta": "Ver reseñas en Google",
+      "writeReviewCta": "Dejar reseña en Google",
+      "reviews": [
+        {
+          "text": "El pan de semillas me dura la semana entera. Paso cada sábado por mi hogaza.",
+          "author": "Daniela R."
+        },
+        {
+          "text": "Pedí la rosca por WhatsApp y estaba lista a la hora que acordamos, con la fruta que quería.",
+          "author": "Miguel A."
+        },
+        {
+          "text": "Me siento en la barra con un café y una concha. Es tranquilo y el pan sale tibio.",
+          "author": "Paola S."
+        }
+      ],
+      "title": "Lo que dicen en <span class=\"lz-title__serif\">la barra</span>",
+      "intro": "Reseñas de clientes que apartan su pan por WhatsApp."
+    },
+    "faq": {
+      "kicker": "{{index}} — Preguntas",
+      "title": "Antes de <span class=\"lz-title__serif\">venir</span>",
+      "intro": "Lo que más nos preguntan, en pocas líneas. Si tu duda no está aquí, escríbenos.",
+      "cta": "Preguntar por WhatsApp",
+      "items": [
+        {
+          "question": "¿Hasta qué hora hay pan?",
+          "answer": "La primera tanda sale a las 7:00. Después de las 14:00 queda poco, sobre todo pan dulce."
+        },
+        {
+          "question": "¿Con cuánto tiempo pido una rosca o un pastel?",
+          "answer": "Con 48 horas de margen. Para mesas de pan, escríbenos con la fecha del evento."
+        },
+        {
+          "question": "¿Tienen pan sin lácteo?",
+          "answer": "Algunas hogazas se hacen solo con harina, agua y sal. Pregunta en el mostrador por la tanda."
+        },
+        {
+          "question": "¿Puedo sentarme a desayunar?",
+          "answer": "Sí, hay mesas junto a la barra. También puedes llevar tu pan y tu café."
+        },
+        {
+          "question": "¿Puedo apartar mi pan?",
+          "answer": "Sí. Mándanos tu pedido por WhatsApp y te decimos a qué hora pasar por él."
+        },
+        {
+          "question": "¿Hay dónde estacionarse?",
+          "answer": "No tenemos estacionamiento propio; hay uno público a una cuadra."
+        }
+      ]
+    },
+    "locations": {
+      "kicker": "{{index}} — Visítanos",
+      "title": "Pasa por tu <span class=\"lz-title__serif\">pan</span>",
+      "contactText": "Para apartar pan y hacer encargos, escríbenos en horario de la panadería. Si es una mesa de pan, incluye la fecha.",
+      "whatsappLabel": "WhatsApp",
+      "whatsappValue": "Hacer encargo",
+      "callLabel": "Teléfono",
+      "emailLabel": "Correo",
+      "directionsLabel": "Cómo llegar",
+      "hoursLabel": "Horario",
+      "whatsappCta": "Encargo por WhatsApp",
+      "callCta": "Llamar",
+      "whatsappNote": "Encargos y pan apartado",
+      "callNote": "Para pedidos del mismo día",
+      "emailNote": "Cotizaciones de mesas de pan"
+    },
+    "floating-whatsapp": {
+      "label": "Hacer encargo por WhatsApp"
+    },
+    "footer": {
+      "about": "Panadería de masa madre en {{branch}}, {{city}}. Pan apartado y encargos por WhatsApp.",
+      "branchesTitle": "Dónde estamos",
+      "linksTitle": "Explorar",
+      "contactTitle": "Contacto"
+    },
+    "cta": {
+      "kicker": "Encargos",
+      "title": "Roscas y pasteles por <span class=\"lz-title__serif\">encargo</span>",
+      "text": "Para festejos, reuniones y mesas de pan. Avísanos con dos días de margen.",
+      "primaryCta": "Hacer encargo",
+      "panelTitle": "Qué incluye",
+      "items": [
+        "Masa madre de fermentación lenta",
+        "Recoges en la panadería, en Clavería",
+        "Mesas de pan para hasta 40 personas"
+      ]
+    },
+    "gallery": {
+      "kicker": "{{index}} — Del horno",
+      "title": "De la mesa de trabajo a <span class=\"lz-title__serif\">tu mesa</span>",
+      "items": [
+        {
+          "image": "gallery-01.jpg",
+          "caption": "Hogazas recién horneadas",
+          "alt": "Hogazas de masa madre con corteza dorada sobre una tabla de madera"
+        },
+        {
+          "image": "gallery-02.jpg",
+          "caption": "La vitrina",
+          "alt": "Estante de panadería con hogazas y bollos"
+        },
+        {
+          "image": "gallery-03.jpg",
+          "caption": "El horno",
+          "alt": "Panadero sacando pan del horno"
+        },
+        {
+          "image": "gallery-04.jpg",
+          "caption": "Masa en reposo",
+          "alt": "Masa de pan creciendo en un recipiente"
+        }
+      ]
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Pan recién horneado en {{branch}}",
+          "text": "Masa madre y café cada mañana. Aparta tu pan y pasa por él.",
+          "eyebrow": "Panadería · {{branch}}"
+        },
+        "about": {
+          "summary": "Horneamos en tres tandas y lo que sale primero se acaba primero. Aparta tu pieza por WhatsApp."
+        },
+        "services": {
+          "prices": [
+            {
+              "name": "Hogaza de masa madre",
+              "price": "$95",
+              "description": "800 g de corteza crujiente y miga abierta.",
+              "image": "product-01.jpg",
+              "imageAlt": "Hogaza de masa madre con corteza marcada",
+              "tags": [
+                "Masa madre",
+                "Del día"
+              ]
+            },
+            {
+              "name": "Pan de ajo y hierbas",
+              "price": "$70",
+              "description": "Barra de corteza fina con mantequilla de hierbas; sale caliente.",
+              "image": "product-02.jpg",
+              "imageAlt": "Barra de pan abierta con mantequilla de ajo y hierbas",
+              "tags": [
+                "Del día"
+              ]
+            },
+            {
+              "name": "Pan de semillas",
+              "price": "$110",
+              "description": "Girasol, ajonjolí y linaza; dura toda la semana.",
+              "image": "product-03.jpg",
+              "imageAlt": "Hogaza cubierta de semillas sobre una tabla de madera",
+              "tags": [
+                "Semillas"
+              ]
+            },
+            {
+              "name": "Croissant de mantequilla",
+              "price": "$45",
+              "description": "Horneado al amanecer; con mermelada o solo.",
+              "image": "product-04.jpg",
+              "imageAlt": "Croissant dorado junto a un tazón de mermelada",
+              "tags": [
+                "Mantequilla",
+                "Mañana"
+              ]
+            }
+          ]
+        }
+      },
+      "brand": {
+        "palette": {
+          "preset": "pal-papel-tinta"
+        },
+        "fontPair": "lora+figtree",
+        "photoTreatment": "none"
+      }
+    }
+  },
+  "images": [
+    {
+      "key": "hero",
+      "source": {
+        "search": "rustic sourdough bread loaf wooden table"
+      }
+    },
+    {
+      "key": "product-01",
+      "source": {
+        "search": "sourdough loaf crusty bread"
+      }
+    },
+    {
+      "key": "product-02",
+      "source": {
+        "search": "baguette bread"
+      }
+    },
+    {
+      "key": "product-03",
+      "source": {
+        "search": "seeded bread loaf"
+      }
+    },
+    {
+      "key": "product-04",
+      "source": {
+        "search": "croissants golden butter"
+      }
+    },
+    {
+      "key": "product-05",
+      "source": {
+        "search": "king cake dessert"
+      }
+    },
+    {
+      "key": "product-06",
+      "source": {
+        "search": "cappuccino cup wooden table"
+      }
+    },
+    {
+      "key": "gallery-01",
+      "source": {
+        "search": "artisan bread loaves bakery"
+      }
+    },
+    {
+      "key": "gallery-02",
+      "source": {
+        "search": "bakery display bread shelf"
+      }
+    },
+    {
+      "key": "gallery-03",
+      "source": {
+        "search": "baker oven peel bread"
+      }
+    },
+    {
+      "key": "gallery-04",
+      "source": {
+        "search": "bread dough rising bowl"
+      }
+    }
+  ],
+  "motion": {
+    "preset": "calm",
+    "progress": false
+  },
+  "version": 2,
+  "renews": {
+    "spec": "restaurante-trigo-y-brasa"
+  }
+}

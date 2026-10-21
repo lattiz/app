@@ -125,7 +125,6 @@
   color: var(--lz-color-text);
   font-size: calc(14px * var(--lz-text-scale));
   font-weight: 600;
-  letter-spacing: 0.04em;
 }
 
 .lz-services-photo-rows__promos {
@@ -153,10 +152,6 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-}
-
-.lz-services-photo-rows__promo-text {
-  color: var(--lz-color-muted);
 }
 
 .lz-services-photo-rows__promo-title {
@@ -199,10 +194,6 @@
   .lz-services-photo-rows__image {
     width: 100%;
     aspect-ratio: 16 / 10;
-  }
-
-  .lz-services-photo-rows__body {
-    width: 100%;
   }
 
   .lz-services-photo-rows__row {

@@ -1,0 +1,58 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/restaurante-trigo-y-brasa-v2.spec.json",
+  "catalog": "extended",
+  "catalogVersion": 2,
+  "tiers": {
+    "restaurante-trigo-y-brasa-v2": {
+      "tier": "pro",
+      "palette": "pal-mostaza",
+      "fontPair": "fraunces+nunito-sans",
+      "shape": "suave",
+      "archetype": "editorial-atelier",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "overlap" },
+        { "role": "about", "slot": "about", "variant": "booking-steps" },
+        { "role": "catalog", "slot": "services", "variant": "photo-rows" },
+        { "role": "cta", "slot": "cta", "variant": "included-panel" },
+        { "role": "proof", "slot": "gallery", "variant": "grid" },
+        { "role": "testimonials", "slot": "testimonials", "variant": "cards" },
+        { "role": "faq", "slot": "faq", "variant": "grid" },
+        { "role": "contact", "slot": "locations", "variant": "with-contact" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "minimal-centered" }
+      ],
+      "layout": { "direction": "terracota-calida", "archetype": "catalog" },
+      "renews": "restaurante-trigo-y-brasa-v1"
+    },
+    "restaurante-base-trigo-y-brasa-v2": {
+      "tier": "basico",
+      "palette": "pal-papel-tinta",
+      "fontPair": "lora+figtree",
+      "shape": "brutal",
+      "archetype": "essential",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "split" },
+        { "role": "about", "slot": "about", "variant": "booking-steps" },
+        { "role": "catalog", "slot": "services", "variant": "photo-rows" },
+        { "role": "faq", "slot": "faq", "variant": "list" },
+        { "role": "contact", "slot": "locations", "variant": "single" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "minimal-centered" }
+      ],
+      "layout": { "direction": "terracota-calida", "archetype": "catalog" },
+      "renews": "restaurante-base-trigo-y-brasa-v1"
+    }
+  }
+}
