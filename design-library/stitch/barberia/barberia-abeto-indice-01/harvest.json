@@ -1,0 +1,517 @@
+{
+  "version": 1,
+  "candidate_id": "barberia-abeto-indice-01",
+  "input": {
+    "file": "design.md",
+    "kind": "design-md"
+  },
+  "palette": {
+    "label": "Local business · Insignia y musgo (Stitch, oscuro)",
+    "mode": "dark",
+    "mood": [
+      "nocturno",
+      "stitch"
+    ],
+    "affinity": [
+      "barberia"
+    ],
+    "bg": "#314B3E",
+    "text": "#F1F2EE",
+    "accent": "#C4CACF",
+    "surface": "#3B5748",
+    "surface2": "#456353",
+    "photoTreatment": "none",
+    "placeholder": "rules",
+    "from": {
+      "bg": "background",
+      "text": "on-background",
+      "accent": "primary",
+      "surface": "surface-container-low",
+      "surface2": "surface-container-high"
+    },
+    "aa": {
+      "ok": true,
+      "problems": []
+    },
+    "roles": {
+      "surface": [
+        "background",
+        "surface",
+        "surface-container-low",
+        "surface-container-high"
+      ],
+      "text": [
+        "on-background",
+        "on-surface",
+        "on-surface-variant"
+      ],
+      "accent": [
+        "primary",
+        "tertiary"
+      ],
+      "border": [
+        "outline",
+        "outline-variant"
+      ]
+    },
+    "lz": {
+      "--lz-color-bg": "#314B3E",
+      "--lz-color-surface": "#3B5748",
+      "--lz-color-surface-2": "#456353",
+      "--lz-color-text": "#F1F2EE",
+      "--lz-color-muted": "#D6DBD5",
+      "--lz-color-accent": "#C4CACF",
+      "--lz-color-on-accent": "#314B3E",
+      "--lz-color-accent-text": "#C4CACF",
+      "--lz-color-line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+      "--lz-color-line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+      "--lz-color-overlay": "#314B3E",
+      "--lz-color-on-overlay": "#F1F2EE",
+      "--lz-color-navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+      "--lz-color-ink": "#314B3E"
+    },
+    "pairs": [
+      {
+        "fg": "on-background",
+        "bg": "background",
+        "ratio": 8.46,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface",
+        "bg": "surface",
+        "ratio": 8.46,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-primary",
+        "bg": "primary",
+        "ratio": 5.75,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface",
+        "bg": "background",
+        "ratio": 8.46,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "background",
+        "ratio": 5.96,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "surface",
+        "ratio": 5.96,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface",
+        "bg": "surface-container-low",
+        "ratio": 7.07,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "surface-container-low",
+        "ratio": 4.98,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface",
+        "bg": "surface-container-high",
+        "ratio": 5.9,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "surface-container-high",
+        "ratio": 4.16,
+        "min": 4.5,
+        "aa_pass": false
+      }
+    ],
+    "distance": [
+      {
+        "giro": "barberia",
+        "nearest": "pal-musgo-y-plata",
+        "distance": 8.8,
+        "min": 15,
+        "ok": false
+      }
+    ]
+  },
+  "typography": {
+    "scale": [
+      {
+        "token": "display-lg",
+        "role": "display",
+        "family": "Bodoni Moda",
+        "sizePx": 83,
+        "weight": 700,
+        "lineHeightPx": 89
+      },
+      {
+        "token": "headline-md",
+        "role": "headline",
+        "family": "Bodoni Moda",
+        "sizePx": 41,
+        "weight": 600,
+        "lineHeightPx": 48
+      },
+      {
+        "token": "body-lg",
+        "role": "body",
+        "family": "Geist",
+        "sizePx": 20,
+        "weight": 400,
+        "lineHeightPx": 32
+      },
+      {
+        "token": "body-md",
+        "role": "body",
+        "family": "Geist",
+        "sizePx": 16,
+        "weight": 400,
+        "lineHeightPx": 26
+      },
+      {
+        "token": "label-caps",
+        "role": "label",
+        "family": "Geist",
+        "sizePx": 14,
+        "weight": 600,
+        "lineHeightPx": 20,
+        "letterSpacingEm": 0.08
+      }
+    ],
+    "displayFamily": "Bodoni Moda",
+    "bodyFamily": "Geist",
+    "googleFamilies": [
+      "Bodoni Moda",
+      "Geist"
+    ],
+    "unsupportedFamilies": [],
+    "excludedFamilies": [],
+    "metrics": {
+      "Bodoni Moda": true,
+      "Geist": true
+    },
+    "delivery": {
+      "ok": true,
+      "problems": []
+    },
+    "radiusPx": 0,
+    "spacing": {
+      "container-max": "1200px",
+      "gutter": "32px",
+      "section-gap": "144px",
+      "stack-md": "28px"
+    }
+  },
+  "sections": [
+    {
+      "ref": "hero",
+      "columns": 3,
+      "items": 3,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "bordered",
+      "heading": "Corte, barba y navaja.",
+      "mappable": true,
+      "slot": "hero",
+      "layout": "centered",
+      "similar": [
+        "hero/columns",
+        "hero/centered-arch",
+        "hero/offset-card",
+        "hero/rail"
+      ]
+    },
+    {
+      "ref": "servicios",
+      "columns": 12,
+      "items": 4,
+      "hasImage": false,
+      "hasStat": true,
+      "hasQuote": false,
+      "surface": "bordered",
+      "heading": "El ritual del oficio.",
+      "mappable": true,
+      "slot": "services",
+      "layout": "bento",
+      "similar": [
+        "services/cards",
+        "services/ritual-cards",
+        "services/product-grid"
+      ],
+      "draft": {
+        "variant": "bordered-bento",
+        "html": "<section id=\"servicios\" data-lz-slot=\"services\" data-lz-variant=\"bordered-bento\" class=\"lz-section lz-services-bordered-bento\">\n  <div class=\"lz-container\">\n    <p class=\"lz-services-bordered-bento__kicker\" data-lz-key=\"kicker\"></p>\n    <h2 class=\"lz-title lz-title--section\" data-lz-key=\"title\"></h2>\n    <div class=\"lz-services-bordered-bento__grid\">\n      <article class=\"lz-services-bordered-bento__card\" data-lz-each=\"prices\">\n        <p class=\"lz-services-bordered-bento__price\" data-lz-key=\"price\"></p>\n        <h3 class=\"lz-services-bordered-bento__name\" data-lz-key=\"name\"></h3>\n        <p class=\"lz-services-bordered-bento__desc\" data-lz-key=\"description\"></p>\n      </article>\n    </div>\n  </div>\n</section>\n",
+        "css": ".lz-services-bordered-bento {\n  padding: var(--lz-section-pad) 0;\n}\n\n.lz-services-bordered-bento__kicker {\n  margin: 0 0 calc(12px * var(--lz-space));\n  color: var(--lz-color-text);\n  font-size: calc(14px * var(--lz-text-scale));\n  letter-spacing: 0.12em;\n  text-transform: uppercase;\n}\n\n.lz-services-bordered-bento__grid {\n  display: grid;\n  grid-template-columns: repeat(12, minmax(0, 1fr));\n  gap: calc(20px * var(--lz-space));\n  margin-top: calc(40px * var(--lz-space));\n}\n\n.lz-services-bordered-bento__card {\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  gap: calc(14px * var(--lz-space));\n  min-height: calc(220px * var(--lz-space));\n  padding: calc(32px * var(--lz-space));\n  border-radius: var(--lz-radius-card);\n  color: var(--lz-color-text);\n  background: var(--lz-color-surface);\n  border: var(--lz-border-width, 1px) solid var(--lz-color-line);\n}\n\n/* Bento: the first card takes two thirds, the second the rest, then pairs. */\n.lz-services-bordered-bento__card:nth-child(4n + 1) {\n  grid-column: span 8;\n}\n.lz-services-bordered-bento__card:nth-child(4n + 2) {\n  grid-column: span 4;\n}\n.lz-services-bordered-bento__card:nth-child(4n + 3),\n.lz-services-bordered-bento__card:nth-child(4n + 4) {\n  grid-column: span 6;\n}\n\n.lz-services-bordered-bento__price {\n  margin: 0;\n  color: var(--lz-color-accent-text);\n  font-family: var(--lz-font-display);\n  font-size: calc(clamp(36px, 4.4vw, 60px) * var(--lz-display-scale));\n  letter-spacing: var(--lz-display-tracking, 0);\n  line-height: 1;\n}\n\n.lz-services-bordered-bento__name {\n  margin: 0;\n  font-family: var(--lz-font-display);\n  font-size: calc(24px * var(--lz-text-scale));\n  line-height: 1.2;\n}\n\n.lz-services-bordered-bento__desc {\n  max-width: 44ch;\n  margin: 0;\n  color: var(--lz-color-muted);\n  font-size: calc(16px * var(--lz-text-scale));\n  line-height: 1.55;\n  text-wrap: pretty;\n}\n\n@media (max-width: 992px) {\n  .lz-services-bordered-bento__grid {\n    grid-template-columns: repeat(6, minmax(0, 1fr));\n  }\n  .lz-services-bordered-bento__card,\n  .lz-services-bordered-bento__card:nth-child(n) {\n    grid-column: span 3;\n  }\n}\n\n@media (max-width: 480px) {\n  .lz-services-bordered-bento__grid {\n    grid-template-columns: minmax(0, 1fr);\n  }\n  .lz-services-bordered-bento__card,\n  .lz-services-bordered-bento__card:nth-child(n) {\n    grid-column: auto;\n    padding: calc(24px * var(--lz-space));\n  }\n}\n",
+        "meta_ts": "import type { SectionMeta } from '../../../src/types';\n\n// Stitch: barberia-abeto-indice-01\nexport default {\n  slot: \"services\",\n  variant: \"bordered-bento\",\n  label: \"Servicios y precios\",\n  region: 'main',\n  description: \"Tarjetas con filete con el precio grande arriba, nombre y descripción; en escritorio forman un bento de 12 columnas (8/4 y 6/6).\",\n  numbered: true,\n  tiers: [\n  \"basic\",\n  \"pro\"\n],\n  intent: \"Catálogo en mosaico con tarjetas con filete, a partir de un patrón de Stitch; para giros con pocos servicios bien diferenciados.\",\n  archetypes: [\n  \"showcase\",\n  \"bold\",\n  \"catalog\"\n],\n  contentKeys: [\n  \"kicker\",\n  \"title\",\n  \"prices[].name\",\n  \"prices[].price\",\n  \"prices[].description\"\n],\n  sample: {\n  \"prices\": [\n    {\n      \"name\": \"Valoración inicial\",\n      \"price\": \"$600\",\n      \"description\": \"Revisión completa y plan por escrito, sin compromiso.\"\n    },\n    {\n      \"name\": \"Limpieza profunda\",\n      \"price\": \"$950\",\n      \"description\": \"Higiene con ultrasonido y pulido, en una sola visita.\"\n    },\n    {\n      \"name\": \"Blanqueamiento\",\n      \"price\": \"$3,200\",\n      \"description\": \"Dos sesiones con seguimiento de sensibilidad.\"\n    },\n    {\n      \"name\": \"Ortodoncia\",\n      \"price\": \"$1,400\",\n      \"description\": \"Mensualidad con revisión incluida.\"\n    }\n  ]\n},\n} satisfies SectionMeta;\n",
+        "bytes": {
+          "html": 719,
+          "css": 2400,
+          "css_gzip": 677
+        }
+      }
+    },
+    {
+      "ref": "maestros",
+      "columns": 3,
+      "items": 3,
+      "hasImage": true,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "bordered",
+      "heading": "Manos y temple artesanal.",
+      "mappable": true,
+      "slot": "services",
+      "layout": "card-grid",
+      "reuse_candidate": "services/cards",
+      "similar": [
+        "services/cards",
+        "services/ritual-cards",
+        "services/product-grid"
+      ],
+      "draft": {
+        "variant": "bordered-card-grid",
+        "html": "<section id=\"servicios\" data-lz-slot=\"services\" data-lz-variant=\"bordered-card-grid\" class=\"lz-section lz-services-bordered-card-grid\">\n  <div class=\"lz-container\">\n    <p class=\"lz-services-bordered-card-grid__kicker\" data-lz-key=\"kicker\"></p>\n    <h2 class=\"lz-title lz-title--section\" data-lz-key=\"title\"></h2>\n    <div class=\"lz-services-bordered-card-grid__grid\">\n      <article class=\"lz-services-bordered-card-grid__card\" data-lz-each=\"prices\">\n        <p class=\"lz-services-bordered-card-grid__price\" data-lz-key=\"price\"></p>\n        <h3 class=\"lz-services-bordered-card-grid__name\" data-lz-key=\"name\"></h3>\n        <p class=\"lz-services-bordered-card-grid__desc\" data-lz-key=\"description\"></p>\n      </article>\n    </div>\n  </div>\n</section>\n",
+        "css": ".lz-services-bordered-card-grid {\n  padding: var(--lz-section-pad) 0;\n}\n\n.lz-services-bordered-card-grid__kicker {\n  margin: 0 0 calc(12px * var(--lz-space));\n  color: var(--lz-color-text);\n  font-size: calc(14px * var(--lz-text-scale));\n  letter-spacing: 0.12em;\n  text-transform: uppercase;\n}\n\n.lz-services-bordered-card-grid__grid {\n  display: grid;\n  grid-template-columns: repeat(3, minmax(0, 1fr));\n  gap: calc(20px * var(--lz-space));\n  margin-top: calc(40px * var(--lz-space));\n}\n\n.lz-services-bordered-card-grid__card {\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  gap: calc(14px * var(--lz-space));\n  min-height: calc(220px * var(--lz-space));\n  padding: calc(32px * var(--lz-space));\n  border-radius: var(--lz-radius-card);\n  color: var(--lz-color-text);\n  background: var(--lz-color-surface);\n  border: var(--lz-border-width, 1px) solid var(--lz-color-line);\n}\n\n.lz-services-bordered-card-grid__price {\n  margin: 0;\n  color: var(--lz-color-accent-text);\n  font-family: var(--lz-font-display);\n  font-size: calc(clamp(36px, 4.4vw, 60px) * var(--lz-display-scale));\n  letter-spacing: var(--lz-display-tracking, 0);\n  line-height: 1;\n}\n\n.lz-services-bordered-card-grid__name {\n  margin: 0;\n  font-family: var(--lz-font-display);\n  font-size: calc(24px * var(--lz-text-scale));\n  line-height: 1.2;\n}\n\n.lz-services-bordered-card-grid__desc {\n  max-width: 44ch;\n  margin: 0;\n  color: var(--lz-color-muted);\n  font-size: calc(16px * var(--lz-text-scale));\n  line-height: 1.55;\n  text-wrap: pretty;\n}\n\n@media (max-width: 992px) {\n  .lz-services-bordered-card-grid__grid {\n    grid-template-columns: repeat(2, minmax(0, 1fr));\n  }\n  .lz-services-bordered-card-grid__card,\n  .lz-services-bordered-card-grid__card:nth-child(n) {\n    grid-column: auto;\n  }\n}\n\n@media (max-width: 480px) {\n  .lz-services-bordered-card-grid__grid {\n    grid-template-columns: minmax(0, 1fr);\n  }\n  .lz-services-bordered-card-grid__card,\n  .lz-services-bordered-card-grid__card:nth-child(n) {\n    grid-column: auto;\n    padding: calc(24px * var(--lz-space));\n  }\n}\n",
+        "meta_ts": "import type { SectionMeta } from '../../../src/types';\n\n// Stitch: barberia-abeto-indice-01\nexport default {\n  slot: \"services\",\n  variant: \"bordered-card-grid\",\n  label: \"Servicios y precios\",\n  region: 'main',\n  description: \"Tarjetas con filete con el precio grande arriba, nombre y descripción; tres por fila en escritorio.\",\n  numbered: true,\n  tiers: [\n  \"basic\",\n  \"pro\"\n],\n  intent: \"Catálogo en retícula con tarjetas con filete, a partir de un patrón de Stitch; para giros con pocos servicios bien diferenciados.\",\n  archetypes: [\n  \"catalog\",\n  \"soft\"\n],\n  contentKeys: [\n  \"kicker\",\n  \"title\",\n  \"prices[].name\",\n  \"prices[].price\",\n  \"prices[].description\"\n],\n  sample: {\n  \"prices\": [\n    {\n      \"name\": \"Valoración inicial\",\n      \"price\": \"$600\",\n      \"description\": \"Revisión completa y plan por escrito, sin compromiso.\"\n    },\n    {\n      \"name\": \"Limpieza profunda\",\n      \"price\": \"$950\",\n      \"description\": \"Higiene con ultrasonido y pulido, en una sola visita.\"\n    },\n    {\n      \"name\": \"Blanqueamiento\",\n      \"price\": \"$3,200\",\n      \"description\": \"Dos sesiones con seguimiento de sensibilidad.\"\n    },\n    {\n      \"name\": \"Ortodoncia\",\n      \"price\": \"$1,400\",\n      \"description\": \"Mensualidad con revisión incluida.\"\n    }\n  ]\n},\n} satisfies SectionMeta;\n",
+        "bytes": {
+          "html": 751,
+          "css": 2079,
+          "css_gzip": 583
+        }
+      }
+    },
+    {
+      "ref": "galeria",
+      "columns": 3,
+      "items": 3,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "bordered",
+      "heading": "Atmósfera y detalle.",
+      "mappable": true,
+      "slot": "services",
+      "layout": "card-grid",
+      "reuse_candidate": "services/cards",
+      "similar": [
+        "services/cards",
+        "services/ritual-cards",
+        "services/product-grid"
+      ],
+      "draft": {
+        "variant": "bordered-card-grid",
+        "html": "<section id=\"servicios\" data-lz-slot=\"services\" data-lz-variant=\"bordered-card-grid\" class=\"lz-section lz-services-bordered-card-grid\">\n  <div class=\"lz-container\">\n    <p class=\"lz-services-bordered-card-grid__kicker\" data-lz-key=\"kicker\"></p>\n    <h2 class=\"lz-title lz-title--section\" data-lz-key=\"title\"></h2>\n    <div class=\"lz-services-bordered-card-grid__grid\">\n      <article class=\"lz-services-bordered-card-grid__card\" data-lz-each=\"prices\">\n        <p class=\"lz-services-bordered-card-grid__price\" data-lz-key=\"price\"></p>\n        <h3 class=\"lz-services-bordered-card-grid__name\" data-lz-key=\"name\"></h3>\n        <p class=\"lz-services-bordered-card-grid__desc\" data-lz-key=\"description\"></p>\n      </article>\n    </div>\n  </div>\n</section>\n",
+        "css": ".lz-services-bordered-card-grid {\n  padding: var(--lz-section-pad) 0;\n}\n\n.lz-services-bordered-card-grid__kicker {\n  margin: 0 0 calc(12px * var(--lz-space));\n  color: var(--lz-color-text);\n  font-size: calc(14px * var(--lz-text-scale));\n  letter-spacing: 0.12em;\n  text-transform: uppercase;\n}\n\n.lz-services-bordered-card-grid__grid {\n  display: grid;\n  grid-template-columns: repeat(3, minmax(0, 1fr));\n  gap: calc(20px * var(--lz-space));\n  margin-top: calc(40px * var(--lz-space));\n}\n\n.lz-services-bordered-card-grid__card {\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  gap: calc(14px * var(--lz-space));\n  min-height: calc(220px * var(--lz-space));\n  padding: calc(32px * var(--lz-space));\n  border-radius: var(--lz-radius-card);\n  color: var(--lz-color-text);\n  background: var(--lz-color-surface);\n  border: var(--lz-border-width, 1px) solid var(--lz-color-line);\n}\n\n.lz-services-bordered-card-grid__price {\n  margin: 0;\n  color: var(--lz-color-accent-text);\n  font-family: var(--lz-font-display);\n  font-size: calc(clamp(36px, 4.4vw, 60px) * var(--lz-display-scale));\n  letter-spacing: var(--lz-display-tracking, 0);\n  line-height: 1;\n}\n\n.lz-services-bordered-card-grid__name {\n  margin: 0;\n  font-family: var(--lz-font-display);\n  font-size: calc(24px * var(--lz-text-scale));\n  line-height: 1.2;\n}\n\n.lz-services-bordered-card-grid__desc {\n  max-width: 44ch;\n  margin: 0;\n  color: var(--lz-color-muted);\n  font-size: calc(16px * var(--lz-text-scale));\n  line-height: 1.55;\n  text-wrap: pretty;\n}\n\n@media (max-width: 992px) {\n  .lz-services-bordered-card-grid__grid {\n    grid-template-columns: repeat(2, minmax(0, 1fr));\n  }\n  .lz-services-bordered-card-grid__card,\n  .lz-services-bordered-card-grid__card:nth-child(n) {\n    grid-column: auto;\n  }\n}\n\n@media (max-width: 480px) {\n  .lz-services-bordered-card-grid__grid {\n    grid-template-columns: minmax(0, 1fr);\n  }\n  .lz-services-bordered-card-grid__card,\n  .lz-services-bordered-card-grid__card:nth-child(n) {\n    grid-column: auto;\n    padding: calc(24px * var(--lz-space));\n  }\n}\n",
+        "meta_ts": "import type { SectionMeta } from '../../../src/types';\n\n// Stitch: barberia-abeto-indice-01\nexport default {\n  slot: \"services\",\n  variant: \"bordered-card-grid\",\n  label: \"Servicios y precios\",\n  region: 'main',\n  description: \"Tarjetas con filete con el precio grande arriba, nombre y descripción; tres por fila en escritorio.\",\n  numbered: true,\n  tiers: [\n  \"basic\",\n  \"pro\"\n],\n  intent: \"Catálogo en retícula con tarjetas con filete, a partir de un patrón de Stitch; para giros con pocos servicios bien diferenciados.\",\n  archetypes: [\n  \"catalog\",\n  \"soft\"\n],\n  contentKeys: [\n  \"kicker\",\n  \"title\",\n  \"prices[].name\",\n  \"prices[].price\",\n  \"prices[].description\"\n],\n  sample: {\n  \"prices\": [\n    {\n      \"name\": \"Valoración inicial\",\n      \"price\": \"$600\",\n      \"description\": \"Revisión completa y plan por escrito, sin compromiso.\"\n    },\n    {\n      \"name\": \"Limpieza profunda\",\n      \"price\": \"$950\",\n      \"description\": \"Higiene con ultrasonido y pulido, en una sola visita.\"\n    },\n    {\n      \"name\": \"Blanqueamiento\",\n      \"price\": \"$3,200\",\n      \"description\": \"Dos sesiones con seguimiento de sensibilidad.\"\n    },\n    {\n      \"name\": \"Ortodoncia\",\n      \"price\": \"$1,400\",\n      \"description\": \"Mensualidad con revisión incluida.\"\n    }\n  ]\n},\n} satisfies SectionMeta;\n",
+        "bytes": {
+          "html": 751,
+          "css": 2079,
+          "css_gzip": 583
+        }
+      }
+    },
+    {
+      "ref": "testimonios",
+      "columns": 3,
+      "items": 3,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": true,
+      "surface": "bordered",
+      "heading": "La estima de quienes vuelven.",
+      "mappable": true,
+      "slot": "testimonials",
+      "layout": "card-grid",
+      "reuse_candidate": "testimonials/cards",
+      "similar": [
+        "testimonials/cards",
+        "testimonials/paper-trio",
+        "testimonials/feature-stack"
+      ]
+    },
+    {
+      "ref": "faq",
+      "columns": 12,
+      "items": 2,
+      "hasImage": false,
+      "hasStat": true,
+      "hasQuote": false,
+      "surface": "bordered",
+      "heading": "Claridad y respaldo.",
+      "mappable": true,
+      "slot": "faq",
+      "layout": "card-grid",
+      "reuse_candidate": "faq/grid",
+      "similar": [
+        "faq/grid",
+        "faq/numbered-cards"
+      ]
+    },
+    {
+      "ref": "contacto",
+      "columns": 2,
+      "items": 2,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "bordered",
+      "heading": "Agenda tu espacio.",
+      "mappable": true,
+      "slot": "cta",
+      "layout": "centered",
+      "draft": {
+        "variant": "bordered-centered",
+        "html": "<section id=\"cita\" data-lz-slot=\"cta\" data-lz-variant=\"bordered-centered\" class=\"lz-section lz-cta-bordered-centered\">\n  <div class=\"lz-container\">\n    <div class=\"lz-cta-bordered-centered__card\">\n      <h2 class=\"lz-title lz-cta-bordered-centered__title\" data-lz-key=\"title\"></h2>\n      <p class=\"lz-cta-bordered-centered__text\" data-lz-if=\"text\" data-lz-key=\"text\"></p>\n      <div class=\"lz-cta-bordered-centered__actions\">\n        <a href=\"{{whatsappUrl}}\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"lz-button lz-button--primary lz-cta-bordered-centered__cta\" data-lz-key=\"primaryCta\"></a>\n        <a data-lz-if=\"secondaryCta\" class=\"lz-button lz-button--secondary lz-cta-bordered-centered__cta\" data-lz-attr-href=\"secondaryHref\" data-lz-key=\"secondaryCta\"></a>\n      </div>\n    </div>\n  </div>\n</section>\n",
+        "css": ".lz-cta-bordered-centered {\n  padding: var(--lz-section-pad) 0;\n}\n\n.lz-cta-bordered-centered__card {\n  display: grid;\n  justify-items: center;\n  gap: calc(20px * var(--lz-space));\n  max-width: calc(760px * var(--lz-space));\n  margin: 0 auto;\n  padding: calc(64px * var(--lz-space));\n  border-radius: var(--lz-radius-card);\n  color: var(--lz-color-text);\n  text-align: center;\n  background: var(--lz-color-surface);\n  border: var(--lz-border-width, 1px) solid var(--lz-color-line);\n}\n\n.lz-cta-bordered-centered__title {\n  margin: 0;\n  font-size: calc(\n    min(clamp(32px, 4.4vw, 60px), 10svh) * var(--lz-display-scale)\n  );\n  text-wrap: balance;\n}\n\n.lz-cta-bordered-centered__text {\n  max-width: 46ch;\n  margin: 0;\n  color: var(--lz-color-muted);\n  font-size: calc(18px * var(--lz-text-scale));\n  line-height: 1.55;\n}\n\n.lz-cta-bordered-centered__actions {\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: center;\n  gap: calc(12px * var(--lz-space));\n}\n\n.lz-cta-bordered-centered__cta {\n  touch-action: manipulation;\n}\n\n.lz-cta-bordered-centered__cta:active {\n  transform: scale(var(--lz-press-scale, 0.97));\n  transition: transform var(--lz-dur-press, 120ms)\n    var(--lz-ease-out, cubic-bezier(0.23, 1, 0.32, 1));\n}\n\n@media (prefers-reduced-motion: reduce) {\n  .lz-cta-bordered-centered__cta:active {\n    transform: none;\n    transition: none;\n  }\n}\n\n@media (max-width: 480px) {\n  .lz-cta-bordered-centered__card {\n    padding: calc(32px * var(--lz-space)) calc(24px * var(--lz-space));\n  }\n}\n",
+        "meta_ts": "import type { SectionMeta } from '../../../src/types';\n\n// Stitch: barberia-abeto-indice-01\nexport default {\n  slot: \"cta\",\n  variant: \"bordered-centered\",\n  label: \"Llamada a la acción\",\n  region: 'main',\n  description: \"Tarjeta centrada con filete con titular, una línea y el CTA de WhatsApp (más uno secundario opcional). Cuenta como sección.\",\n  tiers: [\n  \"basic\",\n  \"pro\"\n],\n  intent: \"Un cierre contenido en una sola tarjeta centrada, a partir de un patrón de Stitch (su formulario se vuelve botón de WhatsApp).\",\n  archetypes: [\n  \"booking\",\n  \"bold\",\n  \"soft\"\n],\n  contentKeys: [\n  \"title\",\n  \"text?\",\n  \"primaryCta\",\n  \"secondaryCta?\",\n  \"secondaryHref?\"\n],\n  sample: {\n  \"title\": \"Hablemos de tu <span class=\\\"lz-title__serif\\\">primera visita</span>\",\n  \"text\": \"Escríbenos y te decimos qué horarios hay libres esta semana.\",\n  \"primaryCta\": \"Escribir por WhatsApp\",\n  \"secondaryCta\": \"Ver preguntas\",\n  \"secondaryHref\": \"#preguntas\"\n},\n} satisfies SectionMeta;\n",
+        "bytes": {
+          "html": 815,
+          "css": 1499,
+          "css_gzip": 566
+        }
+      }
+    },
+    {
+      "ref": "footer-8",
+      "columns": 0,
+      "items": 0,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "bordered",
+      "mappable": true,
+      "slot": "footer",
+      "layout": "list"
+    },
+    {
+      "ref": "footer-9",
+      "columns": 0,
+      "items": 0,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "bordered",
+      "mappable": true,
+      "slot": "footer",
+      "layout": "list"
+    },
+    {
+      "ref": "footer-10",
+      "columns": 0,
+      "items": 0,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "bordered",
+      "mappable": true,
+      "slot": "footer",
+      "layout": "list"
+    },
+    {
+      "ref": "9. FOOTER",
+      "columns": 0,
+      "items": 0,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "bordered",
+      "mappable": true,
+      "slot": "footer",
+      "layout": "link-columns",
+      "reuse_candidate": "footer/columns",
+      "similar": [
+        "footer/big-wordmark",
+        "footer/columns",
+        "footer/minimal-centered",
+        "footer/ledger",
+        "footer/signature-bar"
+      ]
+    }
+  ],
+  "not_mappable": [],
+  "rebuild": [
+    {
+      "ref": "hero",
+      "slot": "hero",
+      "layout": "centered",
+      "reason": "sin medir: corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
+    },
+    {
+      "ref": "testimonios",
+      "slot": "testimonials",
+      "layout": "card-grid",
+      "reason": "sin medir (¿testimonials/cards?): corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
+    },
+    {
+      "ref": "faq",
+      "slot": "faq",
+      "layout": "card-grid",
+      "reason": "sin medir (¿faq/grid?): corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
+    },
+    {
+      "ref": "footer-8",
+      "slot": "footer",
+      "layout": "list",
+      "reason": "sin medir: corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
+    },
+    {
+      "ref": "footer-9",
+      "slot": "footer",
+      "layout": "list",
+      "reason": "sin medir: corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
+    },
+    {
+      "ref": "footer-10",
+      "slot": "footer",
+      "layout": "list",
+      "reason": "sin medir: corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
+    },
+    {
+      "ref": "9. FOOTER",
+      "slot": "footer",
+      "layout": "link-columns",
+      "reason": "sin medir (¿footer/columns?): corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
+    }
+  ],
+  "interactivity": [],
+  "image_needs": [
+    {
+      "ref": "maestros",
+      "slot": "services",
+      "orientation": "portrait",
+      "use": "foreground"
+    },
+    {
+      "ref": "maestros",
+      "slot": "services",
+      "orientation": "portrait",
+      "use": "foreground"
+    },
+    {
+      "ref": "maestros",
+      "slot": "services",
+      "orientation": "portrait",
+      "use": "foreground"
+    }
+  ],
+  "images_ignored": 8
+}

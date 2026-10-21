@@ -1,0 +1,430 @@
+{
+  "hero": {
+    "ref": "hero",
+    "slot": "hero",
+    "theme": "barberia-abeto-v1",
+    "measured": [
+      {
+        "variant": "hero/bento",
+        "structure": 0.312,
+        "heightRatio": 0.94,
+        "match": false
+      },
+      {
+        "variant": "hero/framed",
+        "structure": 0.611,
+        "heightRatio": 0.94,
+        "match": false
+      },
+      {
+        "variant": "hero/stack",
+        "structure": 0.683,
+        "heightRatio": 0.94,
+        "match": false
+      },
+      {
+        "variant": "hero/rail",
+        "structure": 0.819,
+        "heightRatio": 0.94,
+        "match": false
+      },
+      {
+        "variant": "hero/photo-ribbon",
+        "structure": 0.841,
+        "heightRatio": 0.87,
+        "match": false
+      },
+      {
+        "variant": "hero/arch-sticker",
+        "structure": 0.86,
+        "heightRatio": 0.96,
+        "match": false
+      },
+      {
+        "variant": "hero/overlap",
+        "structure": 0.873,
+        "heightRatio": 0.94,
+        "match": false
+      },
+      {
+        "variant": "hero/split",
+        "structure": 0.905,
+        "heightRatio": 0.99,
+        "match": false
+      },
+      {
+        "variant": "hero/duo-arch",
+        "structure": 0.937,
+        "heightRatio": 0.96,
+        "match": false
+      },
+      {
+        "variant": "hero/offset-card",
+        "structure": 0.947,
+        "heightRatio": 1.2,
+        "match": false
+      },
+      {
+        "variant": "hero/panel",
+        "structure": 0.979,
+        "heightRatio": 0.96,
+        "match": false
+      },
+      {
+        "variant": "hero/centered-arch",
+        "structure": 1,
+        "heightRatio": 1.39,
+        "match": false
+      },
+      {
+        "variant": "hero/columns",
+        "structure": 1,
+        "heightRatio": 0.96,
+        "match": false
+      },
+      {
+        "variant": "hero/image-bg",
+        "structure": 1,
+        "heightRatio": 0.87,
+        "match": false
+      },
+      {
+        "variant": "hero/poster",
+        "structure": 1,
+        "heightRatio": 0.87,
+        "match": false
+      }
+    ],
+    "best": "hero/bento",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "servicios": {
+    "ref": "servicios",
+    "slot": "services",
+    "theme": "barberia-abeto-v1",
+    "measured": [
+      {
+        "variant": "services/price-list",
+        "structure": 0.903,
+        "heightRatio": 0.94,
+        "match": false
+      },
+      {
+        "variant": "services/menu-columns",
+        "structure": 0.919,
+        "heightRatio": 0.84,
+        "match": false
+      },
+      {
+        "variant": "services/cards",
+        "structure": 0.921,
+        "heightRatio": 0.9,
+        "match": false
+      },
+      {
+        "variant": "services/ritual-cards",
+        "structure": 0.947,
+        "heightRatio": 0.79,
+        "match": false
+      },
+      {
+        "variant": "services/editorial-table",
+        "structure": 0.952,
+        "heightRatio": 1.03,
+        "match": false
+      }
+    ],
+    "best": "services/price-list",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "maestros": {
+    "ref": "maestros",
+    "slot": "team",
+    "theme": "barberia-abeto-v1",
+    "measured": [
+      {
+        "variant": "team/grid",
+        "structure": 0.289,
+        "heightRatio": 0.89,
+        "match": false
+      },
+      {
+        "variant": "team/list",
+        "structure": 0.584,
+        "heightRatio": 1.08,
+        "match": false
+      },
+      {
+        "variant": "team/spotlight",
+        "structure": 0.923,
+        "heightRatio": 0.92,
+        "match": false
+      }
+    ],
+    "best": "team/grid",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "galeria": {
+    "ref": "galeria",
+    "slot": "gallery",
+    "theme": "barberia-abeto-v1",
+    "measured": [
+      {
+        "variant": "gallery/bento",
+        "structure": 0.777,
+        "heightRatio": 1.09,
+        "match": false
+      },
+      {
+        "variant": "gallery/mosaic",
+        "structure": 0.777,
+        "heightRatio": 1.35,
+        "match": false
+      },
+      {
+        "variant": "gallery/strip",
+        "structure": 0.915,
+        "heightRatio": 0.68,
+        "match": false
+      },
+      {
+        "variant": "gallery/collage",
+        "structure": 1,
+        "heightRatio": 1.16,
+        "match": false
+      },
+      {
+        "variant": "gallery/grid",
+        "structure": 1,
+        "heightRatio": 0.8,
+        "match": false
+      }
+    ],
+    "best": "gallery/bento",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "testimonios": {
+    "ref": "testimonios",
+    "slot": "testimonials",
+    "theme": "barberia-abeto-v1",
+    "measured": [
+      {
+        "variant": "testimonials/paper-trio",
+        "structure": 0.527,
+        "heightRatio": 1.07,
+        "match": false
+      },
+      {
+        "variant": "testimonials/quote-feature",
+        "structure": 0.585,
+        "heightRatio": 1.31,
+        "match": false
+      },
+      {
+        "variant": "testimonials/rating-wall",
+        "structure": 0.7,
+        "heightRatio": 0.87,
+        "match": false
+      },
+      {
+        "variant": "testimonials/cards",
+        "structure": 0.803,
+        "heightRatio": 1.01,
+        "match": false
+      },
+      {
+        "variant": "testimonials/feature-stack",
+        "structure": 0.829,
+        "heightRatio": 1.25,
+        "match": false
+      }
+    ],
+    "best": "testimonials/paper-trio",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "faq": {
+    "ref": "faq",
+    "slot": "faq",
+    "theme": "barberia-abeto-v1",
+    "measured": [
+      {
+        "variant": "faq/column-panels",
+        "structure": 0.627,
+        "heightRatio": 0.59,
+        "match": false
+      },
+      {
+        "variant": "faq/two-col",
+        "structure": 0.676,
+        "heightRatio": 0.6,
+        "match": false
+      },
+      {
+        "variant": "faq/grid",
+        "structure": 0.798,
+        "heightRatio": 0.58,
+        "match": false
+      },
+      {
+        "variant": "faq/list",
+        "structure": 0.836,
+        "heightRatio": 0.55,
+        "match": false
+      },
+      {
+        "variant": "faq/numbered-cards",
+        "structure": 0.865,
+        "heightRatio": 0.6,
+        "match": false
+      }
+    ],
+    "best": "faq/column-panels",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "contacto": {
+    "ref": "contacto",
+    "slot": "locations",
+    "theme": "barberia-abeto-v1",
+    "measured": [
+      {
+        "variant": "locations/booking-panel",
+        "structure": 0.658,
+        "heightRatio": 0.9,
+        "match": false
+      },
+      {
+        "variant": "locations/cards",
+        "structure": 0.768,
+        "heightRatio": 0.87,
+        "match": false
+      },
+      {
+        "variant": "locations/map-link",
+        "structure": 0.789,
+        "heightRatio": 0.79,
+        "match": false
+      },
+      {
+        "variant": "locations/single-card",
+        "structure": 0.835,
+        "heightRatio": 0.59,
+        "match": false
+      },
+      {
+        "variant": "locations/arch-visit",
+        "structure": 0.859,
+        "heightRatio": 0.93,
+        "match": false
+      },
+      {
+        "variant": "locations/single",
+        "structure": 0.878,
+        "heightRatio": 0.81,
+        "match": false
+      },
+      {
+        "variant": "locations/with-contact",
+        "structure": 0.883,
+        "heightRatio": 1.13,
+        "match": false
+      }
+    ],
+    "best": "locations/booking-panel",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "footer": {
+    "ref": "footer",
+    "slot": "footer",
+    "theme": "barberia-abeto-v1",
+    "measured": [
+      {
+        "variant": "footer/signature-bar",
+        "structure": 0.588,
+        "heightRatio": 4.67,
+        "match": false
+      },
+      {
+        "variant": "footer/ledger",
+        "structure": 0.622,
+        "heightRatio": 11.96,
+        "match": false
+      },
+      {
+        "variant": "footer/big-wordmark",
+        "structure": 0.633,
+        "heightRatio": 16.98,
+        "match": false
+      },
+      {
+        "variant": "footer/columns",
+        "structure": 0.664,
+        "heightRatio": 9.54,
+        "match": false
+      },
+      {
+        "variant": "footer/minimal-centered",
+        "structure": 0.953,
+        "heightRatio": 9.91,
+        "match": false
+      }
+    ],
+    "best": "footer/signature-bar",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  }
+}

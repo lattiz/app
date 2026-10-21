@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+
+<html class="dark scroll-smooth" lang="es-MX"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Abeto Barbería — San Ángel, Ciudad de México</title>
+<!-- Google Fonts: Bodoni Moda & Geist -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Geist:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with configuration -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-high": "#2a2a2a",
+            "tertiary": "#C4CACF",
+            "on-secondary-fixed": "#042014",
+            "on-error": "#690005",
+            "on-tertiary-container": "#5e5248",
+            "primary-container": "#c4cacf",
+            "on-secondary-fixed-variant": "#314d3e",
+            "surface-container-low": "#3B5748",
+            "on-tertiary-fixed": "#231a12",
+            "surface-tint": "#c1c7cc",
+            "on-surface": "#F1F2EE",
+            "surface-container-highest": "#353535",
+            "on-secondary": "#1a3628",
+            "on-primary-container": "#4f5559",
+            "on-primary": "#2b3135",
+            "inverse-on-surface": "#313030",
+            "tertiary-fixed": "#f1dfd3",
+            "on-background": "#F1F2EE",
+            "on-primary-fixed": "#161c20",
+            "secondary": "#afcebb",
+            "on-tertiary": "#392e26",
+            "on-surface-variant": "#c4c7ca",
+            "secondary-fixed-dim": "#afcebb",
+            "background": "#314B3E",
+            "inverse-primary": "#595f64",
+            "surface-container": "#201f20",
+            "surface-container-lowest": "#0e0e0e",
+            "primary": "#e0e6eb",
+            "on-primary-fixed-variant": "#41484c",
+            "surface-bright": "#393939",
+            "outline-variant": "#53695B",
+            "on-error-container": "#ffdad6",
+            "primary-fixed-dim": "#c1c7cc",
+            "surface": "#314B3E",
+            "inverse-surface": "#e5e2e2",
+            "secondary-fixed": "#caead6",
+            "primary-fixed": "#dde3e8",
+            "on-secondary-container": "#9dbcaa",
+            "tertiary-fixed-dim": "#d4c3b7",
+            "tertiary-container": "#d7c6ba",
+            "surface-variant": "#353535",
+            "secondary-container": "#314d3e",
+            "outline": "#93A39A",
+            "surface-dim": "#131314",
+            "error-container": "#93000a",
+            "on-tertiary-fixed-variant": "#50453c",
+            "error": "#ffb4ab"
+          },
+          "borderRadius": {
+            "DEFAULT": "0px",
+            "none": "0px",
+            "sm": "0px",
+            "md": "0px",
+            "lg": "0px",
+            "xl": "0px",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xl": "144px",
+            "space-sm": "16px",
+            "space-md": "28px",
+            "space-lg": "48px",
+            "space-xs": "8px",
+            "margin": "32px",
+            "gutter": "32px"
+          },
+          "fontFamily": {
+            "display-lg-mobile": ["Bodoni Moda", "serif"],
+            "label-caps": ["Geist", "sans-serif"],
+            "headline-md-mobile": ["Bodoni Moda", "serif"],
+            "headline-md": ["Bodoni Moda", "serif"],
+            "display-lg": ["Bodoni Moda", "serif"],
+            "body-md": ["Geist", "sans-serif"],
+            "body-lg": ["Geist", "sans-serif"]
+          },
+          "fontSize": {
+            "display-lg-mobile": ["48px", { "lineHeight": "54px", "fontWeight": "700" }],
+            "label-caps": ["14px", { "lineHeight": "20px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+            "headline-md-mobile": ["32px", { "lineHeight": "38px", "fontWeight": "600" }],
+            "headline-md": ["41px", { "lineHeight": "48px", "fontWeight": "600" }],
+            "display-lg": ["83px", { "lineHeight": "89px", "fontWeight": "700" }],
+            "body-md": ["16px", { "lineHeight": "26px", "fontWeight": "400" }],
+            "body-lg": ["20px", { "lineHeight": "32px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md antialiased selection:bg-tertiary selection:text-background min-h-screen">
+<!-- 1. HEADER (TopNavBar Anchor) -->
+<header class="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-outline-variant/60">
+<div class="w-full px-space-md lg:px-space-lg py-space-sm flex justify-between items-center max-w-[1200px] mx-auto">
+<!-- Wordmark -->
+<a class="font-headline-md text-headline-md tracking-wider text-on-surface uppercase" href="#">
+        ABETO
+      </a>
+<!-- Central Nav Links -->
+<nav class="hidden md:flex items-center space-x-8">
+<a class="text-outline hover:text-on-surface font-label-caps text-label-caps uppercase tracking-widest transition-colors duration-200" href="#servicios">
+          Servicios
+        </a>
+<a class="text-outline hover:text-on-surface font-label-caps text-label-caps uppercase tracking-widest transition-colors duration-200" href="#ritual">
+          El Ritual
+        </a>
+<a class="text-outline hover:text-on-surface font-label-caps text-label-caps uppercase tracking-widest transition-colors duration-200" href="#galeria">
+          Galería
+        </a>
+<a class="text-outline hover:text-on-surface font-label-caps text-label-caps uppercase tracking-widest transition-colors duration-200" href="#preguntas">
+          Preguntas
+        </a>
+<a class="text-outline hover:text-on-surface font-label-caps text-label-caps uppercase tracking-widest transition-colors duration-200" href="#visitanos">
+          Visítanos
+        </a>
+</nav>
+<!-- Trailing Action -->
+<div class="flex items-center space-x-4">
+<span class="hidden lg:inline text-outline font-label-caps text-label-caps tracking-widest text-xs uppercase">
+          San Ángel, CDMX
+        </span>
+<a class="px-5 py-2.5 border border-tertiary text-on-surface font-label-caps text-label-caps uppercase tracking-widest hover:bg-surface-container-low hover:border-on-surface transition-colors duration-200" href="https://wa.me/525500000000" rel="noopener noreferrer" target="_blank">
+          Reservar Cita
+        </a>
+</div>
+</div>
+</header>
+<main class="max-w-[1200px] mx-auto px-gutter">
+<!-- 2. HERO SECTION -->
+<section class="pt-20 pb-space-xl grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[calc(100vh-90px)]">
+<!-- Left Editorial Block -->
+<div class="lg:col-span-7 flex flex-col justify-center pr-0 lg:pr-8">
+<div class="flex items-center space-x-3 mb-6">
+<span class="w-8 h-[1px] bg-tertiary"></span>
+<p class="font-label-caps text-label-caps uppercase tracking-[0.2em] text-tertiary text-xs">
+            Barbería de caballeros · San Ángel
+          </p>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface mb-8 tracking-tight">
+          El ritual de la <em class="font-serif italic font-normal text-tertiary">navaja</em>.
+        </h1>
+<p class="font-body-lg text-body-lg text-outline max-w-xl mb-12 font-light leading-relaxed">
+          Un oficio riguroso donde el tiempo se desacelera. Hojas templadas, paños calientes y la serenidad de una técnica ejecutada con atención absoluta.
+        </p>
+<div class="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16">
+<a class="px-8 py-4 border border-tertiary text-on-surface font-label-caps text-label-caps uppercase tracking-widest hover:bg-surface-container-low hover:border-on-surface transition-colors duration-200 inline-flex items-center space-x-3" href="https://wa.me/525500000000" rel="noopener noreferrer" target="_blank">
+<span>Reservar cita</span>
+<svg class="w-4 h-4 stroke-current" fill="none" stroke-width="1.5" viewbox="0 0 24 24">
+<path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</a>
+<span class="text-xs text-outline font-label-caps uppercase tracking-wider">Atención únicamente con previa cita</span>
+</div>
+<!-- 3 Data points footer row -->
+<div class="pt-8 border-t border-outline-variant/60 grid grid-cols-3 gap-4">
+<div>
+<p class="text-[11px] font-label-caps uppercase tracking-widest text-outline mb-1">Horario</p>
+<p class="font-body-md text-on-surface text-sm">Mar–Sáb 10:00–21:00</p>
+</div>
+<div class="border-l border-outline-variant/60 pl-4">
+<p class="text-[11px] font-label-caps uppercase tracking-widest text-outline mb-1">Ubicación</p>
+<p class="font-body-md text-on-surface text-sm">San Ángel, CDMX</p>
+</div>
+<div class="border-l border-outline-variant/60 pl-4">
+<p class="text-[11px] font-label-caps uppercase tracking-widest text-outline mb-1">Gestión</p>
+<p class="font-body-md text-on-surface text-sm">Cita en un mensaje</p>
+</div>
+</div>
+</div>
+<!-- Right Editorial Visual Composition -->
+<div class="lg:col-span-5 relative flex justify-center lg:justify-end mt-12 lg:mt-0">
+<!-- Offset Hairline Silver Frame Behind -->
+<div class="absolute inset-0 border border-tertiary/40 translate-x-4 translate-y-4 pointer-events-none w-full max-w-md h-[540px] ml-auto"></div>
+<!-- Primary Image Container -->
+<div class="relative w-full max-w-md h-[540px] bg-surface-container-low border border-outline-variant overflow-hidden">
+<img class="w-full h-full object-cover grayscale contrast-125 opacity-90 hover:scale-105 transition-transform duration-700 ease-out" data-alt="A portrait photograph inside an authentic heritage barbershop in San Ángel, Mexico City. The lighting is soft and moody, casting subtle specular highlights across polished silver shears, vintage glass bottles, and deep dark green forest walls. A master barber in a classic apron stands in quiet concentration. The overall aesthetic is editorial, serene, and rich in craftsmanship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL3_uecsGqmo8o-o2s06fXT6C7XHLPf1SdfWYH3TcRealo1Q_YDceVBQD6OpeaEv5AwJpNVmudi6uSkjWkx4T5nhZ-azd7A25FPI4pruFpIYa_BLehTy_lzDF9O7WyNt8Be_S5jCok0vA0qnf_DfoKUSao47N3ofS5sP3uXzxw5weB0B8PIgGAza3vteyRGCHystpzuJf-kR09Bzu-Gxu9l_v9RlTQPOrj1sAW8yLwGxjDmC25-LEnik6aIwYyZq1blj19eOoZSXHc"/>
+<!-- Subtle Inner Vignette & Hairline Border Overlay -->
+<div class="absolute inset-0 border border-outline-variant/80 pointer-events-none"></div>
+<!-- Circular Embossed Stamp "Desde 2012" -->
+<div class="absolute bottom-6 right-6 w-24 h-24 rounded-full border border-tertiary bg-background/90 backdrop-blur-sm flex flex-col items-center justify-center text-center p-2">
+<span class="text-[9px] font-label-caps uppercase tracking-widest text-outline">Oficio</span>
+<span class="font-headline-md text-sm text-on-surface">2012</span>
+<span class="text-[8px] font-label-caps uppercase tracking-widest text-tertiary">San Ángel</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. SERVICIOS (Price List - Editorial Traditional Menu) -->
+<section class="py-space-xl border-t border-outline-variant/60" id="servicios">
+<div class="max-w-3xl mx-auto">
+<div class="text-center mb-16">
+<p class="font-label-caps text-label-caps uppercase tracking-[0.2em] text-tertiary text-xs mb-3">Carta de Oficio</p>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">La Carta de Servicios</h2>
+<div class="w-12 h-[1px] bg-tertiary mx-auto mt-6"></div>
+</div>
+<div class="space-y-10">
+<!-- Item 1 -->
+<div class="group flex flex-col sm:flex-row sm:items-baseline justify-between pb-6 border-b border-outline-variant/40 hover:border-tertiary/60 transition-colors">
+<div class="sm:max-w-md">
+<div class="flex items-center space-x-3">
+<h3 class="font-headline-md text-xl text-on-surface">Corte clásico</h3>
+<span class="text-xs font-label-caps text-outline tracking-wider">40 min</span>
+</div>
+<p class="font-body-md text-sm text-outline mt-1 font-light">Diagnóstico capilar, corte con tijera y máquina, lavado con sales minerales y peinado con tónico.</p>
+</div>
+<div class="flex items-baseline space-x-4 mt-4 sm:mt-0 justify-between sm:justify-end flex-grow sm:pl-8">
+<span class="hidden md:inline-block flex-grow border-b border-dotted border-outline-variant/60 mb-1 mx-2"></span>
+<span class="font-headline-md text-lg text-on-surface">$350</span>
+<a class="text-xs font-label-caps uppercase tracking-widest text-tertiary hover:text-on-surface inline-flex items-center transition-colors" href="https://wa.me/525500000000?text=Deseo%20reservar%20Corte%20Clásico" rel="noopener noreferrer" target="_blank">
+                Reservar <span class="ml-1">→</span>
+</a>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="group flex flex-col sm:flex-row sm:items-baseline justify-between pb-6 border-b border-outline-variant/40 hover:border-tertiary/60 transition-colors">
+<div class="sm:max-w-md">
+<div class="flex items-center space-x-3">
+<h3 class="font-headline-md text-xl text-on-surface">Afeitado con navaja</h3>
+<span class="text-xs font-label-caps text-outline tracking-wider">35 min</span>
+</div>
+<p class="font-body-md text-sm text-outline mt-1 font-light">Espuma batida con brocha de tejón, doble toalla caliente, navaja de un solo filo y bálsamo calmante de eucalipto.</p>
+</div>
+<div class="flex items-baseline space-x-4 mt-4 sm:mt-0 justify-between sm:justify-end flex-grow sm:pl-8">
+<span class="hidden md:inline-block flex-grow border-b border-dotted border-outline-variant/60 mb-1 mx-2"></span>
+<span class="font-headline-md text-lg text-on-surface">$320</span>
+<a class="text-xs font-label-caps uppercase tracking-widest text-tertiary hover:text-on-surface inline-flex items-center transition-colors" href="https://wa.me/525500000000?text=Deseo%20reservar%20Afeitado%20con%20navaja" rel="noopener noreferrer" target="_blank">
+                Reservar <span class="ml-1">→</span>
+</a>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="group flex flex-col sm:flex-row sm:items-baseline justify-between pb-6 border-b border-outline-variant/40 hover:border-tertiary/60 transition-colors">
+<div class="sm:max-w-md">
+<div class="flex items-center space-x-3">
+<h3 class="font-headline-md text-xl text-on-surface">Barba perfilada</h3>
+<span class="text-xs font-label-caps text-outline tracking-wider">30 min</span>
+</div>
+<p class="font-body-md text-sm text-outline mt-1 font-light">Definición de contornos de mejilla y cuello con navaja libre, rebajado simétrico y aceite acondicionador de cedro.</p>
+</div>
+<div class="flex items-baseline space-x-4 mt-4 sm:mt-0 justify-between sm:justify-end flex-grow sm:pl-8">
+<span class="hidden md:inline-block flex-grow border-b border-dotted border-outline-variant/60 mb-1 mx-2"></span>
+<span class="font-headline-md text-lg text-on-surface">$250</span>
+<a class="text-xs font-label-caps uppercase tracking-widest text-tertiary hover:text-on-surface inline-flex items-center transition-colors" href="https://wa.me/525500000000?text=Deseo%20reservar%20Barba%20perfilada" rel="noopener noreferrer" target="_blank">
+                Reservar <span class="ml-1">→</span>
+</a>
+</div>
+</div>
+<!-- Item 4 (Destacado) -->
+<div class="relative group bg-surface-container-low/40 p-6 border border-tertiary/60 transition-colors">
+<div class="absolute -top-3 right-6 bg-surface-container-low border border-tertiary px-3 py-0.5">
+<span class="font-label-caps text-[11px] uppercase tracking-widest text-tertiary">El más pedido</span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-baseline justify-between">
+<div class="sm:max-w-md">
+<div class="flex items-center space-x-3">
+<h3 class="font-headline-md text-xl text-on-surface">Corte + barba</h3>
+<span class="text-xs font-label-caps text-tertiary tracking-wider">65 min</span>
+</div>
+<p class="font-body-md text-sm text-outline mt-1 font-light">La atención completa tradicional: corte de cabello de precisión, toallas al vapor, alineación de barba y masaje en sienes.</p>
+</div>
+<div class="flex items-baseline space-x-4 mt-4 sm:mt-0 justify-between sm:justify-end flex-grow sm:pl-8">
+<span class="hidden md:inline-block flex-grow border-b border-dotted border-outline-variant/80 mb-1 mx-2"></span>
+<span class="font-headline-md text-xl text-on-surface">$520</span>
+<a class="text-xs font-label-caps uppercase tracking-widest text-tertiary hover:text-on-surface inline-flex items-center transition-colors" href="https://wa.me/525500000000?text=Deseo%20reservar%20Corte%20mas%20Barba" rel="noopener noreferrer" target="_blank">
+                  Reservar <span class="ml-1">→</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Item 5 -->
+<div class="group flex flex-col sm:flex-row sm:items-baseline justify-between pb-6 border-b border-outline-variant/40 hover:border-tertiary/60 transition-colors">
+<div class="sm:max-w-md">
+<div class="flex items-center space-x-3">
+<h3 class="font-headline-md text-xl text-on-surface">Ritual completo</h3>
+<span class="text-xs font-label-caps text-outline tracking-wider">90 min</span>
+</div>
+<p class="font-body-md text-sm text-outline mt-1 font-light">Corte de autor, rasurado tradicional ceremonioso, exfoliación facial suave, toallas alternadas y bebida de cortesía.</p>
+</div>
+<div class="flex items-baseline space-x-4 mt-4 sm:mt-0 justify-between sm:justify-end flex-grow sm:pl-8">
+<span class="hidden md:inline-block flex-grow border-b border-dotted border-outline-variant/60 mb-1 mx-2"></span>
+<span class="font-headline-md text-lg text-on-surface">$680</span>
+<a class="text-xs font-label-caps uppercase tracking-widest text-tertiary hover:text-on-surface inline-flex items-center transition-colors" href="https://wa.me/525500000000?text=Deseo%20reservar%20Ritual%20Completo" rel="noopener noreferrer" target="_blank">
+                Reservar <span class="ml-1">→</span>
+</a>
+</div>
+</div>
+</div>
+<div class="mt-12 text-center">
+<p class="text-xs text-outline font-label-caps uppercase tracking-widest">Precios en moneda nacional con IVA incluido · Pago en efectivo y terminal</p>
+</div>
+</div>
+</section>
+<!-- 4. EL RITUAL (Horizontal Hairline Timeline) -->
+<section class="py-space-xl border-t border-outline-variant/60" id="ritual">
+<div class="mb-16">
+<p class="font-label-caps text-label-caps uppercase tracking-[0.2em] text-tertiary text-xs mb-3">La Metodología</p>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">El Ritual del Afeitado</h2>
+<p class="font-body-md text-outline mt-2 max-w-xl font-light">Tres etapas inalterables diseñadas para respetar la piel y revitalizar el semblante.</p>
+</div>
+<!-- Hairline Horizontal Timeline -->
+<div class="relative">
+<!-- Connecting Hairline Silver Line -->
+<div class="hidden md:block absolute top-7 left-0 right-0 h-[1px] bg-tertiary/40 z-0"></div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
+<!-- Step 01 -->
+<div class="bg-background pt-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="w-12 h-12 flex items-center justify-center border border-tertiary bg-surface-container-low font-headline-md text-lg text-tertiary">
+                01
+              </span>
+<div class="h-[1px] flex-grow bg-tertiary/40 md:hidden"></div>
+</div>
+<h3 class="font-headline-md text-xl text-on-surface mb-3">Toalla caliente</h3>
+<p class="font-body-md text-sm text-outline font-light leading-relaxed">
+              Apertura de poro y preparación aromática con esencias destiladas de cedro y eucalipto para ablandar la hebra sin agredir el tejido dérmico.
+            </p>
+</div>
+<!-- Step 02 -->
+<div class="bg-background pt-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="w-12 h-12 flex items-center justify-center border border-tertiary bg-surface-container-low font-headline-md text-lg text-tertiary">
+                02
+              </span>
+<div class="h-[1px] flex-grow bg-tertiary/40 md:hidden"></div>
+</div>
+<h3 class="font-headline-md text-xl text-on-surface mb-3">Navaja</h3>
+<p class="font-body-md text-sm text-outline font-light leading-relaxed">
+              Corte al ras con hoja de un solo filo y técnica tradicional a mano alzada. Precisión quirúrgica en ángulo de 30 grados para una suavidad perenne.
+            </p>
+</div>
+<!-- Step 03 -->
+<div class="bg-background pt-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="w-12 h-12 flex items-center justify-center border border-tertiary bg-surface-container-low font-headline-md text-lg text-tertiary">
+                03
+              </span>
+<div class="h-[1px] flex-grow bg-tertiary/40 md:hidden"></div>
+</div>
+<h3 class="font-headline-md text-xl text-on-surface mb-3">Bálsamo frío</h3>
+<p class="font-body-md text-sm text-outline font-light leading-relaxed">
+              Cierre tonificante, toalla fría para cerrar los poros y masaje astringente con minerales puros que restauran el equilibrio dérmico inmediato.
+            </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. GALERÍA (Collage Editorial Asimétrico) -->
+<section class="py-space-xl border-t border-outline-variant/60" id="galeria">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
+<div>
+<p class="font-label-caps text-label-caps uppercase tracking-[0.2em] text-tertiary text-xs mb-3">Espacio y Materia</p>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">El Taller de San Ángel</h2>
+</div>
+<p class="font-label-caps text-xs text-outline uppercase tracking-widest mt-4 md:mt-0">
+          Fotografías de archivo · Estudio 2024
+        </p>
+</div>
+<!-- Asymmetric Grid Composition -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+<!-- 1. Formato vertical alto -->
+<div class="md:col-span-5 flex flex-col space-y-3">
+<div class="relative h-[620px] bg-surface-container-low border border-outline-variant overflow-hidden group">
+<img class="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700" data-alt="A vertical composition showing an antique Belmont 1968 barber chair reupholstered in dark forest green leather, situated inside a historic high-ceiling room in San Ángel, Mexico City. The lighting streams from a tall French window, creating silver highlights along the chrome base and weathered wooden floorboards. The atmosphere is solemn, quiet, and artisanal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPl_Uk1wfawxVeEMsh5RyP1Umcr6T4Cy_iTWB2GL8DynN2O6KhK25R2H9sMEVXpc7Xmx1oaDcTS5twwIEIH4_TyO-x1eCVDXBOtHgG7KtLTFd6C4Mc74Vf6Ut3w06KmtAcMMMmIUPsjBxxenb0q4tTfpb8og_SMVrzvYcryL9nlQ5kPuVcf0Tsasbd4G4EZ-3vpN9tE6P5k_PSQXZnI0MhXfNmk9GDrpgnPmbZttZMrAuPPr1WFHijZ6pdUhXUYVEK2dH4Zw6RgF-p"/>
+<div class="absolute inset-0 border border-outline-variant pointer-events-none"></div>
+</div>
+<p class="font-label-caps text-xs text-tertiary uppercase tracking-wider">
+            Cabina San Ángel · Silla Belmont 1968 (19.348° N, 99.191° W)
+          </p>
+</div>
+<!-- Columna derecha combinada -->
+<div class="md:col-span-7 flex flex-col space-y-8">
+<!-- 2. Panorámico apaisado -->
+<div class="flex flex-col space-y-3">
+<div class="relative h-[320px] bg-surface-container-low border border-outline-variant overflow-hidden group">
+<img class="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700" data-alt="A wide horizontal composition depicting a master barber's workstation in San Ángel. Polished silver straight razors, ceramic shaving bowls, and natural bristle badger brushes are arrayed symmetrically across a dark slate countertop. The dark green studio wall reflects muted daylight. A composition honoring manual precision and timeless luxury tools." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMEMPszVsUd1NH6QE9bM2hkMpvM8D2KMQOuGypFy9cxb3JBIW5UoPgmlyNu3WRnSL9KUUcgQo6Z2tIOe9UZqgXPAidn7ZzadlRuSfeWn1U7oPWlqVq9j8xDY8yD23BXDypdNr3O2Ty7eF6ztP2E26I3xZV7Ln3cNMtJ6NV_qrGm3snOSQpZ0FCIEem9Npv8_pLQ7VyfYkbAcdDfEPzlTaJM0BWnTkmQKHTC1-DBhy4E9SaAE4GftBEEZoMttgU8f9k7ZSHoBq1h2Re"/>
+<div class="absolute inset-0 border border-outline-variant pointer-events-none"></div>
+</div>
+<p class="font-label-caps text-xs text-tertiary uppercase tracking-wider">
+              Mesa de herramientas de filo directo y emulsiones botánicas
+            </p>
+</div>
+<!-- Dos fotos pequeñas de detalle -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+<!-- 3. Detalle 1 -->
+<div class="flex flex-col space-y-3">
+<div class="relative h-[260px] bg-surface-container-low border border-outline-variant overflow-hidden group">
+<img class="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700" data-alt="A close-up detailed macro photograph of an antique Solingen straight razor being stropped on a thick leather belt. Strong specular silver gleam runs across the blade edge. Deep forest green shadow tones and fine tactile textures of seasoned leather. Elegant, editorial, and quiet craftsmanship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUg-nrlaonbGPVzcD-0U0kd-JzAl9lKUjw9pcqKcsiiLATL9uOuz2vCh6O1QV4e9LCpDaHQH4qgfavrL0DhVDyuRC9_hCUKh5A2fDJi0YDrp-jk1Kx7TYHxORl6xaQjlzb94HEH4gHJKJH7X_mqa45cwgJ37VK87RnjX4eBih0xpbBOfV9DVZLTgj0wDiMk0zxNrpGd7IuDl3JzGmjSo93iV4l6noSv1OUuw9VkVoMLvHwkgY2Dfl79ECkxDmltlAJSXQyJtdRD15C"/>
+<div class="absolute inset-0 border border-outline-variant pointer-events-none"></div>
+</div>
+<p class="font-label-caps text-xs text-outline uppercase tracking-wider">
+                Asentado de navaja en cuero crudo
+              </p>
+</div>
+<!-- 4. Detalle 2 -->
+<div class="flex flex-col space-y-3">
+<div class="relative h-[260px] bg-surface-container-low border border-outline-variant overflow-hidden group">
+<img class="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700" data-alt="A detailed view of white linen towels neatly rolled inside an unlacquered silver metal tray beside glass apothecary jars filled with cedar and mineral astringents. The scene is illuminated by gentle ambient light inside a quiet corner of the San Ángel barber shop. Minimalist and refined." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMakOamBHhawokaT3_sXvjYHF9pTBAikD12eCqtOVNI_0IiaonXd0OahGLGudY8qoM8zDQahrEp5Qx5wrLhy_NkiWM9qcqKRWFqwFNlTEv9SBhUwzAAh2uLq8rWAcBkhPzN0Y5jbfpGEAuFWYhg4le_T-PZe-zNXJYi0_b22Ki4Yr41AlEpcahHOjcd8pj_cCVBOjKNZG_CD4zyBbHFBWE2ni4n3UTL_7HUDhSs3PFEuEhY7LWX9W0PmgwV6-n4oJ2CAFllHZxVUVR"/>
+<div class="absolute inset-0 border border-outline-variant pointer-events-none"></div>
+</div>
+<p class="font-label-caps text-xs text-outline uppercase tracking-wider">
+                Linens de lino puro y bálsamos minerales
+              </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. TESTIMONIOS (Editorial Quote & Formal Review) -->
+<section class="py-space-xl border-t border-outline-variant/60">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+<!-- Izquierda: Cita Editorial Prominente -->
+<div class="lg:col-span-7 pr-0 lg:pr-12">
+<span class="font-headline-md text-6xl text-tertiary block leading-none select-none -mb-6">“</span>
+<blockquote class="font-headline-md text-2xl lg:text-3xl text-on-surface leading-snug">
+            Aquí el tiempo se detiene; no hay prisa, solo el filo exacto y la atención de quien conoce el oficio.
+          </blockquote>
+<div class="mt-8 flex items-center space-x-4">
+<span class="w-12 h-[1px] bg-tertiary"></span>
+<p class="font-label-caps text-xs uppercase tracking-widest text-outline">El principio rector de Abeto</p>
+</div>
+</div>
+<!-- Derecha: Reseñas apiladas con firma formal -->
+<div class="lg:col-span-5 space-y-8 border-l border-outline-variant/60 pl-8 lg:pl-12">
+<div class="space-y-3 pb-8 border-b border-outline-variant/40">
+<p class="font-body-md text-sm text-outline font-light leading-relaxed">
+              «Llevo más de seis años confiando mi barba a Abeto. En una ciudad saturada de conceptos ruidosos, encontrar un refugio de silencio, toallas calientes bien preparadas y precisión manual es invaluable.»
+            </p>
+<p class="font-label-caps text-xs text-on-surface uppercase tracking-wider">
+              Lic. Fernando M. <span class="text-tertiary">· San Ángel</span>
+</p>
+</div>
+<div class="space-y-3">
+<p class="font-body-md text-sm text-outline font-light leading-relaxed">
+              «La arquitectura de la cabina y la sobriedad en el trato reflejan un respeto genuino por el oficio clásico. El afeitado con navaja es impecable, sin irritación y con una pausa mental absoluta.»
+            </p>
+<p class="font-label-caps text-xs text-on-surface uppercase tracking-wider">
+              Arq. Rodrigo T. <span class="text-tertiary">· Chimalistac</span>
+</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. PREGUNTAS FRECUENTES (FAQ - Sticky 2 Columns) -->
+<section class="py-space-xl border-t border-outline-variant/60" id="preguntas">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+<!-- Sticky Left Column -->
+<div class="md:col-span-5">
+<div class="sticky top-28 space-y-6">
+<p class="font-label-caps text-label-caps uppercase tracking-[0.2em] text-tertiary text-xs">Claridad &amp; Criterio</p>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">Preguntas Frecuentes</h2>
+<p class="font-body-md text-sm text-outline font-light max-w-sm">
+              Detalles sobre la dinámica de atención, tiempos de reserva y normas de convivencia en nuestra cabina.
+            </p>
+<div class="hidden md:block pt-6 border-t border-outline-variant/60">
+<p class="text-xs font-label-caps text-outline uppercase tracking-wider mb-2">¿Dudas no resueltas?</p>
+<a class="text-xs font-label-caps text-tertiary hover:text-on-surface uppercase tracking-widest inline-flex items-center" href="https://wa.me/525500000000" rel="noopener noreferrer" target="_blank">
+                Consultar con Concierge <span class="ml-1">→</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Right Column - All answers visible -->
+<div class="md:col-span-7 space-y-12">
+<!-- Q1 -->
+<div class="space-y-3 pb-8 border-b border-outline-variant/40">
+<h3 class="font-headline-md text-lg text-on-surface">¿Cuánto dura el servicio?</h3>
+<p class="font-body-md text-sm text-outline font-light leading-relaxed">
+              Los servicios oscilan entre los 30 y los 90 minutos, según la complejidad de la sesión. Respetamos rigurosamente la puntualidad de cada turno para garantizar que ningún cliente espere en recepción ni vea apresurado su tratamiento.
+            </p>
+</div>
+<!-- Q2 -->
+<div class="space-y-3 pb-8 border-b border-outline-variant/40">
+<h3 class="font-headline-md text-lg text-on-surface">¿Precios e impuestos?</h3>
+<p class="font-body-md text-sm text-outline font-light leading-relaxed">
+              Todos los montos expresados en nuestra carta son netos e incluyen IVA. Aceptamos transferencias bancarias, tarjetas de débito/crédito y efectivo exacto. No cobramos cargos adicionales por servicios o productos aplicados en cabina.
+            </p>
+</div>
+<!-- Q3 -->
+<div class="space-y-3 pb-8 border-b border-outline-variant/40">
+<h3 class="font-headline-md text-lg text-on-surface">¿Cómo cancelar o reagendar?</h3>
+<p class="font-body-md text-sm text-outline font-light leading-relaxed">
+              Agradecemos notificar cualquier modificación con al menos 4 horas de antelación vía WhatsApp. Al operar con citas exclusivas de un solo barbero por turno, este aviso nos permite asignar la hora a otro cliente en lista de espera.
+            </p>
+</div>
+<!-- Q4 -->
+<div class="space-y-3 pb-8 border-b border-outline-variant/40">
+<h3 class="font-headline-md text-lg text-on-surface">¿Atienden a niños?</h3>
+<p class="font-body-md text-sm text-outline font-light leading-relaxed">
+              Atendemos a jóvenes a partir de los 12 años que deseen experimentar el corte tradicional en un entorno sereno y silencioso. No contamos con cortes infantiles exprés.
+            </p>
+</div>
+<!-- Q5 -->
+<div class="space-y-3">
+<h3 class="font-headline-md text-lg text-on-surface">¿Cuentan con servicio a domicilio?</h3>
+<p class="font-body-md text-sm text-outline font-light leading-relaxed">
+              No brindamos servicio fuera del taller. Creemos que la experiencia del ritual requiere las condiciones acústicas, la iluminación graduada y la comodidad de nuestra silla de época para ejecutarse con excelencia.
+            </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 8. RESERVA Y CONTACTO (Sin Formularios) -->
+<section class="py-space-xl border-t border-outline-variant/60" id="visitanos">
+<div class="mb-16 text-center max-w-2xl mx-auto">
+<p class="font-label-caps text-label-caps uppercase tracking-[0.2em] text-tertiary text-xs mb-3">Concertar Visita</p>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">Atención Personalizada</h2>
+<p class="font-body-md text-outline mt-3 font-light">
+          Sin intermediarios ni plataformas automatizadas. La confirmación se acuerda directamente con nuestro concierge de manera ágil y discreta.
+        </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+<!-- Direct Actions & Info -->
+<div class="lg:col-span-6 space-y-8">
+<!-- WhatsApp Concierge Card -->
+<div class="p-8 border border-tertiary bg-surface-container-low/40">
+<p class="font-label-caps text-xs text-tertiary uppercase tracking-widest mb-2">Canal Principal de Reservas</p>
+<h3 class="font-headline-md text-xl text-on-surface mb-4">Concierge vía WhatsApp</h3>
+<p class="font-body-md text-sm text-outline font-light mb-6">
+              Envíenos un mensaje indicando el servicio de su interés y el horario predilecto. Respondemos con disponibilidad en menos de 15 minutos en días de servicio.
+            </p>
+<a class="w-full py-4 border border-tertiary text-on-surface font-label-caps text-label-caps uppercase tracking-widest text-center hover:bg-surface-container-low transition-colors duration-200 inline-flex items-center justify-center space-x-3" href="https://wa.me/525500000000?text=Hola,%20deseo%20agendar%20una%20cita%20en%20Abeto%20San%20Ángel" rel="noopener noreferrer" target="_blank">
+<svg class="w-5 h-5 stroke-current" fill="none" stroke-width="1.5" viewbox="0 0 24 24">
+<path d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a.75.75 0 01-.874-.75 4.5 4.5 0 011.085-2.923C4.048 15.772 3 13.987 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>Escribir a Concierge WhatsApp</span>
+</a>
+</div>
+<!-- Phone & Email links -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<a class="p-6 border border-outline-variant/60 hover:border-tertiary transition-colors" href="tel:+525556160000">
+<p class="font-label-caps text-[11px] text-outline uppercase tracking-widest mb-1">Línea Fija</p>
+<p class="font-headline-md text-lg text-on-surface">+52 55 5616 0000</p>
+<p class="text-xs text-outline font-light mt-1">Mar a Sáb de 10:00 a 20:30</p>
+</a>
+<a class="p-6 border border-outline-variant/60 hover:border-tertiary transition-colors" href="mailto:concierge@abetobarberia.mx">
+<p class="font-label-caps text-[11px] text-outline uppercase tracking-widest mb-1">Correo Electrónico</p>
+<p class="font-headline-md text-base text-on-surface truncate">concierge@abetobarberia.mx</p>
+<p class="text-xs text-outline font-light mt-1">Para consultas institucionales</p>
+</a>
+</div>
+<!-- Schedule detail table -->
+<div class="p-6 border border-outline-variant/60">
+<p class="font-label-caps text-xs text-tertiary uppercase tracking-widest mb-4">Horarios de Apertura</p>
+<div class="space-y-2 font-body-md text-sm">
+<div class="flex justify-between py-1 border-b border-outline-variant/30">
+<span class="text-on-surface">Martes a Viernes</span>
+<span class="text-outline">10:00 — 21:00</span>
+</div>
+<div class="flex justify-between py-1 border-b border-outline-variant/30">
+<span class="text-on-surface">Sábado</span>
+<span class="text-outline">10:00 — 20:00</span>
+</div>
+<div class="flex justify-between py-1 text-outline">
+<span>Domingo y Lunes</span>
+<span class="italic text-tertiary">Cerrado por oficio</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Side: Location Architecture Sketch / Placeholder -->
+<div class="lg:col-span-6 flex flex-col space-y-6">
+<div class="p-6 border border-outline-variant/60 bg-surface-container-low/20">
+<p class="font-label-caps text-xs text-tertiary uppercase tracking-widest mb-1">Dirección del Taller</p>
+<p class="font-headline-md text-xl text-on-surface mb-2">Calle de la Amargura 14, San Ángel</p>
+<p class="font-body-md text-sm text-outline font-light">
+              Alcaldía Álvaro Obregón, C.P. 01000, Ciudad de México.<br/>
+              A 50 metros de Plaza San Jacinto. Estacionamiento privado disponible frente al local.
+            </p>
+</div>
+<!-- Architectural Minimalist Map Placeholder -->
+<div class="relative h-[380px] bg-surface-container-low border border-outline-variant overflow-hidden" data-location="San Ángel, Ciudad de México" style="">
+<img class="w-full h-full object-cover grayscale contrast-150 opacity-80" data-alt="An architectural minimalist map sketch in dark forest green and silver hairline vector lines. Depicting the historic cobblestone streets around Plaza San Jacinto and Calle de la Amargura in San Ángel, Mexico City. Subtle topographical and architectural markings, quiet editorial luxury aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzQ5c_F7ud0RcsPhmERh1PLjuEAmvJlp1oxhQcYARrZ9GC6T6Kpebo1G8VJe1mp0SU6dGai1feln1D6Z8Q418obQHf3i1PC3tS_HgALNGFw_YS8sWwK0xBc9G6HQ8mtuogZVKS1_mZWfmuJ5q8Ud43jBRBZDtGym9-6IfDsfDh8IcbkXaOyvRXOt-kgP5hTZ0CndjN_N0TUaSD6WIyy41ms76JC6R-5Y9LEkleG9gDqkZzUp97O3BbNZ4HWSZpG29matYkO3e_3_Ll"/>
+<div class="absolute inset-0 border border-outline-variant pointer-events-none"></div>
+<!-- Pin Overlay -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="bg-background/90 border border-tertiary px-4 py-2 flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="font-label-caps text-xs uppercase tracking-widest text-on-surface">Abeto · San Ángel</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- 9. FOOTER (Shared Component Anchor) -->
+<footer class="bg-surface-container-low border-t border-outline-variant mt-space-xl">
+<div class="w-full max-w-[1200px] mx-auto px-space-md lg:px-space-lg py-space-lg flex flex-col md:flex-row justify-between items-center gap-space-md">
+<!-- Brand & Copyright -->
+<div class="flex flex-col items-center md:items-start space-y-2">
+<a class="font-headline-md text-headline-md text-on-surface uppercase tracking-widest" href="#">
+          ABETO
+        </a>
+<p class="font-body-md text-body-md text-outline text-xs">
+          © 2024 Abeto Barbería. San Ángel, Ciudad de México. Todos los derechos reservados.
+        </p>
+</div>
+<!-- Links -->
+<div class="flex flex-wrap justify-center items-center gap-6">
+<a class="text-outline hover:text-tertiary transition-colors duration-200 font-label-caps text-label-caps text-xs uppercase" href="#visitanos">
+          Ubicación &amp; Citas
+        </a>
+<a class="text-outline hover:text-tertiary transition-colors duration-200 font-label-caps text-label-caps text-xs uppercase" href="https://wa.me/525500000000" rel="noopener noreferrer" target="_blank">
+          WhatsApp Concierge
+        </a>
+<a class="text-outline hover:text-tertiary transition-colors duration-200 font-label-caps text-label-caps text-xs uppercase" href="#">
+          Privacidad
+        </a>
+<a class="text-outline hover:text-tertiary transition-colors duration-200 font-label-caps text-label-caps text-xs uppercase" href="#">
+          Términos de Servicio
+        </a>
+</div>
+</div>
+</footer>
+</body></html>
