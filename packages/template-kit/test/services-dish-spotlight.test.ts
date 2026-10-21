@@ -37,7 +37,7 @@ describe('services/dish-spotlight', () => {
   it('renders the featured dish with photo, name, price and order link', async () => {
     const root = await render();
     const feature = root.querySelector(
-      'article.lz-services-spotlight__feature',
+      'article.lz-services-dish-spotlight__feature',
     );
     expect(
       feature?.querySelector('img')?.getAttribute('alt')?.length,
@@ -46,15 +46,15 @@ describe('services/dish-spotlight', () => {
       2,
     );
     expect(
-      feature?.querySelector('.lz-services-spotlight__price')?.textContent,
+      feature?.querySelector('.lz-services-dish-spotlight__price')?.textContent,
     ).toMatch(/\$/);
     expect(
       feature
-        ?.querySelector('a.lz-services-spotlight__cta')
+        ?.querySelector('a.lz-services-dish-spotlight__cta')
         ?.getAttribute('href'),
     ).toMatch(/wa\.me/);
     expect(
-      feature?.querySelectorAll('.lz-services-spotlight__chips li'),
+      feature?.querySelectorAll('.lz-services-dish-spotlight__chips li'),
     ).toHaveLength(4);
     expect(root.querySelectorAll('h2')).toHaveLength(1);
   });
@@ -62,7 +62,7 @@ describe('services/dish-spotlight', () => {
   it('renders the short menu rows and keeps badge, chips and promos optional', async () => {
     const root = await render();
     expect(
-      root.querySelectorAll('.lz-services-spotlight__item').length,
+      root.querySelectorAll('.lz-services-dish-spotlight__item').length,
     ).toBeGreaterThanOrEqual(4);
     const bare = await render({
       badge: '',
@@ -70,9 +70,9 @@ describe('services/dish-spotlight', () => {
       promos: [],
       chipsLabel: '',
     });
-    expect(bare.querySelector('.lz-services-spotlight__badge')).toBeNull();
-    expect(bare.querySelector('.lz-services-spotlight__chips')).toBeNull();
-    expect(bare.querySelector('.lz-services-spotlight__promos')).toBeNull();
+    expect(bare.querySelector('.lz-services-dish-spotlight__badge')).toBeNull();
+    expect(bare.querySelector('.lz-services-dish-spotlight__chips')).toBeNull();
+    expect(bare.querySelector('.lz-services-dish-spotlight__promos')).toBeNull();
   });
 
   it('uses tokens only and no JS, style attribute, iframe or form', async () => {
