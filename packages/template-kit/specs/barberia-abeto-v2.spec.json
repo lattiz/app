@@ -1,0 +1,537 @@
+{
+  "$schema": "./spec.schema.json",
+  "specVersion": 1,
+  "idBase": "barberia-abeto",
+  "twin": true,
+  "giro": "barberia",
+  "business": {
+    "name": "Abeto Barbería",
+    "shortName": "Abeto",
+    "tagline": "Barbería de caballeros",
+    "city": "CDMX",
+    "branch": "San Ángel",
+    "address": "Av. de la Paz 38, San Ángel, Álvaro Obregón, CDMX",
+    "hours": "Mar–Sáb 10:00–21:00 · Dom 10:00–16:00",
+    "phone": "+52 55 0000 0000",
+    "whatsapp": "5215500000000",
+    "whatsappMessage": "Hola, quiero reservar una cita en Abeto",
+    "email": "citas@abetobarberia.mx"
+  },
+  "brand": {
+    "palette": {
+      "custom": {
+        "bg": "#314B3E",
+        "accent": "#C4CACF",
+        "text": "#F1F2EE",
+        "scheme": "dark"
+      }
+    },
+    "fontPair": "bodoni-moda+karla",
+    "shape": "filete",
+    "catalog": "extended"
+  },
+  "sections": {
+    "pro": [
+      {
+        "role": "header",
+        "variant": "inline"
+      },
+      {
+        "role": "hero",
+        "variant": "index-panel"
+      },
+      {
+        "role": "marquee",
+        "variant": "ticker"
+      },
+      {
+        "role": "about",
+        "variant": "text-image-offset"
+      },
+      {
+        "role": "catalog",
+        "variant": "index-table"
+      },
+      {
+        "role": "proof",
+        "variant": "strip"
+      },
+      {
+        "role": "team",
+        "variant": "index-portraits"
+      },
+      {
+        "role": "testimonials",
+        "variant": "hairline-trio"
+      },
+      {
+        "role": "faq",
+        "variant": "index-answers"
+      },
+      {
+        "role": "contact",
+        "variant": "split-panel"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer",
+        "variant": "signature-bar"
+      }
+    ],
+    "basico": [
+      {
+        "role": "header",
+        "variant": "inline"
+      },
+      {
+        "role": "hero"
+      },
+      {
+        "role": "about"
+      },
+      {
+        "role": "catalog",
+        "variant": "index-table"
+      },
+      {
+        "role": "faq",
+        "variant": "index-answers"
+      },
+      {
+        "role": "contact",
+        "variant": "single"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer"
+      }
+    ]
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "{{name}} en San Ángel, {{city}}: ritual de afeitado con navaja, corte a tijera y barba, solo con cita por WhatsApp."
+    },
+    "navbar": {
+      "cta": "Reservar"
+    },
+    "hero": {
+      "image": "hero.jpg",
+      "imageAlt": "Interior de una barbería con sillones de cuero y espejos en una pared verde",
+      "eyebrow": "Barbería de caballeros · {{branch}}",
+      "title": "El ritual de la <span class=\"lz-title__serif\">navaja</span>.",
+      "text": "Afeitado con toalla caliente, corte a tijera y un sillón de cuero que te espera a tu hora. Reserva en un mensaje.",
+      "primaryCta": "Reservar cita",
+      "secondaryCta": "Ver servicios",
+      "secondaryHref": "#servicios",
+      "kicker": "Apertura",
+      "tag": "San Ángel · CDMX",
+      "info": [
+        {
+          "label": "Horario",
+          "value": "Mar–Sáb 10:00–21:00"
+        },
+        {
+          "label": "Colonia",
+          "value": "San Ángel"
+        },
+        {
+          "label": "Cita",
+          "value": "En un mensaje de WhatsApp"
+        }
+      ]
+    },
+    "about": {
+      "kicker": "{{index}} — La casa",
+      "title": "Oficio clásico, <span class=\"lz-title__serif\">trato de hoy</span>.",
+      "summary": "En {{shortName}} la barbería se hace como antes: navaja recta, toalla caliente y tiempo. Pocas sillas, citas espaciadas y un barbero que recuerda cómo te gusta el corte.",
+      "stats": [
+        {
+          "value": "4",
+          "label": "Sillones de cuero"
+        },
+        {
+          "value": "45",
+          "label": "Minutos por cita"
+        },
+        {
+          "value": "4.9 ★",
+          "label": "En Google"
+        }
+      ],
+      "statement": "Una buena navaja no se apura: cada afeitado empieza con vapor, sigue con dos pasadas y termina en silencio.",
+      "image": "about.jpg",
+      "imageAlt": "Mostrador antiguo con pomadas, tónicos y una caja de madera",
+      "paragraphs": [
+        "Tenemos cuatro sillones de cuero restaurados y un poste de barbero que gira desde que abrimos.",
+        "Cada cita dura lo que tiene que durar; entre una y otra limpiamos y esterilizamos todo.",
+        "Te ofrecemos un café de olla o un mezcal mientras esperas."
+      ],
+      "sticker": "Navaja recta"
+    },
+    "services": {
+      "kicker": "{{index}} / Servicios",
+      "title": "La <span class=\"lz-title__serif\">carta</span> de la casa",
+      "intro": "Precios en pesos mexicanos. Cada servicio incluye lavado, toalla caliente y acabado.",
+      "prices": [
+        {
+          "name": "Corte a tijera",
+          "price": "$650",
+          "description": "Corte clásico o contemporáneo, con lavado y peinado.",
+          "duration": "45 min"
+        },
+        {
+          "name": "Ritual de afeitado",
+          "price": "$580",
+          "description": "Vapor, dos pasadas de navaja recta y bálsamo frío.",
+          "duration": "40 min"
+        },
+        {
+          "name": "Corte y barba",
+          "price": "$890",
+          "description": "Corte a tijera con barba perfilada a navaja.",
+          "duration": "70 min"
+        },
+        {
+          "name": "Arreglo de barba",
+          "price": "$420",
+          "description": "Forma, contornos a navaja y aceite de cedro.",
+          "duration": "30 min"
+        },
+        {
+          "name": "Ritual completo",
+          "price": "$1,250",
+          "description": "Corte, afeitado clásico y masaje de cuero cabelludo.",
+          "duration": "90 min",
+          "tag": "La casa"
+        },
+        {
+          "name": "Corte para niños",
+          "price": "$450",
+          "description": "Hasta 12 años, con la misma calma.",
+          "duration": "30 min"
+        }
+      ],
+      "promos": [
+        {
+          "tag": "Primera visita",
+          "title": "Conoce el ritual de afeitado",
+          "text": "En tu primera cita, el afeitado clásico va con 15 % menos.",
+          "cta": "Reservar",
+          "href": "{{whatsappUrl:Hola, quiero el ritual de afeitado de primera visita}}"
+        },
+        {
+          "tag": "Novios",
+          "title": "Arreglo para el día de la boda",
+          "text": "Corte y afeitado para el novio y sus padrinos, en la casa o en tu evento.",
+          "cta": "Cotizar",
+          "href": "{{whatsappUrl:Hola, quiero cotizar el arreglo para una boda}}"
+        }
+      ],
+      "cta": "Reservar cita"
+    },
+    "faq": {
+      "kicker": "{{index}} / Preguntas",
+      "title": "Antes de tu <span class=\"lz-title__serif\">cita</span>",
+      "intro": "Lo que conviene saber antes de sentarte en el sillón. Para lo demás, escríbenos.",
+      "cta": "Preguntar por WhatsApp",
+      "items": [
+        {
+          "question": "¿Atienden sin cita?",
+          "answer": "Solo con cita, para darle a cada cliente su tiempo completo. Reserva por WhatsApp con un día de anticipación."
+        },
+        {
+          "question": "¿Cuánto dura el ritual de afeitado?",
+          "answer": "Unos 40 minutos: vapor, dos pasadas de navaja recta, toalla fría y bálsamo."
+        },
+        {
+          "question": "¿Usan navaja desechable?",
+          "answer": "Usamos navaja recta con hoja nueva en cada cliente y esterilizamos el resto del instrumental."
+        },
+        {
+          "question": "¿Qué formas de pago aceptan?",
+          "answer": "Efectivo, tarjeta y transferencia."
+        },
+        {
+          "question": "¿Hay estacionamiento?",
+          "answer": "Hay valet en la esquina y lugares en la calle los fines de semana."
+        },
+        {
+          "question": "¿Atienden bodas y eventos?",
+          "answer": "Sí, en la casa o en tu evento, con cotización previa por WhatsApp."
+        }
+      ]
+    },
+    "locations": {
+      "kicker": "{{index}} / Visítanos",
+      "title": "Tu sillón en <span class=\"lz-title__serif\">San Ángel</span>",
+      "hoursLabel": "Horario",
+      "whatsappCta": "Reservar por WhatsApp",
+      "callCta": "Llamar",
+      "directionsLabel": "Cómo llegar",
+      "contactText": "Respondemos mensajes en horario de la casa. Si vas a llegar tarde, avísanos y movemos tu cita.",
+      "whatsappLabel": "WhatsApp",
+      "whatsappValue": "Reservar cita",
+      "callLabel": "Teléfono",
+      "emailLabel": "Correo"
+    },
+    "floating-whatsapp": {
+      "label": "Reservar en Abeto por WhatsApp"
+    },
+    "footer": {
+      "about": "Barbería de caballeros en {{city}}. Navaja recta, toalla caliente y corte a tijera, solo con cita.",
+      "branchesTitle": "La casa",
+      "linksTitle": "Secciones",
+      "contactTitle": "Contacto"
+    },
+    "team": {
+      "kicker": "{{index}} / Barberos",
+      "title": "Quién lleva la <span class=\"lz-title__serif\">navaja</span>",
+      "members": [
+        {
+          "name": "Julián Arriola",
+          "role": "Maestro barbero",
+          "tags": [
+            "Navaja recta",
+            "Corte clásico"
+          ],
+          "image": "team-1.jpg",
+          "imageAlt": "Retrato en blanco y negro de Julián Arriola, barbero con barba larga"
+        },
+        {
+          "name": "Rafael Cordero",
+          "role": "Barba y afeitado",
+          "tags": [
+            "Toalla caliente",
+            "Perfilado"
+          ],
+          "image": "team-2.jpg",
+          "imageAlt": "Rafael Cordero, con gorra, cortando el cabello a un cliente"
+        },
+        {
+          "name": "Santiago Velarde",
+          "role": "Corte a tijera",
+          "tags": [
+            "Tijera",
+            "Peinados"
+          ],
+          "image": "team-3.jpg",
+          "imageAlt": "Santiago Velarde, de cabello rizado, junto a un cliente en el sillón"
+        },
+        {
+          "name": "Mateo Ibarra",
+          "role": "Perfilado y barba",
+          "tags": [
+            "Barba",
+            "Navaja"
+          ],
+          "image": "team-4.jpg",
+          "imageAlt": "Mateo Ibarra pasando la máquina por la nuca de un cliente"
+        }
+      ],
+      "intro": "Manos de oficio y atención sin prisa."
+    },
+    "gallery": {
+      "kicker": "{{index}} / La casa",
+      "title": "Navaja, cuero y <span class=\"lz-title__serif\">acero</span>",
+      "items": [
+        {
+          "image": "gallery-01.jpg",
+          "caption": "Corte a tijera",
+          "alt": "Barbero cortando a tijera el cabello de un cliente"
+        },
+        {
+          "image": "gallery-02.jpg",
+          "caption": "Navaja recta",
+          "alt": "Barbero con cubrebocas perfilando con navaja recta"
+        },
+        {
+          "image": "gallery-03.jpg",
+          "caption": "Peine y navaja",
+          "alt": "Peine y navaja recta sobre el cabello, en blanco y negro"
+        },
+        {
+          "image": "gallery-04.jpg",
+          "caption": "Afeitado clásico",
+          "alt": "Barbero preparando el rostro de un cliente para el afeitado"
+        },
+        {
+          "image": "gallery-05.jpg",
+          "caption": "El salón",
+          "alt": "Interior de la barbería visto desde la puerta, con cuadros en la pared"
+        },
+        {
+          "image": "gallery-06.jpg",
+          "caption": "Degradado",
+          "alt": "Corte degradado con raya marcada en un cliente con cubrebocas"
+        },
+        {
+          "image": "gallery-07.jpg",
+          "caption": "El poste",
+          "alt": "Poste de barbero rojo, blanco y azul iluminado"
+        },
+        {
+          "image": "gallery-08.jpg",
+          "caption": "La casa",
+          "alt": "Barberos trabajando en el salón con lámparas colgantes y ventanal"
+        }
+      ]
+    },
+    "testimonials": {
+      "kicker": "{{index}} / Opiniones",
+      "score": "4.9",
+      "summary": "238 opiniones en Google",
+      "allReviewsCta": "Ver todas en Google",
+      "writeReviewCta": "Dejar reseña en Google",
+      "reviews": [
+        {
+          "text": "El afeitado con toalla caliente es otra cosa: Julián se toma su tiempo y sales con la piel tranquila.",
+          "author": "Emiliano R.",
+          "place": "Cliente desde 2021"
+        },
+        {
+          "text": "Reservé por WhatsApp para el día de mi boda y nos atendieron a mí y a mis padrinos sin una sola prisa.",
+          "author": "Diego S.",
+          "place": "Cliente desde 2022"
+        },
+        {
+          "text": "Sillones de cuero, café de olla y un corte que dura bien todo el mes. Mi lugar del sábado.",
+          "author": "Pablo M.",
+          "place": "Cliente desde 2020"
+        }
+      ],
+      "title": "La estima de <span class=\"lz-title__serif\">quienes vuelven</span>"
+    },
+    "marquee": {
+      "label": "El oficio de la casa",
+      "items": [
+        "Navaja recta",
+        "Toalla caliente",
+        "Corte a tijera",
+        "Sillones de cuero",
+        "Solo con cita"
+      ]
+    }
+  },
+  "images": [
+    {
+      "key": "hero",
+      "source": {
+        "search": "barbershop interior"
+      }
+    },
+    {
+      "key": "about",
+      "source": {
+        "search": "barber shop vintage"
+      }
+    },
+    {
+      "key": "gallery-01",
+      "source": {
+        "search": "barber haircut scissors"
+      }
+    },
+    {
+      "key": "gallery-02",
+      "source": {
+        "search": "straight razor shave"
+      }
+    },
+    {
+      "key": "gallery-03",
+      "source": {
+        "search": "barber chair"
+      }
+    },
+    {
+      "key": "gallery-04",
+      "source": {
+        "search": "barber comb scissors"
+      }
+    },
+    {
+      "key": "gallery-05",
+      "source": {
+        "search": "barber tools"
+      }
+    },
+    {
+      "key": "gallery-06",
+      "source": {
+        "search": "hot towel shave"
+      }
+    },
+    {
+      "key": "gallery-07",
+      "source": {
+        "search": "shaving brush"
+      }
+    },
+    {
+      "key": "gallery-08",
+      "source": {
+        "search": "barbershop"
+      }
+    },
+    {
+      "key": "team-1",
+      "source": {
+        "url": "https://pixabay.com/get/g0b247347d4ff89b58807c15f0e90224984fba80fefb8a471a66f9882d6a6fccd34649c18ae56114be861327d863b6edba7345a54d7b31d2eb39d3884a4d1f406_1280.jpg"
+      }
+    },
+    {
+      "key": "team-2",
+      "source": {
+        "url": "https://pixabay.com/get/g33aad9538bd60be743ffd496e4193031302f23a64585fb06109e95698960464dad3a6016b63735b16fda406b26bdb249d933eaa952ba256d8efca3d9455c002b_1280.jpg"
+      }
+    },
+    {
+      "key": "team-3",
+      "source": {
+        "url": "https://pixabay.com/get/g4cb4dda0049468cbd9e9507f401285c51a5967ecbf1a93e7d5407a80fbb5632f6c4cfd3a2bff43487b7dba35e26e80d175dbcdab3956cc59f2a63cb5f053f85c_1280.jpg"
+      }
+    },
+    {
+      "key": "team-4",
+      "source": {
+        "url": "https://pixabay.com/get/g95e04324d2f1b44cd93102a0650a8057c87a9609304192a078bad53b9a5f944deed26851663f8cf3f01e75d71a41a72c3f046d136bcdc7f2e66b4a5403db8077_1280.jpg"
+      }
+    }
+  ],
+  "motion": {
+    "preset": "editorial",
+    "progress": true
+  },
+  "overrides": {
+    "basico": {
+      "brand": {
+        "palette": {
+          "custom": {
+            "bg": "#EFEDE6",
+            "accent": "#4E555B",
+            "text": "#314B3E",
+            "scheme": "light"
+          }
+        },
+        "fontPair": "libre-baskerville+source-sans-3",
+        "shape": "sutil"
+      },
+      "copy": {
+        "hero": {
+          "title": "Clásico por <span class=\"lz-title__serif\">oficio</span>.",
+          "text": "Corte a tijera, barba a navaja y afeitado con toalla caliente en San Ángel. Precios claros y cita por WhatsApp."
+        }
+      }
+    }
+  },
+  "version": 2,
+  "renews": {
+    "spec": "barberia-abeto"
+  },
+  "todo": []
+}

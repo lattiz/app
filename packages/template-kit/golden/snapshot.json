@@ -30,6 +30,34 @@
         }
       }
     },
+    "barberia-abeto-v2": {
+      "manifest": "templates/barberia-abeto-v2.ts",
+      "hashes": {
+        "project": "c1a52054ac49573e",
+        "html": "d3592356a2832752",
+        "css": "d9a902c998d5b9ab",
+        "rootCss": "5e05adb8144a4d28",
+        "theme": "b5cefe77c0ea0325",
+        "pack": "8316412cf659c08b",
+        "meta": "04cbd010af2feb27",
+        "assets": "fab3ba9e38fa099d"
+      },
+      "assets": 14,
+      "size": {
+        "css": {
+          "raw": 36652,
+          "gzip": 6061
+        },
+        "html": {
+          "raw": 26789,
+          "gzip": 6118
+        },
+        "index": {
+          "raw": 63457,
+          "gzip": 12095
+        }
+      }
+    },
     "barberia-base-abeto-v1": {
       "manifest": "templates/barberia-base-abeto-v1.ts",
       "hashes": {
@@ -1236,6 +1264,40 @@
     }
   },
   "specs": {
+    "specs/barberia-abeto-v2.spec.json": {
+      "ids": [
+        "barberia-abeto-v2",
+        "barberia-base-abeto-v2"
+      ],
+      "specHash": "6e61ec7e3369",
+      "files": {
+        "templates/barberia-abeto-v2.ts": "c9aa9935fe40",
+        "themes/barberia-abeto-v2.json": "ea9aa8ffbfa9",
+        "demo-profiles/barberia-abeto-v2.json": "92360ffafee0",
+        "templates/barberia-base-abeto-v2.ts": "5ec4a25053de",
+        "themes/barberia-base-abeto-v2.json": "1c0b3499625d",
+        "demo-profiles/barberia-base-abeto-v2.json": "92360ffafee0",
+        "content/barberia.abeto-v2.es-MX.ts": "8316412cf659"
+      },
+      "choices": {
+        "barberia-abeto-v2": [],
+        "barberia-base-abeto-v2": []
+      },
+      "peers": [
+        "barberia-base-claro-v1",
+        "barberia-base-grafito-estudio-v1",
+        "barberia-base-la-insignia-v1",
+        "barberia-base-oscuro-v1",
+        "barberia-base-solar-v1",
+        "barberia-concreto-v1",
+        "barberia-gabinete-pinar-v1",
+        "barberia-grafito-estudio-v1",
+        "barberia-la-insignia-v1",
+        "barberia-norte-v1",
+        "barberia-oxido-v1"
+      ],
+      "locked": true
+    },
     "specs/barberia-abeto.spec.json": {
       "ids": [
         "barberia-abeto-v1",

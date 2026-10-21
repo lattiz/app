@@ -1,0 +1,16 @@
+{
+  "$lattiz": "GENERATED from specs/barberia-abeto-v2.spec.json (spec 6e61ec7e3369, file ef6bf41da16b). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "da49319e98cdac03f76bc65a1c3872e81c8cee33d69d9814264721d117bb7789",
+      "query": "barbershop interior",
+      "providerId": 5194406,
+      "pageUrl": "https://pixabay.com/photos/barber-barbershop-haircut-5194406/",
+      "photographer": "vahidkanani",
+      "photographerUrl": "https://pixabay.com/users/16386189/",
+      "tags": "barber, barbershop, haircut, hairdresser, salon, beard, scissors, hairstyle, man, male, shop, stylist, fashion, hairstylist, blue shop"
+    }
+  ]
+}

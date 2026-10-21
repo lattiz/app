@@ -1,0 +1,139 @@
+{
+  "$lattiz": "GENERATED from specs/barberia-abeto-v2.spec.json (spec 6e61ec7e3369, file 653e4d4b5e2f). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "a09bdb5f67956e3e6303c2b987dac5ea081ec3627e18ba3f256dae98e19cad9d",
+      "query": "barbershop interior",
+      "providerId": 2165745,
+      "pageUrl": "https://pixabay.com/photos/barber-shop-chair-barber-shop-2165745/",
+      "photographer": "ClickerHappy",
+      "photographerUrl": "https://pixabay.com/users/324082/",
+      "tags": "barber, shop, chair, barber shop, haircut, hairdresser, beard, barbershop, vintage, retro, mustache, hipster, grooming, scissors, man, razor, symbol, male, old, shave, hairstyle"
+    },
+    {
+      "file": "about.jpg",
+      "source": "pixabay",
+      "sha256": "1ce6fd6245b275692fa8fbc6cdfd0ace0b1d40c7e851026961fa36562e90f9cf",
+      "query": "barber shop vintage",
+      "providerId": 2142482,
+      "pageUrl": "https://pixabay.com/photos/hairdressing-barbershop-barber-2142482/",
+      "photographer": "makamuki0",
+      "photographerUrl": "https://pixabay.com/users/1102736/",
+      "tags": "hairdressing, barbershop, barber, signal"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "pixabay",
+      "sha256": "6d4693b4b0b6096f752dd96fe9b5d728dac5f86698d7298579907b307a7837f8",
+      "query": "barber haircut scissors",
+      "providerId": 4666064,
+      "pageUrl": "https://pixabay.com/photos/hairdresser-table-shear-hair-4666064/",
+      "photographer": "guvo59",
+      "photographerUrl": "https://pixabay.com/users/9285194/",
+      "tags": "hairdresser, table, shear, hair, haircut, trimmer, hairstyle, fashion, head, headdress, curls, tools, craft, art, business"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "pixabay",
+      "sha256": "224e59b3fbd177aa51f9e48ecadc7bc4b19860c56a471d25fad6f010b7cd6d07",
+      "query": "straight razor shave",
+      "providerId": 1179458,
+      "pageUrl": "https://pixabay.com/photos/shaver-beard-barber-badger-shaving-1179458/",
+      "photographer": "jackmac34",
+      "photographerUrl": "https://pixabay.com/users/483877/",
+      "tags": "shaver, beard, barber, badger, shaving"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "pixabay",
+      "sha256": "459def1ef95bd6ea5292ed75c053bf0c1a285161fcb6118df9a854964eca3d9f",
+      "query": "barber chair",
+      "providerId": 2595657,
+      "pageUrl": "https://pixabay.com/photos/people-barbershop-haircut-men-2595657/",
+      "photographer": "StockSnap",
+      "photographerUrl": "https://pixabay.com/users/894430/",
+      "tags": "people, barbershop, haircut, men, mirror, brown mirror"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "pixabay",
+      "sha256": "393ecec5796f37d7a3190195458a6591e9f569ac2c64267100e92b94b714dc69",
+      "query": "barber comb scissors",
+      "providerId": 1179459,
+      "pageUrl": "https://pixabay.com/photos/hairdresser-haircut-comb-scissors-1179459/",
+      "photographer": "jackmac34",
+      "photographerUrl": "https://pixabay.com/users/483877/",
+      "tags": "hairdresser, haircut, comb, scissors"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "pixabay",
+      "sha256": "74a79b89f61e7395a78c307cc180f5eff2940d7b34c8fccf8140da11243ffe9b",
+      "query": "barber tools",
+      "providerId": 8619389,
+      "pageUrl": "https://pixabay.com/photos/scissors-vintage-thread-barber-8619389/",
+      "photographer": "Mubashir91",
+      "photographerUrl": "https://pixabay.com/users/2319923/",
+      "tags": "scissors, vintage, thread, barber, haircut, hairdresser, cutting, tool"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "pixabay",
+      "sha256": "4786a8eb5ef6a046ac63ab3425886e315ec5c8cfbda069090257e36bf30406e9",
+      "query": "hot towel shave",
+      "providerId": 1007886,
+      "pageUrl": "https://pixabay.com/photos/razor-straight-barber-male-man-1007886/",
+      "photographer": "Renee_Olmsted_Photography",
+      "photographerUrl": "https://pixabay.com/users/1445310/",
+      "tags": "razor, straight, barber, male, man, grooming, shaving, shave, blade, hands, black and white"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "pixabay",
+      "sha256": "06d6fa4052a2c81d3d27243501d0c23bdcc80a46ca0e1a6f9de4b1462654ec04",
+      "query": "shaving brush",
+      "providerId": 2202295,
+      "pageUrl": "https://pixabay.com/photos/shaving-set-shaving-brush-razor-2202295/",
+      "photographer": "WikimediaImages",
+      "photographerUrl": "https://pixabay.com/users/1185597/",
+      "tags": "shaving set, shaving brush, razor, barber, brush, barbershop, equipment, shave, accessories, hairdresser"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "pixabay",
+      "sha256": "6ac21968a99bf747902198b50a30184e3852601043456c9e131ddf0f7a5cf7da",
+      "query": "barbershop",
+      "providerId": 7019476,
+      "pageUrl": "https://pixabay.com/photos/scissors-tools-barbershop-beard-7019476/",
+      "photographer": "AndyJoel160",
+      "photographerUrl": "https://pixabay.com/users/18034391/",
+      "tags": "scissors, tools, barbershop, beard, barber, hairdresser"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "url",
+      "sha256": "67936a68252b79f81d8ad92e4fa7320e7c36af2c2bdadd46d08630b0dba5c413",
+      "url": "https://pixabay.com/get/g0b247347d4ff89b58807c15f0e90224984fba80fefb8a471a66f9882d6a6fccd34649c18ae56114be861327d863b6edba7345a54d7b31d2eb39d3884a4d1f406_1280.jpg"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "url",
+      "sha256": "6a7a5f1f9d546b02b5069699df3db3030efa083ab64a3b798bc76605602a6cff",
+      "url": "https://pixabay.com/get/g33aad9538bd60be743ffd496e4193031302f23a64585fb06109e95698960464dad3a6016b63735b16fda406b26bdb249d933eaa952ba256d8efca3d9455c002b_1280.jpg"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "url",
+      "sha256": "08ffe6667f927fd834b3b05f030a7b98fcb7f1362be8c6bb9d1fc00d257b8ad7",
+      "url": "https://pixabay.com/get/g4cb4dda0049468cbd9e9507f401285c51a5967ecbf1a93e7d5407a80fbb5632f6c4cfd3a2bff43487b7dba35e26e80d175dbcdab3956cc59f2a63cb5f053f85c_1280.jpg"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "url",
+      "sha256": "b5c6c1942885913b2f30f882a9add808fdbb981c23bdbf55ae3f1c4034b94f87",
+      "url": "https://pixabay.com/get/g95e04324d2f1b44cd93102a0650a8057c87a9609304192a078bad53b9a5f944deed26851663f8cf3f01e75d71a41a72c3f046d136bcdc7f2e66b4a5403db8077_1280.jpg"
+    }
+  ]
+}
