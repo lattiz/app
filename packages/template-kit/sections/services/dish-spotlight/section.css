@@ -13,24 +13,16 @@
 
 .lz-services-spotlight__kicker {
   margin: 0;
-  color: var(--lz-color-text);
   font-size: calc(14px * var(--lz-text-scale));
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-.lz-services-spotlight__title {
-  margin: 0;
-  letter-spacing: var(--lz-display-tracking, 0.01em);
-  text-wrap: balance;
-}
-
 .lz-services-spotlight__intro {
   margin: 0;
   color: var(--lz-color-muted);
   font-size: calc(17px * var(--lz-text-scale));
-  text-wrap: pretty;
 }
 
 .lz-services-spotlight__feature {
@@ -138,7 +130,6 @@
   font-family: var(--lz-font-display);
   font-size: calc(clamp(24px, 2.6vw, 32px) * var(--lz-display-scale));
   font-weight: var(--lz-display-weight, 700);
-  color: var(--lz-color-text);
 }
 
 .lz-services-spotlight__cta {
@@ -235,7 +226,6 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--lz-color-text);
 }
 
 .lz-services-spotlight__promo-title {

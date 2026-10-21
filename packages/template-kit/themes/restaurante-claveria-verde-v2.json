@@ -1,0 +1,78 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-claveria-verde-v2.spec.json (spec 4723322519ff, file 9980602c78ef). Do not edit: use the spec, or freeze.",
+  "name": "restaurante-claveria-verde-v2",
+  "label": "Clavería Verde · Pro",
+  "tier": "pro",
+  "fontPair": "red-hat-display+red-hat-text",
+  "colors": {
+    "bg": "#F5BFAE",
+    "surface": "#F9DAD0",
+    "surface-2": "#E6B3A4",
+    "text": "#24191A",
+    "muted": "#5A4440",
+    "accent": "#24191A",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#24191A",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#F5BFAE",
+    "on-overlay": "#24191A",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#24191A"
+  },
+  "fonts": {
+    "display": "'Red Hat Display', sans-serif",
+    "serif": "'Red Hat Display', sans-serif",
+    "body": "'Red Hat Text', sans-serif",
+    "googleFonts": "family=Red+Hat+Display:ital,wght@0,600;1,600&family=Red+Hat+Text:wght@400..600",
+    "displayTransform": "none",
+    "displayLeading": "1.04",
+    "displayWeight": "600",
+    "displayScale": "0.92",
+    "accentStyle": "italic",
+    "accentTransform": "none",
+    "mood": ["clínico", "fresco"],
+    "affinity": ["clinica", "dental", "veterinaria", "despacho"],
+    "case": "none",
+    "tracking": "normal",
+    "typeScale": "tight",
+    "licenses": {
+      "Red Hat Display": "OFL-1.1",
+      "Red Hat Text": "OFL-1.1"
+    }
+  },
+  "shape": {
+    "radiusCard": "32px",
+    "radiusPill": "999px",
+    "border": "1px",
+    "shadow": "soft"
+  },
+  "density": "airy",
+  "photoTreatment": "warm",
+  "placeholder": "blobs",
+  "accentWords": "color",
+  "container": "1280px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(1.08) saturate(.85)"
+  },
+  "style": {
+    "shape": "pill",
+    "surface": "tinted",
+    "density": "airy",
+    "divider": "none",
+    "imageTreatment": "arch",
+    "typeScale": "normal",
+    "displayCase": "none",
+    "tracking": "normal"
+  },
+  "primitives": {
+    "button": "pill",
+    "card": "tinted",
+    "tag": "pill",
+    "frame": "arch",
+    "number": "plain",
+    "quote": "marks",
+    "divider": "hairline"
+  }
+}

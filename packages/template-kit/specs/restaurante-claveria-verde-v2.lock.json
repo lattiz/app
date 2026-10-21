@@ -1,0 +1,62 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/restaurante-claveria-verde-v2.spec.json",
+  "catalog": "extended",
+  "catalogVersion": 2,
+  "tiers": {
+    "restaurante-claveria-verde-v2": {
+      "tier": "pro",
+      "palette": "pal-coral-tinta",
+      "fontPair": "red-hat-display+red-hat-text",
+      "shape": "suave",
+      "archetype": "editorial-atelier",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "framed" },
+        { "role": "about", "slot": "about", "variant": "text-image-offset" },
+        { "role": "catalog", "slot": "services", "variant": "dish-spotlight" },
+        { "role": "proof", "slot": "gallery", "variant": "collage" },
+        {
+          "role": "testimonials",
+          "slot": "testimonials",
+          "variant": "quote-feature"
+        },
+        { "role": "cta", "slot": "cta", "variant": "band" },
+        { "role": "faq", "slot": "faq", "variant": "column-panels" },
+        { "role": "contact", "slot": "locations", "variant": "arch-visit" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "big-wordmark" }
+      ],
+      "layout": { "direction": "jardin-suave", "archetype": "soft" },
+      "renews": "restaurante-claveria-verde-v1"
+    },
+    "restaurante-base-claveria-verde-v2": {
+      "tier": "basico",
+      "palette": "pal-salvia-tinta",
+      "fontPair": "league-spartan+mulish",
+      "shape": "redondo",
+      "archetype": "essential",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "centered-arch" },
+        { "role": "about", "slot": "about", "variant": "brief" },
+        { "role": "catalog", "slot": "services", "variant": "dish-spotlight" },
+        { "role": "faq", "slot": "faq", "variant": "grid" },
+        { "role": "contact", "slot": "locations", "variant": "single" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "minimal-centered" }
+      ],
+      "layout": { "direction": "jardin-suave", "archetype": "soft" },
+      "renews": "restaurante-base-claveria-verde-v1"
+    }
+  }
+}

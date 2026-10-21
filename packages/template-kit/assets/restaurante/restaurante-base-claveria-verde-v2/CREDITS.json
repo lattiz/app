@@ -1,0 +1,27 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-claveria-verde-v2.spec.json (spec 4723322519ff, file f832f8c7addc). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "8490d188c63ec95539d81f2b6d9a509b541e6ba92f5df0f780cef0617e029ab9",
+      "query": "mexican food table vegetables",
+      "providerId": 5329236,
+      "pageUrl": "https://pixabay.com/photos/capsaicin-cayenne-chili-chilli-5329236/",
+      "photographer": "TatianaMelnik",
+      "photographerUrl": "https://pixabay.com/users/17161992/",
+      "tags": "capsaicin, cayenne, chili, chilli, food, freshness, hot, ingredient, jalapeno, mexican, mexico, natural, nature, paprika, pepper, peppers, seasoning, spice, spicy, tabasco, table, variant, veg, vegetable, vegetarian"
+    },
+    {
+      "file": "product-01.jpg",
+      "source": "pixabay",
+      "sha256": "2110ba794a8ac90665d0eedf7f1650444ae6c1700d948a1c306cb4cb9e678951",
+      "query": "enchiladas",
+      "providerId": 5719784,
+      "pageUrl": "https://pixabay.com/photos/enchilada-dish-food-meal-cuisine-5719784/",
+      "photographer": "JessicaVargasJ",
+      "photographerUrl": "https://pixabay.com/users/19015071/",
+      "tags": "enchilada, dish, food, meal, cuisine, tasty, delicious, plate, mexican food"
+    }
+  ]
+}
