@@ -1,0 +1,17 @@
+<section id="nosotros" data-lz-slot="about" data-lz-variant="booking-steps" class="lz-section lz-about-booking-steps">
+  <div class="lz-container">
+    <div class="lz-about-booking-steps__head">
+      <p class="lz-about-booking-steps__kicker" data-lz-if="kicker" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-about-booking-steps__title" data-lz-key="title"></h2>
+      <p class="lz-about-booking-steps__summary" data-lz-if="summary" data-lz-key="summary"></p>
+    </div>
+    <ol class="lz-about-booking-steps__list" data-lz-if="steps">
+      <li class="lz-about-booking-steps__step" data-lz-each="steps">
+        <span class="lz-about-booking-steps__num" aria-hidden="true"></span>
+        <h3 class="lz-about-booking-steps__name" data-lz-key="title"></h3>
+        <p class="lz-about-booking-steps__text" data-lz-key="text"></p>
+      </li>
+    </ol>
+    <a data-lz-if="primaryCta" href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary lz-about-booking-steps__cta" data-lz-key="primaryCta"></a>
+  </div>
+</section>

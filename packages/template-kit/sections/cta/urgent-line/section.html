@@ -1,0 +1,24 @@
+<section id="urgencias" data-lz-slot="cta" data-lz-variant="urgent-line" class="lz-section lz-cta-urgent-line">
+  <div class="lz-container lz-cta-urgent-line__inner">
+    <div class="lz-cta-urgent-line__copy">
+      <p class="lz-cta-urgent-line__badge" data-lz-if="badge">
+        <span class="lz-cta-urgent-line__dot" aria-hidden="true"></span>
+        <span data-lz-key="badge"></span>
+      </p>
+      <h2 class="lz-title lz-cta-urgent-line__title" data-lz-key="title"></h2>
+      <p class="lz-cta-urgent-line__text" data-lz-if="text" data-lz-key="text"></p>
+      <ul class="lz-cta-urgent-line__hours" data-lz-if="hours">
+        <li class="lz-cta-urgent-line__hour" data-lz-each="hours">
+          <span class="lz-cta-urgent-line__hour-label" data-lz-key="label"></span>
+          <span class="lz-cta-urgent-line__hour-value" data-lz-key="value"></span>
+        </li>
+      </ul>
+    </div>
+    <div class="lz-cta-urgent-line__aside">
+      <p class="lz-cta-urgent-line__phone-label" data-lz-if="phoneLabel" data-lz-key="phoneLabel"></p>
+      <a href="{{phoneUrl}}" class="lz-cta-urgent-line__phone">{{phone}}</a>
+      <a href="{{phoneUrl}}" class="lz-button lz-cta-urgent-line__call" data-lz-key="primaryCta"></a>
+      <a data-lz-if="secondaryCta" target="_blank" rel="noopener noreferrer" class="lz-button lz-cta-urgent-line__wa" data-lz-attr-href="secondaryHref" data-lz-key="secondaryCta"></a>
+    </div>
+  </div>
+</section>

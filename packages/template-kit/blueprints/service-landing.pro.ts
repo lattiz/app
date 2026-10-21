@@ -18,6 +18,7 @@ export default {
         'statement',
         'stats-strip',
         'framed-craft',
+        'booking-steps',
       ],
     },
     catalog: roles.catalog,

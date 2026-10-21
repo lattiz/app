@@ -270,6 +270,34 @@ const SECTIONS: SectionSpec[] = [
     },
   },
   {
+    id: 'lzb-about-booking-steps',
+    label: 'Cómo agendar en tres pasos',
+    category: 'Secciones',
+    icon: 'grid',
+    slot: 'about',
+    variant: 'booking-steps',
+    data: {
+      kicker: 'Sencillo y directo',
+      title: 'Agenda tu visita en tres pasos',
+      summary: 'Nos escribes, elegimos horario y llegas con calma.',
+      primaryCta: 'Agendar por WhatsApp',
+      steps: [
+        {
+          title: 'Escríbenos por WhatsApp',
+          text: 'Cuéntanos qué necesitas; te respondemos en horario de atención.',
+        },
+        {
+          title: 'Elegimos día y hora',
+          text: 'Te proponemos un espacio y te mandamos el recordatorio un día antes.',
+        },
+        {
+          title: 'Ven con calma',
+          text: 'Llega con lo que pidas el mensaje; hay lugar para dejar el auto.',
+        },
+      ],
+    },
+  },
+  {
     id: 'lzb-locations-booking-panel',
     label: 'Contacto y ubicación en tarjeta',
     category: 'Secciones',
@@ -313,6 +341,27 @@ const SECTIONS: SectionSpec[] = [
       primaryCta: 'Escribir por WhatsApp',
       secondaryCta: 'Ver preguntas',
       secondaryHref: '#preguntas',
+    },
+  },
+  {
+    id: 'lzb-cta-urgent-line',
+    label: 'Urgencias: llama ahora',
+    category: 'Secciones',
+    icon: 'cta',
+    slot: 'cta',
+    variant: 'urgent-line',
+    data: {
+      badge: 'Urgencias',
+      title: 'En una urgencia, llámanos antes de salir',
+      text: 'Así preparamos el consultorio mientras vienes. Si estamos cerrados, te decimos a dónde acudir.',
+      phoneLabel: 'Teléfono directo',
+      primaryCta: 'Llamar ahora',
+      secondaryCta: 'Escribir por WhatsApp',
+      secondaryHref: '{{whatsappUrl}}',
+      hours: [
+        { label: 'Lun–Sáb', value: '9:00–20:00' },
+        { label: 'Dom', value: '10:00–14:00' },
+      ],
     },
   },
 ];

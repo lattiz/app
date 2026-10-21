@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="es-MX"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clínica Nogal — Veterinaria &amp; Estética Canina · Toluca</title>
+<!-- Fonts: Quicksand & Nunito Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,300..900;1,6..12,300..900&amp;family=Quicksand:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          background: "#fcfbf7",
+          surface: "#fcfbf7",
+          "surface-container": "#eefdf6",
+          "surface-container-low": "#f4fcf8",
+          "surface-container-lowest": "#ffffff",
+          primary: "#113328",
+          "primary-container": "#1f4d3e",
+          secondary: "#2e8b7b",
+          "secondary-container": "#d4f2ea",
+          "on-background": "#11221c",
+          "on-surface": "#11221c",
+          "on-surface-variant": "#3a4d46",
+          "on-primary": "#ffffff",
+          outline: "#9bb3aa",
+          "outline-variant": "#d0dfd8",
+          error: "#ba1a1a"
+        },
+        fontFamily: {
+          display: ["Quicksand", "sans-serif"],
+          body: ["Nunito Sans", "sans-serif"]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  .arch-frame {
+    border-radius: 12rem 12rem 2rem 2rem;
+  }
+  .dot-leader {
+    background-image: radial-gradient(circle, #9bb3aa 1px, transparent 1.5px);
+    background-size: 8px 100%;
+    background-repeat: repeat-x;
+    background-position: bottom;
+  }
+</style>
+</head>
+<body class="bg-background text-on-surface font-body antialiased selection:bg-secondary-container selection:text-primary min-h-screen flex flex-col">
+<!-- ================= 1. HEADER / NAVIGATION ================= -->
+<header class="bg-background/90 backdrop-blur-md border-b border-outline-variant/50 sticky top-0 z-50">
+<div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+<a class="flex items-center gap-3 group" href="#">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+<svg class="w-6 h-6 fill-current" viewbox="0 0 24 24">
+<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"></path>
+</svg>
+</div>
+<div class="flex flex-col">
+<span class="text-xl font-display font-bold text-primary tracking-tight">Clínica Nogal</span>
+<span class="text-[10px] font-bold tracking-widest text-secondary uppercase">Veterinaria &amp; Estética</span>
+</div>
+</a>
+<nav class="hidden lg:flex items-center gap-8 text-sm font-semibold">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#nosotros">Filosofía</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#servicios">Servicios</a>
+<a class="text-error font-bold hover:opacity-80 transition-opacity flex items-center gap-1.5" href="#urgencias">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>Urgencias
+      </a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#equipo">Equipo</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#opiniones">Opiniones</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#preguntas">Preguntas</a>
+</nav>
+<div class="flex items-center gap-3">
+<a class="inline-flex items-center gap-2 rounded-full bg-primary text-on-primary px-5 py-2.5 text-sm font-bold shadow-sm hover:bg-primary-container transition-all" href="https://wa.me/527220000000" rel="noopener noreferrer" target="_blank">
+<svg class="w-4 h-4 fill-current" viewbox="0 0 24 24"><path d="M12.031 2C6.495 2 2 6.495 2 12.031c0 1.956.559 3.864 1.621 5.518L2.094 22l4.606-1.488c1.583.949 3.42 1.519 5.331 1.519 5.536 0 10.031-4.495 10.031-10.031S17.567 2 12.031 2zm0 18.25c-1.688 0-3.326-.492-4.729-1.417l-.339-.224-2.735.884.887-2.659-.24-.378a8.192 8.192 0 0 1-1.282-4.425c0-4.549 3.699-8.248 8.248-8.248 4.549 0 8.248 3.699 8.248 8.248 0 4.549-3.699 8.248-8.248 8.248z"></path></svg>
+<span>WhatsApp</span>
+</a>
+</div>
+</div>
+</header>
+<main class="flex-grow">
+<!-- ================= 2. HERO SPLIT ASIMÉTRICO ================= -->
+<section class="relative overflow-py pt-12 pb-24 lg:py-24 bg-gradient-to-b from-surface-container/40 to-background">
+<div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<div class="lg:col-span-7 flex flex-col items-start gap-6">
+<div class="inline-flex items-center gap-2 rounded-full bg-secondary-container px-4 py-1.5 text-secondary text-xs font-bold tracking-wide">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+          Col. Colón, Toluca · Atención con calma
+        </div>
+<h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-primary tracking-tight leading-tight">
+          Atención sin prisa para tu perro y tu gato
+        </h1>
+<p class="text-lg text-on-surface-variant max-w-xl leading-relaxed">
+          Medicina preventiva, cirugía y estética canina con trato paciente, instalaciones silenciosas y explicaciones claras en cada paso.
+        </p>
+<div class="flex flex-wrap items-center gap-4 pt-2">
+<a class="inline-flex items-center gap-3 rounded-full bg-primary text-on-primary px-8 py-4 text-base font-bold shadow-md hover:bg-primary-container transition-all" href="https://wa.me/527220000000">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M12.031 2C6.495 2 2 6.495 2 12.031c0 1.956.559 3.864 1.621 5.518L2.094 22l4.606-1.488c1.583.949 3.42 1.519 5.331 1.519 5.536 0 10.031-4.495 10.031-10.031S17.567 2 12.031 2zm0 18.25c-1.688 0-3.326-.492-4.729-1.417l-.339-.224-2.735.884.887-2.659-.24-.378a8.192 8.192 0 0 1-1.282-4.425c0-4.549 3.699-8.248 8.248-8.248 4.549 0 8.248 3.699 8.248 8.248 0 4.549-3.699 8.248-8.248 8.248z"></path></svg>
+<span>Agendar por WhatsApp</span>
+</a>
+<a class="inline-flex items-center gap-2 rounded-full bg-surface-container-lowest text-primary border border-outline-variant px-6 py-4 text-base font-bold hover:bg-surface-container transition-all" href="#servicios">
+<span>Ver servicios y precios</span>
+</a>
+</div>
+<div class="pt-6 border-t border-outline-variant/40 flex items-center gap-4 text-sm font-semibold text-on-surface-variant">
+<div class="flex items-center text-amber-500 gap-1">
+<span class="font-bold text-primary text-base">4.9</span> ★★★★★
+          </div>
+<span class="text-outline">·</span>
+<span>205 reseñas verificadas en Google Maps</span>
+</div>
+</div>
+<div class="lg:col-span-5 flex justify-center relative">
+<div class="relative w-full max-w-md">
+<div class="arch-frame overflow-hidden shadow-2xl bg-surface-container aspect-[4/5] relative border-4 border-white">
+<img alt="Veterinaria examinando un golden retriever" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1VmWjpm2h1xeg9xvtUxpm6cGIBBiidS8NXmKCS851fEdKuHualxAxd9oMjhiPzYbZW1BDI188Qh7jBierMGP579ZhdQn4vnjNmsRTF5R1bHjYGC-ZdXgJwqBN2-0OUsv5giEf4ivIFecdpxTZu7Z8812bMgNKtIO5DvLmCfyyL4MMjvi5wnL1n3s7Cv0bvbGmtrjh9gZFA03lMrZHBt_6P5vozsvWeyRbQzpJtVGNQy4782xkRQac9-x1U"/>
+</div>
+<div class="absolute bottom-6 -left-6 bg-white/95 backdrop-blur-md border border-outline-variant/60 rounded-3xl p-5 shadow-xl">
+<p class="text-xs font-bold text-secondary tracking-wider uppercase">Abierto hoy</p>
+<p class="text-sm font-bold text-primary mt-0.5">Av. Morelos 812, Col. Colón</p>
+<span class="text-xs text-on-surface-variant">Estacionamiento al frente</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ================= 3. FILOSOFÍA ================= -->
+<section class="py-20 bg-surface-container border-y border-outline-variant/30" id="nosotros">
+<div class="max-w-7xl mx-auto px-6">
+<div class="max-w-2xl mb-12">
+<span class="text-secondary font-bold text-xs uppercase tracking-widest">Filosofía de atención</span>
+<h2 class="text-3xl sm:text-4xl font-display font-bold text-primary mt-2 mb-4">
+          Cuidamos a tu compañero como parte de tu familia
+        </h2>
+<p class="text-on-surface-variant text-base leading-relaxed">
+          Diseñamos un entorno con cero prisas, tiempo genuino para escucharte y un manejo amable que minimiza cualquier estímulo de miedo.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-lowest p-8 rounded-3xl border border-outline-variant/40 shadow-sm">
+<div class="w-12 h-12 rounded-full bg-secondary-container text-secondary flex items-center justify-center mb-6 font-bold text-lg">01</div>
+<h3 class="text-xl font-display font-bold text-primary mb-3">Manejo libre de miedo</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Técnicas de sujeción positiva, feromonas ambientales y premios para convertir la revisión en confianza.</p>
+</div>
+<div class="bg-surface-container-lowest p-8 rounded-3xl border border-outline-variant/40 shadow-sm">
+<div class="w-12 h-12 rounded-full bg-secondary-container text-secondary flex items-center justify-center mb-6 font-bold text-lg">02</div>
+<h3 class="text-xl font-display font-bold text-primary mb-3">Cero prisas</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Citas de 40 minutos exclusivos para resolver todas tus dudas sin apuros ni salas saturadas.</p>
+</div>
+<div class="bg-surface-container-lowest p-8 rounded-3xl border border-outline-variant/40 shadow-sm">
+<div class="w-12 h-12 rounded-full bg-secondary-container text-secondary flex items-center justify-center mb-6 font-bold text-lg">03</div>
+<h3 class="text-xl font-display font-bold text-primary mb-3">Espacios separados</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Salas de espera y consultorios independientes para perros y gatos para mantener la calma felina.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- ================= 4. CÓMO AGENDAR ================= -->
+<section class="py-20 bg-background">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center max-w-xl mx-auto mb-14">
+<span class="text-secondary font-bold text-xs uppercase tracking-widest">Sencillo y directo</span>
+<h2 class="text-3xl font-display font-bold text-primary mt-2">Cómo agendar tu visita</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="flex flex-col items-center text-center p-6 bg-surface-container-low rounded-3xl border border-outline-variant/30">
+<div class="w-16 h-16 rounded-full bg-primary text-on-primary flex items-center justify-center font-display font-bold text-xl mb-4">01</div>
+<h3 class="text-lg font-bold text-primary mb-2">Escríbenos por WhatsApp</h3>
+<p class="text-sm text-on-surface-variant">Mándanos un mensaje directo para conocer disponibilidad y platicarnos sobre tu mascota.</p>
+</div>
+<div class="flex flex-col items-center text-center p-6 bg-surface-container-low rounded-3xl border border-outline-variant/30">
+<div class="w-16 h-16 rounded-full bg-primary text-on-primary flex items-center justify-center font-display font-bold text-xl mb-4">02</div>
+<h3 class="text-lg font-bold text-primary mb-2">Elegimos día y horario</h3>
+<p class="text-sm text-on-surface-variant">Seleccionamos el espacio de 40 minutos que mejor se adapte a tu rutina diaria.</p>
+</div>
+<div class="flex flex-col items-center text-center p-6 bg-surface-container-low rounded-3xl border border-outline-variant/30">
+<div class="w-16 h-16 rounded-full bg-primary text-on-primary flex items-center justify-center font-display font-bold text-xl mb-4">03</div>
+<h3 class="text-lg font-bold text-primary mb-2">Ven con tranquilidad</h3>
+<p class="text-sm text-on-surface-variant">Estacionamiento disponible al frente y atención puntual sin esperas prolongadas.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- ================= 5. SERVICIOS Y TARIFAS ================= -->
+<section class="py-20 bg-surface-container/50 border-t border-outline-variant/30" id="servicios">
+<div class="max-w-4xl mx-auto px-6">
+<div class="text-center max-w-xl mx-auto mb-14">
+<span class="text-secondary font-bold text-xs uppercase tracking-widest">Transparencia total</span>
+<h2 class="text-3xl font-display font-bold text-primary mt-2 mb-3">Servicios y tarifas</h2>
+<p class="text-sm text-on-surface-variant">Precios claros en Pesos Mexicanos (MXN) sin sorpresas ocultas.</p>
+</div>
+<div class="bg-surface-container-lowest rounded-3xl border border-outline-variant/50 p-8 shadow-sm space-y-6">
+<div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pb-6 border-b border-outline-variant/30">
+<div>
+<h3 class="font-bold text-primary text-base">Consulta general <span class="text-xs font-normal text-secondary ml-2 bg-secondary-container px-2 py-0.5 rounded-full">Duración 40 min</span></h3>
+<p class="text-xs text-on-surface-variant mt-1">Revisión clínica completa y expediente digital.</p>
+</div>
+<span class="font-display font-bold text-primary text-lg whitespace-nowrap">$450 MXN</span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pb-6 border-b border-outline-variant/30">
+<div>
+<h3 class="font-bold text-primary text-base">Vacuna integral <span class="text-xs font-normal text-secondary ml-2 bg-secondary-container px-2 py-0.5 rounded-full">Perros y Gatos</span></h3>
+<p class="text-xs text-on-surface-variant mt-1">Biológicos de alta calidad con cartilla oficial.</p>
+</div>
+<span class="font-display font-bold text-primary text-lg whitespace-nowrap">Desde $350 MXN</span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pb-6 border-b border-outline-variant/30">
+<div>
+<h3 class="font-bold text-primary text-base">Desparasitación interna y externa</h3>
+<p class="text-xs text-on-surface-variant mt-1">Fórmulas seguras adaptadas a peso y edad.</p>
+</div>
+<span class="font-display font-bold text-primary text-lg whitespace-nowrap">Desde $180 MXN</span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pb-6 border-b border-outline-variant/30">
+<div>
+<h3 class="font-bold text-primary text-base">Baño y corte <span class="text-xs font-normal text-secondary ml-2 bg-secondary-container px-2 py-0.5 rounded-full">Estética respetuosa</span></h3>
+<p class="text-xs text-on-surface-variant mt-1">Shampoo hipoalergénico y secado silencioso.</p>
+</div>
+<span class="font-display font-bold text-primary text-lg whitespace-nowrap">Desde $380 MXN</span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pb-6 border-b border-outline-variant/30">
+<div>
+<h3 class="font-bold text-primary text-base">Esterilización preventiva <span class="text-xs font-normal text-secondary ml-2 bg-secondary-container px-2 py-0.5 rounded-full">Anestesia inhalatoria</span></h3>
+<p class="text-xs text-on-surface-variant mt-1">Monitoreo constante y analgésicos multimodales.</p>
+</div>
+<span class="font-display font-bold text-primary text-lg whitespace-nowrap">Cotiza por peso</span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pt-2">
+<div>
+<h3 class="font-bold text-primary text-base">Hospedaje de bienestar <span class="text-xs font-normal text-secondary ml-2 bg-secondary-container px-2 py-0.5 rounded-full">Guardia 24h</span></h3>
+<p class="text-xs text-on-surface-variant mt-1">Supervisión médica y reportes fotográficos diarios.</p>
+</div>
+<span class="font-display font-bold text-primary text-lg whitespace-nowrap">$350 / noche</span>
+</div>
+</div>
+</div>
+</section>
+<!-- ================= 6. URGENCIAS 24/7 ================= -->
+<section class="py-16 bg-primary text-on-primary" id="urgencias">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+<div class="lg:col-span-8 flex flex-col gap-4">
+<div class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1 text-xs font-bold tracking-wider w-fit">
+<span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+            PROTOCOLO DE ATENCIÓN INMEDIATA
+          </div>
+<h2 class="text-3xl font-display font-bold">En una urgencia médica, llámanos antes de salir</h2>
+<p class="text-sm text-emerald-100 max-w-2xl leading-relaxed">
+            Así nuestro equipo prepara el quirófano y el material necesario mientras vienes en camino, asegurando atención sin demoras al arribar a la clínica.
+          </p>
+<div class="flex flex-wrap gap-6 pt-2 text-xs text-emerald-200">
+<div><strong>Lunes a Sábado:</strong> 9:00 – 20:00 hrs</div>
+<div class="border-l border-emerald-800 pl-6"><strong>Domingos:</strong> 10:00 – 14:00 hrs</div>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col items-start lg:items-end justify-center gap-4">
+<div class="text-left lg:text-right">
+<span class="text-xs text-emerald-300">Teléfono directo:</span>
+<a class="block text-2xl font-display font-bold text-amber-300 hover:underline" href="tel:+527220000000">+52 722 000 0000</a>
+</div>
+<a class="inline-flex items-center justify-center gap-2 w-full sm:w-auto rounded-full bg-amber-400 hover:bg-amber-300 text-primary font-bold px-8 py-4 text-sm shadow-lg transition-all" href="tel:+527220000000">
+<span>Llamar a Urgencias</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- ================= 7. EQUIPO MÉDICO ================= -->
+<section class="py-20 bg-background" id="equipo">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center max-w-xl mx-auto mb-16">
+<span class="text-secondary font-bold text-xs uppercase tracking-widest">Vocación y experiencia</span>
+<h2 class="text-3xl font-display font-bold text-primary mt-2">Equipo médico</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+<div class="bg-surface-container-low rounded-3xl p-6 border border-outline-variant/40 flex items-center gap-6">
+<div class="w-32 h-32 rounded-full overflow-hidden shrink-0 border-2 border-primary/20 bg-surface-container">
+<img alt="Dr. Alejandro Ramírez" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1We8sXJqtNHYNlfGIhuNfWb2fOW3BdTjfRgTdZK4EnY_GYMq4PnkpRYxLaZxIGU4OkdrdYym12sfV1A0N0MmvPbd67LxeSNw3lhtSWH97Dyf5jB49IeeaJHGTfAF_2PqreEixEcR4he9F4lt40AB0PouSY5tRdooh88FwmqDD35PUjv2Y1-T61xZvx4qKIqxBQMkn6FRG9gR4ps9MOQLxcOBrtxcJdmcfTdqib-f_OIoCW5IxUXi5I1d5HI"/>
+</div>
+<div>
+<span class="text-[11px] font-bold text-secondary uppercase tracking-wider">Medicina Felina &amp; Etología</span>
+<h3 class="text-lg font-display font-bold text-primary mt-0.5">Dr. Alejandro Ramírez</h3>
+<p class="text-xs text-outline mt-0.5">Cédula: 7894210 · UNAM</p>
+<p class="text-xs text-on-surface-variant mt-2 leading-relaxed">Enfoque en reducción de estrés ambiental en gatos y revisiones sin prisa.</p>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-3xl p-6 border border-outline-variant/40 flex items-center gap-6">
+<div class="w-32 h-32 rounded-full overflow-hidden shrink-0 border-2 border-primary/20 bg-surface-container">
+<img alt="Dra. Elena Morales" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1VmWjpm2h1xeg9xvtUxpm6cGIBBiidS8NXmKCS851fEdKuHualxAxd9oMjhiPzYbZW1BDI188Qh7jBierMGP579ZhdQn4vnjNmsRTF5R1bHjYGC-ZdXgJwqBN2-0OUsv5giEf4ivIFecdpxTZu7Z8812bMgNKtIO5DvLmCfyyL4MMjvi5wnL1n3s7Cv0bvbGmtrjh9gZFA03lMrZHBt_6P5vozsvWeyRbQzpJtVGNQy4782xkRQac9-x1U"/>
+</div>
+<div>
+<span class="text-[11px] font-bold text-secondary uppercase tracking-wider">Cirugía &amp; Dermatología</span>
+<h3 class="text-lg font-display font-bold text-primary mt-0.5">Dra. Elena Morales</h3>
+<p class="text-xs text-outline mt-0.5">Cédula: 9481023 · UAEMéx</p>
+<p class="text-xs text-on-surface-variant mt-2 leading-relaxed">Cirugía suave de tejidos blandos y manejo integral del dolor postquirúrgico.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ================= 8. TESTIMONIOS ================= -->
+<section class="py-20 bg-surface-container/30 border-t border-outline-variant/30" id="opiniones">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center max-w-xl mx-auto mb-14">
+<div class="inline-flex items-center gap-1 text-amber-500 text-sm mb-2">★★★★★</div>
+<h2 class="text-3xl font-display font-bold text-primary">Historias de confianza en Toluca</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-lowest p-8 rounded-3xl border border-outline-variant/40 shadow-sm flex flex-col justify-between">
+<p class="text-sm text-on-surface-variant italic leading-relaxed">"Llevé a mi perrita Mía muy asustada. Aquí la Dra. Elena se tomó 15 minutos solo para dejar que Mía olfateara antes de tocarla. Cero estrés."</p>
+<div class="mt-6 pt-4 border-t border-outline-variant/20">
+<p class="text-sm font-bold text-primary">Mariana G.</p>
+<p class="text-xs text-outline">Tutora de Mía</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-8 rounded-3xl border border-outline-variant/40 shadow-sm flex flex-col justify-between">
+<p class="text-sm text-on-surface-variant italic leading-relaxed">"Tengo un gato muy nervioso que siempre bufaba. El consultorio felino independiente hace toda la diferencia. El Dr. Alejandro tiene manos de ángel."</p>
+<div class="mt-6 pt-4 border-t border-outline-variant/20">
+<p class="text-sm font-bold text-primary">Roberto M.</p>
+<p class="text-xs text-outline">Tutor de Tomás</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-8 rounded-3xl border border-outline-variant/40 shadow-sm flex flex-col justify-between">
+<p class="text-sm text-on-surface-variant italic leading-relaxed">"Precios claros desde el primer minuto. En el servicio de baño con corte para Lucas me mandaron fotos del proceso y salió oliendo delicioso."</p>
+<div class="mt-6 pt-4 border-t border-outline-variant/20">
+<p class="text-sm font-bold text-primary">Sofía D.</p>
+<p class="text-xs text-outline">Tutora de Lucas</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ================= 9. PREGUNTAS FRECUENTES (FAQ) ================= -->
+<section class="py-20 bg-background border-t border-outline-variant/30" id="preguntas">
+<div class="max-w-3xl mx-auto px-6">
+<div class="text-center mb-14">
+<span class="text-secondary font-bold text-xs uppercase tracking-widest">Resolvemos tus dudas</span>
+<h2 class="text-3xl font-display font-bold text-primary mt-2">Preguntas Frecuentes</h2>
+</div>
+<div class="space-y-4">
+<div class="bg-surface-container-low p-6 rounded-3xl border border-outline-variant/40">
+<h3 class="font-bold text-primary text-base mb-1">¿Necesito agendar cita previa?</h3>
+<p class="text-sm text-on-surface-variant">Recomendamos agendar por WhatsApp para asegurar tus 40 minutos exclusivos. Urgencias siempre tienen prioridad.</p>
+</div>
+<div class="bg-surface-container-low p-6 rounded-3xl border border-outline-variant/40">
+<h3 class="font-bold text-primary text-base mb-1">¿Cómo preparo a mi gato para la visita?</h3>
+<p class="text-sm text-on-surface-variant">Coloca su transportadora abierta en casa días antes con una cobija familiar y cúbrela con una toalla ligera durante el traslado.</p>
+</div>
+<div class="bg-surface-container-low p-6 rounded-3xl border border-outline-variant/40">
+<h3 class="font-bold text-primary text-base mb-1">¿Qué métodos de pago aceptan?</h3>
+<p class="text-sm text-on-surface-variant">Efectivo, tarjetas de débito/crédito (Visa, Mastercard, Amex) y transferencias SPEI con factura fiscal disponible.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- ================= 10. PANEL DE CONTACTO ================= -->
+<section class="py-20 bg-surface-container/50 border-t border-outline-variant/30" id="contacto">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<div class="lg:col-span-6 flex flex-col gap-6">
+<span class="text-secondary font-bold text-xs uppercase tracking-widest">Ubicación &amp; Visitas</span>
+<h2 class="text-3xl font-display font-bold text-primary">Estamos en la Col. Colón, Toluca</h2>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+            Un espacio luminoso, limpio y tranquilo con estacionamiento justo frente a la entrada para que bajar a tu mascota sea cómodo y seguro.
+          </p>
+<div class="space-y-3 text-sm text-on-surface-variant">
+<p><strong>Dirección:</strong> Av. Morelos 812, Col. Colón, Toluca, Estado de México.</p>
+<p><strong>WhatsApp &amp; Citas:</strong> <a class="text-primary font-bold underline" href="https://wa.me/527220000000">+52 722 000 0000</a></p>
+<p><strong>Correo:</strong> contacto@clinicanogal.mx</p>
+</div>
+</div>
+<div class="lg:col-span-6">
+<div class="bg-surface-container-lowest p-6 rounded-3xl border border-outline-variant/50 shadow-lg text-center">
+<div class="w-full h-64 rounded-2xl bg-surface-container-low flex flex-col items-center justify-center p-6 border border-outline-variant/30 relative overflow-hidden">
+<div class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center mb-3 shadow">📍</div>
+<h3 class="font-display font-bold text-primary text-lg">Clínica Nogal</h3>
+<p class="text-xs text-on-surface-variant mt-1">Av. Morelos 812, Col. Colón, Toluca</p>
+<span class="mt-4 text-[11px] font-bold text-secondary bg-secondary-container px-3 py-1 rounded-full">Estacionamiento propio al frente</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- ================= 11. FOOTER ================= -->
+<footer class="w-full bg-surface-container border-t border-outline-variant/50 py-12">
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+<div class="flex flex-col gap-1">
+<span class="font-display font-bold text-primary text-lg">Clínica Nogal</span>
+<p class="text-xs text-on-surface-variant">© 2025 Clínica Nogal Veterinaria &amp; Estética Canina. Todos los derechos reservados. Toluca, Méx.</p>
+</div>
+<div class="flex flex-wrap justify-center items-center gap-6 text-xs text-on-surface-variant font-semibold">
+<a class="hover:text-primary transition-colors" href="#contacto">Aviso de Privacidad</a>
+<a class="hover:text-primary transition-colors" href="#contacto">Términos de Servicio</a>
+<a class="hover:text-primary transition-colors" href="#urgencias">Urgencias 24/7</a>
+<a class="hover:text-primary transition-colors" href="#equipo">Directorio Médico</a>
+</div>
+</div>
+</footer>
+</body></html>

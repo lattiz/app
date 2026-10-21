@@ -808,6 +808,19 @@ export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
     proFeatures: [],
   },
   {
+    id: 'tienda-base-caramelo-pop-v2',
+    tier: 'basic',
+    giro: 'tienda',
+    giroLabel: 'Tienda / boutique',
+    direction: {
+      id: 'jardin-suave',
+      name: 'Jardín suave',
+    },
+    swatches: ['#E6F6FF', '#F5FBFF', '#FF5FA2', '#14213D'],
+    dark: false,
+    proFeatures: [],
+  },
+  {
     id: 'tienda-base-lote-doce-v1',
     tier: 'basic',
     giro: 'tienda',
@@ -830,6 +843,25 @@ export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
     dark: false,
     proFeatures: [
       'Portada con cifras',
+      'Nosotros Pro',
+      'Galería',
+      'Testimonios',
+      'Contacto con mapa',
+      'Animaciones',
+    ],
+  },
+  {
+    id: 'tienda-caramelo-pop-v2',
+    tier: 'pro',
+    giro: 'tienda',
+    giroLabel: 'Tienda / boutique',
+    direction: {
+      id: 'jardin-suave',
+      name: 'Jardín suave',
+    },
+    swatches: ['#FFEAF3', '#FFF7FA', '#35C4E6', '#14213D'],
+    dark: false,
+    proFeatures: [
       'Nosotros Pro',
       'Galería',
       'Testimonios',
