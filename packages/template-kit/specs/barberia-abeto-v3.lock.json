@@ -1,0 +1,58 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/barberia-abeto-v3.spec.json",
+  "catalog": "extended",
+  "catalogVersion": 2,
+  "tiers": {
+    "barberia-abeto-v3": {
+      "tier": "pro",
+      "palette": "custom",
+      "fontPair": "bodoni-moda+karla",
+      "shape": "filete",
+      "archetype": "neo-brutal",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "panel" },
+        { "role": "about", "slot": "about", "variant": "text-image-offset" },
+        { "role": "catalog", "slot": "services", "variant": "cards" },
+        { "role": "cta", "slot": "cta", "variant": "ritual-panels" },
+        { "role": "proof", "slot": "gallery", "variant": "grid" },
+        { "role": "testimonials", "slot": "testimonials", "variant": "cards" },
+        { "role": "faq", "slot": "faq", "variant": "column-panels" },
+        { "role": "contact", "slot": "locations", "variant": "with-contact" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "minimal-centered" }
+      ],
+      "layout": { "archetype": "bold" },
+      "renews": "barberia-abeto-v1"
+    },
+    "barberia-base-abeto-v3": {
+      "tier": "basico",
+      "palette": "custom",
+      "fontPair": "libre-baskerville+source-sans-3",
+      "shape": "sutil",
+      "archetype": "essential",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "split" },
+        { "role": "catalog", "slot": "services", "variant": "price-list" },
+        { "role": "cta", "slot": "cta", "variant": "ritual-panels" },
+        { "role": "faq", "slot": "faq", "variant": "column-panels" },
+        { "role": "contact", "slot": "locations", "variant": "single" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "minimal-centered" }
+      ],
+      "layout": { "archetype": "bold" },
+      "renews": "barberia-base-abeto-v1"
+    }
+  }
+}
