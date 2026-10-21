@@ -205,6 +205,47 @@ const SECTIONS: SectionSpec[] = [
     },
   },
   {
+    id: 'lzb-services-treatment-rows',
+    label: 'Tratamientos en filas con cita',
+    category: 'Secciones',
+    icon: 'grid',
+    slot: 'services',
+    variant: 'treatment-rows',
+    data: {
+      kicker: 'Carta de tratamientos',
+      title: 'Tratamientos y servicios',
+      intro:
+        'Sesiones de 50 minutos. El precio es por cita; el plan se arma en la valoración.',
+      unit: 'por sesión',
+      prices: [
+        {
+          name: 'Valoración inicial',
+          price: '$900 MXN',
+          description:
+            'Revisión de movilidad y un plan de las siguientes semanas.',
+          cta: 'Agendar',
+          href: '{{whatsappUrl:Hola, quiero agendar una valoración}}',
+        },
+        {
+          name: 'Sesión de seguimiento',
+          price: '$800 MXN',
+          description:
+            'Trabajo manual y ejercicios guiados según el avance de la semana.',
+          cta: 'Agendar',
+          href: '{{whatsappUrl:Hola, quiero agendar una sesión de seguimiento}}',
+        },
+        {
+          name: 'Alta con plan en casa',
+          price: '$700 MXN',
+          description:
+            'Cierre con rutina para casa y las señales de alarma a vigilar.',
+          cta: 'Agendar',
+          href: '{{whatsappUrl:Hola, quiero agendar el alta con plan}}',
+        },
+      ],
+    },
+  },
+  {
     id: 'lzb-testimonials-paper-trio',
     label: 'Reseñas en tarjetas de papel',
     category: 'Secciones',
@@ -293,6 +334,43 @@ const SECTIONS: SectionSpec[] = [
         {
           title: 'Ven con calma',
           text: 'Llega con lo que pidas el mensaje; hay lugar para dejar el auto.',
+        },
+      ],
+    },
+  },
+  {
+    id: 'lzb-about-care-pathway',
+    label: 'Ruta de recuperación',
+    category: 'Secciones',
+    icon: 'grid',
+    slot: 'about',
+    variant: 'care-pathway',
+    data: {
+      kicker: 'El proceso',
+      title: 'Tu recuperación, etapa por etapa',
+      summary:
+        'Valoración, plan por fases y alta con ejercicios para casa. Cada etapa tiene un objetivo claro.',
+      primaryCta: 'Agendar valoración',
+      steps: [
+        {
+          title: 'Valoración',
+          text: 'Revisamos movilidad y el motivo de la consulta para armar el plan.',
+          tag: 'Primera sesión',
+        },
+        {
+          title: 'Recuperación',
+          text: 'Trabajo manual y ejercicios guiados para recuperar rango sin forzar.',
+          tag: 'Fase inicial',
+        },
+        {
+          title: 'Fortalecimiento',
+          text: 'Cargas progresivas para que el trabajo del consultorio se sostenga en casa.',
+          tag: 'Fase activa',
+        },
+        {
+          title: 'Alta',
+          text: 'Cerramos con una rutina para casa; si algo cambia, nos escribes.',
+          tag: 'Alta con plan',
         },
       ],
     },

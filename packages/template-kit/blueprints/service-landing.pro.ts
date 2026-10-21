@@ -19,6 +19,7 @@ export default {
         'stats-strip',
         'framed-craft',
         'booking-steps',
+        'care-pathway',
       ],
     },
     catalog: roles.catalog,
