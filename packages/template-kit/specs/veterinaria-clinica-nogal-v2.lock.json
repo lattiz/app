@@ -1,0 +1,58 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/veterinaria-clinica-nogal-v2.spec.json",
+  "catalog": "extended",
+  "catalogVersion": 2,
+  "tiers": {
+    "veterinaria-clinica-nogal-v2": {
+      "tier": "pro",
+      "palette": "hierbabuena",
+      "fontPair": "young-serif+figtree",
+      "shape": "redondo",
+      "archetype": "editorial-atelier",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "arch-sticker" },
+        { "role": "about", "slot": "about", "variant": "booking-steps" },
+        { "role": "catalog", "slot": "services", "variant": "price-list" },
+        { "role": "cta", "slot": "cta", "variant": "urgent-line" },
+        { "role": "proof", "slot": "gallery", "variant": "mosaic" },
+        { "role": "testimonials", "slot": "testimonials", "variant": "cards" },
+        { "role": "faq", "slot": "faq", "variant": "column-panels" },
+        { "role": "contact", "slot": "locations", "variant": "with-contact" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "minimal-centered" }
+      ],
+      "layout": { "archetype": "soft" },
+      "renews": "veterinaria-clinica-nogal-v1"
+    },
+    "veterinaria-base-clinica-nogal-v2": {
+      "tier": "basico",
+      "palette": "durazno",
+      "fontPair": "bricolage-grotesque+inter",
+      "shape": "suave",
+      "archetype": "essential",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "centered-arch" },
+        { "role": "catalog", "slot": "services", "variant": "price-list" },
+        { "role": "cta", "slot": "cta", "variant": "urgent-line" },
+        { "role": "faq", "slot": "faq", "variant": "two-col" },
+        { "role": "contact", "slot": "locations", "variant": "single" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "minimal-centered" }
+      ],
+      "layout": { "archetype": "soft" },
+      "renews": "veterinaria-base-clinica-nogal-v1"
+    }
+  }
+}

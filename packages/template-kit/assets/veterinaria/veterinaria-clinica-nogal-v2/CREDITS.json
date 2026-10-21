@@ -1,0 +1,71 @@
+{
+  "$lattiz": "GENERATED from specs/veterinaria-clinica-nogal-v2.spec.json (spec 898b377e41b4, file 8c6686365e72). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "gallery-01.jpg",
+      "source": "pixabay",
+      "sha256": "eee2bcbc25dd891899ddb52c592ee923fde0d8c3bfa823a0b43824cdfb86189e",
+      "query": "veterinary clinic reception waiting room dog",
+      "providerId": 9529139,
+      "pageUrl": "https://pixabay.com/photos/clinic-doctor-hall-signs-chairs-9529139/",
+      "photographer": "Mollyroselee",
+      "photographerUrl": "https://pixabay.com/users/9214707/",
+      "tags": "clinic, doctor, hall, signs, chairs, waiting room, sitting area, podiatrist, doorway"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "pixabay",
+      "sha256": "e350460e78ca8d28a466611829f62677a8be3b4381bcb16a7daf6e1931a7a554",
+      "query": "veterinary examination table clean room",
+      "providerId": 548143,
+      "pageUrl": "https://pixabay.com/photos/treatment-room-clinic-doctor-548143/",
+      "photographer": "DanielCubas",
+      "photographerUrl": "https://pixabay.com/users/604351/",
+      "tags": "treatment room, clinic, doctor, living room, couch"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "pixabay",
+      "sha256": "5a1841c871af2d746c426b4507bfdd1442ce31e6d7fd95566626c06e567023ed",
+      "query": "dog bath",
+      "providerId": 237193,
+      "pageUrl": "https://pixabay.com/photos/dog-puppy-bath-water-person-girl-237193/",
+      "photographer": "liilxliil",
+      "photographerUrl": "https://pixabay.com/users/118078/",
+      "tags": "dog, puppy, nature, bath, animal, water, person, girl, friendship, kiss, pet"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "pixabay",
+      "sha256": "185f31db5c15eb9786d9c5419f4f053edf5a9f5dcb5d472a98ba9ad9b953d92c",
+      "query": "cat resting clinic bed",
+      "providerId": 6875746,
+      "pageUrl": "https://pixabay.com/photos/cat-pet-kitten-feline-animal-6875746/",
+      "photographer": "AntiM_photography",
+      "photographerUrl": "https://pixabay.com/users/12322866/",
+      "tags": "cat, nature, pet, kitten, feline, animal, lying, fur, kitty, domestic, domestic cat, cat portrait, animal world"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "pixabay",
+      "sha256": "8a1d689979cc3b8cdd3f0b5754632744417fb703435e3a11d2afac2f987efaf0",
+      "query": "groomer trimming small dog",
+      "providerId": 6926857,
+      "pageUrl": "https://pixabay.com/photos/nail-clipping-pet-grooming-dog-6926857/",
+      "photographer": "alektas",
+      "photographerUrl": "https://pixabay.com/users/19398239/",
+      "tags": "nail clipping, pet, pet grooming, dog, pet salon, animal, groomer, pet care, nature, canine"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "pixabay",
+      "sha256": "b5706862b284bab3758fa3ab3a87b51ced44dba6a49fced2d50c94e460321862",
+      "query": "dog bed",
+      "providerId": 5937757,
+      "pageUrl": "https://pixabay.com/photos/english-cocker-spaniel-dog-puppy-5937757/",
+      "photographer": "Alkhaine",
+      "photographerUrl": "https://pixabay.com/users/19974674/",
+      "tags": "english cocker spaniel, dog, puppy, blanket, pet, pup, nature, young dog, animal, domestic dog, purebred, furry, canine, mammal, friend, cute, adorable, bed, bedroom, portrait"
+    }
+  ]
+}

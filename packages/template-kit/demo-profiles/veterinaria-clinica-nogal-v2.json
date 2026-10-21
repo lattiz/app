@@ -1,0 +1,63 @@
+{
+  "$lattiz": "GENERATED from specs/veterinaria-clinica-nogal-v2.spec.json (spec 898b377e41b4, file b35e94126a5a). Do not edit: use the spec, or freeze.",
+  "name": "Clínica Nogal",
+  "category": "other",
+  "phone": "+527220000000",
+  "whatsapp": "+5217220000000",
+  "email": "citas@clinicanogal.mx",
+  "address": {
+    "street": "Av. Morelos 812, Col. Colón",
+    "city": "Toluca",
+    "country": "MX"
+  },
+  "hours": {
+    "mon": [
+      {
+        "open": "09:00",
+        "close": "20:00"
+      }
+    ],
+    "tue": [
+      {
+        "open": "09:00",
+        "close": "20:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "09:00",
+        "close": "20:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "09:00",
+        "close": "20:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "09:00",
+        "close": "20:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "09:00",
+        "close": "20:00"
+      }
+    ],
+    "sun": [
+      {
+        "open": "10:00",
+        "close": "14:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}

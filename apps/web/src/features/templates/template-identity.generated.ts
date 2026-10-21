@@ -897,6 +897,16 @@ export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
     proFeatures: [],
   },
   {
+    id: 'veterinaria-base-clinica-nogal-v2',
+    tier: 'basic',
+    giro: 'veterinaria',
+    giroLabel: 'Veterinaria / estética canina',
+    direction: null,
+    swatches: ['#FCF6F1', '#FFFFFF', '#B0502A', '#25170F'],
+    dark: false,
+    proFeatures: [],
+  },
+  {
     id: 'veterinaria-clinica-nogal-v1',
     tier: 'pro',
     giro: 'veterinaria',
@@ -912,5 +922,15 @@ export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
       'Contacto con mapa',
       'Animaciones',
     ],
+  },
+  {
+    id: 'veterinaria-clinica-nogal-v2',
+    tier: 'pro',
+    giro: 'veterinaria',
+    giroLabel: 'Veterinaria / estética canina',
+    direction: null,
+    swatches: ['#F3F8F6', '#FFFFFF', '#1F7A6A', '#0F201B'],
+    dark: false,
+    proFeatures: ['Galería', 'Testimonios', 'Contacto con mapa', 'Animaciones'],
   },
 ];
