@@ -459,7 +459,10 @@
       "emailLabel": "Correo",
       "directionsLabel": "Cómo llegar",
       "hoursLabel": "Horario",
-      "callCta": "Llamar"
+      "callCta": "Llamar",
+      "whatsappNote": "Dudas de horarios, planes y clase de prueba",
+      "callNote": "Llamada directa a recepción",
+      "emailNote": "Planes para empresas y grupos"
     },
     "floating-whatsapp": {
       "label": "Agendar por WhatsApp"

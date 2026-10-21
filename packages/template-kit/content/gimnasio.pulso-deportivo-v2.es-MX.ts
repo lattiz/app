@@ -1,4 +1,4 @@
-// GENERATED from specs/gimnasio-pulso-deportivo-v2.spec.json (spec 9fbf17764e1c, file d3125f924021). Do not edit: use the spec, or freeze.
+// GENERATED from specs/gimnasio-pulso-deportivo-v2.spec.json (spec dd718c117141, file da734036a56f). Do not edit: use the spec, or freeze.
 import type { ContentPack } from '../src/types';
 
 export default {
@@ -391,9 +391,9 @@ export default {
     locations: {
       kicker: '{{index}} — Visítanos',
       hoursLabel: 'Horario',
-      whatsappNote: 'Atención rápida para apartar tu turno',
-      callNote: 'Llamada directa al mostrador',
-      emailNote: 'Para eventos privados y grupos',
+      whatsappNote: 'Dudas de horarios, planes y clase de prueba',
+      callNote: 'Llamada directa a recepción',
+      emailNote: 'Planes para empresas y grupos',
       whatsappCta: 'Reservar por WhatsApp',
       branches: [
         {
