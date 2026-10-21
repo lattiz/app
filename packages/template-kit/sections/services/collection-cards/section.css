@@ -42,7 +42,8 @@
 
 .lz-services-collection-cards__grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, calc((100% - 3 * var(--lz-stack)) / 4));
+  justify-content: center;
   gap: var(--lz-stack);
   counter-reset: lz-collection;
 }
