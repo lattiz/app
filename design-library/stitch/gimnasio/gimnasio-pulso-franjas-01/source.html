@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pulso Deportivo - Clavería, CDMX</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;1,400&amp;family=Bebas+Neue&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary": "#073546",
+            "surface-dim": "#121509",
+            "on-error-container": "#ffdad6",
+            "surface": "#111311",
+            "on-background": "#EEF2E8",
+            "surface-container": "#1e2115",
+            "primary-fixed": "#c5f331",
+            "inverse-on-surface": "#2f3225",
+            "on-primary": "#283500",
+            "inverse-primary": "#506600",
+            "tertiary": "#C6F432",
+            "on-tertiary-fixed-variant": "#244b5d",
+            "on-surface": "#EEF2E8",
+            "on-primary-fixed": "#161f00",
+            "on-secondary": "#2f312e",
+            "outline-variant": "#393B38",
+            "secondary": "#c6c7c2",
+            "surface-tint": "#aad600",
+            "background": "#111311",
+            "surface-container-high": "#2C2E2B",
+            "surface-container-lowest": "#0d0f05",
+            "on-surface-variant": "#c4c9ae",
+            "on-primary-container": "#556d00",
+            "on-secondary-container": "#b8b9b4",
+            "error-container": "#93000a",
+            "tertiary-fixed": "#c1e8fe",
+            "surface-bright": "#383b2d",
+            "primary-fixed-dim": "#aad600",
+            "outline": "#8B8E87",
+            "secondary-container": "#484a46",
+            "on-tertiary-fixed": "#001e2b",
+            "tertiary-fixed-dim": "#a5cce1",
+            "surface-variant": "#333629",
+            "inverse-surface": "#e2e4d1",
+            "error": "#ffb4ab",
+            "secondary-fixed-dim": "#c6c7c2",
+            "on-primary-fixed-variant": "#3b4d00",
+            "on-secondary-fixed": "#1a1c19",
+            "on-error": "#690005",
+            "primary-container": "#c5f331",
+            "primary": "#ffffff",
+            "tertiary-container": "#c1e8fe",
+            "secondary-fixed": "#e2e3de",
+            "surface-container-low": "#1a1d11",
+            "surface-container-highest": "#333629",
+            "on-secondary-fixed-variant": "#454744",
+            "on-tertiary-container": "#44697c"
+          },
+          "borderRadius": {
+            "DEFAULT": "0rem",
+            "lg": "0rem",
+            "xl": "0rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-sm": "0.875rem",
+            "space-md": "1rem",
+            "space-xs": "0.5rem",
+            "space-xl": "5rem",
+            "margin": "1.5rem",
+            "space-lg": "2rem",
+            "gutter": "1rem"
+          },
+          "fontFamily": {
+            "label-caps": ["Barlow"],
+            "headline-md": ["Bebas Neue"],
+            "body-md": ["Barlow"],
+            "display-lg": ["Bebas Neue"],
+            "body-lg": ["Barlow"]
+          },
+          "fontSize": {
+            "label-caps": ["14px", { "lineHeight": "20px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+            "headline-md": ["41px", { "lineHeight": "48px", "fontWeight": "600" }],
+            "body-md": ["16px", { "lineHeight": "26px", "fontWeight": "400" }],
+            "display-lg": ["83px", { "lineHeight": "89px", "fontWeight": "700" }],
+            "body-lg": ["20px", { "lineHeight": "32px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased selection:bg-tertiary selection:text-surface-dim">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 bg-background text-primary border-b border-outline-variant">
+<div class="flex justify-between items-center w-full px-space-lg max-w-[1200px] mx-auto h-20">
+<div class="text-headline-md font-headline-md font-extrabold text-tertiary tracking-wide">
+        PULSO DEPORTIVO
+      </div>
+<nav class="hidden md:flex items-center gap-space-lg font-label-caps text-label-caps">
+<a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#clases">Timetable</a>
+<a class="text-tertiary font-bold" href="#membresias">Membership</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#nosotros">About</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#testimonios">Testimonials</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#faq">FAQ</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#contacto">Contact</a>
+</nav>
+<div>
+<a class="bg-tertiary text-on-tertiary px-space-md py-space-xs font-label-caps text-label-caps flex items-center gap-2 hover:opacity-90 transition-all duration-200" href="https://wa.me/" target="_blank">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
+          WhatsApp
+        </a>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="max-w-[1200px] mx-auto px-space-lg py-space-xl grid grid-cols-1 md:grid-cols-2 gap-space-xl items-center">
+<div class="flex flex-col gap-space-md">
+<div class="inline-flex items-center gap-2 bg-surface-container-high px-space-xs py-1 border border-outline-variant w-fit">
+<span class="material-symbols-outlined text-tertiary text-sm">location_on</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">CLAVERÍA, AZCAPOTZALCO, CDMX</span>
+</div>
+<h1 class="text-display-lg font-display-lg text-primary tracking-tight leading-none">
+        ENTRENA EN CLAVERÍA
+      </h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-lg">
+        El gimnasio de barrio sin rodeos. Fierro pesado, clases intensas y puro ambiente local en el corazón de Clavería. Sin contratos ocultos, pura disciplina.
+      </p>
+<div class="flex flex-wrap gap-space-md pt-space-sm">
+<a class="bg-tertiary text-on-tertiary px-space-lg py-space-sm font-label-caps text-label-caps hover:bg-primary-fixed-dim transition-all text-center" href="#clases">
+          Apartar clase
+        </a>
+<a class="border border-outline text-primary px-space-lg py-space-sm font-label-caps text-label-caps hover:border-tertiary hover:text-tertiary transition-all text-center" href="#membresias">
+          Ver precios
+        </a>
+</div>
+</div>
+<div class="relative w-full h-[500px] border border-outline-variant overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A striking vertical portrait of a dedicated athlete lifting heavy weights inside an industrial neighborhood gym in Claveria Mexico City. The environment features dark concrete walls, exposed metal beams, and harsh neon accent lighting in electric lime green and deep shadows. The atmosphere is gritty, authentic, and high-energy, captured with sharp focus and cinematic contrast." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCHggHWHOsaF2bmkTKwvXcP60z2agmerlX50towZltcPgFQxmfZEpDAQvoOIL0ji0WgVAxtiTkzmAWsBEBdXrc3jcgp2CezYShpsJnKKlr0kQxi3vk1g4G6sdhTrhB6XhsX3HDDOBr8jdIv-z_zQhwBSvIYjniP-XA8lnUzgRsZiaDUH1j4xCb3Q9wJGtjVT0CT60j-VENgKNVKS6eCqUSn3VShuDifw9O9y4ivV3paGuVb5wHB-_VBiyWVrWB87lFuqgf6hOJ7zc55')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
+</div>
+</section>
+<!-- Classes as Full-Width Stacked Bands -->
+<section class="border-t border-outline-variant" id="clases">
+<!-- Band 1: Fuerza -->
+<div class="w-full border-b border-outline-variant grid grid-cols-1 md:grid-cols-2 bg-surface-container-lowest">
+<div class="relative min-h-[350px] md:min-h-[450px]">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Close-up shot of heavy steel barbell loaded with iron plates on a rugged rubber floor inside an authentic neighborhood gym in Claveria. The lighting is moody and dramatic with sharp highlights reflecting off the textured metal surfaces. Deep shadows and high contrast create an industrial, brutalist aesthetic suited for serious strength training." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDPWM3l0YZw6xayiOZNUziu-bNOMiVDdEsXGZbZPXT-c9IeTjs7lnIntDgoBwaBWqz53nDkKMU9yaXHwAcVxTJB0jwC2eYH45PK5cTfasEHjHC3bhdnbIRXGc-_I9rf0D6sMJvFSDMwEwXq5BkkN2KSme6W_WdA05kb8bveogJE4lTHoQNxHkCuEXiXVnn_56qk1DjIrnQ0-yGAckF49tlEFWJRRionZPVEECY_WjtfNm4uQiV-r2wjH5VafXwiQbvXEv9cPINo8CuK')"></div>
+</div>
+<div class="flex flex-col justify-center p-space-xl gap-space-md">
+<span class="text-tertiary font-label-caps text-label-caps">LUNES A SÁBADO • 06:00 - 22:00 HRS</span>
+<h3 class="text-headline-md font-headline-md text-primary">FUERZA &amp; POWERLIFTING</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">
+          Construye masa muscular real con barras olímpicas, racks profesionales y pesas libres. Espacio diseñado para quienes buscan romper marcas personales sin distracciones.
+        </p>
+<div class="flex items-center gap-4 pt-space-xs">
+<div class="w-10 h-10 bg-surface-container-high border border-outline flex items-center justify-center text-tertiary font-bold">
+            RD
+          </div>
+<div>
+<div class="font-label-caps text-label-caps text-primary">Coach: Roberto "Rudo" Domínguez</div>
+<div class="text-sm text-on-surface-variant">Especialista en biomecánica y powerlifting</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Band 2: Funcional -->
+<div class="w-full border-b border-outline-variant grid grid-cols-1 md:grid-cols-2 bg-surface">
+<div class="flex flex-col justify-center p-space-xl gap-space-md order-2 md:order-1">
+<span class="text-tertiary font-label-caps text-label-caps">LUNES, MIÉRCOLES Y VIERNES • 07:00 Y 19:00 HRS</span>
+<h3 class="text-headline-md font-headline-md text-primary">ENTRENAMIENTO FUNCIONAL</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">
+          Mejora tu condición física general, quema grasa y gana agilidad con circuitos de alta intensidad que combinan kettlebells, cuerdas de batalla y peso corporal.
+        </p>
+<div class="flex items-center gap-4 pt-space-xs">
+<div class="w-10 h-10 bg-surface-container-high border border-outline flex items-center justify-center text-tertiary font-bold">
+            MS
+          </div>
+<div>
+<div class="font-label-caps text-label-caps text-primary">Coach: Mariana Sánchez</div>
+<div class="text-sm text-on-surface-variant">Acondicionamiento físico y alta intensidad</div>
+</div>
+</div>
+</div>
+<div class="relative min-h-[350px] md:min-h-[450px] order-1 md:order-2">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Dynamic action shot of athletes performing high-intensity functional training with battle ropes inside a gritty industrial gym in Claveria. The background shows raw concrete walls and exposed industrial ductwork lit by stark overhead lights. The atmosphere is charged with sweat, energy, and relentless physical effort." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCNeROJe_Gjeq2YKxdFd0NmwA3qnMzhdAw_PSkw-0xkSOSKXq1SIorI8oVktsWQmRzkPu1TL9A99gKCsLKyc-iGagd0UYcC9LHAZxl8i4q668So_F7JU0HVNn-aSrDdE1bCHV0pj_UQmsKof1YyEFcNF0Qxoi0o9d0LnpM_1Nl-P8LiquCuUXlWGTSFWz97LsfwFyZifk1aL9NWHi1xUZ7uqdqitwZVCWwyqr-ztrIpTy88o5z0HhNGA9d5vIbMxlQPu8QGMeHqC7tO')"></div>
+</div>
+</div>
+<!-- Band 3: Spinning -->
+<div class="w-full border-b border-outline-variant grid grid-cols-1 md:grid-cols-2 bg-surface-container-lowest">
+<div class="relative min-h-[350px] md:min-h-[450px]">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A row of stationary indoor cycling bikes lined up inside a dimly lit studio with neon lime green accent lighting casting dramatic shadows. The floor is dark polished concrete and the atmosphere feels intense and electric, capturing a high-energy indoor cycling class in a neighborhood fitness center." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAkJW0R1LkBOVbPOQmXhQKZYvVQY3H6RMARqn_-M3kk_WbCsvnA8UDF961ZbIs-3SiJ-Hbccn8wdrDYGP0eGH-fhrUX-8D_iBYbyMwyMluIAd2WoRKnlaFaY2IzBIFHWB7j3E097TD-MtuKm9pzA_TyKfuNoSKwcXWelvXGhhwfL0qklvfaWaBvgLa_RaaDxhvACNVrqW8j5oONRozKI-0hMk6cqhJwzZilAQYRtq_Fw6oNpHMkYLw37W3wqBgwWB8HA54kC06-Ih2Q')"></div>
+</div>
+<div class="flex flex-col justify-center p-space-xl gap-space-md">
+<span class="text-tertiary font-label-caps text-label-caps">MARTES Y JUEVES • 08:00 Y 20:00 HRS</span>
+<h3 class="text-headline-md font-headline-md text-primary">SPINNING / INDOOR CYCLING</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">
+          Pedalea al ritmo de la música en sesiones diseñadas para llevar tu resistencia cardiovascular al límite. Quema calorías en un ambiente totalmente inmersivo.
+        </p>
+<div class="flex items-center gap-4 pt-space-xs">
+<div class="w-10 h-10 bg-surface-container-high border border-outline flex items-center justify-center text-tertiary font-bold">
+            AR
+          </div>
+<div>
+<div class="font-label-caps text-label-caps text-primary">Coach: Alejandro Ramírez</div>
+<div class="text-sm text-on-surface-variant">Master trainer de ciclismo de interior</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Band 4: Movilidad -->
+<div class="w-full border-b border-outline-variant grid grid-cols-1 md:grid-cols-2 bg-surface">
+<div class="flex flex-col justify-center p-space-xl gap-space-md order-2 md:order-1">
+<span class="text-tertiary font-label-caps text-label-caps">SÁBADOS • 10:00 HRS</span>
+<h3 class="text-headline-md font-headline-md text-primary">MOVILIDAD &amp; ESTIRAMIENTO</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">
+          Recupera rango de movimiento, libera tensión acumulada y previene lesiones. Esenciales para complementar tu rutina pesada y mantener el cuerpo a punto.
+        </p>
+<div class="flex items-center gap-4 pt-space-xs">
+<div class="w-10 h-10 bg-surface-container-high border border-outline flex items-center justify-center text-tertiary font-bold">
+            VG
+          </div>
+<div>
+<div class="font-label-caps text-label-caps text-primary">Coach: Valeria Gómez</div>
+<div class="text-sm text-on-surface-variant">Especialista en movilidad y recuperación muscular</div>
+</div>
+</div>
+</div>
+<div class="relative min-h-[350px] md:min-h-[450px] order-1 md:order-2">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="An athlete stretching gracefully on a yoga mat inside a minimalist industrial fitness studio with dark walls and subtle neon lighting. The atmosphere is calm, focused, and meditative, contrasting sharply with the heavy lifting zones while maintaining the brutalist high-contrast aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC8pirPlAYMX1coqlz42HecaYlnBWnluWMKpvoVBIbqHyNqL43enoRKtKm-4KIDVerPOFjHASRsVZtPMVmkm2rO1Fr0VxP-tt_98_uzx6DoEO13h-woHNxlz4O5Q0dsbj0A0Vxo9rcAO6YdR_X9OhfPtuZi1ArYsLtqFDyKr8H_D26i0ovLx3H9WrKlKjc00kGIxN6O-ZI1yGcmuhnrBuA3gbd2xIa8z2fCI664o6EIlzQYXkFSgbeAGgOWbNm1v1RTNy8EUYV1p6aW')"></div>
+</div>
+</div>
+</section>
+<!-- Memberships Section -->
+<section class="max-w-[1200px] mx-auto px-space-lg py-space-xl" id="membresias">
+<div class="text-center mb-space-xl">
+<span class="text-tertiary font-label-caps text-label-caps">PRECIOS CLAROS Y DIRECTOS</span>
+<h2 class="text-display-lg font-display-lg text-primary mt-2">MEMBRESÍAS</h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-xl mx-auto mt-2">
+        Sin inscripciones fantasma ni plazos forzosos impossibles de cancelar. Paga lo justo y entrénate duro.
+      </p>
+</div>
+<div class="flex flex-col gap-space-md">
+<!-- Row 1 -->
+<div class="bg-surface-container-high border border-outline-variant p-space-lg md:p-space-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-space-md hover:border-tertiary transition-all">
+<div>
+<span class="text-tertiary font-label-caps text-label-caps">ACCESO TOTAL POR 24 HORAS</span>
+<h3 class="text-headline-md font-headline-md text-primary mt-1">PASE DIARIO</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Ideal si vienes de visita o quieres probar nuestras instalaciones.</p>
+</div>
+<div class="flex items-center gap-space-lg w-full md:w-auto justify-between md:justify-end">
+<div class="text-right">
+<span class="text-display-lg font-display-lg text-tertiary">$80</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant"> MXN</span>
+</div>
+<a class="bg-tertiary text-on-tertiary px-space-lg py-space-sm font-label-caps text-label-caps hover:opacity-90" href="https://wa.me/" target="_blank">
+            Comprar
+          </a>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="bg-surface-container-high border-2 border-tertiary p-space-lg md:p-space-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-space-md relative">
+<div class="absolute -top-3 right-space-lg bg-tertiary text-on-tertiary px-space-xs py-0.5 font-label-caps text-xs">
+          MÁS POPULAR
+        </div>
+<div>
+<span class="text-tertiary font-label-caps text-label-caps">30 DÍAS DE ACCESO ILIMITADO</span>
+<h3 class="text-headline-md font-headline-md text-primary mt-1">MEMBRESÍA MENSUAL</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Acceso libre a pesas, clases grupales y regaderas sin restricciones.</p>
+</div>
+<div class="flex items-center gap-space-lg w-full md:w-auto justify-between md:justify-end">
+<div class="text-right">
+<span class="text-display-lg font-display-lg text-tertiary">$690</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant"> MXN</span>
+</div>
+<a class="bg-tertiary text-on-tertiary px-space-lg py-space-sm font-label-caps text-label-caps hover:opacity-90" href="https://wa.me/" target="_blank">
+            Elegir
+          </a>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="bg-surface-container-high border border-outline-variant p-space-lg md:p-space-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-space-md hover:border-tertiary transition-all">
+<div>
+<span class="text-tertiary font-label-caps text-label-caps">90 DÍAS • AHORRO ESPECIAL</span>
+<h3 class="text-headline-md font-headline-md text-primary mt-1">PAQUETE TRIMESTRAL</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Para los que van en serio con su transformación física.</p>
+</div>
+<div class="flex items-center gap-space-lg w-full md:w-auto justify-between md:justify-end">
+<div class="text-right">
+<span class="text-display-lg font-display-lg text-tertiary">$1,850</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant"> MXN</span>
+</div>
+<a class="bg-tertiary text-on-tertiary px-space-lg py-space-sm font-label-caps text-label-caps hover:opacity-90" href="https://wa.me/" target="_blank">
+            Elegir
+          </a>
+</div>
+</div>
+</div>
+</section>
+<!-- About Section ("Tú directo, de barrio") -->
+<section class="border-t border-b border-outline-variant bg-surface-container-lowest py-space-xl" id="nosotros">
+<div class="max-w-[1200px] mx-auto px-space-lg grid grid-cols-1 md:grid-cols-2 gap-space-xl items-center">
+<div class="flex flex-col gap-space-md">
+<span class="text-tertiary font-label-caps text-label-caps">IDENTIDAD LOCAL</span>
+<h2 class="text-display-lg font-display-lg text-primary">TÚ DIRECTO, DE BARRIO</h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant">
+          Nacimos en Clavería para la gente de Azcapotzalco que prefiere entrenar duro antes que hacer sociales. Aquí nos conocemos todos por nombre, las pesas suenan fuerte y el ambiente es auténtico.
+        </p>
+<p class="text-body-md font-body-md text-on-surface-variant">
+          Contamos con equipo de primera, mantenimiento constante y entrenadores experimentados que realmente te cuidan la técnica. Cero pretensiones, puro resultado.
+        </p>
+</div>
+<div class="relative h-[400px] border border-outline-variant overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Wide shot of the interior of Pulso Deportivo gym in Claveria Mexico City, showing strong athletes training amidst heavy iron dumbbells, barbells, and rugged equipment. The lighting is moody with neon highlights, reflecting the hardcore neighborhood gym spirit." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCs-s3Wukky0AsmsHmopYQaWD8AfsQ3Yfv3SJRRnE5yAo9ITuyKRWMT1Rqmrmezr6M6dmICn4ftVvAveIiCO27qGR_pJITi2uGlDYNE-EeJHvqcf3gQ0Ugp9SN4DcjhXVt0azARcVDvOlVk9Abkyt-66EK1WJ6JUKnvjcCFO0Bzlztpi-fHpstLmf5SM_KPuS3CRfi7M8ZZHjpYj43a1EAkJFaSggeXI2xQfmi-ovAiuMl6aX0KSPeoi11Fw4wT6B8nludZ6QIjc5Ik')"></div>
+</div>
+</div>
+</section>
+<!-- Testimonials Section ("Habla la banda") -->
+<section class="max-w-[1200px] mx-auto px-space-lg py-space-xl" id="testimonios">
+<div class="text-center mb-space-xl">
+<span class="text-tertiary font-label-caps text-label-caps">TESTIMONIOS</span>
+<h2 class="text-display-lg font-display-lg text-primary mt-2">HABLA LA BANDA</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<!-- Card 1 -->
+<div class="bg-surface-container-high border border-outline-variant p-space-lg flex flex-col justify-between gap-space-md">
+<p class="text-body-md font-body-md text-on-background italic">
+          "El mejor gimnasio de Clavería sin duda. El ambiente está con madre, las pesas están bien cuidadas y nadie te molesta mientras entrenas."
+        </p>
+<div class="flex items-center gap-3 pt-space-sm border-t border-outline-variant">
+<div class="w-8 h-8 bg-tertiary text-on-tertiary font-bold flex items-center justify-center text-sm">
+            ED
+          </div>
+<div>
+<div class="font-label-caps text-label-caps text-primary">Esteban Durán</div>
+<div class="text-xs text-on-surface-variant">Vecino de Clavería (2 años entrenando)</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-high border border-outline-variant p-space-lg flex flex-col justify-between gap-space-md">
+<p class="text-body-md font-body-md text-on-background italic">
+          "Las clases de funcional con Mariana te destrozan pero sales con una energía increíble. Los precios son justos y la ubicación está excelente."
+        </p>
+<div class="flex items-center gap-3 pt-space-sm border-t border-outline-variant">
+<div class="w-8 h-8 bg-tertiary text-on-tertiary font-bold flex items-center justify-center text-sm">
+            KL
+          </div>
+<div>
+<div class="font-label-caps text-label-caps text-primary">Karla Limón</div>
+<div class="text-xs text-on-surface-variant">Clienta mensual</div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-high border border-outline-variant p-space-lg flex flex-col justify-between gap-space-md">
+<p class="text-body-md font-body-md text-on-background italic">
+          "Aquí hay puro fierro de verdad y gente comprometida. Si quieres resultados reales y cero rodeos, este es el lugar en Azcapotzalco."
+        </p>
+<div class="flex items-center gap-3 pt-space-sm border-t border-outline-variant">
+<div class="w-8 h-8 bg-tertiary text-on-tertiary font-bold flex items-center justify-center text-sm">
+            HM
+          </div>
+<div>
+<div class="font-label-caps text-label-caps text-primary">Héctor Morales</div>
+<div class="text-xs text-on-surface-variant">Powerlifter local</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Accordion -->
+<section class="border-t border-outline-variant bg-surface-container-lowest py-space-xl" id="faq">
+<div class="max-w-[800px] mx-auto px-space-lg">
+<div class="text-center mb-space-xl">
+<span class="text-tertiary font-label-caps text-label-caps">RESOLVEMOS TUS DUDAS</span>
+<h2 class="text-display-lg font-display-lg text-primary mt-2">PREGUNTAS FRECUENTES</h2>
+</div>
+<div class="flex flex-col gap-space-md">
+<!-- Item 1 -->
+<details class="bg-surface-container-high border border-outline-variant p-space-md group">
+<summary class="font-label-caps text-label-caps text-primary cursor-pointer flex justify-between items-center list-none">
+<span>¿Necesito inscripción o pago matrícula anual?</span>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<p class="text-body-md font-body-md text-on-surface-variant mt-3 pt-3 border-t border-outline-variant">
+            Nones. Aquí no cobramos inscripción ni anualidades ocultas. Pagas tu mensualidad o tu pase diario y tienes acceso completo.
+          </p>
+</details>
+<!-- Item 2 -->
+<details class="bg-surface-container-high border border-outline-variant p-space-md group">
+<summary class="font-label-caps text-label-caps text-primary cursor-pointer flex justify-between items-center list-none">
+<span>¿Cuáles son los horarios de apertura?</span>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<p class="text-body-md font-body-md text-on-surface-variant mt-3 pt-3 border-t border-outline-variant">
+            Abrimos de lunes a viernes de 06:00 a 22:00 hrs y sábados de 07:00 a 16:00 hrs. Domingos descansamos para recuperar energía.
+          </p>
+</details>
+<!-- Item 3 -->
+<details class="bg-surface-container-high border border-outline-variant p-space-md group">
+<summary class="font-label-caps text-label-caps text-primary cursor-pointer flex justify-between items-center list-none">
+<span>¿Incluye el uso de regaderas y casilleros?</span>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<p class="text-body-md font-body-md text-on-surface-variant mt-3 pt-3 border-t border-outline-variant">
+            Sí, todas las membresías y pases diarios incluyen acceso libre a regaderas con agua caliente y uso de casilleros (trae tu propio candado).
+          </p>
+</details>
+<!-- Item 4 -->
+<details class="bg-surface-container-high border border-outline-variant p-space-md group">
+<summary class="font-label-caps text-label-caps text-primary cursor-pointer flex justify-between items-center list-none">
+<span>¿Tienen estacionamiento para autos o bicis?</span>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<p class="text-body-md font-body-md text-on-surface-variant mt-3 pt-3 border-t border-outline-variant">
+            Contamos con biciestacionamiento gratuito en la entrada y zona de parquímetros seguros sobre la avenida principal en Clavería.
+          </p>
+</details>
+</div>
+</div>
+</section>
+<!-- Contact & Location -->
+<section class="max-w-[1200px] mx-auto px-space-lg py-space-xl" id="contacto">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-xl items-center">
+<div class="flex flex-col gap-space-md">
+<span class="text-tertiary font-label-caps text-label-caps">UBICACIÓN Y CONTACTO</span>
+<h2 class="text-display-lg font-display-lg text-primary">VEN A CONOCERNOS</h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant">
+          Estamos en el corazón de Clavería. Pásate a conocernos o mándanos un WhatsApp para resolver cualquier duda sobre horarios y clases.
+        </p>
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary">location_on</span>
+<span class="text-body-md font-body-md text-on-background">Av. Clavería #42, Col. Clavería, Azcapotzalco, CDMX</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary">call</span>
+<a class="text-body-md font-body-md text-on-background hover:text-tertiary transition-colors" href="tel:5512345678">55 1234 5678</a>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">chat</span>
+<a class="text-body-md font-body-md text-on-background hover:text-tertiary transition-colors" href="https://wa.me/" target="_blank">WhatsApp directo: 55 8765 4321</a>
+</div>
+</div>
+<div class="pt-space-sm">
+<a class="bg-tertiary text-on-tertiary px-space-lg py-space-sm font-label-caps text-label-caps inline-flex items-center gap-2 hover:opacity-90" href="https://wa.me/" target="_blank">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
+            Mandar WhatsApp ahora
+          </a>
+</div>
+</div>
+<div class="relative h-[400px] border border-outline-variant overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Detailed map view of Claveria neighborhood in Azcapotzalco Mexico City showing streets, avenue layout, and precise location of Pulso Deportivo gym highlighted with a glowing electric lime marker against a dark high-contrast cartography theme." data-location="Clavería, CDMX" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBrpFSuDcXoOUFnn7sUSqZcyoBwXu0qgP2Pa9vaCTAN2KaOym9NcHGQCBJ26yjqItfxEeG_y2r1Y2qNWLumWQ3gPbuAAsKjA9u3fNIiYzr8LhxWuj1awR23ODb-_fxGnmOiMB9HQbfydDMeceHFrmMSNTprhKWlEp3PfC70KYN5YYPN2qS1VhNY4rXjA7DggilRS6r_aIVn83KKQANLHOxntHyRgQBwlRynWnioHxJjmr5AW8Vl6orQye8RM5VF68mhAuAVF7hz7LGK')"></div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest text-primary border-t border-outline-variant">
+<div class="flex flex-col justify-between items-center w-full px-space-lg py-space-lg max-w-[1200px] mx-auto gap-space-md">
+<div class="text-headline-md font-headline-md font-extrabold text-tertiary tracking-wide">
+        PULSO DEPORTIVO
+      </div>
+<nav class="flex flex-wrap justify-center gap-space-md font-label-caps text-label-caps">
+<a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#clases">Timetable</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#membresias">Membership</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#nosotros">About</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#testimonios">Testimonials</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#faq">FAQ</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors" href="#contacto">Contact</a>
+</nav>
+<div class="text-sm text-on-surface-variant text-center">
+        © 2023 Pulso Deportivo. Todos los derechos reservados. Clavería, CDMX.
+      </div>
+</div>
+</footer>
+</body></html>

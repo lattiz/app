@@ -1,0 +1,20 @@
+{
+  "id": "gimnasio-pulso-franjas-01",
+  "giro": "gimnasio",
+  "source": "stitch",
+  "status": "collected",
+  "tags": [
+    "renovacion",
+    "pulso",
+    "franjas"
+  ],
+  "spin": "oscuro-lima-franjas",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-21T05:10:17.446Z",
+  "stitch": {
+    "project_id": "18362120856355259256",
+    "screen_ids": [
+      "7781ee6a55c1469094cc48c0372bd1c6"
+    ]
+  }
+}

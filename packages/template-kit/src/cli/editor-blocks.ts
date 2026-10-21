@@ -205,6 +205,110 @@ const SECTIONS: SectionSpec[] = [
     },
   },
   {
+    id: 'lzb-services-schedule-cards',
+    label: 'Horarios y planes',
+    category: 'Secciones',
+    icon: 'grid',
+    slot: 'services',
+    variant: 'schedule-cards',
+    data: {
+      kicker: 'Horarios y planes',
+      title: 'Clases y tarifas claras',
+      intro:
+        'Elige horario, reserva por WhatsApp y entra el mismo día. Cupo limitado por sesión.',
+      plans: {
+        kicker: 'Planes',
+        title: 'Precios sin letra chiquita',
+        intro: 'Pagas tu pase o tu mensualidad y empiezas cuando quieras.',
+      },
+      promos: [
+        {
+          tag: 'Zona 01',
+          title: 'Fuerza',
+          text: 'Pesas libres, racks y técnica cuidada en grupos pequeños.',
+          cta: 'Reservar fuerza',
+          href: '{{whatsappUrl:Hola, quiero reservar fuerza}}',
+          slots: [
+            { label: 'Lunes a viernes', value: '07:00 – 21:00' },
+            { label: 'Sábados', value: '08:00 – 14:00' },
+          ],
+        },
+        {
+          tag: 'Zona 02',
+          title: 'Funcional',
+          text: 'Alta intensidad y acondicionamiento con coach en el piso.',
+          cta: 'Reservar funcional',
+          href: '{{whatsappUrl:Hola, quiero reservar funcional}}',
+          slots: [
+            { label: 'Lun / mié / vie', value: '07:00 / 19:00' },
+            { label: 'Mar / jue', value: '08:00 / 20:00' },
+          ],
+        },
+        {
+          tag: 'Zona 03',
+          title: 'Spinning',
+          text: 'Cardio con música y resistencia controlada.',
+          cta: 'Reservar spinning',
+          href: '{{whatsappUrl:Hola, quiero reservar spinning}}',
+          slots: [
+            { label: 'Lunes a viernes', value: '07:00 / 18:00 / 20:00' },
+            { label: 'Sábados', value: '09:00' },
+          ],
+        },
+        {
+          tag: 'Zona 04',
+          title: 'Movilidad',
+          text: 'Estiramientos y recuperación para cerrar la semana.',
+          cta: 'Reservar movilidad',
+          href: '{{whatsappUrl:Hola, quiero reservar movilidad}}',
+          slots: [
+            { label: 'Martes y jueves', value: '09:00 / 20:30' },
+            { label: 'Sábados', value: '10:30' },
+          ],
+        },
+      ],
+      prices: [
+        {
+          name: 'Día',
+          price: '$80',
+          description: 'Acceso del día',
+          features: [
+            'Acceso a todas las zonas',
+            'Lockers disponibles',
+            'Regaderas incluidas',
+          ],
+          cta: 'Comprar pase',
+          href: '{{whatsappUrl:Hola, quiero el pase del día}}',
+        },
+        {
+          name: 'Mensual',
+          price: '$690',
+          description: 'Mes corrido',
+          badge: 'Más popular',
+          features: [
+            'Acceso ilimitado en horario abierto',
+            'Clases grupales sin costo extra',
+            'Rutina de bienvenida',
+          ],
+          cta: 'Elegir mensual',
+          href: '{{whatsappUrl:Hola, quiero la mensualidad}}',
+        },
+        {
+          name: 'Trimestre',
+          price: '$1,850',
+          description: 'Ahorro trimestral',
+          features: [
+            'Todos los beneficios mensuales',
+            'Congelamiento de membresía 1 vez',
+            '1 invitado al mes',
+          ],
+          cta: 'Elegir trimestre',
+          href: '{{whatsappUrl:Hola, quiero el plan trimestral}}',
+        },
+      ],
+    },
+  },
+  {
     id: 'lzb-testimonials-paper-trio',
     label: 'Reseñas en tarjetas de papel',
     category: 'Secciones',

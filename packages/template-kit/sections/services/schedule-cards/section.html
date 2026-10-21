@@ -1,0 +1,52 @@
+<section id="servicios" data-lz-slot="services" data-lz-variant="schedule-cards" class="lz-section lz-services-schedule-cards">
+  <div class="lz-container">
+    <div class="lz-services-schedule-cards__schedule">
+      <div class="lz-services-schedule-cards__head">
+        <div class="lz-services-schedule-cards__lead">
+          <p class="lz-services-schedule-cards__kicker" data-lz-key="kicker"></p>
+          <h2 class="lz-title lz-services-schedule-cards__title" data-lz-key="title"></h2>
+        </div>
+        <p class="lz-services-schedule-cards__intro" data-lz-if="intro" data-lz-key="intro"></p>
+      </div>
+      <div class="lz-services-schedule-cards__grid">
+        <article class="lz-services-schedule-cards__card" data-lz-each="promos">
+          <div class="lz-services-schedule-cards__body">
+            <span class="lz-services-schedule-cards__tag" data-lz-key="tag"></span>
+            <h3 class="lz-services-schedule-cards__name" data-lz-key="title"></h3>
+            <p class="lz-services-schedule-cards__text" data-lz-key="text"></p>
+          </div>
+          <div class="lz-services-schedule-cards__slots" data-lz-if="slots">
+            <div class="lz-services-schedule-cards__slot" data-lz-each="slots">
+              <span class="lz-services-schedule-cards__slot-label" data-lz-key="label"></span>
+              <span class="lz-services-schedule-cards__slot-value" data-lz-key="value"></span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+    <div class="lz-services-schedule-cards__plans" data-lz-if="plans.title">
+      <div class="lz-services-schedule-cards__plans-head">
+        <p class="lz-services-schedule-cards__kicker" data-lz-if="plans.kicker" data-lz-key="plans.kicker"></p>
+        <h2 class="lz-title lz-services-schedule-cards__title" data-lz-key="plans.title"></h2>
+        <p class="lz-services-schedule-cards__intro" data-lz-if="plans.intro" data-lz-key="plans.intro"></p>
+      </div>
+      <div class="lz-services-schedule-cards__plans-grid">
+        <article class="lz-services-schedule-cards__plan" data-lz-each="prices">
+          <p class="lz-services-schedule-cards__badge" data-lz-if="badge" data-lz-key="badge"></p>
+          <div class="lz-services-schedule-cards__plan-body">
+            <p class="lz-services-schedule-cards__plan-label" data-lz-key="description"></p>
+            <h3 class="lz-services-schedule-cards__plan-name" data-lz-key="name"></h3>
+            <p class="lz-services-schedule-cards__price"><span data-lz-key="price"></span> <span>MXN</span></p>
+            <ul class="lz-services-schedule-cards__features" data-lz-if="features">
+              <li data-lz-each="features">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 9.5 17 19 7"/></svg>
+                <span data-lz-key="."></span>
+              </li>
+            </ul>
+          </div>
+          <a target="_blank" rel="noopener noreferrer" class="lz-services-schedule-cards__pick" href="{{whatsappUrl:Hola, quiero este plan}}" data-lz-if="cta" data-lz-attr-href="href" data-lz-key="cta"></a>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>

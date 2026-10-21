@@ -1,0 +1,21 @@
+{
+  "id": "gimnasio-pulso-parrilla-01",
+  "giro": "gimnasio",
+  "source": "stitch",
+  "status": "harvested",
+  "tags": [
+    "renovacion",
+    "pulso",
+    "parrilla",
+    "membresias"
+  ],
+  "spin": "oscuro-lima-parrilla",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-21T05:10:16.500Z",
+  "stitch": {
+    "project_id": "18362120856355259256",
+    "screen_ids": [
+      "0c71ddc1253f4f738fce13aa03d2b315"
+    ]
+  }
+}
