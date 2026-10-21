@@ -344,6 +344,44 @@ const SECTIONS: SectionSpec[] = [
     },
   },
   {
+    id: 'lzb-cta-ritual-panels',
+    label: 'Ritual en cuatro pasos',
+    category: 'Secciones',
+    icon: 'grid',
+    slot: 'cta',
+    variant: 'ritual-panels',
+    data: {
+      kicker: 'Paso a paso',
+      title: 'El ritual de la casa',
+      summary: 'Cuatro pasos sin prisa, de la conversación al último toque.',
+      primaryCta: 'Reservar cita',
+      secondaryCta: 'Ver servicios',
+      secondaryHref: '#servicios',
+      steps: [
+        {
+          title: 'Conversación',
+          text: 'Hablamos de cómo llevas el cabello antes de empezar.',
+          duration: '10 min',
+        },
+        {
+          title: 'Lavado y vapor',
+          text: 'Limpieza suave y vapor para preparar la piel.',
+          duration: '10 min',
+        },
+        {
+          title: 'Corte y navaja',
+          text: 'Tijera, máquina y navaja recta para perfilar.',
+          duration: '30 min',
+        },
+        {
+          title: 'Toalla caliente',
+          text: 'Cierre con toalla caliente y bálsamo.',
+          duration: '10 min',
+        },
+      ],
+    },
+  },
+  {
     id: 'lzb-cta-urgent-line',
     label: 'Urgencias: llama ahora',
     category: 'Secciones',
