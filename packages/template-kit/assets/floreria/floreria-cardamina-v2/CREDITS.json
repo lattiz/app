@@ -1,0 +1,115 @@
+{
+  "$lattiz": "GENERATED from specs/floreria-cardamina-v2.spec.json (spec 60bd7505a0df, file 8e56fda1c860). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "12521320eb6a6589408dd15abd69abbeb3602584c8188b5d953656b4e2187b5a",
+      "query": "rose bouquet vase table",
+      "providerId": 1853622,
+      "pageUrl": "https://pixabay.com/photos/bouquet-flower-arrangement-vase-1853622/",
+      "photographer": "Pexels",
+      "photographerUrl": "https://pixabay.com/users/2286921/",
+      "tags": "bouquet, flower arrangement, vase, floral arrangement, flower vase, centerpiece, flower background, flower wallpaper, bloom, blossom, nature, floral, decoration, flowers, beautiful flowers, glass, indoors, roses"
+    },
+    {
+      "file": "about.jpg",
+      "source": "pixabay",
+      "sha256": "c0cc9ac725937a1dabd0735fb7276e388e5ea03a0a3fe133bc4668e66fbf2bb5",
+      "query": "hands holding bouquet",
+      "providerId": 8025984,
+      "pageUrl": "https://pixabay.com/photos/hands-flowers-woman-closeup-model-8025984/",
+      "photographer": "Moroznaya_Photo",
+      "photographerUrl": "https://pixabay.com/users/7166485/",
+      "tags": "hands, beautiful flowers, flowers, woman, closeup, model, flower wallpaper, chamomile, romantic, postcard, flower background, nature"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "pixabay",
+      "sha256": "3e34e32207d6e5cfcd80c499b11960112eb1f06adcd34d93c4d6d0541047f190",
+      "query": "bouquet dark flowers vase",
+      "providerId": 3369269,
+      "pageUrl": "https://pixabay.com/photos/lilac-blossoms-flower-floral-plant-3369269/",
+      "photographer": "RitaE",
+      "photographerUrl": "https://pixabay.com/users/19628/",
+      "tags": "lilac, blossoms, flower, floral, plant, vase, flower wallpaper, bunch of flowers, flower background, still life, ornament, flower stems, flower vase, multicoloured, nature, spring, ostrich, water, table, flower arrangement, beautiful flowers, decorative"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "pixabay",
+      "sha256": "697e36c4148c3d18c880fae0cefaf51a8def84679669ad573214ce586515c463",
+      "query": "roses bouquet",
+      "providerId": 1566792,
+      "pageUrl": "https://pixabay.com/photos/valentines-day-background-roses-1566792/",
+      "photographer": "castleguard",
+      "photographerUrl": "https://pixabay.com/users/2970404/",
+      "tags": "valentines day background, cool backgrounds, hd wallpaper, roses, floral background, desktop backgrounds, beautiful wallpaper, flower wallpaper, mac wallpaper, flowers, basket, laptop wallpaper, pink roses, pink flowers, bloom, blossom, windows wallpaper, beauty, wallpaper 4k, flower background, wire basket, 4k wallpaper 1920x1080, 4k wallpaper, wallpaper hd, garden roses, nature, romantic, beautiful flowers, full hd wallpaper, free wallpaper, rose wallpaper, free background, background"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "pixabay",
+      "sha256": "d357357598efebe4bc124fef75be989c8e58df00d96cb43ec5182a431bd97f73",
+      "query": "dried flowers bouquet neutral",
+      "providerId": 2588461,
+      "pageUrl": "https://pixabay.com/photos/flower-plant-glass-water-vase-2588461/",
+      "photographer": "StockSnap",
+      "photographerUrl": "https://pixabay.com/users/894430/",
+      "tags": "flower, plant, flower wallpaper, glass, water, vase, nature, beautiful flowers, wooden, flower background, green glass, green glasses"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "pixabay",
+      "sha256": "9d5146e2cd7b31d5432148fe978d37a31dba8be0eb5fce0fc13514471c99a190",
+      "query": "white anemone bouquet",
+      "providerId": 731830,
+      "pageUrl": "https://pixabay.com/photos/flower-botany-nature-growth-petals-731830/",
+      "photographer": "SnapwireSnaps",
+      "photographerUrl": "https://pixabay.com/users/692569/",
+      "tags": "flower, flower background, botany, nature, growth, petals, bouquet, flora, blossom, bloom, beautiful flowers, flower wallpaper, decorative"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "pixabay",
+      "sha256": "7cd18ee858b955f4acc1dfc76b36f2d6c1f5ff0b69b51607fa10fce1d5b8c092",
+      "query": "bouquet wrapping paper flowers",
+      "providerId": 9979709,
+      "pageUrl": "https://pixabay.com/photos/bouquet-flower-home-house-interior-9979709/",
+      "photographer": "u_pvkgltwe2c",
+      "photographerUrl": "https://pixabay.com/users/52407619/",
+      "tags": "bouquet, flower, home, nature, flower wallpaper, flower background, house, beautiful flowers, interior"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "pixabay",
+      "sha256": "cb5a3eb01ce09ac45cda3ffccb6f5460f0241a1502836b8259652326a9151946",
+      "query": "indoor plants pots shelf",
+      "providerId": 5095328,
+      "pageUrl": "https://pixabay.com/photos/greenhouse-flowers-blossom-bloom-5095328/",
+      "photographer": "ninikvaratskhelia_",
+      "photographerUrl": "https://pixabay.com/users/15913392/",
+      "tags": "greenhouse, flower wallpaper, beautiful flowers, flowers, flower background, blossom, bloom, nature, plant, daisy, garden, phone wallpaper, aesthetic wallpaper, iphone wallpaper"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "pixabay",
+      "sha256": "2e5487b7010ba0de91d0bb3b5655ce5479c2a74082de5d6698c3b87e0d0a3b4d",
+      "query": "dried flowers pampas vase",
+      "providerId": 4494596,
+      "pageUrl": "https://pixabay.com/photos/vintage-flatlay-write-antique-4494596/",
+      "photographer": "MsErinEast",
+      "photographerUrl": "https://pixabay.com/users/13683390/",
+      "tags": "vintage, flatlay, write, antique, notebook, writer, old, table, freelancer, classic, mood, career, publish, author, creative"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "pixabay",
+      "sha256": "5b6befcd847ab3fbfd8488526e1896f6e75590b9f415cd0d7c99c593d345fdc6",
+      "query": "peonies bouquet pink",
+      "providerId": 1482257,
+      "pageUrl": "https://pixabay.com/photos/bunch-of-flowers-bouquet-of-roses-1482257/",
+      "photographer": "cocoparisienne",
+      "photographerUrl": "https://pixabay.com/users/127419/",
+      "tags": "bunch of flowers, flower wallpaper, bouquet of roses, roses, ostrich, wedding, flower, blossoms, pink, valentine's day, top view, decoration, romance, love, beautiful flowers, wedding bouquet, flower background, romantic, emotion, bound, nature, symbol, feelings"
+    }
+  ]
+}

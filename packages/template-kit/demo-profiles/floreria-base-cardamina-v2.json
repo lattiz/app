@@ -1,0 +1,63 @@
+{
+  "$lattiz": "GENERATED from specs/floreria-cardamina-v2.spec.json (spec 60bd7505a0df, file ce3152821f17). Do not edit: use the spec, or freeze.",
+  "name": "Cardamina Florería Botánica",
+  "category": "store",
+  "phone": "+525500000000",
+  "whatsapp": "+5215500000000",
+  "email": "hola@cardamina.mx",
+  "address": {
+    "street": "Calle Michoacán 87, Col. Condesa, Cuauhtémoc, 06140 CDMX",
+    "city": "CDMX",
+    "country": "MX"
+  },
+  "hours": {
+    "mon": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "tue": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "09:00",
+        "close": "19:00"
+      }
+    ],
+    "sun": [
+      {
+        "open": "09:00",
+        "close": "14:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "$lattiz": "GENERATED from specs/floreria-cardamina-v2.spec.json (spec 60bd7505a0df, file af99f5b8e662). Do not edit: use the spec, or freeze.",
+  "name": "floreria-cardamina-v2",
+  "label": "Cardamina Florería Botánica · Pro",
+  "tier": "pro",
+  "fontPair": "bodoni-moda+karla",
+  "colors": {
+    "bg": "#0F1A15",
+    "surface": "#1C2722",
+    "surface-2": "#29342E",
+    "text": "#E7EFE9",
+    "muted": "#959E98",
+    "accent": "#7FC8A0",
+    "on-accent": "#0F1A15",
+    "accent-text": "#7FC8A0",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#0F1A15",
+    "on-overlay": "#E7EFE9",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#0F1A15"
+  },
+  "fonts": {
+    "display": "'Bodoni Moda', serif",
+    "serif": "'Bodoni Moda', serif",
+    "body": "'Karla', sans-serif",
+    "googleFonts": "family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,600;1,6..96,500&family=Karla:wght@400;500;600",
+    "displayTransform": "none",
+    "displayLeading": "1.02",
+    "displayWeight": "500",
+    "accentStyle": "italic",
+    "accentTransform": "none"
+  },
+  "shape": {
+    "radiusCard": "0px",
+    "radiusPill": "0px",
+    "border": "1px",
+    "shadow": "none"
+  },
+  "density": "airy",
+  "photoTreatment": "none",
+  "placeholder": "grain",
+  "accentWords": "color",
+  "container": "1280px",
+  "effects": {
+    "mapFilter": "grayscale(1) invert(.9) contrast(.9) brightness(.8)",
+    "heroImageFilter": "brightness(.45) saturate(.9)"
+  },
+  "style": {
+    "surface": "outlined",
+    "density": "airy",
+    "divider": "hairline",
+    "imageTreatment": "framed"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$lattiz": "GENERATED from specs/floreria-cardamina-v2.spec.json (spec 60bd7505a0df, file f11c0e2ce421). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "82d516ee4a6fa699fcb8f99aff40e6e91f6f155ff2bd1b518683e60cd869822e",
+      "query": "rose bouquet vase table",
+      "providerId": 1853622,
+      "pageUrl": "https://pixabay.com/photos/bouquet-flower-arrangement-vase-1853622/",
+      "photographer": "Pexels",
+      "photographerUrl": "https://pixabay.com/users/2286921/",
+      "tags": "bouquet, flower arrangement, vase, floral arrangement, flower vase, centerpiece, flower background, flower wallpaper, bloom, blossom, nature, floral, decoration, flowers, beautiful flowers, glass, indoors, roses"
+    }
+  ]
+}

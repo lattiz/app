@@ -392,6 +392,16 @@ export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
     proFeatures: [],
   },
   {
+    id: 'floreria-base-cardamina-v2',
+    tier: 'basic',
+    giro: 'floreria',
+    giroLabel: 'Florería',
+    direction: null,
+    swatches: ['#F4F1EA', '#FAF9F6', '#1A1917', '#1A1917'],
+    dark: false,
+    proFeatures: [],
+  },
+  {
     id: 'floreria-base-casa-confeti-v1',
     tier: 'basic',
     giro: 'floreria',
@@ -430,6 +440,16 @@ export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
       'Contacto con mapa',
       'Animaciones',
     ],
+  },
+  {
+    id: 'floreria-cardamina-v2',
+    tier: 'pro',
+    giro: 'floreria',
+    giroLabel: 'Florería',
+    direction: null,
+    swatches: ['#0F1A15', '#1C2722', '#7FC8A0', '#E7EFE9'],
+    dark: true,
+    proFeatures: ['Nosotros Pro', 'Galería', 'Testimonios', 'Animaciones'],
   },
   {
     id: 'floreria-casa-confeti-v1',
