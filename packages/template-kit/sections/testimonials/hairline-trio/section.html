@@ -1,0 +1,20 @@
+<section id="resenas" data-lz-slot="testimonials" data-lz-variant="hairline-trio" class="lz-section lz-testimonials-hairline-trio">
+  <div class="lz-container">
+    <div class="lz-testimonials-hairline-trio__head">
+      <p class="lz-testimonials-hairline-trio__kicker" data-lz-if="kicker" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-testimonials-hairline-trio__title" data-lz-key="title"></h2>
+      <p class="lz-testimonials-hairline-trio__intro" data-lz-if="intro" data-lz-key="intro"></p>
+    </div>
+    <div class="lz-testimonials-hairline-trio__strip">
+      <figure class="lz-testimonials-hairline-trio__quote" data-lz-each="reviews">
+        <span class="lz-testimonials-hairline-trio__mark" aria-hidden="true">&ldquo;</span>
+        <blockquote class="lz-testimonials-hairline-trio__text" data-lz-key="text"></blockquote>
+        <figcaption class="lz-testimonials-hairline-trio__who">
+          <span class="lz-testimonials-hairline-trio__author" data-lz-key="author"></span>
+          <span class="lz-testimonials-hairline-trio__place" data-lz-if="place" data-lz-key="place"></span>
+        </figcaption>
+      </figure>
+    </div>
+    <a data-lz-if="cta" href="{{whatsappUrl:Hola, quiero reservar mi cita}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary lz-testimonials-hairline-trio__cta" data-lz-key="cta"></a>
+  </div>
+</section>
