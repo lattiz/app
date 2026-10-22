@@ -1,0 +1,159 @@
+{
+  "$lattiz": "GENERATED from specs/estetica-alheli-v2.spec.json (spec 204372a46f6f, file ed8b60e9f24f). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "d236251b3869cc81794ab329c680404b7b32d970f8c799de62f59b72c8e887cd",
+      "query": "nail polish bottles pastel row",
+      "providerId": 635261,
+      "pageUrl": "https://pixabay.com/photos/fingernails-valentine-nail-polish-635261/",
+      "photographer": "JillWellington",
+      "photographerUrl": "https://pixabay.com/users/334088/",
+      "tags": "fingernails, windows wallpaper, wallpaper hd, hd wallpaper, valentine, free background, desktop backgrounds, nail polish, laptop wallpaper, valentines day, 4k wallpaper 1920x1080, cool backgrounds, full hd wallpaper, wallpaper 4k, 4k wallpaper, beautiful wallpaper, mac wallpaper, painting, free wallpaper, hearts, background"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "pixabay",
+      "sha256": "f23c2471f1e8172426ce1a8318751fa19a636a80b3700f27267540e9f7855f7d",
+      "query": "beauty salon interior manicure station",
+      "providerId": 4043096,
+      "pageUrl": "https://pixabay.com/photos/beauty-salon-barber-nail-salon-4043096/",
+      "photographer": "Sunriseforever",
+      "photographerUrl": "https://pixabay.com/users/6314823/",
+      "tags": "beauty salon, barber, nail salon, salon, hairdresser, fashion, beauty, interior, 3 d, interior design, interior designer"
+    },
+    {
+      "file": "about.jpg",
+      "source": "pixabay",
+      "sha256": "f43735938f6d4886041f9f770aee23e406d569fd848822b0bec5888a337562c6",
+      "query": "nail polish brush",
+      "providerId": 1319687,
+      "pageUrl": "https://pixabay.com/photos/nails-manicure-lacquer-hands-hand-1319687/",
+      "photographer": "kropekk_pl",
+      "photographerUrl": "https://pixabay.com/users/114936/",
+      "tags": "nails, manicure, lacquer, hands, hand, painting, cosmetics, paint, toiletry bag, nail, nail polish, varnishing, hybrid, hybrids, hybrid lacquer, elegance"
+    },
+    {
+      "file": "product-01.jpg",
+      "source": "pixabay",
+      "sha256": "df758369bab7cda6aad9fbe00cf17debcffacfd8f013ba02e5ff3d81e5e66119",
+      "query": "matte nude manicure minimal",
+      "providerId": 3161974,
+      "pageUrl": "https://pixabay.com/photos/hand-nail-thumb-leather-manicure-3161974/",
+      "photographer": "Alehandra13",
+      "photographerUrl": "https://pixabay.com/users/1817807/",
+      "tags": "hand, nail, thumb, leather, manicure, nails, nail polish, nails hybrid, toiletry bag, painted, varnishing, woman, lacquer, hybrid lacquer, care"
+    },
+    {
+      "file": "product-02.jpg",
+      "source": "pixabay",
+      "sha256": "c80c9d66ed92a6090133160470c0a405cbf12ffe78cad9af9edf3c35d9921db4",
+      "query": "french nails",
+      "providerId": 5653459,
+      "pageUrl": "https://pixabay.com/photos/nail-art-manicure-nails-nail-polish-5653459/",
+      "photographer": "Mounthive",
+      "photographerUrl": "https://pixabay.com/users/6291643/",
+      "tags": "nail art, flower background, manicure, nails, nail polish, cuticles, red manicure, red nail art, floral nail art, flower wallpaper, floral nails, flowers, beautiful flowers, fingernails, color, polish, woman, hand, nail spa, nature, style, glamour, female, natural nails, elegant nails"
+    },
+    {
+      "file": "product-03.jpg",
+      "source": "pixabay",
+      "sha256": "bad23db3140ce1fd19bcfa3739d9cf9da9309485a1e8a2d6832c19a51ba484d5",
+      "query": "glossy nude nails pink manicure",
+      "providerId": 870857,
+      "pageUrl": "https://pixabay.com/photos/manicure-pedicure-cosmetics-care-870857/",
+      "photographer": "Bru-nO",
+      "photographerUrl": "https://pixabay.com/users/1161770/",
+      "tags": "manicure, pedicure, cosmetics, care, nails, fingernails, toe nails, nail varnish, paint, color, beauty"
+    },
+    {
+      "file": "product-04.jpg",
+      "source": "pixabay",
+      "sha256": "1fd7e106d29935040f403cdd7707a8fda257737941dfdd92f77ca2c37c4315cb",
+      "query": "nail art",
+      "providerId": 2112358,
+      "pageUrl": "https://pixabay.com/photos/nail-polish-fingernails-manicure-2112358/",
+      "photographer": "Bru-nO",
+      "photographerUrl": "https://pixabay.com/users/1161770/",
+      "tags": "nail polish, fingernails, manicure, paint, nails, toenails, fashionable, nail design, cosmetics, to dye, rubber stamp, konad, nail art"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "pixabay",
+      "sha256": "286d5d6291f7bb1a67784fce9ba9dd3bf735498efbbd27312f7e43dd2043547d",
+      "query": "manicure table nail polish bottles",
+      "providerId": 3728091,
+      "pageUrl": "https://pixabay.com/photos/manicure-nails-nail-polish-remover-3728091/",
+      "photographer": "ivabalk",
+      "photographerUrl": "https://pixabay.com/users/782511/",
+      "tags": "manicure, nails, nail polish remover, varnish, varnishing, homemade, colored, varnished, finger, paint"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "pixabay",
+      "sha256": "636e568ade6abed0a08400d3eefdaeec5a86ee73622244e0942f073b5bb572e6",
+      "query": "manicure hands pastel",
+      "providerId": 2592137,
+      "pageUrl": "https://pixabay.com/photos/flower-pink-petal-bloom-garden-2592137/",
+      "photographer": "StockSnap",
+      "photographerUrl": "https://pixabay.com/users/894430/",
+      "tags": "flower, pink, petal, flower wallpaper, bloom, garden, flower background, beautiful flowers, plant, nature, autumn, fall, hands, people"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "pixabay",
+      "sha256": "90424ab32bfdd1c9da8c4265eda7ca882368ccb8e1c9c93c888f80b75845fef6",
+      "query": "nail design",
+      "providerId": 2112366,
+      "pageUrl": "https://pixabay.com/photos/nail-polish-nail-gel-fingernails-2112366/",
+      "photographer": "Bru-nO",
+      "photographerUrl": "https://pixabay.com/users/1161770/",
+      "tags": "nail polish, nail gel, fingernails, manicure, paint, nails, toenails, fashionable, nail design, cosmetics, to dye, french, frenchnails, nail art, nail tips, tips"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "pixabay",
+      "sha256": "165e98a50430202857ab0ea2dd7715853ddc47ce6fe9abb58b3ef42411fa9f83",
+      "query": "pedicure spa feet petals bowl",
+      "providerId": 650874,
+      "pageUrl": "https://pixabay.com/photos/foot-bath-herbs-sage-spa-gray-spa-650874/",
+      "photographer": "graceie",
+      "photographerUrl": "https://pixabay.com/users/804741/",
+      "tags": "foot bath, herbs, sage, spa, gray spa"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "pixabay",
+      "sha256": "d982533d5a2a56cf654ed817e7fc846f333963155aa7cb147a96958c5e9b6370",
+      "query": "gel nails glossy neutral",
+      "providerId": 2253783,
+      "pageUrl": "https://pixabay.com/photos/gel-manicure-brush-template-hand-2253783/",
+      "photographer": "Iguanat",
+      "photographerUrl": "https://pixabay.com/users/3798952/",
+      "tags": "gel, manicure, brush, template, hand, pedicure, beauty, procedure, nails, spa, white background, product, hands, painting, cosmetics, hybrid lacquer, hybrids"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "pixabay",
+      "sha256": "29ec3eb7227c1a01be2503afc57a2ef38faca7d153f57914405ac8b7a667ebea",
+      "query": "manicure salon table",
+      "providerId": 988610,
+      "pageUrl": "https://pixabay.com/photos/nail-hand-manicure-female-care-988610/",
+      "photographer": "epicioci",
+      "photographerUrl": "https://pixabay.com/users/1168802/",
+      "tags": "nail, hand, manicure, female, care, salon, skin, woman, finger, nails manicure, white, polish, fingernail, spa, pink, healthy, young, glamour, treatment, caring hands, fashion, human, nail polish, hands up, nailpolish, beauty salon, cosmetics, girl, lifestyle, skincare, wellness, clean, brown fashion, brown healthy, brown wellness, brown human, brown care, brown spa, brown clean"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "pixabay",
+      "sha256": "fc881b4935b6119be1b18786e6f4b03afc9ea559877fd2e91d2b1c33e54c2c16",
+      "query": "hand care cream",
+      "providerId": 6886590,
+      "pageUrl": "https://pixabay.com/photos/self-care-morning-routine-activity-6886590/",
+      "photographer": "IqbalStock",
+      "photographerUrl": "https://pixabay.com/users/12845379/",
+      "tags": "self care, morning, routine, activity, skincare, white cream, lotion, cream, skin"
+    }
+  ]
+}

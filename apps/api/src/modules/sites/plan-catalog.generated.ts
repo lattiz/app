@@ -2,7 +2,7 @@
 
 /** Kit section variants (`slot/variant`) and Motion hooks that only Pro plans include. */
 export const PLAN_CATALOG = {
-  manifestHash: 'a5e195cf60b9d32c',
+  manifestHash: '608a50954ec257cc',
   proOnlyVariants: [
     'about/portrait',
     'about/statement',

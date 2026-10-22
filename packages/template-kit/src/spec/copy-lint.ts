@@ -55,6 +55,8 @@ export const COPY_LIMITS: Record<string, number> = {
   'services.prices[].name': 36,
   'services.prices[].price': 12,
   'services.prices[].description': 96,
+  'services.prices[].duration': 16,
+  'services.prices[].imageAlt': 125,
   'services.promos[].tag': 16,
   'services.promos[].title': 48,
   'services.promos[].text': 120,

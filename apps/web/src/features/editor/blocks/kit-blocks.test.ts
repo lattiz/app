@@ -31,6 +31,7 @@ describe('kit blocks (generated from the kit)', () => {
       'lzb-cta-urgent-line',
       'lzb-services-treatment-rows',
       'lzb-about-care-pathway',
+      'lzb-services-collection-cards',
       'lzb-btn',
       'lzb-tile',
       'lzb-tag',
