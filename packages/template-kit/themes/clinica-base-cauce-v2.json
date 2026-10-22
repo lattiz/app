@@ -1,5 +1,5 @@
 {
-  "$lattiz": "GENERATED from specs/clinica-cauce-v2.spec.json (spec 22a6ba4f9bc5, file 7433cad000d8). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/clinica-cauce-v2.spec.json (spec 1e2802e0cefe, file 7433cad000d8). Do not edit: use the spec, or freeze.",
   "name": "clinica-base-cauce-v2",
   "label": "Cauce Fisioterapia · Básico",
   "tier": "basic",

@@ -41,7 +41,7 @@
       },
       {
         "role": "hero",
-        "variant": "framed"
+        "variant": "columns"
       },
       {
         "role": "about",
@@ -61,7 +61,7 @@
       },
       {
         "role": "testimonials",
-        "variant": "cards"
+        "variant": "rating-wall"
       },
       {
         "role": "faq",
@@ -86,7 +86,7 @@
       },
       {
         "role": "hero",
-        "variant": "panel"
+        "variant": "image-bg"
       },
       {
         "role": "about",
@@ -98,7 +98,7 @@
       },
       {
         "role": "faq",
-        "variant": "list"
+        "variant": "two-col"
       },
       {
         "role": "contact",
@@ -328,7 +328,8 @@
           "text": "Acompañé a mi mamá por problemas de equilibrio. Fueron pacientes con ella y nos avisaron cada cita por mensaje.",
           "author": "Alejandra C."
         }
-      ]
+      ],
+      "scoreNote": "Calificación de ejemplo"
     },
     "faq": {
       "kicker": "{{index}} — Dudas",

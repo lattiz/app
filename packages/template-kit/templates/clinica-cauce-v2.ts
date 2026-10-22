@@ -1,4 +1,4 @@
-// GENERATED from specs/clinica-cauce-v2.spec.json (spec 22a6ba4f9bc5, file f8d4536a11c9). Do not edit: use the spec, or freeze.
+// GENERATED from specs/clinica-cauce-v2.spec.json (spec 1e2802e0cefe, file e40bff7e6fa9). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
@@ -20,7 +20,7 @@ export default {
     },
     {
       slot: 'hero',
-      variant: 'framed',
+      variant: 'columns',
     },
     {
       slot: 'about',
@@ -40,7 +40,7 @@ export default {
     },
     {
       slot: 'testimonials',
-      variant: 'cards',
+      variant: 'rating-wall',
     },
     {
       slot: 'faq',

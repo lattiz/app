@@ -1,4 +1,4 @@
-// GENERATED from specs/clinica-cauce-v2.spec.json (spec 22a6ba4f9bc5, file 7ea94eef521b). Do not edit: use the spec, or freeze.
+// GENERATED from specs/clinica-cauce-v2.spec.json (spec 1e2802e0cefe, file 062e121c172b). Do not edit: use the spec, or freeze.
 import type { ContentPack } from '../src/types';
 
 export default {
@@ -295,6 +295,7 @@ export default {
       intro:
         'Opiniones de ejemplo; en tu sitio se conectan con tus reseñas de Google.',
       cta: 'Ver reseñas en Google',
+      scoreNote: 'Calificación de ejemplo',
     },
     faq: {
       kicker: '{{index}} — Dudas',

@@ -13,12 +13,16 @@
       "archetype": "editorial-atelier",
       "sections": [
         { "role": "header", "slot": "navbar", "variant": "inline" },
-        { "role": "hero", "slot": "hero", "variant": "framed" },
+        { "role": "hero", "slot": "hero", "variant": "columns" },
         { "role": "about", "slot": "about", "variant": "care-pathway" },
         { "role": "catalog", "slot": "services", "variant": "treatment-rows" },
         { "role": "team", "slot": "team", "variant": "list" },
         { "role": "proof", "slot": "gallery", "variant": "mosaic" },
-        { "role": "testimonials", "slot": "testimonials", "variant": "cards" },
+        {
+          "role": "testimonials",
+          "slot": "testimonials",
+          "variant": "rating-wall"
+        },
         { "role": "faq", "slot": "faq", "variant": "grid" },
         { "role": "contact", "slot": "locations", "variant": "booking-panel" },
         {
@@ -38,10 +42,10 @@
       "archetype": "essential",
       "sections": [
         { "role": "header", "slot": "navbar", "variant": "inline" },
-        { "role": "hero", "slot": "hero", "variant": "panel" },
+        { "role": "hero", "slot": "hero", "variant": "image-bg" },
         { "role": "about", "slot": "about", "variant": "booking-steps" },
         { "role": "catalog", "slot": "services", "variant": "menu-columns" },
-        { "role": "faq", "slot": "faq", "variant": "list" },
+        { "role": "faq", "slot": "faq", "variant": "two-col" },
         { "role": "contact", "slot": "locations", "variant": "single" },
         {
           "role": "whatsapp",

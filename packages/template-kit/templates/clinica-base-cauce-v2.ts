@@ -1,4 +1,4 @@
-// GENERATED from specs/clinica-cauce-v2.spec.json (spec 22a6ba4f9bc5, file d85cad2dd93f). Do not edit: use the spec, or freeze.
+// GENERATED from specs/clinica-cauce-v2.spec.json (spec 1e2802e0cefe, file 90556b8f262d). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
@@ -40,7 +40,7 @@ export default {
     },
     {
       slot: 'hero',
-      variant: 'panel',
+      variant: 'image-bg',
       props: {
         title:
           'Fisioterapia en <span class="lz-title__serif">Clavería</span>, con cita y a tu ritmo.',
@@ -77,7 +77,7 @@ export default {
     },
     {
       slot: 'faq',
-      variant: 'list',
+      variant: 'two-col',
     },
     {
       slot: 'locations',
