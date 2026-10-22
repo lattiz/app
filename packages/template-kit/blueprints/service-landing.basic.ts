@@ -13,7 +13,7 @@ export default {
     about: { ...roles.about, variants: ['brief', 'booking-steps'] },
     catalog: roles.catalog,
     faq: roles.faq,
-    contact: { ...roles.contact, variants: ['single'] },
+    contact: { ...roles.contact, variants: ['single', 'single-card'] },
     cta: roles.cta,
     whatsapp: roles.whatsapp,
     footer: roles.footer,

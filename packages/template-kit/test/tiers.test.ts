@@ -132,7 +132,7 @@ describe('blueprints and role → slot resolution', () => {
       ),
     };
     await expect(compileManifest(withProContact)).rejects.toThrow(
-      /role "contact" \(locations\) allows variant single in basic/,
+      /role "contact" \(locations\) allows variant single \| single-card in basic/,
     );
     const withGallery: Manifest = {
       ...basic,
