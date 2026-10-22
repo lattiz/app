@@ -1,0 +1,16 @@
+{
+  "$lattiz": "GENERATED from specs/gimnasio-pulso-deportivo-v2.spec.json (spec 67f3c7a6daf8, file 047f65ba35ed). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "ae23731d36e820d3881a806b5080e4c16c1c56dd0742abd314daf66642c5b93d",
+      "query": "woman lifting barbell bright gym",
+      "providerId": 1282232,
+      "pageUrl": "https://pixabay.com/photos/man-person-power-strength-strong-1282232/",
+      "photographer": "Pexels",
+      "photographerUrl": "https://pixabay.com/users/2286921/",
+      "tags": "man, person, power, strength, strong, fitness, body, muscles, weights, exhausted, heavy, weightlifting, effort, exhausting, bodybuilding, powerful, black fitness, black workout, black body, black power"
+    }
+  ]
+}

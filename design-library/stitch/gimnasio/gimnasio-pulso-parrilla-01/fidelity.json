@@ -1,0 +1,94 @@
+{
+  "horarios": {
+    "ref": "horarios",
+    "slot": "services",
+    "theme": "gimnasio-pulso-deportivo-v1",
+    "measured": [
+      {
+        "variant": "services/ritual-cards",
+        "structure": 0.302,
+        "heightRatio": 1.46,
+        "match": false
+      },
+      {
+        "variant": "services/cards",
+        "structure": 0.599,
+        "heightRatio": 1.58,
+        "match": false
+      },
+      {
+        "variant": "services/menu-columns",
+        "structure": 0.641,
+        "heightRatio": 1.44,
+        "match": false
+      },
+      {
+        "variant": "services/price-list",
+        "structure": 0.649,
+        "heightRatio": 1.85,
+        "match": false
+      },
+      {
+        "variant": "services/editorial-table",
+        "structure": 0.727,
+        "heightRatio": 1.87,
+        "match": false
+      }
+    ],
+    "best": "services/ritual-cards",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "membresias": {
+    "ref": "membresias",
+    "slot": "services",
+    "theme": "gimnasio-pulso-deportivo-v1",
+    "measured": [
+      {
+        "variant": "services/cards",
+        "structure": 0.38,
+        "heightRatio": 1.41,
+        "match": false
+      },
+      {
+        "variant": "services/ritual-cards",
+        "structure": 0.409,
+        "heightRatio": 1.3,
+        "match": false
+      },
+      {
+        "variant": "services/menu-columns",
+        "structure": 0.629,
+        "heightRatio": 1.29,
+        "match": false
+      },
+      {
+        "variant": "services/price-list",
+        "structure": 0.783,
+        "heightRatio": 1.65,
+        "match": false
+      },
+      {
+        "variant": "services/editorial-table",
+        "structure": 0.86,
+        "heightRatio": 1.67,
+        "match": false
+      }
+    ],
+    "best": "services/cards",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  }
+}
