@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "count": 14,
+  "count": 15,
   "by_status": {
     "collected": 3,
-    "harvested": 7,
+    "harvested": 8,
     "promoted": 1,
     "shelved": 3,
     "rejected": 0
@@ -213,6 +213,20 @@
       "created_at": "2026-10-21T05:45:04.714Z",
       "harvested": true,
       "path": "stitch/estetica/estetica-alheli-colecciones-01"
+    },
+    {
+      "id": "floreria-botanical-editorial-system-01",
+      "giro": "floreria",
+      "status": "harvested",
+      "tags": [
+        "dark",
+        "editorial",
+        "framed"
+      ],
+      "spin": "bosque-editorial-enmarcado",
+      "created_at": "2026-10-21T05:49:35.304Z",
+      "harvested": true,
+      "path": "stitch/floreria/floreria-botanical-editorial-system-01"
     }
   ]
 }
