@@ -1,0 +1,1 @@
+Trigo y Brasa v2 A — Stitch project 4156180989867491 (design md in the project's designTheme). Mustard paper #F4E6B6, espresso ink #2A2421, terracotta #C85A32, wheat #E0A96D; Fraunces + Source Sans 3.

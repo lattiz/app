@@ -1,0 +1,32 @@
+<section id="servicios" data-lz-slot="services" data-lz-variant="photo-rows" class="lz-section lz-services-photo-rows">
+  <div class="lz-container">
+    <div class="lz-services-photo-rows__head">
+      <p class="lz-services-photo-rows__kicker" data-lz-if="kicker" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-services-photo-rows__title" data-lz-key="title"></h2>
+      <p class="lz-services-photo-rows__intro" data-lz-if="intro" data-lz-key="intro"></p>
+    </div>
+    <ul class="lz-services-photo-rows__grid">
+      <li class="lz-services-photo-rows__card" data-lz-each="prices">
+        <img loading="lazy" width="400" height="400" class="lz-services-photo-rows__image" data-lz-if="image" data-lz-attr-src="image" data-lz-attr-alt="imageAlt">
+        <div class="lz-services-photo-rows__body">
+          <div class="lz-services-photo-rows__row">
+            <h3 class="lz-services-photo-rows__name" data-lz-key="name"></h3>
+            <p class="lz-services-photo-rows__price" data-lz-key="price"></p>
+          </div>
+          <p class="lz-services-photo-rows__desc" data-lz-key="description"></p>
+          <ul class="lz-services-photo-rows__tags" data-lz-if="tags">
+            <li class="lz-services-photo-rows__tag" data-lz-each="tags" data-lz-key="."></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+    <div class="lz-services-photo-rows__promos" data-lz-if="promos">
+      <article class="lz-services-photo-rows__promo" data-lz-each="promos">
+        <p class="lz-services-photo-rows__promo-tag" data-lz-if="tag" data-lz-key="tag"></p>
+        <h3 class="lz-services-photo-rows__promo-title" data-lz-key="title"></h3>
+        <p class="lz-services-photo-rows__promo-text" data-lz-if="text" data-lz-key="text"></p>
+        <a class="lz-services-photo-rows__promo-cta" target="_blank" rel="noopener noreferrer" data-lz-attr-href="href" data-lz-key="cta"></a>
+      </article>
+    </div>
+  </div>
+</section>

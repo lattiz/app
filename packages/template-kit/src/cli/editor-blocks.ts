@@ -693,6 +693,71 @@ const SECTIONS: SectionSpec[] = [
       ],
     },
   },
+  {
+    id: 'lzb-services-photo-rows',
+    label: 'Productos con foto',
+    category: 'Secciones',
+    icon: 'grid',
+    slot: 'services',
+    variant: 'photo-rows',
+    data: {
+      kicker: '03 — Vitrina',
+      title: 'Nuestros <span class="lz-title__serif">panes</span>',
+      intro:
+        'Precios de ejemplo en pesos, IVA incluido. Pregunta por la tanda de hoy.',
+      prices: [
+        {
+          name: 'Hogaza de masa madre',
+          price: '$95',
+          description: 'Corteza crujiente y miga abierta, de 800 g.',
+          image: 'product-01.jpg',
+          imageAlt: 'Hogaza de masa madre cortada sobre una tabla de madera',
+          tags: ['Masa madre', 'Del día'],
+        },
+        {
+          name: 'Baguette',
+          price: '$65',
+          description:
+            'Barra larga de corteza fina; sola o con aceite de oliva.',
+          image: 'product-02.jpg',
+          imageAlt: 'Baguette sobre una tabla de madera con un paño',
+          tags: ['Crujiente'],
+        },
+      ],
+      promos: [
+        {
+          tag: 'Encargos',
+          title: 'Roscas y pasteles por encargo',
+          text: 'Pídelos con 48 horas de anticipación.',
+          cta: 'Haz tu encargo',
+          href: '{{whatsappUrl:Hola, quiero hacer un encargo de pan}}',
+        },
+      ],
+    },
+  },
+  {
+    id: 'lzb-cta-included-panel',
+    label: 'Encargos con panel',
+    category: 'Secciones',
+    icon: 'cta',
+    slot: 'cta',
+    variant: 'included-panel',
+    data: {
+      kicker: 'Encargos',
+      title:
+        'Roscas y pasteles por <span class="lz-title__serif">encargo</span>',
+      text: 'Para reuniones, festejos y mesas de pan. Pídelos con 48 horas de anticipación.',
+      primaryCta: 'Hacer encargo',
+      secondaryCta: 'Ver la vitrina',
+      secondaryHref: '#servicios',
+      panelTitle: 'Qué incluye',
+      items: [
+        'Masa madre de fermentación lenta',
+        'Recoges en la panadería',
+        'Mesas de pan para hasta 40 personas',
+      ],
+    },
+  },
 ];
 
 interface PieceSpec {

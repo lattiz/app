@@ -750,6 +750,19 @@ export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
     proFeatures: [],
   },
   {
+    id: 'restaurante-base-trigo-y-brasa-v2',
+    tier: 'basic',
+    giro: 'restaurante',
+    giroLabel: 'Restaurante',
+    direction: {
+      id: 'terracota-calida',
+      name: 'Terracota cálida',
+    },
+    swatches: ['#F4F1EA', '#FAF9F6', '#1A1917', '#1A1917'],
+    dark: false,
+    proFeatures: [],
+  },
+  {
     id: 'restaurante-casa-comal-v1',
     tier: 'pro',
     giro: 'restaurante',
@@ -911,6 +924,19 @@ export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
       'Contacto con mapa',
       'Animaciones',
     ],
+  },
+  {
+    id: 'restaurante-trigo-y-brasa-v2',
+    tier: 'pro',
+    giro: 'restaurante',
+    giroLabel: 'Restaurante',
+    direction: {
+      id: 'terracota-calida',
+      name: 'Terracota cálida',
+    },
+    swatches: ['#EFD88C', '#F6E8BC', '#262319', '#26231A'],
+    dark: false,
+    proFeatures: ['Galería', 'Testimonios', 'Contacto con mapa', 'Animaciones'],
   },
   {
     id: 'tienda-base-caramelo-pop-v1',

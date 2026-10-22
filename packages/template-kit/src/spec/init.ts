@@ -86,7 +86,8 @@ export function initSpec(opts: {
       (used.has('about/text-image-offset') || used.has('about/statement'))) ||
     (k.startsWith('product-') &&
       (used.has('catalog/product-grid') ||
-        used.has('catalog/collection-cards'))) ||
+        used.has('catalog/collection-cards') ||
+        used.has('catalog/photo-rows'))) ||
     (k.startsWith('team-') && [...used].some((u) => u.startsWith('team/'))) ||
     (k.startsWith('gallery-') && [...used].some((u) => u.startsWith('proof/')));
   const imageKeys = Object.keys(giro.images).filter(shows);

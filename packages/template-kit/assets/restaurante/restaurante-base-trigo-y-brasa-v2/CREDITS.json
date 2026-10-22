@@ -1,0 +1,60 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-trigo-y-brasa-v2.spec.json (spec c4c8c2d94ae1, file 852ca7ba41dc). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "c9a5f2e582f959709876ae62dd3930f116ee0f027de861ab4e3c4596759536f1",
+      "query": "rustic sourdough bread loaf wooden table",
+      "providerId": 2817388,
+      "pageUrl": "https://pixabay.com/photos/loaf-bread-bread-crust-crispy-2817388/",
+      "photographer": "Couleur",
+      "photographerUrl": "https://pixabay.com/users/1195798/",
+      "tags": "loaf, bread, bread crust, crispy, baked, fresh, cut, bread slices, meal, natural product, baked goods, food, nourishment, calories, carbohydrates, energy, staple food"
+    },
+    {
+      "file": "product-01.jpg",
+      "source": "pixabay",
+      "sha256": "f560d9268b0338c18f72fc5fa83ddfcd61db27a568b6c4f6efb64ff59ab7b332",
+      "query": "sourdough loaf crusty bread",
+      "providerId": 2824597,
+      "pageUrl": "https://pixabay.com/photos/loaf-to-bake-crust-baked-goods-2824597/",
+      "photographer": "webandi",
+      "photographerUrl": "https://pixabay.com/users/1460261/",
+      "tags": "loaf, to bake, crust, baked goods, crispy, grain, bread time, baking bread, baker, food, meal, farmers bread, bread crust, loaf of bread, flour, fresh"
+    },
+    {
+      "file": "product-02.jpg",
+      "source": "pixabay",
+      "sha256": "1729f874a9b9ca446e4f151b900e3226134604459b96ff902d99c90aaa2ca8fa",
+      "query": "baguette bread",
+      "providerId": 1378049,
+      "pageUrl": "https://pixabay.com/photos/baguette-bread-herb-baguette-fresh-1378049/",
+      "photographer": "Couleur",
+      "photographerUrl": "https://pixabay.com/users/1195798/",
+      "tags": "baguette, bread, herb baguette, fresh, delicious, baked goods, freshly baked, sliced bread, french baguette, french bread, close up, food, eat"
+    },
+    {
+      "file": "product-03.jpg",
+      "source": "pixabay",
+      "sha256": "f8ed83b462c5d1973f7a04264746ab5d0c75ee96386780c304c9fec032272315",
+      "query": "seeded bread loaf",
+      "providerId": 7445434,
+      "pageUrl": "https://pixabay.com/photos/loaf-evening-bread-bread-crust-7445434/",
+      "photographer": "bennopic",
+      "photographerUrl": "https://pixabay.com/users/13363608/",
+      "tags": "loaf, evening bread, bread, crust, breakfast, abendbrot, grain bread, sesame seeds"
+    },
+    {
+      "file": "product-04.jpg",
+      "source": "pixabay",
+      "sha256": "6ea13c2e6ffdd86ca3d9c191e9df4a2a919a7fbbb8ca6b4ebb9a2244ceafbf3c",
+      "query": "croissants golden butter",
+      "providerId": 569075,
+      "pageUrl": "https://pixabay.com/photos/croissants-jam-breakfast-knife-569075/",
+      "photographer": "JESHOOTS-com",
+      "photographerUrl": "https://pixabay.com/users/264599/",
+      "tags": "croissants, jam, breakfast, knife, butter knife, breakfast meal, meal, food, breakfast food, bread, plate, jelly, fruit jelly, fruit jam, plate of croissants, danish bread, puff pastry, flaky pastry, baked, bakery, eat, food photography, baked goods, dish, pastries, wooden table"
+    }
+  ]
+}

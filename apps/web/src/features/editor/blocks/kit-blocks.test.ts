@@ -37,6 +37,8 @@ describe('kit blocks (generated from the kit)', () => {
       'lzb-services-treatment-rows',
       'lzb-about-care-pathway',
       'lzb-services-collection-cards',
+      'lzb-services-photo-rows',
+      'lzb-cta-included-panel',
       'lzb-btn',
       'lzb-tile',
       'lzb-tag',
