@@ -82,15 +82,15 @@
       },
       {
         "role": "hero",
-        "variant": "split"
-      },
-      {
-        "role": "about",
-        "variant": "booking-steps"
+        "variant": "offset-card"
       },
       {
         "role": "catalog",
         "variant": "photo-rows"
+      },
+      {
+        "role": "cta",
+        "variant": "included-panel"
       },
       {
         "role": "faq",
@@ -379,7 +379,7 @@
     "basico": {
       "copy": {
         "hero": {
-          "title": "Pan recién horneado en {{branch}}",
+          "title": "Pan del día en {{branch}}",
           "text": "Masa madre y café cada mañana. Aparta tu pan y pasa por él.",
           "eyebrow": "Panadería · {{branch}}"
         },

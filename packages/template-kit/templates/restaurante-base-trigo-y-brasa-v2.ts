@@ -1,4 +1,4 @@
-// GENERATED from specs/restaurante-trigo-y-brasa-v2.spec.json (spec 5c84ecf59d40, file afccfa84f073). Do not edit: use the spec, or freeze.
+// GENERATED from specs/restaurante-trigo-y-brasa-v2.spec.json (spec c4c8c2d94ae1, file 947d5d0ea10c). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
@@ -20,10 +20,6 @@ export default {
       props: {
         links: [
           {
-            label: 'Nosotros',
-            href: '#nosotros',
-          },
-          {
             label: 'Menú',
             href: '#servicios',
           },
@@ -40,19 +36,11 @@ export default {
     },
     {
       slot: 'hero',
-      variant: 'split',
+      variant: 'offset-card',
       props: {
         eyebrow: 'Panadería · Clavería',
-        title: 'Pan recién horneado en Clavería',
+        title: 'Pan del día en Clavería',
         text: 'Masa madre y café cada mañana. Aparta tu pan y pasa por él.',
-      },
-    },
-    {
-      slot: 'about',
-      variant: 'booking-steps',
-      props: {
-        summary:
-          'Horneamos en tres tandas y lo que sale primero se acaba primero. Aparta tu pieza por WhatsApp.',
       },
     },
     {
@@ -97,6 +85,10 @@ export default {
       },
     },
     {
+      slot: 'cta',
+      variant: 'included-panel',
+    },
+    {
       slot: 'faq',
       variant: 'list',
     },
@@ -123,10 +115,6 @@ export default {
       variant: 'minimal-centered',
       props: {
         links: [
-          {
-            label: 'Nosotros',
-            href: '#nosotros',
-          },
           {
             label: 'Menú',
             href: '#servicios',

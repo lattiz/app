@@ -1,4 +1,4 @@
-// GENERATED from specs/restaurante-trigo-y-brasa-v2.spec.json (spec 5c84ecf59d40, file 623a7d7bfd33). Do not edit: use the spec, or freeze.
+// GENERATED from specs/restaurante-trigo-y-brasa-v2.spec.json (spec c4c8c2d94ae1, file 623a7d7bfd33). Do not edit: use the spec, or freeze.
 import type { ContentPack } from '../src/types';
 
 export default {

@@ -39,9 +39,9 @@
       "archetype": "essential",
       "sections": [
         { "role": "header", "slot": "navbar", "variant": "inline" },
-        { "role": "hero", "slot": "hero", "variant": "split" },
-        { "role": "about", "slot": "about", "variant": "booking-steps" },
+        { "role": "hero", "slot": "hero", "variant": "offset-card" },
         { "role": "catalog", "slot": "services", "variant": "photo-rows" },
+        { "role": "cta", "slot": "cta", "variant": "included-panel" },
         { "role": "faq", "slot": "faq", "variant": "list" },
         { "role": "contact", "slot": "locations", "variant": "single" },
         {

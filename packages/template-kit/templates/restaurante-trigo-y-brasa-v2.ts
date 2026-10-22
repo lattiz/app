@@ -1,4 +1,4 @@
-// GENERATED from specs/restaurante-trigo-y-brasa-v2.spec.json (spec 5c84ecf59d40, file 267f5b6439a1). Do not edit: use the spec, or freeze.
+// GENERATED from specs/restaurante-trigo-y-brasa-v2.spec.json (spec c4c8c2d94ae1, file 267f5b6439a1). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
