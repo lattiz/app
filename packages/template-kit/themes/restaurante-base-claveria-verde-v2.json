@@ -1,0 +1,78 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-claveria-verde-v2.spec.json (spec 0ee305495571, file ba6fa9d3b89f). Do not edit: use the spec, or freeze.",
+  "name": "restaurante-base-claveria-verde-v2",
+  "label": "Clavería Verde · Básico",
+  "tier": "basic",
+  "fontPair": "league-spartan+mulish",
+  "colors": {
+    "bg": "#DCE4D6",
+    "surface": "#EBEFE7",
+    "surface-2": "#CFD7C9",
+    "text": "#1E241E",
+    "muted": "#535A52",
+    "accent": "#222A22",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#222A22",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#DCE4D6",
+    "on-overlay": "#1E241E",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#1E241E"
+  },
+  "fonts": {
+    "display": "'League Spartan', sans-serif",
+    "serif": "'League Spartan', sans-serif",
+    "body": "'Mulish', sans-serif",
+    "googleFonts": "family=League+Spartan:wght@700&family=Mulish:wght@400..600",
+    "displayTransform": "none",
+    "displayLeading": "0.96",
+    "displayWeight": "700",
+    "displayScale": "0.9",
+    "accentStyle": "normal",
+    "accentTransform": "none",
+    "mood": ["urbano", "energía"],
+    "affinity": ["gimnasio", "tienda", "barberia"],
+    "case": "none",
+    "tracking": "tight",
+    "typeScale": "normal",
+    "licenses": {
+      "League Spartan": "OFL-1.1",
+      "Mulish": "OFL-1.1"
+    }
+  },
+  "shape": {
+    "radiusCard": "32px",
+    "radiusPill": "999px",
+    "border": "2px",
+    "shadow": "soft"
+  },
+  "density": "airy",
+  "photoTreatment": "none",
+  "placeholder": "blobs",
+  "accentWords": "color",
+  "container": "1280px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(1.08) saturate(.85)"
+  },
+  "style": {
+    "shape": "pill",
+    "surface": "tinted",
+    "density": "airy",
+    "divider": "none",
+    "imageTreatment": "arch",
+    "typeScale": "normal",
+    "displayCase": "none",
+    "tracking": "normal"
+  },
+  "primitives": {
+    "button": "pill",
+    "card": "tinted",
+    "tag": "pill",
+    "frame": "arch",
+    "number": "plain",
+    "quote": "marks",
+    "divider": "hairline"
+  }
+}

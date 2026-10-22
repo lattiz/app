@@ -166,6 +166,41 @@ const SECTIONS: SectionSpec[] = [
     },
   },
   {
+    id: 'lzb-services-dish-spotlight',
+    label: 'Platillo estrella y carta corta',
+    category: 'Secciones',
+    icon: 'grid',
+    slot: 'services',
+    variant: 'dish-spotlight',
+    data: {
+      kicker: 'Platillo estrella',
+      title: 'Especialidad de la casa',
+      intro: 'Cada semana elegimos lo mejor del mercado para un platillo.',
+      imageAlt: 'Foto del platillo estrella',
+      badge: 'Recomendación de la cocina',
+      featuredName: 'Guiso de la casa',
+      featuredText:
+        'Receta de familia con chiles secos y especias tostadas. Se sirve con arroz y tortillas hechas a mano.',
+      chipsLabel: 'Ingredientes principales:',
+      chips: ['Chiles secos', 'Ajonjolí', 'Plátano macho'],
+      featuredPrice: '$265',
+      featuredCta: 'Pedir hoy',
+      featuredHref: '{{whatsappUrl}}',
+      prices: [
+        {
+          name: 'Guacamole de la esquina',
+          price: '$115',
+          description: 'Aguacate machacado con cilantro, cebolla y limón.',
+        },
+        {
+          name: 'Sopa de lima',
+          price: '$95',
+          description: 'Caldo aromático con tiritas de tortilla.',
+        },
+      ],
+    },
+  },
+  {
     id: 'lzb-services-ritual-cards',
     label: 'Servicios en tarjetas de tarifa',
     category: 'Secciones',

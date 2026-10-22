@@ -24,6 +24,7 @@ describe('kit blocks (generated from the kit)', () => {
       'lzb-hero-stack',
       'lzb-hero-photo-ribbon',
       'lzb-faq-numbered-cards',
+      'lzb-services-dish-spotlight',
       'lzb-services-ritual-cards',
       'lzb-services-schedule-cards',
       'lzb-testimonials-paper-trio',

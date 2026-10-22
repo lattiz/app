@@ -47,6 +47,7 @@ export const FAMILIES: Record<string, Family> = {
   'services/cards': 'cells',
   'services/ritual-cards': 'cells',
   'services/alternating-bands': 'media-text',
+  'services/dish-spotlight': 'media-text',
   'services/product-grid': 'cells',
   'services/schedule-cards': 'cells',
   'services/collection-cards': 'cells',
