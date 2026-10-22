@@ -1,4 +1,4 @@
-// GENERATED from specs/restaurante-claveria-verde-v2.spec.json (spec 4723322519ff, file edbb5a9be3e5). Do not edit: use the spec, or freeze.
+// GENERATED from specs/restaurante-claveria-verde-v2.spec.json (spec 0ee305495571, file edbb5a9be3e5). Do not edit: use the spec, or freeze.
 import type { ContentPack } from '../src/types';
 
 export default {

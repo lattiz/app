@@ -1,5 +1,5 @@
 {
-  "$lattiz": "GENERATED from specs/restaurante-claveria-verde-v2.spec.json (spec 4723322519ff, file 2ef6c69460a1). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/restaurante-claveria-verde-v2.spec.json (spec 0ee305495571, file f1c940e09141). Do not edit: use the spec, or freeze.",
   "images": [
     {
       "file": "hero.jpg",
@@ -11,17 +11,6 @@
       "photographer": "markjhemmings9",
       "photographerUrl": "https://pixabay.com/users/10680176/",
       "tags": "fruit, vegetarian, vegetable, nutrition, fiber, eating, food, pepper, red, green, dutch, still life, sour orange, orange, cucumber, red onion, vegan, organic, table, ingredients, sour, mexican, south american, salsa, natural, black life, black vegetables, black table, black fruits, black eating, black nutrition, black onion"
-    },
-    {
-      "file": "about.jpg",
-      "source": "pixabay",
-      "sha256": "7645c3e66c71cbdba985c1cbc72a600fa4fca5002691eba9d6fa68dfb555f169",
-      "query": "cook stirring pot vegetables kitchen",
-      "providerId": 4282016,
-      "pageUrl": "https://pixabay.com/photos/platting-chef-food-fine-dining-4282016/",
-      "photographer": "guillermomuro00",
-      "photographerUrl": "https://pixabay.com/users/12807863/",
-      "tags": "platting, chef, food, fine dining, vegan, michelin star"
     },
     {
       "file": "product-01.jpg",

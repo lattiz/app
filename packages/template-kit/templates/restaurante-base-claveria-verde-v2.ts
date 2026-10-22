@@ -1,4 +1,4 @@
-// GENERATED from specs/restaurante-claveria-verde-v2.spec.json (spec 4723322519ff, file 98912e5aff3a). Do not edit: use the spec, or freeze.
+// GENERATED from specs/restaurante-claveria-verde-v2.spec.json (spec 0ee305495571, file 98912e5aff3a). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {

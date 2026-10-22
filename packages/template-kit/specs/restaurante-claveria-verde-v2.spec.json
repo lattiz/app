@@ -48,7 +48,7 @@
       },
       {
         "role": "about",
-        "variant": "text-image-offset"
+        "variant": "stats-strip"
       },
       {
         "role": "catalog",

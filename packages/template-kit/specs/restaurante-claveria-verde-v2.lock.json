@@ -14,7 +14,7 @@
       "sections": [
         { "role": "header", "slot": "navbar", "variant": "inline" },
         { "role": "hero", "slot": "hero", "variant": "framed" },
-        { "role": "about", "slot": "about", "variant": "text-image-offset" },
+        { "role": "about", "slot": "about", "variant": "stats-strip" },
         { "role": "catalog", "slot": "services", "variant": "dish-spotlight" },
         { "role": "proof", "slot": "gallery", "variant": "collage" },
         {
