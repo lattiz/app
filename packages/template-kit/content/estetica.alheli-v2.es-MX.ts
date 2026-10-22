@@ -1,4 +1,4 @@
-// GENERATED from specs/estetica-alheli-v2.spec.json (spec 7eb4508f9aa2, file 7d0debe4b388). Do not edit: use the spec, or freeze.
+// GENERATED from specs/estetica-alheli-v2.spec.json (spec 204372a46f6f, file f5f2281b5616). Do not edit: use the spec, or freeze.
 import type { ContentPack } from '../src/types';
 
 export default {
@@ -55,6 +55,9 @@ export default {
       ],
     },
     hero: {
+      detailImage: 'gallery-01.jpg',
+      detailAlt:
+        'Salón con sillas negras, espejo con luces y estante de esmaltes',
       image: 'hero.jpg',
       imageAlt:
         'Manos pintando las uñas de otra persona con esmalte rojo sobre una tela rosa',

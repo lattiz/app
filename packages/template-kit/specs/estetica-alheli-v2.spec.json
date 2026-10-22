@@ -41,11 +41,11 @@
       },
       {
         "role": "hero",
-        "variant": "framed"
+        "variant": "duo-arch"
       },
       {
         "role": "about",
-        "variant": "text-image-offset"
+        "variant": "statement"
       },
       {
         "role": "catalog",
@@ -53,7 +53,7 @@
       },
       {
         "role": "proof",
-        "variant": "collage"
+        "variant": "bento"
       },
       {
         "role": "testimonials",
@@ -82,7 +82,7 @@
       },
       {
         "role": "hero",
-        "variant": "centered-arch"
+        "variant": "offset-card"
       },
       {
         "role": "about",
@@ -94,7 +94,7 @@
       },
       {
         "role": "faq",
-        "variant": "list"
+        "variant": "grid"
       },
       {
         "role": "contact",
@@ -126,7 +126,9 @@
       "primaryCta": "Reservar por WhatsApp",
       "secondaryCta": "Ver colecciones",
       "secondaryHref": "#servicios",
-      "sticker": "Pocas citas al día"
+      "sticker": "Pocas citas al día",
+      "detailImage": "gallery-01.jpg",
+      "detailAlt": "Salón con sillas negras, espejo con luces y estante de esmaltes"
     },
     "marquee": {
       "label": "Servicios del salón",
@@ -494,7 +496,7 @@
     "basico": {
       "copy": {
         "hero": {
-          "title": "Elige tu <span class=\"lz-title__serif\">colección</span> de uñas.",
+          "title": "Uñas de <span class=\"lz-title__serif\">colección</span>.",
           "text": "Manicura de autor y nail art en {{branch}}. Elige tu colección y agenda por WhatsApp en un mensaje.",
           "imageAlt": "Primer plano de uñas rojas, dos de ellas con flores blancas y rojas pintadas a mano"
         },

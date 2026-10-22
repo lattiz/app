@@ -1,4 +1,4 @@
-// GENERATED from specs/estetica-alheli-v2.spec.json (spec 7eb4508f9aa2, file f2b1ac724fd8). Do not edit: use the spec, or freeze.
+// GENERATED from specs/estetica-alheli-v2.spec.json (spec 204372a46f6f, file e0cd300ad76a). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
@@ -20,11 +20,11 @@ export default {
     },
     {
       slot: 'hero',
-      variant: 'framed',
+      variant: 'duo-arch',
     },
     {
       slot: 'about',
-      variant: 'text-image-offset',
+      variant: 'statement',
     },
     {
       slot: 'services',
@@ -32,7 +32,7 @@ export default {
     },
     {
       slot: 'gallery',
-      variant: 'collage',
+      variant: 'bento',
     },
     {
       slot: 'testimonials',

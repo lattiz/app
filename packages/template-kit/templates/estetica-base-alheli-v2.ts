@@ -1,4 +1,4 @@
-// GENERATED from specs/estetica-alheli-v2.spec.json (spec 7eb4508f9aa2, file f1c84a7405f1). Do not edit: use the spec, or freeze.
+// GENERATED from specs/estetica-alheli-v2.spec.json (spec 204372a46f6f, file 5c8cb65f7447). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
@@ -40,12 +40,11 @@ export default {
     },
     {
       slot: 'hero',
-      variant: 'centered-arch',
+      variant: 'offset-card',
       props: {
         imageAlt:
           'Primer plano de uñas rojas, dos de ellas con flores blancas y rojas pintadas a mano',
-        title:
-          'Elige tu <span class="lz-title__serif">colección</span> de uñas.',
+        title: 'Uñas de <span class="lz-title__serif">colección</span>.',
         text: 'Manicura de autor y nail art en San Álvaro. Elige tu colección y agenda por WhatsApp en un mensaje.',
       },
     },
@@ -85,7 +84,7 @@ export default {
     },
     {
       slot: 'faq',
-      variant: 'list',
+      variant: 'grid',
       props: {
         items: [
           {

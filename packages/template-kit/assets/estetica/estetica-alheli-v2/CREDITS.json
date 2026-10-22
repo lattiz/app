@@ -1,5 +1,5 @@
 {
-  "$lattiz": "GENERATED from specs/estetica-alheli-v2.spec.json (spec 7eb4508f9aa2, file 781a36de07cf). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/estetica-alheli-v2.spec.json (spec 204372a46f6f, file ed8b60e9f24f). Do not edit: use the spec, or freeze.",
   "images": [
     {
       "file": "hero.jpg",
@@ -11,6 +11,17 @@
       "photographer": "JillWellington",
       "photographerUrl": "https://pixabay.com/users/334088/",
       "tags": "fingernails, windows wallpaper, wallpaper hd, hd wallpaper, valentine, free background, desktop backgrounds, nail polish, laptop wallpaper, valentines day, 4k wallpaper 1920x1080, cool backgrounds, full hd wallpaper, wallpaper 4k, 4k wallpaper, beautiful wallpaper, mac wallpaper, painting, free wallpaper, hearts, background"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "pixabay",
+      "sha256": "f23c2471f1e8172426ce1a8318751fa19a636a80b3700f27267540e9f7855f7d",
+      "query": "beauty salon interior manicure station",
+      "providerId": 4043096,
+      "pageUrl": "https://pixabay.com/photos/beauty-salon-barber-nail-salon-4043096/",
+      "photographer": "Sunriseforever",
+      "photographerUrl": "https://pixabay.com/users/6314823/",
+      "tags": "beauty salon, barber, nail salon, salon, hairdresser, fashion, beauty, interior, 3 d, interior design, interior designer"
     },
     {
       "file": "about.jpg",
@@ -66,17 +77,6 @@
       "photographer": "Bru-nO",
       "photographerUrl": "https://pixabay.com/users/1161770/",
       "tags": "nail polish, fingernails, manicure, paint, nails, toenails, fashionable, nail design, cosmetics, to dye, rubber stamp, konad, nail art"
-    },
-    {
-      "file": "gallery-01.jpg",
-      "source": "pixabay",
-      "sha256": "f23c2471f1e8172426ce1a8318751fa19a636a80b3700f27267540e9f7855f7d",
-      "query": "beauty salon interior manicure station",
-      "providerId": 4043096,
-      "pageUrl": "https://pixabay.com/photos/beauty-salon-barber-nail-salon-4043096/",
-      "photographer": "Sunriseforever",
-      "photographerUrl": "https://pixabay.com/users/6314823/",
-      "tags": "beauty salon, barber, nail salon, salon, hairdresser, fashion, beauty, interior, 3 d, interior design, interior designer"
     },
     {
       "file": "gallery-02.jpg",
