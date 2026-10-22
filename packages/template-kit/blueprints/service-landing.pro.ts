@@ -20,6 +20,7 @@ export default {
         'framed-craft',
         'booking-steps',
         'care-pathway',
+        'clock-rail',
       ],
     },
     catalog: roles.catalog,
@@ -29,7 +30,7 @@ export default {
     faq: roles.faq,
     contact: {
       ...roles.contact,
-      variants: ['with-contact', 'booking-panel', 'arch-visit'],
+      variants: ['with-contact', 'booking-panel', 'arch-visit', 'map-link'],
     },
     cta: roles.cta,
     whatsapp: roles.whatsapp,

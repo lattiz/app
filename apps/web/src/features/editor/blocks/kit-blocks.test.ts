@@ -40,6 +40,8 @@ describe('kit blocks (generated from the kit)', () => {
       'lzb-services-collection-cards',
       'lzb-services-photo-rows',
       'lzb-cta-included-panel',
+      'lzb-about-clock-rail',
+      'lzb-services-party-tiers',
       'lzb-btn',
       'lzb-tile',
       'lzb-tag',

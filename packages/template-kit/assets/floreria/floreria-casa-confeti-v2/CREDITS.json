@@ -1,0 +1,104 @@
+{
+  "$lattiz": "GENERATED from specs/floreria-casa-confeti-v2.spec.json (spec 361edbc44e43, file e0603b96b323). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "d5068a11229cbaad2311a06f34056205f96b4298413e33b48d2c453a06022f71",
+      "query": "birthday party table balloons garland",
+      "providerId": 3016621,
+      "pageUrl": "https://pixabay.com/photos/cake-balloons-flags-birthday-3016621/",
+      "photographer": "Elkaaaaaaa",
+      "photographerUrl": "https://pixabay.com/users/7348147/",
+      "tags": "cake, happy birthday, balloons, flags"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "pixabay",
+      "sha256": "001017c9c3f1787ed34f5f4178aa37714731b35df47f49c8f559b0cf95efbc97",
+      "query": "cupcakes party table",
+      "providerId": 3301738,
+      "pageUrl": "https://pixabay.com/photos/celebration-birthday-wedding-love-3301738/",
+      "photographer": "JenRegnier",
+      "photographerUrl": "https://pixabay.com/users/7438086/",
+      "tags": "celebration, wedding, happy birthday, love, gift, family, fun, job interview, proposal"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "pixabay",
+      "sha256": "84662b0558cf5ff16f631bbcb17cb9c927270dfa0718069d8b79a85e8abc22bf",
+      "query": "party balloons colorful",
+      "providerId": 1869816,
+      "pageUrl": "https://pixabay.com/photos/balloons-birthday-celebration-1869816/",
+      "photographer": "Pexels",
+      "photographerUrl": "https://pixabay.com/users/2286921/",
+      "tags": "balloons, happy birthday, celebration, helium, party, purple balloons, helium balloons, birthday balloons, birthday celebration, birthday party"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "pixabay",
+      "sha256": "ca043bcc5e303b76133b60440029eb69ad8d8b1f30012e9f16a3296d0376beb8",
+      "query": "candy table sweets party",
+      "providerId": 7948556,
+      "pageUrl": "https://pixabay.com/photos/cake-gift-holiday-food-macaroons-7948556/",
+      "photographer": "Moroznaya_Photo",
+      "photographerUrl": "https://pixabay.com/users/7166485/",
+      "tags": "cake, gift, holiday, food, macaroons, happy birthday, sweets, dessert, raspberry, berries, celebration, surprise, peaches, pink, marshmallow"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "pixabay",
+      "sha256": "2244b80f8786242d92423ba79f8ebec666935566078b5794b9b48f23cfcec786",
+      "query": "ball pit children playing",
+      "providerId": 10495421,
+      "pageUrl": "https://pixabay.com/photos/child-boy-joyful-laughing-smile-10495421/",
+      "photographer": "peter-gamal",
+      "photographerUrl": "https://pixabay.com/users/2526338/",
+      "tags": "child, boy, joyful, laughing, smile, childhood, playful, colorful, ball pit, playing, fun, happiness, cheerful, cute, spheres, recreation, ruckus, delight, child games, happy boy, vibrant colors"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "pixabay",
+      "sha256": "92135902a76d68597bcdf94a8407b6ceaaed4aa6b97b369f2a65d96f85842a91",
+      "query": "pinata birthday kids hitting",
+      "providerId": 1937444,
+      "pageUrl": "https://pixabay.com/photos/pi%C3%B1ata-party-celebration-1937444/",
+      "photographer": "kliempictures",
+      "photographerUrl": "https://pixabay.com/users/3066210/",
+      "tags": "piñata, party, celebration, date of birth, game, wedding, hen party, nature, event, multicoloured, fixed, opening, smash, broken, beat, horse, confetti, alcohol, spain, mexico, easter, christmas, christmas time, paper mache, crepe paper"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "pixabay",
+      "sha256": "0805e78f2d0565d792025db8f93695c17df786caf258918aaf199acf7068b5c7",
+      "query": "children birthday party games",
+      "providerId": 7361026,
+      "pageUrl": "https://pixabay.com/photos/birthday-party-family-celebration-7361026/",
+      "photographer": "iamluisao",
+      "photographerUrl": "https://pixabay.com/users/12015210/",
+      "tags": "birthday party, family, celebration, children's birthday party, party, lifestyle"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "pixabay",
+      "sha256": "1bfea053a602267088215a2bbc3395c8a71ffcad1983f22a6db7d56b99239da3",
+      "query": "party streamers confetti decoration",
+      "providerId": 3088458,
+      "pageUrl": "https://pixabay.com/photos/streamer-carnival-multicoloured-3088458/",
+      "photographer": "5598375",
+      "photographerUrl": "https://pixabay.com/users/5598375/",
+      "tags": "streamer, full hd wallpaper, desktop backgrounds, carnival, multicoloured, coloured, wallpaper 4k, free wallpaper, background, beautiful wallpaper, mac wallpaper, cool backgrounds, template, 4k wallpaper 1920x1080, colorful, party, carneval, multi coloured, hd wallpaper, windows wallpaper, laptop wallpaper, free background, paper snakes, wallpaper hd, 4k wallpaper, to celebrate, confetti"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "pixabay",
+      "sha256": "47e150158b8f0149f9074465a9207524ab284be57ab14348cdf7d27ede9868b3",
+      "query": "kids birthday party table children",
+      "providerId": 7853414,
+      "pageUrl": "https://pixabay.com/photos/kids-birthday-party-celebration-7853414/",
+      "photographer": "u_wz838xqczw",
+      "photographerUrl": "https://pixabay.com/users/34418729/",
+      "tags": "kids, birthday party, celebration, children, siblings, children's party"
+    }
+  ]
+}

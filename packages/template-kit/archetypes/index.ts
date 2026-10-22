@@ -267,8 +267,14 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
       pro: [
         s('header', 'notice-bar'),
         s('hero', 'panel', 'split'),
-        s('about', 'stats-strip', 'booking-steps', 'care-pathway'),
-        s('catalog', 'cards', 'treatment-rows'),
+        s(
+          'about',
+          'stats-strip',
+          'booking-steps',
+          'care-pathway',
+          'clock-rail',
+        ),
+        s('catalog', 'cards', 'treatment-rows', 'party-tiers'),
         s('team', 'spotlight', 'grid'),
         s('proof', 'strip'),
         s('testimonials', 'rating-wall', 'cards'),
@@ -280,8 +286,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
       basic: [
         s('header', 'notice-bar'),
         s('hero', 'panel', 'split'),
-        s('about', 'brief', 'booking-steps', 'care-pathway'),
-        s('catalog', 'cards', 'treatment-rows'),
+        s('about', 'brief', 'booking-steps', 'care-pathway', 'clock-rail'),
+        s('catalog', 'cards', 'treatment-rows', 'party-tiers'),
         s('faq', 'list', 'grid'),
         s('contact', 'single-card', 'single'),
         s('whatsapp', 'bubble'),
@@ -434,7 +440,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
       pro: [
         s('header', 'centered-logo'),
         s('hero', 'duo-arch', 'overlap', 'centered-arch', 'arch-sticker'),
-        s('about', 'text-image-offset', 'booking-steps'),
+        s('about', 'text-image-offset', 'booking-steps', 'clock-rail'),
         s(
           'catalog',
           'cards',
@@ -442,6 +448,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
           'collection-cards',
           'photo-rows',
           'dish-spotlight',
+          'party-tiers',
         ),
         s('team', 'grid'),
         s('proof', 'mosaic', 'collage'),
@@ -454,7 +461,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
       basic: [
         s('header', 'centered-logo', 'inline'),
         s('hero', 'duo-arch', 'centered-arch', 'arch-sticker'),
-        s('about', 'brief', 'booking-steps'),
+        s('about', 'brief', 'booking-steps', 'clock-rail'),
         s(
           'catalog',
           'cards',
@@ -463,6 +470,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
           'collection-cards',
           'photo-rows',
           'dish-spotlight',
+          'party-tiers',
         ),
         s('faq', 'two-col', 'grid', 'column-panels'),
         s('contact', 'single-card', 'single'),

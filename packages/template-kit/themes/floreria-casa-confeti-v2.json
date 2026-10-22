@@ -1,0 +1,78 @@
+{
+  "$lattiz": "GENERATED from specs/floreria-casa-confeti-v2.spec.json (spec 361edbc44e43, file cb953010f786). Do not edit: use the spec, or freeze.",
+  "name": "floreria-casa-confeti-v2",
+  "label": "Casa Confeti · Pro",
+  "tier": "pro",
+  "fontPair": "fredoka+nunito",
+  "colors": {
+    "bg": "#D6CCEB",
+    "surface": "#E7E1F3",
+    "surface-2": "#C9C0DD",
+    "text": "#1F1A26",
+    "muted": "#524C5D",
+    "accent": "#1F1A26",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#1F1A26",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#D6CCEB",
+    "on-overlay": "#1F1A26",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#1F1A26"
+  },
+  "fonts": {
+    "display": "'Fredoka', sans-serif",
+    "serif": "'Fredoka', sans-serif",
+    "body": "'Nunito', sans-serif",
+    "googleFonts": "family=Fredoka:wght@600&family=Nunito:wght@400..700",
+    "displayTransform": "none",
+    "displayLeading": "1.02",
+    "displayWeight": "600",
+    "displayScale": "0.94",
+    "accentStyle": "normal",
+    "accentTransform": "none",
+    "mood": ["juguetón", "suave"],
+    "affinity": ["veterinaria", "tienda", "dental", "floreria"],
+    "case": "none",
+    "tracking": "normal",
+    "typeScale": "normal",
+    "licenses": {
+      "Fredoka": "OFL-1.1",
+      "Nunito": "OFL-1.1"
+    }
+  },
+  "shape": {
+    "radiusCard": "32px",
+    "radiusPill": "999px",
+    "border": "1px",
+    "shadow": "none"
+  },
+  "density": "airy",
+  "photoTreatment": "none",
+  "placeholder": "arches",
+  "accentWords": "color",
+  "container": "1280px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(1.08) saturate(.85)"
+  },
+  "style": {
+    "shape": "pill",
+    "surface": "tinted",
+    "density": "airy",
+    "divider": "none",
+    "imageTreatment": "arch",
+    "typeScale": "normal",
+    "displayCase": "none",
+    "tracking": "normal"
+  },
+  "primitives": {
+    "button": "pill",
+    "card": "tinted",
+    "tag": "pill",
+    "frame": "arch",
+    "number": "plain",
+    "quote": "marks",
+    "divider": "hairline"
+  }
+}

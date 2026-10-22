@@ -1,0 +1,212 @@
+{
+  "itinerario": {
+    "ref": "itinerario",
+    "slot": "about",
+    "theme": "floreria-cardamina-v1",
+    "measured": [
+      {
+        "variant": "about/framed-craft",
+        "structure": 0.455,
+        "heightRatio": 1.48,
+        "match": false
+      },
+      {
+        "variant": "about/booking-steps",
+        "structure": 0.478,
+        "heightRatio": 1.3,
+        "match": false
+      },
+      {
+        "variant": "about/stats-strip",
+        "structure": 0.507,
+        "heightRatio": 1.37,
+        "match": false
+      },
+      {
+        "variant": "about/portrait",
+        "structure": 0.787,
+        "heightRatio": 1.79,
+        "match": false
+      },
+      {
+        "variant": "about/brief",
+        "structure": 0.811,
+        "heightRatio": 0.95,
+        "match": false
+      },
+      {
+        "variant": "about/text-image-offset",
+        "structure": 0.832,
+        "heightRatio": 1.63,
+        "match": false
+      },
+      {
+        "variant": "about/statement",
+        "structure": 0.959,
+        "heightRatio": 1.89,
+        "match": false
+      }
+    ],
+    "best": "about/framed-craft",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "paquetes": {
+    "ref": "paquetes",
+    "slot": "services",
+    "theme": "floreria-cardamina-v1",
+    "measured": [
+      {
+        "variant": "services/cards",
+        "structure": 0.562,
+        "heightRatio": 1.15,
+        "match": false
+      },
+      {
+        "variant": "services/ritual-cards",
+        "structure": 0.59,
+        "heightRatio": 1.05,
+        "match": false
+      },
+      {
+        "variant": "services/price-list",
+        "structure": 0.669,
+        "heightRatio": 1.28,
+        "match": false
+      },
+      {
+        "variant": "services/editorial-table",
+        "structure": 0.709,
+        "heightRatio": 1.29,
+        "match": false
+      },
+      {
+        "variant": "services/menu-columns",
+        "structure": 0.85,
+        "heightRatio": 1.02,
+        "match": false
+      }
+    ],
+    "best": "services/cards",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "Hero Section": {
+    "ref": "Hero Section",
+    "slot": "hero",
+    "theme": "floreria-cardamina-v1",
+    "measured": [
+      {
+        "variant": "hero/centered-arch",
+        "structure": 0.877,
+        "heightRatio": 5.36,
+        "match": false
+      },
+      {
+        "variant": "hero/arch-sticker",
+        "structure": 1,
+        "heightRatio": 3.72,
+        "match": false
+      },
+      {
+        "variant": "hero/bento",
+        "structure": 1,
+        "heightRatio": 3.64,
+        "match": false
+      },
+      {
+        "variant": "hero/columns",
+        "structure": 1,
+        "heightRatio": 3.72,
+        "match": false
+      },
+      {
+        "variant": "hero/duo-arch",
+        "structure": 1,
+        "heightRatio": 3.72,
+        "match": false
+      },
+      {
+        "variant": "hero/framed",
+        "structure": 1,
+        "heightRatio": 3.64,
+        "match": false
+      },
+      {
+        "variant": "hero/image-bg",
+        "structure": 1,
+        "heightRatio": 3.36,
+        "match": false
+      },
+      {
+        "variant": "hero/offset-card",
+        "structure": 1,
+        "heightRatio": 4.7,
+        "match": false
+      },
+      {
+        "variant": "hero/overlap",
+        "structure": 1,
+        "heightRatio": 3.64,
+        "match": false
+      },
+      {
+        "variant": "hero/panel",
+        "structure": 1,
+        "heightRatio": 3.72,
+        "match": false
+      },
+      {
+        "variant": "hero/photo-ribbon",
+        "structure": 1,
+        "heightRatio": 3.36,
+        "match": false
+      },
+      {
+        "variant": "hero/poster",
+        "structure": 1,
+        "heightRatio": 3.36,
+        "match": false
+      },
+      {
+        "variant": "hero/rail",
+        "structure": 1,
+        "heightRatio": 3.64,
+        "match": false
+      },
+      {
+        "variant": "hero/split",
+        "structure": 1,
+        "heightRatio": 3.84,
+        "match": false
+      },
+      {
+        "variant": "hero/stack",
+        "structure": 1,
+        "heightRatio": 3.64,
+        "match": false
+      }
+    ],
+    "best": "hero/centered-arch",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  }
+}

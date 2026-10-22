@@ -1,0 +1,16 @@
+{
+  "$lattiz": "GENERATED from specs/floreria-casa-confeti-v2.spec.json (spec 361edbc44e43, file 82ea576ee543). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "05efd398acd2cdc3b9d755225abda4582b9bff8aef461098a26b22c24d080d56",
+      "query": "birthday party table balloons garland",
+      "providerId": 3016621,
+      "pageUrl": "https://pixabay.com/photos/cake-balloons-flags-birthday-3016621/",
+      "photographer": "Elkaaaaaaa",
+      "photographerUrl": "https://pixabay.com/users/7348147/",
+      "tags": "cake, happy birthday, balloons, flags"
+    }
+  ]
+}
