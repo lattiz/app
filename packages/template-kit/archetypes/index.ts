@@ -236,8 +236,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
       pro: [
         s('header', 'notice-bar'),
         s('hero', 'panel', 'split'),
-        s('about', 'stats-strip', 'booking-steps'),
-        s('catalog', 'cards'),
+        s('about', 'stats-strip', 'booking-steps', 'clock-rail'),
+        s('catalog', 'cards', 'party-tiers'),
         s('team', 'spotlight', 'grid'),
         s('proof', 'strip'),
         s('testimonials', 'rating-wall', 'cards'),
@@ -249,8 +249,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
       basic: [
         s('header', 'notice-bar'),
         s('hero', 'panel', 'split'),
-        s('about', 'brief', 'booking-steps'),
-        s('catalog', 'cards'),
+        s('about', 'brief', 'booking-steps', 'clock-rail'),
+        s('catalog', 'cards', 'party-tiers'),
         s('faq', 'list', 'grid'),
         s('contact', 'single-card', 'single'),
         s('whatsapp', 'bubble'),
@@ -391,8 +391,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
       pro: [
         s('header', 'centered-logo'),
         s('hero', 'duo-arch', 'overlap', 'centered-arch', 'arch-sticker'),
-        s('about', 'text-image-offset', 'booking-steps'),
-        s('catalog', 'cards', 'alternating-bands'),
+        s('about', 'text-image-offset', 'booking-steps', 'clock-rail'),
+        s('catalog', 'cards', 'alternating-bands', 'party-tiers'),
         s('team', 'grid'),
         s('proof', 'mosaic', 'collage'),
         s('testimonials', 'quote-feature', 'feature-stack'),
@@ -404,8 +404,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
       basic: [
         s('header', 'centered-logo', 'inline'),
         s('hero', 'duo-arch', 'centered-arch', 'arch-sticker'),
-        s('about', 'brief', 'booking-steps'),
-        s('catalog', 'cards', 'price-list', 'alternating-bands'),
+        s('about', 'brief', 'booking-steps', 'clock-rail'),
+        s('catalog', 'cards', 'price-list', 'alternating-bands', 'party-tiers'),
         s('faq', 'two-col', 'grid', 'column-panels'),
         s('contact', 'single-card', 'single'),
         s('whatsapp', 'bubble'),

@@ -364,6 +364,79 @@ const SECTIONS: SectionSpec[] = [
       ],
     },
   },
+  {
+    id: 'lzb-about-clock-rail',
+    label: 'Horario del día en un riel',
+    category: 'Secciones',
+    icon: 'grid',
+    slot: 'about',
+    variant: 'clock-rail',
+    data: {
+      kicker: 'Tu día',
+      title: 'Así corre la jornada',
+      summary: 'Cada momento con su hora, para que sepas qué esperar.',
+      statement: 'Tú llegas con calma; nosotros nos encargamos del resto.',
+      primaryCta: 'Reservar por WhatsApp',
+      moments: [
+        {
+          time: '11:00',
+          title: 'Llegada',
+          text: 'Recibimos a todos con el lugar listo.',
+        },
+        {
+          time: '12:00',
+          title: 'Actividad',
+          text: 'Lo central del día, sin prisas.',
+        },
+        { time: '13:30', title: 'Comida', text: 'Mesa servida para todos.' },
+        { time: '14:30', title: 'Despedida', text: 'Un recuerdo para llevar.' },
+      ],
+    },
+  },
+  {
+    id: 'lzb-services-party-tiers',
+    label: 'Paquetes con lista de lo incluido',
+    category: 'Secciones',
+    icon: 'grid',
+    slot: 'services',
+    variant: 'party-tiers',
+    data: {
+      kicker: 'Paquetes',
+      title: 'Elige tu paquete',
+      intro: 'Montos de referencia en MXN.',
+      cta: 'Cotizar este paquete',
+      prices: [
+        {
+          name: 'Básico',
+          price: '$6,500',
+          description: 'Lo esencial para empezar.',
+          includes: ['Servicio principal', 'Atención por WhatsApp', 'Montaje'],
+        },
+        {
+          name: 'Completo',
+          price: '$9,800',
+          description: 'El más elegido.',
+          badge: 'Más pedido',
+          includes: ['Todo lo del Básico', 'Extras incluidos', 'Coordinación'],
+        },
+        {
+          name: 'Especial',
+          price: '$13,500',
+          description: 'Para ocasiones grandes.',
+          includes: [
+            'Todo lo del Completo',
+            'Personalización',
+            'Equipo dedicado',
+          ],
+        },
+      ],
+      extrasLabel: 'Extras',
+      extras: [
+        { name: 'Hora extra', price: '$1,200' },
+        { name: 'Entrega a domicilio', price: '$350' },
+      ],
+    },
+  },
 ];
 
 interface PieceSpec {

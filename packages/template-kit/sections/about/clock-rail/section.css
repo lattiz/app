@@ -1,0 +1,237 @@
+.lz-about-clock-rail {
+  padding: var(--lz-section-pad) 0;
+  background: var(--lz-color-surface-2);
+}
+
+.lz-about-clock-rail__head {
+  display: grid;
+  justify-items: center;
+  gap: calc(12px * var(--lz-space));
+  max-width: 640px;
+  margin: 0 auto calc(56px * var(--lz-space));
+  text-align: center;
+}
+
+.lz-about-clock-rail__kicker {
+  margin: 0;
+  font-size: calc(14px * var(--lz-text-scale));
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.lz-about-clock-rail__title {
+  margin: 0;
+  font-size: calc(clamp(32px, 3.4vw, 44px) * var(--lz-display-scale));
+  letter-spacing: var(--lz-display-tracking, 0.01em);
+  text-wrap: balance;
+}
+
+.lz-about-clock-rail__summary {
+  margin: 0;
+  color: color-mix(in srgb, var(--lz-color-muted) 60%, var(--lz-color-text));
+  font-size: calc(17px * var(--lz-text-scale));
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.lz-about-clock-rail__rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lz-about-clock-rail__stop {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: calc(10px * var(--lz-space));
+  padding-inline: calc(12px * var(--lz-space));
+  text-align: center;
+}
+
+.lz-about-clock-rail__time {
+  font-family: var(--lz-font-display);
+  font-size: calc(clamp(26px, 2.6vw, 34px) * var(--lz-display-scale));
+  font-weight: var(--lz-display-weight, 700);
+  letter-spacing: var(--lz-display-tracking, 0.01em);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.lz-about-clock-rail__mark {
+  position: relative;
+  align-self: stretch;
+  height: calc(22px * var(--lz-space));
+  margin-inline: calc(-12px * var(--lz-space));
+}
+
+.lz-about-clock-rail__mark::before {
+  content: '';
+  position: absolute;
+  inset: 50% 0 auto;
+  border-top: calc(2px * var(--lz-space)) solid var(--lz-color-line-strong);
+}
+
+.lz-about-clock-rail__stop:first-child .lz-about-clock-rail__mark::before {
+  left: 50%;
+}
+
+.lz-about-clock-rail__stop:last-child .lz-about-clock-rail__mark::before {
+  right: 50%;
+}
+
+.lz-about-clock-rail__mark::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(18px * var(--lz-space));
+  aspect-ratio: 1;
+  border: calc(4px * var(--lz-space)) solid var(--lz-color-surface-2);
+  border-radius: 50%;
+  background: var(--lz-color-accent);
+  box-shadow: 0 0 0 calc(2px * var(--lz-space)) var(--lz-color-accent);
+  transform: translate(-50%, -50%);
+}
+
+.lz-about-clock-rail__name {
+  margin: 0;
+  font-family: var(--lz-font-display);
+  font-size: calc(19px * var(--lz-text-scale));
+  font-weight: var(--lz-display-weight, 700);
+  letter-spacing: var(--lz-display-tracking, 0.01em);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.lz-about-clock-rail__text {
+  margin: 0;
+  color: color-mix(in srgb, var(--lz-color-muted) 60%, var(--lz-color-text));
+  font-size: calc(15px * var(--lz-text-scale));
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.lz-about-clock-rail__foot {
+  display: grid;
+  justify-items: center;
+  gap: calc(16px * var(--lz-space));
+  margin-top: calc(48px * var(--lz-space));
+  text-align: center;
+}
+
+.lz-about-clock-rail__note {
+  margin: 0;
+  max-width: 560px;
+  font-size: calc(17px * var(--lz-text-scale));
+  line-height: 1.5;
+  text-wrap: balance;
+}
+
+.lz-about-clock-rail__cta:active {
+  transform: scale(var(--lz-press-scale, 0.97));
+  transition: transform var(--lz-dur-press, 120ms)
+    var(--lz-ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lz-about-clock-rail__cta:active {
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (max-width: 992px) {
+  .lz-about-clock-rail__rail {
+    grid-auto-flow: row;
+    max-width: 560px;
+    margin-inline: auto;
+  }
+
+  .lz-about-clock-rail__stop {
+    grid-template-columns:
+      calc(88px * var(--lz-space)) calc(22px * var(--lz-space))
+      minmax(0, 1fr);
+    grid-template-areas:
+      'time mark name'
+      '. mark text';
+    justify-items: start;
+    align-items: start;
+    column-gap: calc(16px * var(--lz-space));
+    row-gap: calc(4px * var(--lz-space));
+    padding: 0 0 calc(28px * var(--lz-space));
+    text-align: left;
+  }
+
+  .lz-about-clock-rail__stop:last-child {
+    padding-bottom: 0;
+  }
+
+  .lz-about-clock-rail__time {
+    grid-area: time;
+    justify-self: end;
+    font-size: calc(24px * var(--lz-display-scale));
+    line-height: 1.1;
+  }
+
+  .lz-about-clock-rail__mark {
+    grid-area: mark;
+    align-self: stretch;
+    width: calc(22px * var(--lz-space));
+    height: auto;
+    margin: 0;
+  }
+
+  .lz-about-clock-rail__mark::before {
+    inset: calc(6px * var(--lz-space)) auto calc(-28px * var(--lz-space)) 50%;
+    border-top: 0;
+    border-left: calc(2px * var(--lz-space)) solid var(--lz-color-line-strong);
+  }
+
+  .lz-about-clock-rail__stop:first-child .lz-about-clock-rail__mark::before,
+  .lz-about-clock-rail__stop:last-child .lz-about-clock-rail__mark::before {
+    left: 50%;
+    right: auto;
+  }
+
+  .lz-about-clock-rail__stop:last-child .lz-about-clock-rail__mark::before {
+    display: none;
+  }
+
+  .lz-about-clock-rail__mark::after {
+    top: calc(11px * var(--lz-space));
+  }
+
+  .lz-about-clock-rail__name {
+    grid-area: name;
+  }
+
+  .lz-about-clock-rail__text {
+    grid-area: text;
+  }
+}
+
+@media (max-width: 480px) {
+  .lz-about-clock-rail__title {
+    font-size: calc(28px * var(--lz-display-scale));
+  }
+
+  .lz-about-clock-rail__stop {
+    grid-template-columns:
+      calc(70px * var(--lz-space)) calc(22px * var(--lz-space))
+      minmax(0, 1fr);
+    column-gap: calc(12px * var(--lz-space));
+  }
+
+  .lz-about-clock-rail__time {
+    font-size: calc(20px * var(--lz-display-scale));
+  }
+
+  .lz-about-clock-rail__cta {
+    width: 100%;
+  }
+}

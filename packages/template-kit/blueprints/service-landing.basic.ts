@@ -10,7 +10,7 @@ export default {
   roles: {
     header: roles.header,
     hero: roles.hero,
-    about: { ...roles.about, variants: ['brief', 'booking-steps'] },
+    about: { ...roles.about, variants: ['brief', 'booking-steps', 'clock-rail'] },
     catalog: roles.catalog,
     faq: roles.faq,
     contact: { ...roles.contact, variants: ['single'] },

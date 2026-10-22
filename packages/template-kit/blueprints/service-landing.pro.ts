@@ -19,6 +19,7 @@ export default {
         'stats-strip',
         'framed-craft',
         'booking-steps',
+      'clock-rail',
       ],
     },
     catalog: roles.catalog,

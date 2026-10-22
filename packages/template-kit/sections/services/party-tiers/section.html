@@ -1,0 +1,76 @@
+<section
+  id="servicios"
+  data-lz-slot="services"
+  data-lz-variant="party-tiers"
+  class="lz-section lz-services-party-tiers"
+>
+  <div class="lz-container">
+    <div class="lz-services-party-tiers__head">
+      <p class="lz-services-party-tiers__kicker" data-lz-key="kicker"></p>
+      <h2
+        class="lz-title lz-services-party-tiers__title"
+        data-lz-key="title"
+      ></h2>
+      <p
+        class="lz-services-party-tiers__intro"
+        data-lz-if="intro"
+        data-lz-key="intro"
+      ></p>
+    </div>
+    <div class="lz-services-party-tiers__tiers">
+      <article class="lz-services-party-tiers__tier" data-lz-each="prices">
+        <p
+          class="lz-services-party-tiers__badge"
+          data-lz-if="badge"
+          data-lz-key="badge"
+        ></p>
+        <h3 class="lz-services-party-tiers__name" data-lz-key="name"></h3>
+        <p class="lz-services-party-tiers__desc" data-lz-key="description"></p>
+        <p class="lz-services-party-tiers__price" data-lz-key="price"></p>
+        <ul class="lz-services-party-tiers__includes" data-lz-if="includes">
+          <li data-lz-each="includes" data-lz-key="."></li>
+        </ul>
+        <a
+          href="{{whatsappUrl}}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="lz-button lz-services-party-tiers__cta"
+          data-lz-if="cta"
+          data-lz-key="cta"
+        ></a>
+      </article>
+    </div>
+    <div class="lz-services-party-tiers__extras" data-lz-if="extras">
+      <p
+        class="lz-services-party-tiers__extras-label"
+        data-lz-if="extrasLabel"
+        data-lz-key="extrasLabel"
+      ></p>
+      <ul class="lz-services-party-tiers__extra-list">
+        <li class="lz-services-party-tiers__extra" data-lz-each="extras">
+          <span data-lz-key="name"></span><strong data-lz-key="price"></strong>
+        </li>
+      </ul>
+    </div>
+    <ul class="lz-services-party-tiers__promos" data-lz-if="promos">
+      <li class="lz-services-party-tiers__promo" data-lz-each="promos">
+        <span
+          class="lz-services-party-tiers__promo-tag"
+          data-lz-if="tag"
+          data-lz-key="tag"
+        ></span>
+        <span
+          class="lz-services-party-tiers__promo-title"
+          data-lz-key="title"
+        ></span>
+        <a
+          data-lz-attr-href="href"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="lz-services-party-tiers__promo-cta"
+          data-lz-key="cta"
+        ></a>
+      </li>
+    </ul>
+  </div>
+</section>
