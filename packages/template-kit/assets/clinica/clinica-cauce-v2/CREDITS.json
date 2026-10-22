@@ -1,0 +1,148 @@
+{
+  "$lattiz": "GENERATED from specs/clinica-cauce-v2.spec.json (spec 1e2802e0cefe, file 7317438f6088). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "b75dc06c050bd6957e25944597fbaff263ad6177667eb6325a5668817a88fb05",
+      "query": "physical therapy patient",
+      "providerId": 8471963,
+      "pageUrl": "https://pixabay.com/photos/health-fitness-exercise-yoga-8471963/",
+      "photographer": "u_ziuenp439c",
+      "photographerUrl": "https://pixabay.com/users/41490694/",
+      "tags": "health, fitness, exercise, yoga, laboratory, diet, hospital, vitamins, food, healthcare, arm, chiropractic, happy, hispanic, hygiene, indoors, interior, kinesiology, lifestyle, massage, massaging"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "pixabay",
+      "sha256": "fdb8c3b10c337488a58761f61fea739e452124b1dcc260014932ad722caeb979",
+      "query": "female nurse portrait",
+      "providerId": 10267184,
+      "pageUrl": "https://pixabay.com/photos/woman-portrait-smile-fashion-10267184/",
+      "photographer": "Daniil_Kondrashin",
+      "photographerUrl": "https://pixabay.com/users/19909203/",
+      "tags": "woman, portrait, smile, fashion, stethoscope, health, hospital, nurse, doctor, laboratory, treatment, clinic, book, female, healthcare worker, student, modern, education, black hair, white background"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "pixabay",
+      "sha256": "94f17984df7c6f4d873c72a971733c1a56fc31e433da854b3b625867699785b5",
+      "query": "doctor man stethoscope smiling",
+      "providerId": 2337835,
+      "pageUrl": "https://pixabay.com/photos/doctor-gray-hair-experience-2337835/",
+      "photographer": "granderboy",
+      "photographerUrl": "https://pixabay.com/users/5417438/",
+      "tags": "doctor, gray hair, experience"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "pixabay",
+      "sha256": "b1adadcf04d02f10b1cec26f5078ff78aeddaa348b99d6d8105dd5807695248f",
+      "query": "female doctor smiling white coat",
+      "providerId": 5321351,
+      "pageUrl": "https://pixabay.com/photos/woman-doctor-woman-doctor-medical-5321351/",
+      "photographer": "outsideclick",
+      "photographerUrl": "https://pixabay.com/users/16930317/",
+      "tags": "woman doctor, woman, doctor, medical, medicine, hospital, health, care, clinic, smile, female, stethoscope, professional, diagnosis, specialist, young, healthcare, the, person, happy"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "pixabay",
+      "sha256": "dd5723081c45aa455df528e555f3bef22d618f77d65b5fda4d3d9202dd734fd2",
+      "query": "nurse portrait smiling",
+      "providerId": 10267183,
+      "pageUrl": "https://pixabay.com/photos/doctor-woman-stethoscope-healthcare-10267183/",
+      "photographer": "Daniil_Kondrashin",
+      "photographerUrl": "https://pixabay.com/users/19909203/",
+      "tags": "doctor, woman, stethoscope, healthcare, health, model, portrait, smile, nursing, medical, clinic, laboratory, ambulance, nurse, treatment, patient care, wound care, uniform, caregiver, treat, care"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "pixabay",
+      "sha256": "263ec143e75aaa59224d3d0b0fa0661e5dcbce92179aea98ecf502e5dcc06a5c",
+      "query": "physiotherapy",
+      "providerId": 567021,
+      "pageUrl": "https://pixabay.com/photos/woman-hands-massage-massaging-567021/",
+      "photographer": "Mariolh",
+      "photographerUrl": "https://pixabay.com/users/62451/",
+      "tags": "woman, hands, massage, massaging, physiotherapy, back, relax, skin, spa, wellness, masseuse, relaxation"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "pixabay",
+      "sha256": "14347688622aa13938aa1a304fdcbfa3ddfe19ba500004f1293828b4778c24c9",
+      "query": "clinic treatment bed",
+      "providerId": 8352775,
+      "pageUrl": "https://pixabay.com/photos/bed-hospital-nurse-care-health-8352775/",
+      "photographer": "bergy59",
+      "photographerUrl": "https://pixabay.com/users/26678601/",
+      "tags": "bed, hospital, nurse, care, health"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "pixabay",
+      "sha256": "2e562e92652f7cdba6378160cf08455a957bd107477c96ddaea4aa599a91f1d9",
+      "query": "pilates ball exercise",
+      "providerId": 1575315,
+      "pageUrl": "https://pixabay.com/photos/medicine-ball-ball-gymnastics-1575315/",
+      "photographer": "Bru-nO",
+      "photographerUrl": "https://pixabay.com/users/1161770/",
+      "tags": "medicine ball, ball, gymnastics, exercise ball, physio, physical therapy, therapy, medicine, the back, back exercises, back school"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "pixabay",
+      "sha256": "3af18eb89aca8906a37010e3ca9b4ded7444ed02a9a4560be21c95629d602f12",
+      "query": "knee physical therapy",
+      "providerId": 10309879,
+      "pageUrl": "https://pixabay.com/photos/knee-orthopedics-therapy-pain-10309879/",
+      "photographer": "kumarsu6745_",
+      "photographerUrl": "https://pixabay.com/users/4844249/",
+      "tags": "knee, orthopedics, therapy, pain, medical, health, physiotherapy, joint, arthritis, exercise, muscles, physiotherapist, treatment, healthcare, rehabilitation, orthopedic, examination, elderly, diagnosis, caregiver, nursing"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "pixabay",
+      "sha256": "eee2bcbc25dd891899ddb52c592ee923fde0d8c3bfa823a0b43824cdfb86189e",
+      "query": "clinic waiting room",
+      "providerId": 9529139,
+      "pageUrl": "https://pixabay.com/photos/clinic-doctor-hall-signs-chairs-9529139/",
+      "photographer": "Mollyroselee",
+      "photographerUrl": "https://pixabay.com/users/9214707/",
+      "tags": "clinic, doctor, hall, signs, chairs, waiting room, sitting area, podiatrist, doorway"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "pixabay",
+      "sha256": "bef33090baf0b7677a95c01a4861584ecf9d87529ebfa734d0c509d65495788e",
+      "query": "physical therapy session",
+      "providerId": 99740,
+      "pageUrl": "https://pixabay.com/photos/counseling-stress-angry-99740/",
+      "photographer": "tiyowprasetyo",
+      "photographerUrl": "https://pixabay.com/users/12298/",
+      "tags": "counseling, stress, angry, mental health, depression, frustration, psychotherapy, therapy, human, psychology, psychiatry, emotions, feelings, heart, god, brown health, brown heart, brown god, brown stress, brown angry, brown human, brown depression, brown therapy, brown psychology"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "pixabay",
+      "sha256": "6b6cee572c5858618b0da29d8da18ce1ffa243149bde3de35221ea69ccc6ed67",
+      "query": "physiotherapy treatment",
+      "providerId": 2768833,
+      "pageUrl": "https://pixabay.com/photos/massage-shoulder-human-relaxation-2768833/",
+      "photographer": "whitesession",
+      "photographerUrl": "https://pixabay.com/users/4645995/",
+      "tags": "massage, shoulder, human, relaxation, classic massage, neck, sports massage, beneficence, therapy, hands, pain, relaxing massage, kneading"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "pixabay",
+      "sha256": "13ea660474cfc6b7fd1b6bc0d5c730be92231e8d4158ec116896fc6f72201af6",
+      "query": "doctor office room",
+      "providerId": 2610509,
+      "pageUrl": "https://pixabay.com/photos/doctors-office-checkup-medical-2610509/",
+      "photographer": "RobynsWorld",
+      "photographerUrl": "https://pixabay.com/users/1577075/",
+      "tags": "doctors office, checkup, medical, healthcare, health, clinic, equipment, brown office, brown health, brown medical, brown doctors, brown healthcare"
+    }
+  ]
+}

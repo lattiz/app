@@ -29,6 +29,8 @@ describe('kit blocks (generated from the kit)', () => {
       'lzb-locations-booking-panel',
       'lzb-cta-band',
       'lzb-cta-urgent-line',
+      'lzb-services-treatment-rows',
+      'lzb-about-care-pathway',
       'lzb-btn',
       'lzb-tile',
       'lzb-tag',

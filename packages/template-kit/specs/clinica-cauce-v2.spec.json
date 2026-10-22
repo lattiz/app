@@ -1,0 +1,513 @@
+{
+  "$schema": "./spec.schema.json",
+  "specVersion": 1,
+  "idBase": "clinica-cauce",
+  "twin": true,
+  "giro": "clinica",
+  "business": {
+    "name": "Cauce Fisioterapia",
+    "shortName": "Cauce",
+    "tagline": "Fisioterapia y rehabilitación",
+    "city": "CDMX",
+    "branch": "Clavería",
+    "address": "Calle Encino 128, Col. Clavería, Azcapotzalco, 02080 CDMX",
+    "hours": "Lun–Vie 8:00–20:00 · Sáb 9:00–14:00",
+    "phone": "+52 55 0000 0000",
+    "whatsapp": "5215500000000",
+    "whatsappMessage": "Hola, quiero agendar una valoración de fisioterapia",
+    "email": "hola@caucefisio.mx"
+  },
+  "brand": {
+    "catalog": "extended",
+    "palette": {
+      "custom": {
+        "bg": "#F4F8F5",
+        "accent": "#2C6395"
+      }
+    },
+    "fontPair": "instrument-serif+instrument-sans",
+    "shape": "organico",
+    "style": {
+      "surface": "tinted",
+      "density": "airy",
+      "imageTreatment": "arch"
+    }
+  },
+  "sections": {
+    "pro": [
+      {
+        "role": "header",
+        "variant": "inline"
+      },
+      {
+        "role": "hero",
+        "variant": "columns"
+      },
+      {
+        "role": "about",
+        "variant": "care-pathway"
+      },
+      {
+        "role": "catalog",
+        "variant": "treatment-rows"
+      },
+      {
+        "role": "team",
+        "variant": "list"
+      },
+      {
+        "role": "proof",
+        "variant": "mosaic"
+      },
+      {
+        "role": "testimonials",
+        "variant": "rating-wall"
+      },
+      {
+        "role": "faq",
+        "variant": "grid"
+      },
+      {
+        "role": "contact",
+        "variant": "booking-panel"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer",
+        "variant": "minimal-centered"
+      }
+    ],
+    "basico": [
+      {
+        "role": "header",
+        "variant": "inline"
+      },
+      {
+        "role": "hero",
+        "variant": "image-bg"
+      },
+      {
+        "role": "about",
+        "variant": "booking-steps"
+      },
+      {
+        "role": "catalog",
+        "variant": "menu-columns"
+      },
+      {
+        "role": "faq",
+        "variant": "two-col"
+      },
+      {
+        "role": "contact",
+        "variant": "single"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer",
+        "variant": "minimal-centered"
+      }
+    ]
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "{{name}} en {{city}}: fisioterapia con valoración, plan por etapas y ejercicios por escrito. Reserva tu cita por WhatsApp."
+    },
+    "navbar": {
+      "cta": "Agendar cita"
+    },
+    "hero": {
+      "image": "hero.jpg",
+      "imageAlt": "Fisioterapeuta acompañando un ejercicio de hombro en el consultorio",
+      "eyebrow": "Fisioterapia · {{branch}}",
+      "title": "Fisioterapia con <span class=\"lz-title__serif\">calma</span> y un plan claro.",
+      "text": "Valoración con tiempo, sesiones de 50 minutos con tu terapeuta y ejercicios por escrito para casa. Agenda por WhatsApp.",
+      "primaryCta": "Agendar valoración",
+      "secondaryCta": "Ver tratamientos",
+      "secondaryHref": "#servicios",
+      "note": "Hoy atendemos hasta las 20:00"
+    },
+    "about": {
+      "kicker": "{{index}} — Etapas",
+      "title": "Tu recuperación, <span class=\"lz-title__serif\">etapa</span> por etapa",
+      "summary": "Cada fase tiene un objetivo y un tiempo que acordamos contigo, para que sepas qué sigue y qué puedes hacer en casa.",
+      "primaryCta": "Agendar valoración",
+      "steps": [
+        {
+          "title": "Valoración",
+          "text": "Revisamos movilidad, fuerza y el motivo de tu visita para armar el plan de las siguientes semanas.",
+          "tag": "Primera sesión"
+        },
+        {
+          "title": "Recuperación",
+          "text": "Terapia manual y ejercicios guiados para bajar la molestia y recuperar rango sin forzar.",
+          "tag": "Fase inicial"
+        },
+        {
+          "title": "Fortalecimiento",
+          "text": "Cargas progresivas y control del movimiento para sostener lo trabajado en tu día a día.",
+          "tag": "Fase activa"
+        },
+        {
+          "title": "Alta",
+          "text": "Cerramos con una rutina para casa y las señales de alerta. Si algo cambia, nos escribes y retomamos el plan.",
+          "tag": "Alta con plan"
+        }
+      ],
+      "image": "about.jpg",
+      "imageAlt": "Sala de espera del consultorio con plantas y luz natural"
+    },
+    "services": {
+      "kicker": "Tratamientos",
+      "title": "Tratamientos y <span class=\"lz-title__serif\">terapias</span>",
+      "intro": "Montos de ejemplo en pesos. Cuántas sesiones necesitas lo decidimos juntos en la valoración.",
+      "unit": "por sesión",
+      "prices": [
+        {
+          "name": "Valoración inicial",
+          "price": "$850",
+          "description": "Entrevista, pruebas de movimiento y un plan escrito con objetivos.",
+          "cta": "Agendar",
+          "href": "{{whatsappUrl:Hola, quiero agendar una valoración inicial}}"
+        },
+        {
+          "name": "Terapia manual",
+          "price": "$700",
+          "description": "Movilización y trabajo de tejidos con ejercicio guiado, 50 minutos.",
+          "cta": "Agendar",
+          "href": "{{whatsappUrl:Hola, quiero agendar terapia manual}}"
+        },
+        {
+          "name": "Rehabilitación posoperatoria",
+          "price": "Desde $800",
+          "description": "Plan por fases que respeta las indicaciones de tu cirujano.",
+          "cta": "Agendar",
+          "href": "{{whatsappUrl:Hola, quiero agendar rehabilitación posoperatoria}}"
+        },
+        {
+          "name": "Fisioterapia deportiva",
+          "price": "$750",
+          "description": "Regreso gradual al entrenamiento con criterios claros de avance.",
+          "cta": "Agendar",
+          "href": "{{whatsappUrl:Hola, quiero agendar fisioterapia deportiva}}"
+        },
+        {
+          "name": "Equilibrio y adulto mayor",
+          "price": "$700",
+          "description": "Ejercicios de fuerza y marcha, seguros y progresivos, para prevenir caídas.",
+          "cta": "Agendar",
+          "href": "{{whatsappUrl:Hola, quiero agendar equilibrio y movilidad}}"
+        }
+      ],
+      "promos": [
+        {
+          "tag": "Paquete",
+          "title": "Paquete de cinco sesiones",
+          "text": "Cinco citas seguidas con un reporte de avance al cerrar el paquete.",
+          "cta": "Agendar",
+          "href": "{{whatsappUrl:Hola, quiero el paquete de cinco sesiones}}"
+        }
+      ]
+    },
+    "gallery": {
+      "kicker": "{{index}} — Instalaciones",
+      "title": "Un lugar <span class=\"lz-title__serif\">sereno</span>",
+      "items": [
+        {
+          "image": "gallery-01.jpg",
+          "caption": "Recepción",
+          "alt": "Recepción luminosa con plantas y sillones"
+        },
+        {
+          "image": "gallery-02.jpg",
+          "caption": "Sala de terapia",
+          "alt": "Sala de terapia con camilla y ventana grande"
+        },
+        {
+          "image": "gallery-03.jpg",
+          "caption": "Ejercicio guiado",
+          "alt": "Paciente haciendo ejercicio con banda elástica"
+        },
+        {
+          "image": "gallery-04.jpg",
+          "caption": "Terapia manual",
+          "alt": "Fisioterapeuta trabajando la espalda de un paciente"
+        },
+        {
+          "image": "gallery-05.jpg",
+          "caption": "Espacio de movilidad",
+          "alt": "Espacio de rehabilitación con barras paralelas"
+        },
+        {
+          "image": "gallery-06.jpg",
+          "caption": "Equilibrio",
+          "alt": "Paciente practicando equilibrio sobre una plataforma"
+        },
+        {
+          "image": "gallery-07.jpg",
+          "caption": "Electroterapia",
+          "alt": "Equipo de electroterapia junto a una camilla"
+        },
+        {
+          "image": "gallery-08.jpg",
+          "caption": "Entrada",
+          "alt": "Entrada del consultorio con puerta de cristal"
+        }
+      ]
+    },
+    "team": {
+      "kicker": "{{index}} — Equipo",
+      "title": "Quien <span class=\"lz-title__serif\">te atiende</span>",
+      "members": [
+        {
+          "name": "Lic. Ximena Barrera",
+          "role": "Fisioterapia ortopédica",
+          "tags": [
+            "Cédula 0000000",
+            "Columna y rodilla"
+          ],
+          "image": "team-1.jpg",
+          "imageAlt": "Retrato de la Lic. Ximena Barrera con uniforme blanco"
+        },
+        {
+          "name": "Lic. Diego Arteaga",
+          "role": "Rehabilitación deportiva",
+          "tags": [
+            "Cédula 0000000",
+            "Retorno al deporte"
+          ],
+          "image": "team-2.jpg",
+          "imageAlt": "Retrato del Lic. Diego Arteaga en la sala de terapia"
+        },
+        {
+          "name": "Lic. Paula Cisneros",
+          "role": "Fisioterapia geriátrica",
+          "tags": [
+            "Cédula 0000000",
+            "Equilibrio"
+          ],
+          "image": "team-3.jpg",
+          "imageAlt": "Retrato de la Lic. Paula Cisneros sonriendo"
+        },
+        {
+          "name": "Mtro. Emilio Ortega",
+          "role": "Neurorrehabilitación",
+          "tags": [
+            "Cédula 0000000",
+            "Movilidad funcional"
+          ],
+          "image": "team-4.jpg",
+          "imageAlt": "Retrato del Mtro. Emilio Ortega junto a una ventana"
+        }
+      ]
+    },
+    "testimonials": {
+      "kicker": "{{index}} — Opiniones",
+      "title": "Lo que cuentan <span class=\"lz-title__serif\">nuestros pacientes</span>",
+      "intro": "Opiniones de ejemplo; en tu sitio se conectan con tus reseñas de Google.",
+      "cta": "Ver reseñas en Google",
+      "score": "4.9",
+      "summary": "42 opiniones en Google",
+      "allReviewsCta": "Ver todas en Google",
+      "writeReviewCta": "Dejar reseña en Google",
+      "reviews": [
+        {
+          "text": "Después de mi cirugía de rodilla me dijeron qué esperar cada semana. Los ejercicios impresos me ayudaron mucho en casa.",
+          "author": "Laura G."
+        },
+        {
+          "text": "Entreno los sábados y armamos un regreso por etapas tras un esguince. Las citas siempre empezaron puntuales.",
+          "author": "Héctor V."
+        },
+        {
+          "text": "Acompañé a mi mamá por problemas de equilibrio. Fueron pacientes con ella y nos avisaron cada cita por mensaje.",
+          "author": "Alejandra C."
+        }
+      ],
+      "scoreNote": "Calificación de ejemplo"
+    },
+    "faq": {
+      "kicker": "{{index}} — Dudas",
+      "title": "Antes de tu <span class=\"lz-title__serif\">primera cita</span>",
+      "intro": "Lo que más nos preguntan antes de reservar. Si falta algo, escríbenos.",
+      "cta": "Preguntar por WhatsApp",
+      "items": [
+        {
+          "question": "¿Cuánto dura la primera cita?",
+          "answer": "Alrededor de una hora: conversamos, revisamos tu movimiento y te explicamos el plan antes de empezar."
+        },
+        {
+          "question": "¿Necesito orden de mi médico?",
+          "answer": "No para la valoración. Si tienes estudios o indicaciones, llévalos para revisarlos juntos."
+        },
+        {
+          "question": "¿Cuántas sesiones voy a necesitar?",
+          "answer": "Varía según el caso. Tras la valoración te damos un estimado y lo revisamos contigo en cada etapa."
+        },
+        {
+          "question": "¿Dan factura o recibo para el seguro?",
+          "answer": "Sí, emitimos factura y el comprobante que pida tu aseguradora para solicitar reembolso."
+        }
+      ]
+    },
+    "locations": {
+      "kicker": "{{index}} — Cita",
+      "title": "Reserva tu <span class=\"lz-title__serif\">valoración</span>",
+      "contactText": "Elige cómo prefieres escribirnos. Respondemos en horario del consultorio; si es una urgencia, llama al 911.",
+      "whatsappLabel": "WhatsApp",
+      "whatsappValue": "Agendar por mensaje",
+      "callLabel": "Teléfono",
+      "emailLabel": "Correo",
+      "directionsLabel": "Cómo llegar",
+      "hoursLabel": "Horario",
+      "whatsappCta": "Escribir por WhatsApp",
+      "callCta": "Llamar ahora",
+      "whatsappNote": "Respuesta el mismo día",
+      "callNote": "En horario de consultorio",
+      "emailNote": "Para facturas y estudios"
+    },
+    "floating-whatsapp": {
+      "label": "Agendar valoración por WhatsApp"
+    },
+    "footer": {
+      "about": "Consultorio de fisioterapia en {{branch}}, {{city}}: cada paciente con su plan por escrito y su cita por WhatsApp.",
+      "branchesTitle": "Consultorio",
+      "linksTitle": "Secciones",
+      "contactTitle": "Contacto"
+    }
+  },
+  "images": [
+    {
+      "key": "hero",
+      "source": {
+        "search": "physical therapy patient"
+      }
+    },
+    {
+      "key": "team-1",
+      "source": {
+        "search": "female nurse portrait"
+      }
+    },
+    {
+      "key": "team-2",
+      "source": {
+        "search": "doctor man stethoscope smiling"
+      }
+    },
+    {
+      "key": "team-3",
+      "source": {
+        "search": "female doctor smiling white coat"
+      }
+    },
+    {
+      "key": "team-4",
+      "source": {
+        "search": "nurse portrait smiling"
+      }
+    },
+    {
+      "key": "gallery-01",
+      "source": {
+        "search": "physiotherapy"
+      }
+    },
+    {
+      "key": "gallery-02",
+      "source": {
+        "search": "clinic treatment bed"
+      }
+    },
+    {
+      "key": "gallery-03",
+      "source": {
+        "search": "pilates ball exercise"
+      }
+    },
+    {
+      "key": "gallery-04",
+      "source": {
+        "search": "knee physical therapy"
+      }
+    },
+    {
+      "key": "gallery-05",
+      "source": {
+        "search": "clinic waiting room"
+      }
+    },
+    {
+      "key": "gallery-06",
+      "source": {
+        "search": "physical therapy session"
+      }
+    },
+    {
+      "key": "gallery-07",
+      "source": {
+        "search": "physiotherapy treatment"
+      }
+    },
+    {
+      "key": "gallery-08",
+      "source": {
+        "search": "doctor office room"
+      }
+    }
+  ],
+  "motion": {
+    "preset": "calm",
+    "progress": false
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "eyebrow": "Fisioterapia · {{branch}}",
+          "title": "Fisioterapia en <span class=\"lz-title__serif\">Clavería</span>, con cita y a tu ritmo.",
+          "text": "Valoración, terapia manual y ejercicio guiado. Escríbenos por WhatsApp y te proponemos un horario esta semana."
+        },
+        "about": {
+          "kicker": "{{index}} — Cómo agendar",
+          "title": "Agenda en <span class=\"lz-title__serif\">tres pasos</span>",
+          "summary": "Sin llamadas largas: escribes, te proponemos horario y llegas con tu cita confirmada.",
+          "primaryCta": "Agendar valoración",
+          "steps": [
+            {
+              "title": "Escríbenos",
+              "text": "Cuéntanos por WhatsApp qué molestia tienes y qué horario te acomoda."
+            },
+            {
+              "title": "Confirma tu cita",
+              "text": "Te proponemos un horario esta semana y te enviamos la dirección y un recordatorio."
+            },
+            {
+              "title": "Ven a tu valoración",
+              "text": "Llegas con ropa cómoda; revisamos tu movimiento y te damos un plan por escrito."
+            }
+          ]
+        }
+      },
+      "brand": {
+        "palette": {
+          "custom": {
+            "bg": "#F6F8F5",
+            "accent": "#4A7A3A"
+          }
+        },
+        "fontPair": "sora+inter",
+        "shape": "suave"
+      }
+    }
+  },
+  "version": 2,
+  "renews": {
+    "spec": "clinica-cauce"
+  }
+}

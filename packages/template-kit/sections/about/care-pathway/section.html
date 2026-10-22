@@ -1,0 +1,21 @@
+<section id="nosotros" data-lz-slot="about" data-lz-variant="care-pathway" class="lz-section lz-about-care-pathway">
+  <div class="lz-container lz-about-care-pathway__grid">
+    <div class="lz-about-care-pathway__head">
+      <p class="lz-about-care-pathway__kicker" data-lz-if="kicker" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-about-care-pathway__title" data-lz-key="title"></h2>
+      <p class="lz-about-care-pathway__summary" data-lz-if="summary" data-lz-key="summary"></p>
+      <a data-lz-if="primaryCta" href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-about-care-pathway__cta" data-lz-key="primaryCta"></a>
+    </div>
+    <ol class="lz-about-care-pathway__list" data-lz-if="steps">
+      <li class="lz-about-care-pathway__step" data-lz-each="steps">
+        <span class="lz-about-care-pathway__rail" aria-hidden="true"><span class="lz-about-care-pathway__node"></span></span>
+        <div class="lz-about-care-pathway__body">
+          <span class="lz-about-care-pathway__num" aria-hidden="true"></span>
+          <h3 class="lz-about-care-pathway__name" data-lz-key="title"></h3>
+          <p class="lz-about-care-pathway__text" data-lz-key="text"></p>
+          <p class="lz-about-care-pathway__tag" data-lz-if="tag" data-lz-key="tag"></p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
