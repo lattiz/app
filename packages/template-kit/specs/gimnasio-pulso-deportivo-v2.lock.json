@@ -13,14 +13,14 @@
       "archetype": "neo-brutal",
       "sections": [
         { "role": "header", "slot": "navbar", "variant": "inline" },
-        { "role": "hero", "slot": "hero", "variant": "framed" },
-        { "role": "about", "slot": "about", "variant": "booking-steps" },
+        { "role": "hero", "slot": "hero", "variant": "stack" },
+        { "role": "about", "slot": "about", "variant": "stats-strip" },
         { "role": "catalog", "slot": "services", "variant": "schedule-cards" },
-        { "role": "proof", "slot": "gallery", "variant": "collage" },
+        { "role": "proof", "slot": "gallery", "variant": "strip" },
         {
           "role": "testimonials",
           "slot": "testimonials",
-          "variant": "feature-stack"
+          "variant": "rating-wall"
         },
         { "role": "faq", "slot": "faq", "variant": "list" },
         { "role": "contact", "slot": "locations", "variant": "booking-panel" },
@@ -42,7 +42,7 @@
       "archetype": "essential",
       "sections": [
         { "role": "header", "slot": "navbar", "variant": "inline" },
-        { "role": "hero", "slot": "hero", "variant": "centered-arch" },
+        { "role": "hero", "slot": "hero", "variant": "image-bg" },
         { "role": "catalog", "slot": "services", "variant": "schedule-cards" },
         { "role": "cta", "slot": "cta", "variant": "band" },
         { "role": "faq", "slot": "faq", "variant": "list" },

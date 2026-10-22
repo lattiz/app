@@ -1,4 +1,4 @@
-// GENERATED from specs/gimnasio-pulso-deportivo-v2.spec.json (spec dd718c117141, file 43ae37386fc6). Do not edit: use the spec, or freeze.
+// GENERATED from specs/gimnasio-pulso-deportivo-v2.spec.json (spec 67f3c7a6daf8, file 14531f9e7d0d). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
@@ -36,7 +36,7 @@ export default {
     },
     {
       slot: 'hero',
-      variant: 'centered-arch',
+      variant: 'image-bg',
       props: {
         title: 'Entrena cerca de casa, sin complicarte',
         text: 'Clases en grupo, pesas y planes sencillos en Clavería. Agenda tu clase de prueba por WhatsApp.',

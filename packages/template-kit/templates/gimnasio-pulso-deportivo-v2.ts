@@ -1,4 +1,4 @@
-// GENERATED from specs/gimnasio-pulso-deportivo-v2.spec.json (spec dd718c117141, file 06356417df2e). Do not edit: use the spec, or freeze.
+// GENERATED from specs/gimnasio-pulso-deportivo-v2.spec.json (spec 67f3c7a6daf8, file 73ba6a19d56f). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
@@ -20,11 +20,11 @@ export default {
     },
     {
       slot: 'hero',
-      variant: 'framed',
+      variant: 'stack',
     },
     {
       slot: 'about',
-      variant: 'booking-steps',
+      variant: 'stats-strip',
     },
     {
       slot: 'services',
@@ -32,11 +32,11 @@ export default {
     },
     {
       slot: 'gallery',
-      variant: 'collage',
+      variant: 'strip',
     },
     {
       slot: 'testimonials',
-      variant: 'feature-stack',
+      variant: 'rating-wall',
     },
     {
       slot: 'faq',

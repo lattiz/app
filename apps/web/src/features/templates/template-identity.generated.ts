@@ -550,7 +550,7 @@ export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
     direction: null,
     swatches: ['#F7F9FB', '#FCFDFD', '#08758C', '#1E1E1E'],
     dark: false,
-    proFeatures: ['Galería', 'Testimonios', 'Animaciones'],
+    proFeatures: ['Nosotros Pro', 'Galería', 'Testimonios', 'Animaciones'],
   },
   {
     id: 'restaurante-base-casa-comal-v1',

@@ -1,4 +1,4 @@
-// GENERATED from specs/gimnasio-pulso-deportivo-v2.spec.json (spec dd718c117141, file da734036a56f). Do not edit: use the spec, or freeze.
+// GENERATED from specs/gimnasio-pulso-deportivo-v2.spec.json (spec 67f3c7a6daf8, file b768dafca8b8). Do not edit: use the spec, or freeze.
 import type { ContentPack } from '../src/types';
 
 export default {
@@ -83,21 +83,6 @@ export default {
       title: 'De la puerta a tu primera clase en tres pasos',
       summary:
         'Sin contratos largos ni letra chica: vienes, entrenas y decides si te quedas.',
-      primaryCta: 'Reservar clase de prueba',
-      steps: [
-        {
-          title: 'Escríbenos',
-          text: 'Cuéntanos tu horario y qué buscas por WhatsApp. Te respondemos el mismo día.',
-        },
-        {
-          title: 'Haz tu clase de prueba',
-          text: 'Un coach te recibe, te enseña la sala y te acompaña en una clase.',
-        },
-        {
-          title: 'Elige tu plan',
-          text: 'Pase del día, mensual o trimestral. Pagas solo lo que vas a usar.',
-        },
-      ],
       statement: 'Aquí entrenas cerca de casa y con alguien que te corrige.',
       image: 'about.jpg',
       imageAlt:
@@ -121,6 +106,21 @@ export default {
           label: 'De inscripción',
         },
       ],
+      steps: [
+        {
+          title: 'Escríbenos',
+          text: 'Cuéntanos tu horario y qué buscas por WhatsApp. Te respondemos el mismo día.',
+        },
+        {
+          title: 'Haz tu clase de prueba',
+          text: 'Un coach te recibe, te enseña la sala y te acompaña en una clase.',
+        },
+        {
+          title: 'Elige tu plan',
+          text: 'Pase del día, mensual o trimestral. Pagas solo lo que vas a usar.',
+        },
+      ],
+      primaryCta: 'Reservar clase de prueba',
     },
     services: {
       kicker: '{{index}} — Clases y planes',
@@ -322,9 +322,12 @@ export default {
       ],
     },
     testimonials: {
+      scoreNote: 'Calificación de ejemplo',
       kicker: '{{index}} — Vecinos',
-      title: 'Lo que dicen quienes entrenan aquí',
-      intro: 'Reseñas de ejemplo; reemplázalas con las de tus clientes.',
+      score: '4.9',
+      summary: '183 reseñas en Google',
+      allReviewsCta: 'Ver todas en Google',
+      writeReviewCta: 'Dejar reseña en Google',
       reviews: [
         {
           text: 'Llegué sin saber usar las máquinas y el coach me acompañó las primeras semanas. Sin presiones.',
@@ -345,10 +348,8 @@ export default {
           initials: 'PS',
         },
       ],
-      score: '4.9',
-      summary: '183 reseñas en Google',
-      allReviewsCta: 'Ver todas en Google',
-      writeReviewCta: 'Dejar reseña en Google',
+      title: 'Lo que dicen quienes entrenan aquí',
+      intro: 'Reseñas de ejemplo; reemplázalas con las de tus clientes.',
     },
     faq: {
       kicker: '{{index}} — Preguntas',

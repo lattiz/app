@@ -39,11 +39,11 @@
       },
       {
         "role": "hero",
-        "variant": "framed"
+        "variant": "stack"
       },
       {
         "role": "about",
-        "variant": "booking-steps"
+        "variant": "stats-strip"
       },
       {
         "role": "catalog",
@@ -51,11 +51,11 @@
       },
       {
         "role": "proof",
-        "variant": "collage"
+        "variant": "strip"
       },
       {
         "role": "testimonials",
-        "variant": "feature-stack"
+        "variant": "rating-wall"
       },
       {
         "role": "faq",
@@ -80,7 +80,7 @@
       },
       {
         "role": "hero",
-        "variant": "centered-arch"
+        "variant": "image-bg"
       },
       {
         "role": "catalog",
