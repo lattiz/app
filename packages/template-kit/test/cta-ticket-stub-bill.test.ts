@@ -57,8 +57,7 @@ describe('cta/ticket-stub-bill', () => {
     expect((await render()).querySelector('script, [style], iframe, form')).toBeNull();
     const sheet = css();
     expect(sheet).toMatch(/2px dashed var\(--lz-color-line/);
-    expect(sheet).toMatch(/radial-gradient/);
-    expect(sheet).toMatch(/prefers-reduced-motion/);
-    expect(sheet).not.toMatch(/#[0-9a-fA-F]{3,8}\b|rgba?\(|@import|url\(|backdrop-filter|@keyframes/);
+    expect(sheet).toMatch(/::before/);
+    expect(sheet).not.toMatch(/#[0-9a-fA-F]{3,8}\b|rgba?\(|@import|url\(|gradient|backdrop-filter|@keyframes/);
   });
 });
