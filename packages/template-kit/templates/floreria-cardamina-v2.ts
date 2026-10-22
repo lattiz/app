@@ -1,4 +1,4 @@
-// GENERATED from specs/floreria-cardamina-v2.spec.json (spec 60bd7505a0df, file 6acf3f399239). Do not edit: use the spec, or freeze.
+// GENERATED from specs/floreria-cardamina-v2.spec.json (spec 269653124ad6, file 9ebe5ee896e2). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
@@ -24,7 +24,7 @@ export default {
     },
     {
       slot: 'about',
-      variant: 'text-image-offset',
+      variant: 'statement',
     },
     {
       slot: 'services',
@@ -36,7 +36,7 @@ export default {
     },
     {
       slot: 'testimonials',
-      variant: 'cards',
+      variant: 'quote-feature',
     },
     {
       slot: 'faq',
@@ -44,7 +44,7 @@ export default {
     },
     {
       slot: 'locations',
-      variant: 'booking-panel',
+      variant: 'with-contact',
     },
     {
       slot: 'floating-whatsapp',

@@ -449,7 +449,13 @@ export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
     direction: null,
     swatches: ['#0F1A15', '#1C2722', '#7FC8A0', '#E7EFE9'],
     dark: true,
-    proFeatures: ['Nosotros Pro', 'Galería', 'Testimonios', 'Animaciones'],
+    proFeatures: [
+      'Nosotros Pro',
+      'Galería',
+      'Testimonios',
+      'Contacto con mapa',
+      'Animaciones',
+    ],
   },
   {
     id: 'floreria-casa-confeti-v1',

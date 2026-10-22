@@ -14,12 +14,16 @@
       "sections": [
         { "role": "header", "slot": "navbar", "variant": "inline" },
         { "role": "hero", "slot": "hero", "variant": "poster" },
-        { "role": "about", "slot": "about", "variant": "text-image-offset" },
+        { "role": "about", "slot": "about", "variant": "statement" },
         { "role": "catalog", "slot": "services", "variant": "cards" },
         { "role": "proof", "slot": "gallery", "variant": "staggered-frames" },
-        { "role": "testimonials", "slot": "testimonials", "variant": "cards" },
+        {
+          "role": "testimonials",
+          "slot": "testimonials",
+          "variant": "quote-feature"
+        },
         { "role": "faq", "slot": "faq", "variant": "grid" },
-        { "role": "contact", "slot": "locations", "variant": "booking-panel" },
+        { "role": "contact", "slot": "locations", "variant": "with-contact" },
         {
           "role": "whatsapp",
           "slot": "floating-whatsapp",
@@ -39,9 +43,9 @@
       "sections": [
         { "role": "header", "slot": "navbar", "variant": "centered-logo" },
         { "role": "hero", "slot": "hero", "variant": "split" },
-        { "role": "about", "slot": "about", "variant": "booking-steps" },
+        { "role": "about", "slot": "about", "variant": "brief" },
         { "role": "catalog", "slot": "services", "variant": "editorial-table" },
-        { "role": "faq", "slot": "faq", "variant": "list" },
+        { "role": "faq", "slot": "faq", "variant": "grid" },
         { "role": "contact", "slot": "locations", "variant": "single" },
         {
           "role": "whatsapp",

@@ -44,7 +44,7 @@
       },
       {
         "role": "about",
-        "variant": "text-image-offset"
+        "variant": "statement"
       },
       {
         "role": "catalog",
@@ -56,7 +56,7 @@
       },
       {
         "role": "testimonials",
-        "variant": "cards"
+        "variant": "quote-feature"
       },
       {
         "role": "faq",
@@ -64,7 +64,7 @@
       },
       {
         "role": "contact",
-        "variant": "booking-panel"
+        "variant": "with-contact"
       },
       {
         "role": "whatsapp"
@@ -85,7 +85,7 @@
       },
       {
         "role": "about",
-        "variant": "booking-steps"
+        "variant": "brief"
       },
       {
         "role": "catalog",
@@ -93,7 +93,7 @@
       },
       {
         "role": "faq",
-        "variant": "list"
+        "variant": "grid"
       },
       {
         "role": "contact",

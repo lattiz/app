@@ -1,4 +1,4 @@
-// GENERATED from specs/floreria-cardamina-v2.spec.json (spec 60bd7505a0df, file 3abe7670927c). Do not edit: use the spec, or freeze.
+// GENERATED from specs/floreria-cardamina-v2.spec.json (spec 269653124ad6, file 3abe7670927c). Do not edit: use the spec, or freeze.
 import type { ContentPack } from '../src/types';
 
 export default {
@@ -334,11 +334,20 @@ export default {
     },
     locations: {
       kicker: '{{index}} — Taller',
+      title: 'Visita o <span class="lz-title__serif">encarga</span>',
+      contactText:
+        'Atendemos pedidos por WhatsApp y recibimos visitas con cita en el taller. Dinos fecha, lugar y estilo.',
+      whatsappLabel: 'WhatsApp',
+      whatsappValue: 'Cotizar arreglo',
+      callLabel: 'Teléfono',
+      emailLabel: 'Correo',
+      directionsLabel: 'Cómo llegar',
       hoursLabel: 'Horario',
+      whatsappCta: 'Pedir por WhatsApp',
+      callCta: 'Llamar',
       whatsappNote: 'Cotizaciones y pedidos del día',
       callNote: 'Llamada directa al taller',
       emailNote: 'Bodas, eventos y empresas',
-      whatsappCta: 'Pedir por WhatsApp',
       branches: [
         {
           name: 'Condesa',
@@ -349,15 +358,6 @@ export default {
           mapTitle: 'Mapa de la sucursal Condesa',
         },
       ],
-      title: 'Visita o <span class="lz-title__serif">encarga</span>',
-      contactText:
-        'Atendemos pedidos por WhatsApp y recibimos visitas con cita en el taller. Dinos fecha, lugar y estilo.',
-      whatsappLabel: 'WhatsApp',
-      whatsappValue: 'Cotizar arreglo',
-      callLabel: 'Teléfono',
-      emailLabel: 'Correo',
-      directionsLabel: 'Cómo llegar',
-      callCta: 'Llamar',
     },
     'floating-whatsapp': {
       label: 'Cotizar por WhatsApp',
