@@ -27,6 +27,11 @@ export const COPY_LIMITS: Record<string, number> = {
   'cta.phoneLabel': 24,
   'cta.hours[].label': 16,
   'cta.hours[].value': 20,
+  'cta.kicker': 32,
+  'cta.summary': 120,
+  'cta.steps[].title': 36,
+  'cta.steps[].text': 120,
+  'cta.steps[].duration': 14,
   // A2 heroes: bento facts and rail details.
   'hero.facts[].value': 10,
   'hero.facts[].label': 40,

@@ -1,0 +1,115 @@
+{
+  "$lattiz": "GENERATED from specs/barberia-abeto-v3.spec.json (spec 69ee2eeee689, file 28255dff6aa4). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "089ee6e79c3eadf63ff2fe48f68cf81a44c1dc62546616ba1d367385af236c6b",
+      "query": "barbershop chair",
+      "providerId": 1453064,
+      "pageUrl": "https://pixabay.com/photos/barber-chair-salon-hairdresser-1453064/",
+      "photographer": "ClickerHappy",
+      "photographerUrl": "https://pixabay.com/users/324082/",
+      "tags": "barber, chair, salon, hairdresser, shop, beard, male, man, barbershop, retro, shaving, masculinity, grooming, business, trendy, lifestyle, skill, stylish, hdr, hipster, store, brown business, brown shopping, brown shop, brown company, brown retro"
+    },
+    {
+      "file": "about.jpg",
+      "source": "pixabay",
+      "sha256": "f2a980b7b032d68919fcf78f0292bc1d12969a95f394c7d74ba458504d8ab0b1",
+      "query": "barber working beard client",
+      "providerId": 1007897,
+      "pageUrl": "https://pixabay.com/photos/haircut-model-male-man-hairstyle-1007897/",
+      "photographer": "Renee_Olmsted_Photography",
+      "photographerUrl": "https://pixabay.com/users/1445310/",
+      "tags": "haircut, model, male, man, hairstyle, hair, hair model, barber, barber shop, grooming, face, caucasian, black and white, gray shopping, gray model, gray shop, gray hair"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "pixabay",
+      "sha256": "459def1ef95bd6ea5292ed75c053bf0c1a285161fcb6118df9a854964eca3d9f",
+      "query": "men haircut scissors",
+      "providerId": 2595657,
+      "pageUrl": "https://pixabay.com/photos/people-barbershop-haircut-men-2595657/",
+      "photographer": "StockSnap",
+      "photographerUrl": "https://pixabay.com/users/894430/",
+      "tags": "people, barbershop, haircut, men, mirror, brown mirror"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "pixabay",
+      "sha256": "4786a8eb5ef6a046ac63ab3425886e315ec5c8cfbda069090257e36bf30406e9",
+      "query": "straight razor shave hot towel",
+      "providerId": 1007886,
+      "pageUrl": "https://pixabay.com/photos/razor-straight-barber-male-man-1007886/",
+      "photographer": "Renee_Olmsted_Photography",
+      "photographerUrl": "https://pixabay.com/users/1445310/",
+      "tags": "razor, straight, barber, male, man, grooming, shaving, shave, blade, hands, black and white"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "pixabay",
+      "sha256": "a7d1e890fdec87c0a3343e3cfcff88b8b8b0570949356e4f785f132852f713db",
+      "query": "barbershop chairs mirrors",
+      "providerId": 6797941,
+      "pageUrl": "https://pixabay.com/photos/barber-shop-job-work-occupation-6797941/",
+      "photographer": "mostafa_meraji",
+      "photographerUrl": "https://pixabay.com/users/13551092/",
+      "tags": "barber shop, job, work, occupation, business, iran, mashhad city, hair, salon, jorj barber, barbershop in iran, mostafa meraji, hairdresser in iran"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "pixabay",
+      "sha256": "b31ffd9b492bf1a9d56ce29a07b3dab16bf6d2b9cd09c892fda89d4f41158d5f",
+      "query": "beard trim barber",
+      "providerId": 3173419,
+      "pageUrl": "https://pixabay.com/photos/barber-beard-shaver-shaving-3173419/",
+      "photographer": "jackmac34",
+      "photographerUrl": "https://pixabay.com/users/483877/",
+      "tags": "barber, beard, shaver, shaving, hair salon"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "pixabay",
+      "sha256": "06d6fa4052a2c81d3d27243501d0c23bdcc80a46ca0e1a6f9de4b1462654ec04",
+      "query": "barber shaving brush razor",
+      "providerId": 2202295,
+      "pageUrl": "https://pixabay.com/photos/shaving-set-shaving-brush-razor-2202295/",
+      "photographer": "WikimediaImages",
+      "photographerUrl": "https://pixabay.com/users/1185597/",
+      "tags": "shaving set, shaving brush, razor, barber, brush, barbershop, equipment, shave, accessories, hairdresser"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "pixabay",
+      "sha256": "156438138c759f416b46a4cfda4ce02f62d9386bd318a352622fdfc6495f54de",
+      "query": "barber clippers fade man",
+      "providerId": 8254063,
+      "pageUrl": "https://pixabay.com/photos/fashion-beard-barbershop-barber-8254063/",
+      "photographer": "Macroodry",
+      "photographerUrl": "https://pixabay.com/users/8179739/",
+      "tags": "fashion, beard, barbershop, barber, model, men, barber shop, hairdressing"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "pixabay",
+      "sha256": "08735f1410e9c4b6827dc9eb0084e2158e2941a91ec1af6ddf1a6aba9a579ef1",
+      "query": "barber hot towel beard man",
+      "providerId": 4136705,
+      "pageUrl": "https://pixabay.com/photos/beard-bearded-bearded-man-4136705/",
+      "photographer": "BeardedBasturds",
+      "photographerUrl": "https://pixabay.com/users/11824871/",
+      "tags": "beard, bearded, bearded man, beard model, guy, smile, man, male, mustache, barber, moustache, gray smile"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "pixabay",
+      "sha256": "7e4e6306d37676769d45d2a1d705342c1716b0dcf30b94e89db2fd8fa3d067cf",
+      "query": "barber pole vintage",
+      "providerId": 2142482,
+      "pageUrl": "https://pixabay.com/photos/hairdressing-barbershop-barber-2142482/",
+      "photographer": "makamuki0",
+      "photographerUrl": "https://pixabay.com/users/1102736/",
+      "tags": "hairdressing, barbershop, barber, signal"
+    }
+  ]
+}

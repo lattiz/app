@@ -78,6 +78,7 @@ export const FAMILIES: Record<string, Family> = {
   'locations/cards': 'cells',
   'cta/band': 'band',
   'cta/urgent-line': 'band',
+  'cta/ritual-panels': 'cells',
   'navbar/inline': 'chrome',
   'navbar/centered-logo': 'chrome',
   'navbar/notice-bar': 'chrome',

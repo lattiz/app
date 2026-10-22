@@ -1,0 +1,16 @@
+{
+  "$lattiz": "GENERATED from specs/barberia-abeto-v3.spec.json (spec 69ee2eeee689, file 780bb807cbda). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "f9a57d9ee4695a0c2e3604ee39abebbc9840357ac1e8625ed349e0f062020497",
+      "query": "barbershop chair",
+      "providerId": 2165745,
+      "pageUrl": "https://pixabay.com/photos/barber-shop-chair-barber-shop-2165745/",
+      "photographer": "ClickerHappy",
+      "photographerUrl": "https://pixabay.com/users/324082/",
+      "tags": "barber, shop, chair, barber shop, haircut, hairdresser, beard, barbershop, vintage, retro, mustache, hipster, grooming, scissors, man, razor, symbol, male, old, shave, hairstyle"
+    }
+  ]
+}

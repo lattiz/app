@@ -1,0 +1,49 @@
+<section
+  id="ritual"
+  data-lz-slot="cta"
+  data-lz-variant="ritual-panels"
+  class="lz-section lz-cta-ritual-panels"
+>
+  <div class="lz-container">
+    <div class="lz-cta-ritual-panels__head">
+      <p
+        class="lz-cta-ritual-panels__kicker"
+        data-lz-if="kicker"
+        data-lz-key="kicker"
+      ></p>
+      <h2 class="lz-title lz-cta-ritual-panels__title" data-lz-key="title"></h2>
+      <p
+        class="lz-cta-ritual-panels__summary"
+        data-lz-if="summary"
+        data-lz-key="summary"
+      ></p>
+    </div>
+    <ol class="lz-cta-ritual-panels__list" data-lz-if="steps">
+      <li class="lz-cta-ritual-panels__step" data-lz-each="steps">
+        <span class="lz-cta-ritual-panels__num" aria-hidden="true"></span>
+        <h3 class="lz-cta-ritual-panels__name" data-lz-key="title"></h3>
+        <p class="lz-cta-ritual-panels__text" data-lz-key="text"></p>
+        <p
+          class="lz-cta-ritual-panels__duration"
+          data-lz-if="duration"
+          data-lz-key="duration"
+        ></p>
+      </li>
+    </ol>
+    <div class="lz-cta-ritual-panels__actions">
+      <a
+        href="{{whatsappUrl}}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="lz-button lz-button--primary lz-cta-ritual-panels__cta"
+        data-lz-key="primaryCta"
+      ></a>
+      <a
+        data-lz-if="secondaryCta"
+        class="lz-button lz-cta-ritual-panels__secondary"
+        data-lz-attr-href="secondaryHref"
+        data-lz-key="secondaryCta"
+      ></a>
+    </div>
+  </div>
+</section>
