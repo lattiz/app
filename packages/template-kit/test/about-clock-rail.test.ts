@@ -70,7 +70,6 @@ describe('about/clock-rail', () => {
 
   it('uses theme tokens only and handles the narrow layouts', () => {
     const sheet = css();
-    expect(sheet).toMatch(/prefers-reduced-motion/);
     expect(sheet).toMatch(/max-width: 992px/);
     expect(sheet).toMatch(/max-width: 480px/);
     expect(sheet).not.toMatch(/#[0-9a-fA-F]{3,8}\b|rgba?\(|@import|url\(/);

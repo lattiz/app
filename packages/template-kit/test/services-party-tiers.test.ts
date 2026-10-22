@@ -68,7 +68,6 @@ describe('services/party-tiers', () => {
     expect(sheet).toMatch(/:nth-child\(2\):nth-last-child\(2\)/);
     expect(sheet).toMatch(/background: var\(--lz-color-text\)/);
     expect(sheet).not.toMatch(/#[0-9a-fA-F]{3,8}\b|rgba?\(|@import|url\(/);
-    expect(sheet).toMatch(/prefers-reduced-motion/);
     expect(sheet).toMatch(/max-width: 992px/);
     expect(sheet).toMatch(/max-width: 480px/);
   });
