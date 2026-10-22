@@ -1,0 +1,78 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-la-nota-azul-v2.spec.json (spec 6c6c43d83abc, file d2750de19d6d). Do not edit: use the spec, or freeze.",
+  "name": "restaurante-la-nota-azul-v2",
+  "label": "La Nota Azul · Pro",
+  "tier": "pro",
+  "fontPair": "oswald+source-sans-3",
+  "colors": {
+    "bg": "#0B1630",
+    "surface": "#14264A",
+    "surface-2": "#4A2418",
+    "text": "#F4EBDD",
+    "muted": "#BFB6AA",
+    "accent": "#2FA8E0",
+    "on-accent": "#0B1630",
+    "accent-text": "#FF6B6B",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#0B1630",
+    "on-overlay": "#F4EBDD",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#0B1630"
+  },
+  "fonts": {
+    "display": "'Oswald', sans-serif",
+    "serif": "'Source Sans 3', sans-serif",
+    "body": "'Source Sans 3', sans-serif",
+    "googleFonts": "family=Oswald:wght@600&family=Source+Sans+3:ital,wght@0,400..600;1,400",
+    "displayTransform": "uppercase",
+    "displayLeading": "0.96",
+    "displayWeight": "600",
+    "displayScale": "1.1",
+    "accentStyle": "italic",
+    "accentTransform": "lowercase",
+    "mood": ["urbano", "energía"],
+    "affinity": ["gimnasio", "barberia", "restaurante"],
+    "case": "upper",
+    "tracking": "normal",
+    "typeScale": "normal",
+    "licenses": {
+      "Oswald": "OFL-1.1",
+      "Source Sans 3": "OFL-1.1"
+    }
+  },
+  "shape": {
+    "radiusCard": "0px",
+    "radiusPill": "0px",
+    "border": "1px",
+    "shadow": "soft"
+  },
+  "density": "compact",
+  "photoTreatment": "none",
+  "placeholder": "stripes",
+  "accentWords": "color",
+  "container": "1120px",
+  "effects": {
+    "mapFilter": "grayscale(1) invert(.9) contrast(.9) brightness(.8)",
+    "heroImageFilter": "brightness(.45) saturate(.9)"
+  },
+  "style": {
+    "shape": "sharp",
+    "surface": "outlined",
+    "density": "compact",
+    "divider": "rule",
+    "imageTreatment": "duotone-overlay",
+    "typeScale": "expressive",
+    "displayCase": "upper",
+    "tracking": "wide"
+  },
+  "primitives": {
+    "button": "solid",
+    "card": "outlined",
+    "tag": "outlined",
+    "frame": "duotone",
+    "number": "ruled",
+    "quote": "marks",
+    "divider": "rule"
+  }
+}

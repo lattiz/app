@@ -1,0 +1,16 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-la-nota-azul-v2.spec.json (spec 6c6c43d83abc, file 4d6d73c403d0). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "f9d2d953a9bb75f058c3d43a8f438bba8fd930475be3c0f98d2a6a1537d7bb05",
+      "query": "saxophone player stage",
+      "providerId": 3264716,
+      "pageUrl": "https://pixabay.com/photos/music-performance-concert-musician-3264716/",
+      "photographer": "aaron00023",
+      "photographerUrl": "https://pixabay.com/users/790223/",
+      "tags": "music, performance, concert, musician, band, saxophone, singer, artist, red, blue, bicolor, model, young, guy, men, portrait, profile, to sing, sound, silhouette, jazz"
+    }
+  ]
+}

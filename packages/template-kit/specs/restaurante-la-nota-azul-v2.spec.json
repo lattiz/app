@@ -1,0 +1,470 @@
+{
+  "$schema": "./spec.schema.json",
+  "specVersion": 1,
+  "idBase": "restaurante-la-nota-azul",
+  "twin": true,
+  "giro": "restaurante",
+  "business": {
+    "name": "La Nota Azul",
+    "shortName": "La Nota",
+    "tagline": "Pizzería y jazz en Clavería",
+    "city": "CDMX",
+    "branch": "Clavería",
+    "address": "Calle Cobalto 45, Col. Clavería, CDMX",
+    "hours": "Mar–Dom 13:00–23:00 · Lun cerrado",
+    "phone": "+52 55 0000 0000",
+    "whatsapp": "5215500000000",
+    "whatsappMessage": "Hola, quiero reservar una mesa"
+  },
+  "brand": {
+    "catalog": "extended",
+    "palette": {
+      "preset": "pal-marino-ladrillo-neon"
+    }
+  },
+  "layout": {
+    "direction": "neon-nocturno"
+  },
+  "sections": {
+    "pro": [
+      {
+        "role": "header"
+      },
+      {
+        "role": "hero",
+        "variant": "stack"
+      },
+      {
+        "role": "about",
+        "variant": "text-image-offset"
+      },
+      {
+        "role": "cta",
+        "variant": "ticket-stub-bill"
+      },
+      {
+        "role": "catalog",
+        "variant": "price-list"
+      },
+      {
+        "role": "proof",
+        "variant": "strip"
+      },
+      {
+        "role": "testimonials",
+        "variant": "paper-trio"
+      },
+      {
+        "role": "faq",
+        "variant": "list"
+      },
+      {
+        "role": "contact",
+        "variant": "map-link"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer",
+        "variant": "big-wordmark"
+      }
+    ],
+    "basico": [
+      {
+        "role": "header"
+      },
+      {
+        "role": "hero",
+        "variant": "centered-arch"
+      },
+      {
+        "role": "cta",
+        "variant": "ticket-stub-bill"
+      },
+      {
+        "role": "catalog",
+        "variant": "price-list"
+      },
+      {
+        "role": "faq",
+        "variant": "list"
+      },
+      {
+        "role": "contact",
+        "variant": "single-card"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer",
+        "variant": "big-wordmark"
+      }
+    ]
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}}",
+      "description": "{{name}} en {{city}}: pizza al horno de leña y un trío de jazz de jueves a sábado. Reserva con un mensaje."
+    },
+    "navbar": {
+      "cta": "Reservar"
+    },
+    "hero": {
+      "image": "hero.jpg",
+      "imageAlt": "Saxofonista tocando bajo una luz roja de escenario",
+      "eyebrow": "Jazz y horno de leña · {{branch}}",
+      "title": "Pizza al horno, jazz en la mesa de al lado",
+      "text": "Masa que reposa dos días, horno de leña a la vista y un trío en vivo de jueves a sábado. Escríbenos para guardar tu lugar.",
+      "primaryCta": "Reservar mesa",
+      "secondaryCta": "Ver la carta",
+      "secondaryHref": "#servicios",
+      "details": [
+        {
+          "label": "Horario",
+          "value": "Mar–Dom 13:00–23:00"
+        },
+        {
+          "label": "Jazz",
+          "value": "Jue–Sáb desde 21:00"
+        },
+        {
+          "label": "Mesas",
+          "value": "Reserva por WhatsApp"
+        }
+      ],
+      "sticker": "Jazz esta semana"
+    },
+    "about": {
+      "kicker": "{{index}} — La casa",
+      "title": "Una pizzería de barrio con escenario",
+      "summary": "{{shortName}} abre en {{branch}}: horno de leña, un salón azul y un trío que toca cada fin de semana.",
+      "image": "about.jpg",
+      "imageAlt": "Llamas dentro del horno de leña donde se cuecen las pizzas",
+      "statement": "Pizza de barrio, música de noche y mesa para quedarse al último set.",
+      "paragraphs": [
+        "{{shortName}} empezó con seis mesas y una receta de masa que reposa dos días.",
+        "Hoy el horno de leña sigue a la vista y la sobremesa se alarga con el último set.",
+        "Ven temprano por una pizza o quédate hasta que termine la música."
+      ],
+      "sticker": "Clavería",
+      "stats": [
+        {
+          "value": "6 pizzas",
+          "label": "De la casa en la carta"
+        },
+        {
+          "value": "3 noches",
+          "label": "De jazz en vivo"
+        },
+        {
+          "value": "Clavería",
+          "label": "Colonia de {{city}}"
+        }
+      ]
+    },
+    "services": {
+      "kicker": "{{index}} — La carta",
+      "title": "Pizzas de la casa",
+      "intro": "Precios de ejemplo en pesos, IVA incluido. Hay pizza del día; pregunta en mesa.",
+      "prices": [
+        {
+          "name": "Margarita",
+          "price": "$185",
+          "description": "Salsa de tomate, mozzarella fresca y hojas de albahaca."
+        },
+        {
+          "name": "Pepperoni",
+          "price": "$210",
+          "description": "Pepperoni curado, mozzarella y un toque de orégano."
+        },
+        {
+          "name": "La Nota",
+          "price": "$245",
+          "description": "Cebolla caramelizada, tocino ahumado y queso azul. Receta de la casa."
+        },
+        {
+          "name": "Vegetariana",
+          "price": "$195",
+          "description": "Calabacita, champiñón, pimiento asado y pesto de albahaca."
+        },
+        {
+          "name": "Pizza del día",
+          "price": "$220",
+          "description": "Con el ingrediente de temporada que llegó al mercado."
+        },
+        {
+          "name": "Calzone dulce",
+          "price": "$90",
+          "description": "Relleno tibio con helado de vainilla, solo en noches de show."
+        }
+      ],
+      "promos": [
+        {
+          "tag": "Jazz en vivo",
+          "title": "Jueves, viernes y sábado",
+          "text": "El trío toca desde las 21:00. Reserva tu mesa para el set.",
+          "cta": "Reservar",
+          "href": "{{whatsappUrl:Hola, quiero reservar para el show de jazz}}"
+        },
+        {
+          "tag": "Eventos",
+          "title": "Reuniones y cumpleaños",
+          "text": "El salón recibe grupos de hasta treinta personas, con menú acordado.",
+          "cta": "Cotizar",
+          "href": "{{whatsappUrl:Hola, quiero cotizar un evento}}"
+        }
+      ]
+    },
+    "gallery": {
+      "kicker": "{{index}} — La noche",
+      "title": "Música, horno y <span class=\"lz-title__serif\">barra</span>",
+      "items": [
+        {
+          "image": "gallery-01.jpg",
+          "caption": "Contrabajo",
+          "alt": "Contrabajista cantando junto al micrófono mientras toca"
+        },
+        {
+          "image": "gallery-02.jpg",
+          "caption": "Voz de jazz",
+          "alt": "Cantante de jazz con micrófono frente a la banda, en blanco y negro"
+        },
+        {
+          "image": "gallery-03.jpg",
+          "caption": "Barra con luz",
+          "alt": "Tres botellas de colores iluminadas sobre una barra oscura"
+        },
+        {
+          "image": "gallery-04.jpg",
+          "caption": "Pizza al horno",
+          "alt": "Pizza sobre la parrilla frente a las brasas del horno de leña"
+        },
+        {
+          "image": "gallery-05.jpg",
+          "caption": "Margarita",
+          "alt": "Pizza con tomate y albahaca sobre tabla de madera"
+        },
+        {
+          "image": "gallery-06.jpg",
+          "caption": "Masa a mano",
+          "alt": "Bolas de masa y rodillo sobre la mesa de trabajo"
+        }
+      ]
+    },
+    "testimonials": {
+      "kicker": "{{index}} — Mesa de al lado",
+      "allReviewsCta": "Ver reseñas en Google",
+      "writeReviewCta": "Dejar reseña en Google",
+      "reviews": [
+        {
+          "text": "Llegamos por la pizza y nos quedamos al segundo set. La mesa junto al escenario fue un acierto.",
+          "author": "Daniela R.",
+          "place": "Narvarte"
+        },
+        {
+          "text": "Apartamos por WhatsApp un jueves y nos respondieron en minutos. Volvemos con amigos.",
+          "author": "Miguel A.",
+          "place": "Clavería"
+        },
+        {
+          "text": "Celebramos un cumpleaños en el salón. La masa estaba increíble y la música no tapaba la plática.",
+          "author": "Paola S.",
+          "place": "Azcapotzalco"
+        }
+      ],
+      "title": "Lo que cuentan quienes <span class=\"lz-title__serif\">vienen</span>",
+      "intro": "Opiniones de clientes que reservaron por WhatsApp.",
+      "cta": "Reservar mesa"
+    },
+    "faq": {
+      "kicker": "{{index}} — Preguntas",
+      "title": "Antes de <span class=\"lz-title__serif\">llegar</span>",
+      "intro": "Lo que nos preguntan antes de venir. ¿Otra duda? Escríbenos por WhatsApp.",
+      "cta": "Preguntar por WhatsApp",
+      "items": [
+        {
+          "question": "¿Conviene apartar mesa?",
+          "answer": "De jueves a sábado sí, sobre todo si quieres lugar cerca del escenario."
+        },
+        {
+          "question": "¿Hay cover para el jazz?",
+          "answer": "Con reserva entre semana no se cobra. Para fin de semana, consúltalo por WhatsApp."
+        },
+        {
+          "question": "¿Hay pizzas sin carne?",
+          "answer": "Sí: la vegetariana y la margarita están siempre disponibles."
+        },
+        {
+          "question": "¿Venden pizza para llevar?",
+          "answer": "Sí. Pide por chat y te avisamos en cuánto tiempo pasar."
+        },
+        {
+          "question": "¿Sirven mezcal y cerveza?",
+          "answer": "Sí, con consumo responsable. En la barra te recomiendan la opción de la casa."
+        }
+      ]
+    },
+    "locations": {
+      "kicker": "{{index}} — Reservar",
+      "title": "Aparta tu <span class=\"lz-title__serif\">mesa</span>",
+      "contactText": "Aparta mesa o pide para llevar por WhatsApp durante el horario. Para grupos grandes, escríbenos un correo.",
+      "whatsappLabel": "WhatsApp",
+      "whatsappValue": "Reservar mesa",
+      "callLabel": "Teléfono",
+      "emailLabel": "Correo",
+      "directionsLabel": "Cómo llegar",
+      "hoursLabel": "Horario",
+      "whatsappCta": "Reservar por WhatsApp",
+      "callCta": "Llamar"
+    },
+    "floating-whatsapp": {
+      "label": "Reservar por WhatsApp"
+    },
+    "footer": {
+      "about": "Pizzería con jazz en vivo en {{branch}}, {{city}}. Reservas por WhatsApp.",
+      "branchesTitle": "Dónde estamos",
+      "linksTitle": "Explorar",
+      "contactTitle": "Contacto"
+    },
+    "cta": {
+      "kicker": "Programación en vivo",
+      "title": "Cartelera de la <span class=\"lz-title__serif\">semana</span>",
+      "text": "Las noches de música se llenan temprano. Aparta tu mesa para el set que quieras escuchar.",
+      "primaryCta": "Reservar mesa",
+      "secondaryCta": "Ver la carta",
+      "secondaryHref": "#servicios",
+      "shows": [
+        {
+          "day": "Cada",
+          "date": "Jue",
+          "time": "21:00",
+          "title": "Trío de la casa",
+          "text": "Estándares de jazz y clásicos con arreglos propios.",
+          "badge": "Entrada libre",
+          "cta": "Reservar",
+          "href": "{{whatsappUrl:Hola, quiero reservar mesa para el jueves de jazz}}"
+        },
+        {
+          "day": "Cada",
+          "date": "Vie",
+          "time": "21:30",
+          "title": "Noche de jazz manouche",
+          "text": "Cuerdas gitanas y swing de principio a fin.",
+          "cta": "Reservar",
+          "href": "{{whatsappUrl:Hola, quiero reservar mesa para el viernes de jazz manouche}}"
+        },
+        {
+          "day": "Cada",
+          "date": "Sáb",
+          "time": "21:30",
+          "title": "Bossa nova y vino",
+          "text": "Ritmos brasileños para brindar sin prisa.",
+          "cta": "Reservar",
+          "href": "{{whatsappUrl:Hola, quiero reservar mesa para el sábado de bossa nova}}"
+        }
+      ]
+    }
+  },
+  "overrides": {
+    "basico": {
+      "copy": {
+        "hero": {
+          "title": "Pizza de horno en {{branch}}",
+          "text": "Masa lenta, horno de leña y jazz de jueves a sábado. Reserva tu mesa por WhatsApp.",
+          "sticker": "Jazz esta semana"
+        },
+        "faq": {
+          "items": [
+            {
+              "question": "¿Conviene apartar mesa?",
+              "answer": "De jueves a sábado sí, sobre todo si quieres lugar cerca del escenario."
+            },
+            {
+              "question": "¿Hay cover para el jazz?",
+              "answer": "Con reserva entre semana no se cobra. Para fin de semana, consúltalo por WhatsApp."
+            },
+            {
+              "question": "¿Hay pizzas sin carne?",
+              "answer": "Sí: la vegetariana y la margarita están siempre disponibles."
+            },
+            {
+              "question": "¿Venden pizza para llevar?",
+              "answer": "Sí. Pide por chat y te avisamos en cuánto tiempo pasar."
+            }
+          ]
+        }
+      },
+      "brand": {
+        "palette": {
+          "preset": "pal-ladrillo-indigo-neon"
+        }
+      }
+    }
+  },
+  "images": [
+    {
+      "key": "hero",
+      "source": {
+        "search": "saxophone player stage"
+      }
+    },
+    {
+      "key": "about",
+      "source": {
+        "search": "pizza oven fire flames"
+      }
+    },
+    {
+      "key": "gallery-01",
+      "source": {
+        "search": "double bass player jazz"
+      }
+    },
+    {
+      "key": "gallery-02",
+      "source": {
+        "search": "jazz band live concert"
+      }
+    },
+    {
+      "key": "gallery-03",
+      "source": {
+        "search": "cocktail bar neon blue"
+      }
+    },
+    {
+      "key": "gallery-04",
+      "source": {
+        "search": "wood fired pizza oven"
+      }
+    },
+    {
+      "key": "gallery-05",
+      "source": {
+        "search": "margherita pizza wooden board"
+      }
+    },
+    {
+      "key": "gallery-06",
+      "source": {
+        "search": "pizza dough hands flour"
+      }
+    }
+  ],
+  "motion": {
+    "preset": "editorial",
+    "progress": false
+  },
+  "todo": [
+    "business: dirección, colonia, horario, teléfono y WhatsApp reales (hoy son de demostración)",
+    "copy: precios, equipo, reseñas y preguntas del negocio",
+    "images: fotos reales ({ \"file\": \"…\" }) o `pnpm lattiz build <id> --images pexels`",
+    "brand: paleta, tipografía y forma (spec schema → opciones; `kit:spec presets` las lista)"
+  ],
+  "version": 2,
+  "renews": {
+    "spec": "restaurante-la-nota-azul"
+  }
+}
