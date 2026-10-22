@@ -30,6 +30,34 @@
         }
       }
     },
+    "barberia-abeto-v3": {
+      "manifest": "templates/barberia-abeto-v3.ts",
+      "hashes": {
+        "project": "edc190790aafc4a4",
+        "html": "f226e6bbab839448",
+        "css": "82669f940ab83699",
+        "rootCss": "5e05adb8144a4d28",
+        "theme": "4c5ac9af7e457e6d",
+        "pack": "77328924a7228f2a",
+        "meta": "e4a1079074f6c0dc",
+        "assets": "bedd60dd7cb3f23e"
+      },
+      "assets": 10,
+      "size": {
+        "css": {
+          "raw": 34069,
+          "gzip": 6052
+        },
+        "html": {
+          "raw": 26708,
+          "gzip": 7041
+        },
+        "index": {
+          "raw": 60793,
+          "gzip": 13047
+        }
+      }
+    },
     "barberia-base-abeto-v1": {
       "manifest": "templates/barberia-base-abeto-v1.ts",
       "hashes": {
@@ -394,6 +422,34 @@
         }
       }
     },
+    "clinica-cauce-v2": {
+      "manifest": "templates/clinica-cauce-v2.ts",
+      "hashes": {
+        "project": "c52f4884983f6427",
+        "html": "8ec11424af75cccc",
+        "css": "df7382c711a72ab7",
+        "rootCss": "6a958a6a201a2cfa",
+        "theme": "f86ba8a00ad40b58",
+        "pack": "062e121c172b4e29",
+        "meta": "d312aa6d9da1d8b2",
+        "assets": "30f47798f704d1c4"
+      },
+      "assets": 13,
+      "size": {
+        "css": {
+          "raw": 38588,
+          "gzip": 6715
+        },
+        "html": {
+          "raw": 29264,
+          "gzip": 7180
+        },
+        "index": {
+          "raw": 67868,
+          "gzip": 13830
+        }
+      }
+    },
     "dental-arboleda-v1": {
       "manifest": "templates/dental-arboleda-v1.ts",
       "hashes": {
@@ -531,6 +587,34 @@
         "index": {
           "raw": 59781,
           "gzip": 12671
+        }
+      }
+    },
+    "estetica-alheli-v2": {
+      "manifest": "templates/estetica-alheli-v2.ts",
+      "hashes": {
+        "project": "a772253e2dd8f671",
+        "html": "11e1a6f42291d618",
+        "css": "5e193004bc5830a4",
+        "rootCss": "ef159f09e5c9f4e5",
+        "theme": "0d3694d37972eae6",
+        "pack": "f5f2281b5616a599",
+        "meta": "f74d37c9a2610af2",
+        "assets": "7fee10a748f3d0d8"
+      },
+      "assets": 14,
+      "size": {
+        "css": {
+          "raw": 35383,
+          "gzip": 6302
+        },
+        "html": {
+          "raw": 27913,
+          "gzip": 6424
+        },
+        "index": {
+          "raw": 63312,
+          "gzip": 12665
         }
       }
     },
@@ -702,6 +786,62 @@
         }
       }
     },
+    "floreria-cardamina-v2": {
+      "manifest": "templates/floreria-cardamina-v2.ts",
+      "hashes": {
+        "project": "0514aab8450763a8",
+        "html": "c6a5fc0fd9bb4714",
+        "css": "0c97a5bfdd03146b",
+        "rootCss": "56a752f217f24493",
+        "theme": "b1d9a90857045dc0",
+        "pack": "3abe7670927c3cfe",
+        "meta": "ef702521b12f0b62",
+        "assets": "84567540d988bcce"
+      },
+      "assets": 10,
+      "size": {
+        "css": {
+          "raw": 31965,
+          "gzip": 5815
+        },
+        "html": {
+          "raw": 24180,
+          "gzip": 6069
+        },
+        "index": {
+          "raw": 56161,
+          "gzip": 11800
+        }
+      }
+    },
+    "floreria-casa-confeti-v2": {
+      "manifest": "templates/floreria-casa-confeti-v2.ts",
+      "hashes": {
+        "project": "bbc8a91584bb2da1",
+        "html": "e7522fe35c528d71",
+        "css": "eee8f1bb422e1675",
+        "rootCss": "c24e61bac3a59247",
+        "theme": "1f452263f54166a8",
+        "pack": "427be2fbc4bf5f32",
+        "meta": "93e6711c3bbb10de",
+        "assets": "16a664a18f2b7a08"
+      },
+      "assets": 9,
+      "size": {
+        "css": {
+          "raw": 35548,
+          "gzip": 6352
+        },
+        "html": {
+          "raw": 26654,
+          "gzip": 6767
+        },
+        "index": {
+          "raw": 62218,
+          "gzip": 13046
+        }
+      }
+    },
     "floreria-flores-lupita-v1": {
       "manifest": "templates/floreria-flores-lupita-v1.ts",
       "hashes": {
@@ -783,6 +923,34 @@
         "index": {
           "raw": 58904,
           "gzip": 12467
+        }
+      }
+    },
+    "gimnasio-pulso-deportivo-v2": {
+      "manifest": "templates/gimnasio-pulso-deportivo-v2.ts",
+      "hashes": {
+        "project": "9b7f30f73bfa0144",
+        "html": "4af40cf76e68cdbb",
+        "css": "4640a150ab1d49e7",
+        "rootCss": "90fcb95c28b16e76",
+        "theme": "abfd5b5b50d95d7d",
+        "pack": "b768dafca8b895dd",
+        "meta": "9c53f2aa764ea29a",
+        "assets": "ee5113f27def52dc"
+      },
+      "assets": 9,
+      "size": {
+        "css": {
+          "raw": 37473,
+          "gzip": 6479
+        },
+        "html": {
+          "raw": 27345,
+          "gzip": 6141
+        },
+        "index": {
+          "raw": 64834,
+          "gzip": 12579
         }
       }
     },
@@ -1010,6 +1178,34 @@
         }
       }
     },
+    "restaurante-claveria-verde-v2": {
+      "manifest": "templates/restaurante-claveria-verde-v2.ts",
+      "hashes": {
+        "project": "57dd5c3f00b2b255",
+        "html": "ec55987652989a76",
+        "css": "bad44919285f2073",
+        "rootCss": "5010fe58537a14ff",
+        "theme": "6f1b06d854447d4b",
+        "pack": "edbb5a9be3e5e7a4",
+        "meta": "c2b80bddd20a6672",
+        "assets": "7922a34ef8b83c4b"
+      },
+      "assets": 10,
+      "size": {
+        "css": {
+          "raw": 38221,
+          "gzip": 6450
+        },
+        "html": {
+          "raw": 28721,
+          "gzip": 7202
+        },
+        "index": {
+          "raw": 66958,
+          "gzip": 13597
+        }
+      }
+    },
     "restaurante-fresca-nube-v1": {
       "manifest": "templates/restaurante-fresca-nube-v1.ts",
       "hashes": {
@@ -1094,6 +1290,34 @@
         }
       }
     },
+    "restaurante-la-nota-azul-v2": {
+      "manifest": "templates/restaurante-la-nota-azul-v2.ts",
+      "hashes": {
+        "project": "7ce52c481906b84a",
+        "html": "e9283694893baf4d",
+        "css": "3fab3ce73c211fe5",
+        "rootCss": "f241dfee89917ccd",
+        "theme": "146608b7673c09e2",
+        "pack": "62b20f3498b48cc3",
+        "meta": "fd4b06cbded1e098",
+        "assets": "29dcf69a4e47a492"
+      },
+      "assets": 8,
+      "size": {
+        "css": {
+          "raw": 38666,
+          "gzip": 6892
+        },
+        "html": {
+          "raw": 25691,
+          "gzip": 6575
+        },
+        "index": {
+          "raw": 64373,
+          "gzip": 13380
+        }
+      }
+    },
     "restaurante-margen-v1": {
       "manifest": "templates/restaurante-margen-v1.ts",
       "hashes": {
@@ -1119,6 +1343,34 @@
         "index": {
           "raw": 62257,
           "gzip": 13298
+        }
+      }
+    },
+    "restaurante-trigo-y-brasa-v2": {
+      "manifest": "templates/restaurante-trigo-y-brasa-v2.ts",
+      "hashes": {
+        "project": "c81f683c4bcfc738",
+        "html": "63eee3bf8f6de399",
+        "css": "21faa5be22900973",
+        "rootCss": "47ab36bbd9434c26",
+        "theme": "b36baaf53faab790",
+        "pack": "623a7d7bfd33acd1",
+        "meta": "9cd0dd117c0c2128",
+        "assets": "701f8f2f0b588188"
+      },
+      "assets": 11,
+      "size": {
+        "css": {
+          "raw": 37831,
+          "gzip": 6673
+        },
+        "html": {
+          "raw": 27496,
+          "gzip": 7007
+        },
+        "index": {
+          "raw": 65343,
+          "gzip": 13621
         }
       }
     },
@@ -1236,6 +1488,44 @@
     }
   },
   "specs": {
+    "specs/barberia-abeto-v3.spec.json": {
+      "ids": [
+        "barberia-abeto-v3",
+        "barberia-base-abeto-v3"
+      ],
+      "specHash": "69ee2eeee689",
+      "files": {
+        "templates/barberia-abeto-v3.ts": "1d3eeab5746b",
+        "themes/barberia-abeto-v3.json": "28180be7520d",
+        "demo-profiles/barberia-abeto-v3.json": "92360ffafee0",
+        "templates/barberia-base-abeto-v3.ts": "c9d570c6d796",
+        "themes/barberia-base-abeto-v3.json": "3f043fbb9c8e",
+        "demo-profiles/barberia-base-abeto-v3.json": "92360ffafee0",
+        "content/barberia.abeto-v3.es-MX.ts": "77328924a722"
+      },
+      "choices": {
+        "barberia-abeto-v3": [
+          "arquetipo: bold"
+        ],
+        "barberia-base-abeto-v3": [
+          "arquetipo: bold"
+        ]
+      },
+      "peers": [
+        "barberia-base-claro-v1",
+        "barberia-base-grafito-estudio-v1",
+        "barberia-base-la-insignia-v1",
+        "barberia-base-oscuro-v1",
+        "barberia-base-solar-v1",
+        "barberia-concreto-v1",
+        "barberia-gabinete-pinar-v1",
+        "barberia-grafito-estudio-v1",
+        "barberia-la-insignia-v1",
+        "barberia-norte-v1",
+        "barberia-oxido-v1"
+      ],
+      "locked": true
+    },
     "specs/barberia-abeto.spec.json": {
       "ids": [
         "barberia-abeto-v1",
@@ -1320,6 +1610,33 @@
       ],
       "locked": true
     },
+    "specs/clinica-cauce-v2.spec.json": {
+      "ids": [
+        "clinica-cauce-v2",
+        "clinica-base-cauce-v2"
+      ],
+      "specHash": "1e2802e0cefe",
+      "files": {
+        "templates/clinica-cauce-v2.ts": "e40bff7e6fa9",
+        "themes/clinica-cauce-v2.json": "61b51b10adf9",
+        "demo-profiles/clinica-cauce-v2.json": "bc3f514d89c6",
+        "templates/clinica-base-cauce-v2.ts": "90556b8f262d",
+        "themes/clinica-base-cauce-v2.json": "7433cad000d8",
+        "demo-profiles/clinica-base-cauce-v2.json": "bc3f514d89c6",
+        "content/clinica.cauce-v2.es-MX.ts": "062e121c172b"
+      },
+      "choices": {
+        "clinica-cauce-v2": [],
+        "clinica-base-cauce-v2": []
+      },
+      "peers": [
+        "clinica-alba-v1",
+        "clinica-base-alba-v1",
+        "clinica-base-brote-v1",
+        "clinica-brote-v1"
+      ],
+      "locked": true
+    },
     "specs/clinica-cauce.spec.json": {
       "ids": [
         "clinica-cauce-v1",
@@ -1397,6 +1714,36 @@
       },
       "peers": []
     },
+    "specs/estetica-alheli-v2.spec.json": {
+      "ids": [
+        "estetica-alheli-v2",
+        "estetica-base-alheli-v2"
+      ],
+      "specHash": "204372a46f6f",
+      "files": {
+        "templates/estetica-alheli-v2.ts": "e0cd300ad76a",
+        "themes/estetica-alheli-v2.json": "85943af8a8db",
+        "demo-profiles/estetica-alheli-v2.json": "2a94f7e72ef0",
+        "templates/estetica-base-alheli-v2.ts": "5c8cb65f7447",
+        "themes/estetica-base-alheli-v2.json": "c3446cb4f832",
+        "demo-profiles/estetica-base-alheli-v2.json": "2a94f7e72ef0",
+        "content/estetica.alheli-v2.es-MX.ts": "f5f2281b5616"
+      },
+      "choices": {
+        "estetica-alheli-v2": [
+          "arquetipo: soft"
+        ],
+        "estetica-base-alheli-v2": [
+          "arquetipo: soft",
+          "tipografía: \"playfair-display+inter\" (del lock)"
+        ]
+      },
+      "peers": [
+        "estetica-base-estudio-nacar-v1",
+        "estetica-estudio-nacar-v1"
+      ],
+      "locked": true
+    },
     "specs/estetica-alheli.spec.json": {
       "ids": [
         "estetica-alheli-v1",
@@ -1447,6 +1794,41 @@
       },
       "peers": []
     },
+    "specs/floreria-cardamina-v2.spec.json": {
+      "ids": [
+        "floreria-cardamina-v2",
+        "floreria-base-cardamina-v2"
+      ],
+      "specHash": "269653124ad6",
+      "files": {
+        "templates/floreria-cardamina-v2.ts": "9ebe5ee896e2",
+        "themes/floreria-cardamina-v2.json": "af99f5b8e662",
+        "demo-profiles/floreria-cardamina-v2.json": "ce3152821f17",
+        "templates/floreria-base-cardamina-v2.ts": "52a3553fb3d2",
+        "themes/floreria-base-cardamina-v2.json": "4e0203354de5",
+        "demo-profiles/floreria-base-cardamina-v2.json": "ce3152821f17",
+        "content/floreria.cardamina-v2.es-MX.ts": "3abe7670927c"
+      },
+      "choices": {
+        "floreria-cardamina-v2": [
+          "arquetipo: editorial"
+        ],
+        "floreria-base-cardamina-v2": [
+          "arquetipo: editorial",
+          "paleta: \"pal-papel-tinta\" (del lock)",
+          "tipografía: \"instrument-serif+instrument-sans\" (del lock)"
+        ]
+      },
+      "peers": [
+        "floreria-base-casa-confeti-v1",
+        "floreria-base-casa-confeti-v2",
+        "floreria-base-flores-lupita-v1",
+        "floreria-casa-confeti-v1",
+        "floreria-casa-confeti-v2",
+        "floreria-flores-lupita-v1"
+      ],
+      "locked": true
+    },
     "specs/floreria-cardamina.spec.json": {
       "ids": [
         "floreria-cardamina-v1",
@@ -1468,6 +1850,45 @@
       },
       "peers": [
         "floreria-base-flores-lupita-v1",
+        "floreria-flores-lupita-v1"
+      ],
+      "locked": true
+    },
+    "specs/floreria-casa-confeti-v2.spec.json": {
+      "ids": [
+        "floreria-casa-confeti-v2",
+        "floreria-base-casa-confeti-v2"
+      ],
+      "specHash": "361edbc44e43",
+      "files": {
+        "templates/floreria-casa-confeti-v2.ts": "961d15972d4a",
+        "themes/floreria-casa-confeti-v2.json": "cb953010f786",
+        "demo-profiles/floreria-casa-confeti-v2.json": "76a2c5f352dd",
+        "templates/floreria-base-casa-confeti-v2.ts": "de839fd490c5",
+        "themes/floreria-base-casa-confeti-v2.json": "63b93d141254",
+        "demo-profiles/floreria-base-casa-confeti-v2.json": "76a2c5f352dd",
+        "content/floreria.casa-confeti-v2.es-MX.ts": "427be2fbc4bf"
+      },
+      "choices": {
+        "floreria-casa-confeti-v2": [
+          "dirección: jardin-suave",
+          "arquetipo: booking",
+          "paleta: \"pal-lavanda-tinta\" (del lock)",
+          "tipografía: \"fredoka+nunito\" (del lock)"
+        ],
+        "floreria-base-casa-confeti-v2": [
+          "dirección: jardin-suave",
+          "arquetipo: booking",
+          "paleta: \"pal-menta-tinta\" (del lock)",
+          "tipografía: \"red-hat-display+red-hat-text\" (del lock)"
+        ]
+      },
+      "peers": [
+        "floreria-base-cardamina-v1",
+        "floreria-base-cardamina-v2",
+        "floreria-base-flores-lupita-v1",
+        "floreria-cardamina-v1",
+        "floreria-cardamina-v2",
         "floreria-flores-lupita-v1"
       ],
       "locked": true
@@ -1521,6 +1942,31 @@
         ]
       },
       "peers": []
+    },
+    "specs/gimnasio-pulso-deportivo-v2.spec.json": {
+      "ids": [
+        "gimnasio-pulso-deportivo-v2",
+        "gimnasio-base-pulso-deportivo-v2"
+      ],
+      "specHash": "67f3c7a6daf8",
+      "files": {
+        "templates/gimnasio-pulso-deportivo-v2.ts": "73ba6a19d56f",
+        "themes/gimnasio-pulso-deportivo-v2.json": "008cd70af03a",
+        "demo-profiles/gimnasio-pulso-deportivo-v2.json": "25f80ba23ed0",
+        "templates/gimnasio-base-pulso-deportivo-v2.ts": "14531f9e7d0d",
+        "themes/gimnasio-base-pulso-deportivo-v2.json": "1c24a386ad20",
+        "demo-profiles/gimnasio-base-pulso-deportivo-v2.json": "25f80ba23ed0",
+        "content/gimnasio.pulso-deportivo-v2.es-MX.ts": "b768dafca8b8"
+      },
+      "choices": {
+        "gimnasio-pulso-deportivo-v2": [],
+        "gimnasio-base-pulso-deportivo-v2": []
+      },
+      "peers": [
+        "gimnasio-base-nave-norte-v1",
+        "gimnasio-nave-norte-v1"
+      ],
+      "locked": true
     },
     "specs/restaurante-casa-comal.spec.json": {
       "ids": [
@@ -1581,6 +2027,57 @@
       ],
       "locked": true
     },
+    "specs/restaurante-claveria-verde-v2.spec.json": {
+      "ids": [
+        "restaurante-claveria-verde-v2",
+        "restaurante-base-claveria-verde-v2"
+      ],
+      "specHash": "0ee305495571",
+      "files": {
+        "templates/restaurante-claveria-verde-v2.ts": "33f9f6b31135",
+        "themes/restaurante-claveria-verde-v2.json": "9980602c78ef",
+        "demo-profiles/restaurante-claveria-verde-v2.json": "d376842b1d7e",
+        "templates/restaurante-base-claveria-verde-v2.ts": "98912e5aff3a",
+        "themes/restaurante-base-claveria-verde-v2.json": "ba6fa9d3b89f",
+        "demo-profiles/restaurante-base-claveria-verde-v2.json": "d376842b1d7e",
+        "content/restaurante.claveria-verde-v2.es-MX.ts": "edbb5a9be3e5"
+      },
+      "choices": {
+        "restaurante-claveria-verde-v2": [
+          "dirección: jardin-suave",
+          "arquetipo: soft",
+          "tipografía: \"red-hat-display+red-hat-text\" (del lock)"
+        ],
+        "restaurante-base-claveria-verde-v2": [
+          "dirección: jardin-suave",
+          "arquetipo: soft",
+          "tipografía: \"league-spartan+mulish\" (del lock)"
+        ]
+      },
+      "peers": [
+        "restaurante-base-casa-comal-v1",
+        "restaurante-base-casa-rosa-mantequilla-v1",
+        "restaurante-base-ceniza-v1",
+        "restaurante-base-fresca-nube-v1",
+        "restaurante-base-hoja-y-barro-v1",
+        "restaurante-base-la-nota-azul-v1",
+        "restaurante-base-la-nota-azul-v2",
+        "restaurante-base-margen-v1",
+        "restaurante-base-trigo-y-brasa-v1",
+        "restaurante-base-trigo-y-brasa-v2",
+        "restaurante-casa-comal-v1",
+        "restaurante-casa-rosa-mantequilla-v1",
+        "restaurante-ceniza-v1",
+        "restaurante-fresca-nube-v1",
+        "restaurante-hoja-y-barro-v1",
+        "restaurante-la-nota-azul-v1",
+        "restaurante-la-nota-azul-v2",
+        "restaurante-margen-v1",
+        "restaurante-trigo-y-brasa-v1",
+        "restaurante-trigo-y-brasa-v2"
+      ],
+      "locked": true
+    },
     "specs/restaurante-fresca-nube.spec.json": {
       "ids": [
         "restaurante-fresca-nube-v1",
@@ -1635,6 +2132,57 @@
         "restaurante-base-casa-comal-v1",
         "restaurante-casa-comal-v1"
       ]
+    },
+    "specs/restaurante-la-nota-azul-v2.spec.json": {
+      "ids": [
+        "restaurante-la-nota-azul-v2",
+        "restaurante-base-la-nota-azul-v2"
+      ],
+      "specHash": "6c6c43d83abc",
+      "files": {
+        "templates/restaurante-la-nota-azul-v2.ts": "9e3c7b1081fc",
+        "themes/restaurante-la-nota-azul-v2.json": "d2750de19d6d",
+        "demo-profiles/restaurante-la-nota-azul-v2.json": "16838de17dd5",
+        "templates/restaurante-base-la-nota-azul-v2.ts": "8d1a462aa77d",
+        "themes/restaurante-base-la-nota-azul-v2.json": "f9baa6331465",
+        "demo-profiles/restaurante-base-la-nota-azul-v2.json": "16838de17dd5",
+        "content/restaurante.la-nota-azul-v2.es-MX.ts": "62b20f3498b4"
+      },
+      "choices": {
+        "restaurante-la-nota-azul-v2": [
+          "dirección: neon-nocturno",
+          "arquetipo: bold",
+          "tipografía: \"oswald+source-sans-3\" (del lock)"
+        ],
+        "restaurante-base-la-nota-azul-v2": [
+          "dirección: neon-nocturno",
+          "arquetipo: bold",
+          "tipografía: \"bebas-neue+barlow\" (del lock)"
+        ]
+      },
+      "peers": [
+        "restaurante-base-casa-comal-v1",
+        "restaurante-base-casa-rosa-mantequilla-v1",
+        "restaurante-base-ceniza-v1",
+        "restaurante-base-claveria-verde-v1",
+        "restaurante-base-claveria-verde-v2",
+        "restaurante-base-fresca-nube-v1",
+        "restaurante-base-hoja-y-barro-v1",
+        "restaurante-base-margen-v1",
+        "restaurante-base-trigo-y-brasa-v1",
+        "restaurante-base-trigo-y-brasa-v2",
+        "restaurante-casa-comal-v1",
+        "restaurante-casa-rosa-mantequilla-v1",
+        "restaurante-ceniza-v1",
+        "restaurante-claveria-verde-v1",
+        "restaurante-claveria-verde-v2",
+        "restaurante-fresca-nube-v1",
+        "restaurante-hoja-y-barro-v1",
+        "restaurante-margen-v1",
+        "restaurante-trigo-y-brasa-v1",
+        "restaurante-trigo-y-brasa-v2"
+      ],
+      "locked": true
     },
     "specs/restaurante-la-nota-azul.spec.json": {
       "ids": [
@@ -1705,6 +2253,55 @@
         "restaurante-ceniza-v1",
         "restaurante-fresca-nube-v1",
         "restaurante-hoja-y-barro-v1"
+      ],
+      "locked": true
+    },
+    "specs/restaurante-trigo-y-brasa-v2.spec.json": {
+      "ids": [
+        "restaurante-trigo-y-brasa-v2",
+        "restaurante-base-trigo-y-brasa-v2"
+      ],
+      "specHash": "c4c8c2d94ae1",
+      "files": {
+        "templates/restaurante-trigo-y-brasa-v2.ts": "267f5b6439a1",
+        "themes/restaurante-trigo-y-brasa-v2.json": "d14db287308c",
+        "demo-profiles/restaurante-trigo-y-brasa-v2.json": "2bd1abc63383",
+        "templates/restaurante-base-trigo-y-brasa-v2.ts": "947d5d0ea10c",
+        "themes/restaurante-base-trigo-y-brasa-v2.json": "e7960929b18f",
+        "demo-profiles/restaurante-base-trigo-y-brasa-v2.json": "2bd1abc63383",
+        "content/restaurante.trigo-y-brasa-v2.es-MX.ts": "623a7d7bfd33"
+      },
+      "choices": {
+        "restaurante-trigo-y-brasa-v2": [
+          "dirección: terracota-calida",
+          "arquetipo: catalog"
+        ],
+        "restaurante-base-trigo-y-brasa-v2": [
+          "dirección: terracota-calida",
+          "arquetipo: catalog"
+        ]
+      },
+      "peers": [
+        "restaurante-base-casa-comal-v1",
+        "restaurante-base-casa-rosa-mantequilla-v1",
+        "restaurante-base-ceniza-v1",
+        "restaurante-base-claveria-verde-v1",
+        "restaurante-base-claveria-verde-v2",
+        "restaurante-base-fresca-nube-v1",
+        "restaurante-base-hoja-y-barro-v1",
+        "restaurante-base-la-nota-azul-v1",
+        "restaurante-base-la-nota-azul-v2",
+        "restaurante-base-margen-v1",
+        "restaurante-casa-comal-v1",
+        "restaurante-casa-rosa-mantequilla-v1",
+        "restaurante-ceniza-v1",
+        "restaurante-claveria-verde-v1",
+        "restaurante-claveria-verde-v2",
+        "restaurante-fresca-nube-v1",
+        "restaurante-hoja-y-barro-v1",
+        "restaurante-la-nota-azul-v1",
+        "restaurante-la-nota-azul-v2",
+        "restaurante-margen-v1"
       ],
       "locked": true
     },
