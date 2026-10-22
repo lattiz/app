@@ -81,6 +81,7 @@ export const FAMILIES: Record<string, Family> = {
   'locations/map-link': 'split-panel',
   'locations/cards': 'cells',
   'cta/band': 'band',
+  'cta/ticket-stub-bill': 'rows',
   'cta/urgent-line': 'band',
   'cta/ritual-panels': 'cells',
   'cta/included-panel': 'band',

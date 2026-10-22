@@ -42,6 +42,7 @@ describe('kit blocks (generated from the kit)', () => {
       'lzb-cta-included-panel',
       'lzb-about-clock-rail',
       'lzb-services-party-tiers',
+      'lzb-cta-ticket-stub-bill',
       'lzb-btn',
       'lzb-tile',
       'lzb-tag',

@@ -1,0 +1,93 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-la-nota-azul-v2.spec.json (spec 6c6c43d83abc, file 94289c47b461). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "bf6226bc5abd98578e0bec21a308c5a3d55aba00c9abdf407b349c616068d3e9",
+      "query": "saxophone player stage",
+      "providerId": 3264716,
+      "pageUrl": "https://pixabay.com/photos/music-performance-concert-musician-3264716/",
+      "photographer": "aaron00023",
+      "photographerUrl": "https://pixabay.com/users/790223/",
+      "tags": "music, performance, concert, musician, band, saxophone, singer, artist, red, blue, bicolor, model, young, guy, men, portrait, profile, to sing, sound, silhouette, jazz"
+    },
+    {
+      "file": "about.jpg",
+      "source": "pixabay",
+      "sha256": "712388676e735a8ae9ebda31d0ddc9643839f10b286dece29b98ef7c10d6aab7",
+      "query": "pizza oven fire flames",
+      "providerId": 7568262,
+      "pageUrl": "https://pixabay.com/photos/fire-chimney-oven-firewood-burn-7568262/",
+      "photographer": "HelgaKa",
+      "photographerUrl": "https://pixabay.com/users/2849566/",
+      "tags": "fire, chimney, oven, firewood, burn, flames, warmth, winter, heat"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "pixabay",
+      "sha256": "516af5ce4c640034ac5e8722e3d5a96ceb36481cbec9b633cb102d6ddbeaa59a",
+      "query": "double bass player jazz",
+      "providerId": 4506153,
+      "pageUrl": "https://pixabay.com/photos/jazz-music-double-bass-concert-4506153/",
+      "photographer": "dtulupov",
+      "photographerUrl": "https://pixabay.com/users/10841891/",
+      "tags": "jazz, music, double bass, concert, tool, musician, group, sound, melody, orchestra, blues, equipment, acoustics, player, man, human, men"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "pixabay",
+      "sha256": "5c9e9534bb740a09a50508817d8cdb040271eff3ef917c8bdaca8312d9ad713e",
+      "query": "jazz band live concert",
+      "providerId": 1658886,
+      "pageUrl": "https://pixabay.com/photos/jazz-concert-singer-blues-music-1658886/",
+      "photographer": "SeppH",
+      "photographerUrl": "https://pixabay.com/users/1859049/",
+      "tags": "jazz, concert, singer, blues, music, monochrome"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "pixabay",
+      "sha256": "0344dde82bfdb39bec32c18af50b0ec4c8512b814cb19da8faa298830851fc52",
+      "query": "cocktail bar neon blue",
+      "providerId": 1596205,
+      "pageUrl": "https://pixabay.com/photos/neon-art-colour-multicoloured-1596205/",
+      "photographer": "Openpics",
+      "photographerUrl": "https://pixabay.com/users/1148498/",
+      "tags": "neon, art, colour, multicoloured, shining, mystical, glow, garish, mysterious, night, dark, nature, play of colors, neon colors, light, bottles, party, drink, club, cocktail, fresh, coloured, food, fruit, refreshment, alcohol, schnapps, mix, beer, gastronomy, bar, lounge, afterlife, event, water, reflection, to celebrate, life, abstract, fluid, drinks"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "pixabay",
+      "sha256": "ca302fcf45d6181326c8fd59c1609b99d2e40215c03537371c0a3438a0046983",
+      "query": "wood fired pizza oven",
+      "providerId": 6593419,
+      "pageUrl": "https://pixabay.com/photos/tarte-flambee-pizza-wood-fired-pizza-6593419/",
+      "photographer": "mariya_m",
+      "photographerUrl": "https://pixabay.com/users/12752456/",
+      "tags": "tarte flambee, pizza, wood fired pizza, brick oven pizza, wood oven pizza"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "pixabay",
+      "sha256": "3719dd762a29f3c3e43642233bfd81d02dd7b755380e57bf3b2fe8000c5287e4",
+      "query": "margherita pizza wooden board",
+      "providerId": 3010062,
+      "pageUrl": "https://pixabay.com/photos/pizza-plate-food-cheese-lunch-3010062/",
+      "photographer": "zuzi99",
+      "photographerUrl": "https://pixabay.com/users/7340598/",
+      "tags": "pizza, plate, food, cheese, lunch, vegetables, italian, vegetarian pizza, pizza slices, italian food, italian cuisine, composition, food photography"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "pixabay",
+      "sha256": "71205c8f06d7f0cafb5b4dd2f01cb56e46422097414bad28a4253d419e9893ee",
+      "query": "pizza dough hands flour",
+      "providerId": 2885089,
+      "pageUrl": "https://pixabay.com/photos/pizza-pastry-roll-pastry-2885089/",
+      "photographer": "jackmac34",
+      "photographerUrl": "https://pixabay.com/users/483877/",
+      "tags": "pizza, pastry, roll pastry, plain flour, baker"
+    }
+  ]
+}
