@@ -364,6 +364,52 @@ const SECTIONS: SectionSpec[] = [
       ],
     },
   },
+  {
+    id: 'lzb-cta-ticket-stub-bill',
+    label: 'Cartelera de boletos',
+    category: 'Secciones',
+    icon: 'cta',
+    slot: 'cta',
+    variant: 'ticket-stub-bill',
+    data: {
+      kicker: 'Programación en vivo',
+      title: 'Cartelera de la semana',
+      text: 'Aparta tu mesa para el set que quieras escuchar.',
+      primaryCta: 'Reservar mesa',
+      secondaryCta: 'Ver el menú',
+      secondaryHref: '#servicios',
+      shows: [
+        {
+          day: 'Jue',
+          date: '22',
+          time: '21:00',
+          title: 'Trío de la casa',
+          text: 'Estándares de jazz con arreglos propios.',
+          badge: 'Esta noche',
+          cta: 'Reservar',
+          href: '{{whatsappUrl}}',
+        },
+        {
+          day: 'Vie',
+          date: '23',
+          time: '21:30',
+          title: 'Noche de jazz manouche',
+          text: 'Cuerdas gitanas y mucho swing.',
+          cta: 'Reservar',
+          href: '{{whatsappUrl}}',
+        },
+        {
+          day: 'Sáb',
+          date: '24',
+          time: '21:30',
+          title: 'Bossa nova y vino',
+          text: 'Ritmos brasileños para brindar con calma.',
+          cta: 'Reservar',
+          href: '{{whatsappUrl}}',
+        },
+      ],
+    },
+  },
 ];
 
 interface PieceSpec {

@@ -1,0 +1,28 @@
+<section id="cartelera" data-lz-slot="cta" data-lz-variant="ticket-stub-bill" class="lz-section lz-cta-ticket-stub-bill">
+  <div class="lz-container lz-cta-ticket-stub-bill__inner">
+    <div class="lz-cta-ticket-stub-bill__head">
+      <p class="lz-cta-ticket-stub-bill__kicker" data-lz-if="kicker" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-cta-ticket-stub-bill__title" data-lz-key="title"></h2>
+      <p class="lz-cta-ticket-stub-bill__text" data-lz-if="text" data-lz-key="text"></p>
+      <div class="lz-cta-ticket-stub-bill__actions">
+        <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary" data-lz-key="primaryCta"></a>
+        <a data-lz-if="secondaryCta" class="lz-button lz-button--secondary" data-lz-attr-href="secondaryHref" data-lz-key="secondaryCta"></a>
+      </div>
+    </div>
+    <ol class="lz-cta-ticket-stub-bill__list" data-lz-if="shows">
+      <li class="lz-cta-ticket-stub-bill__show" data-lz-each="shows">
+        <div class="lz-cta-ticket-stub-bill__stub">
+          <span class="lz-cta-ticket-stub-bill__day" data-lz-key="day"></span>
+          <span class="lz-cta-ticket-stub-bill__date" data-lz-if="date" data-lz-key="date"></span>
+        </div>
+        <div class="lz-cta-ticket-stub-bill__body">
+          <p class="lz-cta-ticket-stub-bill__badge" data-lz-if="badge" data-lz-key="badge"></p>
+          <p class="lz-cta-ticket-stub-bill__time" data-lz-key="time"></p>
+          <h3 class="lz-cta-ticket-stub-bill__name" data-lz-key="title"></h3>
+          <p class="lz-cta-ticket-stub-bill__desc" data-lz-if="text" data-lz-key="text"></p>
+        </div>
+        <a data-lz-if="href" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--secondary lz-cta-ticket-stub-bill__reserve" data-lz-attr-href="href" data-lz-key="cta"></a>
+      </li>
+    </ol>
+  </div>
+</section>

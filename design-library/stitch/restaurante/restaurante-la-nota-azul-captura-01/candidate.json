@@ -1,0 +1,18 @@
+{
+  "id": "restaurante-la-nota-azul-captura-01",
+  "giro": "restaurante",
+  "source": "stitch",
+  "status": "collected",
+  "tags": [
+    "jazz",
+    "pizzeria",
+    "nocturno"
+  ],
+  "spin": "nota-azul-v2",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-22T10:07:28.042Z",
+  "stitch": {
+    "project_id": "17842041815359600646"
+  },
+  "direction": "neon-nocturno"
+}
