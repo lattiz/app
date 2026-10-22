@@ -405,6 +405,19 @@ export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
     proFeatures: [],
   },
   {
+    id: 'floreria-base-casa-confeti-v2',
+    tier: 'basic',
+    giro: 'floreria',
+    giroLabel: 'Florería',
+    direction: {
+      id: 'jardin-suave',
+      name: 'Jardín suave',
+    },
+    swatches: ['#A6DDD6', '#CBEBE7', '#14211D', '#14211D'],
+    dark: false,
+    proFeatures: [],
+  },
+  {
     id: 'floreria-base-flores-lupita-v1',
     tier: 'basic',
     giro: 'floreria',
@@ -451,6 +464,19 @@ export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
       'Contacto con mapa',
       'Animaciones',
     ],
+  },
+  {
+    id: 'floreria-casa-confeti-v2',
+    tier: 'pro',
+    giro: 'floreria',
+    giroLabel: 'Florería',
+    direction: {
+      id: 'jardin-suave',
+      name: 'Jardín suave',
+    },
+    swatches: ['#D6CCEB', '#E7E1F3', '#1F1A26', '#1F1A26'],
+    dark: false,
+    proFeatures: ['Galería', 'Testimonios', 'Contacto con mapa', 'Animaciones'],
   },
   {
     id: 'floreria-flores-lupita-v1',
