@@ -29,7 +29,7 @@ export default {
     faq: roles.faq,
     contact: {
       ...roles.contact,
-      variants: ['with-contact', 'booking-panel', 'arch-visit'],
+      variants: ['with-contact', 'booking-panel', 'arch-visit', 'map-link'],
     },
     cta: roles.cta,
     whatsapp: roles.whatsapp,
