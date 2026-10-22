@@ -87,3 +87,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [template-renewal-flag](template-renewal-flag.md) — rehacer = spec -v2 con version + renews; hereda paleta/par; v1 se retira en /admin
 - [stitch-section-cap-per-candidate](stitch-section-cap-per-candidate.md) — tope de 6 secciones de Stitch por candidato, no global
 - [design-fidelity-needs-section-id](design-fidelity-needs-section-id.md) — fidelity solo mide `#id`; otro ref cae al <footer> sin avisar
+- [locations-sin-mapa](locations-sin-mapa.md) — map-link (Pro) y single-card (Básico) admitidas en blueprints; single-card es sucursal única
