@@ -88,4 +88,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [stitch-section-cap-per-candidate](stitch-section-cap-per-candidate.md) — tope de 6 secciones de Stitch por candidato, no global
 - [design-fidelity-needs-section-id](design-fidelity-needs-section-id.md) — fidelity solo mide `#id`; otro ref cae al <footer> sin avisar
 - [hero-fit-stacked-copy-first](hero-fit-stacked-copy-first.md) — probe `fit` mide el texto si la foto va debajo; móvil: foto al final con order
-- [stitch-generation-lands-late](stitch-generation-lands-late.md) — Stitch da timeout pero genera minutos después; sondear con otra conexión
+- [stitch-generation-lands-late](stitch-generation-lands-late.md) — Stitch da timeout por MCP pero genera; HTTP responde en minutos; claves de imagen fijas
