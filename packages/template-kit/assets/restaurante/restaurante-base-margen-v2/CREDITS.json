@@ -1,0 +1,49 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-margen-v2.spec.json (spec 754ac0fa6f16, file c96731ff388e). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "28af430d7e3eb9ddae68e26924a767d9c59ecf1aafca9a4da7251e28db57bdf8",
+      "query": "specialty coffee latte art cup book window",
+      "providerId": 6984075,
+      "pageUrl": "https://pixabay.com/photos/coffee-cup-coffee-cup-cappuccino-6984075/",
+      "photographer": "BayzidIslam",
+      "photographerUrl": "https://pixabay.com/users/18597738/",
+      "tags": "coffee, cup, coffee cup, cappuccino, morning"
+    },
+    {
+      "file": "product-01.jpg",
+      "source": "pixabay",
+      "sha256": "cc52a6c434e5d64ab4f8eb36a5d48b573acfaa60f442f180fad649ed8da3bb25",
+      "query": "pour over coffee v60 dripper",
+      "providerId": 2139592,
+      "pageUrl": "https://pixabay.com/photos/coffee-cup-filter-coffee-filter-2139592/",
+      "photographer": "NoName_13",
+      "photographerUrl": "https://pixabay.com/users/2364555/",
+      "tags": "coffee, cup, filter, coffee filter, paper filter, brewed coffee, black coffee, caffeine, coffee break, morning coffee, coffee cup, cup of coffee, drink, beverage, aroma, stimulant, tableware, red cup"
+    },
+    {
+      "file": "product-02.jpg",
+      "source": "pixabay",
+      "sha256": "a385da86ca47c1d6d67ff8b96bd06f903e31232e3c9167afb2eabb96b7f44dc4",
+      "query": "sourdough sandwich lunch plate",
+      "providerId": 8026582,
+      "pageUrl": "https://pixabay.com/photos/hamburger-sandwich-chicken-healthy-8026582/",
+      "photographer": "SylwesterL",
+      "photographerUrl": "https://pixabay.com/users/34617078/",
+      "tags": "hamburger, sandwich, chicken, healthy, breakfast, club sandwich, grilled, burger, restaurant, meal, lunch"
+    },
+    {
+      "file": "product-03.jpg",
+      "source": "pixabay",
+      "sha256": "4c63cb3b811b95ccdbe765a5f0a136b2267e5181990cdcfdca723b7701628965",
+      "query": "fresh baked tart pastry",
+      "providerId": 2239418,
+      "pageUrl": "https://pixabay.com/photos/strawberry-tart-strawberries-dough-2239418/",
+      "photographer": "silviarita",
+      "photographerUrl": "https://pixabay.com/users/3142410/",
+      "tags": "strawberry tart, strawberries, dough, fresh, fruit, gluten free, to bake, homemade, bio, vegetarian, lactose free, cream, dessert, enjoyment, coffee cup, yummy, cakes, strawberry slices, break, invite, vitamins, diet, sugar, sugar-free, stevia, agave syrup, birch sugar, spring, nature, summer, fruitcake, food, bisquit, spelt, flour, spelled flour, date of birth"
+    }
+  ]
+}

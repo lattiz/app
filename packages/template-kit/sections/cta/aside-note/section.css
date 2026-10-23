@@ -52,7 +52,7 @@
 
 .lz-cta-aside-note__title {
   margin: 0;
-  font-size: calc(clamp(28px, 3.6vw, 48px) * var(--lz-display-scale));
+  font-size: calc(clamp(32px, 3.6vw, 48px) * var(--lz-display-scale));
   letter-spacing: var(--lz-display-tracking, 0.01em);
   text-wrap: balance;
 }

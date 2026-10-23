@@ -1094,6 +1094,34 @@
         }
       }
     },
+    "restaurante-hoja-y-barro-v2": {
+      "manifest": "templates/restaurante-hoja-y-barro-v2.ts",
+      "hashes": {
+        "project": "d381e9f253413f95",
+        "html": "af8a402ed5ecb2ee",
+        "css": "a3a5c7498100549b",
+        "rootCss": "cfedbf465bf411fe",
+        "theme": "732fb8d81c146f46",
+        "pack": "4f728da4a49c409f",
+        "meta": "decc578264e80ae9",
+        "assets": "e8340473eef4577c"
+      },
+      "assets": 15,
+      "size": {
+        "css": {
+          "raw": 37624,
+          "gzip": 6402
+        },
+        "html": {
+          "raw": 27588,
+          "gzip": 6403
+        },
+        "index": {
+          "raw": 65228,
+          "gzip": 12721
+        }
+      }
+    },
     "restaurante-la-nota-azul-v1": {
       "manifest": "templates/restaurante-la-nota-azul-v1.ts",
       "hashes": {
@@ -1147,6 +1175,34 @@
         "index": {
           "raw": 62257,
           "gzip": 13298
+        }
+      }
+    },
+    "restaurante-margen-v2": {
+      "manifest": "templates/restaurante-margen-v2.ts",
+      "hashes": {
+        "project": "de528b88445fea4a",
+        "html": "4d9f0b75f30afd4e",
+        "css": "2ed398c0d0aa2005",
+        "rootCss": "a1c90dff52604651",
+        "theme": "e3151253a855a632",
+        "pack": "78c62749ec865d6b",
+        "meta": "3b6c7d875b533325",
+        "assets": "5d677c15e860dde2"
+      },
+      "assets": 13,
+      "size": {
+        "css": {
+          "raw": 38134,
+          "gzip": 6619
+        },
+        "html": {
+          "raw": 29715,
+          "gzip": 7276
+        },
+        "index": {
+          "raw": 67865,
+          "gzip": 13803
         }
       }
     },
@@ -1674,6 +1730,47 @@
       ],
       "locked": true
     },
+    "specs/restaurante-hoja-y-barro-v2.spec.json": {
+      "ids": [
+        "restaurante-hoja-y-barro-v2",
+        "restaurante-base-hoja-y-barro-v2"
+      ],
+      "specHash": "fee1819bac98",
+      "files": {
+        "templates/restaurante-hoja-y-barro-v2.ts": "794cc0abdf72",
+        "themes/restaurante-hoja-y-barro-v2.json": "455f8de5963c",
+        "demo-profiles/restaurante-hoja-y-barro-v2.json": "9d5047d65133",
+        "templates/restaurante-base-hoja-y-barro-v2.ts": "acb89a3b839b",
+        "themes/restaurante-base-hoja-y-barro-v2.json": "e7f41cd63670",
+        "demo-profiles/restaurante-base-hoja-y-barro-v2.json": "9d5047d65133",
+        "content/restaurante.hoja-y-barro-v2.es-MX.ts": "4f728da4a49c"
+      },
+      "choices": {
+        "restaurante-hoja-y-barro-v2": [],
+        "restaurante-base-hoja-y-barro-v2": []
+      },
+      "peers": [
+        "restaurante-base-casa-comal-v1",
+        "restaurante-base-casa-rosa-mantequilla-v1",
+        "restaurante-base-ceniza-v1",
+        "restaurante-base-claveria-verde-v1",
+        "restaurante-base-fresca-nube-v1",
+        "restaurante-base-la-nota-azul-v1",
+        "restaurante-base-margen-v1",
+        "restaurante-base-margen-v2",
+        "restaurante-base-trigo-y-brasa-v1",
+        "restaurante-casa-comal-v1",
+        "restaurante-casa-rosa-mantequilla-v1",
+        "restaurante-ceniza-v1",
+        "restaurante-claveria-verde-v1",
+        "restaurante-fresca-nube-v1",
+        "restaurante-la-nota-azul-v1",
+        "restaurante-margen-v1",
+        "restaurante-margen-v2",
+        "restaurante-trigo-y-brasa-v1"
+      ],
+      "locked": true
+    },
     "specs/restaurante-hoja-y-barro.spec.json": {
       "ids": [
         "restaurante-hoja-y-barro-v1",
@@ -1736,6 +1833,47 @@
         "restaurante-fresca-nube-v1",
         "restaurante-hoja-y-barro-v1",
         "restaurante-margen-v1"
+      ],
+      "locked": true
+    },
+    "specs/restaurante-margen-v2.spec.json": {
+      "ids": [
+        "restaurante-margen-v2",
+        "restaurante-base-margen-v2"
+      ],
+      "specHash": "754ac0fa6f16",
+      "files": {
+        "templates/restaurante-margen-v2.ts": "bda76338f63b",
+        "themes/restaurante-margen-v2.json": "34bc6cd18ce1",
+        "demo-profiles/restaurante-margen-v2.json": "0d8d88691b15",
+        "templates/restaurante-base-margen-v2.ts": "8d7ea8cb6c21",
+        "themes/restaurante-base-margen-v2.json": "b8b797b48794",
+        "demo-profiles/restaurante-base-margen-v2.json": "0d8d88691b15",
+        "content/restaurante.margen-v2.es-MX.ts": "78c62749ec86"
+      },
+      "choices": {
+        "restaurante-margen-v2": [],
+        "restaurante-base-margen-v2": []
+      },
+      "peers": [
+        "restaurante-base-casa-comal-v1",
+        "restaurante-base-casa-rosa-mantequilla-v1",
+        "restaurante-base-ceniza-v1",
+        "restaurante-base-claveria-verde-v1",
+        "restaurante-base-fresca-nube-v1",
+        "restaurante-base-hoja-y-barro-v1",
+        "restaurante-base-hoja-y-barro-v2",
+        "restaurante-base-la-nota-azul-v1",
+        "restaurante-base-trigo-y-brasa-v1",
+        "restaurante-casa-comal-v1",
+        "restaurante-casa-rosa-mantequilla-v1",
+        "restaurante-ceniza-v1",
+        "restaurante-claveria-verde-v1",
+        "restaurante-fresca-nube-v1",
+        "restaurante-hoja-y-barro-v1",
+        "restaurante-hoja-y-barro-v2",
+        "restaurante-la-nota-azul-v1",
+        "restaurante-trigo-y-brasa-v1"
       ],
       "locked": true
     },

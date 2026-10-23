@@ -1,0 +1,16 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-hoja-y-barro-v2.spec.json (spec fee1819bac98, file 34eed2d3dd3a). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "26df4d48995000d3a3813b7a6bdc287d3a0ced80d85deb6051d5e633e23fbf22",
+      "query": "matcha latte",
+      "providerId": 2683990,
+      "pageUrl": "https://pixabay.com/photos/matcha-latt%C3%A9-heart-2683990/",
+      "photographer": "hoyas",
+      "photographerUrl": "https://pixabay.com/users/6280368/",
+      "tags": "matcha, latté, heart, Tokyo, Japan, Chiyoda City"
+    }
+  ]
+}

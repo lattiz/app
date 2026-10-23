@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-margen-v2.spec.json (spec 754ac0fa6f16, file b8b797b48794). Do not edit: use the spec, or freeze.",
+  "name": "restaurante-base-margen-v2",
+  "label": "Margen Café · Básico",
+  "tier": "basic",
+  "fontPair": "instrument-serif+instrument-sans",
+  "colors": {
+    "bg": "#E6CCB6",
+    "surface": "#F1E1D5",
+    "surface-2": "#D9C0AB",
+    "text": "#2A1D15",
+    "muted": "#5B4A3F",
+    "accent": "#2C241F",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#2C241F",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#E6CCB6",
+    "on-overlay": "#2A1D15",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#2A1D15"
+  },
+  "fonts": {
+    "display": "'Instrument Serif', serif",
+    "serif": "'Instrument Serif', serif",
+    "body": "'Instrument Sans', sans-serif",
+    "googleFonts": "family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600",
+    "displayTransform": "none",
+    "displayLeading": "0.98",
+    "displayWeight": "400",
+    "displayScale": "1.14",
+    "accentStyle": "italic",
+    "accentTransform": "none"
+  },
+  "shape": {
+    "radiusCard": "12px",
+    "radiusPill": "10px",
+    "border": "1px",
+    "shadow": "soft"
+  },
+  "density": "airy",
+  "photoTreatment": "none",
+  "placeholder": "arches",
+  "accentWords": "color",
+  "container": "1280px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(1.08) saturate(.85)"
+  },
+  "style": {
+    "shape": "soft",
+    "surface": "outlined",
+    "density": "airy",
+    "divider": "hairline",
+    "imageTreatment": "framed"
+  }
+}
