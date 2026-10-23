@@ -1,4 +1,4 @@
-// GENERATED from specs/restaurante-hoja-y-barro-v2.spec.json (spec fee1819bac98, file acb89a3b839b). Do not edit: use the spec, or freeze.
+// GENERATED from specs/restaurante-hoja-y-barro-v2.spec.json (spec 86e027853e52, file acb89a3b839b). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {

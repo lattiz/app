@@ -1,0 +1,69 @@
+<section id="sucursales" data-lz-slot="locations" data-lz-variant="pickup-board" class="lz-section lz-locations-pickup-board">
+  <div class="lz-container">
+    <div class="lz-locations-pickup-board__head">
+      <p class="lz-locations-pickup-board__kicker" data-lz-if="kicker" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-locations-pickup-board__title" data-lz-key="title"></h2>
+      <p class="lz-locations-pickup-board__text" data-lz-key="contactText"></p>
+    </div>
+    <div class="lz-locations-pickup-board__panel" data-lz-each="branches">
+      <div class="lz-locations-pickup-board__left">
+        <p class="lz-locations-pickup-board__badge" data-lz-if="badge" data-lz-key="badge"></p>
+        <h3 class="lz-locations-pickup-board__name" data-lz-key="name"></h3>
+        <p class="lz-locations-pickup-board__address" data-lz-key="address"></p>
+        <p class="lz-locations-pickup-board__nearby" data-lz-if="nearby" data-lz-key="nearby"></p>
+        <div class="lz-locations-pickup-board__schedule">
+          <h3 class="lz-locations-pickup-board__label" data-lz-key="hoursLabel"></h3>
+          <ul class="lz-locations-pickup-board__rows">
+            <li class="lz-locations-pickup-board__row" data-lz-each="schedule">
+              <span data-lz-key="label"></span>
+              <span class="lz-locations-pickup-board__hours">
+                <em class="lz-locations-pickup-board__tag" data-lz-if="tag" data-lz-key="tag"></em>
+                <strong data-lz-key="value"></strong>
+              </span>
+            </li>
+          </ul>
+          <p class="lz-locations-pickup-board__note" data-lz-if="scheduleNote" data-lz-key="scheduleNote"></p>
+        </div>
+      </div>
+      <div class="lz-locations-pickup-board__right">
+        <div class="lz-locations-pickup-board__plan">
+          <svg viewBox="0 0 400 220" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid slice"><path d="M30 0v220M110 0v220M190 0v220M270 0v220M350 0v220" opacity=".3"/><path d="M0 40h400M0 110h400M0 180h400" opacity=".3"/><path d="M20 20 380 60M10 150 390 190" stroke-width="1.8"/><path d="M70 0l40 220" stroke-width="1.8" opacity=".7"/><rect x="236" y="76" width="34" height="34"/></svg>
+          <span class="lz-locations-pickup-board__pin" data-lz-key="name"></span>
+        </div>
+        <p class="lz-locations-pickup-board__plan-note">
+          <span data-lz-if="planNote" data-lz-key="planNote"></span>
+          <a target="_blank" rel="noopener noreferrer" class="lz-locations-pickup-board__link" data-lz-attr-href="directionsUrl" data-lz-key="directionsLabel"></a>
+        </p>
+        <div class="lz-locations-pickup-board__routes">
+          <h3 class="lz-locations-pickup-board__label" data-lz-key="routesTitle"></h3>
+          <ol class="lz-locations-pickup-board__route-list">
+            <li class="lz-locations-pickup-board__route" data-lz-each="routes">
+              <span class="lz-locations-pickup-board__num" aria-hidden="true"></span>
+              <div>
+                <h4 class="lz-locations-pickup-board__route-title">
+                  <span data-lz-key="title"></span>
+                  <small data-lz-if="meta" data-lz-key="meta"></small>
+                </h4>
+                <p class="lz-locations-pickup-board__route-text" data-lz-key="text"></p>
+              </div>
+            </li>
+          </ol>
+        </div>
+        <ul class="lz-locations-pickup-board__channels">
+          <li class="lz-locations-pickup-board__channel">
+            <span><strong data-lz-key="whatsappLabel"></strong><span data-lz-key="whatsappValue"></span></span>
+            <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-locations-pickup-board__link" data-lz-key="whatsappCta"></a>
+          </li>
+          <li class="lz-locations-pickup-board__channel">
+            <span><strong data-lz-key="callLabel"></strong><span>{{phone}}</span></span>
+            <a href="{{phoneUrl}}" class="lz-locations-pickup-board__link" data-lz-key="callCta"></a>
+          </li>
+          <li class="lz-locations-pickup-board__channel">
+            <span><strong data-lz-key="emailLabel"></strong><span>{{email}}</span></span>
+            <a href="{{emailUrl}}" class="lz-locations-pickup-board__link" data-lz-key="emailCta"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

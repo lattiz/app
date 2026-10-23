@@ -28,7 +28,14 @@ export default {
     faq: roles.faq,
     contact: {
       ...roles.contact,
-      variants: ['with-contact', 'booking-panel', 'arch-visit', 'split-panel'],
+      variants: [
+        'with-contact',
+        'booking-panel',
+        'arch-visit',
+        'split-panel',
+        'pickup-board',
+        'corner-postcard',
+      ],
     },
     cta: roles.cta,
     whatsapp: roles.whatsapp,

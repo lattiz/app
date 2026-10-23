@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="es-MX"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cantera Café &amp; Barra — Postal de la Esquina | Sucursal Juárez</title>
+<!-- Google Fonts: Newsreader & Public Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&amp;family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-surface": "#1c1b1b",
+            "outline-variant": "#C6C2BC",
+            "on-primary": "#FFFFFF",
+            "on-tertiary": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "surface-bright": "#fdf8f7",
+            "surface-container-high": "#ece7e6",
+            "background": "#E9E5DE",
+            "surface-container-low": "#F5F3F0",
+            "secondary-fixed-dim": "#cbc6c0",
+            "surface-variant": "#e6e1e0",
+            "primary-container": "#4a4540",
+            "on-tertiary-fixed": "#1f1b17",
+            "secondary-container": "#e5dfd9",
+            "on-surface-variant": "#4c463f",
+            "on-secondary": "#ffffff",
+            "on-primary-fixed-variant": "#4b4641",
+            "secondary": "#615e59",
+            "on-secondary-container": "#66625d",
+            "surface": "#E9E5DE",
+            "inverse-primary": "#cdc5be",
+            "error": "#ba1a1a",
+            "on-primary-fixed": "#1f1b17",
+            "tertiary-container": "#4a4540",
+            "surface-container": "#f1edeb",
+            "outline": "#7E7A75",
+            "on-tertiary-container": "#bab2ac",
+            "surface-tint": "#635d58",
+            "surface-dim": "#ddd9d8",
+            "primary-fixed-dim": "#cdc5be",
+            "tertiary-fixed-dim": "#cdc5be",
+            "inverse-on-surface": "#f4f0ee",
+            "on-primary-container": "#bab2ac",
+            "on-background": "#1c1b1b",
+            "primary-fixed": "#eae1da",
+            "tertiary-fixed": "#eae1da",
+            "on-error-container": "#93000a",
+            "on-error": "#ffffff",
+            "on-secondary-fixed-variant": "#494642",
+            "inverse-surface": "#31302f",
+            "on-tertiary-fixed-variant": "#4b4641",
+            "primary": "#332f2a",
+            "on-secondary-fixed": "#1d1b18",
+            "error-container": "#ffdad6",
+            "tertiary": "#332f2a",
+            "secondary-fixed": "#e7e1db",
+            "surface-container-highest": "#e6e1e0"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "space-xs": "8px",
+            "margin": "32px",
+            "gutter": "32px",
+            "space-sm": "16px",
+            "space-md": "28px",
+            "space-xl": "144px",
+            "space-lg": "64px"
+          },
+          fontFamily: {
+            "headline-md": ["Newsreader", "serif"],
+            "label-caps": ["Public Sans", "sans-serif"],
+            "body-lg": ["Public Sans", "sans-serif"],
+            "body-md": ["Public Sans", "sans-serif"],
+            "display-lg": ["Newsreader", "serif"]
+          },
+          fontSize: {
+            "headline-md": ["41px", { lineHeight: "48px", fontWeight: "600" }],
+            "label-caps": ["14px", { lineHeight: "20px", letterSpacing: "0.08em", fontWeight: "600" }],
+            "body-lg": ["20px", { lineHeight: "32px", fontWeight: "400" }],
+            "body-md": ["16px", { lineHeight: "26px", fontWeight: "400" }],
+            "display-lg": ["83px", { lineHeight: "89px", fontWeight: "700" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface antialiased selection:bg-primary selection:text-surface min-h-screen flex flex-col font-body-md text-body-md">
+<!-- Minimal Editorial Top Header -->
+<header class="w-full bg-surface border-b border-outline-variant/60 sticky top-0 z-40 backdrop-blur-sm bg-surface/90">
+<div class="w-full max-w-[1200px] mx-auto px-gutter h-20 flex items-center justify-between">
+<!-- Brand Logo / Title -->
+<a class="font-headline-md text-[26px] md:text-headline-md font-semibold text-primary tracking-tight hover:opacity-90 transition-opacity" href="#sucursales">
+        Cantera Café &amp; Barra
+      </a>
+<!-- Minimal Navigation Cluster -->
+<nav class="hidden md:flex items-center gap-8 text-on-surface-variant font-body-md">
+<a class="hover:text-primary transition-colors duration-200" href="#carta">Carta</a>
+<a class="hover:text-primary transition-colors duration-200" href="#barra">Barra</a>
+<a class="text-primary font-medium border-b-2 border-primary pb-1" href="#sucursales">Visita / Sucursal</a>
+</nav>
+<!-- CTA WhatsApp Action -->
+<div class="flex items-center">
+<a class="inline-flex items-center gap-2 text-xs md:text-label-caps tracking-wider uppercase font-semibold text-primary border border-outline px-4 py-2 hover:bg-primary hover:text-on-primary transition-colors duration-200" href="https://wa.me/525500000000?text=Hola%20Cantera,%20quiero%20hacer%20un%20pedido" rel="noopener noreferrer" target="_blank">
+<svg aria-hidden="true" class="w-3.5 h-3.5" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19.01L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M9.05 7.42C8.88 7.42 8.6 7.48 8.36 7.74C8.13 8 7.48 8.61 7.48 9.85C7.48 11.09 8.38 12.28 8.51 12.45C8.64 12.62 10.28 15.15 12.78 16.23C13.38 16.49 13.84 16.64 14.21 16.76C14.81 16.95 15.36 16.92 15.79 16.86C16.27 16.79 17.27 16.26 17.48 15.67C17.69 15.08 17.69 14.58 17.63 14.47C17.57 14.36 17.4 14.3 17.14 14.17C16.89 14.04 15.65 13.43 15.42 13.35C15.19 13.27 15.02 13.22 14.85 13.47C14.68 13.72 14.2 14.3 14.06 14.47C13.91 14.64 13.77 14.66 13.51 14.53C13.26 14.4 12.45 14.14 11.49 13.28C10.74 12.61 10.23 11.78 10.08 11.53C9.93 11.28 10.06 11.14 10.19 11.01C10.31 10.89 10.45 10.71 10.59 10.55C10.73 10.39 10.77 10.26 10.86 10.09C10.95 9.92 10.9 9.77 10.84 9.64C10.78 9.51 10.28 8.28 10.07 7.78C9.87 7.29 9.67 7.36 9.51 7.35C9.37 7.35 9.21 7.42 9.05 7.42Z"></path>
+</svg>
+<span>WhatsApp</span>
+</a>
+</div>
+</div>
+</header>
+<!-- Main Section: Postal de la Esquina (id="sucursales") -->
+<main class="flex-grow">
+<section class="w-full max-w-[1200px] mx-auto px-gutter pt-12 md:pt-20 pb-24 md:pb-space-lg" id="sucursales">
+<!-- Section Pre-Header / Concept Intro -->
+<div class="mb-12 md:mb-16">
+<div class="flex items-center gap-3 text-secondary mb-3">
+<span class="inline-block w-8 h-[1px] bg-secondary"></span>
+<span class="font-label-caps text-xs md:text-label-caps uppercase tracking-widest">Colonia Juárez — Cuauhtémoc, CDMX</span>
+</div>
+<div class="flex flex-col md:flex-row md:items-baseline md:justify-between gap-4 border-b border-outline-variant/60 pb-6">
+<h1 class="font-headline-md text-3xl md:text-headline-md text-primary tracking-tight font-normal italic">
+            Postal de la esquina
+          </h1>
+<p class="font-body-md text-on-surface-variant max-w-md text-sm md:text-base leading-relaxed">
+            Una barra de barrio con vocación de silencio, tuestes limpios y panadería de fermentación lenta, en la frontera misma de la cantera porfiriana.
+          </p>
+</div>
+</div>
+<!-- Main Editorial Layout: Arch Image + Tall 3-Row Vertical Stack -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-gutter items-start">
+<!-- Left Column: Architectural Arch Frame & Editorial Plate (5 cols) -->
+<div class="lg:col-span-5 flex flex-col">
+<div class="relative bg-surface-container-low p-2 md:p-3 border border-outline-variant/70 shadow-none">
+<!-- Architectural Arch Container -->
+<div class="relative overflow-hidden rounded-t-full w-full aspect-[3/4] bg-surface-container">
+<img alt="Fachada de Cantera Café &amp; Barra en Colonia Juárez" class="w-full h-full object-cover object-center grayscale-[15%] contrast-[102%] hover:scale-[1.02] transition-transform duration-700 ease-out" loading="eager" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNdPgaOW80cZ9YbHPUot9P1gpMqIe4I8LCS1j3fsbfb5H1k7Lp3bZSBWhaOIFbQ3y7KgzC5HL4kZBnYqiDlgr1Bj_IUKcn_GmTZGQugYvz_YPYEpyJj8GX0w00IMufFZrBAsi5C2t3xjmJXaNbqhvbhMrBsctyIaOgskVmNMF6spOy6-kUSnuh3DgwercUASJAU_lHDaAoT65c-dgJWSyYJYyWyzMum4X1e8VAw7wBYADPHB2lf2Q8-POrxrY_N9sp0aKoIMVn9E0"/>
+<!-- Subtle inner shadow gradient for tactile paper depth -->
+<div class="pointer-events-none absolute inset-0 rounded-t-full ring-1 ring-inset ring-black/10"></div>
+</div>
+<!-- Delicado Caption Plate Estilo Archivo / Museo -->
+<div class="pt-4 pb-2 px-3 border-t border-outline-variant/40 mt-3 text-left">
+<div class="flex items-baseline justify-between mb-1">
+<span class="font-label-caps text-[11px] uppercase tracking-widest text-secondary font-semibold">Registro Fotográfico</span>
+<span class="font-mono text-[11px] text-secondary/80">Ref. CDMX-JUR-174</span>
+</div>
+<p class="font-body-md text-xs md:text-sm text-on-surface-variant leading-relaxed">
+<strong class="text-primary font-medium">Fig. 01 — Fachada sobre Londres 174</strong>, esquina con Havre. Cantera virreinal, carpintería de cedro y ventanal abierto al ritmo matutino del barrio.
+              </p>
+</div>
+</div>
+</div>
+<!-- Right Column: Vertical Stack of Three Tall Editorial Rows (7 cols) -->
+<div class="lg:col-span-7 flex flex-col justify-between">
+<!-- Row 01: Dónde estamos -->
+<article class="pt-2 pb-10 border-b border-outline-variant/70">
+<div class="flex items-start gap-6 md:gap-8">
+<span class="font-headline-md text-5xl md:text-6xl text-outline-variant font-light select-none leading-none pt-1">
+                01
+              </span>
+<div class="flex-grow">
+<div class="flex items-baseline justify-between mb-2">
+<h2 class="font-headline-md text-2xl md:text-3xl text-primary font-normal">Dónde estamos</h2>
+<span class="text-xs uppercase font-label-caps text-secondary tracking-widest">Ubicación</span>
+</div>
+<p class="font-body-md text-on-surface-variant text-base md:text-lg leading-relaxed mb-4">
+                  Calle Londres 174, Colonia Juárez, entre Havre y Florencia. Situados a 120 metros de la glorieta de Paseo de la Reforma, al amparo de la sombra de fresnos antiguos.
+                </p>
+<a class="inline-flex items-center gap-2 font-label-caps text-xs md:text-sm text-primary uppercase tracking-wider font-semibold border-b border-primary pb-0.5 hover:text-secondary hover:border-secondary transition-colors duration-200 group" href="https://maps.google.com/?q=Londres+174+Colonia+Juarez+CDMX" rel="noopener noreferrer" target="_blank">
+<span>Abrir en Google Maps</span>
+<svg class="w-4 h-4 transform group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M7 17L17 7M17 7H9M17 7V15" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</a>
+</div>
+</div>
+</article>
+<!-- Row 02: Cuándo abrimos -->
+<article class="py-10 border-b border-outline-variant/70">
+<div class="flex items-start gap-6 md:gap-8">
+<span class="font-headline-md text-5xl md:text-6xl text-outline-variant font-light select-none leading-none pt-1">
+                02
+              </span>
+<div class="flex-grow">
+<div class="flex items-baseline justify-between mb-2">
+<h2 class="font-headline-md text-2xl md:text-3xl text-primary font-normal">Cuándo abrimos</h2>
+<span class="text-xs uppercase font-label-caps text-secondary tracking-widest">Servicio</span>
+</div>
+<p class="font-body-md text-on-surface-variant text-base md:text-lg leading-relaxed mb-2">
+                  Calibración de molienda y servicio de <strong>martes a domingo de 07:30 a 19:00 hrs</strong>. Descanso semanal los lunes para mantenimiento de tostadores y reposo de masa.
+                </p>
+<p class="font-body-md text-secondary text-sm md:text-base italic mb-4">
+                  Primera hornada de hogazas y bizcochería a las 08:00 hrs; segunda tanda de barra caliente a las 11:30 hrs.
+                </p>
+<button class="inline-flex items-center gap-2 font-label-caps text-xs md:text-sm text-primary uppercase tracking-wider font-semibold border-b border-primary pb-0.5 hover:text-secondary hover:border-secondary transition-colors duration-200 group" onclick="navigator.clipboard.writeText('Cantera Café &amp; Barra: Mar-Dom 07:30 - 19:00 hrs. Londres 174, Juárez.'); alert('Horario copiado al portapapeles');" type="button">
+<span>Guardar horario</span>
+<svg class="w-4 h-4 transform group-hover:translate-y-0.5 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M12 4v12m0 0l-4-4m4 4l4-4m-8 8h8" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</div>
+</article>
+<!-- Row 03: Cómo pedir -->
+<article class="pt-10 pb-4">
+<div class="flex items-start gap-6 md:gap-8">
+<span class="font-headline-md text-5xl md:text-6xl text-outline-variant font-light select-none leading-none pt-1">
+                03
+              </span>
+<div class="flex-grow">
+<div class="flex items-baseline justify-between mb-2">
+<h2 class="font-headline-md text-2xl md:text-3xl text-primary font-normal">Cómo pedir</h2>
+<span class="text-xs uppercase font-label-caps text-secondary tracking-widest">Mecánica</span>
+</div>
+<p class="font-body-md text-on-surface-variant text-base md:text-lg leading-relaxed mb-4">
+                  Pide con sosiego directo en barra o adelanta tu comanda por mensaje directo si vas de paso hacia la oficina o el parque. Empacamos café recién filtrado y grano en bolsa sin fila ni demora.
+                </p>
+<a class="inline-flex items-center gap-2 font-label-caps text-xs md:text-sm text-primary uppercase tracking-wider font-semibold border-b border-primary pb-0.5 hover:text-secondary hover:border-secondary transition-colors duration-200 group" href="https://wa.me/525500000000?text=Hola%20Cantera,%20paso%20en%2015%20minutos%20por:" rel="noopener noreferrer" target="_blank">
+<span>Escribir comanda por anticipado</span>
+<svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</a>
+</div>
+</div>
+</article>
+</div>
+</div>
+<!-- Bottom Strip: Full-Width Access Chips & Prominent WhatsApp Button -->
+<div class="mt-16 md:mt-24 pt-10 border-t border-outline-variant/80">
+<div class="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-8">
+<!-- Access Mode Pill Chips -->
+<div class="w-full xl:w-auto">
+<span class="block font-label-caps text-[11px] uppercase tracking-widest text-secondary font-semibold mb-4">
+              Accesos y proximidad de barrio
+            </span>
+<div class="flex flex-wrap gap-2.5">
+<!-- Chip 1: A pie -->
+<div class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-surface-container-low border border-outline-variant text-xs md:text-sm text-on-surface-variant hover:border-primary/50 transition-colors">
+<span class="w-1.5 h-1.5 rounded-full bg-primary/70"></span>
+<span class="font-semibold text-primary">A pie:</span>
+<span>Desde Reforma o Insurgentes, 3 min caminando</span>
+</div>
+<!-- Chip 2: En bici -->
+<div class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-surface-container-low border border-outline-variant text-xs md:text-sm text-on-surface-variant hover:border-primary/50 transition-colors">
+<span class="w-1.5 h-1.5 rounded-full bg-primary/70"></span>
+<span class="font-semibold text-primary">En bici:</span>
+<span>Ciclovía de Londres, rack seguro en fachada</span>
+</div>
+<!-- Chip 3: Metro / Metrobús -->
+<div class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-surface-container-low border border-outline-variant text-xs md:text-sm text-on-surface-variant hover:border-primary/50 transition-colors">
+<span class="w-1.5 h-1.5 rounded-full bg-primary/70"></span>
+<span class="font-semibold text-primary">En transporte:</span>
+<span>Hamburgo L1 o Metro Insurgentes L1</span>
+</div>
+<!-- Chip 4: En coche -->
+<div class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-surface-container-low border border-outline-variant text-xs md:text-sm text-on-surface-variant hover:border-primary/50 transition-colors">
+<span class="w-1.5 h-1.5 rounded-full bg-primary/70"></span>
+<span class="font-semibold text-primary">En coche:</span>
+<span>Estacionamiento público sobre Havre a 50m</span>
+</div>
+</div>
+</div>
+<!-- Prominent Artisanal WhatsApp Action Button -->
+<div class="w-full xl:w-auto shrink-0 flex items-center pt-2 xl:pt-0">
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-primary text-on-primary px-8 py-4 rounded-full text-xs md:text-label-caps uppercase tracking-wider font-semibold hover:bg-primary-container transition-colors duration-200 shadow-sm" href="https://wa.me/525500000000?text=Hola%20Cantera,%20voy%20en%20camino%20hacia%20Londres%20174" rel="noopener noreferrer" target="_blank">
+<svg aria-hidden="true" class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+<path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19.01L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M9.05 7.42C8.88 7.42 8.6 7.48 8.36 7.74C8.13 8 7.48 8.61 7.48 9.85C7.48 11.09 8.38 12.28 8.51 12.45C8.64 12.62 10.28 15.15 12.78 16.23C13.38 16.49 13.84 16.64 14.21 16.76C14.81 16.95 15.36 16.92 15.79 16.86C16.27 16.79 17.27 16.26 17.48 15.67C17.69 15.08 17.69 14.58 17.63 14.47C17.57 14.36 17.4 14.3 17.14 14.17C16.89 14.04 15.65 13.43 15.42 13.35C15.19 13.27 15.02 13.22 14.85 13.47C14.68 13.72 14.2 14.3 14.06 14.47C13.91 14.64 13.77 14.66 13.51 14.53C13.26 14.4 12.45 14.14 11.49 13.28C10.74 12.61 10.23 11.78 10.08 11.53C9.93 11.28 10.06 11.14 10.19 11.01C10.31 10.89 10.45 10.71 10.59 10.55C10.73 10.39 10.77 10.26 10.86 10.09C10.95 9.92 10.9 9.77 10.84 9.64C10.78 9.51 10.28 8.28 10.07 7.78C9.87 7.29 9.67 7.36 9.51 7.35C9.37 7.35 9.21 7.42 9.05 7.42Z"></path>
+</svg>
+<span>Pedir o avisar llegada por WhatsApp</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Editorial Colophon Micro-Footer -->
+<footer class="w-full bg-surface-container-low border-t border-outline-variant/60 py-6">
+<div class="w-full max-w-[1200px] mx-auto px-gutter flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-body-md text-on-surface-variant">
+<div>
+        © 2025 Cantera Café &amp; Barra. Calle Londres 174, Colonia Juárez, CDMX.
+      </div>
+<div class="flex items-center gap-6">
+<span>Tostado en origen</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span>Masa madre viva</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span>Café de oficio</span>
+</div>
+</div>
+</footer>
+</body></html>

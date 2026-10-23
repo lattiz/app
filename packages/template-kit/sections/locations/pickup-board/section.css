@@ -1,0 +1,248 @@
+.lz-locations-pickup-board {
+  padding: var(--lz-section-pad) 0;
+}
+
+.lz-locations-pickup-board__head {
+  display: grid;
+  gap: calc(12px * var(--lz-space));
+  max-width: 720px;
+  margin-bottom: calc(clamp(28px, 4vw, 56px) * var(--lz-space));
+}
+
+.lz-locations-pickup-board__kicker,
+.lz-locations-pickup-board__label,
+.lz-locations-pickup-board__badge {
+  margin: 0;
+  color: color-mix(in srgb, var(--lz-color-accent-text) 40%, var(--lz-color-text));
+  font-size: calc(14px * var(--lz-text-scale));
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.lz-locations-pickup-board__title {
+  margin: 0;
+  font-size: calc(clamp(32px, 4vw, 56px) * var(--lz-display-scale));
+  letter-spacing: var(--lz-display-tracking, 0.01em);
+  text-wrap: balance;
+}
+
+.lz-locations-pickup-board__text,
+.lz-locations-pickup-board__nearby,
+.lz-locations-pickup-board__note,
+.lz-locations-pickup-board__plan-note,
+.lz-locations-pickup-board__route-text {
+  margin: 0;
+  color: var(--lz-color-muted);
+  font-size: calc(16px * var(--lz-text-scale));
+  line-height: 1.55;
+}
+
+.lz-locations-pickup-board__panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: calc(clamp(28px, 5vw, 72px) * var(--lz-space));
+  padding-top: calc(clamp(24px, 3vw, 40px) * var(--lz-space));
+  border-top: var(--lz-border-width) solid var(--lz-color-line);
+}
+
+.lz-locations-pickup-board__left,
+.lz-locations-pickup-board__right {
+  display: grid;
+  gap: calc(20px * var(--lz-space));
+  align-content: start;
+}
+
+.lz-locations-pickup-board__badge {
+  justify-self: start;
+  padding: calc(4px * var(--lz-space)) calc(10px * var(--lz-space));
+  background: var(--lz-color-surface-2);
+  color: var(--lz-color-text);
+}
+
+.lz-locations-pickup-board__name {
+  margin: 0;
+  font-family: var(--lz-font-display);
+  font-size: calc(clamp(30px, 3.4vw, 46px) * var(--lz-text-scale));
+  line-height: 1.1;
+}
+
+.lz-locations-pickup-board__address {
+  margin: 0;
+  color: var(--lz-color-muted);
+  font-family: var(--lz-font-display);
+  font-size: calc(clamp(20px, 2vw, 28px) * var(--lz-text-scale));
+  line-height: 1.3;
+}
+
+.lz-locations-pickup-board__schedule {
+  display: grid;
+  gap: calc(10px * var(--lz-space));
+  margin-top: calc(12px * var(--lz-space));
+  padding-top: calc(20px * var(--lz-space));
+  border-top: var(--lz-border-width) solid var(--lz-color-line);
+}
+
+.lz-locations-pickup-board__rows,
+.lz-locations-pickup-board__route-list,
+.lz-locations-pickup-board__channels {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lz-locations-pickup-board__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(16px * var(--lz-space));
+  padding: calc(12px * var(--lz-space)) calc(8px * var(--lz-space));
+  border-bottom: var(--lz-border-width) solid var(--lz-color-line);
+  font-size: calc(16px * var(--lz-text-scale));
+}
+
+.lz-locations-pickup-board__hours {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(10px * var(--lz-space));
+  font-family: var(--lz-font-mono, var(--lz-font-body));
+  font-variant-numeric: tabular-nums;
+}
+
+.lz-locations-pickup-board__tag {
+  padding: 0 calc(8px * var(--lz-space));
+  background: var(--lz-color-text);
+  color: var(--lz-color-bg);
+  font-size: calc(14px * var(--lz-text-scale));
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lz-locations-pickup-board__plan {
+  position: relative;
+  aspect-ratio: 2 / 1;
+  border: var(--lz-border-width) solid var(--lz-color-line-strong, var(--lz-color-line));
+  background: var(--lz-color-surface);
+  color: var(--lz-color-line-strong, var(--lz-color-line));
+  overflow: hidden;
+}
+
+.lz-locations-pickup-board__plan svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.lz-locations-pickup-board__pin {
+  position: absolute;
+  top: 38%;
+  left: 62%;
+  padding: calc(4px * var(--lz-space)) calc(10px * var(--lz-space));
+  background: var(--lz-color-text);
+  color: var(--lz-color-bg);
+  font-size: calc(14px * var(--lz-text-scale));
+  font-weight: 600;
+}
+
+.lz-locations-pickup-board__plan-note {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: calc(8px * var(--lz-space)) calc(16px * var(--lz-space));
+  font-family: var(--lz-font-mono, var(--lz-font-body));
+  font-size: calc(14px * var(--lz-text-scale));
+}
+
+.lz-locations-pickup-board__link {
+  display: inline-block;
+  min-width: 44px;
+  text-align: center;
+  padding-block: 12px;
+  margin-block: -12px;
+  color: var(--lz-color-text);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.lz-locations-pickup-board__routes {
+  display: grid;
+  gap: calc(8px * var(--lz-space));
+  padding-top: calc(20px * var(--lz-space));
+  border-top: var(--lz-border-width) solid var(--lz-color-line);
+}
+
+.lz-locations-pickup-board__route-list {
+  display: grid;
+  counter-reset: lz-pickup-route;
+}
+
+.lz-locations-pickup-board__route {
+  counter-increment: lz-pickup-route;
+  display: grid;
+  grid-template-columns: calc(40px * var(--lz-space)) minmax(0, 1fr);
+  gap: calc(8px * var(--lz-space));
+  padding: calc(14px * var(--lz-space)) 0;
+  border-bottom: var(--lz-border-width) solid var(--lz-color-line);
+}
+
+.lz-locations-pickup-board__num {
+  color: var(--lz-color-muted);
+  font-family: var(--lz-font-display);
+  font-size: calc(22px * var(--lz-text-scale));
+}
+
+.lz-locations-pickup-board__num::before {
+  content: counter(lz-pickup-route, decimal-leading-zero);
+}
+
+.lz-locations-pickup-board__route-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: calc(8px * var(--lz-space));
+  margin: 0 0 calc(4px * var(--lz-space));
+  font-size: calc(16px * var(--lz-text-scale));
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.lz-locations-pickup-board__route-title small {
+  color: var(--lz-color-muted);
+  font-size: calc(14px * var(--lz-text-scale));
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.lz-locations-pickup-board__channel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(16px * var(--lz-space));
+  padding: calc(14px * var(--lz-space)) 0;
+  border-bottom: var(--lz-border-width) solid var(--lz-color-line);
+}
+
+.lz-locations-pickup-board__channel > span {
+  display: grid;
+  gap: 2px;
+  color: var(--lz-color-muted);
+  font-size: calc(15px * var(--lz-text-scale));
+}
+
+.lz-locations-pickup-board__channel strong {
+  color: var(--lz-color-text);
+  font-size: calc(14px * var(--lz-text-scale));
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 992px) {
+  .lz-locations-pickup-board__panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

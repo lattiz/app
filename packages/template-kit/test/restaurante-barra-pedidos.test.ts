@@ -117,3 +117,42 @@ describe('footer/hours-blocks', () => {
     expect((await render('footer', 'hours-blocks', { about: '' })).querySelector('.lz-footer-hours-blocks__about')).toBeNull();
   });
 });
+
+describe.each([
+  ['locations', 'pickup-board'],
+  ['locations', 'corner-postcard'],
+])('%s/%s (sucursales)', (slot, variant) => {
+  it('keeps the no-JS and token-only contract and the sucursales anchor', async () => {
+    const root = await render(slot, variant);
+    expect(root.querySelector(NO_JS)).toBeNull();
+    expect(root.getAttribute('id')).toBe('sucursales');
+    expect(css(slot, variant)).not.toMatch(TOKENS_ONLY);
+  });
+});
+
+describe('locations/pickup-board', () => {
+  it('has the schedule rows, numbered routes and the three channels', async () => {
+    const root = await render('locations', 'pickup-board');
+    const panel = root.querySelector('.lz-locations-pickup-board__panel')!;
+    expect(panel.querySelectorAll('.lz-locations-pickup-board__row')).toHaveLength(3);
+    expect(panel.querySelectorAll('.lz-locations-pickup-board__tag')).toHaveLength(1);
+    expect(panel.querySelectorAll('.lz-locations-pickup-board__route')).toHaveLength(3);
+    expect(panel.querySelectorAll('.lz-locations-pickup-board__channel')).toHaveLength(3);
+    const bare = await render('locations', 'pickup-board', { badge: '', nearby: '', planNote: '' });
+    expect(bare.querySelector('.lz-locations-pickup-board__badge')).toBeNull();
+    expect(bare.querySelector('.lz-locations-pickup-board__nearby')).toBeNull();
+  });
+});
+
+describe('locations/corner-postcard', () => {
+  it('has the framed photo, three numbered stops and the access chips', async () => {
+    const root = await render('locations', 'corner-postcard');
+    const body = root.querySelector('.lz-locations-corner-postcard__body')!;
+    expect(body.querySelector('img.lz-locations-corner-postcard__image')).not.toBeNull();
+    expect(body.querySelectorAll('.lz-locations-corner-postcard__stop')).toHaveLength(3);
+    expect(root.querySelectorAll('.lz-locations-corner-postcard__chip')).toHaveLength(3);
+    const bare = await render('locations', 'corner-postcard', { plateText: '', hoursNote: '', chipsTitle: '' });
+    expect(bare.querySelector('.lz-locations-corner-postcard__plate')).toBeNull();
+    expect(bare.querySelector('.lz-locations-corner-postcard__label')).toBeNull();
+  });
+});

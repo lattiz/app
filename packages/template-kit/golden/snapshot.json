@@ -1097,28 +1097,28 @@
     "restaurante-hoja-y-barro-v2": {
       "manifest": "templates/restaurante-hoja-y-barro-v2.ts",
       "hashes": {
-        "project": "d381e9f253413f95",
-        "html": "af8a402ed5ecb2ee",
-        "css": "a3a5c7498100549b",
+        "project": "f5404498da873c0d",
+        "html": "399f9859ea951d56",
+        "css": "a6763e8090006b02",
         "rootCss": "cfedbf465bf411fe",
-        "theme": "732fb8d81c146f46",
-        "pack": "4f728da4a49c409f",
-        "meta": "decc578264e80ae9",
-        "assets": "e8340473eef4577c"
+        "theme": "df64b5bda93028c9",
+        "pack": "94ad6897aa8d226a",
+        "meta": "af9383eff8aa7618",
+        "assets": "abc5d693a85e21a1"
       },
-      "assets": 15,
+      "assets": 16,
       "size": {
         "css": {
-          "raw": 37624,
-          "gzip": 6402
+          "raw": 39511,
+          "gzip": 6511
         },
         "html": {
-          "raw": 27588,
-          "gzip": 6403
+          "raw": 29221,
+          "gzip": 6608
         },
         "index": {
-          "raw": 65228,
-          "gzip": 12721
+          "raw": 68748,
+          "gzip": 13043
         }
       }
     },
@@ -1181,28 +1181,28 @@
     "restaurante-margen-v2": {
       "manifest": "templates/restaurante-margen-v2.ts",
       "hashes": {
-        "project": "de528b88445fea4a",
-        "html": "4d9f0b75f30afd4e",
-        "css": "2ed398c0d0aa2005",
+        "project": "969fa1854101cee8",
+        "html": "de506e00d62248d8",
+        "css": "9ccefe3116379c56",
         "rootCss": "a1c90dff52604651",
-        "theme": "e3151253a855a632",
-        "pack": "78c62749ec865d6b",
-        "meta": "3b6c7d875b533325",
+        "theme": "d6fdb0025f8ebf5d",
+        "pack": "c6084ab6f98abf16",
+        "meta": "6d15cb23a78bdb59",
         "assets": "5d677c15e860dde2"
       },
       "assets": 13,
       "size": {
         "css": {
-          "raw": 38134,
-          "gzip": 6619
+          "raw": 41759,
+          "gzip": 6882
         },
         "html": {
-          "raw": 29715,
-          "gzip": 7276
+          "raw": 32231,
+          "gzip": 7831
         },
         "index": {
-          "raw": 67865,
-          "gzip": 13803
+          "raw": 74006,
+          "gzip": 14635
         }
       }
     },
@@ -1735,15 +1735,15 @@
         "restaurante-hoja-y-barro-v2",
         "restaurante-base-hoja-y-barro-v2"
       ],
-      "specHash": "fee1819bac98",
+      "specHash": "86e027853e52",
       "files": {
-        "templates/restaurante-hoja-y-barro-v2.ts": "794cc0abdf72",
+        "templates/restaurante-hoja-y-barro-v2.ts": "00559aa55a8e",
         "themes/restaurante-hoja-y-barro-v2.json": "455f8de5963c",
         "demo-profiles/restaurante-hoja-y-barro-v2.json": "9d5047d65133",
         "templates/restaurante-base-hoja-y-barro-v2.ts": "acb89a3b839b",
         "themes/restaurante-base-hoja-y-barro-v2.json": "e7f41cd63670",
         "demo-profiles/restaurante-base-hoja-y-barro-v2.json": "9d5047d65133",
-        "content/restaurante.hoja-y-barro-v2.es-MX.ts": "4f728da4a49c"
+        "content/restaurante.hoja-y-barro-v2.es-MX.ts": "94ad6897aa8d"
       },
       "choices": {
         "restaurante-hoja-y-barro-v2": [],
@@ -1841,15 +1841,15 @@
         "restaurante-margen-v2",
         "restaurante-base-margen-v2"
       ],
-      "specHash": "754ac0fa6f16",
+      "specHash": "880697027b0b",
       "files": {
-        "templates/restaurante-margen-v2.ts": "bda76338f63b",
+        "templates/restaurante-margen-v2.ts": "897417ff15fc",
         "themes/restaurante-margen-v2.json": "34bc6cd18ce1",
         "demo-profiles/restaurante-margen-v2.json": "0d8d88691b15",
         "templates/restaurante-base-margen-v2.ts": "8d7ea8cb6c21",
         "themes/restaurante-base-margen-v2.json": "b8b797b48794",
         "demo-profiles/restaurante-base-margen-v2.json": "0d8d88691b15",
-        "content/restaurante.margen-v2.es-MX.ts": "78c62749ec86"
+        "content/restaurante.margen-v2.es-MX.ts": "c6084ab6f98a"
       },
       "choices": {
         "restaurante-margen-v2": [],

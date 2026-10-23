@@ -25,7 +25,11 @@
         },
         { "role": "faq", "slot": "faq", "variant": "two-col" },
         { "role": "cta", "slot": "cta", "variant": "closing-band" },
-        { "role": "contact", "slot": "locations", "variant": "with-contact" },
+        {
+          "role": "contact",
+          "slot": "locations",
+          "variant": "corner-postcard"
+        },
         {
           "role": "whatsapp",
           "slot": "floating-whatsapp",

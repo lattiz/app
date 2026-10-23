@@ -1,0 +1,20 @@
+{
+  "id": "restaurante-tablero-recogida-01",
+  "giro": "restaurante",
+  "source": "stitch",
+  "status": "harvested",
+  "tags": [
+    "sucursales",
+    "visita"
+  ],
+  "spin": "tablero-recogida",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-23T22:28:01.336Z",
+  "stitch": {
+    "project_id": "5675624824275708170",
+    "screen_ids": [
+      "b2ba82dd12c44842825cccd89ed0eb28"
+    ]
+  },
+  "direction": "cantera-editorial"
+}

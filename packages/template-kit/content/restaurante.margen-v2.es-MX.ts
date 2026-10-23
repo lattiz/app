@@ -1,4 +1,4 @@
-// GENERATED from specs/restaurante-margen-v2.spec.json (spec 754ac0fa6f16, file 78c62749ec86). Do not edit: use the spec, or freeze.
+// GENERATED from specs/restaurante-margen-v2.spec.json (spec 880697027b0b, file c6084ab6f98a). Do not edit: use the spec, or freeze.
 import type { ContentPack } from '../src/types';
 
 export default {
@@ -397,6 +397,40 @@ export default {
       hoursLabel: 'Horario',
       whatsappCta: 'Pedir por WhatsApp',
       callCta: 'Llamar',
+      badge: 'Barra única',
+      nearby: 'A pocas cuadras del metro · Bicis en la puerta',
+      schedule: [
+        {
+          label: 'Lunes a viernes',
+          value: '8:00 – 20:00',
+        },
+        {
+          label: 'Sábado y domingo',
+          value: '9:00 – 18:00',
+          tag: 'Fin de semana',
+        },
+      ],
+      scheduleNote: 'La cocina fría cierra media hora antes.',
+      planNote: 'Croquis de barrio',
+      routesTitle: 'Cómo llegar',
+      routes: [
+        {
+          title: 'En metro',
+          meta: 'Unos minutos',
+          text: 'Baja en la estación más cercana y camina dos cuadras por la calle de la cafetería.',
+        },
+        {
+          title: 'En bicicleta',
+          meta: 'En la puerta',
+          text: 'Hay un rack seguro frente al local para las bicis de clientes.',
+        },
+        {
+          title: 'A pie',
+          meta: 'De barrio',
+          text: 'A pasos de la plaza de la colonia, por una banqueta con árboles.',
+        },
+      ],
+      emailCta: 'Escribir',
       branches: [
         {
           name: 'Clavería',

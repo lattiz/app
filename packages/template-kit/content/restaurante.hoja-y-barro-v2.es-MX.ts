@@ -1,4 +1,4 @@
-// GENERATED from specs/restaurante-hoja-y-barro-v2.spec.json (spec fee1819bac98, file 4f728da4a49c). Do not edit: use the spec, or freeze.
+// GENERATED from specs/restaurante-hoja-y-barro-v2.spec.json (spec 86e027853e52, file 94ad6897aa8d). Do not edit: use the spec, or freeze.
 import type { ContentPack } from '../src/types';
 
 export default {
@@ -413,6 +413,35 @@ export default {
       hoursLabel: 'Horario',
       whatsappCta: 'Pedir por WhatsApp',
       callCta: 'Llamar',
+      image: 'product-07.jpg',
+      imageAlt: 'Puerta de madera azul dentro de un arco de piedra',
+      plateLabel: 'Fachada',
+      plateText: 'La puerta de la esquina de Orizaba.',
+      placeTitle: 'Dónde estamos',
+      placeNote: 'Entre árboles y mesas al sol, a pasos del parque.',
+      hoursTitle: 'Cuándo abrimos',
+      hoursText:
+        'Lunes a viernes de 7:30 a 20:00. Sábado y domingo de 8:30 a 18:00.',
+      hoursNote: 'La barra de matcha abre desde la primera hora.',
+      orderTitle: 'Cómo pedir',
+      orderText:
+        'Escríbenos por WhatsApp y recoge en la barra, con tu nombre en el vaso.',
+      orderCta: 'Escribir pedido',
+      chipsTitle: 'Cómo llegar',
+      chips: [
+        {
+          label: 'A pie:',
+          text: '3 minutos desde el parque',
+        },
+        {
+          label: 'En bici:',
+          text: 'rack seguro en la fachada',
+        },
+        {
+          label: 'En transporte:',
+          text: 'parada a dos cuadras',
+        },
+      ],
       branches: [
         {
           name: 'Roma Norte',

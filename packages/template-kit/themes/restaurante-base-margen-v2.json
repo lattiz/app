@@ -1,5 +1,5 @@
 {
-  "$lattiz": "GENERATED from specs/restaurante-margen-v2.spec.json (spec 754ac0fa6f16, file b8b797b48794). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/restaurante-margen-v2.spec.json (spec 880697027b0b, file b8b797b48794). Do not edit: use the spec, or freeze.",
   "name": "restaurante-base-margen-v2",
   "label": "Margen Café · Básico",
   "tier": "basic",

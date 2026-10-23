@@ -1,4 +1,4 @@
-// GENERATED from specs/restaurante-margen-v2.spec.json (spec 754ac0fa6f16, file bda76338f63b). Do not edit: use the spec, or freeze.
+// GENERATED from specs/restaurante-margen-v2.spec.json (spec 880697027b0b, file 897417ff15fc). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
@@ -52,7 +52,7 @@ export default {
     },
     {
       slot: 'locations',
-      variant: 'with-contact',
+      variant: 'pickup-board',
     },
     {
       slot: 'floating-whatsapp',

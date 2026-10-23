@@ -25,7 +25,7 @@
         },
         { "role": "faq", "slot": "faq", "variant": "two-col" },
         { "role": "cta", "slot": "cta", "variant": "aside-note" },
-        { "role": "contact", "slot": "locations", "variant": "with-contact" },
+        { "role": "contact", "slot": "locations", "variant": "pickup-board" },
         {
           "role": "whatsapp",
           "slot": "floating-whatsapp",

@@ -1,5 +1,5 @@
 {
-  "$lattiz": "GENERATED from specs/restaurante-hoja-y-barro-v2.spec.json (spec fee1819bac98, file 3d41347d092d). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/restaurante-hoja-y-barro-v2.spec.json (spec 86e027853e52, file 9c36ae81a7ab). Do not edit: use the spec, or freeze.",
   "images": [
     {
       "file": "hero.jpg",
@@ -165,6 +165,17 @@
       "photographer": "StockSnap",
       "photographerUrl": "https://pixabay.com/users/894430/",
       "tags": "people, man, bartender, restaurant, shop, cafe, coffee, money, dollar, table, cap, tattoo, piercing"
+    },
+    {
+      "file": "product-07.jpg",
+      "source": "pixabay",
+      "sha256": "407ac8a4cfc705942bd41f6720bdc2181bb63a04051ddb7b57e5f468d49a4817",
+      "query": "coffee shop entrance wooden door plants",
+      "providerId": 681835,
+      "pageUrl": "https://pixabay.com/photos/door-entrance-facade-archway-arch-681835/",
+      "photographer": "seth0s",
+      "photographerUrl": "https://pixabay.com/users/816508/",
+      "tags": "door, entrance, facade, archway, arch, blue door, wooden, portal"
     }
   ]
 }

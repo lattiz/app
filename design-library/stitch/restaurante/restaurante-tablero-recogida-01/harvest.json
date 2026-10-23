@@ -1,0 +1,281 @@
+{
+  "version": 1,
+  "candidate_id": "restaurante-tablero-recogida-01",
+  "input": {
+    "file": "design.md",
+    "kind": "design-md"
+  },
+  "palette": {
+    "label": "Local business · Cantera editorial (Stitch, claro)",
+    "mode": "light",
+    "mood": [
+      "sobrio",
+      "stitch"
+    ],
+    "affinity": [
+      "restaurante"
+    ],
+    "bg": "#E9E5DE",
+    "text": "#26231F",
+    "accent": "#4A4540",
+    "surface": "#F5F3F0",
+    "surface2": "#DBD7D1",
+    "photoTreatment": "none",
+    "placeholder": "rules",
+    "from": {
+      "bg": "background",
+      "text": "on-background",
+      "accent": "primary",
+      "surface": "surface-container-low",
+      "surface2": "surface-container-high"
+    },
+    "aa": {
+      "ok": true,
+      "problems": []
+    },
+    "roles": {
+      "surface": [
+        "background",
+        "surface",
+        "surface-container-low",
+        "surface-container-high"
+      ],
+      "text": [
+        "on-background",
+        "on-surface",
+        "on-surface-variant"
+      ],
+      "accent": [
+        "primary",
+        "tertiary"
+      ],
+      "border": [
+        "outline",
+        "outline-variant"
+      ]
+    },
+    "lz": {
+      "--lz-color-bg": "#E9E5DE",
+      "--lz-color-surface": "#F5F3F0",
+      "--lz-color-surface-2": "#DBD7D1",
+      "--lz-color-text": "#26231F",
+      "--lz-color-muted": "#5D5954",
+      "--lz-color-accent": "#4A4540",
+      "--lz-color-on-accent": "#FFFFFF",
+      "--lz-color-accent-text": "#4A4540",
+      "--lz-color-line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+      "--lz-color-line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+      "--lz-color-overlay": "#E9E5DE",
+      "--lz-color-on-overlay": "#26231F",
+      "--lz-color-navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+      "--lz-color-ink": "#26231F"
+    },
+    "pairs": [
+      {
+        "fg": "on-background",
+        "bg": "background",
+        "ratio": 12.46,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface",
+        "bg": "surface",
+        "ratio": 12.46,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-primary",
+        "bg": "primary",
+        "ratio": 9.47,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface",
+        "bg": "background",
+        "ratio": 12.46,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "background",
+        "ratio": 5.53,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "surface",
+        "ratio": 5.53,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface",
+        "bg": "surface-container-low",
+        "ratio": 14.12,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "surface-container-low",
+        "ratio": 6.27,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface",
+        "bg": "surface-container-high",
+        "ratio": 10.91,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "surface-container-high",
+        "ratio": 4.85,
+        "min": 4.5,
+        "aa_pass": true
+      }
+    ],
+    "distance": [
+      {
+        "giro": "restaurante",
+        "nearest": "pal-cantera",
+        "distance": 0,
+        "min": 15,
+        "ok": false
+      }
+    ]
+  },
+  "typography": {
+    "scale": [
+      {
+        "token": "display-lg",
+        "role": "display",
+        "family": "Newsreader",
+        "sizePx": 83,
+        "weight": 700,
+        "lineHeightPx": 89
+      },
+      {
+        "token": "headline-md",
+        "role": "headline",
+        "family": "Newsreader",
+        "sizePx": 41,
+        "weight": 600,
+        "lineHeightPx": 48
+      },
+      {
+        "token": "body-lg",
+        "role": "body",
+        "family": "Public Sans",
+        "sizePx": 20,
+        "weight": 400,
+        "lineHeightPx": 32
+      },
+      {
+        "token": "body-md",
+        "role": "body",
+        "family": "Public Sans",
+        "sizePx": 16,
+        "weight": 400,
+        "lineHeightPx": 26
+      },
+      {
+        "token": "label-caps",
+        "role": "label",
+        "family": "Public Sans",
+        "sizePx": 14,
+        "weight": 600,
+        "lineHeightPx": 20,
+        "letterSpacingEm": 0.08
+      }
+    ],
+    "displayFamily": "Newsreader",
+    "bodyFamily": "Public Sans",
+    "googleFamilies": [
+      "Newsreader",
+      "Public Sans"
+    ],
+    "unsupportedFamilies": [],
+    "excludedFamilies": [],
+    "metrics": {
+      "Newsreader": true,
+      "Public Sans": true
+    },
+    "existingPair": "newsreader+public-sans",
+    "delivery": {
+      "ok": true,
+      "problems": []
+    },
+    "radiusPx": 0,
+    "spacing": {
+      "container-max": "1200px",
+      "gutter": "32px",
+      "section-gap": "144px",
+      "stack-md": "28px"
+    }
+  },
+  "sections": [
+    {
+      "ref": "sucursales",
+      "columns": 12,
+      "items": 2,
+      "hasImage": false,
+      "hasStat": true,
+      "hasQuote": false,
+      "surface": "flat",
+      "heading": "Tablero de recogida",
+      "mappable": true,
+      "slot": "hero",
+      "layout": "centered",
+      "similar": [
+        "hero/columns",
+        "hero/centered-arch",
+        "hero/offset-card",
+        "hero/rail"
+      ]
+    },
+    {
+      "ref": "Pie de página discreto con hairline",
+      "columns": 0,
+      "items": 0,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "flat",
+      "mappable": true,
+      "slot": "footer",
+      "layout": "list"
+    }
+  ],
+  "not_mappable": [],
+  "rebuild": [
+    {
+      "ref": "sucursales",
+      "slot": "hero",
+      "layout": "centered",
+      "reason": "sin medir: corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
+    },
+    {
+      "ref": "Pie de página discreto con hairline",
+      "slot": "footer",
+      "layout": "list",
+      "reason": "sin medir: corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
+    }
+  ],
+  "interactivity": [
+    {
+      "kind": "other-js",
+      "detail": "script propio sin patrón reconocido",
+      "recommendation": "omitir: ningún JS de Stitch entra al kit"
+    }
+  ],
+  "image_needs": [],
+  "images_ignored": 1
+}

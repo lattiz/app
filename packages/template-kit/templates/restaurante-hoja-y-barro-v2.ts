@@ -1,4 +1,4 @@
-// GENERATED from specs/restaurante-hoja-y-barro-v2.spec.json (spec fee1819bac98, file 794cc0abdf72). Do not edit: use the spec, or freeze.
+// GENERATED from specs/restaurante-hoja-y-barro-v2.spec.json (spec 86e027853e52, file 00559aa55a8e). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
@@ -52,7 +52,7 @@ export default {
     },
     {
       slot: 'locations',
-      variant: 'with-contact',
+      variant: 'corner-postcard',
     },
     {
       slot: 'floating-whatsapp',
