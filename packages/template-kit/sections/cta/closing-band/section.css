@@ -1,0 +1,82 @@
+/* The panel swaps text and page colors, so the pair keeps its contrast in light and dark themes. */
+.lz-cta-closing-band {
+  padding: calc(var(--lz-section-pad) * 0.6) 0;
+}
+
+.lz-cta-closing-band__panel {
+  display: grid;
+  gap: calc(20px * var(--lz-space));
+  justify-items: start;
+  padding: calc(clamp(28px, 6vw, 72px) * var(--lz-space));
+  background: var(--lz-color-text);
+  color: var(--lz-color-bg);
+}
+
+.lz-cta-closing-band__kicker,
+.lz-cta-closing-band__note {
+  margin: 0;
+  font-family: var(--lz-font-mono, var(--lz-font-body));
+  font-size: calc(14px * var(--lz-text-scale));
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.lz-cta-closing-band__title {
+  max-width: 18ch;
+  margin: 0;
+  color: inherit;
+  font-size: calc(clamp(32px, 5vw, 64px) * var(--lz-display-scale));
+  letter-spacing: var(--lz-display-tracking, 0.01em);
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.lz-cta-closing-band__text {
+  max-width: 52ch;
+  margin: 0;
+  font-size: calc(18px * var(--lz-text-scale));
+  line-height: 1.6;
+}
+
+.lz-cta-closing-band__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(16px * var(--lz-space)) calc(28px * var(--lz-space));
+  padding-top: calc(8px * var(--lz-space));
+}
+
+.lz-cta-closing-band__button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 calc(28px * var(--lz-space));
+  background: var(--lz-color-bg);
+  color: var(--lz-color-text);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  touch-action: manipulation;
+}
+
+.lz-cta-closing-band__button:active {
+  transform: scale(var(--lz-press-scale, 0.97));
+  transition: transform var(--lz-dur-press, 120ms) var(--lz-ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lz-cta-closing-band__button:active {
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .lz-cta-closing-band__title {
+    font-size: calc(var(--lz-title-section-sm) * var(--lz-display-scale));
+  }
+  .lz-cta-closing-band__button {
+    justify-content: center;
+    width: 100%;
+  }
+}

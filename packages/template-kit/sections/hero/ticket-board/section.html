@@ -1,0 +1,37 @@
+<section id="hero" data-lz-slot="hero" data-lz-variant="ticket-board" data-lz-fit class="lz-section lz-hero-ticket-board">
+  <div class="lz-container lz-hero-ticket-board__wrap">
+    <div class="lz-hero-ticket-board__copy">
+      <p class="lz-hero-ticket-board__eyebrow" data-lz-key="eyebrow"></p>
+      <h1 class="lz-title lz-hero-ticket-board__title" data-lz-key="title"></h1>
+      <p class="lz-hero-ticket-board__text" data-lz-key="text"></p>
+      <div class="lz-hero-ticket-board__actions">
+        <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary" data-lz-key="primaryCta"></a>
+        <a class="lz-hero-ticket-board__link" data-lz-if="secondaryCta" data-lz-attr-href="secondaryHref" data-lz-key="secondaryCta"></a>
+      </div>
+      <p class="lz-hero-ticket-board__note" data-lz-if="note" data-lz-key="note"></p>
+    </div>
+    <div class="lz-hero-ticket-board__side">
+      <img fetchpriority="high" width="1200" height="525" class="lz-hero-ticket-board__image" data-lz-attr-src="image" data-lz-attr-alt="imageAlt">
+      <aside class="lz-hero-ticket-board__ticket" data-lz-if="ticketTitle">
+        <p class="lz-hero-ticket-board__ticket-head">
+          <span data-lz-key="ticketTitle"></span>
+          <span data-lz-if="ticketNo" data-lz-key="ticketNo"></span>
+        </p>
+        <ul class="lz-hero-ticket-board__order">
+          <li class="lz-hero-ticket-board__line" data-lz-each="order">
+            <span class="lz-hero-ticket-board__item">
+              <strong data-lz-key="name"></strong>
+              <small data-lz-if="note" data-lz-key="note"></small>
+            </span>
+            <span class="lz-hero-ticket-board__price" data-lz-key="price"></span>
+          </li>
+        </ul>
+        <p class="lz-hero-ticket-board__total" data-lz-if="total">
+          <span data-lz-key="totalLabel"></span>
+          <strong data-lz-key="total"></strong>
+        </p>
+        <a data-lz-if="ticketCta" href="{{whatsappUrl:Hola, quiero pedir lo de la comanda}}" target="_blank" rel="noopener noreferrer" class="lz-hero-ticket-board__repeat" data-lz-key="ticketCta"></a>
+      </aside>
+    </div>
+  </div>
+</section>

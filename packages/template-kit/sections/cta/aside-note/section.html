@@ -1,0 +1,26 @@
+<section id="barra" data-lz-slot="cta" data-lz-variant="aside-note" class="lz-section lz-cta-aside-note">
+  <div class="lz-container">
+    <div class="lz-cta-aside-note__panel">
+      <div class="lz-cta-aside-note__head">
+        <div class="lz-cta-aside-note__heading">
+          <p class="lz-cta-aside-note__kicker" data-lz-if="kicker" data-lz-key="kicker"></p>
+          <h2 class="lz-title lz-cta-aside-note__title" data-lz-key="title"></h2>
+        </div>
+        <p class="lz-cta-aside-note__stock" data-lz-if="stock">
+          <span data-lz-if="stockLabel" data-lz-key="stockLabel"></span>
+          <strong data-lz-key="stock"></strong>
+        </p>
+      </div>
+      <div class="lz-cta-aside-note__blocks">
+        <div class="lz-cta-aside-note__block" data-lz-each="blocks">
+          <h3 class="lz-cta-aside-note__block-title" data-lz-key="title"></h3>
+          <p class="lz-cta-aside-note__block-text" data-lz-key="text"></p>
+          <ul class="lz-cta-aside-note__notes" data-lz-if="notes">
+            <li data-lz-each="notes" data-lz-key="."></li>
+          </ul>
+        </div>
+      </div>
+      <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-cta-aside-note__cta" data-lz-key="primaryCta"></a>
+    </div>
+  </div>
+</section>

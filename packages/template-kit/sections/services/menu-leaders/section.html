@@ -1,0 +1,32 @@
+<section id="servicios" data-lz-slot="services" data-lz-variant="menu-leaders" class="lz-section lz-services-menu-leaders">
+  <div class="lz-container">
+    <div class="lz-services-menu-leaders__head">
+      <div class="lz-services-menu-leaders__heading">
+        <p class="lz-services-menu-leaders__kicker" data-lz-key="kicker"></p>
+        <h2 class="lz-title lz-services-menu-leaders__title" data-lz-key="title"></h2>
+        <p class="lz-services-menu-leaders__intro" data-lz-if="intro" data-lz-key="intro"></p>
+      </div>
+      <p class="lz-services-menu-leaders__note" data-lz-if="note" data-lz-key="note"></p>
+    </div>
+    <div class="lz-services-menu-leaders__groups">
+      <div class="lz-services-menu-leaders__group" data-lz-each="groups">
+        <div class="lz-services-menu-leaders__lead">
+          <img data-lz-if="image" loading="lazy" width="400" height="400" class="lz-services-menu-leaders__thumb" data-lz-attr-src="image" data-lz-attr-alt="imageAlt">
+          <h3 class="lz-services-menu-leaders__group-title" data-lz-key="title"></h3>
+          <p class="lz-services-menu-leaders__group-text" data-lz-if="text" data-lz-key="text"></p>
+        </div>
+        <ul class="lz-services-menu-leaders__items">
+          <li class="lz-services-menu-leaders__item" data-lz-each="items">
+            <p class="lz-services-menu-leaders__line">
+              <span class="lz-services-menu-leaders__name" data-lz-key="name"></span>
+              <span class="lz-services-menu-leaders__dots" aria-hidden="true"></span>
+              <span class="lz-services-menu-leaders__price" data-lz-key="price"></span>
+            </p>
+            <p class="lz-services-menu-leaders__desc" data-lz-if="description" data-lz-key="description"></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <a data-lz-if="cta" href="{{whatsappUrl:Hola, quiero hacer un pedido}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary lz-services-menu-leaders__cta" data-lz-key="cta"></a>
+  </div>
+</section>

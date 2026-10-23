@@ -1,0 +1,123 @@
+.lz-cta-aside-note {
+  padding: calc(var(--lz-section-pad) * 0.7) 0;
+}
+
+.lz-cta-aside-note__panel {
+  display: grid;
+  gap: calc(clamp(24px, 3vw, 40px) * var(--lz-space));
+  padding: calc(clamp(24px, 4.5vw, 56px) * var(--lz-space));
+  border: var(--lz-border-width) solid var(--lz-color-line-strong, var(--lz-color-line));
+  background: var(--lz-color-surface);
+}
+
+.lz-cta-aside-note__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: calc(16px * var(--lz-space)) calc(32px * var(--lz-space));
+  padding-bottom: calc(clamp(20px, 2.4vw, 32px) * var(--lz-space));
+  border-bottom: var(--lz-border-width) solid var(--lz-color-line);
+}
+
+.lz-cta-aside-note__heading {
+  display: grid;
+  gap: calc(10px * var(--lz-space));
+}
+
+.lz-cta-aside-note__kicker,
+.lz-cta-aside-note__stock {
+  margin: 0;
+  font-family: var(--lz-font-mono, var(--lz-font-body));
+  font-size: calc(14px * var(--lz-text-scale));
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.lz-cta-aside-note__kicker {
+  color: color-mix(in srgb, var(--lz-color-accent-text) 40%, var(--lz-color-text));
+  font-weight: 600;
+}
+
+.lz-cta-aside-note__stock {
+  display: grid;
+  gap: 2px;
+  color: var(--lz-color-muted);
+  text-align: right;
+}
+
+.lz-cta-aside-note__stock strong {
+  color: var(--lz-color-text);
+}
+
+.lz-cta-aside-note__title {
+  margin: 0;
+  font-size: calc(clamp(28px, 3.6vw, 48px) * var(--lz-display-scale));
+  letter-spacing: var(--lz-display-tracking, 0.01em);
+  text-wrap: balance;
+}
+
+.lz-cta-aside-note__blocks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: calc(clamp(24px, 4vw, 56px) * var(--lz-space));
+}
+
+.lz-cta-aside-note__block {
+  display: grid;
+  gap: calc(12px * var(--lz-space));
+  align-content: start;
+}
+
+.lz-cta-aside-note__block + .lz-cta-aside-note__block {
+  padding-left: calc(clamp(24px, 4vw, 56px) * var(--lz-space));
+  border-left: var(--lz-border-width) solid var(--lz-color-line);
+}
+
+.lz-cta-aside-note__block-title {
+  margin: 0;
+  font-family: var(--lz-font-display);
+  font-size: calc(24px * var(--lz-text-scale));
+  line-height: 1.2;
+}
+
+.lz-cta-aside-note__block-text {
+  margin: 0;
+  color: var(--lz-color-muted);
+  font-size: calc(16px * var(--lz-text-scale));
+  line-height: 1.6;
+}
+
+.lz-cta-aside-note__notes {
+  display: grid;
+  gap: calc(4px * var(--lz-space));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--lz-color-muted);
+  font-family: var(--lz-font-mono, var(--lz-font-body));
+  font-size: calc(14px * var(--lz-text-scale));
+}
+
+.lz-cta-aside-note__cta {
+  justify-self: start;
+  padding-block: 12px;
+  margin-block: -12px;
+  color: var(--lz-color-text);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 992px) {
+  .lz-cta-aside-note__block + .lz-cta-aside-note__block {
+    padding: calc(20px * var(--lz-space)) 0 0;
+    border-top: var(--lz-border-width) solid var(--lz-color-line);
+    border-left: 0;
+  }
+  .lz-cta-aside-note__stock {
+    text-align: left;
+  }
+}

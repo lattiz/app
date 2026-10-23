@@ -29,6 +29,7 @@ export const FAMILIES: Record<string, Family> = {
   'hero/offset-card': 'type',
   'hero/arch-sticker': 'media-text',
   'hero/index-panel': 'full-media',
+  'hero/ticket-board': 'split-panel',
   'hero/rail': 'type',
   'hero/bento': 'cells',
   'hero/overlap': 'media-text',
@@ -39,6 +40,7 @@ export const FAMILIES: Record<string, Family> = {
   'about/stats-strip': 'figures',
   'about/brief': 'figures',
   'about/framed-craft': 'media-text',
+  'about/order-steps': 'cells',
   'services/price-list': 'rows',
   'services/menu-columns': 'rows',
   'services/editorial-table': 'rows',
@@ -46,6 +48,7 @@ export const FAMILIES: Record<string, Family> = {
   'services/ritual-cards': 'cells',
   'services/alternating-bands': 'media-text',
   'services/index-table': 'rows',
+  'services/menu-leaders': 'rows',
   'services/product-grid': 'cells',
   'gallery/grid': 'full-media',
   'gallery/mosaic': 'full-media',
@@ -77,6 +80,8 @@ export const FAMILIES: Record<string, Family> = {
   'locations/map-link': 'split-panel',
   'locations/cards': 'cells',
   'cta/band': 'band',
+  'cta/aside-note': 'split-panel',
+  'cta/closing-band': 'band',
   'navbar/inline': 'chrome',
   'navbar/centered-logo': 'chrome',
   'navbar/notice-bar': 'chrome',
@@ -87,6 +92,7 @@ export const FAMILIES: Record<string, Family> = {
   'footer/minimal-centered': 'chrome',
   'footer/ledger': 'chrome',
   'footer/signature-bar': 'chrome',
+  'footer/hours-blocks': 'chrome',
 };
 
 export function familyOf(slot: string, variant: string): Family | undefined {

@@ -1,0 +1,22 @@
+{
+  "id": "restaurante-barra-pedidos-01",
+  "giro": "restaurante",
+  "source": "stitch",
+  "status": "harvested",
+  "tags": [
+    "cafe",
+    "barra",
+    "ticket",
+    "como-pedir"
+  ],
+  "spin": "barra-de-pedidos",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-23T21:37:19.595Z",
+  "stitch": {
+    "project_id": "5675624824275708170",
+    "screen_ids": [
+      "84a65faa3f7e4876a9003a49239eab3d"
+    ]
+  },
+  "direction": "cantera-editorial"
+}
