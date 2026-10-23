@@ -1,0 +1,29 @@
+<section id="hero" data-lz-slot="hero" data-lz-variant="vertical-slip" data-lz-fit class="lz-section lz-hero-vertical-slip">
+  <div class="lz-container lz-hero-vertical-slip__wrap">
+    <div class="lz-hero-vertical-slip__copy">
+      <p class="lz-hero-vertical-slip__eyebrow" data-lz-key="eyebrow"></p>
+      <h1 class="lz-title lz-hero-vertical-slip__title" data-lz-key="title"></h1>
+      <p class="lz-hero-vertical-slip__text" data-lz-key="text"></p>
+      <div class="lz-hero-vertical-slip__actions">
+        <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary" data-lz-key="primaryCta"></a>
+        <a class="lz-button lz-button--secondary" data-lz-if="secondaryCta" data-lz-attr-href="secondaryHref" data-lz-key="secondaryCta"></a>
+      </div>
+      <p class="lz-hero-vertical-slip__note" data-lz-if="note" data-lz-key="note"></p>
+    </div>
+    <div class="lz-hero-vertical-slip__side">
+      <figure class="lz-hero-vertical-slip__figure">
+        <img fetchpriority="high" width="900" height="1200" class="lz-hero-vertical-slip__image" data-lz-attr-src="image" data-lz-attr-alt="imageAlt">
+        <span class="lz-hero-vertical-slip__tag" data-lz-if="tag" data-lz-key="tag"></span>
+      </figure>
+      <aside class="lz-hero-vertical-slip__slip" data-lz-if="slipTitle">
+        <p class="lz-hero-vertical-slip__slip-head">
+          <span data-lz-key="slipTitle"></span>
+          <span data-lz-if="slipNo" data-lz-key="slipNo"></span>
+        </p>
+        <ul class="lz-hero-vertical-slip__slip-list">
+          <li data-lz-each="slip"><span data-lz-key="label"></span><strong data-lz-key="value"></strong></li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>

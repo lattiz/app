@@ -1,0 +1,20 @@
+{
+  "id": "restaurante-ceniza-fuego-humo-01",
+  "giro": "restaurante",
+  "source": "stitch",
+  "status": "harvested",
+  "tags": [
+    "ceniza",
+    "oscuro"
+  ],
+  "spin": "ceniza-fuego-humo",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-23T22:53:03.979Z",
+  "stitch": {
+    "project_id": "15114272882321741232",
+    "screen_ids": [
+      "138710c432ad4115903a55164e4e65ad"
+    ]
+  },
+  "direction": "neon-nocturno"
+}

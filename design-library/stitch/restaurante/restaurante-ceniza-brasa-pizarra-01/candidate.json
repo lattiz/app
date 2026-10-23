@@ -1,0 +1,20 @@
+{
+  "id": "restaurante-ceniza-brasa-pizarra-01",
+  "giro": "restaurante",
+  "source": "stitch",
+  "status": "harvested",
+  "tags": [
+    "ceniza",
+    "oscuro"
+  ],
+  "spin": "ceniza-brasa-pizarra",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-23T22:53:01.522Z",
+  "stitch": {
+    "project_id": "15114272882321741232",
+    "screen_ids": [
+      "5152d7e2fe8d4c47bb58541e76c90f89"
+    ]
+  },
+  "direction": "neon-nocturno"
+}

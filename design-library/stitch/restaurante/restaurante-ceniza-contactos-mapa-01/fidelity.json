@@ -1,0 +1,228 @@
+{
+  "galeria": {
+    "ref": "galeria",
+    "slot": "gallery",
+    "theme": "restaurante-casa-comal-v1",
+    "measured": [
+      {
+        "variant": "gallery/collage",
+        "structure": 0.317,
+        "heightRatio": 0.96,
+        "match": false
+      },
+      {
+        "variant": "gallery/grid",
+        "structure": 0.36,
+        "heightRatio": 0.65,
+        "match": false
+      },
+      {
+        "variant": "gallery/bento",
+        "structure": 1,
+        "heightRatio": 0.91,
+        "match": false
+      },
+      {
+        "variant": "gallery/mosaic",
+        "structure": 1,
+        "heightRatio": 1.13,
+        "match": false
+      },
+      {
+        "variant": "gallery/strip",
+        "structure": 1,
+        "heightRatio": 0.55,
+        "match": false
+      }
+    ],
+    "best": "gallery/collage",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "resenas": {
+    "ref": "resenas",
+    "slot": "testimonials",
+    "theme": "restaurante-casa-comal-v1",
+    "measured": [
+      {
+        "variant": "testimonials/hairline-trio",
+        "structure": 0.281,
+        "heightRatio": 0.7,
+        "match": false
+      },
+      {
+        "variant": "testimonials/paper-trio",
+        "structure": 0.307,
+        "heightRatio": 0.77,
+        "match": false
+      },
+      {
+        "variant": "testimonials/quote-feature",
+        "structure": 0.361,
+        "heightRatio": 0.91,
+        "match": false
+      },
+      {
+        "variant": "testimonials/rating-wall",
+        "structure": 0.389,
+        "heightRatio": 0.6,
+        "match": false
+      },
+      {
+        "variant": "testimonials/cards",
+        "structure": 0.446,
+        "heightRatio": 0.7,
+        "match": false
+      },
+      {
+        "variant": "testimonials/feature-stack",
+        "structure": 0.541,
+        "heightRatio": 0.91,
+        "match": false
+      }
+    ],
+    "best": "testimonials/hairline-trio",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "sucursales": {
+    "ref": "sucursales",
+    "slot": "locations",
+    "theme": "restaurante-casa-comal-v1",
+    "measured": [
+      {
+        "variant": "locations/pickup-board",
+        "structure": 0.243,
+        "heightRatio": 1.79,
+        "match": false
+      },
+      {
+        "variant": "locations/single-card",
+        "structure": 0.555,
+        "heightRatio": 0.45,
+        "match": false
+      },
+      {
+        "variant": "locations/map-link",
+        "structure": 0.573,
+        "heightRatio": 0.59,
+        "match": false
+      },
+      {
+        "variant": "locations/with-contact",
+        "structure": 0.61,
+        "heightRatio": 0.89,
+        "match": false
+      },
+      {
+        "variant": "locations/cards",
+        "structure": 0.637,
+        "heightRatio": 0.67,
+        "match": false
+      },
+      {
+        "variant": "locations/booking-panel",
+        "structure": 0.691,
+        "heightRatio": 0.7,
+        "match": false
+      },
+      {
+        "variant": "locations/arch-visit",
+        "structure": 0.74,
+        "heightRatio": 0.71,
+        "match": false
+      },
+      {
+        "variant": "locations/split-panel",
+        "structure": 0.895,
+        "heightRatio": 1.05,
+        "match": false
+      },
+      {
+        "variant": "locations/corner-postcard",
+        "structure": 1,
+        "heightRatio": 1.4,
+        "match": false
+      },
+      {
+        "variant": "locations/single",
+        "structure": 1,
+        "heightRatio": 0.65,
+        "match": false
+      }
+    ],
+    "best": "locations/pickup-board",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "pie": {
+    "ref": "pie",
+    "slot": "footer",
+    "theme": "restaurante-casa-comal-v1",
+    "measured": [
+      {
+        "variant": "footer/minimal-centered",
+        "structure": 0.535,
+        "heightRatio": 0.39,
+        "match": false
+      },
+      {
+        "variant": "footer/ledger",
+        "structure": 0.545,
+        "heightRatio": 0.45,
+        "match": false
+      },
+      {
+        "variant": "footer/big-wordmark",
+        "structure": 0.591,
+        "heightRatio": 0.67,
+        "match": false
+      },
+      {
+        "variant": "footer/columns",
+        "structure": 0.797,
+        "heightRatio": 0.36,
+        "match": false
+      },
+      {
+        "variant": "footer/hours-blocks",
+        "structure": 0.798,
+        "heightRatio": 0.3,
+        "match": false
+      },
+      {
+        "variant": "footer/signature-bar",
+        "structure": 1,
+        "heightRatio": 0.19,
+        "match": false
+      }
+    ],
+    "best": "footer/minimal-centered",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  }
+}

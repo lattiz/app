@@ -95,6 +95,16 @@ export const FAMILIES: Record<string, Family> = {
   'footer/ledger': 'chrome',
   'footer/signature-bar': 'chrome',
   'footer/hours-blocks': 'chrome',
+  'navbar/index-strip': 'chrome',
+  'hero/vertical-slip': 'split-panel',
+  'hero/split-mosaic': 'cells',
+  'about/coal-log': 'cells',
+  'services/chalk-board': 'cells',
+  'faq/rule-table': 'rows',
+  'gallery/contact-sheet': 'cells',
+  'testimonials/order-slips': 'cells',
+  'locations/table-map': 'split-panel',
+  'footer/receipt': 'chrome',
 };
 
 export function familyOf(slot: string, variant: string): Family | undefined {

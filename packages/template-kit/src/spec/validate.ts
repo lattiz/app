@@ -309,7 +309,7 @@ export async function validateSpec(
             `falta (lo pide ${slot}/${variant} en ${TIER_LABEL[tier]})`,
             `Defínelo en copy.${slot} o en overrides.${tier}.copy.${slot}.`,
           );
-      for (const k of ['image', 'items', 'members', 'products', 'groups']) {
+      for (const k of ['image', 'items', 'members', 'products', 'groups', 'tiles']) {
         const v = copy[slot]?.[k];
         if (k === 'image' && typeof v === 'string')
           usedImages.add(v.replace(/\.jpg$/, ''));

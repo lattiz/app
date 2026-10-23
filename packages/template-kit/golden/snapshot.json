@@ -1038,6 +1038,34 @@
         }
       }
     },
+    "restaurante-ceniza-v2": {
+      "manifest": "templates/restaurante-ceniza-v2.ts",
+      "hashes": {
+        "project": "be3fec7f0272558a",
+        "html": "7a348192f582fafb",
+        "css": "f152df40189e1f27",
+        "rootCss": "707741835e9013fd",
+        "theme": "8c062ddad7bd44b1",
+        "pack": "f545afee63f02f31",
+        "meta": "51bea5d825039d70",
+        "assets": "4e819ccd9f0e1560"
+      },
+      "assets": 9,
+      "size": {
+        "css": {
+          "raw": 42504,
+          "gzip": 6227
+        },
+        "html": {
+          "raw": 28942,
+          "gzip": 6538
+        },
+        "index": {
+          "raw": 71462,
+          "gzip": 12685
+        }
+      }
+    },
     "restaurante-fresca-nube-v1": {
       "manifest": "templates/restaurante-fresca-nube-v1.ts",
       "hashes": {
@@ -1667,6 +1695,49 @@
         "restaurante-base-hoja-y-barro-v1",
         "restaurante-hoja-y-barro-v1"
       ]
+    },
+    "specs/restaurante-ceniza-v2.spec.json": {
+      "ids": [
+        "restaurante-ceniza-v2",
+        "restaurante-base-ceniza-v2"
+      ],
+      "specHash": "38d821242b7c",
+      "files": {
+        "templates/restaurante-ceniza-v2.ts": "a253177f519a",
+        "themes/restaurante-ceniza-v2.json": "c138812f7cec",
+        "demo-profiles/restaurante-ceniza-v2.json": "155639a6768e",
+        "templates/restaurante-base-ceniza-v2.ts": "4393684013af",
+        "themes/restaurante-base-ceniza-v2.json": "7fb44431f0de",
+        "demo-profiles/restaurante-base-ceniza-v2.json": "155639a6768e",
+        "content/restaurante.ceniza-v2.es-MX.ts": "f545afee63f0"
+      },
+      "choices": {
+        "restaurante-ceniza-v2": [],
+        "restaurante-base-ceniza-v2": []
+      },
+      "peers": [
+        "restaurante-base-casa-comal-v1",
+        "restaurante-base-casa-rosa-mantequilla-v1",
+        "restaurante-base-claveria-verde-v1",
+        "restaurante-base-fresca-nube-v1",
+        "restaurante-base-hoja-y-barro-v1",
+        "restaurante-base-hoja-y-barro-v2",
+        "restaurante-base-la-nota-azul-v1",
+        "restaurante-base-margen-v1",
+        "restaurante-base-margen-v2",
+        "restaurante-base-trigo-y-brasa-v1",
+        "restaurante-casa-comal-v1",
+        "restaurante-casa-rosa-mantequilla-v1",
+        "restaurante-claveria-verde-v1",
+        "restaurante-fresca-nube-v1",
+        "restaurante-hoja-y-barro-v1",
+        "restaurante-hoja-y-barro-v2",
+        "restaurante-la-nota-azul-v1",
+        "restaurante-margen-v1",
+        "restaurante-margen-v2",
+        "restaurante-trigo-y-brasa-v1"
+      ],
+      "locked": true
     },
     "specs/restaurante-ceniza.spec.json": {
       "ids": [

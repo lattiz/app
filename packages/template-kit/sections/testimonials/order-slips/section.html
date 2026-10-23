@@ -1,0 +1,26 @@
+<section id="resenas" data-lz-slot="testimonials" data-lz-variant="order-slips" class="lz-section lz-testimonials-order-slips">
+  <div class="lz-container">
+    <div class="lz-testimonials-order-slips__head">
+      <div class="lz-testimonials-order-slips__heading">
+        <p class="lz-testimonials-order-slips__kicker" data-lz-if="kicker" data-lz-key="kicker"></p>
+        <h2 class="lz-title lz-testimonials-order-slips__title" data-lz-key="title"></h2>
+      </div>
+      <p class="lz-testimonials-order-slips__intro" data-lz-if="intro" data-lz-key="intro"></p>
+    </div>
+    <div class="lz-testimonials-order-slips__slips">
+      <figure class="lz-testimonials-order-slips__slip" data-lz-each="reviews">
+        <p class="lz-testimonials-order-slips__ticket">
+          <span data-lz-if="ticket" data-lz-key="ticket"></span>
+          <span data-lz-if="time" data-lz-key="time"></span>
+        </p>
+        <blockquote class="lz-testimonials-order-slips__text" data-lz-key="text"></blockquote>
+        <figcaption class="lz-testimonials-order-slips__who">
+          <span class="lz-testimonials-order-slips__author" data-lz-key="author"></span>
+          <span class="lz-testimonials-order-slips__place" data-lz-if="place" data-lz-key="place"></span>
+          <span class="lz-testimonials-order-slips__stamp" data-lz-if="stamp" data-lz-key="stamp"></span>
+        </figcaption>
+      </figure>
+    </div>
+    <p class="lz-testimonials-order-slips__note" data-lz-if="note" data-lz-key="note"></p>
+  </div>
+</section>

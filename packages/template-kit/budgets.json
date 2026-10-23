@@ -1,13 +1,13 @@
 {
-  "$comment": "Byte budgets per tier (kit:validate). Started 2026-10-14 from the maximum over the 42 templates + ~10% (rounded up to a whole KiB). css = compiled stylesheet; html = the preview index.html (inline CSS, what a site serves); images = local assets of one page (total and largest file); js = gzip of the Lattiz Motion runtime (Pro only; B\u00e1sico ships no JS). Over budget is WARN; --strict-budget and spec builds of a new template FAIL. Raise a number only with a written reason. images.hero = the hero photo (the LCP image on every template): 120 KiB is the A2 LCP policy for new work (spec builds encode it at most 1200 px wide, q72), not today's maximum; existing heavier heroes only warn.",
+  "$comment": "Byte budgets per tier (kit:validate). Started 2026-10-14 from the maximum over the 42 templates + ~10% (rounded up to a whole KiB). css = compiled stylesheet; html = the preview index.html (inline CSS, what a site serves); images = local assets of one page (total and largest file); js = gzip of the Lattiz Motion runtime (Pro only; B\u00e1sico ships no JS). Over budget is WARN; --strict-budget and spec builds of a new template FAIL. Raise a number only with a written reason. images.hero = the hero photo (the LCP image on every template): 120 KiB is the A2 LCP policy for new work (spec builds encode it at most 1200 px wide, q72), not today's maximum; existing heavier heroes only warn. 2026-10-23: raw css/html raised (basic css 28\u219233 KiB, html 48\u219253 KiB; pro css 38\u219242 KiB, html 67\u219272 KiB; gzip budgets and image budgets unchanged) because the hand-built Stitch sections (extended catalog, docs/stitch-native-sections.md) carry richer layouts than the 42 legacy templates the numbers came from; their cost on the wire stays inside the gzip budgets.",
   "version": 1,
   "basic": {
     "css": {
-      "raw": 28672,
+      "raw": 33792,
       "gzip": 6144
     },
     "html": {
-      "raw": 49152,
+      "raw": 54272,
       "gzip": 11264
     },
     "images": {
@@ -21,11 +21,11 @@
   },
   "pro": {
     "css": {
-      "raw": 38912,
+      "raw": 43008,
       "gzip": 7168
     },
     "html": {
-      "raw": 68608,
+      "raw": 73728,
       "gzip": 15360
     },
     "images": {

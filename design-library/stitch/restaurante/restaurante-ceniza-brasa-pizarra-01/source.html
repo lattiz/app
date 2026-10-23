@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+
+<html class="dark scroll-smooth" lang="es-MX"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CENIZA GRILL &amp; BAR | CDMX</title>
+<!-- Typography & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-high": "#2b2a29",
+            "tertiary-fixed": "#e1e2e6",
+            "on-background": "#e6e1e0",
+            "error": "#ffb4ab",
+            "surface": "#15110E",
+            "on-secondary": "#362f2a",
+            "on-primary-container": "#5a524c",
+            "surface-container": "#211f1f",
+            "outline-variant": "#3E3630",
+            "on-surface": "#F1ECE7",
+            "secondary-fixed-dim": "#d1c4bd",
+            "on-tertiary-fixed": "#191c1f",
+            "inverse-on-surface": "#32302f",
+            "surface-container-lowest": "#0f0e0d",
+            "error-container": "#93000a",
+            "on-surface-variant": "#d0c4bd",
+            "tertiary-fixed-dim": "#c4c6ca",
+            "on-tertiary": "#2e3134",
+            "primary": "#efe2da",
+            "tertiary": "#e2e4e8",
+            "tertiary-container": "#c6c8cc",
+            "on-primary": "#15110E",
+            "primary-container": "#d2c6be",
+            "surface-container-highest": "#363434",
+            "outline": "#8F867E",
+            "on-error": "#690005",
+            "inverse-primary": "#655d56",
+            "inverse-surface": "#e6e1e0",
+            "on-tertiary-fixed-variant": "#44474a",
+            "on-secondary-fixed": "#211a16",
+            "surface-tint": "#d0c4bc",
+            "on-error-container": "#ffdad6",
+            "surface-container-low": "#1d1b1b",
+            "primary-fixed": "#ede0d8",
+            "background": "#15110E",
+            "primary-fixed-dim": "#d0c4bc",
+            "on-secondary-fixed-variant": "#4d4540",
+            "secondary-fixed": "#ede0d8",
+            "on-primary-fixed-variant": "#4d453f",
+            "surface-dim": "#141313",
+            "on-tertiary-container": "#515457",
+            "on-primary-fixed": "#201a15",
+            "secondary-container": "#504742",
+            "surface-variant": "#363434",
+            "surface-bright": "#3b3938",
+            "secondary": "#d1c4bd",
+            "on-secondary-container": "#c2b6af"
+          },
+          "borderRadius": {
+            "DEFAULT": "0px",
+            "none": "0px",
+            "sm": "0px",
+            "md": "0px",
+            "lg": "0px",
+            "xl": "0px",
+            "full": "0px"
+          },
+          "spacing": {
+            "gutter": "1rem",
+            "space-xl": "5rem",
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem",
+            "space-xs": "0.25rem",
+            "space-md": "0.875rem",
+            "margin": "1.5rem"
+          },
+          "fontFamily": {
+            "display-lg": ["Anton", "sans-serif"],
+            "body-md": ["Space Grotesk", "sans-serif"],
+            "body-lg": ["Space Grotesk", "sans-serif"],
+            "headline-md": ["Anton", "sans-serif"],
+            "label-caps": ["Space Grotesk", "monospace"]
+          },
+          "fontSize": {
+            "display-lg": ["83px", { "lineHeight": "89px", "fontWeight": "400" }],
+            "body-md": ["16px", { "lineHeight": "26px", "fontWeight": "400" }],
+            "body-lg": ["20px", { "lineHeight": "32px", "fontWeight": "400" }],
+            "headline-md": ["41px", { "lineHeight": "48px", "fontWeight": "600" }],
+            "label-caps": ["14px", { "lineHeight": "20px", "letterSpacing": "0.08em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md antialiased selection:bg-primary selection:text-on-primary">
+<!-- 1) NAVBAR -->
+<header class="w-full sticky top-0 z-50 bg-surface border-b border-outline-variant" id="navbar">
+<!-- Tier 1: Utility Strip -->
+<div class="bg-surface-container-low border-b border-outline-variant text-[12px] tracking-widest font-mono text-on-surface-variant px-6 md:px-8 py-2 flex flex-col md:flex-row justify-between items-center gap-2">
+<div class="flex items-center gap-2">
+<span class="inline-block w-2 h-2 bg-error"></span>
+<span>HORARIO: MIE A DOM 19:00 - 01:30 HRS</span>
+</div>
+<div class="hidden lg:block text-primary">
+        COL. JUÁREZ, LONDRES 142, CDMX
+      </div>
+<div>
+<a class="flex items-center gap-2 hover:text-primary transition-colors" href="https://wa.me/525549201180" rel="noopener noreferrer" target="_blank">
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24">
+<path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.299.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.42-.101.825zM12 2C6.477 2 2 6.477 2 12c0 1.891.526 3.662 1.444 5.176L2 22l4.981-1.306C8.423 21.492 10.154 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path>
+</svg>
+<span>WHATSAPP: +52 55 4920 1180</span>
+</a>
+</div>
+</div>
+<!-- Tier 2: Main Brand & Navigation -->
+<div class="max-w-[1400px] mx-auto px-6 md:px-8 py-4 flex justify-between items-center">
+<div class="flex items-baseline gap-3">
+<a class="font-display-lg text-4xl md:text-5xl tracking-tight text-primary hover:text-on-surface transition-colors leading-none" href="#navbar">
+          CENIZA
+        </a>
+<span class="font-headline-md text-sm md:text-base tracking-[0.2em] text-outline">
+          GRILL &amp; BAR
+        </span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant font-label-caps text-label-caps uppercase tracking-widest hover:text-primary transition-colors duration-150" href="#brasa">
+          01 BRASA
+        </a>
+<a class="text-on-surface-variant font-label-caps text-label-caps uppercase tracking-widest hover:text-primary transition-colors duration-150" href="#carta">
+          02 BARRA
+        </a>
+<a class="text-on-surface-variant font-label-caps text-label-caps uppercase tracking-widest hover:text-primary transition-colors duration-150" href="#portada">
+          03 FOTOS
+        </a>
+<a class="text-on-surface-variant font-label-caps text-label-caps uppercase tracking-widest hover:text-primary transition-colors duration-150" href="#preguntas">
+          04 VISITA
+        </a>
+</nav>
+<div>
+<a class="inline-block bg-primary text-on-primary font-label-caps text-xs md:text-sm px-5 py-3 uppercase tracking-widest font-bold hover:bg-on-surface hover:text-background transition-colors duration-150 border border-primary" href="https://wa.me/525549201180" rel="noopener noreferrer" target="_blank">
+          RESERVAR MESA
+        </a>
+</div>
+</div>
+</header>
+<!-- 2) PORTADA (HERO) -->
+<section class="w-full border-b border-outline-variant bg-surface min-h-[calc(100vh-100px)] flex flex-col justify-between" id="portada">
+<div class="max-w-[1400px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 flex-1 border-x border-outline-variant">
+<!-- Left Column (65% width approx -> 8 cols of 12) -->
+<div class="lg:col-span-8 p-8 md:p-14 lg:p-16 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-outline-variant bg-surface">
+<div>
+<div class="inline-flex items-center gap-3 border border-outline px-3 py-1 mb-8 text-on-surface-variant font-mono text-xs tracking-widest uppercase bg-surface-container-low">
+<span class="w-2 h-2 bg-error inline-block"></span>
+<span>CAPITAL FEDERAL / FUEGO ABIERTO</span>
+</div>
+<h1 class="font-display-lg text-[64px] sm:text-[90px] md:text-[110px] xl:text-[130px] leading-[0.85] text-primary uppercase tracking-tight mb-8">
+            HUMO CRUDO<br/>
+            LEÑA SECA<br/>
+            NOCHE HONDA
+          </h1>
+<p class="font-body-lg text-body-lg text-on-surface max-w-2xl mb-10 leading-relaxed font-normal">
+            Parrilla de brasas vivas, destilados silvestres y corte grueso en el corazón de la Juárez. Sin poses.
+          </p>
+<div class="flex flex-wrap items-center gap-4">
+<a class="bg-primary text-on-primary font-label-caps text-base px-8 py-4 uppercase font-bold tracking-widest hover:bg-surface-container-high hover:text-primary border border-primary transition-colors" href="https://wa.me/525549201180" rel="noopener noreferrer" target="_blank">
+              Reservar mesa
+            </a>
+<a class="border border-outline text-primary font-label-caps text-base px-8 py-4 uppercase font-bold tracking-widest hover:border-primary transition-colors bg-surface-container-low" href="#carta">
+              Ver Pizarra
+            </a>
+</div>
+</div>
+<div class="mt-16 pt-8 border-t border-outline-variant flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<p class="font-label-caps text-xs md:text-sm text-outline tracking-widest uppercase">
+            CORTES AL CARBÓN DE ENCINO <span class="text-primary px-1">/</span> MEZCALES ARTESANALES <span class="text-primary px-1">/</span> MÚSICA EN VINIL
+          </p>
+<span class="font-mono text-xs text-on-surface-variant">LONDRES 142 • CDMX</span>
+</div>
+</div>
+<!-- Right Column (~35% width -> 4 cols of 12) -->
+<div class="lg:col-span-4 flex flex-col justify-between bg-surface-container relative overflow-hidden">
+<!-- Tall narrow image container -->
+<div class="relative w-full h-[450px] lg:h-full min-h-[500px]">
+<img class="absolute inset-0 w-full h-full object-cover filter contrast-125 brightness-75 grayscale-[30%]" data-alt="Intense close up shot of prime bone-in beef ribeye roasting over roaring open flames and orange ember coals in a nocturnal dark atmosphere. Deep charcoal background, sharp contrasting amber highlights, gritty urban Mexican grill aesthetic with subtle smoke trails." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBchgan2su3ojgJqwLoxcz__Fxdu4uiHsqwOcOHIgP48-zxHubtChypdUci4mrpAXJljghZqMA8IUjsjc7481rAyUCQzPD3PYCWIWc__3_A_wBYUkBFxxTZWqOoqheM_QpAy93loEXfieO5qEkwP4df3eqj5lZm63IdAGU4_OUAATdtYGcNpAMao2Ni0yEwX6J--rXcbFQ-b8SB1BLl6gKLle8GYdT6qguczN4JKbT7lYNArOtzJx9GWEf2LP9oIZhtX-8ss19t1KJY"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-surface/40"></div>
+<!-- Vertical Rotated Neon Pill Badge -->
+<div class="absolute top-8 right-6 z-10">
+<div class="bg-surface-container-lowest/90 text-primary border border-outline px-4 py-2 text-xs font-mono tracking-widest uppercase transform rotate-90 origin-top-right shadow-2xl flex items-center gap-2">
+<span class="w-2 h-2 rounded-none bg-error animate-pulse"></span>
+<span>ABIERTO HASTA LA 1:30 AM</span>
+</div>
+</div>
+</div>
+<!-- Ticket-like reservation slip box pinned at bottom -->
+<div class="relative z-10 bg-surface-container-lowest border-t-2 border-primary p-6 m-0">
+<div class="flex items-center justify-between border-b border-outline-variant pb-3 mb-3">
+<span class="font-mono text-xs text-primary font-bold tracking-widest uppercase">FICHA DE TURNO NO. 042</span>
+<span class="font-mono text-[11px] text-outline">ESTADO: BRASA ACTIVA</span>
+</div>
+<p class="font-label-caps text-sm text-on-surface uppercase tracking-wider mb-4 leading-snug">
+            RESERVA O LLEGA DIRECTO A LA BARRA
+          </p>
+<div class="flex items-center justify-between text-[11px] font-mono text-on-surface-variant">
+<span>SIN DRESS CODE</span>
+<span class="text-primary font-bold">ACCESO INMEDIATO</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3) BITÁCORA DE LA BRASA -->
+<section class="w-full border-b border-outline-variant bg-surface py-20" id="brasa">
+<div class="max-w-[1400px] mx-auto px-6 md:px-8">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-outline-variant pb-6 gap-4">
+<div>
+<span class="font-label-caps text-xs md:text-sm text-outline uppercase tracking-widest block mb-2">
+            01 / RITUAL DIARIO
+          </span>
+<h2 class="font-headline-md text-headline-md text-primary uppercase tracking-tight">
+            BITÁCORA DE LA BRASA
+          </h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">
+          El carbón no admite prisas. Todo arranca siete horas antes de recibir a la primera persona en el taburete.
+        </p>
+</div>
+<!-- 4 Stages Timeline Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border border-outline-variant divide-y md:divide-y-0 md:divide-x divide-outline-variant bg-surface-container-lowest">
+<!-- Stage 1 -->
+<div class="p-8 flex flex-col justify-between hover:bg-surface-container-low transition-colors duration-200">
+<div>
+<div class="font-display-lg text-6xl text-primary font-normal leading-none mb-6">
+              12:00
+            </div>
+<div class="font-mono text-xs text-outline mb-2 tracking-widest">FASE 01</div>
+<h3 class="font-headline-md text-2xl text-on-surface uppercase tracking-tight mb-4">
+              ENCIENDE EL CARBÓN
+            </h3>
+<p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+              Selección de encino michoacano y mezquite blanco. Fuego lento hasta lograr brasa ceniza pareja sin llama viva.
+            </p>
+</div>
+<div class="mt-8 pt-4 border-t border-outline-variant font-mono text-[11px] text-outline">
+            Tª OBJETIVO: 450°C
+          </div>
+</div>
+<!-- Stage 2 -->
+<div class="p-8 flex flex-col justify-between hover:bg-surface-container-low transition-colors duration-200">
+<div>
+<div class="font-display-lg text-6xl text-primary font-normal leading-none mb-6">
+              15:00
+            </div>
+<div class="font-mono text-xs text-outline mb-2 tracking-widest">FASE 02</div>
+<h3 class="font-headline-md text-2xl text-on-surface uppercase tracking-tight mb-4">
+              REPOSO DE LAS CARNES
+            </h3>
+<p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+              Despiece en frío y salado con sal de grano de Colima. Los cortes toman temperatura de cuarto para abrir grasa.
+            </p>
+</div>
+<div class="mt-8 pt-4 border-t border-outline-variant font-mono text-[11px] text-outline">
+            CORTE: 2.5 PULGADAS
+          </div>
+</div>
+<!-- Stage 3 -->
+<div class="p-8 flex flex-col justify-between hover:bg-surface-container-low transition-colors duration-200">
+<div>
+<div class="font-display-lg text-6xl text-primary font-normal leading-none mb-6">
+              19:00
+            </div>
+<div class="font-mono text-xs text-outline mb-2 tracking-widest">FASE 03</div>
+<h3 class="font-headline-md text-2xl text-on-surface uppercase tracking-tight mb-4">
+              ABRE LA BARRA
+            </h3>
+<p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+              Arrancan los cócteles de humo, sotol chihuahuense y cerveza de barril helada. Las primeras brasas reciben el hierro.
+            </p>
+</div>
+<div class="mt-8 pt-4 border-t border-outline-variant font-mono text-[11px] text-outline">
+            AUDIO: VINILO 33 RPM
+          </div>
+</div>
+<!-- Stage 4 -->
+<div class="p-8 flex flex-col justify-between hover:bg-surface-container-low transition-colors duration-200">
+<div>
+<div class="font-display-lg text-6xl text-primary font-normal leading-none mb-6">
+              23:00
+            </div>
+<div class="font-mono text-xs text-outline mb-2 tracking-widest">FASE 04</div>
+<h3 class="font-headline-md text-2xl text-on-surface uppercase tracking-tight mb-4">
+              ÚLTIMA RONDA
+            </h3>
+<p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+              Tacos de tuétano a la medianoche, sellados directos al rescoldo y mezcal espadín antes del cierre.
+            </p>
+</div>
+<div class="mt-8 pt-4 border-t border-outline-variant font-mono text-[11px] text-outline">
+            CIERRE DE HIERRO: 00:45 HRS
+          </div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4) PIZARRA DE TURNOS (MENU) -->
+<section class="w-full border-b border-outline-variant bg-surface-container-lowest py-20" id="carta">
+<div class="max-w-[1400px] mx-auto px-6 md:px-8">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-outline-variant pb-6 gap-4">
+<div>
+<span class="font-label-caps text-xs md:text-sm text-outline uppercase tracking-widest block mb-2">
+            02 / SELECCIÓN NOCTURNA
+          </span>
+<h2 class="font-headline-md text-headline-md text-primary uppercase tracking-tight">
+            PIZARRA DE TURNOS
+          </h2>
+</div>
+<div class="font-mono text-xs text-outline tracking-widest uppercase">
+          PRECIOS EN MXN • INCLUYEN IVA
+        </div>
+</div>
+<!-- Blackboard Layout (3 Columns) -->
+<div class="grid grid-cols-1 lg:grid-cols-3 border border-outline-variant divide-y lg:divide-y-0 lg:divide-x divide-outline-variant bg-surface">
+<!-- Column 1: BRASA & FUEGO -->
+<div class="p-8">
+<div class="border-b-2 border-primary pb-3 mb-8 flex justify-between items-baseline">
+<h3 class="font-headline-md text-2xl text-primary uppercase tracking-wide">
+              BRASA &amp; FUEGO
+            </h3>
+<span class="font-mono text-xs text-outline">01 / CARNES</span>
+</div>
+<div class="space-y-8">
+<div class="group">
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-label-caps text-base text-on-surface font-bold uppercase tracking-wider group-hover:text-primary transition-colors">
+                  Rib Eye 400g
+                </span>
+<span class="font-display-lg text-2xl text-primary">$420</span>
+</div>
+<p class="font-body-md text-xs text-on-surface-variant">
+                Rib Eye de 400g al carbón con chiles toreados
+              </p>
+</div>
+<div class="group">
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-label-caps text-base text-on-surface font-bold uppercase tracking-wider group-hover:text-primary transition-colors">
+                  Picaña en Costra de Café
+                </span>
+<span class="font-display-lg text-2xl text-primary">$580</span>
+</div>
+<p class="font-body-md text-xs text-on-surface-variant">
+                Picaña curada en costra de café de olla y pimienta gorda
+              </p>
+</div>
+<div class="group">
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-label-caps text-base text-on-surface font-bold uppercase tracking-wider group-hover:text-primary transition-colors">
+                  Porterhouse 800g
+                </span>
+<span class="font-display-lg text-2xl text-primary">$890</span>
+</div>
+<p class="font-body-md text-xs text-on-surface-variant">
+                Porterhouse 800g para compartir con cebollitas quemadas
+              </p>
+</div>
+<div class="group">
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-label-caps text-base text-on-surface font-bold uppercase tracking-wider group-hover:text-primary transition-colors">
+                  Pollo en Recado Negro
+                </span>
+<span class="font-display-lg text-2xl text-primary">$340</span>
+</div>
+<p class="font-body-md text-xs text-on-surface-variant">
+                Medio pollo de granja marinado en recado negro
+              </p>
+</div>
+</div>
+</div>
+<!-- Column 2: BARRA & DESTILADOS -->
+<div class="p-8">
+<div class="border-b-2 border-primary pb-3 mb-8 flex justify-between items-baseline">
+<h3 class="font-headline-md text-2xl text-primary uppercase tracking-wide">
+              BARRA &amp; DESTILADOS
+            </h3>
+<span class="font-mono text-xs text-outline">02 / TRAGOS</span>
+</div>
+<div class="space-y-8">
+<div class="group">
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-label-caps text-base text-on-surface font-bold uppercase tracking-wider group-hover:text-primary transition-colors">
+                  Xoconostle Ahumado
+                </span>
+<span class="font-display-lg text-2xl text-primary">$180</span>
+</div>
+<p class="font-body-md text-xs text-on-surface-variant">
+                Mezcal ahumado con cordial de xoconostle y sal de gusano
+              </p>
+</div>
+<div class="group">
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-label-caps text-base text-on-surface font-bold uppercase tracking-wider group-hover:text-primary transition-colors">
+                  Charanda &amp; Cacao
+                </span>
+<span class="font-display-lg text-2xl text-primary">$195</span>
+</div>
+<p class="font-body-md text-xs text-on-surface-variant">
+                Charanda añeja, jugo de caña tatemada y bitter de cacao
+              </p>
+</div>
+<div class="group">
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-label-caps text-base text-on-surface font-bold uppercase tracking-wider group-hover:text-primary transition-colors">
+                  Sotol Desértico
+                </span>
+<span class="font-display-lg text-2xl text-primary">$210</span>
+</div>
+<p class="font-body-md text-xs text-on-surface-variant">
+                Sotol de desierto con infusión de romero quemado y toronja
+              </p>
+</div>
+<div class="group">
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-label-caps text-base text-on-surface font-bold uppercase tracking-wider group-hover:text-primary transition-colors">
+                  Stout Ceniza Local
+                </span>
+<span class="font-display-lg text-2xl text-primary">$160</span>
+</div>
+<p class="font-body-md text-xs text-on-surface-variant">
+                Cerveza de la casa Stout ceniza en colaboración local
+              </p>
+</div>
+</div>
+</div>
+<!-- Column 3: PARA COMPARTIR -->
+<div class="p-8">
+<div class="border-b-2 border-primary pb-3 mb-8 flex justify-between items-baseline">
+<h3 class="font-headline-md text-2xl text-primary uppercase tracking-wide">
+              PARA COMPARTIR
+            </h3>
+<span class="font-mono text-xs text-outline">03 / CENTRO</span>
+</div>
+<div class="space-y-8">
+<div class="group">
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-label-caps text-base text-on-surface font-bold uppercase tracking-wider group-hover:text-primary transition-colors">
+                  Tuétanos en Canoa
+                </span>
+<span class="font-display-lg text-2xl text-primary">$240</span>
+</div>
+<p class="font-body-md text-xs text-on-surface-variant">
+                Tuétanos asados en canoa con tortillas de maíz azul hechas a mano
+              </p>
+</div>
+<div class="group">
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-label-caps text-base text-on-surface font-bold uppercase tracking-wider group-hover:text-primary transition-colors">
+                  Guacamole Rústico
+                </span>
+<span class="font-display-lg text-2xl text-primary">$210</span>
+</div>
+<p class="font-body-md text-xs text-on-surface-variant">
+                Guacamole rústico con chicharrón norteño crujiente
+              </p>
+</div>
+<div class="group">
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-label-caps text-base text-on-surface font-bold uppercase tracking-wider group-hover:text-primary transition-colors">
+                  Chorizo Tolucano
+                </span>
+<span class="font-display-lg text-2xl text-primary">$280</span>
+</div>
+<p class="font-body-md text-xs text-on-surface-variant">
+                Chorizo artesanal de Toluca ahumado al rescoldo
+              </p>
+</div>
+<div class="group">
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-label-caps text-base text-on-surface font-bold uppercase tracking-wider group-hover:text-primary transition-colors">
+                  Queso de Sartén
+                </span>
+<span class="font-display-lg text-2xl text-primary">$170</span>
+</div>
+<p class="font-body-md text-xs text-on-surface-variant">
+                Queso fundido al sartén con epazote fresco y rajas poblanas
+              </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 5) PREGUNTAS (FAQ) -->
+<section class="w-full border-b border-outline-variant bg-surface py-20" id="preguntas">
+<div class="max-w-[1400px] mx-auto px-6 md:px-8">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-outline-variant pb-6 gap-4">
+<div>
+<span class="font-label-caps text-xs md:text-sm text-outline uppercase tracking-widest block mb-2">
+            03 / REGLAS DEL LUGAR
+          </span>
+<h2 class="font-headline-md text-headline-md text-primary uppercase tracking-tight">
+            PREGUNTAS
+          </h2>
+</div>
+<p class="font-mono text-xs text-outline tracking-widest uppercase">
+          DIRECTO / SIN LETRAS CHIQUITAS
+        </p>
+</div>
+<!-- Ruled Table Structure -->
+<div class="w-full border border-outline-variant overflow-x-auto bg-surface-container-lowest">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-container-low font-mono text-xs uppercase tracking-widest text-outline">
+<th class="py-4 px-6 border-r border-outline-variant w-1/5">TEMA</th>
+<th class="py-4 px-6 border-r border-outline-variant w-2/5">PREGUNTA</th>
+<th class="py-4 px-6 w-2/5">RESPUESTA</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant font-body-md text-sm">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-5 px-6 border-r border-outline-variant font-mono text-xs text-primary font-bold tracking-wider">
+                ACCESO
+              </td>
+<td class="py-5 px-6 border-r border-outline-variant font-label-caps text-on-surface font-semibold">
+                ¿Se requiere reservación obligatoria?
+              </td>
+<td class="py-5 px-6 text-on-surface-variant leading-relaxed">
+                La mitad del salón se aparta vía WhatsApp; la barra y mesas periqueras son de acceso libre por orden de llegada.
+              </td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-5 px-6 border-r border-outline-variant font-mono text-xs text-primary font-bold tracking-wider">
+                HORARIOS
+              </td>
+<td class="py-5 px-6 border-r border-outline-variant font-label-caps text-on-surface font-semibold">
+                ¿A qué hora apagan la parrilla?
+              </td>
+<td class="py-5 px-6 text-on-surface-variant leading-relaxed">
+                La cocina de brasas toma última orden a las 00:45 hrs; la barra de coctelería opera continua hasta la 01:30 hrs.
+              </td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-5 px-6 border-r border-outline-variant font-mono text-xs text-primary font-bold tracking-wider">
+                UBICACIÓN
+              </td>
+<td class="py-5 px-6 border-r border-outline-variant font-label-caps text-on-surface font-semibold">
+                ¿Tienen servicio de Valet Parking?
+              </td>
+<td class="py-5 px-6 text-on-surface-variant leading-relaxed">
+                Sí, sobre calle Londres con boleto sellado. También estamos a 3 minutos caminando del Metro Insurgentes.
+              </td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-5 px-6 border-r border-outline-variant font-mono text-xs text-primary font-bold tracking-wider">
+                DIETA
+              </td>
+<td class="py-5 px-6 border-r border-outline-variant font-label-caps text-on-surface font-semibold">
+                ¿Tienen opciones vegetarianas al fuego?
+              </td>
+<td class="py-5 px-6 text-on-surface-variant leading-relaxed">
+                Manejamos coliflor tatemada con salsa macha, calabazas criollas al rescoldo y hongos de lluvia asados.
+              </td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-5 px-6 border-r border-outline-variant font-mono text-xs text-primary font-bold tracking-wider">
+                PAGO
+              </td>
+<td class="py-5 px-6 border-r border-outline-variant font-label-caps text-on-surface font-semibold">
+                ¿Qué formas de pago aceptan?
+              </td>
+<td class="py-5 px-6 text-on-surface-variant leading-relaxed">
+                Todas las tarjetas de crédito y débito, transferencias SPEI y efectivo. No cobramos comisión.
+              </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- FOOTER -->
+<footer class="w-full bg-surface-container-lowest border-t border-outline-variant py-12">
+<div class="max-w-[1400px] mx-auto px-6 md:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="text-center md:text-left">
+<span class="font-headline-md text-2xl uppercase tracking-wider text-primary block mb-2">
+          CENIZA GRILL &amp; BAR
+        </span>
+<p class="font-mono text-xs text-outline tracking-wider">
+          © 2024 CENIZA GRILL &amp; BAR. LONDRES 142, COL. JUÁREZ, CDMX. TODOS LOS DERECHOS RESERVADOS.
+        </p>
+</div>
+<div class="flex items-center gap-8 font-label-caps text-xs tracking-widest uppercase">
+<a class="text-on-surface-variant hover:text-primary hover:underline underline-offset-4 transition-colors" href="https://wa.me/525549201180" rel="noopener noreferrer" target="_blank">
+          WHATSAPP DIRECTO
+        </a>
+<a class="text-on-surface-variant hover:text-primary hover:underline underline-offset-4 transition-colors" href="https://instagram.com" rel="noopener noreferrer" target="_blank">
+          INSTAGRAM
+        </a>
+</div>
+</div>
+</footer>
+</body></html>

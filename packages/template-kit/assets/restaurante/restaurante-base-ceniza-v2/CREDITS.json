@@ -1,0 +1,16 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-ceniza-v2.spec.json (spec 38d821242b7c, file a8a9b7ccac33). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "product-01.jpg",
+      "source": "pixabay",
+      "sha256": "03d703653ced8cd0873a9336cd46c3fdfd35559a40f8926baf0b4bdfc6ef0d67",
+      "query": "bbq steak flames",
+      "providerId": 1076665,
+      "pageUrl": "https://pixabay.com/photos/steak-beef-meat-food-grilled-1076665/",
+      "photographer": "dbreen",
+      "photographerUrl": "https://pixabay.com/users/1643989/",
+      "tags": "steak, beef, meat, food, grilled, dinner, meal, barbecue, grill, bbq, steak dinner, sirloin, fresh, nature, rare, cooked, delicious, juicy, barbecue grill, summer, outdoor, fire, smoke, heat, hot, sizzle, entertain, backyard, friends, cooking, grilling, bbq grill, barbeque, cook, protein, fat, outdoor party, bbq party, party, cookout, barbecue party, flame, lunch"
+    }
+  ]
+}

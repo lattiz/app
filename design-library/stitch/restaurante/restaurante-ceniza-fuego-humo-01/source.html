@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es-MX" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ceniza Grill & Bar — Portada</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              bg: '#15110E',
+              surface: '#15110E',
+              surfaceLow: '#211B17',
+              surfaceHigh: '#2F2823',
+              text: '#F1ECE7',
+              muted: '#A89F97',
+              outline: '#8F867E',
+              outlineDim: '#3E3630',
+              accent: '#D2C6BE',
+              accentHover: '#EDE3DC'
+            }
+          },
+          fontFamily: {
+            display: ['Anton', 'sans-serif'],
+            body: ['"Space Grotesk"', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #15110E;
+      color: #F1ECE7;
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+    .font-condensed {
+      font-family: 'Anton', sans-serif;
+      letter-spacing: 0.02em;
+    }
+  </style>
+</head>
+<body class="bg-brand-bg text-brand-text min-h-screen flex flex-col justify-between selection:bg-brand-accent selection:text-brand-bg">
+
+  <!-- Header mínimo -->
+  <header id="encabezado" class="w-full border-b border-brand-outlineDim bg-brand-surface/95 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-[1440px] mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="font-condensed text-2xl tracking-wider text-brand-text uppercase">Ceniza</span>
+        <span class="text-xs uppercase tracking-widest text-brand-muted border-l border-brand-outlineDim pl-3 hidden sm:inline-block">Grill & Bar · CDMX</span>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <span class="text-xs text-brand-muted tracking-wider hidden md:flex items-center gap-2">
+          <svg class="w-4 h-4 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          ABIERTO HOY · 19:00 A 03:00 HRS
+        </span>
+
+        <a href="https://wa.me/525500000000" target="_blank" rel="noopener noreferrer" class="text-xs uppercase tracking-widest font-semibold px-4 py-2 border border-brand-outline hover:border-brand-accent text-brand-text hover:text-brand-accent transition-colors duration-200">
+          WhatsApp Directo
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Split Screen (id=portada) -->
+  <section id="portada" class="flex-1 flex flex-col lg:flex-row w-full max-w-[1440px] mx-auto border-x border-b border-brand-outlineDim min-h-[calc(100vh-69px)]">
+    
+    <!-- Left Half: Full-height Dark Panel -->
+    <div class="w-full lg:w-1/2 p-8 sm:p-12 lg:p-16 flex flex-col justify-between bg-brand-surface border-b lg:border-b-0 lg:border-r border-brand-outlineDim relative">
+      <!-- Tag / Location info -->
+      <div class="space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 border border-brand-outlineDim bg-brand-surfaceLow text-brand-accent text-xs font-semibold tracking-widest uppercase">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+          </svg>
+          Colonia Roma Norte · CDMX
+        </div>
+      </div>
+
+      <!-- Main Headline & Subtitle -->
+      <div class="my-auto py-10 lg:py-8 space-y-6">
+        <h1 class="font-condensed text-6xl sm:text-7xl lg:text-8xl leading-[0.92] uppercase text-brand-text tracking-tight">
+          FUEGO.<br>
+          HUMO.<br>
+          <span class="text-brand-accent">NOCHE.</span>
+        </h1>
+        
+        <p class="text-lg sm:text-xl text-brand-muted max-w-md font-normal leading-relaxed">
+          Cortes al carbón y mezcal artesanal hasta las tres. Pide directo, sin rodeos.
+        </p>
+
+        <!-- CTA WhatsApp Button -->
+        <div class="pt-4">
+          <a href="https://wa.me/525500000000?text=Hola%20Ceniza,%20quiero%20hacer%20un%20pedido%20directo" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             class="inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-5 bg-brand-accent hover:bg-brand-accentHover text-brand-bg font-semibold text-base uppercase tracking-wider transition-all duration-200 shadow-lg">
+            <!-- Inline SVG WhatsApp icon -->
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c0-5.445 4.43-9.874 9.879-9.874 2.636 0 5.114 1.028 6.979 2.894a9.835 9.835 0 012.888 6.982c0 5.447-4.431 9.878-9.879 9.878m8.377-18.256A11.83 11.83 0 0012.046 0C5.408 0 .016 5.39.013 12.029a11.815 11.815 0 001.608 5.96L0 24l6.155-1.614a11.802 11.802 0 005.889 1.554h.005c6.637 0 12.028-5.392 12.032-12.032 0-3.213-1.252-6.234-3.526-8.511z"/>
+            </svg>
+            Pedir por WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick order note -->
+      <div class="pt-6 border-t border-brand-outlineDim flex flex-wrap items-center justify-between text-xs text-brand-muted gap-4">
+        <span class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          Entrega rápida o para recoger
+        </span>
+        <span class="uppercase font-semibold tracking-wider text-brand-text">Ceniza Grill & Bar © 2025</span>
+      </div>
+    </div>
+
+    <!-- Right Half: 2x2 Mosaic of 4 Photos with Caption Chips -->
+    <div class="w-full lg:w-1/2 grid grid-cols-2 grid-rows-2 bg-brand-surfaceLow p-2 sm:p-3 gap-2 sm:gap-3">
+      
+      <!-- Item 1: Burger Ceniza -->
+      <div class="relative group overflow-hidden bg-brand-surface border border-brand-outlineDim aspect-square">
+        <img 
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1_LapRBbUH18qkbSLeJaVLRoSM9Kg2wcISP4t9LswBQjHIZVMGgC8hSf-2leSPKNaFPohWnL0242B_WbWnLkc-n6gA1Oks8daojswRdqx3mqYCqP-chG6DOOzF374YkboD_azuLGST8VfW65zy3icbZr2YVOaRkIoZA8MMRJsLKP4hROUesxZygLvq46O38SlEVcnIX2scmroa45GhZBjXC6cZnfyI48AX8vq8wYYcP8zcUhFvmUN2F7rBRJk0rVsQguxP8_EdXl3" 
+          alt="Burger Ceniza con queso fundido y pan brioche ahumado" 
+          class="w-full h-full object-cover grayscale-[25%] contrast-125 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-500"
+          loading="eager"
+        >
+        <!-- Overlay vignette -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none"></div>
+        <!-- Caption Chip -->
+        <div class="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 flex flex-col">
+          <span class="inline-block px-3 py-1 bg-brand-surface/90 border border-brand-outline text-brand-text text-xs sm:text-sm font-semibold tracking-wider uppercase backdrop-blur-sm shadow-md">
+            Burger Ceniza
+          </span>
+          <span class="text-[11px] text-brand-muted tracking-tight mt-1 pl-1 hidden sm:block">Carne ahumada · Brioche</span>
+        </div>
+      </div>
+
+      <!-- Item 2: Rib eye -->
+      <div class="relative group overflow-hidden bg-brand-surface border border-brand-outlineDim aspect-square">
+        <img 
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBf01NjXjw1tcQNHOu9N_Epc0kNXVPfTpHXpjwIFAi92Ek1MVibOU3phAatrjiR5aB_tDJ54czY5gCR8eHP9cs1CjSj55tw_9FPHgv1-GLypiXckfaufHQJMkzcPOXuY966GvHeYl1K8bF0RazJoJYmrRN1f5J21lHHYZw7lr301Cf1vZ66oy9RC3sZvyExKRMW4UWURgSaN3CTlFaNJO6kxFE1zdN0ZvO-cFxoTh18lnwlZwF9eUz1LTvl1W0TSOYDDrTRfQ5vol0k" 
+          alt="Corte grueso de Rib eye sellado a las brasas" 
+          class="w-full h-full object-cover grayscale-[25%] contrast-125 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-500"
+          loading="eager"
+        >
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none"></div>
+        <div class="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 flex flex-col">
+          <span class="inline-block px-3 py-1 bg-brand-surface/90 border border-brand-outline text-brand-text text-xs sm:text-sm font-semibold tracking-wider uppercase backdrop-blur-sm shadow-md">
+            Rib eye
+          </span>
+          <span class="text-[11px] text-brand-muted tracking-tight mt-1 pl-1 hidden sm:block">400g al carbón · Sal de mar</span>
+        </div>
+      </div>
+
+      <!-- Item 3: Alitas -->
+      <div class="relative group overflow-hidden bg-brand-surface border border-brand-outlineDim aspect-square">
+        <img 
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEogfCzTxAXNlMO-eRaryw05rQBsq2VNtPearLlseXQ6oMBGfM9iQQjEf840hVz00gqE_MdS1gjCECTIzKpxUn6GjR9wowaJ70LOgrHk6Gv7JrVPJWBi4IVnwmhMKofOpg6cUG6Y1jUJgOzI3jDEDOgkVGsFYtNcXUbcOI_8hzChCrI598yFzmncBS63O8WRARCd4ttOAB17CN8LADFICCdIgf8JnzvhNqsLn0Gg7WzUDO_UicMGjpPMqU2ZEUL-zyRuSpMAzbccLE" 
+          alt="Alitas glaseadas y crujientes al carbón" 
+          class="w-full h-full object-cover grayscale-[25%] contrast-125 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-500"
+          loading="eager"
+        >
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none"></div>
+        <div class="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 flex flex-col">
+          <span class="inline-block px-3 py-1 bg-brand-surface/90 border border-brand-outline text-brand-text text-xs sm:text-sm font-semibold tracking-wider uppercase backdrop-blur-sm shadow-md">
+            Alitas
+          </span>
+          <span class="text-[11px] text-brand-muted tracking-tight mt-1 pl-1 hidden sm:block">Salsa negra ahumada picante</span>
+        </div>
+      </div>
+
+      <!-- Item 4: Cóctel -->
+      <div class="relative group overflow-hidden bg-brand-surface border border-brand-outlineDim aspect-square">
+        <img 
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEG756e5lqdJVFVIBG175NwjBKbv91I6seJvzgMbnotJPsE7wWfrlbDjYS5iilDyp0IGIrbViHuNBKnh4vcaKsdfy-gHbAmFaTKL2s4cyod046unDXXf_2JTX4qDSzcpgJXNQB3P8JX-imVTkLtZmLMvEZaqH_oEzdiyusxHT_3tyYv2cKnC-nLAoiRgtMV4kc_HPP5yF9cnh3IIqGChHYWqwcOU3AoFRaKisZrg4Qg7RN2FRQPIVaktQ9ZLAQ4i7yw_tAy8uFRfqd" 
+          alt="Cóctel de mezcal artesanal ahumado con romero" 
+          class="w-full h-full object-cover grayscale-[25%] contrast-125 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-500"
+          loading="eager"
+        >
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none"></div>
+        <div class="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 flex flex-col">
+          <span class="inline-block px-3 py-1 bg-brand-surface/90 border border-brand-outline text-brand-text text-xs sm:text-sm font-semibold tracking-wider uppercase backdrop-blur-sm shadow-md">
+            Coctel
+          </span>
+          <span class="text-[11px] text-brand-muted tracking-tight mt-1 pl-1 hidden sm:block">Mezcal joven · Romero quemado</span>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+</body>
+</html>

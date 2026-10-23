@@ -1,0 +1,20 @@
+{
+  "id": "restaurante-ceniza-contactos-mapa-01",
+  "giro": "restaurante",
+  "source": "stitch",
+  "status": "harvested",
+  "tags": [
+    "ceniza",
+    "oscuro"
+  ],
+  "spin": "ceniza-contactos-mapa",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-23T22:53:02.776Z",
+  "stitch": {
+    "project_id": "15114272882321741232",
+    "screen_ids": [
+      "21c9241cdfa34619bed398e1eb7da25d"
+    ]
+  },
+  "direction": "neon-nocturno"
+}

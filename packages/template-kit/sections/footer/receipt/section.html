@@ -1,0 +1,40 @@
+<footer id="footer" data-lz-slot="footer" data-lz-variant="receipt" class="lz-section lz-footer-receipt">
+  <div class="lz-container">
+    <div class="lz-footer-receipt__paper">
+      <p class="lz-footer-receipt__stamp" data-lz-if="stamp" data-lz-key="stamp"></p>
+      <p class="lz-footer-receipt__name">{{name}}</p>
+      <p class="lz-footer-receipt__legal" data-lz-if="about" data-lz-key="about"></p>
+      <h3 class="lz-footer-receipt__label" data-lz-key="linesTitle"></h3>
+      <ul class="lz-footer-receipt__lines">
+        <li class="lz-footer-receipt__line" data-lz-each="lines">
+          <span><strong data-lz-key="label"></strong><small data-lz-if="note" data-lz-key="note"></small></span>
+          <span class="lz-footer-receipt__value" data-lz-key="value"></span>
+        </li>
+      </ul>
+      <p class="lz-footer-receipt__total">
+        <span data-lz-key="totalLabel"></span>
+        <strong data-lz-key="total"></strong>
+      </p>
+      <p class="lz-footer-receipt__total-note" data-lz-if="totalNote" data-lz-key="totalNote"></p>
+      <div class="lz-footer-receipt__cols">
+        <div class="lz-footer-receipt__col">
+          <h3 class="lz-footer-receipt__label" data-lz-key="linksTitle"></h3>
+          <ul class="lz-footer-receipt__list">
+            <li data-lz-each="links"><a class="lz-footer-receipt__link" data-lz-attr-href="href" data-lz-key="label"></a></li>
+          </ul>
+        </div>
+        <div class="lz-footer-receipt__col">
+          <h3 class="lz-footer-receipt__label" data-lz-key="contactTitle"></h3>
+          <ul class="lz-footer-receipt__list">
+            <li><a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-footer-receipt__link">WhatsApp</a></li>
+            <li><a href="{{phoneUrl}}" class="lz-footer-receipt__link">{{phone}}</a></li>
+            <li><a href="{{emailUrl}}" class="lz-footer-receipt__link">{{email}}</a></li>
+          </ul>
+        </div>
+      </div>
+      <span class="lz-footer-receipt__barcode" aria-hidden="true"></span>
+      <p class="lz-footer-receipt__cut" data-lz-if="cut" data-lz-key="cut"></p>
+      <p class="lz-footer-receipt__year">© {{year}} {{name}}. Todos los derechos reservados. · Hecho con Lattiz</p>
+    </div>
+  </div>
+</footer>

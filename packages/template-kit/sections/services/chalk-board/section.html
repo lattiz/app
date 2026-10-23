@@ -1,0 +1,29 @@
+<section id="servicios" data-lz-slot="services" data-lz-variant="chalk-board" class="lz-section lz-services-chalk-board">
+  <div class="lz-container">
+    <div class="lz-services-chalk-board__head">
+      <div class="lz-services-chalk-board__heading">
+        <p class="lz-services-chalk-board__kicker" data-lz-key="kicker"></p>
+        <h2 class="lz-title lz-services-chalk-board__title" data-lz-key="title"></h2>
+      </div>
+      <p class="lz-services-chalk-board__note" data-lz-if="note" data-lz-key="note"></p>
+    </div>
+    <div class="lz-services-chalk-board__board">
+      <div class="lz-services-chalk-board__group" data-lz-each="groups">
+        <h3 class="lz-services-chalk-board__group-title">
+          <span data-lz-key="title"></span>
+          <small data-lz-if="tag" data-lz-key="tag"></small>
+        </h3>
+        <ul class="lz-services-chalk-board__items">
+          <li class="lz-services-chalk-board__item" data-lz-each="items">
+            <p class="lz-services-chalk-board__line">
+              <span class="lz-services-chalk-board__name" data-lz-key="name"></span>
+              <span class="lz-services-chalk-board__price" data-lz-key="price"></span>
+            </p>
+            <p class="lz-services-chalk-board__desc" data-lz-if="description" data-lz-key="description"></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <a data-lz-if="cta" href="{{whatsappUrl:Hola, quiero hacer un pedido}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary lz-services-chalk-board__cta" data-lz-key="cta"></a>
+  </div>
+</section>

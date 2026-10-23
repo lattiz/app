@@ -1,0 +1,27 @@
+<section id="hero" data-lz-slot="hero" data-lz-variant="split-mosaic" data-lz-fit class="lz-section lz-hero-split-mosaic">
+  <div class="lz-hero-split-mosaic__wrap">
+    <div class="lz-hero-split-mosaic__panel">
+      <p class="lz-hero-split-mosaic__eyebrow" data-lz-key="eyebrow"></p>
+      <h1 class="lz-title lz-hero-split-mosaic__title" data-lz-key="title"></h1>
+      <p class="lz-hero-split-mosaic__text" data-lz-key="text"></p>
+      <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary lz-hero-split-mosaic__cta" data-lz-key="primaryCta"></a>
+      <p class="lz-hero-split-mosaic__note" data-lz-if="note" data-lz-key="note"></p>
+    </div>
+    <div class="lz-hero-split-mosaic__mosaic">
+      <figure class="lz-hero-split-mosaic__tile">
+        <img fetchpriority="high" width="900" height="900" class="lz-hero-split-mosaic__image" data-lz-attr-src="image" data-lz-attr-alt="imageAlt">
+        <figcaption class="lz-hero-split-mosaic__chip" data-lz-if="imageLabel">
+          <strong data-lz-key="imageLabel"></strong>
+          <span data-lz-if="imageNote" data-lz-key="imageNote"></span>
+        </figcaption>
+      </figure>
+      <figure class="lz-hero-split-mosaic__tile" data-lz-each="tiles">
+        <img data-lz-if="photo" loading="lazy" width="900" height="900" class="lz-hero-split-mosaic__image" data-lz-attr-src="photo" data-lz-attr-alt="photoAlt">
+        <figcaption class="lz-hero-split-mosaic__chip">
+          <strong data-lz-key="label"></strong>
+          <span data-lz-if="note" data-lz-key="note"></span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>

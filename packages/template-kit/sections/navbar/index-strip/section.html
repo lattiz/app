@@ -1,0 +1,27 @@
+<header id="inicio" data-lz-slot="navbar" data-lz-variant="index-strip" class="lz-section lz-navbar lz-navbar-index-strip">
+  <div class="lz-navbar-index-strip__strip">
+    <div class="lz-container lz-navbar-index-strip__strip-inner">
+      <p class="lz-navbar-index-strip__hours" data-lz-if="hours" data-lz-key="hours"></p>
+      <p class="lz-navbar-index-strip__address">{{address}}</p>
+      <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-navbar-index-strip__phone">{{phone}}</a>
+    </div>
+  </div>
+  <div class="lz-container lz-navbar__inner">
+    <a href="#inicio" aria-label="{{name}}, ir al inicio" class="lz-brand">
+      <p class="lz-brand__wordmark">{{shortName}}</p>
+      <p class="lz-brand__sub">{{tagline}}</p>
+    </a>
+    <nav id="menu" aria-label="Navegación principal" class="lz-nav lz-menu">
+      <ul class="lz-nav__list lz-menu__list lz-navbar-index-strip__list">
+        <li data-lz-each="links"><a class="lz-nav__link lz-menu__link" data-lz-attr-href="href" data-lz-key="label"></a></li>
+      </ul>
+      <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary lz-menu__cta"><span data-lz-key="cta"></span><svg aria-hidden="true" class="lz-menu__icon lz-menu__icon--arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+    </nav>
+    <div class="lz-navbar__cta">
+      <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary" data-lz-key="cta"></a>
+    </div>
+    <a href="#menu" aria-controls="menu" aria-label="Abrir menú" class="lz-menu-toggle lz-menu-toggle--open"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg></a>
+    <a href="#menu-cerrado" aria-controls="menu" aria-label="Cerrar menú" class="lz-menu-toggle lz-menu-toggle--close"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></a>
+    <span id="menu-cerrado" aria-hidden="true" class="lz-menu__anchor"></span>
+  </div>
+</header>
