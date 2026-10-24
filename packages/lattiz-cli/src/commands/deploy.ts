@@ -15,6 +15,7 @@ import {
   previewsBaseUrl,
   previewUrl,
   remoteTemplate,
+  remoteTemplates,
   waitFor200,
 } from '../lib/remote';
 import { readState, writeState } from '../lib/state';
@@ -56,6 +57,18 @@ function uncommittedPreviews(): string[] {
   ];
 }
 
+/**
+ * Active templates whose preview folder is not in this tree. The deploy replaces the whole site, so
+ * shipping from a branch that lacks them (a stale branch, say) takes their pages down with a 404.
+ */
+async function missingActivePreviews(folders: string[]): Promise<string[]> {
+  const rows = await remoteTemplates().catch(() => null);
+  if (!rows) return [];
+  return rows
+    .filter((r) => r.is_active && !folders.includes(r.id))
+    .map((r) => r.id);
+}
+
 export function requireDeployTooling(): void {
   if (!vercel(['--version']).ok)
     throw usage(
@@ -80,7 +93,7 @@ export function requireDeployTooling(): void {
  */
 export async function deployPreviews(
   ctx: Context,
-  opts: { skipVerify: boolean; expect?: string[] },
+  opts: { skipVerify: boolean; expect?: string[]; allowMissing?: boolean },
 ): Promise<ExitCode> {
   log.title('lattiz deploy');
   requireDeployTooling();
@@ -90,6 +103,12 @@ export async function deployPreviews(
   );
   const pending = pendingIds();
   const changed = uncommittedPreviews();
+  const missing = opts.allowMissing ? [] : await missingActivePreviews(folders);
+  if (missing.length > 0)
+    throw gate(
+      `Este árbol no tiene la carpeta de preview de ${missing.length} plantilla(s) activa(s) en Supabase: ${missing.join(', ')}. Desplegar ahora las dejaría en 404.`,
+      'Trae esas carpetas a la rama (git merge origin/main) y repite; con --allow-missing sigues a propósito (por ejemplo, si las retiraste).',
+    );
   log.plain(
     plan('Deploy de previews', [
       [
@@ -184,16 +203,23 @@ export const deploy: Command = {
   name: 'deploy',
   summary:
     'Despliega templates.lattiz.app (Vercel CLI) con confirmación y espera a que responda 200',
-  usage: 'deploy [--skip-verify]',
+  usage: 'deploy [--skip-verify] [--allow-missing]',
   help: [
     'Sube apps/template-previews/public completo al proyecto "template-previews" (producción), sondea',
     'la URL hasta 200 y termina las plantillas sembradas sin deploy (miniatura + activar).',
     '',
     '  --skip-verify   no sondea la URL',
+    '  --allow-missing despliega aunque falten carpetas de plantillas activas (se quedarían en 404)',
   ],
-  options: { 'skip-verify': { type: 'boolean' } },
+  options: {
+    'skip-verify': { type: 'boolean' },
+    'allow-missing': { type: 'boolean' },
+  },
   run(ctx) {
     assertRemoteWrite(ctx, 'deploy');
-    return deployPreviews(ctx, { skipVerify: bool(ctx.flags, 'skip-verify') });
+    return deployPreviews(ctx, {
+      skipVerify: bool(ctx.flags, 'skip-verify'),
+      allowMissing: bool(ctx.flags, 'allow-missing'),
+    });
   },
 };
