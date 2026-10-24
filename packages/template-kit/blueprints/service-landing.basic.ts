@@ -12,11 +12,21 @@ export default {
     hero: roles.hero,
     about: {
       ...roles.about,
-      variants: ['brief', 'booking-steps', 'care-pathway', 'clock-rail'],
+      variants: [
+        'brief',
+        'order-steps',
+        'coal-log',
+        'booking-steps',
+        'care-pathway',
+        'clock-rail',
+      ],
     },
     catalog: roles.catalog,
     faq: roles.faq,
-    contact: { ...roles.contact, variants: ['single', 'single-card'] },
+    contact: {
+      ...roles.contact,
+      variants: ['single', 'single-card', 'table-map'],
+    },
     cta: roles.cta,
     whatsapp: roles.whatsapp,
     footer: roles.footer,

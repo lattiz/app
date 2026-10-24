@@ -1,0 +1,104 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-ceniza-v2.spec.json (spec 38d821242b7c, file 80f4f56d793e). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "9dac15115381fdcbc79f7edca5f1de5f42a7638bd2ca0e1a0d676264ac7a8a2c",
+      "query": "grilled steak",
+      "providerId": 7423225,
+      "pageUrl": "https://pixabay.com/photos/steak-bbq-meat-food-food-porn-7423225/",
+      "photographer": "CharlVera",
+      "photographerUrl": "https://pixabay.com/users/11040068/",
+      "tags": "steak, bbq, meat, food, food porn, foodie, beef, grilled meat, grilled beef, steakhouse, dinner, delicious, rib eye, barbecue, yummy, grilling"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "pixabay",
+      "sha256": "eea873b1e9588cd05f682d658f38381fa39fdb0f7ac80f0c6f622b9cc374c70a",
+      "query": "gourmet burger dark wood board",
+      "providerId": 8026582,
+      "pageUrl": "https://pixabay.com/photos/hamburger-sandwich-chicken-healthy-8026582/",
+      "photographer": "SylwesterL",
+      "photographerUrl": "https://pixabay.com/users/34617078/",
+      "tags": "hamburger, sandwich, chicken, healthy, breakfast, club sandwich, grilled, burger, restaurant, meal, lunch"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "pixabay",
+      "sha256": "1ea0fff6a3b8ff1214535fd338fab9b3885d23534eec46aa6438d1b4fddebb92",
+      "query": "ribeye steak sliced grill marks",
+      "providerId": 5098185,
+      "pageUrl": "https://pixabay.com/photos/roast-meat-grill-ribeye-steak-5098185/",
+      "photographer": "Jhon_Sanchez",
+      "photographerUrl": "https://pixabay.com/users/10020590/",
+      "tags": "roast, meat, grill, ribeye, steak, intarsia, lean, beef steak, cut of meat, beef"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "pixabay",
+      "sha256": "5a2f0c6daab209e31efb10a7138119094b341c06e1c35fae990d4db0a3d0af7e",
+      "query": "bbq pork ribs glazed",
+      "providerId": 2157179,
+      "pageUrl": "https://pixabay.com/photos/pork-ribs-dinner-pork-food-meat-2157179/",
+      "photographer": "Anestiev",
+      "photographerUrl": "https://pixabay.com/users/2736923/",
+      "tags": "pork ribs, dinner, pork, food, meat, meal, bbq, barbecue, grilled, lunch, grill, cooking, baked, beef, cooked, roasted, plate, roast, delicious, fresh, restaurant, american, tasty, brown cooking, brown restaurant, brown meat, brown dinner"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "pixabay",
+      "sha256": "9929672110562fca828a22f245351d5ea8b31f5ca9026add79e61d8a2f571a86",
+      "query": "grilled chicken wings sauce",
+      "providerId": 1559548,
+      "pageUrl": "https://pixabay.com/photos/chicken-wing-chicken-wings-buffalo-1559548/",
+      "photographer": "RitaE",
+      "photographerUrl": "https://pixabay.com/users/19628/",
+      "tags": "chicken, wing, chicken wings, buffalo, food, enjoy the meal, meal, grilling, dish, feasting, bbq, tasty, spicy, chicken meat, yummy, cook"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "pixabay",
+      "sha256": "8cd34cc67902da59b63b051d8b5bcc58863c5ff93ee15ebca7632ae09212164f",
+      "query": "industrial restaurant interior brick warm light night",
+      "providerId": 791942,
+      "pageUrl": "https://pixabay.com/photos/vintage-restaurant-window-lamps-791942/",
+      "photographer": "kaboompics",
+      "photographerUrl": "https://pixabay.com/users/1013994/",
+      "tags": "vintage, restaurant, window, lamps, interior, design, home, decor, people, talking, conversation"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "pixabay",
+      "sha256": "bff5e02e0a52e226958ad5fe798e655ca3e47a278eb159a292cbf3d2e3d29bdb",
+      "query": "smoked cocktail orange peel glass",
+      "providerId": 8443152,
+      "pageUrl": "https://pixabay.com/photos/whisky-whiskey-whisky-decanter-8443152/",
+      "photographer": "OurWhiskyFoundation",
+      "photographerUrl": "https://pixabay.com/users/30201434/",
+      "tags": "whisky, whiskey, whisky decanter, decanter, old fashioned, drinking, drink, beverage, festiveseasoncontest"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "pixabay",
+      "sha256": "f84f06dcc0f02165268e2c3827bed0d84510b7c0f12d44c3bae4d02573dff30b",
+      "query": "glowing charcoal embers",
+      "providerId": 8084064,
+      "pageUrl": "https://pixabay.com/photos/campfire-flame-wood-burn-hot-8084064/",
+      "photographer": "wal_172619",
+      "photographerUrl": "https://pixabay.com/users/12138562/",
+      "tags": "campfire, flame, wood, burn, hot, embers, warmth"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "pixabay",
+      "sha256": "4856472f3deb4d2e1bde2eac5b42383e4b5c4288082ec897e7f430eb7b3de256",
+      "query": "bar counter bottles stools night",
+      "providerId": 1845295,
+      "pageUrl": "https://pixabay.com/photos/alcoholic-beverages-bar-beer-1845295/",
+      "photographer": "Pexels",
+      "photographerUrl": "https://pixabay.com/users/2286921/",
+      "tags": "alcoholic beverages, bar, beer, bottles, glass bottles, liquors, alcoholic drinks, drinks, counter, pub, shelves"
+    }
+  ]
+}

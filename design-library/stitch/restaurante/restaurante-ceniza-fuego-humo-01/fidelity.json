@@ -1,0 +1,120 @@
+{
+  "portada": {
+    "ref": "portada",
+    "slot": "hero",
+    "theme": "restaurante-casa-comal-v1",
+    "measured": [
+      {
+        "variant": "hero/ticket-board",
+        "structure": 0.629,
+        "heightRatio": 0.63,
+        "match": false
+      },
+      {
+        "variant": "hero/index-panel",
+        "structure": 0.717,
+        "heightRatio": 0.74,
+        "match": false
+      },
+      {
+        "variant": "hero/stack",
+        "structure": 0.726,
+        "heightRatio": 0.9,
+        "match": false
+      },
+      {
+        "variant": "hero/bento",
+        "structure": 0.738,
+        "heightRatio": 0.9,
+        "match": false
+      },
+      {
+        "variant": "hero/offset-card",
+        "structure": 0.809,
+        "heightRatio": 1.06,
+        "match": false
+      },
+      {
+        "variant": "hero/arch-sticker",
+        "structure": 0.86,
+        "heightRatio": 0.92,
+        "match": false
+      },
+      {
+        "variant": "hero/overlap",
+        "structure": 0.865,
+        "heightRatio": 0.9,
+        "match": false
+      },
+      {
+        "variant": "hero/framed",
+        "structure": 0.868,
+        "heightRatio": 0.9,
+        "match": false
+      },
+      {
+        "variant": "hero/duo-arch",
+        "structure": 0.892,
+        "heightRatio": 0.92,
+        "match": false
+      },
+      {
+        "variant": "hero/split",
+        "structure": 0.908,
+        "heightRatio": 0.95,
+        "match": false
+      },
+      {
+        "variant": "hero/photo-ribbon",
+        "structure": 0.932,
+        "heightRatio": 0.83,
+        "match": false
+      },
+      {
+        "variant": "hero/columns",
+        "structure": 0.933,
+        "heightRatio": 0.92,
+        "match": false
+      },
+      {
+        "variant": "hero/panel",
+        "structure": 0.944,
+        "heightRatio": 0.92,
+        "match": false
+      },
+      {
+        "variant": "hero/image-bg",
+        "structure": 0.954,
+        "heightRatio": 0.83,
+        "match": false
+      },
+      {
+        "variant": "hero/centered-arch",
+        "structure": 1,
+        "heightRatio": 1.36,
+        "match": false
+      },
+      {
+        "variant": "hero/poster",
+        "structure": 1,
+        "heightRatio": 0.83,
+        "match": false
+      },
+      {
+        "variant": "hero/rail",
+        "structure": 1,
+        "heightRatio": 0.9,
+        "match": false
+      }
+    ],
+    "best": "hero/ticket-board",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  }
+}

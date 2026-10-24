@@ -1,0 +1,50 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-ceniza-v2.spec.json (spec 38d821242b7c, file 7fb44431f0de). Do not edit: use the spec, or freeze.",
+  "name": "restaurante-base-ceniza-v2",
+  "label": "Ceniza Grill & Bar · Básico",
+  "tier": "basic",
+  "fontPair": "archivo-black+space-grotesk",
+  "colors": {
+    "bg": "#1B1F24",
+    "surface": "#272B30",
+    "surface-2": "#34383D",
+    "text": "#E9EDF1",
+    "muted": "#A3A7AB",
+    "accent": "#CDD3DA",
+    "on-accent": "#1B1F24",
+    "accent-text": "#CDD3DA",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#1B1F24",
+    "on-overlay": "#E9EDF1",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#1B1F24"
+  },
+  "fonts": {
+    "display": "'Archivo Black', sans-serif",
+    "serif": "'Archivo Black', sans-serif",
+    "body": "'Space Grotesk', sans-serif",
+    "mono": "'Space Mono', monospace",
+    "googleFonts": "family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700",
+    "displayTransform": "uppercase",
+    "displayLeading": "0.96",
+    "displayWeight": "400",
+    "accentStyle": "normal",
+    "accentTransform": "none"
+  },
+  "shape": {
+    "radiusCard": "4px",
+    "radiusPill": "4px",
+    "border": "1px",
+    "shadow": "none"
+  },
+  "density": "regular",
+  "photoTreatment": "grayscale",
+  "placeholder": "stripes",
+  "accentWords": "color",
+  "container": "1200px",
+  "effects": {
+    "mapFilter": "grayscale(1) invert(.9) contrast(.9) brightness(.8)",
+    "heroImageFilter": "brightness(.45) saturate(.9)"
+  }
+}

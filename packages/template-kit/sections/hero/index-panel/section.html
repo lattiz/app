@@ -1,0 +1,26 @@
+<section id="hero" data-lz-slot="hero" data-lz-variant="index-panel" data-lz-fit class="lz-section lz-hero-index-panel">
+  <div class="lz-container lz-hero-index-panel__wrap">
+    <p class="lz-hero-index-panel__bar" data-lz-if="kicker">
+      <span data-lz-key="kicker"></span>
+      <span class="lz-hero-index-panel__tag" data-lz-if="tag" data-lz-key="tag"></span>
+    </p>
+    <div class="lz-hero-index-panel__stage">
+      <img fetchpriority="high" width="1600" height="800" class="lz-hero-index-panel__image" data-lz-attr-src="image" data-lz-attr-alt="imageAlt">
+      <div class="lz-hero-index-panel__panel">
+        <p class="lz-hero-index-panel__eyebrow" data-lz-key="eyebrow"></p>
+        <h1 class="lz-title lz-hero-index-panel__title" data-lz-key="title"></h1>
+        <p class="lz-hero-index-panel__text" data-lz-key="text"></p>
+        <div class="lz-hero-index-panel__actions">
+          <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary" data-lz-key="primaryCta"></a>
+          <a class="lz-hero-index-panel__link" data-lz-if="secondaryCta" data-lz-attr-href="secondaryHref" data-lz-key="secondaryCta"></a>
+        </div>
+      </div>
+    </div>
+    <ul class="lz-hero-index-panel__facts">
+      <li class="lz-hero-index-panel__fact" data-lz-each="info">
+        <span class="lz-hero-index-panel__label" data-lz-key="label"></span>
+        <span class="lz-hero-index-panel__value" data-lz-key="value"></span>
+      </li>
+    </ul>
+  </div>
+</section>

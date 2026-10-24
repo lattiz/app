@@ -102,6 +102,7 @@ async function pipeline(
       const code = await deployPreviews(ctx, {
         skipVerify: false,
         expect: ids,
+        allowMissing: bool(ctx.flags, 'allow-missing'),
       });
       if (code !== EXIT.OK)
         throw new CliError(
@@ -176,10 +177,12 @@ const shared = {
     force: { type: 'boolean' },
     lighthouse: { type: 'boolean' },
     'overwrite-meta': { type: 'boolean' },
+    'allow-missing': { type: 'boolean' },
   },
   help: [
     '  --force           publica aunque check tenga FAIL (se avisa y queda registrado)',
     '  --lighthouse      corre Lighthouse dentro de check',
+    '  --allow-missing   despliega aunque falten carpetas de plantillas activas (quedarían en 404)',
     '  --overwrite-meta  pisa nombre, descripción, categoría, orden y la miniatura del admin',
     '  --yes             confirma Motion, seed y deploy sin preguntar',
   ],

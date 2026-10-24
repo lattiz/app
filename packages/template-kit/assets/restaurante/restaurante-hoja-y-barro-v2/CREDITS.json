@@ -1,0 +1,181 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-hoja-y-barro-v2.spec.json (spec 86e027853e52, file 9c36ae81a7ab). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "31742c6e7145073281b99fbcada253296b220607701ef2349a643eca5df13de5",
+      "query": "matcha latte",
+      "providerId": 2356769,
+      "pageUrl": "https://pixabay.com/photos/matcha-powder-latte-green-japanese-2356769/",
+      "photographer": "dungthuyvunguyen",
+      "photographerUrl": "https://pixabay.com/users/5499796/",
+      "tags": "matcha powder, latte, green, japanese, hot, milk"
+    },
+    {
+      "file": "product-01.jpg",
+      "source": "pixabay",
+      "sha256": "5a42e591431fb16fec9128eead8fe53018c3fba99c8c94739fe5051c9bca2dc0",
+      "query": "matcha tea drink",
+      "providerId": 2683990,
+      "pageUrl": "https://pixabay.com/photos/matcha-latt%C3%A9-heart-2683990/",
+      "photographer": "hoyas",
+      "photographerUrl": "https://pixabay.com/users/6280368/",
+      "tags": "matcha, latté, heart, Tokyo, Japan, Chiyoda City"
+    },
+    {
+      "file": "product-02.jpg",
+      "source": "pixabay",
+      "sha256": "a4e51fd6e89e5d264059db8bdca81668bd6004b2bc7bd9ce30d501b95bd4b581",
+      "query": "cold brew coffee glass",
+      "providerId": 5703345,
+      "pageUrl": "https://pixabay.com/photos/iced-coffee-coffee-beans-drink-5703345/",
+      "photographer": "Brendin_Hoffman",
+      "photographerUrl": "https://pixabay.com/users/18938289/",
+      "tags": "iced coffee, coffee beans, drink, glass, served, beans, coffee cup, coffee, espresso, cafe, caffeine, latte, americano, ice, cup, cold, mocha pot"
+    },
+    {
+      "file": "product-03.jpg",
+      "source": "pixabay",
+      "sha256": "6089e73793f0e32822c25e186ef7cfe685ebb17669d06e1db65da71f769c7ac7",
+      "query": "yogurt granola bowl",
+      "providerId": 5712343,
+      "pageUrl": "https://pixabay.com/photos/cereal-food-breakfast-strawberries-5712343/",
+      "photographer": "lizziet5",
+      "photographerUrl": "https://pixabay.com/users/2690626/",
+      "tags": "cereal, food, breakfast, strawberries, sliced strawberries, fruit, healthy, nutrition, bowl"
+    },
+    {
+      "file": "product-04.jpg",
+      "source": "pixabay",
+      "sha256": "606bf293cf93d7187aa0839932117155628a0b2a326137419bb55dbde94fa0d1",
+      "query": "avocado toast",
+      "providerId": 1844894,
+      "pageUrl": "https://pixabay.com/photos/bowl-breakfast-fruits-healthy-food-1844894/",
+      "photographer": "Pexels",
+      "photographerUrl": "https://pixabay.com/users/2286921/",
+      "tags": "bowl, breakfast, fruits, healthy, food, breakfast bowl, healthy breakfast, fruit bowl, fresh fruits, avocado, bread, orange, rustic, wooden table, flat lay, composition"
+    },
+    {
+      "file": "product-05.jpg",
+      "source": "pixabay",
+      "sha256": "aa8c3723bab67fdb7d418382aba53ced99232d4fbe108b087eea5eaa140b17df",
+      "query": "oatmeal cookie",
+      "providerId": 2345439,
+      "pageUrl": "https://pixabay.com/photos/merry-christmas-cookies-oatmeal-2345439/",
+      "photographer": "StarFlames",
+      "photographerUrl": "https://pixabay.com/users/5196428/",
+      "tags": "merry christmas, cookies, oatmeal, confectionery, kindness, warmly, cosiness, hands, bowl"
+    },
+    {
+      "file": "product-06.jpg",
+      "source": "pixabay",
+      "sha256": "ae68771378ca007277431cf81fa1ea59a4dbb336740ef72e015199f6d4723cb9",
+      "query": "green smoothie glass",
+      "providerId": 1248949,
+      "pageUrl": "https://pixabay.com/photos/view-from-above-close-up-1248949/",
+      "photographer": "Kost9n4",
+      "photographerUrl": "https://pixabay.com/users/2105326/",
+      "tags": "view from above, desktop backgrounds, close-up, vegetarianism, healthy eating, vegetables, green, 4k wallpaper, cocktail, bubbles, glass, depth of field, healthy, vitamins, cool backgrounds, full hd wallpaper, diet, drink, hd wallpaper, fresh, frothy, cabbage, wallpaper hd, mac wallpaper, space wallpaper, spinach, breakfast, broccoli, herbs, mixed, fruit, background, laptop wallpaper, nutrition, white, focus, wallpaper 4k, space, juices, large, windows wallpaper, 4k wallpaper 1920x1080, objects, macro, vegetarian, dessert, color, lifestyle, organic, free background, sweet, apple, free wallpaper, beautiful wallpaper, ripe, nutrients"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "pixabay",
+      "sha256": "74e753e20beb853073a5900cb053aec73c5828758511c3dedafae50d26ccf117",
+      "query": "iced matcha glass",
+      "providerId": 6006446,
+      "pageUrl": "https://pixabay.com/photos/dessert-glass-food-cup-cream-milk-6006446/",
+      "photographer": "Tikovka1355",
+      "photographerUrl": "https://pixabay.com/users/16935155/",
+      "tags": "dessert, glass, food, cup, cream, milk, berry, healthy, sweet, tasty, delicious, closeup"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "pixabay",
+      "sha256": "685424339777988381c2091540857bbcc6cec86ae5fedbc9ccbaf7b1e20394f0",
+      "query": "granola yogurt bowl fruit",
+      "providerId": 486832,
+      "pageUrl": "https://pixabay.com/photos/muesli-cereals-breakfast-meal-bowl-486832/",
+      "photographer": "Fotomaus13",
+      "photographerUrl": "https://pixabay.com/users/504165/",
+      "tags": "muesli, cereals, breakfast, meal, bowl, bowl of muesli, breakfast meal, breakfast bowl, healthy breakfast, healthy meal, healthy, fresh fruits, oatmeal, fruit, strawberries, pineapple, orange juice, blueberries, food, healthy food, food photography"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "pixabay",
+      "sha256": "02d49c15f48ead8963d38a76c198b0aadc32f3fa09935fff177bec6685a6276e",
+      "query": "avocado toast",
+      "providerId": 1467286,
+      "pageUrl": "https://pixabay.com/photos/eggs-fried-sunny-side-up-sandwich-1467286/",
+      "photographer": "ponce_photography",
+      "photographerUrl": "https://pixabay.com/users/2473530/",
+      "tags": "eggs, fried, sunny side up, sandwich, open faced, salad, lunch, food, nature, breakfast, meal, hot, pan, yolk, cooking, healthy, yellow, cuisine, frying, protein, white, kitchen, restaurant, nutrition, delicious, savory, summer, cooking light, fork"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "pixabay",
+      "sha256": "365cedc315cd4d4f067e93d42d05e2b17b9c6de8bc31839ccdf34ff03a48d026",
+      "query": "cold brew coffee glass ice",
+      "providerId": 3908006,
+      "pageUrl": "https://pixabay.com/photos/food-coffee-ice-coffee-3908006/",
+      "photographer": "nots12311",
+      "photographerUrl": "https://pixabay.com/users/5328791/",
+      "tags": "food, coffee, ice coffee"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "pixabay",
+      "sha256": "fe60f2abae9e636fec0375f835fa5e7a42fb3a999d708b28b003194617023b52",
+      "query": "cafe interior sunny tables",
+      "providerId": 791942,
+      "pageUrl": "https://pixabay.com/photos/vintage-restaurant-window-lamps-791942/",
+      "photographer": "kaboompics",
+      "photographerUrl": "https://pixabay.com/users/1013994/",
+      "tags": "vintage, restaurant, window, lamps, interior, design, home, decor, people, talking, conversation"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "pixabay",
+      "sha256": "d6113767bafee4e38c028ba9fb3342e2c595757e29aea141a8307ab68c64bd4b",
+      "query": "oatmeal cookies",
+      "providerId": 6863667,
+      "pageUrl": "https://pixabay.com/photos/havregrynskugler-cookies-food-6863667/",
+      "photographer": "Alexandra_Koch",
+      "photographerUrl": "https://pixabay.com/users/621802/",
+      "tags": "havregrynskugler, cookies, food, christmas cookies, oatmeal ball, chocolate ball, sweets, rum balls, coconut, chocolate, dish, closeup"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "pixabay",
+      "sha256": "3ff8e353d3916ad0fcdd4a7b19eae4b794878a83c3e178c25844b31d4525d7b3",
+      "query": "green smoothie glass",
+      "providerId": 1248950,
+      "pageUrl": "https://pixabay.com/photos/view-from-above-close-up-1248950/",
+      "photographer": "Kost9n4",
+      "photographerUrl": "https://pixabay.com/users/2105326/",
+      "tags": "view from above, close-up, vegetarianism, mac wallpaper, free background, beautiful wallpaper, healthy eating, wallpaper 4k, vegetables, green, cocktail, cool backgrounds, bubbles, full hd wallpaper, glass, free wallpaper, windows wallpaper, depth of field, healthy, vitamins, diet, drink, 4k wallpaper 1920x1080, fresh, frothy, cabbage, spinach, breakfast, 4k wallpaper, wallpaper hd, space wallpaper, broccoli, herbs, mixed, fruit, background, hd wallpaper, nutrition, white, desktop backgrounds, focus, space, juices, large, objects, macro, vegetarian, dessert, color, lifestyle, organic, sweet, apple, laptop wallpaper, ripe, nutrients"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "pixabay",
+      "sha256": "7bef912aa7d0ad33e38f6c070154573ed4e913468d33a495e2b522c5cdfa5c36",
+      "query": "coffee bar counter barista",
+      "providerId": 2592335,
+      "pageUrl": "https://pixabay.com/photos/people-man-bartender-restaurant-2592335/",
+      "photographer": "StockSnap",
+      "photographerUrl": "https://pixabay.com/users/894430/",
+      "tags": "people, man, bartender, restaurant, shop, cafe, coffee, money, dollar, table, cap, tattoo, piercing"
+    },
+    {
+      "file": "product-07.jpg",
+      "source": "pixabay",
+      "sha256": "407ac8a4cfc705942bd41f6720bdc2181bb63a04051ddb7b57e5f468d49a4817",
+      "query": "coffee shop entrance wooden door plants",
+      "providerId": 681835,
+      "pageUrl": "https://pixabay.com/photos/door-entrance-facade-archway-arch-681835/",
+      "photographer": "seth0s",
+      "photographerUrl": "https://pixabay.com/users/816508/",
+      "tags": "door, entrance, facade, archway, arch, blue door, wooden, portal"
+    }
+  ]
+}

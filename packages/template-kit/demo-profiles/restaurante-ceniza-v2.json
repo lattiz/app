@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-ceniza-v2.spec.json (spec 38d821242b7c, file 155639a6768e). Do not edit: use the spec, or freeze.",
+  "name": "Ceniza Grill & Bar",
+  "category": "restaurant",
+  "phone": "+525500000000",
+  "whatsapp": "+5215500000000",
+  "email": "hola@ceniza.mx",
+  "address": {
+    "street": "Calle Nilo 128, Col. Clavería, Azcapotzalco",
+    "city": "CDMX",
+    "country": "MX"
+  },
+  "hours": {
+    "tue": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "13:00",
+        "close": "23:00"
+      }
+    ],
+    "sun": [
+      {
+        "open": "13:00",
+        "close": "18:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}

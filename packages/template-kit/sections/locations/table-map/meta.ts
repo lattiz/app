@@ -1,0 +1,71 @@
+import type { SectionMeta } from '../../../src/types';
+
+// Stitch: restaurante-ceniza-contactos-mapa-01 (sucursales), rebuilt by hand
+export default {
+  slot: 'locations',
+  variant: 'table-map',
+  label: 'Mapa de mesas',
+  region: 'main',
+  description:
+    'Cabecera con título y un rótulo de plano a la derecha bajo un filete; a la izquierda un plano de salón en línea (barra, parrilla, mesas y terraza) con una leyenda numerada de zonas y, a la derecha, tres bloques: dirección en tipografía grande con enlace de cómo llegar, horario por días con una etiqueta que invierte una fila, y tres filas de canales (WhatsApp, teléfono, correo). Sin formulario ni mapa incrustado.',
+  intent:
+    'Ubicar al cliente dentro del local y no solo en la calle: qué zonas hay, cuándo abre cada día y cómo escribir; para bares, parrillas y restaurantes con barra, mesas y terraza.',
+  numbered: true,
+  tiers: ['basic', 'pro'],
+  archetypes: ['bold', 'editorial'],
+  contentKeys: [
+    'kicker?',
+    'title',
+    'planLabel?',
+    'zones[].label',
+    'zones[].text',
+    'placeNote?',
+    'directionsLabel',
+    'hoursLabel',
+    'schedule[].label',
+    'schedule[].value',
+    'schedule[].tag?',
+    'whatsappLabel',
+    'whatsappValue',
+    'whatsappCta',
+    'callLabel',
+    'callCta',
+    'emailLabel',
+    'emailCta',
+    'branches[].name',
+    'branches[].address',
+    'branches[].directionsUrl',
+  ],
+  sample: {
+    kicker: 'Visita',
+    planLabel: 'Plano general · 4 zonas',
+    zones: [
+      { label: 'Terraza', text: '18 lugares · se puede fumar' },
+      { label: 'La barra', text: '10 bancos · sin reserva' },
+      { label: 'Parrilla', text: 'Leña de encino y brasa' },
+      { label: 'Salón', text: '32 lugares · mesa comunal' },
+    ],
+    placeNote: 'Entre árboles y calles tranquilas.',
+    directionsLabel: 'Cómo llegar',
+    hoursLabel: 'Horario nocturno',
+    schedule: [
+      { label: 'Miércoles y jueves', value: '19:00 – 01:30' },
+      { label: 'Viernes y sábado', value: '19:00 – 02:30', tag: 'Más tarde' },
+      { label: 'Domingo', value: '16:00 – 23:30' },
+    ],
+    whatsappLabel: 'WhatsApp',
+    whatsappValue: 'Reservar o pedir',
+    whatsappCta: 'Reservar',
+    callLabel: 'Teléfono',
+    callCta: 'Llamar',
+    emailLabel: 'Correo',
+    emailCta: 'Escribir',
+    branches: [
+      {
+        name: 'Salón nocturno',
+        address: 'Calle Ejemplo 138, Col. Centro, CDMX',
+        directionsUrl: 'https://maps.google.com/?q=Calle+Ejemplo+138+CDMX',
+      },
+    ],
+  },
+} satisfies SectionMeta;

@@ -1,0 +1,148 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-margen-v2.spec.json (spec 880697027b0b, file 2f3eaeca1c5c). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "e73559ccd37cfc60554c10e0b49aa7d0dcdc9578a57894ecdbbb5ad737a01b47",
+      "query": "specialty coffee latte art cup book window",
+      "providerId": 6984075,
+      "pageUrl": "https://pixabay.com/photos/coffee-cup-coffee-cup-cappuccino-6984075/",
+      "photographer": "BayzidIslam",
+      "photographerUrl": "https://pixabay.com/users/18597738/",
+      "tags": "coffee, cup, coffee cup, cappuccino, morning"
+    },
+    {
+      "file": "about.jpg",
+      "source": "pixabay",
+      "sha256": "5ca455d151f54e39ffe3509687ccba9269c742e9752ceb54a73fa29937da4525",
+      "query": "barista pouring filter coffee wooden bar",
+      "providerId": 5252373,
+      "pageUrl": "https://pixabay.com/photos/coffee-drip-coffee-drink-caffeine-5252373/",
+      "photographer": "DiDeeChen",
+      "photographerUrl": "https://pixabay.com/users/16856550/",
+      "tags": "coffee, drip coffee, drink, caffeine, beverage"
+    },
+    {
+      "file": "product-01.jpg",
+      "source": "pixabay",
+      "sha256": "cc52a6c434e5d64ab4f8eb36a5d48b573acfaa60f442f180fad649ed8da3bb25",
+      "query": "pour over coffee v60 dripper",
+      "providerId": 2139592,
+      "pageUrl": "https://pixabay.com/photos/coffee-cup-filter-coffee-filter-2139592/",
+      "photographer": "NoName_13",
+      "photographerUrl": "https://pixabay.com/users/2364555/",
+      "tags": "coffee, cup, filter, coffee filter, paper filter, brewed coffee, black coffee, caffeine, coffee break, morning coffee, coffee cup, cup of coffee, drink, beverage, aroma, stimulant, tableware, red cup"
+    },
+    {
+      "file": "product-02.jpg",
+      "source": "pixabay",
+      "sha256": "a385da86ca47c1d6d67ff8b96bd06f903e31232e3c9167afb2eabb96b7f44dc4",
+      "query": "sourdough sandwich lunch plate",
+      "providerId": 8026582,
+      "pageUrl": "https://pixabay.com/photos/hamburger-sandwich-chicken-healthy-8026582/",
+      "photographer": "SylwesterL",
+      "photographerUrl": "https://pixabay.com/users/34617078/",
+      "tags": "hamburger, sandwich, chicken, healthy, breakfast, club sandwich, grilled, burger, restaurant, meal, lunch"
+    },
+    {
+      "file": "product-03.jpg",
+      "source": "pixabay",
+      "sha256": "4c63cb3b811b95ccdbe765a5f0a136b2267e5181990cdcfdca723b7701628965",
+      "query": "fresh baked tart pastry",
+      "providerId": 2239418,
+      "pageUrl": "https://pixabay.com/photos/strawberry-tart-strawberries-dough-2239418/",
+      "photographer": "silviarita",
+      "photographerUrl": "https://pixabay.com/users/3142410/",
+      "tags": "strawberry tart, strawberries, dough, fresh, fruit, gluten free, to bake, homemade, bio, vegetarian, lactose free, cream, dessert, enjoyment, coffee cup, yummy, cakes, strawberry slices, break, invite, vitamins, diet, sugar, sugar-free, stevia, agave syrup, birch sugar, spring, nature, summer, fruitcake, food, bisquit, spelt, flour, spelled flour, date of birth"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "pixabay",
+      "sha256": "3b37f215c94c57f5f803584b4e3c79117e6e5e6994701bff0ccc7cf75e332d31",
+      "query": "oat milk latte cup",
+      "providerId": 4651087,
+      "pageUrl": "https://pixabay.com/photos/the-coffee-capuchino-hot-dark-4651087/",
+      "photographer": "tathanhtuan",
+      "photographerUrl": "https://pixabay.com/users/10219403/",
+      "tags": "the coffee, capuchino, hot, dark, drink, hand"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "pixabay",
+      "sha256": "3deb8c5f13c362a4a3252277c47bef63d1b9aa484bc3abd0c7a0ca4b5da9574a",
+      "query": "pastry display bakery counter",
+      "providerId": 1868925,
+      "pageUrl": "https://pixabay.com/photos/bakery-breads-assorted-assortment-1868925/",
+      "photographer": "Pexels",
+      "photographerUrl": "https://pixabay.com/users/2286921/",
+      "tags": "bakery, breads, assorted, assortment, bread shop, food, pastries, shop, store, freshly baked"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "pixabay",
+      "sha256": "ff99efcfb0ad670a4f96a613a533912a8838a1e757f9d7dfcbe7414058bd197f",
+      "query": "turkey brie sandwich",
+      "providerId": 7008088,
+      "pageUrl": "https://pixabay.com/photos/cheese-bread-food-breakfast-snack-7008088/",
+      "photographer": "NadinShlyueva",
+      "photographerUrl": "https://pixabay.com/users/25667153/",
+      "tags": "cheese, bread, food, breakfast, snack, baguette, pear, honey, wheat, dish, meal, cuisine, delicious, tasty, nutrition, flat lay"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "pixabay",
+      "sha256": "86b721cf612bd1485c39fd262c56d27a5fde97379ef4cd51ef59778c9e5e746e",
+      "query": "pear almond tart",
+      "providerId": 6695584,
+      "pageUrl": "https://pixabay.com/photos/dessert-pie-pastry-flatlay-pear-6695584/",
+      "photographer": "TanyaMelnyk",
+      "photographerUrl": "https://pixabay.com/users/23783428/",
+      "tags": "dessert, pie, pastry, flatlay, pear, food, tart"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "pixabay",
+      "sha256": "2dec7381cca42f6bad3125f9b2cba58f4bfd746cfc5a5b9223ea57626669c5e3",
+      "query": "bookshelf cozy cafe books",
+      "providerId": 4226020,
+      "pageUrl": "https://pixabay.com/photos/interior-room-couch-window-4226020/",
+      "photographer": "atanaspaskalev",
+      "photographerUrl": "https://pixabay.com/users/8225711/",
+      "tags": "interior, room, couch, window, living room, property, real estate"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "pixabay",
+      "sha256": "1e5190bc206ef8c50fb1cc31db6f7f2b3eecfb9f58c7fd526c4f56ca1b4c6c00",
+      "query": "roasted coffee beans bag",
+      "providerId": 2258869,
+      "pageUrl": "https://pixabay.com/photos/coffee-beans-coffee-pot-cup-coffee-2258869/",
+      "photographer": "NoName_13",
+      "photographerUrl": "https://pixabay.com/users/2364555/",
+      "tags": "coffee beans, coffee pot, cup, coffee, pleasure, beans, caffeine, coffee enjoyment, enjoyment, porcelain, roasted, coffee cup, drink, coffee shop, coffee mug, food, luxury items, bag, paper bag, heart, wooden heart"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "pixabay",
+      "sha256": "7cae5ac5536fd4df35268a93c1a05555e14c160f4e6ba8de17e2dea71fe98e6c",
+      "query": "cafe interior plants window light",
+      "providerId": 2774351,
+      "pageUrl": "https://pixabay.com/photos/beautiful-cafe-bookshelf-chair-2774351/",
+      "photographer": "huynhthientu",
+      "photographerUrl": "https://pixabay.com/users/6494547/",
+      "tags": "beautiful cafe, bookshelf, chair, table"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "pixabay",
+      "sha256": "071b1702f1402a114542fcee6a056680a04b9c42d21a672a3f0daee548b07e9c",
+      "query": "v60 coffee brewing kettle",
+      "providerId": 5252372,
+      "pageUrl": "https://pixabay.com/photos/coffee-black-coffee-drip-coffee-5252372/",
+      "photographer": "DiDeeChen",
+      "photographerUrl": "https://pixabay.com/users/16856550/",
+      "tags": "coffee, black coffee, drip coffee"
+    }
+  ]
+}

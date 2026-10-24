@@ -1,0 +1,349 @@
+{
+  "version": 1,
+  "candidate_id": "restaurante-ceniza-brasa-pizarra-01",
+  "input": {
+    "file": "design.md",
+    "kind": "design-md"
+  },
+  "palette": {
+    "label": "Local business · Neón nocturno (Stitch, oscuro)",
+    "mode": "dark",
+    "mood": [
+      "nocturno",
+      "stitch"
+    ],
+    "affinity": [
+      "restaurante"
+    ],
+    "bg": "#15110E",
+    "text": "#F1ECE7",
+    "accent": "#D2C6BE",
+    "surface": "#211B17",
+    "surface2": "#2F2823",
+    "photoTreatment": "none",
+    "placeholder": "rules",
+    "from": {
+      "bg": "background",
+      "text": "on-background",
+      "accent": "primary",
+      "surface": "surface-container-low",
+      "surface2": "surface-container-high"
+    },
+    "aa": {
+      "ok": true,
+      "problems": []
+    },
+    "roles": {
+      "surface": [
+        "background",
+        "surface",
+        "surface-container-low",
+        "surface-container-high"
+      ],
+      "text": [
+        "on-background",
+        "on-surface",
+        "on-surface-variant"
+      ],
+      "accent": [
+        "primary",
+        "tertiary"
+      ],
+      "border": [
+        "outline",
+        "outline-variant"
+      ]
+    },
+    "lz": {
+      "--lz-color-bg": "#15110E",
+      "--lz-color-surface": "#211B17",
+      "--lz-color-surface-2": "#2F2823",
+      "--lz-color-text": "#F1ECE7",
+      "--lz-color-muted": "#999490",
+      "--lz-color-accent": "#D2C6BE",
+      "--lz-color-on-accent": "#15110E",
+      "--lz-color-accent-text": "#D2C6BE",
+      "--lz-color-line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+      "--lz-color-line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+      "--lz-color-overlay": "#15110E",
+      "--lz-color-on-overlay": "#F1ECE7",
+      "--lz-color-navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+      "--lz-color-ink": "#15110E"
+    },
+    "pairs": [
+      {
+        "fg": "on-background",
+        "bg": "background",
+        "ratio": 16,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface",
+        "bg": "surface",
+        "ratio": 16,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-primary",
+        "bg": "primary",
+        "ratio": 11.23,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface",
+        "bg": "background",
+        "ratio": 16,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "background",
+        "ratio": 7.22,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "surface",
+        "ratio": 7.22,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface",
+        "bg": "surface-container-low",
+        "ratio": 14.5,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "surface-container-low",
+        "ratio": 6.54,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface",
+        "bg": "surface-container-high",
+        "ratio": 12.35,
+        "min": 4.5,
+        "aa_pass": true
+      },
+      {
+        "fg": "on-surface-variant",
+        "bg": "surface-container-high",
+        "ratio": 5.57,
+        "min": 4.5,
+        "aa_pass": true
+      }
+    ],
+    "distance": [
+      {
+        "giro": "restaurante",
+        "nearest": "pal-vino-hueso",
+        "distance": 17.1,
+        "min": 15,
+        "ok": true
+      }
+    ]
+  },
+  "typography": {
+    "scale": [
+      {
+        "token": "display-lg",
+        "role": "display",
+        "family": "Anton",
+        "sizePx": 83,
+        "weight": 400,
+        "lineHeightPx": 89
+      },
+      {
+        "token": "headline-md",
+        "role": "headline",
+        "family": "Anton",
+        "sizePx": 41,
+        "weight": 600,
+        "lineHeightPx": 48
+      },
+      {
+        "token": "body-lg",
+        "role": "body",
+        "family": "Space Grotesk",
+        "sizePx": 20,
+        "weight": 400,
+        "lineHeightPx": 32
+      },
+      {
+        "token": "body-md",
+        "role": "body",
+        "family": "Space Grotesk",
+        "sizePx": 16,
+        "weight": 400,
+        "lineHeightPx": 26
+      },
+      {
+        "token": "label-caps",
+        "role": "label",
+        "family": "Space Grotesk",
+        "sizePx": 14,
+        "weight": 600,
+        "lineHeightPx": 20,
+        "letterSpacingEm": 0.08
+      }
+    ],
+    "displayFamily": "Anton",
+    "bodyFamily": "Space Grotesk",
+    "googleFamilies": [
+      "Anton",
+      "Space Grotesk"
+    ],
+    "unsupportedFamilies": [],
+    "excludedFamilies": [],
+    "metrics": {
+      "Anton": true,
+      "Space Grotesk": true
+    },
+    "existingPair": "anton+space-grotesk",
+    "delivery": {
+      "ok": true,
+      "problems": []
+    },
+    "radiusPx": 0,
+    "spacing": {
+      "container-max": "1200px",
+      "gutter": "16px",
+      "section-gap": "80px",
+      "stack-md": "14px"
+    }
+  },
+  "sections": [
+    {
+      "ref": "portada",
+      "columns": 12,
+      "items": 2,
+      "hasImage": true,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "bordered",
+      "heading": "HUMO CRUDO LEÑA SECA NOCHE HONDA",
+      "mappable": true,
+      "slot": "hero",
+      "layout": "photo-overlay",
+      "reuse_candidate": "hero/photo-ribbon",
+      "similar": [
+        "hero/image-bg",
+        "hero/framed",
+        "hero/poster",
+        "hero/photo-ribbon",
+        "hero/index-panel"
+      ]
+    },
+    {
+      "ref": "brasa",
+      "columns": 4,
+      "items": 4,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "bordered",
+      "heading": "BITÁCORA DE LA BRASA",
+      "mappable": true,
+      "slot": "services",
+      "layout": "card-grid",
+      "reuse_candidate": "services/cards",
+      "similar": [
+        "services/cards",
+        "services/ritual-cards",
+        "services/product-grid"
+      ],
+      "draft": {
+        "variant": "bordered-card-grid",
+        "html": "<section id=\"servicios\" data-lz-slot=\"services\" data-lz-variant=\"bordered-card-grid\" class=\"lz-section lz-services-bordered-card-grid\">\n  <div class=\"lz-container\">\n    <p class=\"lz-services-bordered-card-grid__kicker\" data-lz-key=\"kicker\"></p>\n    <h2 class=\"lz-title lz-title--section\" data-lz-key=\"title\"></h2>\n    <div class=\"lz-services-bordered-card-grid__grid\">\n      <article class=\"lz-services-bordered-card-grid__card\" data-lz-each=\"prices\">\n        <p class=\"lz-services-bordered-card-grid__price\" data-lz-key=\"price\"></p>\n        <h3 class=\"lz-services-bordered-card-grid__name\" data-lz-key=\"name\"></h3>\n        <p class=\"lz-services-bordered-card-grid__desc\" data-lz-key=\"description\"></p>\n      </article>\n    </div>\n  </div>\n</section>\n",
+        "css": ".lz-services-bordered-card-grid {\n  padding: var(--lz-section-pad) 0;\n}\n\n.lz-services-bordered-card-grid__kicker {\n  margin: 0 0 calc(12px * var(--lz-space));\n  color: var(--lz-color-text);\n  font-size: calc(14px * var(--lz-text-scale));\n  letter-spacing: 0.12em;\n  text-transform: uppercase;\n}\n\n.lz-services-bordered-card-grid__grid {\n  display: grid;\n  grid-template-columns: repeat(3, minmax(0, 1fr));\n  gap: calc(20px * var(--lz-space));\n  margin-top: calc(40px * var(--lz-space));\n}\n\n.lz-services-bordered-card-grid__card {\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  gap: calc(14px * var(--lz-space));\n  min-height: calc(220px * var(--lz-space));\n  padding: calc(32px * var(--lz-space));\n  border-radius: var(--lz-radius-card);\n  color: var(--lz-color-text);\n  background: var(--lz-color-surface);\n  border: var(--lz-border-width, 1px) solid var(--lz-color-line);\n}\n\n.lz-services-bordered-card-grid__price {\n  margin: 0;\n  color: var(--lz-color-accent-text);\n  font-family: var(--lz-font-display);\n  font-size: calc(clamp(36px, 4.4vw, 60px) * var(--lz-display-scale));\n  letter-spacing: var(--lz-display-tracking, 0);\n  line-height: 1;\n}\n\n.lz-services-bordered-card-grid__name {\n  margin: 0;\n  font-family: var(--lz-font-display);\n  font-size: calc(24px * var(--lz-text-scale));\n  line-height: 1.2;\n}\n\n.lz-services-bordered-card-grid__desc {\n  max-width: 44ch;\n  margin: 0;\n  color: var(--lz-color-muted);\n  font-size: calc(16px * var(--lz-text-scale));\n  line-height: 1.55;\n  text-wrap: pretty;\n}\n\n@media (max-width: 992px) {\n  .lz-services-bordered-card-grid__grid {\n    grid-template-columns: repeat(2, minmax(0, 1fr));\n  }\n  .lz-services-bordered-card-grid__card,\n  .lz-services-bordered-card-grid__card:nth-child(n) {\n    grid-column: auto;\n  }\n}\n\n@media (max-width: 480px) {\n  .lz-services-bordered-card-grid__grid {\n    grid-template-columns: minmax(0, 1fr);\n  }\n  .lz-services-bordered-card-grid__card,\n  .lz-services-bordered-card-grid__card:nth-child(n) {\n    grid-column: auto;\n    padding: calc(24px * var(--lz-space));\n  }\n}\n",
+        "meta_ts": "import type { SectionMeta } from '../../../src/types';\n\n// Stitch: restaurante-ceniza-brasa-pizarra-01\nexport default {\n  slot: \"services\",\n  variant: \"bordered-card-grid\",\n  label: \"Servicios y precios\",\n  region: 'main',\n  description: \"Tarjetas con filete con el precio grande arriba, nombre y descripción; tres por fila en escritorio.\",\n  numbered: true,\n  tiers: [\n  \"basic\",\n  \"pro\"\n],\n  intent: \"Catálogo en retícula con tarjetas con filete, a partir de un patrón de Stitch; para giros con pocos servicios bien diferenciados.\",\n  archetypes: [\n  \"catalog\",\n  \"soft\"\n],\n  contentKeys: [\n  \"kicker\",\n  \"title\",\n  \"prices[].name\",\n  \"prices[].price\",\n  \"prices[].description\"\n],\n  sample: {\n  \"prices\": [\n    {\n      \"name\": \"Valoración inicial\",\n      \"price\": \"$600\",\n      \"description\": \"Revisión completa y plan por escrito, sin compromiso.\"\n    },\n    {\n      \"name\": \"Limpieza profunda\",\n      \"price\": \"$950\",\n      \"description\": \"Higiene con ultrasonido y pulido, en una sola visita.\"\n    },\n    {\n      \"name\": \"Blanqueamiento\",\n      \"price\": \"$3,200\",\n      \"description\": \"Dos sesiones con seguimiento de sensibilidad.\"\n    },\n    {\n      \"name\": \"Ortodoncia\",\n      \"price\": \"$1,400\",\n      \"description\": \"Mensualidad con revisión incluida.\"\n    }\n  ]\n},\n} satisfies SectionMeta;\n",
+        "bytes": {
+          "html": 751,
+          "css": 2079,
+          "css_gzip": 583
+        }
+      }
+    },
+    {
+      "ref": "carta",
+      "columns": 3,
+      "items": 3,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "bordered",
+      "heading": "PIZARRA DE TURNOS",
+      "mappable": true,
+      "slot": "services",
+      "layout": "card-grid",
+      "reuse_candidate": "services/cards",
+      "similar": [
+        "services/cards",
+        "services/ritual-cards",
+        "services/product-grid"
+      ],
+      "draft": {
+        "variant": "bordered-card-grid",
+        "html": "<section id=\"servicios\" data-lz-slot=\"services\" data-lz-variant=\"bordered-card-grid\" class=\"lz-section lz-services-bordered-card-grid\">\n  <div class=\"lz-container\">\n    <p class=\"lz-services-bordered-card-grid__kicker\" data-lz-key=\"kicker\"></p>\n    <h2 class=\"lz-title lz-title--section\" data-lz-key=\"title\"></h2>\n    <div class=\"lz-services-bordered-card-grid__grid\">\n      <article class=\"lz-services-bordered-card-grid__card\" data-lz-each=\"prices\">\n        <p class=\"lz-services-bordered-card-grid__price\" data-lz-key=\"price\"></p>\n        <h3 class=\"lz-services-bordered-card-grid__name\" data-lz-key=\"name\"></h3>\n        <p class=\"lz-services-bordered-card-grid__desc\" data-lz-key=\"description\"></p>\n      </article>\n    </div>\n  </div>\n</section>\n",
+        "css": ".lz-services-bordered-card-grid {\n  padding: var(--lz-section-pad) 0;\n}\n\n.lz-services-bordered-card-grid__kicker {\n  margin: 0 0 calc(12px * var(--lz-space));\n  color: var(--lz-color-text);\n  font-size: calc(14px * var(--lz-text-scale));\n  letter-spacing: 0.12em;\n  text-transform: uppercase;\n}\n\n.lz-services-bordered-card-grid__grid {\n  display: grid;\n  grid-template-columns: repeat(3, minmax(0, 1fr));\n  gap: calc(20px * var(--lz-space));\n  margin-top: calc(40px * var(--lz-space));\n}\n\n.lz-services-bordered-card-grid__card {\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  gap: calc(14px * var(--lz-space));\n  min-height: calc(220px * var(--lz-space));\n  padding: calc(32px * var(--lz-space));\n  border-radius: var(--lz-radius-card);\n  color: var(--lz-color-text);\n  background: var(--lz-color-surface);\n  border: var(--lz-border-width, 1px) solid var(--lz-color-line);\n}\n\n.lz-services-bordered-card-grid__price {\n  margin: 0;\n  color: var(--lz-color-accent-text);\n  font-family: var(--lz-font-display);\n  font-size: calc(clamp(36px, 4.4vw, 60px) * var(--lz-display-scale));\n  letter-spacing: var(--lz-display-tracking, 0);\n  line-height: 1;\n}\n\n.lz-services-bordered-card-grid__name {\n  margin: 0;\n  font-family: var(--lz-font-display);\n  font-size: calc(24px * var(--lz-text-scale));\n  line-height: 1.2;\n}\n\n.lz-services-bordered-card-grid__desc {\n  max-width: 44ch;\n  margin: 0;\n  color: var(--lz-color-muted);\n  font-size: calc(16px * var(--lz-text-scale));\n  line-height: 1.55;\n  text-wrap: pretty;\n}\n\n@media (max-width: 992px) {\n  .lz-services-bordered-card-grid__grid {\n    grid-template-columns: repeat(2, minmax(0, 1fr));\n  }\n  .lz-services-bordered-card-grid__card,\n  .lz-services-bordered-card-grid__card:nth-child(n) {\n    grid-column: auto;\n  }\n}\n\n@media (max-width: 480px) {\n  .lz-services-bordered-card-grid__grid {\n    grid-template-columns: minmax(0, 1fr);\n  }\n  .lz-services-bordered-card-grid__card,\n  .lz-services-bordered-card-grid__card:nth-child(n) {\n    grid-column: auto;\n    padding: calc(24px * var(--lz-space));\n  }\n}\n",
+        "meta_ts": "import type { SectionMeta } from '../../../src/types';\n\n// Stitch: restaurante-ceniza-brasa-pizarra-01\nexport default {\n  slot: \"services\",\n  variant: \"bordered-card-grid\",\n  label: \"Servicios y precios\",\n  region: 'main',\n  description: \"Tarjetas con filete con el precio grande arriba, nombre y descripción; tres por fila en escritorio.\",\n  numbered: true,\n  tiers: [\n  \"basic\",\n  \"pro\"\n],\n  intent: \"Catálogo en retícula con tarjetas con filete, a partir de un patrón de Stitch; para giros con pocos servicios bien diferenciados.\",\n  archetypes: [\n  \"catalog\",\n  \"soft\"\n],\n  contentKeys: [\n  \"kicker\",\n  \"title\",\n  \"prices[].name\",\n  \"prices[].price\",\n  \"prices[].description\"\n],\n  sample: {\n  \"prices\": [\n    {\n      \"name\": \"Valoración inicial\",\n      \"price\": \"$600\",\n      \"description\": \"Revisión completa y plan por escrito, sin compromiso.\"\n    },\n    {\n      \"name\": \"Limpieza profunda\",\n      \"price\": \"$950\",\n      \"description\": \"Higiene con ultrasonido y pulido, en una sola visita.\"\n    },\n    {\n      \"name\": \"Blanqueamiento\",\n      \"price\": \"$3,200\",\n      \"description\": \"Dos sesiones con seguimiento de sensibilidad.\"\n    },\n    {\n      \"name\": \"Ortodoncia\",\n      \"price\": \"$1,400\",\n      \"description\": \"Mensualidad con revisión incluida.\"\n    }\n  ]\n},\n} satisfies SectionMeta;\n",
+        "bytes": {
+          "html": 751,
+          "css": 2079,
+          "css_gzip": 583
+        }
+      }
+    },
+    {
+      "ref": "FOOTER",
+      "columns": 0,
+      "items": 0,
+      "hasImage": false,
+      "hasStat": false,
+      "hasQuote": false,
+      "surface": "bordered",
+      "mappable": true,
+      "slot": "footer",
+      "layout": "list"
+    }
+  ],
+  "not_mappable": [
+    {
+      "ref": "preguntas",
+      "reason": "usa <table>: el kit no lo admite en una sección"
+    }
+  ],
+  "rebuild": [
+    {
+      "ref": "portada",
+      "slot": "hero",
+      "layout": "photo-overlay",
+      "reason": "sin medir (¿hero/photo-ribbon?): corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
+    },
+    {
+      "ref": "FOOTER",
+      "slot": "footer",
+      "layout": "list",
+      "reason": "sin medir: corre «lattiz design fidelity» y, si es distinta, reconstrúyela a mano"
+    }
+  ],
+  "interactivity": [],
+  "image_needs": [
+    {
+      "ref": "portada",
+      "slot": "hero",
+      "orientation": "unspecified",
+      "use": "background"
+    }
+  ],
+  "images_ignored": 1
+}

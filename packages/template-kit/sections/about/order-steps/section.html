@@ -1,0 +1,17 @@
+<section id="nosotros" data-lz-slot="about" data-lz-variant="order-steps" class="lz-section lz-about-order-steps">
+  <div class="lz-container">
+    <div class="lz-about-order-steps__head">
+      <p class="lz-about-order-steps__kicker" data-lz-if="kicker" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-about-order-steps__title" data-lz-key="title"></h2>
+      <p class="lz-about-order-steps__summary" data-lz-key="summary"></p>
+    </div>
+    <ol class="lz-about-order-steps__steps">
+      <li class="lz-about-order-steps__step" data-lz-each="features">
+        <span class="lz-about-order-steps__num" aria-hidden="true"></span>
+        <h3 class="lz-about-order-steps__step-title" data-lz-key="title"></h3>
+        <p class="lz-about-order-steps__step-text" data-lz-key="text"></p>
+      </li>
+    </ol>
+    <a data-lz-if="cta" href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary lz-about-order-steps__cta" data-lz-key="cta"></a>
+  </div>
+</section>

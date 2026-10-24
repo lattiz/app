@@ -1,0 +1,59 @@
+<section id="sucursales" data-lz-slot="locations" data-lz-variant="corner-postcard" class="lz-section lz-locations-corner-postcard">
+  <div class="lz-container">
+    <div class="lz-locations-corner-postcard__head">
+      <div class="lz-locations-corner-postcard__heading">
+        <p class="lz-locations-corner-postcard__kicker" data-lz-if="kicker" data-lz-key="kicker"></p>
+        <h2 class="lz-title lz-locations-corner-postcard__title" data-lz-key="title"></h2>
+      </div>
+      <p class="lz-locations-corner-postcard__text" data-lz-key="contactText"></p>
+    </div>
+    <div class="lz-locations-corner-postcard__body" data-lz-each="branches">
+      <figure class="lz-locations-corner-postcard__frame">
+        <img loading="lazy" width="900" height="1100" class="lz-locations-corner-postcard__image" data-lz-attr-src="image" data-lz-attr-alt="imageAlt">
+        <figcaption class="lz-locations-corner-postcard__plate" data-lz-if="plateText">
+          <span class="lz-locations-corner-postcard__plate-label" data-lz-if="plateLabel" data-lz-key="plateLabel"></span>
+          <span data-lz-key="plateText"></span>
+        </figcaption>
+      </figure>
+      <ol class="lz-locations-corner-postcard__stops">
+        <li class="lz-locations-corner-postcard__stop">
+          <span class="lz-locations-corner-postcard__num" aria-hidden="true"></span>
+          <div class="lz-locations-corner-postcard__stop-body">
+            <h3 class="lz-locations-corner-postcard__stop-title" data-lz-key="placeTitle"></h3>
+            <p class="lz-locations-corner-postcard__stop-text">{{address}}</p>
+            <p class="lz-locations-corner-postcard__stop-note" data-lz-if="placeNote" data-lz-key="placeNote"></p>
+            <a target="_blank" rel="noopener noreferrer" class="lz-locations-corner-postcard__link" data-lz-attr-href="directionsUrl" data-lz-key="directionsLabel"></a>
+          </div>
+        </li>
+        <li class="lz-locations-corner-postcard__stop">
+          <span class="lz-locations-corner-postcard__num" aria-hidden="true"></span>
+          <div class="lz-locations-corner-postcard__stop-body">
+            <h3 class="lz-locations-corner-postcard__stop-title" data-lz-key="hoursTitle"></h3>
+            <p class="lz-locations-corner-postcard__stop-text" data-lz-key="hoursText"></p>
+            <p class="lz-locations-corner-postcard__stop-note" data-lz-if="hoursNote" data-lz-key="hoursNote"></p>
+          </div>
+        </li>
+        <li class="lz-locations-corner-postcard__stop">
+          <span class="lz-locations-corner-postcard__num" aria-hidden="true"></span>
+          <div class="lz-locations-corner-postcard__stop-body">
+            <h3 class="lz-locations-corner-postcard__stop-title" data-lz-key="orderTitle"></h3>
+            <p class="lz-locations-corner-postcard__stop-text" data-lz-key="orderText"></p>
+            <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-locations-corner-postcard__link" data-lz-key="orderCta"></a>
+          </div>
+        </li>
+      </ol>
+    </div>
+    <div class="lz-locations-corner-postcard__access">
+      <div class="lz-locations-corner-postcard__access-list">
+        <p class="lz-locations-corner-postcard__label" data-lz-if="chipsTitle" data-lz-key="chipsTitle"></p>
+        <ul class="lz-locations-corner-postcard__chips">
+          <li class="lz-locations-corner-postcard__chip" data-lz-each="chips">
+            <strong data-lz-key="label"></strong>
+            <span data-lz-key="text"></span>
+          </li>
+        </ul>
+      </div>
+      <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary" data-lz-key="whatsappCta"></a>
+    </div>
+  </div>
+</section>

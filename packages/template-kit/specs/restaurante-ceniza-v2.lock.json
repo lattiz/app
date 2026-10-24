@@ -1,0 +1,58 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/restaurante-ceniza-v2.spec.json",
+  "catalog": "extended",
+  "catalogVersion": 2,
+  "tiers": {
+    "restaurante-ceniza-v2": {
+      "tier": "pro",
+      "palette": "custom",
+      "fontPair": "anton+space-grotesk",
+      "shape": "filete",
+      "archetype": "street-luxe",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "index-strip" },
+        { "role": "hero", "slot": "hero", "variant": "vertical-slip" },
+        { "role": "about", "slot": "about", "variant": "coal-log" },
+        { "role": "catalog", "slot": "services", "variant": "chalk-board" },
+        { "role": "proof", "slot": "gallery", "variant": "contact-sheet" },
+        {
+          "role": "testimonials",
+          "slot": "testimonials",
+          "variant": "order-slips"
+        },
+        { "role": "faq", "slot": "faq", "variant": "rule-table" },
+        { "role": "contact", "slot": "locations", "variant": "table-map" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "receipt" }
+      ],
+      "renews": "restaurante-ceniza-v1"
+    },
+    "restaurante-base-ceniza-v2": {
+      "tier": "basico",
+      "palette": "pal-pizarra-plata",
+      "fontPair": "archivo-black+space-grotesk",
+      "shape": "sutil",
+      "archetype": "essential",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "index-strip" },
+        { "role": "hero", "slot": "hero", "variant": "split-mosaic" },
+        { "role": "catalog", "slot": "services", "variant": "chalk-board" },
+        { "role": "faq", "slot": "faq", "variant": "rule-table" },
+        { "role": "contact", "slot": "locations", "variant": "table-map" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "receipt" }
+      ],
+      "renews": "restaurante-base-ceniza-v1"
+    }
+  }
+}

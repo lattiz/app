@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="es-MX"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cantera Café &amp; Barra — Colonia Juárez, Ciudad de México</title>
+<!-- Google Fonts: Newsreader & Public Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&amp;family=Public+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container": "#f1edeb",
+            "on-primary-fixed-variant": "#4b4641",
+            "on-primary-container": "#bab2ac",
+            "secondary-container": "#e5dfd9",
+            "on-primary-fixed": "#1f1b17",
+            "on-surface": "#26231F",
+            "on-primary": "#FFFFFF",
+            "error": "#ba1a1a",
+            "secondary-fixed-dim": "#cbc6c0",
+            "surface-container-low": "#f7f3f1",
+            "primary-container": "#4a4540",
+            "outline-variant": "#C6C2BC",
+            "on-tertiary-fixed-variant": "#4b4641",
+            "on-secondary-fixed-variant": "#494642",
+            "on-secondary-container": "#66625d",
+            "surface-container-high": "#ece7e6",
+            "secondary-fixed": "#e7e1db",
+            "on-secondary-fixed": "#1d1b18",
+            "on-surface-variant": "#4c463f",
+            "on-background": "#26231F",
+            "tertiary-fixed": "#eae1da",
+            "primary-fixed": "#eae1da",
+            "on-tertiary-container": "#bab2ac",
+            "error-container": "#ffdad6",
+            "surface-dim": "#ddd9d8",
+            "on-tertiary": "#ffffff",
+            "inverse-on-surface": "#f4f0ee",
+            "tertiary-container": "#4a4540",
+            "surface-container-lowest": "#ffffff",
+            "surface-bright": "#fdf8f7",
+            "surface-container-highest": "#e6e1e0",
+            "on-secondary": "#ffffff",
+            "secondary": "#615e59",
+            "inverse-primary": "#cdc5be",
+            "on-error": "#ffffff",
+            "surface-variant": "#e6e1e0",
+            "inverse-surface": "#31302f",
+            "surface-tint": "#635d58",
+            "primary": "#332f2a",
+            "background": "#E9E5DE",
+            "surface": "#E9E5DE",
+            "primary-fixed-dim": "#cdc5be",
+            "on-tertiary-fixed": "#1f1b17",
+            "outline": "#7E7A75",
+            "tertiary-fixed-dim": "#cdc5be",
+            "tertiary": "#332f2a",
+            "on-error-container": "#93000a"
+          },
+          "borderRadius": {
+            "DEFAULT": "0px",
+            "lg": "0px",
+            "xl": "0px",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xs": "8px",
+            "space-sm": "16px",
+            "space-md": "28px",
+            "space-lg": "64px",
+            "space-xl": "144px",
+            "margin": "32px",
+            "gutter": "32px"
+          },
+          "fontFamily": {
+            "headline-md": ["Newsreader", "serif"],
+            "body-lg": ["Public Sans", "sans-serif"],
+            "body-md": ["Public Sans", "sans-serif"],
+            "display-lg": ["Newsreader", "serif"],
+            "label-caps": ["Public Sans", "sans-serif"],
+            "mono": ["JetBrains Mono", "monospace"]
+          },
+          "fontSize": {
+            "headline-md": ["41px", { "lineHeight": "48px", "fontWeight": "600" }],
+            "body-lg": ["20px", { "lineHeight": "32px", "fontWeight": "400" }],
+            "body-md": ["16px", { "lineHeight": "26px", "fontWeight": "400" }],
+            "display-lg": ["72px", { "lineHeight": "78px", "fontWeight": "700" }],
+            "label-caps": ["14px", { "lineHeight": "20px", "letterSpacing": "0.08em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface antialiased font-body-md text-body-md selection:bg-primary-container selection:text-surface-container-lowest">
+<!-- 1. HEADER (TopNavBar Anchor Component) -->
+<header class="sticky top-0 z-50 bg-surface border-b border-outline-variant">
+<div class="w-full max-w-[1200px] mx-auto px-gutter h-20 flex items-center justify-between">
+<a class="font-headline-md text-headline-md font-semibold text-primary tracking-tight" href="#">
+        Cantera Café &amp; Barra
+      </a>
+<!-- Desktop Navigation Links -->
+<nav class="hidden md:flex items-center gap-8 text-on-surface-variant font-body-md text-body-md">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#como-pedir">Cómo pedir</a>
+<a class="text-primary font-body-md text-body-md border-b-2 border-primary pb-1" href="#carta">Carta</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#hoy-en-barra">Barra</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#resenas">Reseñas</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#contacto">Contacto</a>
+</nav>
+<!-- Primary Action CTA -->
+<div class="flex items-center">
+<a class="inline-flex items-center gap-2 bg-primary-container text-on-primary px-5 py-2.5 font-label-caps text-label-caps uppercase tracking-wider hover:bg-primary transition-colors duration-200" href="https://wa.me/525552081944?text=Hola%20Cantera,%20quiero%20hacer%20un%20pedido" rel="noopener noreferrer" target="_blank">
+<span>Pedir por WhatsApp</span>
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.75" viewbox="0 0 24 24">
+<path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="square" stroke-linejoin="miter"></path>
+</svg>
+</a>
+</div>
+</div>
+</header>
+<main class="w-full max-w-[1200px] mx-auto px-gutter">
+<!-- 2. HERO SECTION (Asymmetric: Editorial Narrative & Real Barra Ticket) -->
+<section id="portada" class="pt-16 pb-24 md:pt-24 md:pb-32 border-b border-outline-variant">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+<!-- Left Column: Editorial Statement & Direct Intent -->
+<div class="lg:col-span-7 flex flex-col justify-between">
+<div class="space-y-6">
+<span class="inline-block text-secondary font-label-caps text-label-caps uppercase tracking-widest border-b border-outline pb-1">
+              Colonia Juárez · Esquina Havre y Londres
+            </span>
+<h1 class="font-display-lg text-4xl sm:text-5xl lg:text-[68px] leading-[1.08] font-bold text-primary tracking-tight">
+              Café de origen y lonches de oficio en la Juárez.
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl pt-2">
+              Tostamos lotes pequeños de fincas trazables en Huatusco, Veracruz y la Sierra Sur de Oaxaca. Horneamos hogazas de masa madre cada madrugada y preparamos emparedados fríos y calientes con queso de rancho y embutidos locales.
+            </p>
+</div>
+<!-- Micro-details & Primary Action -->
+<div class="mt-12 pt-8 border-t border-outline-variant flex flex-col sm:flex-row sm:items-center gap-6">
+<a class="inline-block bg-primary text-on-primary px-8 py-4 font-label-caps text-label-caps uppercase tracking-wider hover:bg-on-surface transition-colors duration-200 text-center" href="https://wa.me/525552081944?text=Buen%20d%C3%ADa,%20quiero%20hacer%20un%20pedido%20para%20recoger" rel="noopener noreferrer" target="_blank">
+              Pedir por WhatsApp
+            </a>
+<div class="flex items-center gap-3 text-on-surface-variant">
+<span class="w-2.5 h-2.5 bg-outline rounded-full inline-block"></span>
+<p class="text-sm font-mono tracking-tight">
+                Horno encendido y molino calibrado desde las 7:30
+              </p>
+</div>
+</div>
+</div>
+<!-- Right Column: Physical Order Ticket ("Comanda de Barra") -->
+<div class="lg:col-span-5">
+<div class="bg-surface-container-low border border-outline p-6 md:p-8 relative">
+<!-- Ticket Header -->
+<div class="flex justify-between items-baseline border-b border-outline pb-4">
+<div>
+<span class="font-mono text-xs uppercase tracking-widest text-secondary block">Comanda de barra</span>
+<span class="font-mono text-lg font-bold text-primary">#0482</span>
+</div>
+<div class="text-right">
+<span class="font-mono text-xs uppercase tracking-wider text-secondary block">Juárez, CDMX</span>
+<span class="font-mono text-xs text-on-surface-variant">Mesa / Mostrador</span>
+</div>
+</div>
+<!-- Extraction Parameters Table -->
+<div class="py-5 border-b border-outline-variant font-mono text-xs space-y-2 text-on-surface-variant">
+<div class="flex justify-between">
+<span>Cosecha:</span>
+<span class="font-medium text-primary">Finca La Esperanza, Oaxaca</span>
+</div>
+<div class="flex justify-between">
+<span>Calibración:</span>
+<span>19.2g in · 42g out · 27 seg</span>
+</div>
+<div class="flex justify-between">
+<span>Agua de red:</span>
+<span>Mineralizada a 115 ppm</span>
+</div>
+</div>
+<!-- Ticket Items Table -->
+<div class="py-6 space-y-4">
+<div class="flex justify-between items-baseline text-sm">
+<div>
+<span class="font-mono text-xs text-secondary mr-2">01</span>
+<span class="font-medium text-primary">Flat White (Doble espresso)</span>
+<p class="font-mono text-xs text-secondary pl-6">Leche entera de pastoreo pasteurizada</p>
+</div>
+<span class="font-mono text-sm text-primary">$70</span>
+</div>
+<div class="flex justify-between items-baseline text-sm">
+<div>
+<span class="font-mono text-xs text-secondary mr-2">01</span>
+<span class="font-medium text-primary">Lonche de roast beef curado</span>
+<p class="font-mono text-xs text-secondary pl-6">Hogaza rústica, mostaza y provolone</p>
+</div>
+<span class="font-mono text-sm text-primary">$175</span>
+</div>
+<div class="flex justify-between items-baseline text-sm">
+<div>
+<span class="font-mono text-xs text-secondary mr-2">01</span>
+<span class="font-medium text-primary">Galleta de tahini y cacao 72%</span>
+<p class="font-mono text-xs text-secondary pl-6">Sal de Colima en grano</p>
+</div>
+<span class="font-mono text-sm text-primary">$55</span>
+</div>
+</div>
+<!-- Ticket Footer -->
+<div class="pt-4 border-t border-outline flex justify-between items-baseline">
+<span class="font-mono text-xs uppercase tracking-widest text-secondary">Total Comanda</span>
+<span class="font-mono text-lg font-bold text-primary">$300 MXN</span>
+</div>
+<div class="mt-6 pt-4 border-t border-dashed border-outline-variant text-center">
+<a class="block w-full text-center py-2.5 bg-primary-container text-on-primary font-mono text-xs uppercase tracking-wider hover:bg-primary transition-colors" href="https://wa.me/525552081944?text=Hola,%20quiero%20ordenar%20este%20pedido%20de%20comanda">
+                Replicar esta comanda por WhatsApp
+              </a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. CÓMO PEDIR (Numbered Steps with Continuous Hairline Connector) -->
+<section class="py-20 md:py-28 border-b border-outline-variant" id="como-pedir">
+<div class="max-w-2xl mb-16">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-secondary block mb-3">
+          Dinámica de servicio
+        </span>
+<h2 class="font-headline-md text-headline-md text-primary tracking-tight">
+          Cómo pedir en Cantera
+        </h2>
+<p class="text-on-surface-variant mt-2 font-body-md text-body-md">
+          Atendemos en mostrador o coordinamos tu entrega para tenerla empacada en papel vegetal en el momento en que cruces la puerta.
+        </p>
+</div>
+<!-- Process Track -->
+<div class="relative">
+<!-- Desktop Horizontal Connector Rule -->
+<div class="hidden md:block absolute top-6 left-0 right-0 h-[1px] bg-outline-variant z-0"></div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
+<!-- Step 1 -->
+<div class="pt-0 md:pt-12 bg-background md:bg-transparent">
+<div class="w-12 h-12 bg-surface-container-low border border-outline flex items-center justify-center font-mono text-sm font-bold text-primary mb-6">
+              01
+            </div>
+<h3 class="font-headline-md text-2xl font-semibold text-primary mb-3">
+              Elige de la carta
+            </h3>
+<p class="text-on-surface-variant font-body-md text-body-md">
+              Revisa nuestras extracciones calibradas, la selección de lonches en pan de hogaza y la vitrina de fermentos y horneados del día.
+            </p>
+</div>
+<!-- Step 2 -->
+<div class="pt-0 md:pt-12 bg-background md:bg-transparent">
+<div class="w-12 h-12 bg-surface-container-low border border-outline flex items-center justify-center font-mono text-sm font-bold text-primary mb-6">
+              02
+            </div>
+<h3 class="font-headline-md text-2xl font-semibold text-primary mb-3">
+              Manda tu pedido por WhatsApp
+            </h3>
+<p class="text-on-surface-variant font-body-md text-body-md">
+              Escríbenos directamente indicando lo que vas a tomar, tu hora estimada de llegada o la dirección exacta dentro de la colonia.
+            </p>
+</div>
+<!-- Step 3 -->
+<div class="pt-0 md:pt-12 bg-background md:bg-transparent">
+<div class="w-12 h-12 bg-surface-container-low border border-outline flex items-center justify-center font-mono text-sm font-bold text-primary mb-6">
+              03
+            </div>
+<h3 class="font-headline-md text-2xl font-semibold text-primary mb-3">
+              Recoge en barra o espera en bici
+            </h3>
+<p class="text-on-surface-variant font-body-md text-body-md">
+              Tu bebida saldrá recién extraída para conservar crema y temperatura; el mensajero en bicicleta cubre Juárez, Roma Norte y Cuauhtémoc.
+            </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. MENÚ / CARTA DE ESPECIALIDAD (Editorial Multi-Column with Dot Leaders & Artisanal Vignettes) -->
+<section class="py-20 md:py-28 border-b border-outline-variant" id="carta">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+<div>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-secondary block mb-3">
+            Oferta de barra
+          </span>
+<h2 class="font-headline-md text-headline-md text-primary tracking-tight">
+            Carta de especialidad
+          </h2>
+</div>
+<div class="font-mono text-xs text-on-surface-variant">
+          Precios con impuestos incluidos · Moneda nacional ($ MXN)
+        </div>
+</div>
+<div class="space-y-20">
+<!-- Category 1: Bebidas de barra y café filtrado -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<div class="lg:col-span-4 space-y-4">
+<div class="w-32 h-32 rounded-full overflow-hidden border border-outline">
+<img alt="Filtrado manual de café" class="w-full h-full object-cover grayscale contrast-125" data-alt="Close up shot of specialty coffee pour over method in a ceramic dripper on a wooden counter with soft natural lighting and warm neutral earthy tones matching minimalist editorial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQja1-1XKSFnjG8_dt2EhkFbkUshmaLpSIlyQUaHhVbIEg0mPmhDNWRPr2lPajhnxP_8t1OWUYxDQfegQv11hdvWGD9pTiZO1qjQyuNRcdEhyhU_cNcVhy3dUSmoGRxr74bkROTTokpMnB6Av0s352NLO5StZIPxlbocqEW_r7_icCQuSLCZVm8ZGpNGqj6yQB6TfcnNXkjskiIptZlsS3ZP5oPJVm1cgi_RIqN4VLZaedZh9gAtDFEnMThiiVSCjT3aQPxtW1c4g"/>
+</div>
+<h3 class="font-headline-md text-3xl font-semibold text-primary">
+              Bebidas de barra y café filtrado
+            </h3>
+<p class="text-on-surface-variant text-sm">
+              Extracciones con agua declorada y re-mineralizada. Moliendas micrométricas en molinos Mahlkönig.
+            </p>
+</div>
+<div class="lg:col-span-8 space-y-6 pt-2">
+<!-- Item -->
+<div class="flex items-baseline justify-between gap-4">
+<div class="flex-1">
+<div class="flex items-baseline justify-between">
+<span class="font-semibold text-primary font-body-md">Espresso sencillo / doble</span>
+<span class="flex-1 mx-3 border-b border-dotted border-outline-variant"></span>
+<span class="font-mono text-sm text-primary font-medium">$45 / $55</span>
+</div>
+<p class="text-xs text-on-surface-variant mt-1">Lote Huatusco lavado. Notas a chocolate amargo y naranja confitada.</p>
+</div>
+</div>
+<!-- Item -->
+<div class="flex items-baseline justify-between gap-4">
+<div class="flex-1">
+<div class="flex items-baseline justify-between">
+<span class="font-semibold text-primary font-body-md">Cortado &amp; Flat White</span>
+<span class="flex-1 mx-3 border-b border-dotted border-outline-variant"></span>
+<span class="font-mono text-sm text-primary font-medium">$65 / $70</span>
+</div>
+<p class="text-xs text-on-surface-variant mt-1">Doble carga con leche de pastoreo emulsionada a 60°C.</p>
+</div>
+</div>
+<!-- Item -->
+<div class="flex items-baseline justify-between gap-4">
+<div class="flex-1">
+<div class="flex items-baseline justify-between">
+<span class="font-semibold text-primary font-body-md">Filtrado en V60 / Kalita Wave</span>
+<span class="flex-1 mx-3 border-b border-dotted border-outline-variant"></span>
+<span class="font-mono text-sm text-primary font-medium">$80</span>
+</div>
+<p class="text-xs text-on-surface-variant mt-1">Lote de temporada Oaxaca natural. Taza limpia, floral y dulce.</p>
+</div>
+</div>
+<!-- Item -->
+<div class="flex items-baseline justify-between gap-4">
+<div class="flex-1">
+<div class="flex items-baseline justify-between">
+<span class="font-semibold text-primary font-body-md">Cold Brew 16 horas</span>
+<span class="flex-1 mx-3 border-b border-dotted border-outline-variant"></span>
+<span class="font-mono text-sm text-primary font-medium">$75</span>
+</div>
+<p class="text-xs text-on-surface-variant mt-1">Maceración lenta en frío con grano de tueste medio, servido sobre cubo tallado a mano.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="h-[1px] bg-outline-variant"></div>
+<!-- Category 2: Lonches de pan artesanal y cocina fría -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<div class="lg:col-span-4 space-y-4">
+<div class="w-32 h-32 rounded-full overflow-hidden border border-outline">
+<img alt="Lonche artesanal de hogaza" class="w-full h-full object-cover grayscale contrast-125" data-alt="Artisanal sourdough bread sandwich on butcher paper inside a calm Mexican bakery with clean minimalist styling and natural paper texture tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSIF3-iCWrZo0NSL8JTwonHaJE8sLvbCNBAlxUFE17oeN8m9AQwWN4dh6cxlILBsSOS0q4LQVz0h8KDYNkGpvDLWca6b81X4qKQz_WRZmPMM0zQk-IrWCuFfHYJYajvBh6pLNM3HSMI2_NCAp4J-TBnkzSwhRLb3ty1fYZlJJWGnsEISPVzm0dHW2XU3zvdQkGyRqoi2wXIruZG7-XGTTdggOAtcbqMobtBoP3SuRrQWZL9e6qw-rjb8ymLYJMztk0IvrbiWsYl28"/>
+</div>
+<h3 class="font-headline-md text-3xl font-semibold text-primary">
+              Lonches de pan artesanal y cocina fría
+            </h3>
+<p class="text-on-surface-variant text-sm">
+              Hogazas de fermentación natural de 28 horas, masa madre de centeno y sal marina.
+            </p>
+</div>
+<div class="lg:col-span-8 space-y-6 pt-2">
+<!-- Item -->
+<div class="flex items-baseline justify-between gap-4">
+<div class="flex-1">
+<div class="flex items-baseline justify-between">
+<span class="font-semibold text-primary font-body-md">Lonche de Roast Beef al romero</span>
+<span class="flex-1 mx-3 border-b border-dotted border-outline-variant"></span>
+<span class="font-mono text-sm text-primary font-medium">$175</span>
+</div>
+<p class="text-xs text-on-surface-variant mt-1">Carne curada en casa, provolone fundido, mostaza dijon en grano y arúgula silvestre.</p>
+</div>
+</div>
+<!-- Item -->
+<div class="flex items-baseline justify-between gap-4">
+<div class="flex-1">
+<div class="flex items-baseline justify-between">
+<span class="font-semibold text-primary font-body-md">Emparedado de queso de rancho y calabaza asada</span>
+<span class="flex-1 mx-3 border-b border-dotted border-outline-variant"></span>
+<span class="font-mono text-sm text-primary font-medium">$150</span>
+</div>
+<p class="text-xs text-on-surface-variant mt-1">Queso madurado de Querétaro, compota de calabaza de castilla, mantequilla noisette.</p>
+</div>
+</div>
+<!-- Item -->
+<div class="flex items-baseline justify-between gap-4">
+<div class="flex-1">
+<div class="flex items-baseline justify-between">
+<span class="font-semibold text-primary font-body-md">Toast de trucha salmonada ahumada</span>
+<span class="flex-1 mx-3 border-b border-dotted border-outline-variant"></span>
+<span class="font-mono text-sm text-primary font-medium">$180</span>
+</div>
+<p class="text-xs text-on-surface-variant mt-1">Trucha de Michoacán, jocoque artesanal de leche bronca, alcaparras y eneldo fresco.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="h-[1px] bg-outline-variant"></div>
+<!-- Category 3: Repostería del día -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<div class="lg:col-span-4 space-y-4">
+<div class="w-32 h-32 rounded-full overflow-hidden border border-outline">
+<img alt="Repostería de horno diario" class="w-full h-full object-cover grayscale contrast-125" data-alt="Handcrafted fresh fig tartlet and rustic pastry on raw stone slab counter top with warm morning sunlight and neutral warm beige tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgL-5BSA5rFAok5T2bSEnhgv8eIo9a4n2oBtROpYeUcJFWc9IGRVQ-ZX6TnlcobwRNR9YgyVIuDcEZtHnOOg0C3GPbhq9RxX74TcMGrVYkK0mWauS40zebBzPoe4T9pCpfL9QaTnsskPfJBtl0BM6PQo9XyRXETO8_ijo0VYLzsrFlL4mFgvTJttqrVkGMkKVvr5k75Q3DjsAE1nXZ2SFz3ZS17p8oVjkN-TIQ5T4rD2zroM25t2Bqtd9BHY8iYUlOK2ezRlXnbHg"/>
+</div>
+<h3 class="font-headline-md text-3xl font-semibold text-primary">
+              Repostería del día
+            </h3>
+<p class="text-on-surface-variant text-sm">
+              Horneada cada mañana a las 6:30. Azúcar de caña no refinada y mantequilla de rancho.
+            </p>
+</div>
+<div class="lg:col-span-8 space-y-6 pt-2">
+<!-- Item -->
+<div class="flex items-baseline justify-between gap-4">
+<div class="flex-1">
+<div class="flex items-baseline justify-between">
+<span class="font-semibold text-primary font-body-md">Tartaleta de higo y crema de requesón</span>
+<span class="flex-1 mx-3 border-b border-dotted border-outline-variant"></span>
+<span class="font-mono text-sm text-primary font-medium">$75</span>
+</div>
+<p class="text-xs text-on-surface-variant mt-1">Masa quebrada de harina integral, higos morelos de temporada y miel de abeja melipona.</p>
+</div>
+</div>
+<!-- Item -->
+<div class="flex items-baseline justify-between gap-4">
+<div class="flex-1">
+<div class="flex items-baseline justify-between">
+<span class="font-semibold text-primary font-body-md">Panquequé de elote tierno y cardamomo</span>
+<span class="flex-1 mx-3 border-b border-dotted border-outline-variant"></span>
+<span class="font-mono text-sm text-primary font-medium">$60</span>
+</div>
+<p class="text-xs text-on-surface-variant mt-1">Maíz criollo desgranado a mano, sin harina refinada, perfumado con vaina entera.</p>
+</div>
+</div>
+<!-- Item -->
+<div class="flex items-baseline justify-between gap-4">
+<div class="flex-1">
+<div class="flex items-baseline justify-between">
+<span class="font-semibold text-primary font-body-md">Galleta de tahini, cacao soconusco y sal</span>
+<span class="flex-1 mx-3 border-b border-dotted border-outline-variant"></span>
+<span class="font-mono text-sm text-primary font-medium">$55</span>
+</div>
+<p class="text-xs text-on-surface-variant mt-1">Pasta densa de ajonjolí tostado, trozos de pasta pura de cacao chiapaneco.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. ASIDE NOTE PANEL ('Hoy en barra' / Especial de la semana) -->
+<section class="py-20 md:py-28 border-b border-outline-variant" id="hoy-en-barra">
+<div class="bg-surface-container-low border border-outline p-8 md:p-14">
+<div class="flex flex-col lg:flex-row justify-between items-start gap-8 border-b border-outline-variant pb-8">
+<div>
+<span class="font-mono text-xs uppercase tracking-widest text-secondary block mb-2">
+              Edición limitada · Semana 18
+            </span>
+<h2 class="font-headline-md text-3xl md:text-4xl text-primary font-semibold">
+              Hoy en barra: Productor invitado
+            </h2>
+</div>
+<div class="font-mono text-xs text-on-surface-variant text-left lg:text-right">
+            Disponibilidad en tolva:<br/>
+<span class="font-bold text-primary">14 bolsas de 250g y servicio filtrado</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10 pt-8">
+<div class="space-y-4">
+<h3 class="font-headline-md text-2xl font-semibold text-primary">
+              Pluma Hidalgo, Sierra Sur de Oaxaca
+            </h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">
+              Cultivado a 1,450 metros sobre el nivel del mar por la familia Mendoza. Variedad Típica y Bourbon con fermentación aeróbica de 24 horas y secado en camas africanas bajo sombra parcial.
+            </p>
+<div class="pt-2 font-mono text-xs text-secondary space-y-1">
+<p>Perfil de taza: Mandarina madura, piloncillo claro y retrogusto sedoso de flor de azahar.</p>
+<p>Molienda sugerida: Grano entero o molido para Chemex y prensa francesa.</p>
+</div>
+</div>
+<div class="border-t md:border-t-0 md:border-l border-outline-variant pt-6 md:pt-0 md:pl-10 space-y-4">
+<h3 class="font-headline-md text-2xl font-semibold text-primary">
+              Horneada especial de temporada
+            </h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">
+              Tartaleta de higo negro pochado en reducción de cascara de café y requesón fresco de cabra de Tequisquiapan. La masa contiene un 30% de harina de centeno integral molida en piedra.
+            </p>
+<div class="pt-4">
+<a class="inline-flex items-center gap-2 text-primary font-label-caps text-label-caps uppercase tracking-wider underline underline-offset-4 hover:text-outline transition-colors" href="https://wa.me/525552081944?text=Quiero%20apartar%20una%20bolsa%20de%20Pluma%20Hidalgo%20y%20una%20tartaleta" rel="noopener noreferrer" target="_blank">
+<span>Apartar bolsa de café por WhatsApp</span>
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="square"></path>
+</svg>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. RESEÑAS / TESTIMONIOS DE VECINOS (Editorial Pull-quotes with Fine Hairline Rules) -->
+<section class="py-20 md:py-28 border-b border-outline-variant" id="resenas">
+<div class="max-w-2xl mb-16">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-secondary block mb-3">
+          Reseñas de barrio
+        </span>
+<h2 class="font-headline-md text-headline-md text-primary tracking-tight">
+          La voz de la banqueta
+        </h2>
+<p class="text-on-surface-variant mt-2 font-body-md text-body-md">
+          Vecinos, arquitectos del corredor Reforma y colegas baristas que pasan cada mañana por la barra de Cantera.
+        </p>
+</div>
+<div class="space-y-12">
+<!-- Review 1 -->
+<div class="border-b border-outline-variant pb-10">
+<blockquote class="font-headline-md text-2xl md:text-3xl text-primary font-normal italic leading-snug">
+            “El único lugar en Havre donde el café no te quema la lengua ni te satura de jarabes. La calibración del espresso doble a las 8:00 AM es impecable y la hogaza de masa madre tiene el punto exacto de acidez.”
+          </blockquote>
+<div class="mt-4 flex items-center justify-between font-mono text-xs text-secondary">
+<span>Mauricio G. — Taller de arquitectura, Calle Londres</span>
+<span>Cliente diario desde 2023</span>
+</div>
+</div>
+<!-- Review 2 -->
+<div class="border-b border-outline-variant pb-10">
+<blockquote class="font-headline-md text-2xl md:text-3xl text-primary font-normal italic leading-snug">
+            “Hago el encargo por WhatsApp mientras salgo a caminar con mi perro y al llegar a la barra el lonche de roast beef ya está empacado en su papel encerado. La atención es tranquila, educada y sin poses.”
+          </blockquote>
+<div class="mt-4 flex items-center justify-between font-mono text-xs text-secondary">
+<span>Valeria Montes — Vecina de Calle Versalles</span>
+<span>Pedido habitual para llevar</span>
+</div>
+</div>
+<!-- Review 3 -->
+<div class="pb-2">
+<blockquote class="font-headline-md text-2xl md:text-3xl text-primary font-normal italic leading-snug">
+            “Se agradece profundamente la honestidad en el origen: te dicen con nombre y apellido qué productor cosechó el lote en Veracruz y el agua está medida para no enmascarar los tonos florales.”
+          </blockquote>
+<div class="mt-4 flex items-center justify-between font-mono text-xs text-secondary">
+<span>Enrique Alcocer — Tostador y catador Q-Grader</span>
+<span>Visita técnica semanal</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. PREGUNTAS FRECUENTES (FAQ Editorial 2-Column Layout, Fully Expanded) -->
+<section class="py-20 md:py-28 border-b border-outline-variant" id="preguntas">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<div class="lg:col-span-4">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-secondary block mb-3">
+            Dudas comunes
+          </span>
+<h2 class="font-headline-md text-headline-md text-primary tracking-tight">
+            Cuestiones de servicio
+          </h2>
+<p class="text-on-surface-variant mt-2 text-sm">
+            Detalles sobre nuestra operación diaria, envíos en bicicleta y granos de especialidad para casa.
+          </p>
+</div>
+<div class="lg:col-span-8 space-y-8">
+<div class="border-b border-outline-variant pb-6">
+<h3 class="font-headline-md text-xl font-semibold text-primary mb-2">
+              ¿Qué métodos de pago aceptan en barra y a distancia?
+            </h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">
+              Aceptamos pagos en efectivo, transferencias bancarias directas (SPEI) vía WhatsApp y cobro con tarjeta física o sin contacto (terminal Clip/Mercado Pago) tanto en barra como con el mensajero.
+            </p>
+</div>
+<div class="border-b border-outline-variant pb-6">
+<h3 class="font-headline-md text-xl font-semibold text-primary mb-2">
+              ¿Cuál es la cobertura del mensajero en bicicleta?
+            </h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">
+              Nuestro mensajero en bicicleta cubre sin costo adicional en pedidos superiores a $200 las colonias Juárez, Roma Norte y Cuauhtémoc. Los alimentos viajan aislados en contenedores térmicos para garantizar que el pan conserve su textura crujiente.
+            </p>
+</div>
+<div class="border-b border-outline-variant pb-6">
+<h3 class="font-headline-md text-xl font-semibold text-primary mb-2">
+              ¿Venden café en grano y lo pueden moler para mi cafetera?
+            </h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">
+              Sí. Tenemos bolsas selladas con válvula desgasificadora de 250g y 1kg de todos los orígenes en rotación. Podemos moler tu grano al momento ajustando la granulometría exacta para moka italiana, prensa francesa, V60, aeropress o espresso doméstico.
+            </p>
+</div>
+<div>
+<h3 class="font-headline-md text-xl font-semibold text-primary mb-2">
+              ¿Se puede trabajar con computadora en el local?
+            </h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">
+              Contamos con una barra de madera con conexiones eléctricas y red inalámbrica de alta velocidad. Priorizamos una atmósfera tranquila sin música estridente, ideal para lectura, conversaciones pausadas y trabajo individual.
+            </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 8. CLOSING CTA BAND (Solid, Grounding Band with High Contrast) -->
+<section id="cierre" class="my-20 md:my-28 bg-primary text-surface-container-lowest p-8 md:p-16">
+<div class="max-w-3xl space-y-6">
+<span class="font-mono text-xs uppercase tracking-widest text-outline-variant block">
+          Servicio activo de martes a domingo · 7:30 a 19:00
+        </span>
+<h2 class="font-headline-md text-3xl md:text-5xl font-semibold text-surface-container-lowest tracking-tight">
+          Tu pedido listo al llegar a la barra.
+        </h2>
+<p class="text-surface-variant font-body-md text-body-md max-w-xl">
+          Escríbenos unos minutos antes de salir de casa o de tu oficina. Tendremos el café recién tirado y el pan empacado con tu nombre.
+        </p>
+<div class="pt-4 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+<a class="inline-block bg-surface-container-lowest text-primary px-8 py-4 font-label-caps text-label-caps uppercase tracking-wider hover:bg-background transition-colors font-semibold" href="https://wa.me/525552081944?text=Hola,%20quisiera%20pedir%20para%20recoger%20en%20unos%20minutos" rel="noopener noreferrer" target="_blank">
+            Pedir por WhatsApp
+          </a>
+<span class="font-mono text-xs text-outline-variant">
+            Teléfono directo: +52 55 5208 1944
+          </span>
+</div>
+</div>
+</section>
+<!-- 9. CONTACTO & FOOTER (Asymmetric Blocks & Anchor Component) -->
+<section class="py-16 border-t border-outline-variant" id="contacto">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16 text-sm">
+<!-- Block 1: Location -->
+<div class="space-y-3">
+<h4 class="font-label-caps text-label-caps uppercase tracking-wider text-primary font-bold">Ubicación y paso</h4>
+<p class="text-on-surface-variant leading-relaxed">
+            Calle Havre 43<br/>
+            Colonia Juárez, Alcaldía Cuauhtémoc<br/>
+            06600 Ciudad de México, CDMX
+          </p>
+<p class="font-mono text-xs text-secondary pt-1">
+            A media cuadra de Insurgentes y Metrobús Hamburgo.
+          </p>
+</div>
+<!-- Block 2: Communication channels (No form inputs) -->
+<div class="space-y-3">
+<h4 class="font-label-caps text-label-caps uppercase tracking-wider text-primary font-bold">Comunicación directa</h4>
+<p class="text-on-surface-variant leading-relaxed">
+            WhatsApp pedidos: <a class="underline underline-offset-2 hover:text-primary" href="https://wa.me/525552081944">+52 55 5208 1944</a><br/>
+            Línea fija: <a class="underline underline-offset-2 hover:text-primary" href="tel:+525552081944">55 5208 1944</a><br/>
+            Correo de barra: <a class="underline underline-offset-2 hover:text-primary" href="mailto:barra@canteracafe.mx">barra@canteracafe.mx</a>
+</p>
+<p class="font-mono text-xs text-secondary pt-1">
+            Respuesta inmediata durante horas de servicio.
+          </p>
+</div>
+<!-- Block 3: Schedule -->
+<div class="space-y-3">
+<h4 class="font-label-caps text-label-caps uppercase tracking-wider text-primary font-bold">Horarios de molienda</h4>
+<p class="text-on-surface-variant leading-relaxed">
+            Martes a Viernes: 07:30 – 19:00<br/>
+            Sábado y Domingo: 08:30 – 18:00<br/>
+            Lunes: Cerrado por mantenimiento y tueste
+          </p>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER (Shared Anchor Component Exact Implementation) -->
+<footer id="pie" class="bg-surface-container-low border-t border-outline-variant">
+<div class="w-full max-w-[1200px] mx-auto px-gutter py-space-lg flex flex-col md:flex-row justify-between items-start gap-gutter">
+<div>
+<span class="font-headline-md text-headline-md font-semibold text-primary block mb-2">
+          Cantera Café &amp; Barra
+        </span>
+<p class="text-on-surface-variant text-xs max-w-sm">
+          © 2025 Cantera Café &amp; Barra. Colonia Juárez, Ciudad de México. Todos los derechos reservados.
+        </p>
+</div>
+<!-- Footer navigation exact string matches -->
+<div class="flex flex-wrap gap-y-2 gap-x-6 text-sm">
+<a class="text-on-surface-variant font-body-md text-body-md hover:text-primary underline underline-offset-4 transition-colors" href="#como-pedir">Cómo pedir</a>
+<a class="text-on-surface-variant font-body-md text-body-md hover:text-primary underline underline-offset-4 transition-colors" href="#carta">Carta de especialidad</a>
+<a class="text-on-surface-variant font-body-md text-body-md hover:text-primary underline underline-offset-4 transition-colors" href="#hoy-en-barra">Hoy en barra</a>
+<a class="text-on-surface-variant font-body-md text-body-md hover:text-primary underline underline-offset-4 transition-colors" href="#resenas">Reseñas de barrio</a>
+<a class="text-on-surface-variant font-body-md text-body-md hover:text-primary underline underline-offset-4 transition-colors" href="#contacto">Contacto y pedidos</a>
+</div>
+</div>
+</footer>
+</body></html>

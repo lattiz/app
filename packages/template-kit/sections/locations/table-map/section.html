@@ -1,0 +1,59 @@
+<section id="sucursales" data-lz-slot="locations" data-lz-variant="table-map" class="lz-section lz-locations-table-map">
+  <span id="ubicacion" class="lz-locations-table-map__anchor" aria-hidden="true"></span>
+  <div class="lz-container">
+    <div class="lz-locations-table-map__head">
+      <div class="lz-locations-table-map__heading">
+        <p class="lz-locations-table-map__kicker" data-lz-if="kicker" data-lz-key="kicker"></p>
+        <h2 class="lz-title lz-locations-table-map__title" data-lz-key="title"></h2>
+      </div>
+      <p class="lz-locations-table-map__plan-label" data-lz-if="planLabel" data-lz-key="planLabel"></p>
+    </div>
+    <div class="lz-locations-table-map__body" data-lz-each="branches">
+      <div class="lz-locations-table-map__plan">
+        <div class="lz-locations-table-map__drawing">
+          <svg viewBox="0 0 400 240" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid meet"><rect x="8" y="8" width="384" height="224"/><path d="M8 120h120M128 8v224" opacity=".6"/><rect x="150" y="26" width="150" height="26" rx="2"/><circle cx="165" cy="70" r="5"/><circle cx="190" cy="70" r="5"/><circle cx="215" cy="70" r="5"/><circle cx="240" cy="70" r="5"/><circle cx="265" cy="70" r="5"/><rect x="316" y="26" width="60" height="70" rx="2"/><path d="M324 42h44M324 56h44M324 70h44"/><rect x="154" y="120" width="52" height="34" rx="2"/><rect x="224" y="120" width="52" height="34" rx="2"/><rect x="294" y="120" width="52" height="34" rx="2"/><rect x="154" y="176" width="192" height="30" rx="2"/><circle cx="48" cy="48" r="16"/><circle cx="92" cy="48" r="16"/><circle cx="70" cy="170" r="16" stroke-dasharray="4 3"/><path d="M8 120h120" stroke-dasharray="4 3"/></svg>
+        </div>
+        <ol class="lz-locations-table-map__zones">
+          <li class="lz-locations-table-map__zone-item" data-lz-each="zones">
+            <strong data-lz-key="label"></strong>
+            <span data-lz-key="text"></span>
+          </li>
+        </ol>
+      </div>
+      <div class="lz-locations-table-map__info">
+        <div class="lz-locations-table-map__card">
+          <h3 class="lz-locations-table-map__label" data-lz-key="name"></h3>
+          <p class="lz-locations-table-map__address" data-lz-key="address"></p>
+          <p class="lz-locations-table-map__note" data-lz-if="placeNote" data-lz-key="placeNote"></p>
+          <a target="_blank" rel="noopener noreferrer" class="lz-locations-table-map__link" data-lz-attr-href="directionsUrl" data-lz-key="directionsLabel"></a>
+        </div>
+        <div class="lz-locations-table-map__card">
+          <h3 class="lz-locations-table-map__label" data-lz-key="hoursLabel"></h3>
+          <ul class="lz-locations-table-map__rows">
+            <li class="lz-locations-table-map__row" data-lz-each="schedule">
+              <span data-lz-key="label"></span>
+              <span class="lz-locations-table-map__hours">
+                <em class="lz-locations-table-map__tag" data-lz-if="tag" data-lz-key="tag"></em>
+                <strong data-lz-key="value"></strong>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <ul class="lz-locations-table-map__channels">
+          <li class="lz-locations-table-map__channel">
+            <span><strong data-lz-key="whatsappLabel"></strong><span data-lz-key="whatsappValue"></span></span>
+            <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-locations-table-map__link" data-lz-key="whatsappCta"></a>
+          </li>
+          <li class="lz-locations-table-map__channel">
+            <span><strong data-lz-key="callLabel"></strong><span>{{phone}}</span></span>
+            <a href="{{phoneUrl}}" class="lz-locations-table-map__link" data-lz-key="callCta"></a>
+          </li>
+          <li class="lz-locations-table-map__channel">
+            <span><strong data-lz-key="emailLabel"></strong><span>{{email}}</span></span>
+            <a href="{{emailUrl}}" class="lz-locations-table-map__link" data-lz-key="emailCta"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

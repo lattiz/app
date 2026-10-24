@@ -1,0 +1,19 @@
+<section id="nosotros" data-lz-slot="about" data-lz-variant="coal-log" class="lz-section lz-about-coal-log">
+  <div class="lz-container">
+    <div class="lz-about-coal-log__head">
+      <div class="lz-about-coal-log__heading">
+        <p class="lz-about-coal-log__kicker" data-lz-if="kicker" data-lz-key="kicker"></p>
+        <h2 class="lz-title lz-about-coal-log__title" data-lz-key="title"></h2>
+      </div>
+      <p class="lz-about-coal-log__summary" data-lz-key="summary"></p>
+    </div>
+    <ol class="lz-about-coal-log__stages">
+      <li class="lz-about-coal-log__stage" data-lz-each="stages">
+        <p class="lz-about-coal-log__time" data-lz-key="time"></p>
+        <h3 class="lz-about-coal-log__stage-title" data-lz-key="title"></h3>
+        <p class="lz-about-coal-log__stage-text" data-lz-key="text"></p>
+        <p class="lz-about-coal-log__stage-note" data-lz-if="note" data-lz-key="note"></p>
+      </li>
+    </ol>
+  </div>
+</section>

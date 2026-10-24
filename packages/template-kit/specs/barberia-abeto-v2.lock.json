@@ -1,0 +1,61 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/barberia-abeto-v2.spec.json",
+  "catalog": "extended",
+  "catalogVersion": 2,
+  "tiers": {
+    "barberia-abeto-v2": {
+      "tier": "pro",
+      "palette": "custom",
+      "fontPair": "bodoni-moda+karla",
+      "shape": "filete",
+      "archetype": "street-luxe",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "index-panel" },
+        { "role": "marquee", "slot": "marquee", "variant": "ticker" },
+        { "role": "about", "slot": "about", "variant": "text-image-offset" },
+        { "role": "catalog", "slot": "services", "variant": "index-table" },
+        { "role": "proof", "slot": "gallery", "variant": "strip" },
+        { "role": "team", "slot": "team", "variant": "index-portraits" },
+        {
+          "role": "testimonials",
+          "slot": "testimonials",
+          "variant": "hairline-trio"
+        },
+        { "role": "faq", "slot": "faq", "variant": "index-answers" },
+        { "role": "contact", "slot": "locations", "variant": "split-panel" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "signature-bar" }
+      ],
+      "renews": "barberia-abeto-v1"
+    },
+    "barberia-base-abeto-v2": {
+      "tier": "basico",
+      "palette": "custom",
+      "fontPair": "libre-baskerville+source-sans-3",
+      "shape": "sutil",
+      "archetype": "essential",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "centered-arch" },
+        { "role": "about", "slot": "about", "variant": "brief" },
+        { "role": "catalog", "slot": "services", "variant": "index-table" },
+        { "role": "faq", "slot": "faq", "variant": "index-answers" },
+        { "role": "contact", "slot": "locations", "variant": "single" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "columns" }
+      ],
+      "renews": "barberia-base-abeto-v1"
+    }
+  }
+}

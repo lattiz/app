@@ -1,0 +1,24 @@
+<section id="servicios" data-lz-slot="services" data-lz-variant="index-table" class="lz-section lz-services-index-table">
+  <div class="lz-container">
+    <div class="lz-services-index-table__head">
+      <p class="lz-services-index-table__kicker" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-services-index-table__title" data-lz-key="title"></h2>
+      <p class="lz-services-index-table__intro" data-lz-if="intro" data-lz-key="intro"></p>
+    </div>
+    <ol class="lz-services-index-table__list">
+      <li class="lz-services-index-table__row" data-lz-each="prices">
+        <span class="lz-services-index-table__num" aria-hidden="true"></span>
+        <div class="lz-services-index-table__main">
+          <span class="lz-services-index-table__tag" data-lz-if="tag" data-lz-key="tag"></span>
+          <h3 class="lz-services-index-table__name" data-lz-key="name"></h3>
+        </div>
+        <p class="lz-services-index-table__desc" data-lz-key="description"></p>
+        <p class="lz-services-index-table__price">
+          <span class="lz-services-index-table__duration" data-lz-if="duration" data-lz-key="duration"></span>
+          <strong data-lz-key="price"></strong>
+        </p>
+      </li>
+    </ol>
+    <a data-lz-if="cta" href="{{whatsappUrl:Hola, quiero reservar una cita}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary lz-services-index-table__cta" data-lz-key="cta"></a>
+  </div>
+</section>

@@ -1,0 +1,18 @@
+.lz-faq-rule-table{padding:var(--lz-section-pad) 0}
+.lz-faq-rule-table__head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:calc(16px * var(--lz-space)) calc(32px * var(--lz-space));padding-bottom:calc(20px * var(--lz-space));margin-bottom:calc(clamp(20px,3vw,40px) * var(--lz-space));border-bottom:var(--lz-border-width) solid var(--lz-color-line)}
+.lz-faq-rule-table__heading{display:grid;gap:calc(10px * var(--lz-space))}
+.lz-faq-rule-table__kicker,.lz-faq-rule-table__cols,.lz-faq-rule-table__topic,.lz-faq-rule-table__intro{margin:0;color:var(--lz-color-muted);font-family:var(--lz-font-mono,var(--lz-font-body));font-size:calc(14px * var(--lz-text-scale));letter-spacing:0.1em;text-transform:uppercase}
+.lz-faq-rule-table__title{margin:0;font-size:calc(clamp(32px,4.4vw,64px) * var(--lz-display-scale));letter-spacing:var(--lz-display-tracking,0.01em)}
+.lz-faq-rule-table__table{border:var(--lz-border-width) solid var(--lz-color-line);background:var(--lz-color-surface)}
+.lz-faq-rule-table__cols,.lz-faq-rule-table__row{display:grid;grid-template-columns:minmax(96px,1fr) minmax(0,3fr) minmax(0,4fr);gap:calc(20px * var(--lz-space));padding:calc(16px * var(--lz-space)) calc(clamp(14px,2vw,24px) * var(--lz-space))}
+.lz-faq-rule-table__cols{background:var(--lz-color-surface-2);color:var(--lz-color-text)}
+.lz-faq-rule-table__row{align-items:baseline;border-top:var(--lz-border-width) solid var(--lz-color-line)}
+.lz-faq-rule-table__summary{display:contents;list-style:none}
+.lz-faq-rule-table__summary::-webkit-details-marker{display:none}
+.lz-faq-rule-table__topic{color:var(--lz-color-text);font-weight:700}
+.lz-faq-rule-table__question{font-weight:700;line-height:1.35}
+.lz-faq-rule-table__answer{margin:0;color:var(--lz-color-muted);font-size:calc(15px * var(--lz-text-scale));line-height:1.55}
+.lz-faq-rule-table__cta{margin-top:calc(clamp(20px,3vw,32px) * var(--lz-space))}
+@media (max-width:992px){.lz-faq-rule-table__cols{display:none}
+.lz-faq-rule-table__row{grid-template-columns:minmax(0,1fr);gap:calc(6px * var(--lz-space))}
+.lz-faq-rule-table__answer{margin-top:calc(4px * var(--lz-space))}}

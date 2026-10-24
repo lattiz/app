@@ -1,0 +1,49 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-ceniza-v2.spec.json (spec 38d821242b7c, file c138812f7cec). Do not edit: use the spec, or freeze.",
+  "name": "restaurante-ceniza-v2",
+  "label": "Ceniza Grill & Bar · Pro",
+  "tier": "pro",
+  "fontPair": "anton+space-grotesk",
+  "colors": {
+    "bg": "#15110E",
+    "surface": "#201C19",
+    "surface-2": "#2B2724",
+    "text": "#ECECEC",
+    "muted": "#8B8988",
+    "accent": "#D2C6BE",
+    "on-accent": "#15110E",
+    "accent-text": "#D2C6BE",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#15110E",
+    "on-overlay": "#ECECEC",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#15110E"
+  },
+  "fonts": {
+    "display": "'Anton', sans-serif",
+    "serif": "'Instrument Serif', serif",
+    "body": "'Space Grotesk', sans-serif",
+    "googleFonts": "family=Anton&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;700",
+    "displayTransform": "uppercase",
+    "displayLeading": "0.9",
+    "displayWeight": "700",
+    "accentStyle": "italic",
+    "accentTransform": "lowercase"
+  },
+  "shape": {
+    "radiusCard": "0px",
+    "radiusPill": "0px",
+    "border": "1px",
+    "shadow": "none"
+  },
+  "density": "airy",
+  "photoTreatment": "warm",
+  "placeholder": "grain",
+  "accentWords": "color",
+  "container": "1200px",
+  "effects": {
+    "mapFilter": "grayscale(1) invert(.9) contrast(.9) brightness(.8)",
+    "heroImageFilter": "brightness(.45) saturate(.9)"
+  }
+}

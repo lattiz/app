@@ -1,0 +1,49 @@
+{
+  "$lattiz": "GENERATED from specs/barberia-abeto-v2.spec.json (spec 6e61ec7e3369, file ea9aa8ffbfa9). Do not edit: use the spec, or freeze.",
+  "name": "barberia-abeto-v2",
+  "label": "Abeto Barbería · Pro",
+  "tier": "pro",
+  "fontPair": "bodoni-moda+karla",
+  "colors": {
+    "bg": "#314B3E",
+    "surface": "#3B5347",
+    "surface-2": "#445C50",
+    "text": "#F1F2EE",
+    "muted": "#C1C8C2",
+    "accent": "#C4CACF",
+    "on-accent": "#314B3E",
+    "accent-text": "#C4CACF",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#314B3E",
+    "on-overlay": "#F1F2EE",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#314B3E"
+  },
+  "fonts": {
+    "display": "'Bodoni Moda', serif",
+    "serif": "'Bodoni Moda', serif",
+    "body": "'Karla', sans-serif",
+    "googleFonts": "family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,600;1,6..96,500&family=Karla:wght@400;500;600",
+    "displayTransform": "none",
+    "displayLeading": "1.02",
+    "displayWeight": "500",
+    "accentStyle": "italic",
+    "accentTransform": "none"
+  },
+  "shape": {
+    "radiusCard": "0px",
+    "radiusPill": "0px",
+    "border": "1px",
+    "shadow": "none"
+  },
+  "density": "airy",
+  "photoTreatment": "none",
+  "placeholder": "dots",
+  "accentWords": "color",
+  "container": "1200px",
+  "effects": {
+    "mapFilter": "grayscale(1) invert(.9) contrast(.9) brightness(.8)",
+    "heroImageFilter": "brightness(.45) saturate(.9)"
+  }
+}

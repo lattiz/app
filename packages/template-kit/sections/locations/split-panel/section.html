@@ -1,0 +1,36 @@
+<section id="sucursales" data-lz-slot="locations" data-lz-variant="split-panel" class="lz-section lz-locations-split-panel">
+  <div class="lz-container">
+    <div class="lz-locations-split-panel__head">
+      <p class="lz-locations-split-panel__kicker" data-lz-if="kicker" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-locations-split-panel__title" data-lz-key="title"></h2>
+      <p class="lz-locations-split-panel__text" data-lz-key="contactText"></p>
+    </div>
+    <div class="lz-locations-split-panel__panel" data-lz-each="branches">
+      <div class="lz-locations-split-panel__channels">
+        <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary lz-locations-split-panel__whatsapp" data-lz-key="whatsappCta"></a>
+        <p class="lz-locations-split-panel__line">
+          <span class="lz-locations-split-panel__label" data-lz-key="callLabel"></span>
+          <a href="{{phoneUrl}}">{{phone}}</a>
+        </p>
+        <p class="lz-locations-split-panel__line">
+          <a href="{{emailUrl}}">{{email}}</a>
+        </p>
+        <div class="lz-locations-split-panel__tile">
+          <h3 class="lz-locations-split-panel__label" data-lz-key="name"></h3>
+          <p class="lz-locations-split-panel__value" data-lz-key="address"></p>
+        </div>
+        <div class="lz-locations-split-panel__tile">
+          <p class="lz-locations-split-panel__label" data-lz-if="hoursLabel" data-lz-key="hoursLabel"></p>
+          <p class="lz-locations-split-panel__value" data-lz-key="hours"></p>
+        </div>
+      </div>
+      <div class="lz-locations-split-panel__map">
+        <div class="lz-locations-split-panel__plan">
+          <svg viewBox="0 0 400 260" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid slice"><path d="M40 0v260M120 0v260M200 0v260M280 0v260M360 0v260M0 50h400M0 130h400M0 210h400" opacity=".35"/><path d="M20 230 380 40M70 20l250 230" stroke-width="1.6"/><rect x="180" y="90" width="40" height="40"/></svg>
+          <span class="lz-locations-split-panel__pin" data-lz-key="name"></span>
+        </div>
+        <a target="_blank" rel="noopener noreferrer" class="lz-locations-split-panel__directions" data-lz-attr-href="directionsUrl" data-lz-key="directionsLabel"></a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,66 @@
+{
+  "sucursales": {
+    "ref": "sucursales",
+    "slot": "locations",
+    "theme": "restaurante-casa-comal-v1",
+    "measured": [
+      {
+        "variant": "locations/split-panel",
+        "structure": 0.452,
+        "heightRatio": 0.89,
+        "match": false
+      },
+      {
+        "variant": "locations/booking-panel",
+        "structure": 0.508,
+        "heightRatio": 0.59,
+        "match": false
+      },
+      {
+        "variant": "locations/single-card",
+        "structure": 0.726,
+        "heightRatio": 0.38,
+        "match": false
+      },
+      {
+        "variant": "locations/cards",
+        "structure": 0.741,
+        "heightRatio": 0.57,
+        "match": false
+      },
+      {
+        "variant": "locations/map-link",
+        "structure": 0.744,
+        "heightRatio": 0.5,
+        "match": false
+      },
+      {
+        "variant": "locations/single",
+        "structure": 0.75,
+        "heightRatio": 0.55,
+        "match": false
+      },
+      {
+        "variant": "locations/arch-visit",
+        "structure": 0.786,
+        "heightRatio": 0.61,
+        "match": false
+      },
+      {
+        "variant": "locations/with-contact",
+        "structure": 0.841,
+        "heightRatio": 0.75,
+        "match": false
+      }
+    ],
+    "best": "locations/split-panel",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  }
+}

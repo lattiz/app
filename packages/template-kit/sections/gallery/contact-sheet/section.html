@@ -1,0 +1,26 @@
+<section id="galeria" data-lz-slot="gallery" data-lz-variant="contact-sheet" class="lz-section lz-gallery-contact-sheet">
+  <div class="lz-container">
+    <div class="lz-gallery-contact-sheet__head">
+      <div class="lz-gallery-contact-sheet__heading">
+        <p class="lz-gallery-contact-sheet__kicker" data-lz-key="kicker"></p>
+        <h2 class="lz-title lz-gallery-contact-sheet__title" data-lz-key="title"></h2>
+      </div>
+      <ul class="lz-gallery-contact-sheet__meta" data-lz-if="meta">
+        <li data-lz-each="meta" data-lz-key="."></li>
+      </ul>
+    </div>
+    <div class="lz-gallery-contact-sheet__sheet">
+      <p class="lz-gallery-contact-sheet__strip" data-lz-if="sheetLabel">
+        <span data-lz-key="sheetLabel"></span>
+        <span data-lz-if="sheetNote" data-lz-key="sheetNote"></span>
+      </p>
+      <div class="lz-gallery-contact-sheet__grid">
+        <figure class="lz-gallery-contact-sheet__frame" data-lz-each="items">
+          <p class="lz-gallery-contact-sheet__no" aria-hidden="true"></p>
+          <img loading="lazy" width="1200" height="1500" class="lz-gallery-contact-sheet__image" data-lz-attr-src="image" data-lz-attr-alt="alt">
+          <figcaption class="lz-gallery-contact-sheet__caption" data-lz-key="caption"></figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>

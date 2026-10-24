@@ -30,6 +30,34 @@
         }
       }
     },
+    "barberia-abeto-v2": {
+      "manifest": "templates/barberia-abeto-v2.ts",
+      "hashes": {
+        "project": "c1a52054ac49573e",
+        "html": "d3592356a2832752",
+        "css": "d9a902c998d5b9ab",
+        "rootCss": "5e05adb8144a4d28",
+        "theme": "b5cefe77c0ea0325",
+        "pack": "8316412cf659c08b",
+        "meta": "04cbd010af2feb27",
+        "assets": "fab3ba9e38fa099d"
+      },
+      "assets": 14,
+      "size": {
+        "css": {
+          "raw": 36652,
+          "gzip": 6061
+        },
+        "html": {
+          "raw": 26789,
+          "gzip": 6118
+        },
+        "index": {
+          "raw": 63457,
+          "gzip": 12095
+        }
+      }
+    },
     "barberia-abeto-v3": {
       "manifest": "templates/barberia-abeto-v3.ts",
       "hashes": {
@@ -1178,6 +1206,34 @@
         }
       }
     },
+    "restaurante-ceniza-v2": {
+      "manifest": "templates/restaurante-ceniza-v2.ts",
+      "hashes": {
+        "project": "be3fec7f0272558a",
+        "html": "7a348192f582fafb",
+        "css": "f152df40189e1f27",
+        "rootCss": "707741835e9013fd",
+        "theme": "8c062ddad7bd44b1",
+        "pack": "f545afee63f02f31",
+        "meta": "51bea5d825039d70",
+        "assets": "4e819ccd9f0e1560"
+      },
+      "assets": 9,
+      "size": {
+        "css": {
+          "raw": 42504,
+          "gzip": 6227
+        },
+        "html": {
+          "raw": 28942,
+          "gzip": 6538
+        },
+        "index": {
+          "raw": 71462,
+          "gzip": 12685
+        }
+      }
+    },
     "restaurante-claveria-verde-v2": {
       "manifest": "templates/restaurante-claveria-verde-v2.ts",
       "hashes": {
@@ -1262,6 +1318,34 @@
         }
       }
     },
+    "restaurante-hoja-y-barro-v2": {
+      "manifest": "templates/restaurante-hoja-y-barro-v2.ts",
+      "hashes": {
+        "project": "f5404498da873c0d",
+        "html": "399f9859ea951d56",
+        "css": "a6763e8090006b02",
+        "rootCss": "cfedbf465bf411fe",
+        "theme": "df64b5bda93028c9",
+        "pack": "94ad6897aa8d226a",
+        "meta": "af9383eff8aa7618",
+        "assets": "abc5d693a85e21a1"
+      },
+      "assets": 16,
+      "size": {
+        "css": {
+          "raw": 39511,
+          "gzip": 6511
+        },
+        "html": {
+          "raw": 29221,
+          "gzip": 6608
+        },
+        "index": {
+          "raw": 68748,
+          "gzip": 13043
+        }
+      }
+    },
     "restaurante-la-nota-azul-v1": {
       "manifest": "templates/restaurante-la-nota-azul-v1.ts",
       "hashes": {
@@ -1343,6 +1427,34 @@
         "index": {
           "raw": 62257,
           "gzip": 13298
+        }
+      }
+    },
+    "restaurante-margen-v2": {
+      "manifest": "templates/restaurante-margen-v2.ts",
+      "hashes": {
+        "project": "969fa1854101cee8",
+        "html": "de506e00d62248d8",
+        "css": "9ccefe3116379c56",
+        "rootCss": "a1c90dff52604651",
+        "theme": "d6fdb0025f8ebf5d",
+        "pack": "c6084ab6f98abf16",
+        "meta": "6d15cb23a78bdb59",
+        "assets": "5d677c15e860dde2"
+      },
+      "assets": 13,
+      "size": {
+        "css": {
+          "raw": 41759,
+          "gzip": 6882
+        },
+        "html": {
+          "raw": 32231,
+          "gzip": 7831
+        },
+        "index": {
+          "raw": 74006,
+          "gzip": 14635
         }
       }
     },
@@ -1488,6 +1600,37 @@
     }
   },
   "specs": {
+    "specs/barberia-abeto-v2.spec.json": {
+      "ids": [],
+      "specHash": "6e61ec7e3369",
+      "files": {},
+      "choices": {
+        "error": [
+          "brand.palette.custom: el acento de la paleta propia está a < 30° de otra plantilla de Barbería",
+          "brand.palette.custom: el acento de la paleta propia está a < 30° de otra plantilla de Barbería"
+        ]
+      },
+      "peers": [
+        "barberia-abeto-v1",
+        "barberia-abeto-v2",
+        "barberia-abeto-v3",
+        "barberia-base-abeto-v1",
+        "barberia-base-abeto-v2",
+        "barberia-base-abeto-v3",
+        "barberia-base-claro-v1",
+        "barberia-base-grafito-estudio-v1",
+        "barberia-base-la-insignia-v1",
+        "barberia-base-oscuro-v1",
+        "barberia-base-solar-v1",
+        "barberia-concreto-v1",
+        "barberia-gabinete-pinar-v1",
+        "barberia-grafito-estudio-v1",
+        "barberia-la-insignia-v1",
+        "barberia-norte-v1",
+        "barberia-oxido-v1"
+      ],
+      "locked": true
+    },
     "specs/barberia-abeto-v3.spec.json": {
       "ids": [
         "barberia-abeto-v3",
@@ -1996,6 +2139,55 @@
         "restaurante-hoja-y-barro-v1"
       ]
     },
+    "specs/restaurante-ceniza-v2.spec.json": {
+      "ids": [
+        "restaurante-ceniza-v2",
+        "restaurante-base-ceniza-v2"
+      ],
+      "specHash": "38d821242b7c",
+      "files": {
+        "templates/restaurante-ceniza-v2.ts": "a253177f519a",
+        "themes/restaurante-ceniza-v2.json": "c138812f7cec",
+        "demo-profiles/restaurante-ceniza-v2.json": "155639a6768e",
+        "templates/restaurante-base-ceniza-v2.ts": "4393684013af",
+        "themes/restaurante-base-ceniza-v2.json": "7fb44431f0de",
+        "demo-profiles/restaurante-base-ceniza-v2.json": "155639a6768e",
+        "content/restaurante.ceniza-v2.es-MX.ts": "f545afee63f0"
+      },
+      "choices": {
+        "restaurante-ceniza-v2": [],
+        "restaurante-base-ceniza-v2": []
+      },
+      "peers": [
+        "restaurante-base-casa-comal-v1",
+        "restaurante-base-casa-rosa-mantequilla-v1",
+        "restaurante-base-claveria-verde-v1",
+        "restaurante-base-claveria-verde-v2",
+        "restaurante-base-fresca-nube-v1",
+        "restaurante-base-hoja-y-barro-v1",
+        "restaurante-base-hoja-y-barro-v2",
+        "restaurante-base-la-nota-azul-v1",
+        "restaurante-base-la-nota-azul-v2",
+        "restaurante-base-margen-v1",
+        "restaurante-base-margen-v2",
+        "restaurante-base-trigo-y-brasa-v1",
+        "restaurante-base-trigo-y-brasa-v2",
+        "restaurante-casa-comal-v1",
+        "restaurante-casa-rosa-mantequilla-v1",
+        "restaurante-claveria-verde-v1",
+        "restaurante-claveria-verde-v2",
+        "restaurante-fresca-nube-v1",
+        "restaurante-hoja-y-barro-v1",
+        "restaurante-hoja-y-barro-v2",
+        "restaurante-la-nota-azul-v1",
+        "restaurante-la-nota-azul-v2",
+        "restaurante-margen-v1",
+        "restaurante-margen-v2",
+        "restaurante-trigo-y-brasa-v1",
+        "restaurante-trigo-y-brasa-v2"
+      ],
+      "locked": true
+    },
     "specs/restaurante-ceniza.spec.json": {
       "ids": [
         "restaurante-ceniza-v1",
@@ -2106,6 +2298,55 @@
         "restaurante-ceniza-v1",
         "restaurante-hoja-y-barro-v1",
         "restaurante-margen-v1"
+      ],
+      "locked": true
+    },
+    "specs/restaurante-hoja-y-barro-v2.spec.json": {
+      "ids": [
+        "restaurante-hoja-y-barro-v2",
+        "restaurante-base-hoja-y-barro-v2"
+      ],
+      "specHash": "86e027853e52",
+      "files": {
+        "templates/restaurante-hoja-y-barro-v2.ts": "00559aa55a8e",
+        "themes/restaurante-hoja-y-barro-v2.json": "455f8de5963c",
+        "demo-profiles/restaurante-hoja-y-barro-v2.json": "9d5047d65133",
+        "templates/restaurante-base-hoja-y-barro-v2.ts": "acb89a3b839b",
+        "themes/restaurante-base-hoja-y-barro-v2.json": "e7f41cd63670",
+        "demo-profiles/restaurante-base-hoja-y-barro-v2.json": "9d5047d65133",
+        "content/restaurante.hoja-y-barro-v2.es-MX.ts": "94ad6897aa8d"
+      },
+      "choices": {
+        "restaurante-hoja-y-barro-v2": [],
+        "restaurante-base-hoja-y-barro-v2": []
+      },
+      "peers": [
+        "restaurante-base-casa-comal-v1",
+        "restaurante-base-casa-rosa-mantequilla-v1",
+        "restaurante-base-ceniza-v1",
+        "restaurante-base-ceniza-v2",
+        "restaurante-base-claveria-verde-v1",
+        "restaurante-base-claveria-verde-v2",
+        "restaurante-base-fresca-nube-v1",
+        "restaurante-base-la-nota-azul-v1",
+        "restaurante-base-la-nota-azul-v2",
+        "restaurante-base-margen-v1",
+        "restaurante-base-margen-v2",
+        "restaurante-base-trigo-y-brasa-v1",
+        "restaurante-base-trigo-y-brasa-v2",
+        "restaurante-casa-comal-v1",
+        "restaurante-casa-rosa-mantequilla-v1",
+        "restaurante-ceniza-v1",
+        "restaurante-ceniza-v2",
+        "restaurante-claveria-verde-v1",
+        "restaurante-claveria-verde-v2",
+        "restaurante-fresca-nube-v1",
+        "restaurante-la-nota-azul-v1",
+        "restaurante-la-nota-azul-v2",
+        "restaurante-margen-v1",
+        "restaurante-margen-v2",
+        "restaurante-trigo-y-brasa-v1",
+        "restaurante-trigo-y-brasa-v2"
       ],
       "locked": true
     },
@@ -2222,6 +2463,55 @@
         "restaurante-fresca-nube-v1",
         "restaurante-hoja-y-barro-v1",
         "restaurante-margen-v1"
+      ],
+      "locked": true
+    },
+    "specs/restaurante-margen-v2.spec.json": {
+      "ids": [
+        "restaurante-margen-v2",
+        "restaurante-base-margen-v2"
+      ],
+      "specHash": "880697027b0b",
+      "files": {
+        "templates/restaurante-margen-v2.ts": "897417ff15fc",
+        "themes/restaurante-margen-v2.json": "34bc6cd18ce1",
+        "demo-profiles/restaurante-margen-v2.json": "0d8d88691b15",
+        "templates/restaurante-base-margen-v2.ts": "8d7ea8cb6c21",
+        "themes/restaurante-base-margen-v2.json": "b8b797b48794",
+        "demo-profiles/restaurante-base-margen-v2.json": "0d8d88691b15",
+        "content/restaurante.margen-v2.es-MX.ts": "c6084ab6f98a"
+      },
+      "choices": {
+        "restaurante-margen-v2": [],
+        "restaurante-base-margen-v2": []
+      },
+      "peers": [
+        "restaurante-base-casa-comal-v1",
+        "restaurante-base-casa-rosa-mantequilla-v1",
+        "restaurante-base-ceniza-v1",
+        "restaurante-base-ceniza-v2",
+        "restaurante-base-claveria-verde-v1",
+        "restaurante-base-claveria-verde-v2",
+        "restaurante-base-fresca-nube-v1",
+        "restaurante-base-hoja-y-barro-v1",
+        "restaurante-base-hoja-y-barro-v2",
+        "restaurante-base-la-nota-azul-v1",
+        "restaurante-base-la-nota-azul-v2",
+        "restaurante-base-trigo-y-brasa-v1",
+        "restaurante-base-trigo-y-brasa-v2",
+        "restaurante-casa-comal-v1",
+        "restaurante-casa-rosa-mantequilla-v1",
+        "restaurante-ceniza-v1",
+        "restaurante-ceniza-v2",
+        "restaurante-claveria-verde-v1",
+        "restaurante-claveria-verde-v2",
+        "restaurante-fresca-nube-v1",
+        "restaurante-hoja-y-barro-v1",
+        "restaurante-hoja-y-barro-v2",
+        "restaurante-la-nota-azul-v1",
+        "restaurante-la-nota-azul-v2",
+        "restaurante-trigo-y-brasa-v1",
+        "restaurante-trigo-y-brasa-v2"
       ],
       "locked": true
     },

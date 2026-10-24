@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="es-MX" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ceniza Grill & Bar — CDMX Nocturno</title>
+  <!-- Google Fonts: Anton (display) & Space Grotesk (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ground: '#15110E',
+            'ground-low': '#211B17',
+            'ground-high': '#2F2823',
+            'ground-lowest': '#0d0a08',
+            surface: '#15110E',
+            'accent-sand': '#D2C6BE',
+            'text-cream': '#F1ECE7',
+            'text-muted': '#A89F97',
+            'border-subtle': '#3E3630',
+            'border-strong': '#8F867E',
+            'ticket-bg': '#E8E1DA',
+            'ticket-text': '#191512',
+            'neon-glow': '#E65D2F',
+            'stamp-red': '#C83827'
+          },
+          fontFamily: {
+            anton: ['Anton', 'sans-serif'],
+            sans: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #15110E;
+      color: #F1ECE7;
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Perforated edge effect using CSS gradients */
+    .perforated-top {
+      position: relative;
+    }
+    .perforated-top::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: 0;
+      right: 0;
+      height: 10px;
+      background-image: radial-gradient(circle at 10px 0, transparent 0, transparent 8px, #15110E 8px, #15110E 10px);
+      background-size: 20px 10px;
+      background-repeat: repeat-x;
+    }
+
+    .perforated-bottom-ticket {
+      position: relative;
+    }
+    .perforated-bottom-ticket::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background-image: radial-gradient(circle at 8px 8px, transparent 0, transparent 6px, #E8E1DA 6px, #E8E1DA 8px);
+      background-size: 16px 8px;
+      background-repeat: repeat-x;
+    }
+
+    /* Film strip sprockets */
+    .film-sprocket {
+      width: 14px;
+      height: 20px;
+      background-color: #15110E;
+      border: 1px solid #3E3630;
+      border-radius: 2px;
+    }
+
+    /* Subtle print texture */
+    .grain-overlay {
+      background-image: radial-gradient(#3E3630 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+  </style>
+</head>
+<body class="bg-ground text-text-cream antialiased selection:bg-accent-sand selection:text-ground">
+
+  <!-- Top Nav Bar / Identity Banner -->
+  <header class="border-b border-border-subtle bg-ground/95 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-[1380px] mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-6">
+        <a href="#galeria" class="font-anton text-3xl tracking-wider text-text-cream hover:text-accent-sand transition uppercase flex items-center gap-2">
+          <span class="inline-block w-2.5 h-2.5 bg-neon-glow rounded-full animate-pulse"></span>
+          CENIZA
+          <span class="text-xs font-mono tracking-widest text-text-muted px-2 py-0.5 border border-border-subtle ml-2">GRILL & BAR • CDMX</span>
+        </a>
+      </div>
+
+      <!-- Quick Section Anchor Jump -->
+      <nav class="hidden md:flex items-center gap-8 font-mono text-xs uppercase tracking-widest text-text-muted">
+        <a href="#galeria" class="hover:text-text-cream transition flex items-center gap-1.5">
+          <span class="text-border-strong">[01]</span> Contact-Sheet
+        </a>
+        <a href="#resenas" class="hover:text-text-cream transition flex items-center gap-1.5">
+          <span class="text-border-strong">[02]</span> Comandas
+        </a>
+        <a href="#sucursales" class="hover:text-text-cream transition flex items-center gap-1.5">
+          <span class="text-border-strong">[03]</span> Mapa de Mesas
+        </a>
+        <a href="#pie" class="hover:text-text-cream transition flex items-center gap-1.5">
+          <span class="text-border-strong">[04]</span> Ticket de Cierre
+        </a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="https://wa.me/525512345678?text=Mesa%20Ceniza" target="_blank" rel="noopener" class="font-mono text-xs uppercase tracking-wider bg-text-cream text-ground font-bold px-4 py-2 hover:bg-accent-sand transition flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.2.662.59 1.221.773 1.394.86.174.086.275.072.376-.044.102-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/>
+          </svg>
+          Mesa Directa
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="w-full">
+
+    <!-- 1) SECTION: TIRA DE CONTACTOS (id=galeria) -->
+    <section id="galeria" class="py-16 md:py-24 bg-ground border-b border-border-subtle relative overflow-hidden">
+      <!-- Dark ruled background sheet elements -->
+      <div class="absolute inset-0 pointer-events-none opacity-20 grain-overlay"></div>
+      
+      <div class="max-w-[1380px] mx-auto px-6 relative z-10">
+        
+        <!-- Section Header Bar (Editorial film slate style) -->
+        <div class="border-b-2 border-text-cream pb-6 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <div class="flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-accent-sand mb-2">
+              <span class="w-3 h-3 bg-neon-glow inline-block"></span>
+              SEC 01 // ARCHIVO FOTOGRÁFICO DE CONTACTO
+            </div>
+            <h1 class="font-anton text-5xl md:text-7xl lg:text-8xl tracking-tight uppercase leading-none text-text-cream">
+              TIRA DE CONTACTOS
+            </h1>
+          </div>
+          <div class="font-mono text-xs text-text-muted text-right space-y-1">
+            <p class="text-text-cream">EMULSIÓN: ILFORD HP5+ / ISO 3200 EXP</p>
+            <p>LOCACIÓN: GUANAJUATO 138, ROMA NORTE, CDMX</p>
+            <p class="text-accent-sand font-bold">HORARIO: 19:00 — 02:30 HRS</p>
+          </div>
+        </div>
+
+        <!-- The Film Contact Sheet Strip -->
+        <div class="bg-ground-lowest border border-border-strong p-4 md:p-8 rounded-none shadow-2xl relative">
+          
+          <!-- Top Film Edge with Sprocket Holes and Metadata -->
+          <div class="flex items-center justify-between border-b border-border-subtle pb-3 mb-6 font-mono text-[11px] tracking-widest text-border-strong uppercase select-none">
+            <div class="flex items-center gap-2">
+              <span class="text-accent-sand font-bold">KODAK TRI-X 400</span>
+              <span>• SAFETY FILM •</span>
+              <span class="hidden sm:inline">ROLL #09-MX</span>
+            </div>
+            <!-- Sprocket row -->
+            <div class="flex items-center gap-2 sm:gap-3 overflow-hidden">
+              <div class="film-sprocket"></div>
+              <div class="film-sprocket"></div>
+              <div class="film-sprocket"></div>
+              <div class="film-sprocket"></div>
+              <div class="film-sprocket"></div>
+              <div class="film-sprocket"></div>
+              <div class="film-sprocket hidden md:block"></div>
+              <div class="film-sprocket hidden md:block"></div>
+              <div class="film-sprocket hidden md:block"></div>
+              <div class="film-sprocket hidden lg:block"></div>
+              <div class="film-sprocket hidden lg:block"></div>
+            </div>
+            <div class="text-neon-glow font-bold">CDMX NOCHE</div>
+          </div>
+
+          <!-- Film Strip Contact Sheet Grid: 6 Distinct Aspect Ratio Photos -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
+
+            <!-- Frame 01: Aspect Ratio 4:5 - El Fuego y el Carbón de Encino -->
+            <div class="border border-border-subtle p-3 bg-ground-low flex flex-col group hover:border-accent-sand transition">
+              <div class="flex items-center justify-between font-mono text-[10px] text-text-muted mb-2 border-b border-border-subtle/50 pb-1.5">
+                <span class="text-text-cream font-bold">▶ 21A</span>
+                <span>F/2.8 • 1/60s</span>
+                <span class="text-neon-glow">01</span>
+              </div>
+              <div class="relative w-full aspect-[4/5] bg-ground-lowest overflow-hidden border border-border-subtle flex items-center justify-center">
+                <!-- High-contrast architectural duotone vector photo plate -->
+                <svg viewBox="0 0 400 500" class="w-full h-full object-cover" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="400" height="500" fill="#15110E"/>
+                  <!-- Charcoal bed silhouette and fire sparks -->
+                  <path d="M0 320 Q 80 290 180 330 T 400 310 L 400 500 L 0 500 Z" fill="#211B17"/>
+                  <path d="M40 370 Q 120 340 220 380 T 400 360 L 400 500 L 40 500 Z" fill="#2F2823"/>
+                  <!-- Grill Iron Bars -->
+                  <line x1="20" y1="280" x2="380" y2="280" stroke="#8F867E" stroke-width="4"/>
+                  <line x1="20" y1="240" x2="380" y2="240" stroke="#8F867E" stroke-width="4"/>
+                  <line x1="20" y1="200" x2="380" y2="200" stroke="#8F867E" stroke-width="4"/>
+                  <line x1="60" y1="160" x2="60" y2="340" stroke="#3E3630" stroke-width="3"/>
+                  <line x1="120" y1="160" x2="120" y2="340" stroke="#3E3630" stroke-width="3"/>
+                  <line x1="180" y1="160" x2="180" y2="340" stroke="#3E3630" stroke-width="3"/>
+                  <line x1="240" y1="160" x2="240" y2="340" stroke="#3E3630" stroke-width="3"/>
+                  <line x1="300" y1="160" x2="300" y2="340" stroke="#3E3630" stroke-width="3"/>
+                  <line x1="360" y1="160" x2="360" y2="340" stroke="#3E3630" stroke-width="3"/>
+                  <!-- Meat silhouette sizzling -->
+                  <path d="M110 180 C 130 150 260 140 290 190 C 310 230 260 270 200 260 C 140 250 100 210 110 180 Z" fill="#15110E" stroke="#D2C6BE" stroke-width="2"/>
+                  <!-- Searing Lines -->
+                  <line x1="130" y1="180" x2="270" y2="230" stroke="#8F867E" stroke-width="2" stroke-dasharray="8 6"/>
+                  <line x1="140" y1="200" x2="250" y2="250" stroke="#8F867E" stroke-width="2" stroke-dasharray="8 6"/>
+                  <!-- Ember sparks -->
+                  <circle cx="160" cy="120" r="3" fill="#E65D2F"/>
+                  <circle cx="210" cy="90" r="2.5" fill="#E65D2F"/>
+                  <circle cx="240" cy="140" r="4" fill="#E65D2F"/>
+                  <circle cx="290" cy="110" r="2" fill="#E65D2F"/>
+                  <circle cx="130" cy="100" r="1.5" fill="#E65D2F"/>
+                  <!-- Vignette film border -->
+                  <rect x="0" y="0" width="400" height="500" fill="none" stroke="#3E3630" stroke-width="14" opacity="0.4"/>
+                </svg>
+                <div class="absolute bottom-2 left-2 px-1.5 py-0.5 bg-ground/90 font-mono text-[9px] text-accent-sand uppercase tracking-wider border border-border-subtle">
+                  BRASA & CHISPA
+                </div>
+              </div>
+              <div class="mt-2.5 font-mono text-[11px] leading-tight text-text-muted">
+                <span class="text-text-cream font-bold block mb-0.5">MARCADO AL HIERRO</span>
+                T-bone de Sonora curado 28 días, leña de encino y sal de Colima.
+              </div>
+            </div>
+
+            <!-- Frame 02: Aspect Ratio 1:1 (Square) - La Barra y Coctelería -->
+            <div class="border border-border-subtle p-3 bg-ground-low flex flex-col group hover:border-accent-sand transition">
+              <div class="flex items-center justify-between font-mono text-[10px] text-text-muted mb-2 border-b border-border-subtle/50 pb-1.5">
+                <span class="text-text-cream font-bold">▶ 22</span>
+                <span>F/1.8 • 1/125s</span>
+                <span class="text-neon-glow">02</span>
+              </div>
+              <div class="relative w-full aspect-square bg-ground-lowest overflow-hidden border border-border-subtle flex items-center justify-center">
+                <!-- Duotone Mezcal Glass and Smoked Garnish Graphic -->
+                <svg viewBox="0 0 400 400" class="w-full h-full object-cover" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="400" height="400" fill="#15110E"/>
+                  <!-- Low lit counter bar line -->
+                  <rect x="0" y="310" width="400" height="90" fill="#211B17"/>
+                  <line x1="0" y1="310" x2="400" y2="310" stroke="#8F867E" stroke-width="2"/>
+                  <!-- Highball / Old Fashioned Glass -->
+                  <path d="M130 140 L 150 310 L 250 310 L 270 140 Z" fill="#2F2823" stroke="#F1ECE7" stroke-width="2.5"/>
+                  <!-- Hand-cut crystal ice cube -->
+                  <polygon points="170,210 230,195 240,270 180,285" fill="#15110E" stroke="#D2C6BE" stroke-width="1.5"/>
+                  <!-- Smoked Tortilla Ash Ring & Toronja Slice -->
+                  <path d="M 120 135 C 150 110, 250 110, 280 135" stroke="#E65D2F" stroke-width="4" fill="none"/>
+                  <!-- Smoke ribbons rising -->
+                  <path d="M 180 130 Q 160 80 190 40 T 210 10" fill="none" stroke="#8F867E" stroke-width="2" stroke-dasharray="4 4"/>
+                  <path d="M 220 125 Q 240 75 210 35 T 230 10" fill="none" stroke="#D2C6BE" stroke-width="1.5" stroke-dasharray="3 3"/>
+                  <!-- Vignette film border -->
+                  <rect x="0" y="0" width="400" height="400" fill="none" stroke="#3E3630" stroke-width="12" opacity="0.4"/>
+                </svg>
+                <div class="absolute bottom-2 left-2 px-1.5 py-0.5 bg-ground/90 font-mono text-[9px] text-accent-sand uppercase tracking-wider border border-border-subtle">
+                  TRAGO DE AUTOR
+                </div>
+              </div>
+              <div class="mt-2.5 font-mono text-[11px] leading-tight text-text-muted">
+                <span class="text-text-cream font-bold block mb-0.5">HUMO DE AGAVE</span>
+                Mezcal espadín de Oaxaca, bitter de ceniza de tortilla y toronja asada.
+              </div>
+            </div>
+
+            <!-- Frame 03: Aspect Ratio 16:9 (Wide) - Corte en Madera -->
+            <div class="border border-border-subtle p-3 bg-ground-low flex flex-col group hover:border-accent-sand transition">
+              <div class="flex items-center justify-between font-mono text-[10px] text-text-muted mb-2 border-b border-border-subtle/50 pb-1.5">
+                <span class="text-text-cream font-bold">▶ 22A</span>
+                <span>F/4.0 • 1/30s</span>
+                <span class="text-neon-glow">03</span>
+              </div>
+              <div class="relative w-full aspect-[16/9] bg-ground-lowest overflow-hidden border border-border-subtle flex items-center justify-center">
+                <!-- Platter & Knife line illustration -->
+                <svg viewBox="0 0 480 270" class="w-full h-full object-cover" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="480" height="270" fill="#15110E"/>
+                  <!-- Wood carving board -->
+                  <rect x="40" y="50" width="400" height="170" rx="4" fill="#211B17" stroke="#8F867E" stroke-width="2"/>
+                  <!-- Blood groove line in board -->
+                  <rect x="52" y="62" width="376" height="146" rx="2" fill="none" stroke="#3E3630" stroke-width="1.5"/>
+                  <!-- Sliced Picanha Cuts -->
+                  <path d="M100 135 C 110 95, 170 95, 180 135 L 175 165 L 95 165 Z" fill="#2F2823" stroke="#D2C6BE" stroke-width="1.5"/>
+                  <path d="M160 135 C 170 95, 230 95, 240 135 L 235 165 L 155 165 Z" fill="#2F2823" stroke="#D2C6BE" stroke-width="1.5"/>
+                  <path d="M220 135 C 230 95, 290 95, 300 135 L 295 165 L 215 165 Z" fill="#2F2823" stroke="#D2C6BE" stroke-width="1.5"/>
+                  <path d="M280 135 C 290 95, 350 95, 360 135 L 355 165 L 275 165 Z" fill="#2F2823" stroke="#D2C6BE" stroke-width="1.5"/>
+                  <!-- Roasted Bone Marrow Canoes -->
+                  <line x1="120" y1="185" x2="340" y2="185" stroke="#E65D2F" stroke-width="3" stroke-linecap="round"/>
+                  <!-- Coarse salt grains -->
+                  <circle cx="140" cy="115" r="1.5" fill="#F1ECE7"/>
+                  <circle cx="200" cy="110" r="1.5" fill="#F1ECE7"/>
+                  <circle cx="260" cy="115" r="1.5" fill="#F1ECE7"/>
+                  <circle cx="320" cy="112" r="1.5" fill="#F1ECE7"/>
+                  <!-- Vignette film border -->
+                  <rect x="0" y="0" width="480" height="270" fill="none" stroke="#3E3630" stroke-width="10" opacity="0.4"/>
+                </svg>
+                <div class="absolute bottom-2 left-2 px-1.5 py-0.5 bg-ground/90 font-mono text-[9px] text-accent-sand uppercase tracking-wider border border-border-subtle">
+                  MESA CENTRAL
+                </div>
+              </div>
+              <div class="mt-2.5 font-mono text-[11px] leading-tight text-text-muted">
+                <span class="text-text-cream font-bold block mb-0.5">COSTILLA AL CHILTEPÍN</span>
+                Cocción lenta de 14 horas, glaseado negro de piloncillo y tuétano.
+              </div>
+            </div>
+
+            <!-- Frame 04: Aspect Ratio 16:10 - Vinilos & Salón -->
+            <div class="border border-border-subtle p-3 bg-ground-low flex flex-col group hover:border-accent-sand transition md:col-span-2 lg:col-span-1">
+              <div class="flex items-center justify-between font-mono text-[10px] text-text-muted mb-2 border-b border-border-subtle/50 pb-1.5">
+                <span class="text-text-cream font-bold">▶ 23</span>
+                <span>F/2.0 • 1/50s</span>
+                <span class="text-neon-glow">04</span>
+              </div>
+              <div class="relative w-full aspect-[16/10] bg-ground-lowest overflow-hidden border border-border-subtle flex items-center justify-center">
+                <!-- Vinyl turntable & low pendant lamps -->
+                <svg viewBox="0 0 400 250" class="w-full h-full object-cover" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="400" height="250" fill="#15110E"/>
+                  <!-- Hanging filament lamp from top -->
+                  <line x1="200" y1="0" x2="200" y2="70" stroke="#8F867E" stroke-width="1.5"/>
+                  <circle cx="200" cy="85" r="12" fill="none" stroke="#D2C6BE" stroke-width="2"/>
+                  <circle cx="200" cy="85" r="4" fill="#E65D2F"/>
+                  <!-- Turntable Platter Silhouette -->
+                  <circle cx="200" cy="180" r="60" fill="#211B17" stroke="#3E3630" stroke-width="2"/>
+                  <circle cx="200" cy="180" r="45" fill="none" stroke="#2F2823" stroke-width="1" stroke-dasharray="3 3"/>
+                  <circle cx="200" cy="180" r="30" fill="none" stroke="#2F2823" stroke-width="1"/>
+                  <circle cx="200" cy="180" r="15" fill="#E65D2F"/>
+                  <!-- Tonearm -->
+                  <line x1="270" y1="130" x2="225" y2="165" stroke="#F1ECE7" stroke-width="2"/>
+                  <circle cx="270" cy="130" r="6" fill="#8F867E"/>
+                  <!-- Vignette film border -->
+                  <rect x="0" y="0" width="400" height="250" fill="none" stroke="#3E3630" stroke-width="10" opacity="0.4"/>
+                </svg>
+                <div class="absolute bottom-2 left-2 px-1.5 py-0.5 bg-ground/90 font-mono text-[9px] text-accent-sand uppercase tracking-wider border border-border-subtle">
+                  ATMÓSFERA
+                </div>
+              </div>
+              <div class="mt-2.5 font-mono text-[11px] leading-tight text-text-muted">
+                <span class="text-text-cream font-bold block mb-0.5">PENUMBRA Y VINILOS</span>
+                Sonido analógico, iluminación ámbar indirecta y cero prisa.
+              </div>
+            </div>
+
+            <!-- Frame 05: Aspect Ratio 3:4 (Portrait) - Manos del Maestro Parrillero -->
+            <div class="border border-border-subtle p-3 bg-ground-low flex flex-col group hover:border-accent-sand transition">
+              <div class="flex items-center justify-between font-mono text-[10px] text-text-muted mb-2 border-b border-border-subtle/50 pb-1.5">
+                <span class="text-text-cream font-bold">▶ 23A</span>
+                <span>F/1.4 • 1/250s</span>
+                <span class="text-neon-glow">05</span>
+              </div>
+              <div class="relative w-full aspect-[3/4] bg-ground-lowest overflow-hidden border border-border-subtle flex items-center justify-center">
+                <!-- Tongs turning meat over glowing coals -->
+                <svg viewBox="0 0 300 400" class="w-full h-full object-cover" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="300" height="400" fill="#15110E"/>
+                  <!-- Pit of wood and embers below -->
+                  <rect x="20" y="280" width="260" height="100" fill="#211B17" stroke="#3E3630" stroke-width="1.5"/>
+                  <circle cx="80" cy="330" r="16" fill="#2F2823"/>
+                  <circle cx="150" cy="340" r="22" fill="#2F2823"/>
+                  <circle cx="210" cy="325" r="18" fill="#2F2823"/>
+                  <circle cx="150" cy="320" r="8" fill="#E65D2F"/>
+                  <circle cx="95" cy="315" r="6" fill="#E65D2F"/>
+                  <!-- Steel Tongs holding thick bone -->
+                  <path d="M 60 50 L 140 230 L 160 230 L 100 50" fill="#8F867E"/>
+                  <line x1="60" y1="50" x2="140" y2="230" stroke="#F1ECE7" stroke-width="2"/>
+                  <!-- Tomahawk chop silhouette -->
+                  <path d="M 120 180 Q 180 150 210 200 Q 180 250 130 220 Z" fill="#2F2823" stroke="#D2C6BE" stroke-width="2"/>
+                  <line x1="160" y1="190" x2="260" y2="120" stroke="#D2C6BE" stroke-width="4" stroke-linecap="round"/>
+                  <!-- Vignette film border -->
+                  <rect x="0" y="0" width="300" height="400" fill="none" stroke="#3E3630" stroke-width="12" opacity="0.4"/>
+                </svg>
+                <div class="absolute bottom-2 left-2 px-1.5 py-0.5 bg-ground/90 font-mono text-[9px] text-accent-sand uppercase tracking-wider border border-border-subtle">
+                  OFICIO
+                </div>
+              </div>
+              <div class="mt-2.5 font-mono text-[11px] leading-tight text-text-muted">
+                <span class="text-text-cream font-bold block mb-0.5">HIERRO Y TEMPLE</span>
+                Control directo de la flama abierta. Sin atajos ni vaporeras.
+              </div>
+            </div>
+
+            <!-- Frame 06: Aspect Ratio 4:3 - Fachada & Portón Metálico -->
+            <div class="border border-border-subtle p-3 bg-ground-low flex flex-col group hover:border-accent-sand transition">
+              <div class="flex items-center justify-between font-mono text-[10px] text-text-muted mb-2 border-b border-border-subtle/50 pb-1.5">
+                <span class="text-text-cream font-bold">▶ 24</span>
+                <span>F/2.8 • 1/15s</span>
+                <span class="text-neon-glow">06</span>
+              </div>
+              <div class="relative w-full aspect-[4/3] bg-ground-lowest overflow-hidden border border-border-subtle flex items-center justify-center">
+                <!-- Industrial steel door and small glowing neon sign -->
+                <svg viewBox="0 0 400 300" class="w-full h-full object-cover" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="400" height="300" fill="#15110E"/>
+                  <!-- Raw concrete wall texture lines -->
+                  <line x1="40" y1="80" x2="360" y2="80" stroke="#211B17" stroke-width="1"/>
+                  <line x1="40" y1="160" x2="360" y2="160" stroke="#211B17" stroke-width="1"/>
+                  <line x1="40" y1="240" x2="360" y2="240" stroke="#211B17" stroke-width="1"/>
+                  <!-- Heavy riveted steel door -->
+                  <rect x="130" y="70" width="140" height="230" fill="#211B17" stroke="#8F867E" stroke-width="2.5"/>
+                  <line x1="200" y1="70" x2="200" y2="300" stroke="#3E3630" stroke-width="1.5"/>
+                  <!-- Door rivets -->
+                  <circle cx="145" cy="90" r="3" fill="#8F867E"/>
+                  <circle cx="145" cy="150" r="3" fill="#8F867E"/>
+                  <circle cx="145" cy="210" r="3" fill="#8F867E"/>
+                  <circle cx="145" cy="270" r="3" fill="#8F867E"/>
+                  <circle cx="255" cy="90" r="3" fill="#8F867E"/>
+                  <circle cx="255" cy="150" r="3" fill="#8F867E"/>
+                  <circle cx="255" cy="210" r="3" fill="#8F867E"/>
+                  <circle cx="255" cy="270" r="3" fill="#8F867E"/>
+                  <!-- Minimal brass doorbell button -->
+                  <rect x="290" y="160" width="14" height="24" fill="#3E3630" stroke="#D2C6BE" stroke-width="1"/>
+                  <circle cx="297" cy="172" r="3" fill="#E65D2F"/>
+                  <!-- Discrete small neon text above door -->
+                  <text x="160" y="55" fill="#E65D2F" font-family="Anton" font-size="16" letter-spacing="3">CENIZA</text>
+                  <!-- Vignette film border -->
+                  <rect x="0" y="0" width="400" height="300" fill="none" stroke="#3E3630" stroke-width="10" opacity="0.4"/>
+                </svg>
+                <div class="absolute bottom-2 left-2 px-1.5 py-0.5 bg-ground/90 font-mono text-[9px] text-accent-sand uppercase tracking-wider border border-border-subtle">
+                  ACCESO
+                </div>
+              </div>
+              <div class="mt-2.5 font-mono text-[11px] leading-tight text-text-muted">
+                <span class="text-text-cream font-bold block mb-0.5">EL PORTÓN DE CHAPA</span>
+                Timbre discreto sobre Guanajuato. Tocar dos veces después de las 22h.
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Film Edge with Sprocket Holes and Frame Indicators -->
+          <div class="flex items-center justify-between border-t border-border-subtle pt-3 mt-6 font-mono text-[11px] tracking-widest text-border-strong uppercase select-none">
+            <div class="text-neon-glow font-bold">CONTACT PRINTS • NEGATIVE STRIP</div>
+            <div class="flex items-center gap-2 sm:gap-3 overflow-hidden">
+              <div class="film-sprocket"></div>
+              <div class="film-sprocket"></div>
+              <div class="film-sprocket"></div>
+              <div class="film-sprocket"></div>
+              <div class="film-sprocket"></div>
+              <div class="film-sprocket"></div>
+              <div class="film-sprocket hidden md:block"></div>
+              <div class="film-sprocket hidden md:block"></div>
+              <div class="film-sprocket hidden md:block"></div>
+              <div class="film-sprocket hidden lg:block"></div>
+              <div class="film-sprocket hidden lg:block"></div>
+            </div>
+            <div class="text-accent-sand font-bold">HOJA 01 DE 01</div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- 2) SECTION: TESTIMONIALS 'NOTAS DE LA BARRA' (id=resenas) -->
+    <section id="resenas" class="py-20 md:py-28 bg-ground-low border-b border-border-subtle relative overflow-hidden">
+      <div class="max-w-[1380px] mx-auto px-6 relative z-10">
+        
+        <!-- Header -->
+        <div class="border-b border-border-subtle pb-6 mb-16 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span class="font-mono text-xs text-accent-sand uppercase tracking-widest block mb-2">
+              SEC 02 // TESTIMONIOS REALES AL PIE DEL CARBÓN
+            </span>
+            <h2 class="font-anton text-5xl md:text-7xl uppercase tracking-tight text-text-cream leading-none">
+              NOTAS DE LA BARRA
+            </h2>
+          </div>
+          <p class="font-mono text-xs text-text-muted max-w-sm">
+            Comandas originales recuperadas del gancho de salida. Palabras directas de quienes se quedaron hasta que apagaron la campana.
+          </p>
+        </div>
+
+        <!-- 3 Staggered Order-Ticket Slips at slight offsets -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 lg:gap-10 pt-4 pb-8 items-start">
+
+          <!-- Ticket 01: Comanda #084 (Offset -2deg) -->
+          <div class="transform md:-rotate-2 md:translate-y-4 hover:rotate-0 hover:translate-y-0 transition-transform duration-300 relative shadow-2xl">
+            <!-- Ticket Top Metal Clip Graphic -->
+            <div class="w-12 h-4 bg-ground-high border border-border-strong mx-auto -mb-2 z-20 relative"></div>
+            
+            <div class="bg-ticket-bg text-ticket-text p-6 md:p-8 font-mono border-t-4 border-stamp-red perforated-bottom-ticket shadow-lg">
+              
+              <!-- Ticket Header -->
+              <div class="border-b border-dashed border-ticket-text/30 pb-3 mb-4 text-center">
+                <div class="font-anton text-2xl tracking-wider text-ticket-text uppercase">CENIZA // BARRA</div>
+                <div class="text-[11px] text-ticket-text/70 flex justify-between mt-1">
+                  <span>COMANDA: #084</span>
+                  <span>HORA: 23:42</span>
+                </div>
+                <div class="text-[10px] text-ticket-text/60 text-left mt-0.5">MESA: 03 (BARRA CENTRAL)</div>
+              </div>
+
+              <!-- Quote Body -->
+              <div class="my-6">
+                <span class="text-3xl font-anton text-stamp-red leading-none block">“</span>
+                <p class="font-sans font-bold text-lg md:text-xl text-ticket-text leading-snug tracking-tight">
+                  No vengas buscando velitas ni salsitas dulces. El tuétano con pulpo asado te cambia el humor y el mezcal ahumado pega con respeto. Es el mejor rincón de la Roma para cenar tarde.
+                </p>
+              </div>
+
+              <!-- Ticket Divider -->
+              <div class="border-t border-dashed border-ticket-text/40 pt-4 mt-6 flex items-end justify-between">
+                <div>
+                  <div class="font-anton text-lg tracking-wide uppercase text-ticket-text">HÉCTOR B.</div>
+                  <div class="text-xs font-mono text-ticket-text/75 uppercase">VECINO DE LA ROMA SUR</div>
+                </div>
+                <!-- Stamp -->
+                <div class="border-2 border-stamp-red text-stamp-red font-mono text-[10px] font-bold px-2 py-1 rotate-12 uppercase tracking-widest">
+                  PAGADO
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Ticket 02: Comanda #119 (Offset +1.5deg, translated down) -->
+          <div class="transform md:rotate-2 md:translate-y-12 hover:rotate-0 hover:translate-y-0 transition-transform duration-300 relative shadow-2xl">
+            <!-- Ticket Top Metal Clip Graphic -->
+            <div class="w-12 h-4 bg-ground-high border border-border-strong mx-auto -mb-2 z-20 relative"></div>
+            
+            <div class="bg-ticket-bg text-ticket-text p-6 md:p-8 font-mono border-t-4 border-ticket-text perforated-bottom-ticket shadow-lg">
+              
+              <!-- Ticket Header -->
+              <div class="border-b border-dashed border-ticket-text/30 pb-3 mb-4 text-center">
+                <div class="font-anton text-2xl tracking-wider text-ticket-text uppercase">CENIZA // SALÓN</div>
+                <div class="text-[11px] text-ticket-text/70 flex justify-between mt-1">
+                  <span>COMANDA: #119</span>
+                  <span>HORA: 01:15</span>
+                </div>
+                <div class="text-[10px] text-ticket-text/60 text-left mt-0.5">MESA: 08 (TERRAZA FRONTAL)</div>
+              </div>
+
+              <!-- Quote Body -->
+              <div class="my-6">
+                <span class="text-3xl font-anton text-ticket-text/70 leading-none block">“</span>
+                <p class="font-sans font-bold text-lg md:text-xl text-ticket-text leading-snug tracking-tight">
+                  La costilla de 14 horas se deshace con cuchara. La música en vinilo le da un aire de taberna vieja pero con un nivel de cocina brutal. Nada de poses mamonas, puro oficio.
+                </p>
+              </div>
+
+              <!-- Ticket Divider -->
+              <div class="border-t border-dashed border-ticket-text/40 pt-4 mt-6 flex items-end justify-between">
+                <div>
+                  <div class="font-anton text-lg tracking-wide uppercase text-ticket-text">VALERIA S.</div>
+                  <div class="text-xs font-mono text-ticket-text/75 uppercase">CONDESA HIPÓDROMO</div>
+                </div>
+                <!-- Stamp -->
+                <div class="border-2 border-ticket-text text-ticket-text font-mono text-[10px] font-bold px-2 py-1 -rotate-6 uppercase tracking-widest">
+                  REPETIDOR
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Ticket 03: Comanda #142 (Offset -1deg, slightly higher) -->
+          <div class="transform md:-rotate-1 md:translate-y-2 hover:rotate-0 hover:translate-y-0 transition-transform duration-300 relative shadow-2xl">
+            <!-- Ticket Top Metal Clip Graphic -->
+            <div class="w-12 h-4 bg-ground-high border border-border-strong mx-auto -mb-2 z-20 relative"></div>
+            
+            <div class="bg-ticket-bg text-ticket-text p-6 md:p-8 font-mono border-t-4 border-stamp-red perforated-bottom-ticket shadow-lg">
+              
+              <!-- Ticket Header -->
+              <div class="border-b border-dashed border-ticket-text/30 pb-3 mb-4 text-center">
+                <div class="font-anton text-2xl tracking-wider text-ticket-text uppercase">CENIZA // PRIVADO</div>
+                <div class="text-[11px] text-ticket-text/70 flex justify-between mt-1">
+                  <span>COMANDA: #142</span>
+                  <span>HORA: 02:05</span>
+                </div>
+                <div class="text-[10px] text-ticket-text/60 text-left mt-0.5">MESA: C-01 (MESA COMUNAL)</div>
+              </div>
+
+              <!-- Quote Body -->
+              <div class="my-6">
+                <span class="text-3xl font-anton text-stamp-red leading-none block">“</span>
+                <p class="font-sans font-bold text-lg md:text-xl text-ticket-text leading-snug tracking-tight">
+                  Pedimos la picaña entera para compartir entre cuatro y un par de jarras de carajillo de cacao tostado. Es el lugar que hacía falta en la ciudad para cerrar la noche en serio.
+                </p>
+              </div>
+
+              <!-- Ticket Divider -->
+              <div class="border-t border-dashed border-ticket-text/40 pt-4 mt-6 flex items-end justify-between">
+                <div>
+                  <div class="font-anton text-lg tracking-wide uppercase text-ticket-text">RODRIGO M.</div>
+                  <div class="text-xs font-mono text-ticket-text/75 uppercase">NARVARTE PONIENTE</div>
+                </div>
+                <!-- Stamp -->
+                <div class="border-2 border-stamp-red text-stamp-red font-mono text-[10px] font-bold px-2 py-1 rotate-6 uppercase tracking-widest">
+                  MESA LLENA
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Footnote citation -->
+        <div class="text-center font-mono text-xs text-text-muted mt-12 tracking-widest uppercase">
+          [ 4.9 ESTRELLAS EN BOCA A BOCA • SIN FILTROS NI PATROCINIOS ]
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- 3) SECTION: LOCATION 'MAPA DE MESAS' (id=sucursales) -->
+    <section id="sucursales" class="py-20 md:py-28 bg-ground border-b border-border-subtle relative">
+      <div class="max-w-[1380px] mx-auto px-6">
+        
+        <!-- Header -->
+        <div class="border-b border-border-subtle pb-6 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span class="font-mono text-xs text-accent-sand uppercase tracking-widest block mb-2">
+              SEC 03 // DISTRIBUCIÓN ARQUITECTÓNICA Y CONTACTO DIRECTO
+            </span>
+            <h2 class="font-anton text-5xl md:text-7xl uppercase tracking-tight text-text-cream leading-none">
+              MAPA DE MESAS & LOCALIZACIÓN
+            </h2>
+          </div>
+          <div class="font-mono text-xs text-text-muted">
+            PLANO C-104 // PLANTA BAJA GUANAJUATO 138
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          
+          <!-- LEFT PANEL: The Stylised Line Art Floor Plan (7 Columns) -->
+          <div class="lg:col-span-7 bg-ground-low border-2 border-border-strong p-6 md:p-8">
+            <div class="flex items-center justify-between border-b border-border-subtle pb-3 mb-6">
+              <div class="font-mono text-xs uppercase tracking-widest text-text-cream flex items-center gap-2">
+                <span class="w-2.5 h-2.5 bg-neon-glow inline-block"></span>
+                PLANO GENERAL DE CAPACIDAD (4 ZONAS)
+              </div>
+              <span class="font-mono text-[11px] text-accent-sand uppercase">ESCALA 1:50 // COTAS EN METROS</span>
+            </div>
+
+            <!-- Stylised Line-Art SVG Floor Plan -->
+            <div class="w-full bg-ground-lowest border border-border-subtle p-4 relative overflow-hidden">
+              <svg viewBox="0 0 700 460" class="w-full h-auto text-text-cream" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Background Grid Coordinates -->
+                <defs>
+                  <pattern id="plan-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+                    <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#2F2823" stroke-width="0.7"/>
+                  </pattern>
+                </defs>
+                <rect width="700" height="460" fill="url(#plan-grid)" />
+
+                <!-- Outer Architectural Perimeter Walls (Thick double strokes) -->
+                <rect x="20" y="20" width="660" height="420" stroke="#F1ECE7" stroke-width="3" />
+                <rect x="25" y="25" width="650" height="410" stroke="#3E3630" stroke-width="1" />
+
+                <!-- Entrance Doorway Arc at Guanajuato Street (Top Left) -->
+                <path d="M 50 20 L 110 20" stroke="#15110E" stroke-width="5" />
+                <path d="M 50 20 A 60 60 0 0 1 110 80" stroke="#D2C6BE" stroke-width="1.5" stroke-dasharray="4 4" />
+                <line x1="50" y1="20" x2="50" y2="80" stroke="#D2C6BE" stroke-width="2" />
+                <text x="120" y="36" fill="#D2C6BE" font-family="JetBrains Mono" font-size="10" letter-spacing="1">ACCESO GUANAJUATO</text>
+
+                <!-- ZONE 1: LA TERRAZA EXTERIOR (Left vertical quadrant) -->
+                <rect x="35" y="100" width="160" height="320" stroke="#8F867E" stroke-width="1.5" stroke-dasharray="5 5" fill="#211B17" fill-opacity="0.3"/>
+                <!-- Zone 1 Tables -->
+                <circle cx="85" cy="150" r="22" stroke="#D2C6BE" stroke-width="1.5" />
+                <circle cx="85" cy="150" r="3" fill="#D2C6BE"/>
+                <text x="80" y="154" fill="#F1ECE7" font-family="JetBrains Mono" font-size="10" font-weight="bold">T1</text>
+                <circle cx="145" cy="150" r="22" stroke="#D2C6BE" stroke-width="1.5" />
+                <text x="140" y="154" fill="#F1ECE7" font-family="JetBrains Mono" font-size="10" font-weight="bold">T2</text>
+
+                <circle cx="85" cy="240" r="22" stroke="#D2C6BE" stroke-width="1.5" />
+                <text x="80" y="244" fill="#F1ECE7" font-family="JetBrains Mono" font-size="10" font-weight="bold">T3</text>
+                <circle cx="145" cy="240" r="22" stroke="#D2C6BE" stroke-width="1.5" />
+                <text x="140" y="244" fill="#F1ECE7" font-family="JetBrains Mono" font-size="10" font-weight="bold">T4</text>
+
+                <circle cx="115" cy="330" r="26" stroke="#D2C6BE" stroke-width="1.5" />
+                <text x="110" y="334" fill="#F1ECE7" font-family="JetBrains Mono" font-size="10" font-weight="bold">T5</text>
+
+                <!-- Zone Tag Indicator 1 -->
+                <rect x="45" y="110" width="22" height="18" fill="#E65D2F"/>
+                <text x="52" y="123" fill="#15110E" font-family="JetBrains Mono" font-size="11" font-weight="bold">1</text>
+                <text x="73" y="123" fill="#A89F97" font-family="JetBrains Mono" font-size="9" letter-spacing="1">TERRAZA CALLEJÓN</text>
+
+                <!-- Divider Wall: Acoustic Glass and Steel -->
+                <line x1="215" y1="20" x2="215" y2="440" stroke="#8F867E" stroke-width="2.5" />
+
+                <!-- ZONE 2: LA GRAN BARRA Y MEZCALERÍA (Top Right / Center) -->
+                <!-- L-Shaped Bar Structure -->
+                <path d="M 240 80 L 460 80 L 460 170 L 420 170 L 420 110 L 240 110 Z" fill="#2F2823" stroke="#F1ECE7" stroke-width="2" />
+                <!-- Bar Stools along the outer perimeter -->
+                <circle cx="255" cy="60" r="8" stroke="#D2C6BE" stroke-width="1" />
+                <circle cx="285" cy="60" r="8" stroke="#D2C6BE" stroke-width="1" />
+                <circle cx="315" cy="60" r="8" stroke="#D2C6BE" stroke-width="1" />
+                <circle cx="345" cy="60" r="8" stroke="#D2C6BE" stroke-width="1" />
+                <circle cx="375" cy="60" r="8" stroke="#D2C6BE" stroke-width="1" />
+                <circle cx="405" cy="60" r="8" stroke="#D2C6BE" stroke-width="1" />
+                <circle cx="435" cy="60" r="8" stroke="#D2C6BE" stroke-width="1" />
+                <circle cx="480" cy="95" r="8" stroke="#D2C6BE" stroke-width="1" />
+                <circle cx="480" cy="125" r="8" stroke="#D2C6BE" stroke-width="1" />
+                <circle cx="480" cy="155" r="8" stroke="#D2C6BE" stroke-width="1" />
+
+                <rect x="240" y="40" width="22" height="18" fill="#E65D2F"/>
+                <text x="247" y="53" fill="#15110E" font-family="JetBrains Mono" font-size="11" font-weight="bold">2</text>
+                <text x="268" y="53" fill="#A89F97" font-family="JetBrains Mono" font-size="9" letter-spacing="1">BARRA DE HIERRO (10 BANCOS)</text>
+
+                <!-- ZONE 3: PARRILLA ABIERTA & POZO DE CARBÓN (Far right top) -->
+                <rect x="520" y="40" width="145" height="150" stroke="#E65D2F" stroke-width="2" fill="#211B17" />
+                <!-- Charcoal grill graphic lines -->
+                <line x1="535" y1="70" x2="650" y2="70" stroke="#E65D2F" stroke-width="1.5" />
+                <line x1="535" y1="85" x2="650" y2="85" stroke="#E65D2F" stroke-width="1.5" />
+                <line x1="535" y1="100" x2="650" y2="100" stroke="#E65D2F" stroke-width="1.5" />
+                <line x1="535" y1="115" x2="650" y2="115" stroke="#E65D2F" stroke-width="1.5" />
+                <line x1="535" y1="130" x2="650" y2="130" stroke="#E65D2F" stroke-width="1.5" />
+                
+                <rect x="530" y="48" width="22" height="18" fill="#E65D2F"/>
+                <text x="537" y="61" fill="#15110E" font-family="JetBrains Mono" font-size="11" font-weight="bold">3</text>
+                <text x="558" y="61" fill="#E65D2F" font-family="JetBrains Mono" font-size="9" font-weight="bold" letter-spacing="1">FUEGO ABIERTO</text>
+                <text x="555" y="165" fill="#A89F97" font-family="JetBrains Mono" font-size="8">CAMPANA EXTRACTORA</text>
+
+                <!-- ZONE 4: SALÓN PRINCIPAL Y MESAS BOOTH (Bottom right quadrant) -->
+                <rect x="235" y="215" width="430" height="205" stroke="#3E3630" stroke-width="1" />
+                
+                <!-- Booth 01 -->
+                <rect x="250" y="240" width="70" height="45" stroke="#D2C6BE" stroke-width="1.5" />
+                <text x="272" y="267" fill="#F1ECE7" font-family="JetBrains Mono" font-size="10">M01</text>
+                <!-- Booth 02 -->
+                <rect x="340" y="240" width="70" height="45" stroke="#D2C6BE" stroke-width="1.5" />
+                <text x="362" y="267" fill="#F1ECE7" font-family="JetBrains Mono" font-size="10">M02</text>
+                <!-- Booth 03 -->
+                <rect x="430" y="240" width="70" height="45" stroke="#D2C6BE" stroke-width="1.5" />
+                <text x="452" y="267" fill="#F1ECE7" font-family="JetBrains Mono" font-size="10">M03</text>
+
+                <!-- Long Communal Table (Mesa Comunal) -->
+                <rect x="250" y="325" width="250" height="60" stroke="#D2C6BE" stroke-width="2" stroke-dasharray="2 2" fill="#2F2823" fill-opacity="0.5"/>
+                <!-- Stools along communal table -->
+                <circle cx="275" cy="312" r="6" stroke="#8F867E" stroke-width="1" />
+                <circle cx="315" cy="312" r="6" stroke="#8F867E" stroke-width="1" />
+                <circle cx="355" cy="312" r="6" stroke="#8F867E" stroke-width="1" />
+                <circle cx="395" cy="312" r="6" stroke="#8F867E" stroke-width="1" />
+                <circle cx="435" cy="312" r="6" stroke="#8F867E" stroke-width="1" />
+                <circle cx="475" cy="312" r="6" stroke="#8F867E" stroke-width="1" />
+
+                <circle cx="275" cy="398" r="6" stroke="#8F867E" stroke-width="1" />
+                <circle cx="315" cy="398" r="6" stroke="#8F867E" stroke-width="1" />
+                <circle cx="355" cy="398" r="6" stroke="#8F867E" stroke-width="1" />
+                <circle cx="395" cy="398" r="6" stroke="#8F867E" stroke-width="1" />
+                <circle cx="435" cy="398" r="6" stroke="#8F867E" stroke-width="1" />
+                <circle cx="475" cy="398" r="6" stroke="#8F867E" stroke-width="1" />
+
+                <text x="320" y="358" fill="#F1ECE7" font-family="JetBrains Mono" font-size="11" font-weight="bold">MESA COMUNAL (12 PAX)</text>
+
+                <!-- High Top Cocktail Round Tables -->
+                <circle cx="560" cy="265" r="20" stroke="#D2C6BE" stroke-width="1.5" />
+                <text x="552" y="269" fill="#F1ECE7" font-family="JetBrains Mono" font-size="9">A1</text>
+                <circle cx="620" cy="265" r="20" stroke="#D2C6BE" stroke-width="1.5" />
+                <text x="612" y="269" fill="#F1ECE7" font-family="JetBrains Mono" font-size="9">A2</text>
+                <circle cx="560" cy="355" r="20" stroke="#D2C6BE" stroke-width="1.5" />
+                <text x="552" y="359" fill="#F1ECE7" font-family="JetBrains Mono" font-size="9">A3</text>
+                <circle cx="620" cy="355" r="20" stroke="#D2C6BE" stroke-width="1.5" />
+                <text x="612" y="359" fill="#F1ECE7" font-family="JetBrains Mono" font-size="9">A4</text>
+
+                <!-- Zone Tag Indicator 4 -->
+                <rect x="250" y="222" width="22" height="16" fill="#E65D2F"/>
+                <text x="257" y="234" fill="#15110E" font-family="JetBrains Mono" font-size="10" font-weight="bold">4</text>
+                <text x="277" y="234" fill="#A89F97" font-family="JetBrains Mono" font-size="9" letter-spacing="1">SALÓN NOCTURNO</text>
+
+                <!-- North Arrow Indicator -->
+                <g transform="translate(640, 410)">
+                  <line x1="0" y1="10" x2="0" y2="-12" stroke="#F1ECE7" stroke-width="1.5" />
+                  <polygon points="0,-16 -4,-8 4,-8" fill="#F1ECE7" />
+                  <text x="-3" y="20" fill="#F1ECE7" font-family="JetBrains Mono" font-size="8">N</text>
+                </g>
+              </svg>
+            </div>
+
+            <!-- Legend Grid Below Plan -->
+            <div class="mt-6 pt-4 border-t border-border-subtle grid grid-cols-2 sm:grid-cols-4 gap-4 font-mono text-xs">
+              <div class="flex items-start gap-2">
+                <span class="w-5 h-5 bg-neon-glow text-ground font-bold flex items-center justify-center shrink-0">1</span>
+                <div>
+                  <span class="text-text-cream font-bold block">Terraza</span>
+                  <span class="text-text-muted text-[11px]">18 lugares / Fumador</span>
+                </div>
+              </div>
+              <div class="flex items-start gap-2">
+                <span class="w-5 h-5 bg-neon-glow text-ground font-bold flex items-center justify-center shrink-0">2</span>
+                <div>
+                  <span class="text-text-cream font-bold block">La Barra</span>
+                  <span class="text-text-muted text-[11px]">10 bancos / Sin reserva</span>
+                </div>
+              </div>
+              <div class="flex items-start gap-2">
+                <span class="w-5 h-5 bg-neon-glow text-ground font-bold flex items-center justify-center shrink-0">3</span>
+                <div>
+                  <span class="text-text-cream font-bold block">Parrilla</span>
+                  <span class="text-text-muted text-[11px]">Leña de encino y brasa</span>
+                </div>
+              </div>
+              <div class="flex items-start gap-2">
+                <span class="w-5 h-5 bg-neon-glow text-ground font-bold flex items-center justify-center shrink-0">4</span>
+                <div>
+                  <span class="text-text-cream font-bold block">Salón</span>
+                  <span class="text-text-muted text-[11px]">32 pax + Comunal</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT PANEL: Location, Hours by Day, WhatsApp / Phone / Email Rows (5 Columns) -->
+          <div class="lg:col-span-5 space-y-6">
+            
+            <!-- Address Card -->
+            <div class="bg-ground-low border border-border-subtle p-6">
+              <div class="flex items-center justify-between border-b border-border-subtle pb-3 mb-4">
+                <span class="font-mono text-xs uppercase tracking-widest text-accent-sand flex items-center gap-2">
+                  <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                  </svg>
+                  UBICACIÓN EXACTA
+                </span>
+                <span class="font-mono text-[10px] text-neon-glow font-bold">ROMA NORTE</span>
+              </div>
+              <div class="font-anton text-3xl text-text-cream tracking-wide mb-1">
+                GUANAJUATO 138
+              </div>
+              <p class="font-sans text-text-muted text-sm leading-relaxed">
+                Entre Jalapa y Tonalá, Colonia Roma Norte, Alcaldía Cuauhtémoc, C.P. 06700, Ciudad de México.
+              </p>
+              <div class="mt-4 pt-3 border-t border-border-subtle/60 flex items-center justify-between font-mono text-xs text-text-muted">
+                <span>METROBUS MÁS CERCANO:</span>
+                <span class="text-text-cream">ÁLVARO OBREGÓN (LÍNEA 1)</span>
+              </div>
+            </div>
+
+            <!-- Opening Hours by Day Card -->
+            <div class="bg-ground-low border border-border-subtle p-6 font-mono">
+              <div class="flex items-center justify-between border-b border-border-subtle pb-3 mb-4">
+                <span class="text-xs uppercase tracking-widest text-accent-sand flex items-center gap-2">
+                  <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                  </svg>
+                  HORARIOS DE OPERACIÓN NOCTURNA
+                </span>
+                <span class="text-[10px] px-2 py-0.5 bg-ground border border-border-subtle text-accent-sand font-bold">
+                  COCINA AL CIERRE
+                </span>
+              </div>
+
+              <div class="divide-y divide-border-subtle text-xs">
+                <div class="py-2.5 flex items-center justify-between">
+                  <span class="text-text-muted">LUNES & MARTES</span>
+                  <span class="text-border-strong uppercase">CERRADO (CURACIÓN DE BRASA)</span>
+                </div>
+                <div class="py-2.5 flex items-center justify-between">
+                  <span class="text-text-cream font-bold">MIÉRCOLES</span>
+                  <span class="text-accent-sand">19:00 — 01:30 HRS</span>
+                </div>
+                <div class="py-2.5 flex items-center justify-between">
+                  <span class="text-text-cream font-bold">JUEVES</span>
+                  <span class="text-accent-sand">19:00 — 02:00 HRS</span>
+                </div>
+                <div class="py-2.5 flex items-center justify-between bg-ground-high/40 px-2 -mx-2 border-l-2 border-neon-glow">
+                  <span class="text-text-cream font-bold">VIERNES & SÁBADO</span>
+                  <span class="text-neon-glow font-bold">19:00 — 02:30 HRS</span>
+                </div>
+                <div class="py-2.5 flex items-center justify-between">
+                  <span class="text-text-cream font-bold">DOMINGO</span>
+                  <span class="text-accent-sand">16:00 — 23:30 HRS</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Direct Contact Rows: WhatsApp, Phone, Email (Strictly no form inputs) -->
+            <div class="bg-ground-low border-2 border-border-strong p-6 space-y-4">
+              <div class="font-mono text-xs uppercase tracking-widest text-text-cream pb-2 border-b border-border-subtle">
+                CANALES DIRECTOS // SIN INTERMEDIARIOS
+              </div>
+
+              <!-- Row 1: WhatsApp -->
+              <a href="https://wa.me/525512345678?text=Hola%2C%20quisiera%20consultar%20disponibilidad%20en%20Ceniza" target="_blank" rel="noopener" class="group flex items-center justify-between p-3.5 bg-ground border border-border-subtle hover:border-text-cream transition">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-ground-high flex items-center justify-center text-text-cream group-hover:bg-text-cream group-hover:text-ground transition">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                      <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.2.662.59 1.221.773 1.394.86.174.086.275.072.376-.044.102-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="font-mono text-xs text-text-muted block">WHATSAPP (RESPUESTA EN VIVO)</span>
+                    <span class="font-mono font-bold text-sm text-text-cream">+52 (55) 1234-5678</span>
+                  </div>
+                </div>
+                <span class="font-mono text-xs text-accent-sand group-hover:translate-x-1 transition uppercase">RESERVAR ▶</span>
+              </a>
+
+              <!-- Row 2: Phone Link -->
+              <a href="tel:+525555648900" class="group flex items-center justify-between p-3.5 bg-ground border border-border-subtle hover:border-text-cream transition">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-ground-high flex items-center justify-center text-text-cream group-hover:bg-text-cream group-hover:text-ground transition">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                      <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="font-mono text-xs text-text-muted block">TELÉFONO DE SALÓN</span>
+                    <span class="font-mono font-bold text-sm text-text-cream">+52 (55) 5564-8900</span>
+                  </div>
+                </div>
+                <span class="font-mono text-xs text-accent-sand group-hover:translate-x-1 transition uppercase">LLAMAR ▶</span>
+              </a>
+
+              <!-- Row 3: Email Link -->
+              <a href="mailto:hola@cenizagrill.mx" class="group flex items-center justify-between p-3.5 bg-ground border border-border-subtle hover:border-text-cream transition">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 bg-ground-high flex items-center justify-center text-text-cream group-hover:bg-text-cream group-hover:text-ground transition">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                      <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="font-mono text-xs text-text-muted block">CORREO EVENTOS & PRIVADOS</span>
+                    <span class="font-mono font-bold text-sm text-text-cream">HOLA@CENIZAGRILL.MX</span>
+                  </div>
+                </div>
+                <span class="font-mono text-xs text-accent-sand group-hover:translate-x-1 transition uppercase">ESCRIBIR ▶</span>
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- 4) SECTION: FOOTER STYLED LIKE A PERFORATED RECEIPT (id=pie) -->
+    <footer id="pie" class="py-20 md:py-28 bg-ground-lowest relative perforated-top">
+      
+      <!-- Container styled specifically like a long thermal cash receipt -->
+      <div class="max-w-3xl mx-auto px-6">
+        
+        <div class="bg-ground-low border-2 border-border-strong p-8 md:p-12 font-mono relative shadow-2xl">
+          
+          <!-- Top Perforation Graphic Line -->
+          <div class="border-b-2 border-dashed border-border-subtle pb-6 text-center space-y-2">
+            <div class="text-[11px] tracking-widest text-text-muted uppercase">
+              *** EXPEDIENTE FISCAL SIMULADO ***
+            </div>
+            
+            <!-- Receipt Wordmark -->
+            <div class="font-anton text-4xl sm:text-5xl md:text-6xl tracking-wider text-text-cream uppercase py-1">
+              CENIZA GRILL & BAR
+            </div>
+            
+            <div class="text-xs text-accent-sand tracking-widest uppercase font-bold">
+              OPERADORA NOCTURNA DE LA ROMA S.A. DE C.V.
+            </div>
+            
+            <div class="text-xs text-text-muted">
+              RFC: CGB-240918-MX9 • GUANAJUATO 138, ROMA NORTE, CDMX
+            </div>
+          </div>
+
+          <!-- Metadata Line Items -->
+          <div class="py-4 border-b border-border-subtle text-xs space-y-1.5 text-text-muted">
+            <div class="flex justify-between">
+              <span>TERMINAL: T-01 (BARRA)</span>
+              <span>FOLIO: 0092418-N</span>
+            </div>
+            <div class="flex justify-between">
+              <span>TURNO: NOCHE PROFUNDA</span>
+              <span>FECHA: HOY, CIUDAD DE MÉXICO</span>
+            </div>
+            <div class="flex justify-between">
+              <span>JEFE DE SALÓN: M. HERNÁNDEZ</span>
+              <span>ESTADO: SERVICIO ACTIVO</span>
+            </div>
+          </div>
+
+          <!-- Receipt Line Items for Hours & Address -->
+          <div class="py-6 border-b border-dashed border-border-subtle space-y-3">
+            <div class="text-xs font-bold text-text-cream uppercase tracking-wider mb-2">
+              DESGLOSE DE CONDICIONES DE SERVICIO:
+            </div>
+
+            <!-- Item 1: Ubicación -->
+            <div class="flex justify-between text-xs items-start">
+              <div>
+                <span class="text-text-cream font-bold block">01 / SEDE FÍSICA</span>
+                <span class="text-text-muted text-[11px]">Guanajuato 138, Roma Norte, CDMX</span>
+              </div>
+              <span class="text-accent-sand font-bold">VÁLIDO</span>
+            </div>
+
+            <!-- Item 2: Días y Apertura -->
+            <div class="flex justify-between text-xs items-start">
+              <div>
+                <span class="text-text-cream font-bold block">02 / HORARIO OPERATIVO</span>
+                <span class="text-text-muted text-[11px]">Mié a Sáb: 19:00 a 02:30 | Dom: 16:00 a 23:30</span>
+              </div>
+              <span class="text-accent-sand font-bold">ACTIVO</span>
+            </div>
+
+            <!-- Item 3: Política de Mesa -->
+            <div class="flex justify-between text-xs items-start">
+              <div>
+                <span class="text-text-cream font-bold block">03 / CONDICIÓN DE BARRA</span>
+                <span class="text-text-muted text-[11px]">10 bancos sin reservación previa. Llegada directa.</span>
+              </div>
+              <span class="text-accent-sand font-bold">LIBRE</span>
+            </div>
+
+            <!-- Item 4: Selección de Brasa -->
+            <div class="flex justify-between text-xs items-start">
+              <div>
+                <span class="text-text-cream font-bold block">04 / COMBUSTIBLE PRINCIPAL</span>
+                <span class="text-text-muted text-[11px]">100% Carbón de encino veracruzano y leña seca.</span>
+              </div>
+              <span class="text-accent-sand font-bold">ORIGEN</span>
+            </div>
+          </div>
+
+          <!-- The "GRACIAS" Total Line -->
+          <div class="py-6 border-b-2 border-dashed border-border-strong space-y-2">
+            <div class="flex justify-between items-baseline">
+              <span class="font-anton text-2xl md:text-3xl text-text-cream uppercase tracking-wider">
+                TOTAL: GRACIAS POR QUEDARTE HASTA EL FINAL
+              </span>
+              <span class="font-anton text-2xl md:text-3xl text-neon-glow">
+                $ 0.00
+              </span>
+            </div>
+            <p class="text-[11px] text-text-muted leading-relaxed">
+              La casa no cobra cover ni impone tiempos por mesa. El fuego se apaga cuando el último vaso toca la madera.
+            </p>
+          </div>
+
+          <!-- Structured Link Groups -->
+          <div class="py-8 grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs border-b border-border-subtle">
+            
+            <!-- Group 1: Secciones -->
+            <div>
+              <div class="font-bold text-text-cream uppercase tracking-wider mb-2 border-b border-border-subtle/50 pb-1">
+                SECCIONES
+              </div>
+              <ul class="space-y-1.5 text-text-muted">
+                <li><a href="#galeria" class="hover:text-accent-sand transition">01. Tira de Contactos</a></li>
+                <li><a href="#resenas" class="hover:text-accent-sand transition">02. Notas de la Barra</a></li>
+                <li><a href="#sucursales" class="hover:text-accent-sand transition">03. Mapa de Mesas</a></li>
+                <li><a href="#pie" class="hover:text-accent-sand transition">04. Ticket de Cierre</a></li>
+              </ul>
+            </div>
+
+            <!-- Group 2: Legal & Bar -->
+            <div>
+              <div class="font-bold text-text-cream uppercase tracking-wider mb-2 border-b border-border-subtle/50 pb-1">
+                LEGALES & POLÍTICA
+              </div>
+              <ul class="space-y-1.5 text-text-muted">
+                <li><span class="text-accent-sand">Sin Código de Vestimenta</span></li>
+                <li><span>Solo Mayores de 18 Años</span></li>
+                <li><span>Pet Friendly en Terraza</span></li>
+                <li><span>Aviso de Privacidad 2025</span></li>
+              </ul>
+            </div>
+
+            <!-- Group 3: Contacto Directo -->
+            <div>
+              <div class="font-bold text-text-cream uppercase tracking-wider mb-2 border-b border-border-subtle/50 pb-1">
+                CONTACTO INMEDIATO
+              </div>
+              <ul class="space-y-1.5 text-text-muted">
+                <li><a href="https://wa.me/525512345678" target="_blank" rel="noopener" class="text-neon-glow hover:underline">WhatsApp Oficial</a></li>
+                <li><a href="tel:+525555648900" class="hover:text-text-cream">+52 (55) 5564-8900</a></li>
+                <li><a href="mailto:hola@cenizagrill.mx" class="hover:text-text-cream">hola@cenizagrill.mx</a></li>
+                <li><span class="text-[10px] text-text-muted">Roma Norte, CDMX</span></li>
+              </ul>
+            </div>
+
+          </div>
+
+          <!-- Bottom Receipt Stamp and Barcode -->
+          <div class="pt-6 text-center space-y-4">
+            
+            <!-- Simulated Barcode -->
+            <div class="flex justify-center items-center gap-1 h-12 py-1 max-w-xs mx-auto overflow-hidden">
+              <span class="w-1 h-full bg-text-cream"></span>
+              <span class="w-2 h-full bg-text-cream"></span>
+              <span class="w-0.5 h-full bg-text-cream"></span>
+              <span class="w-3 h-full bg-text-cream"></span>
+              <span class="w-1 h-full bg-text-cream"></span>
+              <span class="w-0.5 h-full bg-text-cream"></span>
+              <span class="w-2 h-full bg-text-cream"></span>
+              <span class="w-1.5 h-full bg-text-cream"></span>
+              <span class="w-0.5 h-full bg-text-cream"></span>
+              <span class="w-2.5 h-full bg-text-cream"></span>
+              <span class="w-1 h-full bg-text-cream"></span>
+              <span class="w-3 h-full bg-text-cream"></span>
+              <span class="w-0.5 h-full bg-text-cream"></span>
+              <span class="w-2 h-full bg-text-cream"></span>
+              <span class="w-1 h-full bg-text-cream"></span>
+              <span class="w-0.5 h-full bg-text-cream"></span>
+              <span class="w-3 h-full bg-text-cream"></span>
+              <span class="w-1.5 h-full bg-text-cream"></span>
+              <span class="w-2 h-full bg-text-cream"></span>
+              <span class="w-0.5 h-full bg-text-cream"></span>
+              <span class="w-1 h-full bg-text-cream"></span>
+              <span class="w-2 h-full bg-text-cream"></span>
+            </div>
+            
+            <div class="text-[10px] tracking-widest text-text-muted uppercase">
+              CENIZA-ROMANORTE-0924 • CONSERVE ESTE COMPROBANTE
+            </div>
+
+            <!-- Perforated Tear-off Simulation Message -->
+            <div class="pt-2 text-[10px] font-bold text-accent-sand uppercase tracking-widest">
+              ✂ CORTE AQUÍ AL SALIR DE LA BARRA
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </footer>
+
+  </main>
+
+</body>
+</html>

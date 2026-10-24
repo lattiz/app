@@ -1,0 +1,40 @@
+<footer id="footer" data-lz-slot="footer" data-lz-variant="hours-blocks" class="lz-section lz-footer-hours-blocks">
+  <div class="lz-container">
+    <div class="lz-footer-hours-blocks__grid">
+      <div class="lz-footer-hours-blocks__brand">
+        <p class="lz-footer-hours-blocks__name">{{shortName}}</p>
+        <p class="lz-footer-hours-blocks__about" data-lz-if="about" data-lz-key="about"></p>
+      </div>
+      <div class="lz-footer-hours-blocks__block">
+        <h3 class="lz-footer-hours-blocks__title" data-lz-key="placeTitle"></h3>
+        <p class="lz-footer-hours-blocks__text">{{address}}</p>
+        <p class="lz-footer-hours-blocks__aside" data-lz-if="placeNote" data-lz-key="placeNote"></p>
+      </div>
+      <div class="lz-footer-hours-blocks__block">
+        <h3 class="lz-footer-hours-blocks__title" data-lz-key="scheduleTitle"></h3>
+        <ul class="lz-footer-hours-blocks__list">
+          <li class="lz-footer-hours-blocks__row" data-lz-each="schedule">
+            <span data-lz-key="label"></span>
+            <strong data-lz-key="value"></strong>
+          </li>
+        </ul>
+      </div>
+      <div class="lz-footer-hours-blocks__block">
+        <h3 class="lz-footer-hours-blocks__title" data-lz-key="contactTitle"></h3>
+        <ul class="lz-footer-hours-blocks__list">
+          <li><a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-footer-hours-blocks__link">WhatsApp</a></li>
+          <li><a href="{{phoneUrl}}" class="lz-footer-hours-blocks__link">{{phone}}</a></li>
+          <li><a href="{{emailUrl}}" class="lz-footer-hours-blocks__link">{{email}}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="lz-footer-hours-blocks__bottom">
+      <p class="lz-footer-hours-blocks__legal">© {{year}} {{name}}. Todos los derechos reservados. · Hecho con Lattiz</p>
+      <nav aria-label="Enlaces del pie">
+        <ul class="lz-footer-hours-blocks__links">
+          <li data-lz-each="links"><a class="lz-footer-hours-blocks__link" data-lz-attr-href="href" data-lz-key="label"></a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</footer>

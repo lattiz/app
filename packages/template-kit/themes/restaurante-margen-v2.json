@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-margen-v2.spec.json (spec 880697027b0b, file 34bc6cd18ce1). Do not edit: use the spec, or freeze.",
+  "name": "restaurante-margen-v2",
+  "label": "Margen Café · Pro",
+  "tier": "pro",
+  "fontPair": "cormorant-garamond+work-sans",
+  "colors": {
+    "bg": "#EFE7DA",
+    "surface": "#F9F5F0",
+    "surface-2": "#E0D9CD",
+    "text": "#1D1C1A",
+    "muted": "#66635D",
+    "accent": "#405640",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#405640",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#EFE7DA",
+    "on-overlay": "#1D1C1A",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#1D1C1A"
+  },
+  "fonts": {
+    "display": "'Cormorant Garamond', serif",
+    "serif": "'Cormorant Garamond', serif",
+    "body": "'Work Sans', sans-serif",
+    "googleFonts": "family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Work+Sans:wght@400;500;600",
+    "displayTransform": "none",
+    "displayLeading": "1",
+    "displayWeight": "600",
+    "displayScale": "1.12",
+    "accentStyle": "italic",
+    "accentTransform": "none"
+  },
+  "shape": {
+    "radiusCard": "22px",
+    "radiusPill": "999px",
+    "border": "1px",
+    "shadow": "none"
+  },
+  "density": "airy",
+  "photoTreatment": "warm",
+  "placeholder": "blobs",
+  "accentWords": "color",
+  "container": "1280px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(1.08) saturate(.85)"
+  },
+  "style": {
+    "shape": "round",
+    "surface": "tinted",
+    "density": "airy",
+    "divider": "hairline",
+    "imageTreatment": "arch"
+  }
+}

@@ -87,4 +87,8 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [template-renewal-flag](template-renewal-flag.md) — rehacer = spec -v2 con version + renews; hereda paleta/par; v1 se retira en /admin
 - [stitch-section-cap-per-candidate](stitch-section-cap-per-candidate.md) — tope de 6 secciones de Stitch por candidato, no global
 - [design-fidelity-needs-section-id](design-fidelity-needs-section-id.md) — fidelity solo mide `#id`; otro ref cae al <footer> sin avisar
+- [hero-fit-stacked-copy-first](hero-fit-stacked-copy-first.md) — probe `fit` mide el texto si la foto va debajo; móvil: foto al final con order
+- [stitch-generation-lands-late](stitch-generation-lands-late.md) — Stitch da timeout por MCP pero genera; HTTP responde en minutos; claves de imagen fijas
+- [new-sections-budgets-and-gotchas](new-sections-budgets-and-gotchas.md) — presupuesto crudo subido; nojs y lookup con hijos; ancla de contacto en ambos tiers
 - [locations-sin-mapa](locations-sin-mapa.md) — map-link (Pro) y single-card (Básico) admitidas en blueprints; single-card es sucursal única
+- [deploy-previews-whole-tree](deploy-previews-whole-tree.md) — el deploy reemplaza todo el sitio; aborta si faltan carpetas de plantillas activas

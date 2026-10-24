@@ -1,0 +1,308 @@
+{
+  "portada": {
+    "ref": "portada",
+    "slot": "hero",
+    "theme": "restaurante-casa-comal-v1",
+    "measured": [
+      {
+        "variant": "hero/panel",
+        "structure": 0.411,
+        "heightRatio": 1.04,
+        "match": false
+      },
+      {
+        "variant": "hero/columns",
+        "structure": 0.586,
+        "heightRatio": 1.04,
+        "match": false
+      },
+      {
+        "variant": "hero/framed",
+        "structure": 0.625,
+        "heightRatio": 1.02,
+        "match": false
+      },
+      {
+        "variant": "hero/offset-card",
+        "structure": 0.628,
+        "heightRatio": 1.2,
+        "match": false
+      },
+      {
+        "variant": "hero/arch-sticker",
+        "structure": 0.695,
+        "heightRatio": 1.04,
+        "match": false
+      },
+      {
+        "variant": "hero/split",
+        "structure": 0.7,
+        "heightRatio": 1.07,
+        "match": false
+      },
+      {
+        "variant": "hero/duo-arch",
+        "structure": 0.779,
+        "heightRatio": 1.04,
+        "match": false
+      },
+      {
+        "variant": "hero/image-bg",
+        "structure": 0.806,
+        "heightRatio": 0.94,
+        "match": false
+      },
+      {
+        "variant": "hero/photo-ribbon",
+        "structure": 0.828,
+        "heightRatio": 0.94,
+        "match": false
+      },
+      {
+        "variant": "hero/index-panel",
+        "structure": 0.829,
+        "heightRatio": 0.84,
+        "match": false
+      },
+      {
+        "variant": "hero/bento",
+        "structure": 0.884,
+        "heightRatio": 1.02,
+        "match": false
+      },
+      {
+        "variant": "hero/poster",
+        "structure": 0.928,
+        "heightRatio": 0.94,
+        "match": false
+      },
+      {
+        "variant": "hero/overlap",
+        "structure": 0.968,
+        "heightRatio": 1.02,
+        "match": false
+      },
+      {
+        "variant": "hero/rail",
+        "structure": 0.998,
+        "heightRatio": 1.02,
+        "match": false
+      },
+      {
+        "variant": "hero/centered-arch",
+        "structure": 1,
+        "heightRatio": 1.54,
+        "match": false
+      },
+      {
+        "variant": "hero/stack",
+        "structure": 1,
+        "heightRatio": 1.02,
+        "match": false
+      }
+    ],
+    "best": "hero/panel",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "como-pedir": {
+    "ref": "como-pedir",
+    "slot": "about",
+    "theme": "restaurante-casa-comal-v1",
+    "measured": [
+      {
+        "variant": "about/portrait",
+        "structure": 0.739,
+        "heightRatio": 1.45,
+        "match": false
+      },
+      {
+        "variant": "about/brief",
+        "structure": 0.905,
+        "heightRatio": 0.85,
+        "match": false
+      },
+      {
+        "variant": "about/stats-strip",
+        "structure": 0.942,
+        "heightRatio": 1.22,
+        "match": false
+      },
+      {
+        "variant": "about/statement",
+        "structure": 0.953,
+        "heightRatio": 1.54,
+        "match": false
+      },
+      {
+        "variant": "about/text-image-offset",
+        "structure": 0.984,
+        "heightRatio": 1.34,
+        "match": false
+      },
+      {
+        "variant": "about/framed-craft",
+        "structure": 1,
+        "heightRatio": 1.19,
+        "match": false
+      }
+    ],
+    "best": "about/portrait",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "carta": {
+    "ref": "carta",
+    "slot": "services",
+    "theme": "restaurante-casa-comal-v1",
+    "measured": [
+      {
+        "variant": "services/index-table",
+        "structure": 0.92,
+        "heightRatio": 0.62,
+        "match": false
+      },
+      {
+        "variant": "services/price-list",
+        "structure": 0.926,
+        "heightRatio": 0.74,
+        "match": false
+      },
+      {
+        "variant": "services/menu-columns",
+        "structure": 0.958,
+        "heightRatio": 0.61,
+        "match": false
+      },
+      {
+        "variant": "services/cards",
+        "structure": 0.967,
+        "heightRatio": 0.67,
+        "match": false
+      },
+      {
+        "variant": "services/ritual-cards",
+        "structure": 0.984,
+        "heightRatio": 0.62,
+        "match": false
+      },
+      {
+        "variant": "services/editorial-table",
+        "structure": 1,
+        "heightRatio": 0.81,
+        "match": false
+      }
+    ],
+    "best": "services/index-table",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "hoy-en-barra": {
+    "ref": "hoy-en-barra",
+    "slot": "cta",
+    "theme": "restaurante-casa-comal-v1",
+    "measured": [
+      {
+        "variant": "cta/band",
+        "structure": 0.497,
+        "heightRatio": 0.46,
+        "match": false
+      }
+    ],
+    "best": "cta/band",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "cierre": {
+    "ref": "cierre",
+    "slot": "cta",
+    "theme": "restaurante-casa-comal-v1",
+    "measured": [
+      {
+        "variant": "cta/band",
+        "structure": 1,
+        "heightRatio": 0.82,
+        "match": false
+      }
+    ],
+    "best": "cta/band",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "pie": {
+    "ref": "pie",
+    "slot": "footer",
+    "theme": "restaurante-casa-comal-v1",
+    "measured": [
+      {
+        "variant": "footer/signature-bar",
+        "structure": 0.579,
+        "heightRatio": 1.15,
+        "match": false
+      },
+      {
+        "variant": "footer/ledger",
+        "structure": 0.682,
+        "heightRatio": 2.72,
+        "match": false
+      },
+      {
+        "variant": "footer/columns",
+        "structure": 0.731,
+        "heightRatio": 2.15,
+        "match": false
+      },
+      {
+        "variant": "footer/big-wordmark",
+        "structure": 0.751,
+        "heightRatio": 4.05,
+        "match": false
+      },
+      {
+        "variant": "footer/minimal-centered",
+        "structure": 0.997,
+        "heightRatio": 2.33,
+        "match": false
+      }
+    ],
+    "best": "footer/signature-bar",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  }
+}
