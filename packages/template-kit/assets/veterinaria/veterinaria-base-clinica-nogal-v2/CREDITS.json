@@ -1,0 +1,16 @@
+{
+  "$lattiz": "GENERATED from specs/veterinaria-clinica-nogal-v2.spec.json (spec 898b377e41b4, file 0ffa8eb8f845). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "b5590e61f23ddfc36a2e86e2080883578372f1223932c3bb5a653852a58eb86f",
+      "query": "vet examining puppy",
+      "providerId": 5969002,
+      "pageUrl": "https://pixabay.com/photos/dog-puppy-veterinary-clinic-5969002/",
+      "photographer": "mbfrye",
+      "photographerUrl": "https://pixabay.com/users/2647089/",
+      "tags": "dog, puppy, veterinary clinic, vet clinic, nature, leash, pet, animal, young dog, domestic dog, canine, mammal, cute, adorable, portrait"
+    }
+  ]
+}

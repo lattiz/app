@@ -1,0 +1,20 @@
+{
+  "id": "estetica-alheli-colecciones-01",
+  "giro": "estetica",
+  "source": "stitch",
+  "status": "harvested",
+  "tags": [
+    "nail",
+    "colecciones",
+    "rosa"
+  ],
+  "spin": "colecciones-rosa",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-21T05:45:04.714Z",
+  "stitch": {
+    "project_id": "15767938082826316070",
+    "screen_ids": [
+      "f1a392bd154f414289c2f2f937f49e50"
+    ]
+  }
+}

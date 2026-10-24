@@ -1,0 +1,61 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/floreria-cardamina-v2.spec.json",
+  "catalog": "extended",
+  "catalogVersion": 2,
+  "tiers": {
+    "floreria-cardamina-v2": {
+      "tier": "pro",
+      "palette": "pal-bosque-profundo",
+      "fontPair": "bodoni-moda+karla",
+      "shape": "filete",
+      "archetype": "editorial-atelier",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "poster" },
+        { "role": "about", "slot": "about", "variant": "statement" },
+        { "role": "catalog", "slot": "services", "variant": "cards" },
+        { "role": "proof", "slot": "gallery", "variant": "staggered-frames" },
+        {
+          "role": "testimonials",
+          "slot": "testimonials",
+          "variant": "quote-feature"
+        },
+        { "role": "faq", "slot": "faq", "variant": "grid" },
+        { "role": "contact", "slot": "locations", "variant": "with-contact" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "ledger" }
+      ],
+      "layout": { "archetype": "editorial" },
+      "renews": "floreria-cardamina-v1"
+    },
+    "floreria-base-cardamina-v2": {
+      "tier": "basico",
+      "palette": "pal-papel-tinta",
+      "fontPair": "instrument-serif+instrument-sans",
+      "shape": "sutil",
+      "archetype": "essential",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "centered-logo" },
+        { "role": "hero", "slot": "hero", "variant": "split" },
+        { "role": "about", "slot": "about", "variant": "brief" },
+        { "role": "catalog", "slot": "services", "variant": "editorial-table" },
+        { "role": "faq", "slot": "faq", "variant": "grid" },
+        { "role": "contact", "slot": "locations", "variant": "single" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "minimal-centered" }
+      ],
+      "layout": { "archetype": "editorial" },
+      "renews": "floreria-base-cardamina-v1"
+    }
+  }
+}

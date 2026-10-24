@@ -1,0 +1,43 @@
+<section id="servicios" data-lz-slot="services" data-lz-variant="dish-spotlight" class="lz-section lz-services-dish-spotlight">
+  <div class="lz-container">
+    <div class="lz-services-dish-spotlight__head">
+      <p class="lz-services-dish-spotlight__kicker" data-lz-if="kicker" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-services-dish-spotlight__title" data-lz-key="title"></h2>
+      <p class="lz-services-dish-spotlight__intro" data-lz-if="intro" data-lz-key="intro"></p>
+    </div>
+    <article class="lz-services-dish-spotlight__feature">
+      <img loading="lazy" width="1000" height="780" class="lz-services-dish-spotlight__photo" data-lz-attr-src="image" data-lz-attr-alt="imageAlt">
+      <div class="lz-services-dish-spotlight__body">
+        <p class="lz-services-dish-spotlight__badge" data-lz-if="badge" data-lz-key="badge"></p>
+        <h3 class="lz-services-dish-spotlight__name" data-lz-key="featuredName"></h3>
+        <p class="lz-services-dish-spotlight__text" data-lz-key="featuredText"></p>
+        <div class="lz-services-dish-spotlight__ingredients" data-lz-if="chips">
+          <p class="lz-services-dish-spotlight__chips-label" data-lz-if="chipsLabel" data-lz-key="chipsLabel"></p>
+          <ul class="lz-services-dish-spotlight__chips">
+            <li data-lz-each="chips" data-lz-key="."></li>
+          </ul>
+        </div>
+        <div class="lz-services-dish-spotlight__foot">
+          <p class="lz-services-dish-spotlight__price" data-lz-key="featuredPrice"></p>
+          <a target="_blank" rel="noopener noreferrer" class="lz-services-dish-spotlight__cta" data-lz-attr-href="featuredHref" data-lz-key="featuredCta"></a>
+        </div>
+      </div>
+    </article>
+    <ul class="lz-services-dish-spotlight__list">
+      <li class="lz-services-dish-spotlight__item" data-lz-each="prices">
+        <div class="lz-services-dish-spotlight__row">
+          <h3 class="lz-services-dish-spotlight__item-name" data-lz-key="name"></h3>
+          <p class="lz-services-dish-spotlight__item-price" data-lz-key="price"></p>
+        </div>
+        <p class="lz-services-dish-spotlight__item-desc" data-lz-key="description"></p>
+      </li>
+    </ul>
+    <div class="lz-services-dish-spotlight__promos" data-lz-if="promos">
+      <a target="_blank" rel="noopener noreferrer" class="lz-services-dish-spotlight__promo" data-lz-each="promos" data-lz-attr-href="href">
+        <span class="lz-services-dish-spotlight__promo-tag" data-lz-if="tag" data-lz-key="tag"></span>
+        <span class="lz-services-dish-spotlight__promo-title" data-lz-key="title"></span>
+        <span class="lz-services-dish-spotlight__promo-cta" data-lz-key="cta"></span>
+      </a>
+    </div>
+  </div>
+</section>

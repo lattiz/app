@@ -1,0 +1,25 @@
+<section id="servicios" data-lz-slot="services" data-lz-variant="treatment-rows" class="lz-section lz-services-treatment-rows">
+  <div class="lz-container">
+    <div class="lz-services-treatment-rows__head">
+      <div class="lz-services-treatment-rows__lead">
+        <p class="lz-services-treatment-rows__kicker" data-lz-if="kicker" data-lz-key="kicker"></p>
+        <h2 class="lz-title lz-services-treatment-rows__title" data-lz-key="title"></h2>
+        <p class="lz-services-treatment-rows__intro" data-lz-if="intro" data-lz-key="intro"></p>
+      </div>
+      <p class="lz-services-treatment-rows__unit" data-lz-if="unit" data-lz-key="unit"></p>
+    </div>
+    <ul class="lz-services-treatment-rows__panel" data-lz-if="prices">
+      <li class="lz-services-treatment-rows__row" data-lz-each="prices">
+        <h3 class="lz-services-treatment-rows__name" data-lz-key="name"></h3>
+        <p class="lz-services-treatment-rows__desc" data-lz-key="description"></p>
+        <p class="lz-services-treatment-rows__price" data-lz-key="price"></p>
+        <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-services-treatment-rows__cta" data-lz-attr-href="href" data-lz-key="cta">Agendar</a>
+      </li>
+    </ul>
+    <ul class="lz-services-treatment-rows__promos" data-lz-if="promos">
+      <li class="lz-services-treatment-rows__promo" data-lz-each="promos">
+        <a target="_blank" rel="noopener noreferrer" class="lz-services-treatment-rows__promo-link" data-lz-attr-href="href" data-lz-key="cta"></a>
+      </li>
+    </ul>
+  </div>
+</section>

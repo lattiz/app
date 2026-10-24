@@ -1,0 +1,22 @@
+<section id="encargos" data-lz-slot="cta" data-lz-variant="included-panel" class="lz-section lz-cta-included-panel">
+  <div class="lz-container lz-cta-included-panel__inner">
+    <div class="lz-cta-included-panel__copy">
+      <p class="lz-cta-included-panel__kicker" data-lz-if="kicker" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-cta-included-panel__title" data-lz-key="title"></h2>
+      <p class="lz-cta-included-panel__text" data-lz-if="text" data-lz-key="text"></p>
+      <div class="lz-cta-included-panel__actions">
+        <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-cta-included-panel__cta" data-lz-key="primaryCta"></a>
+        <a data-lz-if="secondaryCta" class="lz-cta-included-panel__more" data-lz-attr-href="secondaryHref" data-lz-key="secondaryCta"></a>
+      </div>
+    </div>
+    <div class="lz-cta-included-panel__panel" data-lz-if="items">
+      <h3 class="lz-cta-included-panel__panel-title" data-lz-if="panelTitle" data-lz-key="panelTitle"></h3>
+      <ul class="lz-cta-included-panel__items">
+        <li class="lz-cta-included-panel__item" data-lz-each="items">
+          <svg class="lz-cta-included-panel__check" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10" cy="10" r="8"/><path d="m6.5 10.2 2.4 2.4 4.6-4.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span data-lz-key="."></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

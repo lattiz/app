@@ -1,0 +1,82 @@
+{
+  "colecciones": {
+    "ref": "colecciones",
+    "slot": "services",
+    "theme": "estetica-alheli-v1",
+    "measured": [
+      {
+        "variant": "services/ritual-cards",
+        "structure": 0.557,
+        "heightRatio": 1.16,
+        "match": false
+      },
+      {
+        "variant": "services/price-list",
+        "structure": 0.747,
+        "heightRatio": 1.42,
+        "match": false
+      },
+      {
+        "variant": "services/editorial-table",
+        "structure": 0.783,
+        "heightRatio": 1.45,
+        "match": false
+      },
+      {
+        "variant": "services/menu-columns",
+        "structure": 0.837,
+        "heightRatio": 1.16,
+        "match": false
+      },
+      {
+        "variant": "services/cards",
+        "structure": 0.882,
+        "heightRatio": 1.24,
+        "match": false
+      }
+    ],
+    "best": "services/ritual-cards",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "cita": {
+    "ref": "cita",
+    "slot": "about",
+    "theme": "estetica-alheli-v1",
+    "measured": [
+      {
+        "variant": "about/booking-steps",
+        "structure": 0.225,
+        "heightRatio": 1.44,
+        "match": false
+      },
+      {
+        "variant": "about/framed-craft",
+        "structure": 0.487,
+        "heightRatio": 1.63,
+        "match": false
+      },
+      {
+        "variant": "about/portrait",
+        "structure": 0.975,
+        "heightRatio": 1.99,
+        "match": false
+      }
+    ],
+    "best": "about/booking-steps",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  }
+}

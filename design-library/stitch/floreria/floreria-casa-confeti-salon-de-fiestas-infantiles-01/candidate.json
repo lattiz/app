@@ -1,0 +1,20 @@
+{
+  "id": "floreria-casa-confeti-salon-de-fiestas-infantiles-01",
+  "giro": "floreria",
+  "source": "stitch",
+  "status": "harvested",
+  "tags": [
+    "party",
+    "tiers",
+    "timeline"
+  ],
+  "spin": "casa-confeti-itinerario-paquetes",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-22T09:41:02.359Z",
+  "stitch": {
+    "project_id": "6031046357300669951",
+    "screen_ids": [
+      "3edba971286144b09abe18aac11f638a"
+    ]
+  }
+}

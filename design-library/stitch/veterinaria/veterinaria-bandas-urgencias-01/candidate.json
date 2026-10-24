@@ -1,0 +1,22 @@
+{
+  "id": "veterinaria-bandas-urgencias-01",
+  "giro": "veterinaria",
+  "source": "stitch",
+  "status": "harvested",
+  "tags": [
+    "clinica-nogal",
+    "renovacion",
+    "jardin-suave",
+    "loose"
+  ],
+  "spin": "vet-bandas-urgencias",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-21T03:52:56.305Z",
+  "stitch": {
+    "project_id": "15767938082826316070",
+    "screen_ids": [
+      "88a2230299784830a5596df5c837f9a0"
+    ]
+  },
+  "direction": "jardin-suave"
+}

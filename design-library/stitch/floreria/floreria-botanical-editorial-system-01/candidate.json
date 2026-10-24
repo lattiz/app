@@ -1,0 +1,17 @@
+{
+  "id": "floreria-botanical-editorial-system-01",
+  "giro": "floreria",
+  "source": "stitch",
+  "status": "harvested",
+  "tags": [
+    "dark",
+    "editorial",
+    "framed"
+  ],
+  "spin": "bosque-editorial-enmarcado",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-21T05:49:35.304Z",
+  "stitch": {
+    "project_id": "3235029467291222637"
+  }
+}

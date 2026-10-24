@@ -309,7 +309,15 @@ export async function validateSpec(
             `falta (lo pide ${slot}/${variant} en ${TIER_LABEL[tier]})`,
             `Defínelo en copy.${slot} o en overrides.${tier}.copy.${slot}.`,
           );
-      for (const k of ['image', 'items', 'members', 'products', 'groups', 'tiles']) {
+      for (const k of [
+        'image',
+        'items',
+        'members',
+        'products',
+        'prices',
+        'groups',
+        'tiles',
+      ]) {
         const v = copy[slot]?.[k];
         if (k === 'image' && typeof v === 'string')
           usedImages.add(v.replace(/\.jpg$/, ''));
@@ -358,7 +366,8 @@ export async function validateSpec(
     const n = Number(/\[(\d+)\]/.exec(path)?.[1] ?? 0) + 1;
     if (/members\[/.test(path)) return `team-${n}`;
     if (/items\[/.test(path)) return `gallery-${String(n).padStart(2, '0')}`;
-    if (/products\[/.test(path)) return `product-${String(n).padStart(2, '0')}`;
+    if (/products\[/.test(path) || /prices\[/.test(path))
+      return `product-${String(n).padStart(2, '0')}`;
     return /about\./.test(path) ? 'about' : 'hero';
   };
   const remote = (value: unknown, path: string): void => {

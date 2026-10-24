@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pulso Deportivo - Clavería, CDMX</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Barlow:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "error-container": "#93000a",
+            "outline-variant": "#444934",
+            "on-secondary-container": "#b8b9b4",
+            "surface-container": "#1e2115",
+            "tertiary-fixed": "#c1e8fe",
+            "tertiary": "#C6F432",
+            "surface-bright": "#383b2d",
+            "surface-container-high": "#2C2E2B",
+            "on-tertiary": "#073546",
+            "background": "#111311",
+            "surface-container-lowest": "#0d0f05",
+            "secondary-container": "#484a46",
+            "on-surface-variant": "#969992",
+            "on-primary-fixed": "#161f00",
+            "on-error-container": "#ffdad6",
+            "on-secondary-fixed-variant": "#454744",
+            "secondary": "#c6c7c2",
+            "inverse-on-surface": "#2f3225",
+            "on-background": "#e2e4d1",
+            "secondary-fixed-dim": "#c6c7c2",
+            "surface-container-low": "#1a1d11",
+            "on-error": "#690005",
+            "on-tertiary-container": "#44697c",
+            "error": "#ffb4ab",
+            "on-surface": "#EEF2E8",
+            "inverse-surface": "#e2e4d1",
+            "on-tertiary-fixed-variant": "#244b5d",
+            "on-primary-fixed-variant": "#3b4d00",
+            "tertiary-container": "#c1e8fe",
+            "on-primary": "#283500",
+            "primary-container": "#c5f331",
+            "primary": "#ffffff",
+            "on-tertiary-fixed": "#001e2b",
+            "surface-variant": "#333629",
+            "primary-fixed": "#c5f331",
+            "inverse-primary": "#506600",
+            "primary-fixed-dim": "#aad600",
+            "secondary-fixed": "#e2e3de",
+            "on-secondary": "#2f312e",
+            "surface-tint": "#aad600",
+            "surface-dim": "#121509",
+            "surface": "#111311",
+            "on-secondary-fixed": "#1a1c19",
+            "outline": "#8B8E87",
+            "surface-container-highest": "#333629",
+            "tertiary-fixed-dim": "#a5cce1",
+            "on-primary-container": "#556d00"
+          },
+          "borderRadius": {
+            "DEFAULT": "0rem",
+            "lg": "0rem",
+            "xl": "0rem",
+            "full": "0rem"
+          },
+          "spacing": {
+            "space-md": "1rem",
+            "space-sm": "0.875rem",
+            "gutter": "1rem",
+            "space-xl": "5rem",
+            "space-lg": "2rem",
+            "margin": "1.5rem",
+            "space-xs": "0.5rem"
+          },
+          "fontFamily": {
+            "headline-md": ["Bebas Neue"],
+            "label-caps": ["Barlow"],
+            "body-md": ["Barlow"],
+            "display-lg": ["Bebas Neue"],
+            "body-lg": ["Barlow"]
+          },
+          "fontSize": {
+            "headline-md": ["41px", { "lineHeight": "48px", "fontWeight": "600" }],
+            "label-caps": ["14px", { "lineHeight": "20px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+            "body-md": ["16px", { "lineHeight": "26px", "fontWeight": "400" }],
+            "display-lg": ["83px", { "lineHeight": "89px", "fontWeight": "700" }],
+            "body-lg": ["20px", { "lineHeight": "32px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased selection:bg-tertiary selection:text-on-tertiary">
+<!-- TopAppBar -->
+<header class="bg-background text-primary sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-space-lg max-w-[1200px] mx-auto h-20">
+<a class="text-headline-md font-headline-md font-extrabold text-primary tracking-wider" href="#">PULSO DEPORTIVO</a>
+<div class="hidden md:flex items-center gap-space-lg">
+<a class="text-on-surface-variant hover:text-tertiary transition-colors text-label-caps" href="#horarios">Timetable</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors text-label-caps" href="#membresias">Membership</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors text-label-caps" href="#nosotros">About</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors text-label-caps" href="#testimonios">Testimonials</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors text-label-caps" href="#faq">FAQ</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors text-label-caps" href="#contacto">Contact</a>
+</div>
+<div>
+<a class="bg-tertiary text-on-tertiary px-space-md py-space-xs font-label-caps flex items-center gap-2 hover:opacity-90 transition-opacity" href="https://wa.me/" target="_blank">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
+          WhatsApp
+        </a>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="relative w-full min-h-[870px] flex items-center justify-center overflow-hidden border-b border-outline-variant">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center filter grayscale contrast-125" data-alt="A moody, high-contrast dark gym interior in Claveria CDMX with dramatic neon lighting casting electric lime glows on heavy steel barbells, squat racks, and concrete floors. The gritty urban atmosphere is captured in a striking duotone style with deep blacks and vibrant highlights, conveying an intense and authentic neighborhood fitness vibe." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCz0UrMwS13bn3zKJJL2HjCpVP8qhNjF7gSCfCJ8lfKjw6Sq5VydPbn5KjKCD6tSZRaL-pyBidzjnZN5nWVNNuyV3D-LATwsXhbtga8IBNgkBzRs5IaIZ4PI3tFUO1ToKxBMkwptoj06mzTFSql4lq5uZT0ryqgzXmk5cIncLmSUaSd7aIUAE0oA_By7zUPZsgEGCJiTikp4FjMVdHxyCyjOnhjNT6iAB8HARlJXJf-1wC-x20XBRQPsuTewW91z1a4kThUWt-nT13G')"></div>
+<div class="absolute inset-0 bg-background/80 mix-blend-multiply"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background"></div>
+</div>
+<div class="relative z-10 max-w-[1200px] mx-auto px-space-lg py-space-xl text-center flex flex-col items-center gap-space-md">
+<span class="text-tertiary font-label-caps tracking-widest bg-surface-container-high px-space-sm py-1 border border-outline-variant">GIMNASIO DE BARRIO • CLAVERÍA, CDMX</span>
+<h1 class="text-display-lg font-display-lg text-primary uppercase tracking-tight">ENTRENA EN CLAVERÍA</h1>
+<p class="text-body-lg text-on-surface-variant max-w-2xl">Sin pretextos ni rodeos. Equipo pesado, clases intensas y la mejor comunidad de la zona norte para cumplir tus metas reales.</p>
+<div class="flex flex-wrap justify-center gap-space-md mt-space-md">
+<a class="bg-tertiary text-on-tertiary px-space-lg py-space-sm font-label-caps text-base hover:bg-primary-fixed-dim transition-colors flex items-center gap-2" href="#horarios">
+          Apartar clase
+          <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+<a class="border border-outline text-primary px-space-lg py-space-sm font-label-caps text-base hover:border-tertiary hover:text-tertiary transition-colors" href="#membresias">
+          Ver Precios
+        </a>
+</div>
+</div>
+</section>
+<!-- Class Timetable Section -->
+<section class="max-w-[1200px] mx-auto px-space-lg py-space-xl" id="horarios">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-space-lg border-b border-outline-variant pb-space-md">
+<div>
+<span class="text-tertiary font-label-caps">PARRILLA DE HORARIOS</span>
+<h2 class="text-headline-md font-headline-md text-primary uppercase mt-1">Clases Disponibles</h2>
+</div>
+<p class="text-on-surface-variant text-body-md max-w-md mt-2 md:mt-0">Reserva tu lugar con anticipación. Cupo limitado por zona para garantizar tu rendimiento.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Card 1 -->
+<div class="bg-surface-container-high border border-outline-variant p-space-lg flex flex-col justify-between hover:border-tertiary transition-colors">
+<div>
+<div class="flex justify-between items-start mb-space-md">
+<span class="bg-surface text-tertiary px-space-xs py-1 font-label-caps text-xs border border-outline-variant">ZONA 01</span>
+<span class="material-symbols-outlined text-tertiary">fitness_center</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary mb-2">Fuerza</h3>
+<p class="text-on-surface-variant text-body-md mb-space-md">Levantamiento olímpico, powerlifting y hipertrofia con pesas libres.</p>
+</div>
+<div class="border-t border-outline-variant pt-space-md flex flex-col gap-2">
+<div class="flex justify-between text-sm">
+<span class="text-on-surface-variant">Lunes a Viernes</span>
+<span class="text-primary font-semibold">06:00 - 22:00</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-on-surface-variant">Sábados</span>
+<span class="text-primary font-semibold">08:00 - 16:00</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-high border border-outline-variant p-space-lg flex flex-col justify-between hover:border-tertiary transition-colors">
+<div>
+<div class="flex justify-between items-start mb-space-md">
+<span class="bg-surface text-tertiary px-space-xs py-1 font-label-caps text-xs border border-outline-variant">ZONA 02</span>
+<span class="material-symbols-outlined text-tertiary">bolt</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary mb-2">Funcional</h3>
+<p class="text-on-surface-variant text-body-md mb-space-md">Entrenamiento de alta intensidad, cuerdas, barras y acondicionamiento.</p>
+</div>
+<div class="border-t border-outline-variant pt-space-md flex flex-col gap-2">
+<div class="flex justify-between text-sm">
+<span class="text-on-surface-variant">Lun / Mié / Vie</span>
+<span class="text-primary font-semibold">07:00 / 19:00</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-on-surface-variant">Mar / Jue</span>
+<span class="text-primary font-semibold">08:00 / 20:00</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-high border border-outline-variant p-space-lg flex flex-col justify-between hover:border-tertiary transition-colors">
+<div>
+<div class="flex justify-between items-start mb-space-md">
+<span class="bg-surface text-tertiary px-space-xs py-1 font-label-caps text-xs border border-outline-variant">ZONA 03</span>
+<span class="material-symbols-outlined text-tertiary">directions_bike</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary mb-2">Spinning</h3>
+<p class="text-on-surface-variant text-body-md mb-space-md">Cardio extremo con música inmersiva y resistencia controlada.</p>
+</div>
+<div class="border-t border-outline-variant pt-space-md flex flex-col gap-2">
+<div class="flex justify-between text-sm">
+<span class="text-on-surface-variant">Lunes a Viernes</span>
+<span class="text-primary font-semibold">07:00 / 18:00 / 20:00</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-on-surface-variant">Sábados</span>
+<span class="text-primary font-semibold">09:00</span>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-high border border-outline-variant p-space-lg flex flex-col justify-between hover:border-tertiary transition-colors">
+<div>
+<div class="flex justify-between items-start mb-space-md">
+<span class="bg-surface text-tertiary px-space-xs py-1 font-label-caps text-xs border border-outline-variant">ZONA 04</span>
+<span class="material-symbols-outlined text-tertiary">self_improvement</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary mb-2">Movilidad</h3>
+<p class="text-on-surface-variant text-body-md mb-space-md">Estiramientos, liberación miofascial y recuperación muscular.</p>
+</div>
+<div class="border-t border-outline-variant pt-space-md flex flex-col gap-2">
+<div class="flex justify-between text-sm">
+<span class="text-on-surface-variant">Martes y Jueves</span>
+<span class="text-primary font-semibold">09:00 / 21:00</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-on-surface-variant">Sábados</span>
+<span class="text-primary font-semibold">10:30</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Membership Prices Section -->
+<section class="bg-surface-container-lowest border-y border-outline-variant py-space-xl" id="membresias">
+<div class="max-w-[1200px] mx-auto px-space-lg">
+<div class="text-center max-w-2xl mx-auto mb-space-lg">
+<span class="text-tertiary font-label-caps">PLANES Y TARIFAS</span>
+<h2 class="text-headline-md font-headline-md text-primary uppercase mt-1">Inversión sin Rodeos</h2>
+<p class="text-on-surface-variant text-body-md mt-2">Sin inscripciones ocultas ni plazos forzosos en tu pase diario. Entra y dale.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- Day Pass -->
+<div class="bg-surface-container-high border border-outline-variant p-space-lg flex flex-col justify-between relative">
+<div>
+<span class="text-on-surface-variant font-label-caps text-xs">ACCESO TOTAL 24H</span>
+<h3 class="text-headline-md font-headline-md text-primary mt-1 mb-4">Día</h3>
+<div class="text-4xl font-headline-md text-tertiary mb-space-md">$80 <span class="text-sm font-body-md text-on-surface-variant">MXN</span></div>
+<ul class="space-y-3 text-on-surface-variant text-body-md mb-space-lg">
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-sm">check</span>
+                Acceso a todas las zonas
+              </li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-sm">check</span>
+                Lockers disponibles
+              </li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-sm">check</span>
+                Regaderas incluidas
+              </li>
+</ul>
+</div>
+<a class="w-full border border-outline text-primary py-3 font-label-caps text-center hover:bg-tertiary hover:text-on-tertiary hover:border-tertiary transition-all" href="https://wa.me/">
+            Comprar Pase
+          </a>
+</div>
+<!-- Monthly -->
+<div class="bg-surface-container-high border-2 border-tertiary p-space-lg flex flex-col justify-between relative shadow-lg">
+<div class="absolute -top-3 right-space-md bg-tertiary text-on-tertiary px-space-xs py-0.5 font-label-caps text-xs">
+            MÁS POPULAR
+          </div>
+<div>
+<span class="text-tertiary font-label-caps text-xs">MES CORRIDO</span>
+<h3 class="text-headline-md font-headline-md text-primary mt-1 mb-4">Mensual</h3>
+<div class="text-4xl font-headline-md text-tertiary mb-space-md">$690 <span class="text-sm font-body-md text-on-surface-variant">MXN</span></div>
+<ul class="space-y-3 text-on-surface text-body-md mb-space-lg">
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-sm">check</span>
+                Acceso ilimitado en horario abierto
+              </li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-sm">check</span>
+                Clases grupales sin costo extra
+              </li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-sm">check</span>
+                Rutina personalizada de bienvenida
+              </li>
+</ul>
+</div>
+<a class="w-full bg-tertiary text-on-tertiary py-3 font-label-caps text-center hover:opacity-90 transition-opacity" href="https://wa.me/">
+            Elegir Mensual
+          </a>
+</div>
+<!-- Quarterly -->
+<div class="bg-surface-container-high border border-outline-variant p-space-lg flex flex-col justify-between relative">
+<div>
+<span class="text-on-surface-variant font-label-caps text-xs">AHORRO TRIMESTRAL</span>
+<h3 class="text-headline-md font-headline-md text-primary mt-1 mb-4">Trimestre</h3>
+<div class="text-4xl font-headline-md text-tertiary mb-space-md">$1,850 <span class="text-sm font-body-md text-on-surface-variant">MXN</span></div>
+<ul class="space-y-3 text-on-surface-variant text-body-md mb-space-lg">
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-sm">check</span>
+                Todos los beneficios mensuales
+              </li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-sm">check</span>
+                Congelamiento de membresía 1 vez
+              </li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-sm">check</span>
+                1 invitado gratis al mes
+              </li>
+</ul>
+</div>
+<a class="w-full border border-outline text-primary py-3 font-label-caps text-center hover:bg-tertiary hover:text-on-tertiary hover:border-tertiary transition-all" href="https://wa.me/">
+            Elegir Trimestre
+          </a>
+</div>
+</div>
+</div>
+</section>
+<!-- About Section (Nosotros) -->
+<section class="max-w-[1200px] mx-auto px-space-lg py-space-xl" id="nosotros">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-xl items-center">
+<div class="space-y-space-md">
+<span class="text-tertiary font-label-caps">NOSOTROS</span>
+<h2 class="text-headline-md font-headline-md text-primary uppercase">Tú directo, de barrio</h2>
+<p class="text-body-lg text-on-surface-variant">Aquí nos conocemos todos por nombre. Pulso Deportivo nació en el corazón de Clavería para ofrecer un espacio sin pretensiones, con fierros bien cuidados, entrenadores que sí te corregirán la postura y un ambiente motivado por puro esfuerzo local.</p>
+<p class="text-body-md text-on-surface-variant">Sin franquicias aburridas ni contratos tramposos. Ven a entrenar pesado, respira metal y forma parte de la verdadera vieja escuela renovada en Azcapotzalco.</p>
+<div class="grid grid-cols-2 gap-space-md pt-space-sm">
+<div class="border-l-2 border-tertiary pl-space-md">
+<div class="text-3xl font-headline-md text-primary">+10 Años</div>
+<div class="text-on-surface-variant text-sm">Forjando atletas en Clavería</div>
+</div>
+<div class="border-l-2 border-tertiary pl-space-md">
+<div class="text-3xl font-headline-md text-primary">100%</div>
+<div class="text-on-surface-variant text-sm">Equipo profesional libre</div>
+</div>
+</div>
+</div>
+<div class="relative h-[400px] border border-outline-variant overflow-hidden">
+<div class="w-full h-full bg-cover bg-center filter grayscale contrast-125" data-alt="An energetic interior shot of Pulso Deportivo gym in Claveria CDMX, showing local members lifting heavy weights with focused expressions. The gritty industrial design features dark concrete walls, heavy steel dumbbells racked neatly, and neon accent lighting casting a moody glow across the active training floor." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuALB3zoKpfi54sIC49O4CLOZ8JJhbGvlMYwfbmYzkimHcZkcUXsEERPFxjJBkxi6RQlXRTJqsgzXFtsN_RkOVuWzuKfwXdP4lYdyLiyYgVzbptjDPYZq0xYMNQqSG9z9Utkr3n7tVC9lPJo7QVS2rWUek9NVtZU4BmuPCCvI5ujlCUziFL22MLwrd3F-aJEcLYJ3GP6xzoErWnBB5_xZOl6Xm-ECs2s9vdKIzCsUo-VOyEn2gAOp9zNu452yit6MtXOjrXnxx0RpyS3')"></div>
+<div class="absolute inset-0 bg-tertiary/10 mix-blend-color"></div>
+</div>
+</div>
+</section>
+<!-- Testimonials Section -->
+<section class="bg-surface-container-lowest border-y border-outline-variant py-space-xl" id="testimonios">
+<div class="max-w-[1200px] mx-auto px-space-lg">
+<div class="text-center max-w-2xl mx-auto mb-space-lg">
+<span class="text-tertiary font-label-caps">TESTIMONIOS</span>
+<h2 class="text-headline-md font-headline-md text-primary uppercase mt-1">Habla la Banda</h2>
+<p class="text-on-surface-variant text-body-md mt-2">Lo que dicen los vecinos que entrenan diario con nosotros.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- Testimonial 1 -->
+<div class="bg-surface-container-high border border-outline-variant p-space-lg flex flex-col justify-between">
+<p class="text-on-surface text-body-md italic mb-space-md">"El mejor ambiente de Clavería. Llevo dos años entrenando aquí y la comunidad te empuja a dar más en cada serie. Cero pretencioso."</p>
+<div class="border-t border-outline-variant pt-space-md flex items-center justify-between">
+<div>
+<div class="text-primary font-semibold">Rodrigo M.</div>
+<div class="text-on-surface-variant text-xs">Vecino de Clavería</div>
+</div>
+<span class="material-symbols-outlined text-tertiary">format_quote</span>
+</div>
+</div>
+<!-- Testimonial 2 -->
+<div class="bg-surface-container-high border border-outline-variant p-space-lg flex flex-col justify-between">
+<p class="text-on-surface text-body-md italic mb-space-md">"Las clases de spinning y funcional están con todo. Los instructores están al pendiente de tu técnica todo el tiempo. ¡100% recomendado!"</p>
+<div class="border-t border-outline-variant pt-space-md flex items-center justify-between">
+<div>
+<div class="text-primary font-semibold">Valeria S.</div>
+<div class="text-on-surface-variant text-xs">Atleta Funcional</div>
+</div>
+<span class="material-symbols-outlined text-tertiary">format_quote</span>
+</div>
+</div>
+<!-- Testimonial 3 -->
+<div class="bg-surface-container-high border border-outline-variant p-space-lg flex flex-col justify-between">
+<p class="text-on-surface text-body-md italic mb-space-md">"Los fierros siempre están ordenados, hay buen espacio y la tarifa mensual es justa. No necesitas más para ponerte fuerte."</p>
+<div class="border-t border-outline-variant pt-space-md flex items-center justify-between">
+<div>
+<div class="text-primary font-semibold">Carlos G.</div>
+<div class="text-on-surface-variant text-xs">Powerlifter Local</div>
+</div>
+<span class="material-symbols-outlined text-tertiary">format_quote</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="max-w-[1200px] mx-auto px-space-lg py-space-xl" id="faq">
+<div class="text-center max-w-2xl mx-auto mb-space-lg">
+<span class="text-tertiary font-label-caps">PREGUNTAS FRECUENTES</span>
+<h2 class="text-headline-md font-headline-md text-primary uppercase mt-1">Dudas Comunes</h2>
+</div>
+<div class="max-w-3xl mx-auto space-y-space-md">
+<div class="bg-surface-container-high border border-outline-variant p-space-md">
+<h3 class="text-primary font-semibold text-lg mb-2 flex items-center justify-between">
+<span>¿Necesito inscripción o pago matrícula inicial?</span>
+<span class="material-symbols-outlined text-tertiary">add</span>
+</h3>
+<p class="text-on-surface-variant text-body-md">No. En Pulso Deportivo no cobramos inscripción ni cuotas fantasma. Pagas tu pase diario o tu mensualidad y entrenas desde el primer minuto.</p>
+</div>
+<div class="bg-surface-container-high border border-outline-variant p-space-md">
+<h3 class="text-primary font-semibold text-lg mb-2 flex items-center justify-between">
+<span>¿Qué incluye el pase diario de $80?</span>
+<span class="material-symbols-outlined text-tertiary">add</span>
+</h3>
+<p class="text-on-surface-variant text-body-md">Tienes acceso libre a toda la zona de pesas, equipo cardiovascular, uso de regaderas, lockers y área de estiramientos durante todo el día de tu visita.</p>
+</div>
+<div class="bg-surface-container-high border border-outline-variant p-space-md">
+<h3 class="text-primary font-semibold text-lg mb-2 flex items-center justify-between">
+<span>¿Hay estacionamiento para bicicletas o autos?</span>
+<span class="material-symbols-outlined text-tertiary">add</span>
+</h3>
+<p class="text-on-surface-variant text-body-md">Contamos con biciestacionamiento gratuito en la entrada del gimnasio y zona segura para dejar vehículos sobre la calle con vigilancia vecinal.</p>
+</div>
+<div class="bg-surface-container-high border border-outline-variant p-space-md">
+<h3 class="text-primary font-semibold text-lg mb-2 flex items-center justify-between">
+<span>¿Puedo congelar mi membresía mensual si salgo de viaje?</span>
+<span class="material-symbols-outlined text-tertiary">add</span>
+</h3>
+<p class="text-on-surface-variant text-body-md">Sí, en planes trimestrales puedes congelar tu membresía hasta por 15 días notificando previamente por WhatsApp.</p>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="bg-surface-container-lowest border-t border-outline-variant py-space-xl" id="contacto">
+<div class="max-w-[1200px] mx-auto px-space-lg">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-xl">
+<div class="space-y-space-md">
+<span class="text-tertiary font-label-caps">UBICACIÓN Y CONTACTO</span>
+<h2 class="text-headline-md font-headline-md text-primary uppercase">Pásate a Conocer</h2>
+<p class="text-on-surface-variant text-body-md">Estamos ubicados en el corazón de Clavería. Ven a darte una vuelta o mándanos mensaje para resolver cualquier duda.</p>
+<div class="space-y-4 pt-space-sm">
+<a class="flex items-center gap-4 text-on-surface hover:text-tertiary transition-colors" href="https://wa.me/">
+<span class="material-symbols-outlined text-tertiary bg-surface-container-high p-3 border border-outline-variant">chat</span>
+<div>
+<div class="text-xs text-on-surface-variant font-label-caps">WHATSAPP DIRECTO</div>
+<div class="text-primary font-semibold">+52 55 1234 5678</div>
+</div>
+</a>
+<a class="flex items-center gap-4 text-on-surface hover:text-tertiary transition-colors" href="tel:+525512345678">
+<span class="material-symbols-outlined text-tertiary bg-surface-container-high p-3 border border-outline-variant">phone</span>
+<div>
+<div class="text-xs text-on-surface-variant font-label-caps">TELÉFONO</div>
+<div class="text-primary font-semibold">55 1234 5678</div>
+</div>
+</a>
+<a class="flex items-center gap-4 text-on-surface hover:text-tertiary transition-colors" href="mailto:contacto@pulsodeportivo.mx">
+<span class="material-symbols-outlined text-tertiary bg-surface-container-high p-3 border border-outline-variant">mail</span>
+<div>
+<div class="text-xs text-on-surface-variant font-label-caps">CORREO ELECTRÓNICO</div>
+<div class="text-primary font-semibold">contacto@pulsodeportivo.mx</div>
+</div>
+</a>
+</div>
+</div>
+<div class="border border-outline-variant h-[350px] relative overflow-hidden bg-surface-container-high">
+<div class="w-full h-full bg-cover bg-center filter grayscale contrast-125 opacity-80" data-alt="A detailed map view of Claveria neighborhood in Azcapotzalco CDMX, highlighting streets, avenues, and the exact marker location of Pulso Deportivo gym. The map features a high-contrast dark mode aesthetic with muted grey roads and a vibrant electric lime location pin." data-location="Claveria CDMX" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDJiuJl_E9SQyTyIXgRBID8_sXYPXxKjkAYYAuCWThV_aZpl7g3SWDi-ylljXi87gnfvM6F8MkOYwbOycamwuKDm0tPEw4VtEX0cUwWesl5q4xZVO2D7X1U_1SQRljZaPx0nC6NUheoRPAhjM0I8zqgco3KT0w0i6h_WRg1Oek8TxbRj6aqZwyWAZkJ300UQvXjAa_BmaQOPA4_qZalMgXAhvnXgtDTHuqSKa3c1ABJ-UZVjhXdJKFNnkJys_WP9VzXKqpOLlxBJxnH')"></div>
+<div class="absolute bottom-4 left-4 bg-background border border-outline-variant px-space-md py-space-xs">
+<div class="text-primary font-semibold text-sm">Clavería, Azcapotzalco, CDMX</div>
+<div class="text-tertiary text-xs">Abierto Lunes a Sábado</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant">
+<div class="flex flex-col justify-between items-center w-full px-space-lg py-space-lg max-w-[1200px] mx-auto gap-space-md">
+<div class="text-headline-md font-headline-md font-extrabold text-primary">PULSO DEPORTIVO</div>
+<div class="flex flex-wrap justify-center gap-space-md">
+<a class="text-on-surface-variant hover:text-tertiary transition-colors text-label-caps" href="#horarios">Timetable</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors text-label-caps" href="#membresias">Membership</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors text-label-caps" href="#nosotros">About</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors text-label-caps" href="#testimonios">Testimonials</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors text-label-caps" href="#faq">FAQ</a>
+<a class="text-on-surface-variant hover:text-tertiary transition-colors text-label-caps" href="#contacto">Contact</a>
+</div>
+<div class="text-on-surface-variant text-sm text-center">
+        © 2023 Pulso Deportivo. Todos los derechos reservados. Clavería, CDMX.
+      </div>
+</div>
+</footer>
+</body></html>

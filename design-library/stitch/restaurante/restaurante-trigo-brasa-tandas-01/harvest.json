@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "candidate_id": "restaurante-trigo-brasa-tandas-01",
+  "input": {
+    "file": "source.html",
+    "kind": "html"
+  },
+  "palette": null,
+  "typography": {
+    "scale": [],
+    "googleFamilies": [],
+    "unsupportedFamilies": [],
+    "excludedFamilies": [],
+    "metrics": {},
+    "delivery": {
+      "ok": false,
+      "problems": [
+        "sin tokens tipográficos"
+      ]
+    }
+  },
+  "sections": [],
+  "not_mappable": [],
+  "rebuild": [],
+  "interactivity": [],
+  "image_needs": [],
+  "images_ignored": 0
+}

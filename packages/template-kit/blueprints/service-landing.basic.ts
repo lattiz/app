@@ -10,10 +10,23 @@ export default {
   roles: {
     header: roles.header,
     hero: roles.hero,
-    about: { ...roles.about, variants: ['brief', 'order-steps', 'coal-log'] },
+    about: {
+      ...roles.about,
+      variants: [
+        'brief',
+        'order-steps',
+        'coal-log',
+        'booking-steps',
+        'care-pathway',
+        'clock-rail',
+      ],
+    },
     catalog: roles.catalog,
     faq: roles.faq,
-    contact: { ...roles.contact, variants: ['single', 'table-map'] },
+    contact: {
+      ...roles.contact,
+      variants: ['single', 'single-card', 'table-map'],
+    },
     cta: roles.cta,
     whatsapp: roles.whatsapp,
     footer: roles.footer,

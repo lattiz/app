@@ -1,0 +1,58 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/floreria-casa-confeti-v2.spec.json",
+  "catalog": "extended",
+  "catalogVersion": 2,
+  "tiers": {
+    "floreria-casa-confeti-v2": {
+      "tier": "pro",
+      "palette": "pal-lavanda-tinta",
+      "fontPair": "fredoka+nunito",
+      "shape": "organico",
+      "archetype": "editorial-atelier",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "split" },
+        { "role": "about", "slot": "about", "variant": "clock-rail" },
+        { "role": "catalog", "slot": "services", "variant": "party-tiers" },
+        { "role": "proof", "slot": "gallery", "variant": "mosaic" },
+        { "role": "testimonials", "slot": "testimonials", "variant": "cards" },
+        { "role": "faq", "slot": "faq", "variant": "list" },
+        { "role": "cta", "slot": "cta", "variant": "band" },
+        { "role": "contact", "slot": "locations", "variant": "map-link" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "big-wordmark" }
+      ],
+      "layout": { "direction": "jardin-suave", "archetype": "booking" },
+      "renews": "floreria-casa-confeti-v1"
+    },
+    "floreria-base-casa-confeti-v2": {
+      "tier": "basico",
+      "palette": "pal-menta-tinta",
+      "fontPair": "red-hat-display+red-hat-text",
+      "shape": "organico",
+      "archetype": "essential",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "centered-arch" },
+        { "role": "about", "slot": "about", "variant": "brief" },
+        { "role": "catalog", "slot": "services", "variant": "party-tiers" },
+        { "role": "faq", "slot": "faq", "variant": "list" },
+        { "role": "contact", "slot": "locations", "variant": "single-card" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "big-wordmark" }
+      ],
+      "layout": { "direction": "jardin-suave", "archetype": "booking" },
+      "renews": "floreria-base-casa-confeti-v1"
+    }
+  }
+}

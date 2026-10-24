@@ -1,0 +1,50 @@
+{
+  "$lattiz": "GENERATED from specs/veterinaria-clinica-nogal-v2.spec.json (spec 898b377e41b4, file 2cc5d8b92871). Do not edit: use the spec, or freeze.",
+  "name": "veterinaria-base-clinica-nogal-v2",
+  "label": "Clínica Nogal · Básico",
+  "tier": "basic",
+  "fontPair": "bricolage-grotesque+inter",
+  "colors": {
+    "bg": "#FCF6F1",
+    "surface": "#FFFFFF",
+    "surface-2": "#F3E5DA",
+    "text": "#25170F",
+    "muted": "#62514A",
+    "accent": "#B0502A",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#B0502A",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#25170F",
+    "on-overlay": "#FCF6F1",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#25170F"
+  },
+  "fonts": {
+    "display": "'Bricolage Grotesque', sans-serif",
+    "serif": "'Instrument Serif', serif",
+    "body": "'Inter', sans-serif",
+    "googleFonts": "family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600",
+    "displayTransform": "none",
+    "displayLeading": "0.98",
+    "displayWeight": "800",
+    "displayScale": "0.92",
+    "accentStyle": "italic",
+    "accentTransform": "none"
+  },
+  "shape": {
+    "radiusCard": "14px",
+    "radiusPill": "999px",
+    "border": "1px",
+    "shadow": "soft"
+  },
+  "density": "regular",
+  "photoTreatment": "warm",
+  "placeholder": "arches",
+  "accentWords": "color",
+  "container": "1200px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(.62) saturate(.95)"
+  }
+}

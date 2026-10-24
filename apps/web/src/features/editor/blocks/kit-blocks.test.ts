@@ -5,7 +5,10 @@ import { KIT_BLOCKS } from './kit-blocks.generated';
 import { KIT_SECTION_BLOCKS } from './kit-blocks';
 
 /** Sections whose design has no contact link (the craft section only tells how the work is done). */
-const NO_CONTACT_LINK = new Set(['lzb-about-framed-craft']);
+const NO_CONTACT_LINK = new Set([
+  'lzb-about-framed-craft',
+  'lzb-gallery-staggered-frames',
+]);
 const sections = KIT_BLOCKS.filter((b) => 'kitVariant' in b);
 /** Role modifiers (lz-btn--secondary) live in a primitive's base.css, as in kit templates. */
 const ROLE_CLASSES = new Set(
@@ -21,11 +24,25 @@ describe('kit blocks (generated from the kit)', () => {
       'lzb-hero-stack',
       'lzb-hero-photo-ribbon',
       'lzb-faq-numbered-cards',
+      'lzb-services-dish-spotlight',
       'lzb-services-ritual-cards',
+      'lzb-services-schedule-cards',
       'lzb-testimonials-paper-trio',
       'lzb-about-framed-craft',
+      'lzb-about-booking-steps',
       'lzb-locations-booking-panel',
+      'lzb-gallery-staggered-frames',
       'lzb-cta-band',
+      'lzb-cta-ritual-panels',
+      'lzb-cta-urgent-line',
+      'lzb-services-treatment-rows',
+      'lzb-about-care-pathway',
+      'lzb-services-collection-cards',
+      'lzb-services-photo-rows',
+      'lzb-cta-included-panel',
+      'lzb-about-clock-rail',
+      'lzb-services-party-tiers',
+      'lzb-cta-ticket-stub-bill',
       'lzb-btn',
       'lzb-tile',
       'lzb-tag',
@@ -96,12 +113,12 @@ describe('kit blocks (generated from the kit)', () => {
     }
   });
 
-  it('hero bento is Pro; the other heroes, the cta and the pieces are Básico', () => {
+  it('hero bento and the staggered gallery are Pro; the rest are Básico', () => {
     const plans = Object.fromEntries(
       KIT_SECTION_BLOCKS.map((b) => [b.id, blockPlan(b)]),
     );
-    expect(plans['lzb-hero-bento']).toBe('pro');
-    for (const id of Object.keys(plans).filter((i) => i !== 'lzb-hero-bento'))
-      expect(plans[id], id).toBe('basic');
+    const pro = new Set(['lzb-hero-bento', 'lzb-gallery-staggered-frames']);
+    for (const [id, plan] of Object.entries(plans))
+      expect(plan, id).toBe(pro.has(id) ? 'pro' : 'basic');
   });
 });

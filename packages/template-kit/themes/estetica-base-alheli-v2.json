@@ -1,0 +1,54 @@
+{
+  "$lattiz": "GENERATED from specs/estetica-alheli-v2.spec.json (spec 204372a46f6f, file c3446cb4f832). Do not edit: use the spec, or freeze.",
+  "name": "estetica-base-alheli-v2",
+  "label": "Alhelí Nail Atelier · Básico",
+  "tier": "basic",
+  "fontPair": "playfair-display+inter",
+  "colors": {
+    "bg": "#FAF4EF",
+    "surface": "#FDFBF9",
+    "surface-2": "#EBE5E0",
+    "text": "#1E1D1D",
+    "muted": "#6B6866",
+    "accent": "#9A5A4A",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#9A5A4A",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#FAF4EF",
+    "on-overlay": "#1E1D1D",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#1E1D1D"
+  },
+  "fonts": {
+    "display": "'Playfair Display', serif",
+    "serif": "'Playfair Display', serif",
+    "body": "'Inter', sans-serif",
+    "googleFonts": "family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600",
+    "displayTransform": "none",
+    "displayLeading": "1.04",
+    "displayWeight": "500",
+    "accentStyle": "italic",
+    "accentTransform": "none"
+  },
+  "shape": {
+    "radiusCard": "0px",
+    "radiusPill": "0px",
+    "border": "1px",
+    "shadow": "none"
+  },
+  "density": "regular",
+  "photoTreatment": "none",
+  "placeholder": "dots",
+  "accentWords": "color",
+  "container": "1200px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(1.08) saturate(.85)"
+  },
+  "style": {
+    "surface": "tinted",
+    "density": "cozy",
+    "imageTreatment": "arch"
+  }
+}

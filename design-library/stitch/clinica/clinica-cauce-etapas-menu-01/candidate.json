@@ -1,0 +1,19 @@
+{
+  "id": "clinica-cauce-etapas-menu-01",
+  "giro": "clinica",
+  "source": "stitch",
+  "status": "collected",
+  "tags": [
+    "clinica-cauce",
+    "renovacion",
+    "marmol-sobrio",
+    "loose"
+  ],
+  "spin": "cauce-etapas-menu",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-21T05:09:41.442Z",
+  "stitch": {
+    "project_id": "9323787640626831468"
+  },
+  "direction": "marmol-sobrio"
+}

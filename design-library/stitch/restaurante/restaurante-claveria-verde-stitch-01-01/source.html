@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cocina Clavería</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-container": "#5c7e46",
+            "on-secondary": "#ffffff",
+            "surface-container-high": "#eae8e3",
+            "inverse-primary": "#ffb59c",
+            "surface-container": "#f0eee9",
+            "tertiary-fixed-dim": "#acd291",
+            "surface-container-low": "#f5f3ee",
+            "on-error": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "inverse-on-surface": "#f2f1ec",
+            "error": "#ba1a1a",
+            "tertiary": "#44652f",
+            "outline": "#8a726a",
+            "on-surface": "#1b1c19",
+            "secondary-container": "#caedab",
+            "on-primary-fixed": "#390c00",
+            "surface-container-highest": "#e4e2dd",
+            "primary-fixed-dim": "#ffb59c",
+            "secondary-fixed": "#caedab",
+            "on-tertiary-fixed-variant": "#2f4f1c",
+            "on-background": "#1b1c19",
+            "secondary": "#496632",
+            "on-tertiary-container": "#f9ffed",
+            "background": "#fbf9f4",
+            "on-primary": "#ffffff",
+            "error-container": "#ffdad6",
+            "on-secondary-fixed-variant": "#324e1d",
+            "on-secondary-fixed": "#0b2000",
+            "on-primary-container": "#fffbff",
+            "on-primary-fixed-variant": "#822801",
+            "secondary-fixed-dim": "#afd192",
+            "on-error-container": "#93000a",
+            "surface-bright": "#fbf9f4",
+            "outline-variant": "#dec0b7",
+            "on-secondary-container": "#4f6d38",
+            "surface-variant": "#e4e2dd",
+            "on-tertiary": "#ffffff",
+            "primary-fixed": "#ffdbcf",
+            "surface": "#fbf9f4",
+            "tertiary-fixed": "#c7eeab",
+            "primary-container": "#bf542c",
+            "primary": "#9f3c16",
+            "surface-tint": "#a23e18",
+            "on-tertiary-fixed": "#092100",
+            "inverse-surface": "#30312e",
+            "on-surface-variant": "#57423b",
+            "surface-dim": "#dbdad5"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "margin": "2rem",
+            "space-sm": "0.5rem",
+            "gutter": "1.5rem",
+            "space-xl": "3rem",
+            "space-lg": "1.5rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Playfair Display"],
+            "headline-xl": ["Playfair Display"],
+            "headline-md": ["Playfair Display"],
+            "body-md": ["Inter"],
+            "headline-sm": ["Playfair Display"],
+            "body-lg": ["Inter"],
+            "label-sm": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-md": ["Inter"]
+          },
+          "fontSize": {
+            "headline-lg": ["36px", { "lineHeight": "44px", "fontWeight": "600" }],
+            "headline-xl": ["48px", { "lineHeight": "56px", "fontWeight": "600" }],
+            "headline-md": ["28px", { "lineHeight": "36px", "fontWeight": "500" }],
+            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-sm": ["22px", { "lineHeight": "28px", "fontWeight": "500" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased selection:bg-primary-fixed selection:on-primary-fixed">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-surface dark:bg-surface shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center w-full px-gutter py-space-md max-w-7xl mx-auto">
+<a class="text-headline-sm font-headline-sm font-semibold text-primary dark:text-inverse-primary tracking-tight" href="#">
+        Cocina Clavería
+      </a>
+<nav class="hidden md:flex items-center space-x-8">
+<a class="text-label-md font-label-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#menu">Menú</a>
+<a class="text-label-md font-label-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#especialidades">Especialidades</a>
+<a class="text-label-md font-label-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#galeria">Galería</a>
+<a class="text-label-md font-label-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#testimonios">Testimonios</a>
+<a class="text-label-md font-label-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#ubicacion">Ubicación</a>
+</nav>
+<div class="flex items-center space-x-4">
+<a class="hidden md:inline-flex items-center justify-center bg-primary hover:bg-primary-container text-on-primary font-label-md px-4 py-2 rounded-lg transition-colors shadow-sm" href="#reserva">
+<span class="material-symbols-outlined text-sm mr-2" data-icon="restaurant">restaurant</span>
+          Reservar Mesa
+        </a>
+<button class="md:hidden text-on-surface p-2 focus:outline-none" id="mobile-menu-button">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</div>
+<!-- Mobile Menu Dropdown -->
+<div class="hidden md:hidden bg-surface border-b border-outline-variant px-gutter py-space-md space-y-3" id="mobile-menu">
+<a class="block text-label-md text-on-surface" href="#menu">Menú</a>
+<a class="block text-label-md text-on-surface" href="#especialidades">Especialidades</a>
+<a class="block text-label-md text-on-surface" href="#galeria">Galería</a>
+<a class="block text-label-md text-on-surface" href="#testimonios">Testimonios</a>
+<a class="block text-label-md text-on-surface" href="#ubicacion">Ubicación</a>
+<a class="block text-center bg-primary text-on-primary py-2 rounded-lg text-label-md" href="#reserva">Reservar Mesa</a>
+</div>
+</header>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative overflow-hidden py-space-xl px-gutter max-w-7xl mx-auto min-h-[870px] flex items-center">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-xl items-center w-full">
+<div class="space-y-space-md">
+<div class="inline-flex items-center space-x-2 bg-secondary-container/50 text-on-secondary-container px-3 py-1 rounded-full text-label-sm">
+<span class="material-symbols-outlined text-sm" data-icon="eco" style="font-variation-settings: 'FILL' 1;">eco</span>
+<span>Cocina de Barrio &amp; Tradición Fresca</span>
+</div>
+<h1 class="text-headline-xl font-headline-xl text-on-background">
+            El sabor auténtico de Clavería en un ambiente fresco y natural
+          </h1>
+<p class="text-body-lg text-on-surface-variant">
+            Descubre recetas tradicionales con un giro contemporáneo, elaboradas cada mañana con ingredientes de la más alta calidad y un toque entrañable de hogar mexicano.
+          </p>
+<div class="flex flex-wrap gap-4 pt-4">
+<a class="bg-primary text-on-primary font-label-md px-6 py-3 rounded-lg hover:bg-primary-container transition-colors inline-flex items-center shadow-sm" href="#menu">
+              Ver Menú Digital
+            </a>
+<a class="border border-outline text-on-surface font-label-md px-6 py-3 rounded-lg hover:bg-surface-container transition-colors inline-flex items-center" href="#reserva">
+              Reservar por WhatsApp
+            </a>
+</div>
+</div>
+<div class="relative">
+<div class="absolute -inset-4 bg-tertiary-fixed/30 rounded-2xl filter blur-xl transform rotate-3"></div>
+<div class="relative rounded-2xl overflow-hidden shadow-xl aspect-4/3">
+<img class="w-full h-full object-cover" data-alt="A gourmet Mexican dish featuring beautifully plated artisanal tacos with vibrant green avocado puree, fresh herbs, microgreens, and earthy terracotta accents in a high-end natural lighting aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzuRCeB2OedoAhvlR78_kY4QbMgOPVC1Pt1T2LEx8Ks1ZTryZJwVJwvyAo2rj5I9MCo7nO4PvkzVQwf7ampJsd3gCG7cvACnkdpTqXx4AYZWMNbgpCwDRWJAPA6P7pnacCstdV1q0bMdhqKHpqF0SlZ3__AGaDlkSognRStKFmuLX8YwtzpRXc_QQM9kSU1eITfWNsyYiPKiiuyh0mJCozSlJxKk0_4WV26NlY5JhconUXeiQsoUAGfYyOWeliMBw1SxFtHBM0WC4u"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Signature Dish Highlight ("Especialidad de la Casa") -->
+<section class="py-space-xl bg-surface-container-low px-gutter" id="especialidades">
+<div class="max-w-7xl mx-auto">
+<div class="text-center max-w-2xl mx-auto mb-space-xl space-y-space-sm">
+<span class="text-label-md text-primary font-semibold tracking-wider uppercase">Platillo Estrella</span>
+<h2 class="text-headline-lg font-headline-lg text-on-background">Especialidad de la Casa</h2>
+<p class="text-body-md text-on-surface-variant">Cada semana nuestro chef selecciona lo mejor del mercado local para crear una obra maestra culinaria.</p>
+</div>
+<div class="bg-surface rounded-2xl overflow-hidden shadow-sm grid grid-cols-1 md:grid-cols-2 border border-outline-variant/30">
+<div class="relative min-h-[300px] md:min-h-full">
+<img class="w-full h-full object-cover" data-alt="A rich traditional Mexican mole dish served with artisanal pottery, decorated with toasted sesame seeds and fresh herbs, warm golden lighting, earthy terracotta surface background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDb2jTdN7Jm3y4jooeiuM5fVHg2lqX38H9E0b8xqxsIJaqUv1OyAVA2avs2yhWtfE3HY3JBxADjDKgC7kleC9hysw4jAki8mLX5uBgRyB_kpJfb0eKmQ-K_fWTwGSLLKtVXumRNBzIltfFXVex3LafQh10AH_IpzXTpys64o2vv3XNDMS8r1aXl_m0HNi5sHbDOFY2i4463poZW8ZFSz82N1Ajox3iTi6K2Cr2yZrnO13TQE8CJ88R3ll3Igvssq0Yn_loVRRvgE-16"/>
+</div>
+<div class="p-space-xl flex flex-col justify-center space-y-space-md">
+<div class="inline-flex items-center space-x-2 bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-label-sm w-max">
+<span class="material-symbols-outlined text-sm" data-icon="local_fire_department" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span>Recomendación del Chef</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-on-background">Mole Clavería Tradicional</h3>
+<p class="text-body-md text-on-surface-variant">
+              Una receta secreta de la familia con más de 30 ingredientes, incluyendo chiles secos seleccionados, cacao artesanal y notas sutiles de especias tostadas. Servido con pollo de libre pastoreo y ajonjolí tostado.
+            </p>
+<div class="space-y-2 pt-2">
+<span class="text-label-md font-semibold text-on-background block">Ingredientes Principales:</span>
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface-container px-3 py-1 rounded-md text-body-sm text-on-surface-variant">Cacao Orgánico</span>
+<span class="bg-surface-container px-3 py-1 rounded-md text-body-sm text-on-surface-variant">Chiles Secos de Temporada</span>
+<span class="bg-surface-container px-3 py-1 rounded-md text-body-sm text-on-surface-variant">Pollo de Libre Pastoreo</span>
+<span class="bg-surface-container px-3 py-1 rounded-md text-body-sm text-on-surface-variant">Plátano Macho</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4">
+<span class="text-headline-sm font-headline-sm text-primary">$265 MXN</span>
+<a class="bg-primary text-on-primary px-5 py-2.5 rounded-lg text-label-md font-label-md hover:bg-primary-container transition-colors" href="#reserva">Probar Hoy</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Menu with Prices ("Nuestro Menú") -->
+<section class="py-space-xl px-gutter max-w-7xl mx-auto" id="menu">
+<div class="text-center max-w-2xl mx-auto mb-space-xl space-y-space-sm">
+<span class="text-label-md text-primary font-semibold tracking-wider uppercase">Sabor y Frescura</span>
+<h2 class="text-headline-lg font-headline-lg text-on-background">Nuestro Menú</h2>
+<p class="text-body-md text-on-surface-variant">Una selección honesta de platillos preparados al momento.</p>
+</div>
+<!-- Menu Categories Tabs/Grid -->
+<div class="space-y-space-xl">
+<!-- Entradas -->
+<div class="bg-surface-container-low rounded-2xl p-6 md:p-8">
+<div class="flex items-center space-x-3 mb-6 border-b border-outline-variant/30 pb-4">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="tapas">tapas</span>
+<h3 class="text-headline-md font-headline-md text-on-background">Entradas</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-surface p-5 rounded-xl border border-outline-variant/20 flex justify-between items-start">
+<div class="space-y-1 pr-4">
+<h4 class="text-body-lg font-semibold text-on-background">Guacamole de la Esquina</h4>
+<p class="text-body-sm text-on-surface-variant">Aguacates Hass seleccionados, machacados con cilantro fresco, cebolla morada, chiles serranos y un toque de limón real.</p>
+</div>
+<span class="text-body-lg font-semibold text-primary whitespace-nowrap">$115 MXN</span>
+</div>
+<div class="bg-surface p-5 rounded-xl border border-outline-variant/20 flex justify-between items-start">
+<div class="space-y-1 pr-4">
+<h4 class="text-body-lg font-semibold text-on-background">Sopa de Lima Yucateca</h4>
+<p class="text-body-sm text-on-surface-variant">Caldo aromático de gallina con tiritas de tortilla frita crujiente, tiras de pimiento y rodajas de lima agria.</p>
+</div>
+<span class="text-body-lg font-semibold text-primary whitespace-nowrap">$95 MXN</span>
+</div>
+</div>
+</div>
+<!-- Platos Fuertes -->
+<div class="bg-surface-container-low rounded-2xl p-6 md:p-8">
+<div class="flex items-center space-x-3 mb-6 border-b border-outline-variant/30 pb-4">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="dinner_dining">dinner_dining</span>
+<h3 class="text-headline-md font-headline-md text-on-background">Platos Fuertes</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-surface p-5 rounded-xl border border-outline-variant/20 flex justify-between items-start">
+<div class="space-y-1 pr-4">
+<h4 class="text-body-lg font-semibold text-on-background">Arrachera al Carbón Clavería</h4>
+<p class="text-body-sm text-on-surface-variant">Corte fino marinado en hierbas de olor, acompañado de frijoles de la olla, nopal asado y cebollitas cambray.</p>
+</div>
+<span class="text-body-lg font-semibold text-primary whitespace-nowrap">$290 MXN</span>
+</div>
+<div class="bg-surface p-5 rounded-xl border border-outline-variant/20 flex justify-between items-start">
+<div class="space-y-1 pr-4">
+<h4 class="text-body-lg font-semibold text-on-background">Enchiladas Verdes de la Abuela</h4>
+<p class="text-body-sm text-on-surface-variant">Tortillas hechas a mano rellenas de pollo deshebrado, bañadas en salsa verde tatemada, crema de rancho y queso fresco.</p>
+</div>
+<span class="text-body-lg font-semibold text-primary whitespace-nowrap">$185 MXN</span>
+</div>
+</div>
+</div>
+<!-- Especialidades Verdes -->
+<div class="bg-surface-container-low rounded-2xl p-6 md:p-8">
+<div class="flex items-center space-x-3 mb-6 border-b border-outline-variant/30 pb-4">
+<span class="material-symbols-outlined text-secondary text-2xl" data-icon="salad" style="font-variation-settings: 'FILL' 1;">waves</span>
+<h3 class="text-headline-md font-headline-md text-on-background">Especialidades Verdes</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-surface p-5 rounded-xl border border-outline-variant/20 flex justify-between items-start">
+<div class="space-y-1 pr-4">
+<div class="flex items-center space-x-2">
+<h4 class="text-body-lg font-semibold text-on-background">Bowl del Huerto</h4>
+<span class="bg-secondary-container text-on-secondary-container text-label-sm px-2 py-0.5 rounded-full">Vegano</span>
+</div>
+<p class="text-body-sm text-on-surface-variant">Quinoa orgánica, aguacate hass, brotes tiernos, pepino persa, rábanos encurtidos y aderezo de cilantro y pepita.</p>
+</div>
+<span class="text-body-lg font-semibold text-primary whitespace-nowrap">$160 MXN</span>
+</div>
+<div class="bg-surface p-5 rounded-xl border border-outline-variant/20 flex justify-between items-start">
+<div class="space-y-1 pr-4">
+<div class="flex items-center space-x-2">
+<h4 class="text-body-lg font-semibold text-on-background">Tacos de Portobello Rostizado</h4>
+<span class="bg-secondary-container text-on-secondary-container text-label-sm px-2 py-0.5 rounded-full">Vegetariano</span>
+</div>
+<p class="text-body-sm text-on-surface-variant">Hongos portobello marinados al ajillo, puré de frijol negro, queso cotija rallado y brotes de cilantro sobre tortilla de maíz azul.</p>
+</div>
+<span class="text-body-lg font-semibold text-primary whitespace-nowrap">$150 MXN</span>
+</div>
+</div>
+</div>
+<!-- Postres y Bebidas -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<div class="bg-surface-container-low rounded-2xl p-6 md:p-8">
+<div class="flex items-center space-x-3 mb-6 border-b border-outline-variant/30 pb-4">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="cake">cake</span>
+<h3 class="text-headline-md font-headline-md text-on-background">Postres</h3>
+</div>
+<div class="space-y-4">
+<div class="bg-surface p-4 rounded-xl border border-outline-variant/20 flex justify-between items-start">
+<div class="pr-4">
+<h4 class="text-body-md font-semibold text-on-background">Flan de Cajeta Artesanal</h4>
+<p class="text-body-sm text-on-surface-variant">Suave flan de vainilla de Papantla con reducción de cajeta de Celaya y nuez tostada.</p>
+</div>
+<span class="text-body-md font-semibold text-primary whitespace-nowrap">$85 MXN</span>
+</div>
+<div class="bg-surface p-4 rounded-xl border border-outline-variant/20 flex justify-between items-start">
+<div class="pr-4">
+<h4 class="text-body-md font-semibold text-on-background">Pay de Limón Real</h4>
+<p class="text-body-sm text-on-surface-variant">Base crujiente de galleta María con cremoso de limón y merengue tostado al momento.</p>
+</div>
+<span class="text-body-md font-semibold text-primary whitespace-nowrap">$90 MXN</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-2xl p-6 md:p-8">
+<div class="flex items-center space-x-3 mb-6 border-b border-outline-variant/30 pb-4">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="local_bar">local_bar</span>
+<h3 class="text-headline-md font-headline-md text-on-background">Bebidas</h3>
+</div>
+<div class="space-y-4">
+<div class="bg-surface p-4 rounded-xl border border-outline-variant/20 flex justify-between items-start">
+<div class="pr-4">
+<h4 class="text-body-md font-semibold text-on-background">Agua Fresca del Día (1L)</h4>
+<p class="text-body-sm text-on-surface-variant">Horchata con toque de nuez o Jamaica con menta fresca.</p>
+</div>
+<span class="text-body-md font-semibold text-primary whitespace-nowrap">$65 MXN</span>
+</div>
+<div class="bg-surface p-4 rounded-xl border border-outline-variant/20 flex justify-between items-start">
+<div class="pr-4">
+<h4 class="text-body-md font-semibold text-on-background">Margarita de la Casa</h4>
+<p class="text-body-sm text-on-surface-variant">Tequila 100% agave, licor de naranja, jugo de limón fresco y borde de sal de gusano.</p>
+</div>
+<span class="text-body-md font-semibold text-primary whitespace-nowrap">$130 MXN</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Gallery ("Galería") -->
+<section class="py-space-xl bg-surface-container-low px-gutter" id="galeria">
+<div class="max-w-7xl mx-auto">
+<div class="text-center max-w-2xl mx-auto mb-space-xl space-y-space-sm">
+<span class="text-label-md text-primary font-semibold tracking-wider uppercase">Nuestra Atmósfera</span>
+<h2 class="text-headline-lg font-headline-lg text-on-background">Galería</h2>
+<p class="text-body-md text-on-surface-variant">Un vistazo a los rincones, la comida y el calor humano que nos distingue en Clavería.</p>
+</div>
+<!-- Asymmetric Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="md:col-span-2 relative rounded-2xl overflow-hidden shadow-sm h-80">
+<img class="w-full h-full object-cover" data-alt="A warm and cozy restaurant dining room interior with wooden tables, soft natural light streaming through windows, green potted plants, and modern earth-toned aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmGMSz8cIXQ6wymFQXbSrCGZlmINxN4buR7L4-T38-7nnEndkNCwHC5YBw9w0yH_vA2iDy-j-m6PJiQc314PsWFcDNN21fgpcove9QhSsKTcH7j836svwVG24GDJiCHx-TC6JCGlKmliaIAQFL4nv-0-UUSVDL3nLIqdgAQdQMoYzfWcp-92SK2dwldEsChkXQcsQnFRyYyJNsta9f09ldaqQlEE0zmgNzt_O8I2BxMRnHADBNDKodvQj9oGOdzrWxXk6YnwTbgTCt"/>
+</div>
+<div class="relative rounded-2xl overflow-hidden shadow-sm h-80">
+<img class="w-full h-full object-cover" data-alt="Close-up of handmade fresh corn tortillas being pressed on a wooden table with rustic Mexican kitchen utensils." src="https://lh3.googleusercontent.com/aida-public/AB6AXuACpi3K-us9uHDOJLwGDQ483umd2gl7OjIEZ9NAPHAVUrl_UwjEgkyRY0ycAsB9z_GI6s3k6wFkDBqjQCMtFwTvKWofUxHs1fhBRSX1VKsMLjFvEpFPmHG2jmwQfOWDVjIK343O-eo2KB6q5nGvd1fvSvFM2dLLDKNGqdnE1TyL7TEby9rs77WqUk-Pu2VH0fFP-vR9hgPjsOE4by-SF5WwWUL-04x6UNDZwdLsf9aq7YTFnMGuZ3U6115NDex3_EyTIqmI49IvSF4Z"/>
+</div>
+<div class="relative rounded-2xl overflow-hidden shadow-sm h-80">
+<img class="w-full h-full object-cover" data-alt="Refreshing artisan cocktails with fresh mint leaves and citrus slices garnished on a wooden bar counter in a vibrant neighborhood restaurant." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEpjeM47Kj38BoFWKqL_cBwbWJeMiaqf_k6uXQXUBMPTiiGfqGG7mbGnulQ9t35kkgeh8ARuiYN0O6nNM-wPo6M4IFmdVeO8OpTIvpLrsNzRGE2alxOWhuCIH1p-v1pr2tADbUU6taRmr6zYiAarBb5Nhg597sLO2Rjasr4WwzTdrDgbG6rSalHjr9r_92FWfWZnOLILyCQWca7BQcpfhNG95nyvaduPkrrPHQVxHigXsOMBQApEJEk2vaIPlF36lXiktm3HYqHRMG"/>
+</div>
+<div class="md:col-span-2 relative rounded-2xl overflow-hidden shadow-sm h-80">
+<img class="w-full h-full object-cover" data-alt="A lively outdoor patio dining experience surrounded by lush green foliage, terracotta pots, and smiling diners enjoying lunch under warm daylight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUHv-22m9JmHUbLIjFKa_8spRDVTCOSQTFKb5w-f2ouRnw3Yt5wC0Twl5x9e6lCE40JVNmnOguMHgj93q4yJKbWOSho6urtNnZhlLMft1-99R15tGizPQSb_-N70qp_eRr9YMK76kBqWnippa29-vxVa3__X3stQ1NghgVVR6PqOWD-MXknZs7UO_Aq2BohBxz3AkpMAVksoINW1vmOApqic-OXx6QuQQnoVOoQjT4d-TXsIdSCicMZOPa2XkSj8r_xuyOkfv7I_Mo"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials ("Lo que dicen nuestros vecinos") -->
+<section class="py-space-xl px-gutter max-w-7xl mx-auto" id="testimonios">
+<div class="text-center max-w-2xl mx-auto mb-space-xl space-y-space-sm">
+<span class="text-label-md text-primary font-semibold tracking-wider uppercase">Reseñas</span>
+<h2 class="text-headline-lg font-headline-lg text-on-background">Lo que dicen nuestros vecinos</h2>
+<p class="text-body-md text-on-surface-variant">El cariño de nuestra comunidad es nuestro mejor reconocimiento.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-low p-8 rounded-2xl border border-outline-variant/30 flex flex-col justify-between space-y-4">
+<div class="space-y-3">
+<div class="flex text-primary space-x-1">
+<span class="material-symbols-outlined text-lg" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-body-md text-on-surface-variant italic">"El mejor lugar para desayunar o comer en Clavería. El ambiente es sumamente acogedor y los platillos tienen ese sazón casero inigualable."</p>
+</div>
+<div class="flex items-center space-x-3 pt-4 border-t border-outline-variant/20">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-label-md">MC</div>
+<div>
+<h4 class="text-body-md font-semibold text-on-background">Mariana Castillo</h4>
+<span class="text-label-sm text-on-surface-variant">Vecina de Clavería</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low p-8 rounded-2xl border border-outline-variant/30 flex flex-col justify-between space-y-4">
+<div class="space-y-3">
+<div class="flex text-primary space-x-1">
+<span class="material-symbols-outlined text-lg" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-body-md text-on-surface-variant italic">"Las especialidades verdes son una delicia total. Se nota la frescura de los ingredientes y la atención del personal te hace sentir en casa."</p>
+</div>
+<div class="flex items-center space-x-3 pt-4 border-t border-outline-variant/20">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-label-md">RH</div>
+<div>
+<h4 class="text-body-md font-semibold text-on-background">Rodrigo Huerta</h4>
+<span class="text-label-sm text-on-surface-variant">Cliente Frecuente</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low p-8 rounded-2xl border border-outline-variant/30 flex flex-col justify-between space-y-4">
+<div class="space-y-3">
+<div class="flex text-primary space-x-1">
+<span class="material-symbols-outlined text-lg" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-lg" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-body-md text-on-surface-variant italic">"El mole de la casa es sencillamente espectacular. Un balance perfecto entre dulce y picoso. ¡Imperdible!"</p>
+</div>
+<div class="flex items-center space-x-3 pt-4 border-t border-outline-variant/20">
+<div class="w-10 h-10 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center font-bold text-label-md">SL</div>
+<div>
+<h4 class="text-body-md font-semibold text-on-background">Sofía Lomelí</h4>
+<span class="text-label-sm text-on-surface-variant">Crítica Gastronómica Local</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Reservations via WhatsApp ("Reserva tu Mesa") -->
+<section class="py-space-xl px-gutter max-w-7xl mx-auto" id="reserva">
+<div class="bg-primary text-on-primary rounded-2xl p-8 md:p-12 relative overflow-hidden shadow-lg flex flex-col md:flex-row items-center justify-between gap-space-lg">
+<div class="absolute -right-16 -bottom-16 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="space-y-space-sm max-w-xl z-10">
+<div class="inline-flex items-center space-x-2 bg-white/20 text-on-primary px-3 py-1 rounded-full text-label-sm">
+<span class="material-symbols-outlined text-sm" data-icon="chat" style="font-variation-settings: 'FILL' 1;">chat</span>
+<span>Reserva Rápida y Directa</span>
+</div>
+<h2 class="text-headline-lg font-headline-lg text-on-primary">Reserva tu Mesa por WhatsApp</h2>
+<p class="text-body-md text-inverse-primary">
+            Asegura tu lugar para comer con nosotros. Escríbenos directamente y te confirmaremos al instante con un pre-saludo listo para enviar.
+          </p>
+</div>
+<div class="z-10">
+<a class="bg-surface text-on-surface font-label-md px-8 py-4 rounded-lg hover:bg-surface-container transition-colors inline-flex items-center space-x-3 shadow-md" href="https://wa.me/525512345678?text=Hola,%20quisiera%20reservar%20una%20mesa%20en%20Cocina%20Claver%C3%ADa." rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="phone" style="font-variation-settings: 'FILL' 1;">phone</span>
+<span class="font-semibold text-body-lg text-primary">Reservar por WhatsApp</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Location & Hours ("Visítanos") -->
+<section class="py-space-xl bg-surface-container-low px-gutter" id="ubicacion">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-space-xl items-center">
+<div class="space-y-space-md">
+<span class="text-label-md text-primary font-semibold tracking-wider uppercase">Encuéntranos</span>
+<h2 class="text-headline-lg font-headline-lg text-on-background">Visítanos en Clavería</h2>
+<p class="text-body-md text-on-surface-variant">
+            Estamos ubicados en el corazón de una de las zonas más tradicionales y arboladas de Azcapotzalco. ¡Ven a disfrutar de una agradable sobremesa!
+          </p>
+<div class="space-y-4 pt-2">
+<div class="flex items-start space-x-3">
+<span class="material-symbols-outlined text-primary text-xl mt-1" data-icon="location_on" style="font-variation-settings: 'FILL' 1;">location_on</span>
+<div>
+<h4 class="text-body-md font-semibold text-on-background">Dirección</h4>
+<p class="text-body-sm text-on-surface-variant">Av. Clavería #123, Colonia Clavería, Azcapotzalco, C.P. 02080, Ciudad de México.</p>
+</div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="material-symbols-outlined text-primary text-xl mt-1" data-icon="schedule" style="font-variation-settings: 'FILL' 1;">schedule</span>
+<div>
+<h4 class="text-body-md font-semibold text-on-background">Horarios</h4>
+<p class="text-body-sm text-on-surface-variant">Martes a Sábado: 8:00 AM – 9:00 PM<br/>Domingo: 9:00 AM – 6:00 PM<br/>Lunes: Descanso</p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative rounded-2xl overflow-hidden shadow-sm h-[350px] border border-outline-variant/30">
+<div class="w-full h-full bg-surface-container flex items-center justify-center relative" data-location="Ciudad de México" style="">
+<img class="w-full h-full object-cover opacity-80" data-alt="A stylized interactive map showing the location of Av. Claveria in Azcapotzalco, Mexico City with clear street markers and botanical green accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKpf88d5R_tSi1ZXCMxlu8OEILaeyBzPZYcRhUn2r3uu6NhlIPam0lZXQ5qaWxWXYedd1NKXI1zVMk3ejmaP-44bHDbSQoIxKTCjmEg278UsqaQcfkko7WujqocdyJRN5moX0Ha3f730L9fl1qw7btjgiTnQq9VPz2xfpDO6mOZNXKD3wYLJjC7bOBmo6785t82AIpkMCniYX0uIxOg2lfcVlK8jRn9E0KVTqFZMObdTOYzfdT7AG9Qz_Hw4bYdROMyxnSQY_MQBga"/>
+<div class="absolute inset-0 bg-primary/10 flex items-center justify-center">
+<div class="bg-surface px-6 py-3 rounded-xl shadow-lg border border-outline-variant flex items-center space-x-3">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="store" style="font-variation-settings: 'FILL' 1;">store</span>
+<div>
+<h5 class="text-body-md font-semibold text-on-background">Cocina Clavería</h5>
+<span class="text-label-sm text-on-surface-variant">Av. Clavería, CDMX</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container dark:bg-surface-container-high py-space-xl px-gutter">
+<div class="flex flex-col md:flex-row justify-between items-center w-full max-w-7xl mx-auto gap-space-lg text-center md:text-left">
+<div class="space-y-1">
+<a class="text-headline-sm font-headline-sm font-semibold text-primary dark:text-inverse-primary tracking-tight" href="#">
+          Cocina Clavería
+        </a>
+<p class="text-body-sm text-on-surface-variant">© 2024 Cocina Clavería. Todos los derechos reservados. Av. Clavería, Ciudad de México.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="text-label-sm text-on-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#ubicacion">Ubicación</a>
+<a class="text-label-sm text-on-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#ubicacion">Horarios</a>
+<a class="text-label-sm text-on-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#">Aviso de Privacidad</a>
+<a class="text-label-sm text-on-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#reserva">Contacto</a>
+</div>
+</div>
+</footer>
+<script>
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+  </script>
+</body></html>

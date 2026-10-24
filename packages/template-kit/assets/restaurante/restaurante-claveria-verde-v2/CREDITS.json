@@ -1,0 +1,115 @@
+{
+  "$lattiz": "GENERATED from specs/restaurante-claveria-verde-v2.spec.json (spec 0ee305495571, file f1c940e09141). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "632c5eb2cc76d744b1cd63c8a98b8d9ee999886fdf75630767b897d82eb18e7d",
+      "query": "mexican food table vegetables",
+      "providerId": 4328898,
+      "pageUrl": "https://pixabay.com/photos/fruit-vegetarian-vegetable-4328898/",
+      "photographer": "markjhemmings9",
+      "photographerUrl": "https://pixabay.com/users/10680176/",
+      "tags": "fruit, vegetarian, vegetable, nutrition, fiber, eating, food, pepper, red, green, dutch, still life, sour orange, orange, cucumber, red onion, vegan, organic, table, ingredients, sour, mexican, south american, salsa, natural, black life, black vegetables, black table, black fruits, black eating, black nutrition, black onion"
+    },
+    {
+      "file": "product-01.jpg",
+      "source": "pixabay",
+      "sha256": "2110ba794a8ac90665d0eedf7f1650444ae6c1700d948a1c306cb4cb9e678951",
+      "query": "enchiladas",
+      "providerId": 5719784,
+      "pageUrl": "https://pixabay.com/photos/enchilada-dish-food-meal-cuisine-5719784/",
+      "photographer": "JessicaVargasJ",
+      "photographerUrl": "https://pixabay.com/users/19015071/",
+      "tags": "enchilada, dish, food, meal, cuisine, tasty, delicious, plate, mexican food"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "pixabay",
+      "sha256": "5bfc22635fb1a53d3276981d384969ba37cd7c32b3669ccbaae5f08011f9c1ee",
+      "query": "restaurant dining room wooden tables",
+      "providerId": 6479818,
+      "pageUrl": "https://pixabay.com/photos/restaurant-furniture-interior-design-6479818/",
+      "photographer": "tuanarch87",
+      "photographerUrl": "https://pixabay.com/users/22113552/",
+      "tags": "restaurant, furniture, interior design, tables, chairs, table setting, banquet table, wooden ceiling, restaurant furniture, interior, indian restaurant"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "pixabay",
+      "sha256": "b788c4c9deeadb9a89b15129547e3fa63a31c9c9fa63ef6bf7631a39aa617e24",
+      "query": "tortillas hands",
+      "providerId": 4351813,
+      "pageUrl": "https://pixabay.com/photos/tacos-al-pastor-4351813/",
+      "photographer": "SallyMeza",
+      "photographerUrl": "https://pixabay.com/users/10788410/",
+      "tags": "tacos al pastor, mexican-style pork tacos, tacos, pork tacos, mexican cuisine, mexican food, dining, meal, dinner, delicious"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "pixabay",
+      "sha256": "aa65513f98cecd1d4dd22dd6f1c04d5551627a9580618a64ded56ede3969b140",
+      "query": "guacamole bowl",
+      "providerId": 829789,
+      "pageUrl": "https://pixabay.com/photos/nachos-tacos-chips-friday-cozy-829789/",
+      "photographer": "Ekologiskt_Skafferi",
+      "photographerUrl": "https://pixabay.com/users/1159164/",
+      "tags": "nachos, tacos, chips, friday cozy, ecological, organic food, texmex"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "pixabay",
+      "sha256": "4c492ec3346793839e7b26c9cbc7973c5dc6587b45d9c9cd58d30e69127961f4",
+      "query": "fish tacos lime",
+      "providerId": 438540,
+      "pageUrl": "https://pixabay.com/photos/taco-salsa-food-mexican-food-438540/",
+      "photographer": "jenniferva",
+      "photographerUrl": "https://pixabay.com/users/187567/",
+      "tags": "taco, salsa, food, mexican food, restaurant, boston, spicy, dinner, meal, cuisine, lunch, plate, mexican"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "pixabay",
+      "sha256": "3c09432430808776f51588377955f71c581a5ca19ed790d0ae8eae005c94468a",
+      "query": "bowl beans corn avocado",
+      "providerId": 4809593,
+      "pageUrl": "https://pixabay.com/photos/vegan-meal-dinner-salad-healthy-4809593/",
+      "photographer": "maxfranke",
+      "photographerUrl": "https://pixabay.com/users/9313892/",
+      "tags": "vegan, meal, dinner, salad, healthy, restaurant, yummy, enjoy the meal, fresh, dressing"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "pixabay",
+      "sha256": "51cfd07fdd48f74d07c919462de0aef380f3e885333faa6480fac7b88fd4987f",
+      "query": "iced hibiscus tea jamaica",
+      "providerId": 6016393,
+      "pageUrl": "https://pixabay.com/photos/tea-jamaica-leaves-hibiscus-plant-6016393/",
+      "photographer": "ArcaiPenumbra",
+      "photographerUrl": "https://pixabay.com/users/20277383/",
+      "tags": "tea, jamaica, leaves, hibiscus, flower wallpaper, plant, flower, exotic, tropical, flower background, spring, petal, white, botany, fresh, flora, beautiful flowers, nature"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "pixabay",
+      "sha256": "2b0b87749f2dce443ea1fab21977396dd61b28c7e92fab3a81e766de2b6f72aa",
+      "query": "flan caramel dessert plate",
+      "providerId": 1958358,
+      "pageUrl": "https://pixabay.com/photos/caramel-cream-flan-milk-dessert-1958358/",
+      "photographer": "RitaE",
+      "photographerUrl": "https://pixabay.com/users/19628/",
+      "tags": "caramel, cream, flan, milk, dessert, vanilla pudding, dish, food, raspberries, pudding, cute, yummy, goodies, sweet, delicacy, treat, confectionery, sweets"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "pixabay",
+      "sha256": "5ad664a6d6b3a6db8c52be701554347d72fe9ffe5849245f4128a0656f78aa87",
+      "query": "fresh juice fruit glasses bar",
+      "providerId": 5913063,
+      "pageUrl": "https://pixabay.com/photos/drink-glass-juice-cocktail-orange-5913063/",
+      "photographer": "rajdeepcraft",
+      "photographerUrl": "https://pixabay.com/users/15019006/",
+      "tags": "drink, glass, juice, cocktail, orange, ice, beverage, fruit, cold, splash, fresh, liquid, bar, water, refreshment, nature, freshness, tropical, cool"
+    }
+  ]
+}

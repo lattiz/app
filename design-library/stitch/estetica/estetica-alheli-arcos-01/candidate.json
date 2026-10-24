@@ -1,0 +1,20 @@
+{
+  "id": "estetica-alheli-arcos-01",
+  "giro": "estetica",
+  "source": "stitch",
+  "status": "collected",
+  "tags": [
+    "nail",
+    "arcos",
+    "menu"
+  ],
+  "spin": "arcos-botanico",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-21T05:45:03.661Z",
+  "stitch": {
+    "project_id": "9428019739625075056",
+    "screen_ids": [
+      "5287b264b9da46218a14e5df138164da"
+    ]
+  }
+}

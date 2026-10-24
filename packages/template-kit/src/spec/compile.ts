@@ -91,7 +91,7 @@ const ANCHORS: Record<string, string> = {
 };
 const anchorOf = (slot: string, variant: string) =>
   slot === 'locations'
-    ? variant === 'single'
+    ? variant === 'single' || variant === 'single-card'
       ? 'ubicacion'
       : 'sucursales'
     : ANCHORS[slot];
@@ -622,7 +622,9 @@ function tierCopy(
     : links;
   merged.navbar = { ...merged.navbar, links };
   const single = sections.some(
-    (s) => s.slot === 'locations' && s.variant === 'single',
+    (s) =>
+      s.slot === 'locations' &&
+      (s.variant === 'single' || s.variant === 'single-card'),
   );
   const {
     branch: _branch,
