@@ -168,7 +168,14 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     shapes: ['suave', 'organico'],
     motion: 'editorial',
     moods: ['lujo', 'fresco', 'editorial'],
-    giros: ['estetica', 'floreria', 'tienda', 'barberia', 'restaurante'],
+    giros: [
+      'estetica',
+      'floreria',
+      'tienda',
+      'barberia',
+      'restaurante',
+      'academia-combate',
+    ],
     sections: {
       pro: [
         s('header', 'centered-logo'),
@@ -320,7 +327,14 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     shapes: ['redondo', 'suave'],
     motion: 'calm',
     moods: ['clínico', 'fresco', 'suave'],
-    giros: ['clinica', 'dental', 'veterinaria', 'estetica', 'gimnasio'],
+    giros: [
+      'clinica',
+      'dental',
+      'veterinaria',
+      'estetica',
+      'gimnasio',
+      'academia-combate',
+    ],
     sections: {
       pro: [
         s('header', 'notice-bar'),
@@ -429,7 +443,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     shapes: ['brutal', 'urbano'],
     motion: 'editorial',
     moods: ['urbano', 'energía'],
-    giros: ['barberia', 'gimnasio', 'tienda'],
+    giros: ['barberia', 'gimnasio', 'academia-combate', 'tienda'],
     sections: {
       pro: [
         s('header', 'inline', 'index-strip'),

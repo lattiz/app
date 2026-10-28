@@ -100,6 +100,10 @@ export const verticals: Record<string, BlueprintVertical> = {
   despacho: { schemaType: 'AccountingService', slots: serviceSlots },
   tienda: { schemaType: 'Store', slots: serviceSlots },
   gimnasio: { schemaType: 'ExerciseGym', slots: serviceSlots },
+  'academia-combate': {
+    schemaType: 'SportsActivityLocation',
+    slots: serviceSlots,
+  },
   veterinaria: { schemaType: 'VeterinaryCare', slots: serviceSlots },
 };
 

@@ -61,6 +61,6 @@ export default {
   heroes: { pro: ['split', 'panel', 'columns'], basic: ['split', 'columns'] },
   motion: 'calm',
   dials: { variance: 4, motion: 4, density: 5 },
-  giros: ['despacho', 'tienda', 'clinica', 'barberia'],
+  giros: ['despacho', 'tienda', 'clinica', 'barberia', 'academia-combate'],
   rules: ['accent:neutral', 'no-gradients'],
 } satisfies ArtDirection;

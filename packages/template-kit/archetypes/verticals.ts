@@ -307,6 +307,29 @@ export const VERTICAL_MODULES: Record<string, VerticalModule> = {
       { id: 'preguntas-a-la-vista', copy: {} },
     ],
   },
+  'academia-combate': {
+    giro: 'academia-combate',
+    archetypes: ['bold', 'showcase', 'booking'],
+    modules: [
+      {
+        id: 'aviso-del-dia',
+        copy: { navbar: { notice: 'Hoy: box 19:00 · jiu-jitsu 20:30' } },
+      },
+      {
+        id: 'cierre',
+        copy: cierre(
+          'Tu primera <span class="lz-title__serif">clase</span>',
+          'Elige disciplina y horario; te prestamos guantes y vendas ese día.',
+          'Pedir clase de prueba',
+        ),
+      },
+      {
+        id: 'calificacion',
+        copy: { testimonials: { scoreNote: 'Calificación de ejemplo' } },
+      },
+      { id: 'preguntas-a-la-vista', copy: {} },
+    ],
+  },
   restaurante: {
     giro: 'restaurante',
     archetypes: ['catalog', 'editorial', 'showcase'],
