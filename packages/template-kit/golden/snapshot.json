@@ -1600,6 +1600,69 @@
     }
   },
   "specs": {
+    "specs/academia-combate-dojo-ciruelo.spec.json": {
+      "ids": [
+        "academia-combate-dojo-ciruelo-v1",
+        "academia-combate-base-dojo-ciruelo-v1"
+      ],
+      "specHash": "bacb84df9b64",
+      "files": {
+        "templates/academia-combate-dojo-ciruelo-v1.ts": "69b346e0a372",
+        "themes/academia-combate-dojo-ciruelo-v1.json": "a11186f1fcbf",
+        "demo-profiles/academia-combate-dojo-ciruelo-v1.json": "9be7ec639d05",
+        "templates/academia-combate-base-dojo-ciruelo-v1.ts": "c282c852278f",
+        "themes/academia-combate-base-dojo-ciruelo-v1.json": "455941e471b4",
+        "demo-profiles/academia-combate-base-dojo-ciruelo-v1.json": "9be7ec639d05",
+        "content/academia-combate.dojo-ciruelo.es-MX.ts": "ddfb6d3b81e0"
+      },
+      "choices": {
+        "academia-combate-dojo-ciruelo-v1": [
+          "dirección: tinta-papel",
+          "arquetipo: minimal"
+        ],
+        "academia-combate-base-dojo-ciruelo-v1": [
+          "dirección: tinta-papel",
+          "arquetipo: minimal",
+          "titular: alternativa para no repetir el de la Pro"
+        ]
+      },
+      "peers": [
+        "academia-combate-base-esquina-nueve-v1",
+        "academia-combate-esquina-nueve-v1"
+      ],
+      "locked": true
+    },
+    "specs/academia-combate-esquina-nueve.spec.json": {
+      "ids": [
+        "academia-combate-esquina-nueve-v1",
+        "academia-combate-base-esquina-nueve-v1"
+      ],
+      "specHash": "f701fe3a0c0c",
+      "files": {
+        "templates/academia-combate-esquina-nueve-v1.ts": "95a46330aff1",
+        "themes/academia-combate-esquina-nueve-v1.json": "b83a5d0b3acb",
+        "demo-profiles/academia-combate-esquina-nueve-v1.json": "0b64e410f699",
+        "templates/academia-combate-base-esquina-nueve-v1.ts": "3433d2be60c9",
+        "themes/academia-combate-base-esquina-nueve-v1.json": "ea0296103a80",
+        "demo-profiles/academia-combate-base-esquina-nueve-v1.json": "0b64e410f699",
+        "content/academia-combate.esquina-nueve.es-MX.ts": "92c240bdd57e"
+      },
+      "choices": {
+        "academia-combate-esquina-nueve-v1": [
+          "dirección: neon-nocturno",
+          "arquetipo: bold"
+        ],
+        "academia-combate-base-esquina-nueve-v1": [
+          "dirección: neon-nocturno",
+          "arquetipo: bold"
+        ]
+      },
+      "peers": [
+        "academia-combate-base-dojo-ciruelo-v1",
+        "academia-combate-dojo-ciruelo-v1"
+      ],
+      "locked": true
+    },
     "specs/barberia-abeto-v2.spec.json": {
       "ids": [],
       "specHash": "6e61ec7e3369",
