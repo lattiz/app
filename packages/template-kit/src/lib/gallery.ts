@@ -113,6 +113,8 @@ const SKIP = new Set([
   'mapTitle',
   'score',
   'cta',
+  'rankTone',
+  'rankSteps',
 ]);
 
 async function launch(): Promise<Browser> {

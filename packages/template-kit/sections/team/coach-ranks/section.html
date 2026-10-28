@@ -1,0 +1,24 @@
+<section id="equipo" data-lz-slot="team" data-lz-variant="coach-ranks" class="lz-section lz-team-coach-ranks">
+  <div class="lz-container">
+    <div class="lz-team-coach-ranks__head">
+      <div class="lz-team-coach-ranks__lead">
+        <p class="lz-team-coach-ranks__kicker" data-lz-key="kicker"></p>
+        <h2 class="lz-title lz-team-coach-ranks__title" data-lz-key="title"></h2>
+      </div>
+      <p class="lz-team-coach-ranks__intro" data-lz-if="intro" data-lz-key="intro"></p>
+    </div>
+    <div class="lz-team-coach-ranks__grid">
+      <article class="lz-team-coach-ranks__member" data-lz-each="members">
+        <img loading="lazy" width="800" height="1000" class="lz-team-coach-ranks__photo" data-lz-attr-src="image" data-lz-attr-alt="imageAlt">
+        <p class="lz-team-coach-ranks__role" data-lz-key="role"></p>
+        <h3 class="lz-team-coach-ranks__name" data-lz-key="name"></h3>
+        <div class="lz-team-coach-ranks__grade" data-lz-if="rank">
+          <div class="lz-team-coach-ranks__bar" data-lz-if="rankTone" data-lz-attr-data-tone="rankTone" data-lz-attr-data-steps="rankSteps"></div>
+          <p class="lz-team-coach-ranks__rank" data-lz-key="rank"></p>
+        </div>
+        <p class="lz-team-coach-ranks__bio" data-lz-key="bio"></p>
+        <p class="lz-team-coach-ranks__specialty" data-lz-if="specialty" data-lz-key="specialty"></p>
+      </article>
+    </div>
+  </div>
+</section>

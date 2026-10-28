@@ -8,6 +8,7 @@ import { KIT_SECTION_BLOCKS } from './kit-blocks';
 const NO_CONTACT_LINK = new Set([
   'lzb-about-framed-craft',
   'lzb-gallery-staggered-frames',
+  'lzb-team-coach-ranks',
 ]);
 const sections = KIT_BLOCKS.filter((b) => 'kitVariant' in b);
 /** Role modifiers (lz-btn--secondary) live in a primitive's base.css, as in kit templates. */
@@ -43,6 +44,8 @@ describe('kit blocks (generated from the kit)', () => {
       'lzb-about-clock-rail',
       'lzb-services-party-tiers',
       'lzb-cta-ticket-stub-bill',
+      'lzb-services-discipline-schedule',
+      'lzb-team-coach-ranks',
       'lzb-btn',
       'lzb-tile',
       'lzb-tag',
@@ -117,7 +120,11 @@ describe('kit blocks (generated from the kit)', () => {
     const plans = Object.fromEntries(
       KIT_SECTION_BLOCKS.map((b) => [b.id, blockPlan(b)]),
     );
-    const pro = new Set(['lzb-hero-bento', 'lzb-gallery-staggered-frames']);
+    const pro = new Set([
+      'lzb-hero-bento',
+      'lzb-gallery-staggered-frames',
+      'lzb-team-coach-ranks',
+    ]);
     for (const [id, plan] of Object.entries(plans))
       expect(plan, id).toBe(pro.has(id) ? 'pro' : 'basic');
   });

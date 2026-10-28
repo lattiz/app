@@ -92,3 +92,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [new-sections-budgets-and-gotchas](new-sections-budgets-and-gotchas.md) — presupuesto crudo subido; nojs y lookup con hijos; ancla de contacto en ambos tiers
 - [locations-sin-mapa](locations-sin-mapa.md) — map-link (Pro) y single-card (Básico) admitidas en blueprints; single-card es sucursal única
 - [deploy-previews-whole-tree](deploy-previews-whole-tree.md) — el deploy reemplaza todo el sitio; aborta si faltan carpetas de plantillas activas
+- [picker-respects-direction-rules](picker-respects-direction-rules.md) — el compilador descarta variantes que rompen no-gradients antes de elegir

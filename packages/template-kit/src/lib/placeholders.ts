@@ -62,7 +62,9 @@ type Motif =
   | 'pulse'
   | 'paw'
   | 'bone'
-  | 'collar';
+  | 'collar'
+  | 'glove'
+  | 'belt';
 
 const MOTIFS: Record<Motif, string> = {
   scissors:
@@ -128,6 +130,9 @@ const MOTIFS: Record<Motif, string> = {
   bone: '<path d="M34 30a10 10 0 1 0-12 12l36 36a10 10 0 1 0 12-12z"/><path d="M66 30a10 10 0 1 1 12 12"/><path d="M34 70a10 10 0 1 1-12-12"/>',
   collar:
     '<circle cx="50" cy="44" r="30"/><circle cx="50" cy="44" r="22"/><circle cx="50" cy="84" r="8"/><path d="M50 74v2"/>',
+  glove:
+    '<path d="M30 42c0-15 10-24 25-24h5c13 0 21 9 21 23v16c0 12-8 20-20 20H42c-7 0-12-5-12-12z"/><path d="M30 52c-8 0-13 5-13 11s5 11 13 11"/><rect x="36" y="78" width="38" height="14" rx="3"/>',
+  belt: '<rect x="8" y="42" width="84" height="14" rx="2"/><rect x="40" y="36" width="20" height="26" rx="2"/><path d="M44 62l-8 28M56 62l8 28"/>',
 };
 
 /** hero, about and the gallery cycle per vertical; barbería keeps the original set. */
@@ -180,6 +185,11 @@ const VERTICAL_MOTIFS: Record<
     hero: 'dumbbell',
     about: 'kettlebell',
     cycle: ['pulse', 'dumbbell', 'stopwatch', 'kettlebell'],
+  },
+  'academia-combate': {
+    hero: 'glove',
+    about: 'belt',
+    cycle: ['stopwatch', 'glove', 'pulse', 'belt'],
   },
   veterinaria: {
     hero: 'paw',

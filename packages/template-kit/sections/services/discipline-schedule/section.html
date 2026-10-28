@@ -1,0 +1,69 @@
+<section id="servicios" data-lz-slot="services" data-lz-variant="discipline-schedule" class="lz-section lz-services-discipline-schedule lz-ds">
+  <div class="lz-container">
+    <div class="lz-ds__head">
+      <p class="lz-ds__kicker" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-ds__title" data-lz-key="title"></h2>
+      <p class="lz-ds__intro" data-lz-if="intro" data-lz-key="intro"></p>
+    </div>
+    <ul class="lz-ds__legend" data-lz-if="legend">
+      <li class="lz-ds__chip" data-lz-each="legend">
+        <span data-lz-key="label"></span>
+        <span data-lz-if="text" data-lz-key="text"></span>
+      </li>
+    </ul>
+    <table class="lz-ds__table">
+      <thead class="lz-ds__thead">
+        <tr>
+          <th scope="col" class="lz-ds__corner">Hora</th>
+          <th scope="col" class="lz-ds__col" data-lz-each="days" data-lz-key="."></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="lz-ds__row" data-lz-each="rows">
+          <th scope="row" class="lz-ds__time" data-lz-key="time"></th>
+          <td class="lz-ds__cell" data-lz-each="cells">
+            <span class="lz-ds__day" data-lz-if="discipline" data-lz-key="day"></span>
+            <strong class="lz-ds__disc" data-lz-if="discipline" data-lz-key="discipline"></strong>
+            <span class="lz-ds__lvl" data-lz-if="level" data-lz-key="level"></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="lz-ds__note" data-lz-if="note" data-lz-key="note"></p>
+    <div class="lz-ds__trial" data-lz-if="trial">
+      <div class="lz-ds__trial-copy">
+        <p class="lz-ds__trial-title" data-lz-key="trial.title"></p>
+        <p class="lz-ds__intro" data-lz-if="trial.text" data-lz-key="trial.text"></p>
+      </div>
+      <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary lz-ds__trial-cta" data-lz-attr-href="trial.href" data-lz-key="trial.cta"></a>
+    </div>
+    <div class="lz-ds__plans" data-lz-if="prices">
+      <div class="lz-ds__plans-head">
+        <p class="lz-ds__kicker" data-lz-if="plans.kicker" data-lz-key="plans.kicker"></p>
+        <h2 class="lz-title lz-ds__title" data-lz-if="plans.title" data-lz-key="plans.title"></h2>
+      </div>
+      <div class="lz-ds__grid">
+        <article class="lz-ds__plan" data-lz-each="prices">
+          <p class="lz-ds__badge" data-lz-if="badge" data-lz-key="badge"></p>
+          <h3 class="lz-ds__name" data-lz-key="name"></h3>
+          <p class="lz-ds__price">
+            <span data-lz-key="price"></span>
+            <span class="lz-ds__unit" data-lz-if="unit" data-lz-key="unit"></span>
+          </p>
+          <p class="lz-ds__intro" data-lz-if="description" data-lz-key="description"></p>
+          <ul class="lz-ds__feat" data-lz-if="features">
+            <li data-lz-each="features" data-lz-key="."></li>
+          </ul>
+          <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--secondary lz-ds__cta" data-lz-if="cta" data-lz-attr-href="href" data-lz-key="cta"></a>
+        </article>
+      </div>
+      <ul class="lz-ds__promos" data-lz-if="promos">
+        <li class="lz-ds__promo" data-lz-each="promos">
+          <span class="lz-ds__kicker" data-lz-if="tag" data-lz-key="tag"></span>
+          <span data-lz-key="title"></span>
+          <a data-lz-attr-href="href" target="_blank" rel="noopener noreferrer" class="lz-ds__promo-cta" data-lz-if="cta" data-lz-key="cta"></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

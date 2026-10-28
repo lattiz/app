@@ -168,7 +168,14 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     shapes: ['suave', 'organico'],
     motion: 'editorial',
     moods: ['lujo', 'fresco', 'editorial'],
-    giros: ['estetica', 'floreria', 'tienda', 'barberia', 'restaurante'],
+    giros: [
+      'estetica',
+      'floreria',
+      'tienda',
+      'barberia',
+      'restaurante',
+      'academia-combate',
+    ],
     sections: {
       pro: [
         s('header', 'centered-logo'),
@@ -181,6 +188,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
           'product-grid',
           'schedule-cards',
           'collection-cards',
+          'discipline-schedule',
         ),
         s('proof', 'bento', 'mosaic', 'staggered-frames'),
         s('testimonials', 'quote-feature'),
@@ -199,6 +207,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
           'price-list',
           'schedule-cards',
           'collection-cards',
+          'discipline-schedule',
         ),
         s('faq', 'list'),
         s('cta', 'band', 'urgent-line', 'ritual-panels', 'ticket-stub-bill'),
@@ -320,7 +329,14 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     shapes: ['redondo', 'suave'],
     motion: 'calm',
     moods: ['clínico', 'fresco', 'suave'],
-    giros: ['clinica', 'dental', 'veterinaria', 'estetica', 'gimnasio'],
+    giros: [
+      'clinica',
+      'dental',
+      'veterinaria',
+      'estetica',
+      'gimnasio',
+      'academia-combate',
+    ],
     sections: {
       pro: [
         s('header', 'notice-bar'),
@@ -332,8 +348,14 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
           'care-pathway',
           'clock-rail',
         ),
-        s('catalog', 'cards', 'treatment-rows', 'party-tiers'),
-        s('team', 'spotlight', 'grid'),
+        s(
+          'catalog',
+          'cards',
+          'treatment-rows',
+          'party-tiers',
+          'discipline-schedule',
+        ),
+        s('team', 'spotlight', 'grid', 'coach-ranks'),
         s('proof', 'strip'),
         s('testimonials', 'rating-wall', 'cards'),
         s('faq', 'grid'),
@@ -345,7 +367,13 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
         s('header', 'notice-bar'),
         s('hero', 'panel', 'split'),
         s('about', 'brief', 'booking-steps', 'care-pathway', 'clock-rail'),
-        s('catalog', 'cards', 'treatment-rows', 'party-tiers'),
+        s(
+          'catalog',
+          'cards',
+          'treatment-rows',
+          'party-tiers',
+          'discipline-schedule',
+        ),
         s('faq', 'list', 'grid'),
         s('contact', 'single-card', 'single'),
         s('whatsapp', 'bubble'),
@@ -429,7 +457,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     shapes: ['brutal', 'urbano'],
     motion: 'editorial',
     moods: ['urbano', 'energía'],
-    giros: ['barberia', 'gimnasio', 'tienda'],
+    giros: ['barberia', 'gimnasio', 'academia-combate', 'tienda'],
     sections: {
       pro: [
         s('header', 'inline', 'index-strip'),
@@ -458,6 +486,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
           'schedule-cards',
           'index-table',
           'chalk-board',
+          'discipline-schedule',
         ),
         s('proof', 'bento', 'grid', 'contact-sheet'),
         s(
@@ -504,6 +533,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
           'schedule-cards',
           'index-table',
           'chalk-board',
+          'discipline-schedule',
         ),
         s('faq', 'list', 'numbered-cards', 'index-answers', 'rule-table'),
         s(

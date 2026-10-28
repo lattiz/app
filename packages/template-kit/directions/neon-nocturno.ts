@@ -61,6 +61,6 @@ export default {
   },
   motion: 'editorial',
   dials: { variance: 8, motion: 7, density: 7 },
-  giros: ['barberia', 'gimnasio', 'restaurante', 'tienda'],
+  giros: ['barberia', 'gimnasio', 'academia-combate', 'restaurante', 'tienda'],
   rules: ['scheme:dark', 'display:upper', 'no-gradients'],
 } satisfies ArtDirection;
