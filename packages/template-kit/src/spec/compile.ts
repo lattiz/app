@@ -709,6 +709,18 @@ function candidates<T>(
 
 const CSS_BYTES = new Map<string, number>();
 /** Raw size of a variant's section.css (Básico layout picks prefer the lighter of equals). */
+/** A variant whose CSS a `no-gradients` direction would reject (legacy scrims are exempt, as in directionFindings). */
+function breaksDirection(
+  direction: ArtDirection | undefined,
+  slot: string,
+  variant: string,
+): boolean {
+  if (!direction?.rules.includes('no-gradients')) return false;
+  if (isLegacyVariant(slot, variant)) return false;
+  const file = resolve(paths.sections, slot, variant, 'section.css');
+  return existsSync(file) && /gradient\(/.test(readFileSync(file, 'utf8'));
+}
+
 function cssBytes(slot: string, variant: string): number {
   const key = `${slot}/${variant}`;
   if (!CSS_BYTES.has(key)) {
@@ -911,7 +923,9 @@ export async function planSpec(
               ? heroPrefs
               : (archetype?.sections[kitTier].find((s) => s.role === role)
                   ?.variants ?? []);
-          const options = preferred.filter((v) => allowed.includes(v));
+          const options = preferred.filter(
+            (v) => allowed.includes(v) && !breaksDirection(direction, slot, v),
+          );
           // Básico stays light (budgets.json): the lightest of the archetype's choices for a role.
           const variant =
             kitTier === 'basic' && role !== 'hero'
