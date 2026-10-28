@@ -6,7 +6,7 @@
 .lz-ds__title{margin:0;font-size:calc(var(--lz-title-section) * var(--lz-display-scale))}
 .lz-ds__intro,.lz-ds__note,.lz-ds__lvl,.lz-ds__unit{margin:0;color:var(--lz-color-muted);font-size:calc(14px * var(--lz-text-scale));line-height:1.45}
 .lz-ds__legend{display:flex;flex-wrap:wrap;gap:calc(8px * var(--lz-space));margin:0 0 calc(16px * var(--lz-space));padding:0;list-style:none}
-.lz-ds__chip{padding:calc(6px * var(--lz-space)) calc(12px * var(--lz-space));border:var(--lz-border-width) solid var(--lz-color-line);font-size:calc(14px * var(--lz-text-scale))}
+.lz-ds__chip{display:flex;flex-wrap:wrap;gap:0 calc(6px * var(--lz-space));padding:calc(6px * var(--lz-space)) calc(12px * var(--lz-space));border:var(--lz-border-width) solid var(--lz-color-line);font-size:calc(14px * var(--lz-text-scale))}
 .lz-ds table{width:100%;border-collapse:collapse;table-layout:fixed;overflow:hidden;border:var(--lz-border-width) solid var(--lz-color-line);background:var(--lz-color-surface)}
 .lz-ds th,.lz-ds td{padding:calc(10px * var(--lz-space));border:var(--lz-border-width) solid var(--lz-color-line);text-align:left;vertical-align:top}
 .lz-ds thead th{background:var(--lz-color-surface-2)}
@@ -54,3 +54,4 @@
 .lz-ds__trial{display:grid}
 .lz-ds__trial-cta,.lz-ds__cta{width:100%}
 }
+.lz-ds__chip span+span{color:var(--lz-color-muted)}
