@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/academia-combate-dojo-ciruelo.spec.json (spec bacb84df9b64, file 9be7ec639d05). Do not edit: use the spec, or freeze.",
+  "name": "Dojo Ciruelo",
+  "category": "other",
+  "phone": "+524420000000",
+  "whatsapp": "+5214420000000",
+  "email": "hola@dojociruelo.mx",
+  "address": {
+    "street": "Calle Nogal 214, Col. Jardines",
+    "city": "Querétaro",
+    "country": "MX"
+  },
+  "hours": {
+    "mon": [
+      {
+        "open": "07:00",
+        "close": "22:00"
+      }
+    ],
+    "tue": [
+      {
+        "open": "07:00",
+        "close": "22:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "07:00",
+        "close": "22:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "07:00",
+        "close": "22:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "07:00",
+        "close": "22:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "09:00",
+        "close": "14:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}

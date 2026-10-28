@@ -1,0 +1,11 @@
+{
+  "$lattiz": "GENERATED from specs/academia-combate-dojo-ciruelo.spec.json (spec bacb84df9b64, file fa1232be7982). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "85641e91f0549080e3e8a8453cc83824bbeda9e39c77e35c4825bfc64d37551f",
+      "url": "https://pixabay.com/get/gfe40a0c55fb57afcdca00a9a8db9230f75e822cd32c4552ae297d8115883cc4414d10beda95eab1a01fa37a0d915c0dbbb3dd88d3d24bede011c3b7415cb3e64_1280.jpg"
+    }
+  ]
+}

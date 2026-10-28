@@ -14,6 +14,19 @@ export interface TemplateIdentity {
 /** Kit templates by id: giro, art direction, palette swatches and Pro-only features. */
 export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
   {
+    id: 'academia-combate-base-dojo-ciruelo-v1',
+    tier: 'basic',
+    giro: 'academia-combate',
+    giroLabel: 'Academia de combate',
+    direction: {
+      id: 'tinta-papel',
+      name: 'Tinta y papel',
+    },
+    swatches: ['#ECEFF1', '#F6F8F9', '#59626B', '#1B2025'],
+    dark: false,
+    proFeatures: [],
+  },
+  {
     id: 'academia-combate-base-esquina-nueve-v1',
     tier: 'basic',
     giro: 'academia-combate',
@@ -25,6 +38,26 @@ export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
     swatches: ['#111311', '#1E201E', '#C6F432', '#EEF2E8'],
     dark: true,
     proFeatures: [],
+  },
+  {
+    id: 'academia-combate-dojo-ciruelo-v1',
+    tier: 'pro',
+    giro: 'academia-combate',
+    giroLabel: 'Academia de combate',
+    direction: {
+      id: 'tinta-papel',
+      name: 'Tinta y papel',
+    },
+    swatches: ['#F4F1EA', '#FAF9F6', '#1A1917', '#1A1917'],
+    dark: false,
+    proFeatures: [
+      'Nosotros Pro',
+      'Equipo',
+      'Galería',
+      'Testimonios',
+      'Contacto con mapa',
+      'Animaciones',
+    ],
   },
   {
     id: 'academia-combate-esquina-nueve-v1',

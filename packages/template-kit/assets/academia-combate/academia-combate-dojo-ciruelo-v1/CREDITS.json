@@ -1,0 +1,94 @@
+{
+  "$lattiz": "GENERATED from specs/academia-combate-dojo-ciruelo.spec.json (spec bacb84df9b64, file f1ab03def57f). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "url",
+      "sha256": "38392c3c600dff0f966f7decb231b58dd3e48192d66d0c3d3bd638a1773ffc2c",
+      "url": "https://pixabay.com/get/gfe40a0c55fb57afcdca00a9a8db9230f75e822cd32c4552ae297d8115883cc4414d10beda95eab1a01fa37a0d915c0dbbb3dd88d3d24bede011c3b7415cb3e64_1280.jpg"
+    },
+    {
+      "file": "about.jpg",
+      "source": "url",
+      "sha256": "291e4b1911f634e366383c0150f74cc46444232a1f32a127edb0acb751605d94",
+      "url": "https://pixabay.com/get/gc540acafc09edf192707ba2f73416b8823452611df71a310769dad99a9e68c118893820e9e0f0bc1d4a5a9a3d2382534055d51d4903f0333d4958054b50e7e44_1280.jpg"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "url",
+      "sha256": "714f817a23e9adea7e9da1f2acca8dac4141f35bb73338a4b067315d918d93e5",
+      "url": "https://pixabay.com/get/ga1b13b3d764301ac64ecec9e05abb1b342286eedcd6e010fb9f4742e9172d35f0e347b3f11f50e359e65da264fbac1cce8c3fd520ff58d4d0d87b9f5aa5ec62f_1280.jpg"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "url",
+      "sha256": "a9cc2fd4cdb470e5d5de40ee780137b4be152f7984a98a386a3477fb012d2c04",
+      "url": "https://pixabay.com/get/g0149d88ea3f61b7e57acffbc52d61c36c4d168ad140193433f78ad63a7fa74e9fab21e2837aa7bfa9493b304d0ff7c01f4a3247bb55cf1bff561435fbe024131_1280.jpg"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "url",
+      "sha256": "08e034c7911a146cea82b7df21c7baa7dae6ba9c4333525174d1a639600263ab",
+      "url": "https://pixabay.com/get/g1d056c2ec1f5fb5c153b860a5d46d2e0817492d67fc631798c4dc2c05c7451ef01eee4e80417b714eb7650b10a28d9833f80a80d1684eff7fc8558ec92129301_1280.jpg"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "url",
+      "sha256": "9243fe848106ead3796e7f061460e122f9a984fb572cf4d8fa0f7b33726e74b1",
+      "url": "https://pixabay.com/get/ga1566a14e1638d195e9fec6a14e06a597eeb4989e45a5f958c415e2f65c803f83e9d24aac3c03c156a918ca5bb3ec1a656c83e3eb6054777f6d0aff280923603_1280.jpg"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "url",
+      "sha256": "c23aa4922445eb4832a386396806ac2b45e2e422463c548ec8e631aa5d1988ea",
+      "url": "https://pixabay.com/get/g4324ebc0dd991eac40168a0cc4617f55789415806646ab560cea914c047aef423c60099ee08e4b9f9e60480aecdfe1cc293a617b2f60d6136d91b971942c6910_1280.jpg"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "pixabay",
+      "sha256": "82b380f0bce2395cb411890e36bfa5f468347013550015686fc485b932756bc7",
+      "query": "taekwondo kick training",
+      "providerId": 5015437,
+      "pageUrl": "https://pixabay.com/photos/karate-kick-fighter-sport-martial-5015437/",
+      "photographer": "innamykytas",
+      "photographerUrl": "https://pixabay.com/users/15196666/",
+      "tags": "karate, kick, fighter, sport, martial, exercise, training, girl, kickboxing, taekwondo, judo, belt, warrior, activity, kimono, combat"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "url",
+      "sha256": "ac8fb2606fcfcc5a75dc1bedd428220f5f11d2a7c2ca7813307497aecbd92b47",
+      "url": "https://pixabay.com/get/g9740adb972e4d4b9bfbd7cb6e8239cb72d016af65836ef3369b3bfb2d803f5abf14da6586a37d827e2ccc73d564be85cdc2a59837e0fbb2969674d3d9ebfb39f_1280.jpg"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "url",
+      "sha256": "3e1892d14bb487f1008eba87d523bee55a59833a52606ef2d9f943d642088657",
+      "url": "https://pixabay.com/get/g16d88bea8cd35d72bd57b08ffa58324d68c8df65fe37da9980dd8b2bec1935c6ce1fa00031656f3dbf1692776e17e41ce6bc70a29af1c6061743d88c5d377736_1280.jpg"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "url",
+      "sha256": "2238a1fc14a48f367764d68a657cf570d6a90debc31ed8d9a8dbf7474a837b25",
+      "url": "https://pixabay.com/get/g13d357a3f388655cc3ecb77035b5a766da6d890aa0db9e9fede777342d0362fe38f28c3ba2798ece98104566c7026fc33338272bebe4ae2199250eb385178d50_1280.jpg"
+    },
+    {
+      "file": "gallery-06.jpg",
+      "source": "url",
+      "sha256": "314f534824ecda66649f3119bd76cd841464fa14ec1454fe445768acebd2454a",
+      "url": "https://pixabay.com/get/g8e7220a7356e938873ccf0f755e7e29b064695adcb721043b41de367868bdb85d9ab441507a4ef9e9d364db867313399364a381c105b84bede1913d86a68fd3c_1280.jpg"
+    },
+    {
+      "file": "gallery-07.jpg",
+      "source": "url",
+      "sha256": "9dc037ed82562e8ab5855cdc772bb836d056c4b21a2cc0a6b4bb221555d8639b",
+      "url": "https://pixabay.com/get/g4cd573f40c9327d52ba308dcd10e93a212f3413b3bee1d1937793a8c8e01cea313529645d19634a801bd4d09dc891295de5d94ec1c417839023551a5f40cf274_1280.jpg"
+    },
+    {
+      "file": "gallery-08.jpg",
+      "source": "url",
+      "sha256": "d73a94ffc8978fa2d874c9a945a85404260b9c68ad4b04fe84c41ad9e9496136",
+      "url": "https://pixabay.com/get/gf1fb04122ad4887f376ae79f611ce2bd167f0bd3580c2e0a0684404ca3c437e6399404361b6b6e31b5c19c673305db24a66f07559978dbfa53db337f480fa8ef_1280.jpg"
+    }
+  ]
+}
