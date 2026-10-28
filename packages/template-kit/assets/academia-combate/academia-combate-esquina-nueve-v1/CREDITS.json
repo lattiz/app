@@ -1,0 +1,115 @@
+{
+  "$lattiz": "GENERATED from specs/academia-combate-esquina-nueve.spec.json (spec f701fe3a0c0c, file 3c353ae748ba). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "adf11b34574bd14d390db533408c804252383397984a654ac415330e6e444cdd",
+      "query": "boxer punching bag dark",
+      "providerId": 1984344,
+      "pageUrl": "https://pixabay.com/photos/boxer-woman-sport-fighter-fitness-1984344/",
+      "photographer": "TheDigitalArtist",
+      "photographerUrl": "https://pixabay.com/users/202249/",
+      "tags": "boxer, woman, sport, fighter, fitness, training, athlete, dark"
+    },
+    {
+      "file": "team-1.jpg",
+      "source": "pixabay",
+      "sha256": "69753a6c93b71c0a77f3b0402ce3ae2dc0a15a5dea1694fe0ea15f1ea30296d3",
+      "query": "boxer portrait man",
+      "providerId": 7827856,
+      "pageUrl": "https://pixabay.com/photos/man-boxer-portrait-male-sport-7827856/",
+      "photographer": "20252177",
+      "photographerUrl": "https://pixabay.com/users/20252177/",
+      "tags": "man, boxer, portrait, male, sport, fitness, chair, boy, model"
+    },
+    {
+      "file": "team-2.jpg",
+      "source": "pixabay",
+      "sha256": "714f817a23e9adea7e9da1f2acca8dac4141f35bb73338a4b067315d918d93e5",
+      "query": "judo man black belt",
+      "providerId": 1252987,
+      "pageUrl": "https://pixabay.com/photos/boy-karate-fighter-kimono-1252987/",
+      "photographer": "1866946",
+      "photographerUrl": "https://pixabay.com/users/1866946/",
+      "tags": "boy, karate, fighter, kimono, black belt, man, battles"
+    },
+    {
+      "file": "team-3.jpg",
+      "source": "pixabay",
+      "sha256": "3507082b534a9f8fee1b64f3c5228c3875cc3b8a93f69ed182a6fc035d1f613a",
+      "query": "karate woman black belt",
+      "providerId": 5171955,
+      "pageUrl": "https://pixabay.com/photos/karate-sport-fist-fighter-samurai-5171955/",
+      "photographer": "innamykytas",
+      "photographerUrl": "https://pixabay.com/users/15196666/",
+      "tags": "karate, sport, fist, fighter, samurai, training, exercise, workout, fit, gray workout, gray sports"
+    },
+    {
+      "file": "team-4.jpg",
+      "source": "pixabay",
+      "sha256": "edc391f1ffed4b7a7486506458beb38b3af9f3043f2c5873ce2628a188f6cc28",
+      "query": "woman karate instructor portrait black belt",
+      "providerId": 5893041,
+      "pageUrl": "https://pixabay.com/photos/woman-karate-box-kick-kickboxing-5893041/",
+      "photographer": "innamykytas",
+      "photographerUrl": "https://pixabay.com/users/15196666/",
+      "tags": "woman, karate, box, kick, kickboxing, gym, exercise, fist, fighter, sport, judo, lifestyle, human, training, fight, taekwondo, person, fitness, body, boxing"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "pixabay",
+      "sha256": "86fa9ee075e21f202cf64a83086f5ebf04488b4613d6404c37b05a12360b7cf4",
+      "query": "heavy bags hanging gym dark",
+      "providerId": 1278345,
+      "pageUrl": "https://pixabay.com/photos/punching-bag-blue-boxing-1278345/",
+      "photographer": "anttinyman",
+      "photographerUrl": "https://pixabay.com/users/2279602/",
+      "tags": "punching bag, blue, boxing"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "pixabay",
+      "sha256": "907e3a5c7b372192595b3897f3b0edd371729ac951fb45ebafca40df6d6307d6",
+      "query": "punching bags row gym",
+      "providerId": 1923682,
+      "pageUrl": "https://pixabay.com/photos/boxer-boxing-fitness-training-1923682/",
+      "photographer": "SFReader",
+      "photographerUrl": "https://pixabay.com/users/2435922/",
+      "tags": "boxer, boxing, fitness, training, sport, fight, fighter, punch, competition, man, exercise, athlete, healthy, adult, male, kickboxing, gray fitness, gray exercise, gray training, gray healthy, gray workout, gray sports, gray box"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "pixabay",
+      "sha256": "d88d38499e8714c6e098bc1113560f0682469a96c0c657ecf53fecfecc465b1e",
+      "query": "boxing coach focus mitts woman training",
+      "providerId": 3265804,
+      "pageUrl": "https://pixabay.com/photos/salazar-white-red-3265804/",
+      "photographer": "karabulakastan",
+      "photographerUrl": "https://pixabay.com/users/6729797/",
+      "tags": "salazar, white, red"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "pixabay",
+      "sha256": "ac8fb2606fcfcc5a75dc1bedd428220f5f11d2a7c2ca7813307497aecbd92b47",
+      "query": "brazilian jiu jitsu training mat gi",
+      "providerId": 8151667,
+      "pageUrl": "https://pixabay.com/photos/men-jiu-jitsu-jujutsu-sports-8151667/",
+      "photographer": "GoldBJJ",
+      "photographerUrl": "https://pixabay.com/users/38090518/",
+      "tags": "men, jiu-jitsu, jujutsu, sports, athlete, fight, mma"
+    },
+    {
+      "file": "gallery-05.jpg",
+      "source": "pixabay",
+      "sha256": "b1fc0c6528ae6a9a67fc86e99a4caefdbdd88c41f5992104d8946562aad46b24",
+      "query": "kettlebells gym industrial",
+      "providerId": 6995813,
+      "pageUrl": "https://pixabay.com/photos/kettlebell-crossfit-training-gym-6995813/",
+      "photographer": "Jangnyg",
+      "photographerUrl": "https://pixabay.com/users/18190440/",
+      "tags": "kettlebell, crossfit, training, gym, fitness, exercise"
+    }
+  ]
+}

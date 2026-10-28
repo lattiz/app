@@ -1,0 +1,65 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/academia-combate-esquina-nueve.spec.json",
+  "catalog": "extended",
+  "catalogVersion": 2,
+  "tiers": {
+    "academia-combate-esquina-nueve-v1": {
+      "tier": "pro",
+      "palette": "pal-brasa-noche",
+      "fontPair": "bebas-neue+barlow",
+      "shape": "brutal",
+      "archetype": "neo-brutal",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "image-bg" },
+        { "role": "marquee", "slot": "marquee", "variant": "ticker" },
+        { "role": "about", "slot": "about", "variant": "stats-strip" },
+        {
+          "role": "catalog",
+          "slot": "services",
+          "variant": "discipline-schedule"
+        },
+        { "role": "team", "slot": "team", "variant": "coach-ranks" },
+        { "role": "proof", "slot": "gallery", "variant": "grid" },
+        { "role": "testimonials", "slot": "testimonials", "variant": "cards" },
+        { "role": "faq", "slot": "faq", "variant": "two-col" },
+        { "role": "contact", "slot": "locations", "variant": "map-link" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "big-wordmark" }
+      ],
+      "layout": { "direction": "neon-nocturno", "archetype": "bold" }
+    },
+    "academia-combate-base-esquina-nueve-v1": {
+      "tier": "basico",
+      "palette": "pal-carbon-lima",
+      "fontPair": "oswald+source-sans-3",
+      "shape": "redondo",
+      "archetype": "essential",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "inline" },
+        { "role": "hero", "slot": "hero", "variant": "poster" },
+        { "role": "about", "slot": "about", "variant": "brief" },
+        {
+          "role": "catalog",
+          "slot": "services",
+          "variant": "discipline-schedule"
+        },
+        { "role": "faq", "slot": "faq", "variant": "list" },
+        { "role": "contact", "slot": "locations", "variant": "single-card" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "minimal-centered" }
+      ],
+      "layout": { "direction": "neon-nocturno", "archetype": "bold" }
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "$lattiz": "GENERATED from specs/academia-combate-esquina-nueve.spec.json (spec f701fe3a0c0c, file b83a5d0b3acb). Do not edit: use the spec, or freeze.",
+  "name": "academia-combate-esquina-nueve-v1",
+  "label": "Esquina Nueve · Pro",
+  "tier": "pro",
+  "fontPair": "bebas-neue+barlow",
+  "colors": {
+    "bg": "#17110E",
+    "surface": "#241E1B",
+    "surface-2": "#312B27",
+    "text": "#F2E9E2",
+    "muted": "#9F9791",
+    "accent": "#F0642D",
+    "on-accent": "#17110E",
+    "accent-text": "#F0642D",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#17110E",
+    "on-overlay": "#F2E9E2",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#17110E"
+  },
+  "fonts": {
+    "display": "'Bebas Neue', sans-serif",
+    "serif": "'Barlow', sans-serif",
+    "body": "'Barlow', sans-serif",
+    "googleFonts": "family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,500;1,500",
+    "displayTransform": "uppercase",
+    "displayLeading": "0.92",
+    "displayWeight": "400",
+    "displayScale": "1.24",
+    "accentStyle": "italic",
+    "accentTransform": "lowercase",
+    "mood": ["urbano", "energía"],
+    "affinity": ["barberia", "gimnasio", "tienda"],
+    "case": "upper",
+    "tracking": "normal",
+    "typeScale": "expressive",
+    "licenses": {
+      "Bebas Neue": "OFL-1.1",
+      "Barlow": "OFL-1.1"
+    }
+  },
+  "shape": {
+    "radiusCard": "0px",
+    "radiusPill": "0px",
+    "border": "3px",
+    "shadow": "hard-offset"
+  },
+  "density": "compact",
+  "photoTreatment": "warm",
+  "placeholder": "grain",
+  "accentWords": "color",
+  "container": "1120px",
+  "effects": {
+    "mapFilter": "grayscale(1) invert(.9) contrast(.9) brightness(.8)",
+    "heroImageFilter": "brightness(.45) saturate(.9)"
+  },
+  "style": {
+    "shape": "sharp",
+    "surface": "outlined",
+    "density": "compact",
+    "divider": "rule",
+    "imageTreatment": "duotone-overlay",
+    "typeScale": "expressive",
+    "displayCase": "upper",
+    "tracking": "wide"
+  },
+  "primitives": {
+    "button": "solid",
+    "card": "outlined",
+    "tag": "outlined",
+    "frame": "duotone",
+    "number": "ruled",
+    "quote": "marks",
+    "divider": "rule"
+  }
+}

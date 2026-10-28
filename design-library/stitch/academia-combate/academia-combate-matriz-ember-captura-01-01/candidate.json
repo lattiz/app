@@ -1,0 +1,17 @@
+{
+  "id": "academia-combate-matriz-ember-captura-01-01",
+  "giro": "academia-combate",
+  "source": "stitch",
+  "status": "collected",
+  "tags": [
+    "captura",
+    "horario-matriz",
+    "coaches-cinta"
+  ],
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-28T00:17:11.417Z",
+  "stitch": {
+    "project_id": "7505863336252092812"
+  },
+  "direction": "neon-nocturno"
+}

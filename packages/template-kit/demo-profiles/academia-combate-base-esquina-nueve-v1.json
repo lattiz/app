@@ -1,0 +1,57 @@
+{
+  "$lattiz": "GENERATED from specs/academia-combate-esquina-nueve.spec.json (spec f701fe3a0c0c, file 0b64e410f699). Do not edit: use the spec, or freeze.",
+  "name": "Esquina Nueve",
+  "category": "other",
+  "phone": "+528100000000",
+  "whatsapp": "+5218100000000",
+  "email": "hola@esquinanueve.mx",
+  "address": {
+    "street": "Calle Fundidora 214, Col. Obrera, Monterrey, N.L.",
+    "city": "Monterrey",
+    "country": "MX"
+  },
+  "hours": {
+    "mon": [
+      {
+        "open": "07:00",
+        "close": "22:00"
+      }
+    ],
+    "tue": [
+      {
+        "open": "07:00",
+        "close": "22:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "07:00",
+        "close": "22:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "07:00",
+        "close": "22:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "07:00",
+        "close": "22:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "09:00",
+        "close": "14:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}
