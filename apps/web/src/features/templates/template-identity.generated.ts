@@ -14,6 +14,40 @@ export interface TemplateIdentity {
 /** Kit templates by id: giro, art direction, palette swatches and Pro-only features. */
 export const TEMPLATE_IDENTITIES: TemplateIdentity[] = [
   {
+    id: 'academia-combate-base-esquina-nueve-v1',
+    tier: 'basic',
+    giro: 'academia-combate',
+    giroLabel: 'Academia de combate',
+    direction: {
+      id: 'neon-nocturno',
+      name: 'Neón nocturno',
+    },
+    swatches: ['#111311', '#1E201E', '#C6F432', '#EEF2E8'],
+    dark: true,
+    proFeatures: [],
+  },
+  {
+    id: 'academia-combate-esquina-nueve-v1',
+    tier: 'pro',
+    giro: 'academia-combate',
+    giroLabel: 'Academia de combate',
+    direction: {
+      id: 'neon-nocturno',
+      name: 'Neón nocturno',
+    },
+    swatches: ['#17110E', '#241E1B', '#F0642D', '#F2E9E2'],
+    dark: true,
+    proFeatures: [
+      'Cinta en movimiento',
+      'Nosotros Pro',
+      'Equipo',
+      'Galería',
+      'Testimonios',
+      'Contacto con mapa',
+      'Animaciones',
+    ],
+  },
+  {
     id: 'barberia-abeto-v1',
     tier: 'pro',
     giro: 'barberia',

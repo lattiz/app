@@ -1,0 +1,16 @@
+{
+  "$lattiz": "GENERATED from specs/academia-combate-esquina-nueve.spec.json (spec f701fe3a0c0c, file f17f832b2ade). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "product-01.jpg",
+      "source": "pixabay",
+      "sha256": "b390f31b45bb9ad0dcdac08d4bc2a99c348c516240a156b042ff0b82fb6993a1",
+      "query": "boxing coach focus mitts woman training",
+      "providerId": 3293442,
+      "pageUrl": "https://pixabay.com/photos/salazar-white-red-3293442/",
+      "photographer": "karabulakastan",
+      "photographerUrl": "https://pixabay.com/users/6729797/",
+      "tags": "salazar, white, red"
+    }
+  ]
+}

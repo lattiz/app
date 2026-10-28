@@ -1,14 +1,27 @@
 {
   "version": 1,
-  "count": 28,
+  "count": 29,
   "by_status": {
-    "collected": 5,
+    "collected": 6,
     "harvested": 19,
     "promoted": 1,
     "shelved": 3,
     "rejected": 0
   },
   "candidates": [
+    {
+      "id": "academia-combate-matriz-ember-captura-01-01",
+      "giro": "academia-combate",
+      "status": "collected",
+      "tags": [
+        "captura",
+        "horario-matriz",
+        "coaches-cinta"
+      ],
+      "created_at": "2026-10-28T00:17:11.417Z",
+      "harvested": false,
+      "path": "stitch/academia-combate/academia-combate-matriz-ember-captura-01-01"
+    },
     {
       "id": "barberia-abeto-carta-01",
       "giro": "barberia",
