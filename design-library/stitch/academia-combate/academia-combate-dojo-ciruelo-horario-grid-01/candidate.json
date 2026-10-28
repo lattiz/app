@@ -1,0 +1,18 @@
+{
+  "id": "academia-combate-dojo-ciruelo-horario-grid-01",
+  "giro": "academia-combate",
+  "source": "stitch",
+  "status": "collected",
+  "tags": [
+    "dojo",
+    "familiar",
+    "captura"
+  ],
+  "spin": "horario-tabla",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-10-28T00:16:53.075Z",
+  "stitch": {
+    "project_id": "2985408979129899953"
+  },
+  "direction": "tinta-papel"
+}

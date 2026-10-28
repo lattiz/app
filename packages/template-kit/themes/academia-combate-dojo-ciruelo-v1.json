@@ -1,0 +1,78 @@
+{
+  "$lattiz": "GENERATED from specs/academia-combate-dojo-ciruelo.spec.json (spec bacb84df9b64, file a11186f1fcbf). Do not edit: use the spec, or freeze.",
+  "name": "academia-combate-dojo-ciruelo-v1",
+  "label": "Dojo Ciruelo · Pro",
+  "tier": "pro",
+  "fontPair": "newsreader+public-sans",
+  "colors": {
+    "bg": "#F4F1EA",
+    "surface": "#FAF9F6",
+    "surface-2": "#E5E2DB",
+    "text": "#1A1917",
+    "muted": "#605E5B",
+    "accent": "#1A1917",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#1A1917",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#F4F1EA",
+    "on-overlay": "#1A1917",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#1A1917"
+  },
+  "fonts": {
+    "display": "'Newsreader', serif",
+    "serif": "'Newsreader', serif",
+    "body": "'Public Sans', sans-serif",
+    "googleFonts": "family=Newsreader:ital,opsz,wght@0,72,500;1,72,500&family=Public+Sans:wght@400..600",
+    "displayTransform": "none",
+    "displayLeading": "1.04",
+    "displayWeight": "500",
+    "displayScale": "0.92",
+    "accentStyle": "italic",
+    "accentTransform": "none",
+    "mood": ["editorial", "sobrio"],
+    "affinity": ["despacho", "clinica", "floreria", "restaurante"],
+    "case": "none",
+    "tracking": "tight",
+    "typeScale": "expressive",
+    "licenses": {
+      "Newsreader": "OFL-1.1",
+      "Public Sans": "OFL-1.1"
+    }
+  },
+  "shape": {
+    "radiusCard": "0px",
+    "radiusPill": "0px",
+    "border": "3px",
+    "shadow": "hard-offset"
+  },
+  "density": "compact",
+  "photoTreatment": "none",
+  "placeholder": "rules",
+  "accentWords": "color",
+  "container": "1200px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(1.08) saturate(.85)"
+  },
+  "style": {
+    "shape": "sharp",
+    "surface": "flat",
+    "density": "cozy",
+    "divider": "rule",
+    "imageTreatment": "framed",
+    "typeScale": "tight",
+    "displayCase": "none",
+    "tracking": "tight"
+  },
+  "primitives": {
+    "button": "outline",
+    "card": "flat",
+    "tag": "numbered",
+    "frame": "framed",
+    "number": "ruled",
+    "quote": "rule",
+    "divider": "rule"
+  }
+}

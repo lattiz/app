@@ -1,0 +1,78 @@
+{
+  "$lattiz": "GENERATED from specs/academia-combate-dojo-ciruelo.spec.json (spec bacb84df9b64, file 455941e471b4). Do not edit: use the spec, or freeze.",
+  "name": "academia-combate-base-dojo-ciruelo-v1",
+  "label": "Dojo Ciruelo · Básico",
+  "tier": "basic",
+  "fontPair": "schibsted-grotesk+source-serif-4",
+  "colors": {
+    "bg": "#ECEFF1",
+    "surface": "#F6F8F9",
+    "surface-2": "#DDE1E3",
+    "text": "#1B2025",
+    "muted": "#5A5E62",
+    "accent": "#59626B",
+    "on-accent": "#FFFFFF",
+    "accent-text": "#59626B",
+    "line": "color-mix(in srgb, var(--lz-color-text) 18%, transparent)",
+    "line-strong": "color-mix(in srgb, var(--lz-color-text) 55%, transparent)",
+    "overlay": "#ECEFF1",
+    "on-overlay": "#1B2025",
+    "navbar-bg": "color-mix(in srgb, var(--lz-color-bg) 94%, transparent)",
+    "ink": "#1B2025"
+  },
+  "fonts": {
+    "display": "'Schibsted Grotesk', sans-serif",
+    "serif": "'Source Serif 4', serif",
+    "body": "'Source Serif 4', serif",
+    "googleFonts": "family=Schibsted+Grotesk:wght@700&family=Source+Serif+4:ital,opsz,wght@0,16,400..600;1,16,400",
+    "displayTransform": "none",
+    "displayLeading": "1",
+    "displayWeight": "700",
+    "displayScale": "0.83",
+    "accentStyle": "italic",
+    "accentTransform": "none",
+    "mood": ["editorial", "sobrio"],
+    "affinity": ["despacho", "tienda", "restaurante"],
+    "case": "none",
+    "tracking": "tight",
+    "typeScale": "normal",
+    "licenses": {
+      "Schibsted Grotesk": "OFL-1.1",
+      "Source Serif 4": "OFL-1.1"
+    }
+  },
+  "shape": {
+    "radiusCard": "0px",
+    "radiusPill": "0px",
+    "border": "1px",
+    "shadow": "none"
+  },
+  "density": "compact",
+  "photoTreatment": "none",
+  "placeholder": "rules",
+  "accentWords": "color",
+  "container": "1200px",
+  "effects": {
+    "mapFilter": "grayscale(.6) contrast(1.05)",
+    "heroImageFilter": "brightness(1.08) saturate(.85)"
+  },
+  "style": {
+    "shape": "sharp",
+    "surface": "flat",
+    "density": "cozy",
+    "divider": "rule",
+    "imageTreatment": "framed",
+    "typeScale": "tight",
+    "displayCase": "none",
+    "tracking": "tight"
+  },
+  "primitives": {
+    "button": "outline",
+    "card": "flat",
+    "tag": "numbered",
+    "frame": "framed",
+    "number": "ruled",
+    "quote": "rule",
+    "divider": "rule"
+  }
+}
