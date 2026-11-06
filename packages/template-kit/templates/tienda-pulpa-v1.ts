@@ -1,4 +1,4 @@
-// GENERATED from specs/tienda-pulpa-v1.spec.json (spec 53a17b9d18d0, file 7c84dbe4cba7). Do not edit: use the spec, or freeze.
+// GENERATED from specs/tienda-pulpa-v1.spec.json (spec a396cba613f2, file 2da85d372854). Do not edit: use the spec, or freeze.
 import type { Manifest } from '../src/types';
 
 export default {
@@ -52,7 +52,7 @@ export default {
     },
     {
       slot: 'locations',
-      variant: 'with-contact',
+      variant: 'info-map-card',
     },
     {
       slot: 'floating-whatsapp',

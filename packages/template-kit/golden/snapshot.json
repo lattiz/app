@@ -1573,28 +1573,28 @@
     "tienda-pulpa-v1": {
       "manifest": "templates/tienda-pulpa-v1.ts",
       "hashes": {
-        "project": "8a36e06541506f13",
-        "html": "15f93c833b439930",
-        "css": "e54d08bea67d02bd",
+        "project": "36b6675325829a31",
+        "html": "3e5135bc01541a0c",
+        "css": "f88359bd136fa0db",
         "rootCss": "d02e0068bd9cbfea",
-        "theme": "1ba33ef0523718db",
-        "pack": "d3afff83585f9eb3",
-        "meta": "29d3957b5b5b41fe",
+        "theme": "7e29331cfe997e43",
+        "pack": "0c0ff525ffa97b31",
+        "meta": "248b1dffebfcaa9f",
         "assets": "462566a6ae52a46b"
       },
       "assets": 5,
       "size": {
         "css": {
-          "raw": 43323,
-          "gzip": 6792
+          "raw": 44671,
+          "gzip": 6914
         },
         "html": {
-          "raw": 31472,
-          "gzip": 7289
+          "raw": 35020,
+          "gzip": 7826
         },
         "index": {
-          "raw": 74811,
-          "gzip": 14025
+          "raw": 79707,
+          "gzip": 14689
         }
       }
     },
@@ -2770,12 +2770,12 @@
       "ids": [
         "tienda-pulpa-v1"
       ],
-      "specHash": "53a17b9d18d0",
+      "specHash": "a396cba613f2",
       "files": {
-        "templates/tienda-pulpa-v1.ts": "7c84dbe4cba7",
+        "templates/tienda-pulpa-v1.ts": "2da85d372854",
         "themes/tienda-pulpa-v1.json": "2ca8915e6417",
         "demo-profiles/tienda-pulpa-v1.json": "eed7e2cf3559",
-        "content/tienda.pulpa-v1.es-MX.ts": "d3afff83585f"
+        "content/tienda.pulpa-v1.es-MX.ts": "0c0ff525ffa9"
       },
       "choices": {
         "tienda-pulpa-v1": [

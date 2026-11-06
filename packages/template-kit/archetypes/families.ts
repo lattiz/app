@@ -97,6 +97,7 @@ export const FAMILIES: Record<string, Family> = {
   'locations/pickup-board': 'split-panel',
   'locations/corner-postcard': 'media-text',
   'locations/map-link': 'split-panel',
+  'locations/info-map-card': 'split-panel',
   'locations/cards': 'cells',
   'cta/band': 'band',
   'cta/aside-note': 'split-panel',

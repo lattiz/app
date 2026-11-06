@@ -63,7 +63,8 @@
         "variant": "closing-band"
       },
       {
-        "role": "contact"
+        "role": "contact",
+        "variant": "info-map-card"
       },
       {
         "role": "whatsapp"
@@ -412,16 +413,17 @@
     },
     "locations": {
       "kicker": "{{index}} — Visítanos",
-      "title": "Ven a la <span class=\"lz-title__serif\">barra</span>",
-      "contactText": "Pedidos por WhatsApp en horario de barra. Hay biciletero afuera y puedes venir con tu mascota.",
-      "whatsappLabel": "WhatsApp",
-      "whatsappValue": "Hacer pedido",
-      "callLabel": "Teléfono",
-      "emailLabel": "Correo",
-      "directionsLabel": "Cómo llegar",
-      "hoursLabel": "Horario",
-      "whatsappCta": "Pedir por WhatsApp",
-      "callCta": "Llamar"
+      "title": "Ubicación y <span class=\"lz-title__serif\">horarios</span>",
+      "callLabel": "Teléfono de barra",
+      "emailLabel": "Correo directo",
+      "directionsLabel": "Ver en Google Maps",
+      "hoursLabel": "Horarios de barra",
+      "whatsappCta": "WhatsApp de la barra",
+      "addressLabel": "Dirección",
+      "mapNote": "En el corazón de Polanco",
+      "noteText": "Biciletero y área pet friendly afuera de la barra.",
+      "noteTag": "Sin estacionamiento propio",
+      "contactText": "Pedidos por WhatsApp mientras la barra está abierta. Hay biciletero afuera y puedes venir con tu mascota."
     },
     "floating-whatsapp": {
       "label": "Hacer un pedido por WhatsApp"

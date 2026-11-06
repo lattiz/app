@@ -709,63 +709,15 @@
         "match": false
       },
       {
-        "variant": "locations/split-panel",
-        "structure": 0.524,
-        "heightRatio": 2.46,
-        "match": false
-      },
-      {
-        "variant": "locations/arch-visit",
-        "structure": 0.544,
-        "heightRatio": 1.71,
-        "match": false
-      },
-      {
-        "variant": "locations/single-card",
-        "structure": 0.548,
-        "heightRatio": 1.1,
-        "match": false
-      },
-      {
-        "variant": "locations/cards",
-        "structure": 0.668,
-        "heightRatio": 1.62,
+        "variant": "locations/info-map-card",
+        "structure": 0.53,
+        "heightRatio": 2.34,
         "match": false
       },
       {
         "variant": "locations/with-contact",
         "structure": 0.716,
         "heightRatio": 2.09,
-        "match": false
-      },
-      {
-        "variant": "locations/pickup-board",
-        "structure": 0.745,
-        "heightRatio": 4.18,
-        "match": false
-      },
-      {
-        "variant": "locations/booking-panel",
-        "structure": 0.752,
-        "heightRatio": 1.71,
-        "match": false
-      },
-      {
-        "variant": "locations/table-map",
-        "structure": 0.833,
-        "heightRatio": 3.22,
-        "match": false
-      },
-      {
-        "variant": "locations/corner-postcard",
-        "structure": 1,
-        "heightRatio": 3.28,
-        "match": false
-      },
-      {
-        "variant": "locations/single",
-        "structure": 1,
-        "heightRatio": 1.41,
         "match": false
       }
     ],

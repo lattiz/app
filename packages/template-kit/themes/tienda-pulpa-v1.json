@@ -1,5 +1,5 @@
 {
-  "$lattiz": "GENERATED from specs/tienda-pulpa-v1.spec.json (spec 53a17b9d18d0, file 2ca8915e6417). Do not edit: use the spec, or freeze.",
+  "$lattiz": "GENERATED from specs/tienda-pulpa-v1.spec.json (spec a396cba613f2, file 2ca8915e6417). Do not edit: use the spec, or freeze.",
   "name": "tienda-pulpa-v1",
   "label": "Pulpa · Pro",
   "tier": "pro",

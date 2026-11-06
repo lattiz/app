@@ -1,4 +1,4 @@
-// GENERATED from specs/tienda-pulpa-v1.spec.json (spec 53a17b9d18d0, file d3afff83585f). Do not edit: use the spec, or freeze.
+// GENERATED from specs/tienda-pulpa-v1.spec.json (spec a396cba613f2, file 0c0ff525ffa9). Do not edit: use the spec, or freeze.
 import type { ContentPack } from '../src/types';
 
 export default {
@@ -398,16 +398,20 @@ export default {
     },
     locations: {
       kicker: '{{index}} — Visítanos',
-      title: 'Ven a la <span class="lz-title__serif">barra</span>',
+      title: 'Ubicación y <span class="lz-title__serif">horarios</span>',
+      addressLabel: 'Dirección',
+      hoursLabel: 'Horarios de barra',
+      callLabel: 'Teléfono de barra',
+      emailLabel: 'Correo directo',
+      whatsappCta: 'WhatsApp de la barra',
+      directionsLabel: 'Ver en Google Maps',
+      mapNote: 'En el corazón de Polanco',
+      noteText: 'Biciletero y área pet friendly afuera de la barra.',
+      noteTag: 'Sin estacionamiento propio',
       contactText:
-        'Pedidos por WhatsApp en horario de barra. Hay biciletero afuera y puedes venir con tu mascota.',
+        'Pedidos por WhatsApp mientras la barra está abierta. Hay biciletero afuera y puedes venir con tu mascota.',
       whatsappLabel: 'WhatsApp',
       whatsappValue: 'Hacer pedido',
-      callLabel: 'Teléfono',
-      emailLabel: 'Correo',
-      directionsLabel: 'Cómo llegar',
-      hoursLabel: 'Horario',
-      whatsappCta: 'Pedir por WhatsApp',
       callCta: 'Llamar',
       branches: [
         {

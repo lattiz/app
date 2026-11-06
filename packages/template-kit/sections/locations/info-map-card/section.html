@@ -1,0 +1,81 @@
+<section id="sucursales" data-lz-slot="locations" data-lz-variant="info-map-card" class="lz-section lz-locations-info-map-card">
+  <div class="lz-container">
+    <div class="lz-locations-info-map-card__panel">
+      <div class="lz-locations-info-map-card__info">
+        <p class="lz-locations-info-map-card__kicker" data-lz-key="kicker"></p>
+        <h2 class="lz-title lz-locations-info-map-card__title" data-lz-key="title"></h2>
+        <ul class="lz-locations-info-map-card__rows">
+          <template data-lz-each="branches">
+          <li class="lz-locations-info-map-card__row">
+            <span class="lz-locations-info-map-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+            <div class="lz-locations-info-map-card__row-body">
+              <strong data-lz-key="addressLabel"></strong>
+              <span data-lz-key="address"></span>
+            </div>
+          </li>
+          <li class="lz-locations-info-map-card__row">
+            <span class="lz-locations-info-map-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <div class="lz-locations-info-map-card__row-body">
+              <strong data-lz-key="hoursLabel"></strong>
+              <span data-lz-key="hours"></span>
+            </div>
+          </li>
+          </template>
+          <li class="lz-locations-info-map-card__row">
+            <span class="lz-locations-info-map-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
+            <div class="lz-locations-info-map-card__row-body">
+              <strong data-lz-key="callLabel"></strong>
+              <a href="{{phoneUrl}}" class="lz-locations-info-map-card__link">{{phone}}</a>
+            </div>
+          </li>
+          <li class="lz-locations-info-map-card__row">
+            <span class="lz-locations-info-map-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+            <div class="lz-locations-info-map-card__row-body">
+              <strong data-lz-key="emailLabel"></strong>
+              <a href="{{emailUrl}}" class="lz-locations-info-map-card__link">{{email}}</a>
+            </div>
+          </li>
+        </ul>
+        <div class="lz-locations-info-map-card__actions">
+          <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="lz-locations-info-map-card__btn-icon"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 8 19.5z"/><path d="M9 9.5c.5 2.5 2.5 4.5 5 5l1.2-1.2-2-1-.8.8c-.8-.4-1.6-1.2-2-2l.8-.8-1-2z"/></svg>
+            <span data-lz-key="whatsappCta"></span>
+          </a>
+          <template data-lz-each="branches">
+            <a target="_blank" rel="noopener noreferrer" class="lz-button lz-button--secondary" data-lz-attr-href="directionsUrl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="lz-locations-info-map-card__btn-icon"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/></svg>
+            <span data-lz-key="directionsLabel"></span>
+          </a>
+          </template>
+        </div>
+      </div>
+      <div class="lz-locations-info-map-card__cards">
+      <figure class="lz-locations-info-map-card__card" data-lz-each="branches">
+        <div class="lz-locations-info-map-card__frame">
+          <svg viewBox="0 0 520 360" class="lz-locations-info-map-card__plan" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+            <rect class="lz-locations-info-map-card__plan-bg" width="520" height="360"/>
+            <rect class="lz-locations-info-map-card__plan-park" x="-20" y="150" width="190" height="230" rx="28"/>
+            <rect class="lz-locations-info-map-card__plan-park" x="352" y="38" width="92" height="76" rx="14"/>
+            <rect class="lz-locations-info-map-card__plan-block" x="200" y="34" width="62" height="58" rx="8"/>
+            <rect class="lz-locations-info-map-card__plan-block" x="282" y="34" width="52" height="58" rx="8"/>
+            <rect class="lz-locations-info-map-card__plan-block" x="200" y="214" width="70" height="66" rx="8"/>
+            <rect class="lz-locations-info-map-card__plan-block" x="352" y="214" width="110" height="66" rx="8"/>
+            <path class="lz-locations-info-map-card__plan-street" d="M190 0v360M280 0v360M350 0v360M440 0v360M0 112h520M0 196h520M0 300h520"/>
+            <path class="lz-locations-info-map-card__plan-avenue" d="M-10 118 530 190"/>
+            <path class="lz-locations-info-map-card__plan-pin" d="M312 188c-14-18-22-30-22-42a22 22 0 0 1 44 0c0 12-8 24-22 42z"/>
+            <circle class="lz-locations-info-map-card__plan-pin-dot" cx="312" cy="146" r="8"/>
+          </svg>
+          <figcaption class="lz-locations-info-map-card__pin">
+            <strong data-lz-key="name"></strong>
+            <span data-lz-if="mapNote" data-lz-key="mapNote"></span>
+          </figcaption>
+        </div>
+        <p class="lz-locations-info-map-card__note" data-lz-if="noteText">
+          <span data-lz-key="noteText"></span>
+          <strong data-lz-if="noteTag" data-lz-key="noteTag"></strong>
+        </p>
+      </figure>
+      </div>
+    </div>
+  </div>
+</section>

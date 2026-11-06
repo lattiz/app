@@ -1306,6 +1306,36 @@ const SECTIONS: SectionSpec[] = [
       ],
     },
   },
+  {
+    id: 'lzb-locations-info-map-card',
+    label: 'Ubicación con tarjeta de mapa',
+    category: 'Secciones',
+    icon: 'card',
+    slot: 'locations',
+    variant: 'info-map-card',
+    data: {
+      kicker: 'Visítanos',
+      title: 'Ubicación y horarios',
+      addressLabel: 'Dirección',
+      hoursLabel: 'Horario',
+      callLabel: 'Teléfono',
+      emailLabel: 'Correo',
+      whatsappCta: 'Escribir por WhatsApp',
+      directionsLabel: 'Ver en Google Maps',
+      mapNote: 'A pocos pasos de la esquina',
+      noteText:
+        'Un dato útil para quien llega: estacionamiento, acceso o mascotas.',
+      noteTag: 'Dato destacado',
+      branches: [
+        {
+          name: 'Nuestro local',
+          address: '{{address}}',
+          hours: 'Lunes a sábado · 09:00 – 20:00',
+          directionsUrl: 'https://maps.google.com/?q={{address}}',
+        },
+      ],
+    },
+  },
 ];
 
 interface PieceSpec {

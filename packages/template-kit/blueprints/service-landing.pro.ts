@@ -42,6 +42,7 @@ export default {
         'pickup-board',
         'corner-postcard',
         'table-map',
+        'info-map-card',
       ],
     },
     cta: roles.cta,

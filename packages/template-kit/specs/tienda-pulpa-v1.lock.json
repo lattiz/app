@@ -25,7 +25,7 @@
         },
         { "role": "faq", "slot": "faq", "variant": "grid" },
         { "role": "cta", "slot": "cta", "variant": "closing-band" },
-        { "role": "contact", "slot": "locations", "variant": "with-contact" },
+        { "role": "contact", "slot": "locations", "variant": "info-map-card" },
         {
           "role": "whatsapp",
           "slot": "floating-whatsapp",

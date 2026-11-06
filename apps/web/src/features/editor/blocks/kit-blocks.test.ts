@@ -52,6 +52,7 @@ describe('kit blocks (generated from the kit)', () => {
       'lzb-services-flavor-cards',
       'lzb-gallery-priced-rows',
       'lzb-testimonials-avatar-cards',
+      'lzb-locations-info-map-card',
       'lzb-btn',
       'lzb-tile',
       'lzb-tag',
@@ -132,6 +133,7 @@ describe('kit blocks (generated from the kit)', () => {
       'lzb-team-coach-ranks',
       'lzb-gallery-priced-rows',
       'lzb-testimonials-avatar-cards',
+      'lzb-locations-info-map-card',
     ]);
     for (const [id, plan] of Object.entries(plans))
       expect(plan, id).toBe(pro.has(id) ? 'pro' : 'basic');

@@ -2,7 +2,7 @@
 
 /** Kit section variants (`slot/variant`) and Motion hooks that only Pro plans include. */
 export const PLAN_CATALOG = {
-  manifestHash: 'f5201d49ad3e8d8f',
+  manifestHash: '9528353806dbdbe9',
   proOnlyVariants: [
     'about/portrait',
     'about/statement',
@@ -20,6 +20,7 @@ export const PLAN_CATALOG = {
     'hero/vertical-slip',
     'locations/arch-visit',
     'locations/corner-postcard',
+    'locations/info-map-card',
     'locations/map-link',
     'locations/pickup-board',
     'locations/split-panel',
