@@ -93,3 +93,4 @@ Si una decisión queda obsoleta, se edita o se borra el archivo en el mismo comm
 - [locations-sin-mapa](locations-sin-mapa.md) — map-link (Pro) y single-card (Básico) admitidas en blueprints; single-card es sucursal única
 - [deploy-previews-whole-tree](deploy-previews-whole-tree.md) — el deploy reemplaza todo el sitio; aborta si faltan carpetas de plantillas activas
 - [picker-respects-direction-rules](picker-respects-direction-rules.md) — el compilador descarta variantes que rompen no-gradients antes de elegir
+- [single-tier-specs-share-new-hero](single-tier-specs-share-new-hero.md) — un twin evita la portada de su Pro; para compartirla, dos specs de un tier
