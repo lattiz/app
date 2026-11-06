@@ -637,4 +637,18 @@ export const PALETTE_SEEDS: Record<string, PaletteSeed> = {
     photoTreatment: 'none',
     placeholder: 'rules',
   },
+  // Stitch: tienda-barra-saludable-01
+  'pal-oliva-crema': {
+    label: 'Oliva y crema (claro, oliva con verde azulado)',
+    mode: 'light',
+    mood: ['natural', 'fresco', 'saludable'],
+    affinity: ['tienda', 'restaurante', 'gimnasio', 'clinica'],
+    bg: '#FFFDE6',
+    text: '#26280F',
+    accent: '#858040',
+    onAccent: '#101105',
+    accentText: '#407B85',
+    photoTreatment: 'none',
+    placeholder: 'blobs',
+  },
 };

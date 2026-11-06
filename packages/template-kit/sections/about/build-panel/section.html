@@ -1,0 +1,38 @@
+<section id="nosotros" data-lz-slot="about" data-lz-variant="build-panel" class="lz-section lz-about-build-panel">
+  <div class="lz-container">
+    <div class="lz-about-build-panel__head">
+      <p class="lz-about-build-panel__kicker" data-lz-if="kicker" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-about-build-panel__title" data-lz-key="title"></h2>
+      <p class="lz-about-build-panel__summary" data-lz-key="summary"></p>
+    </div>
+    <div class="lz-about-build-panel__layout">
+      <ol class="lz-about-build-panel__steps">
+        <li class="lz-about-build-panel__step" data-lz-each="features">
+          <span class="lz-about-build-panel__num" aria-hidden="true"></span>
+          <h3 class="lz-about-build-panel__step-title" data-lz-key="title"></h3>
+          <p class="lz-about-build-panel__step-text" data-lz-if="text" data-lz-key="text"></p>
+          <ul class="lz-about-build-panel__options" data-lz-if="options">
+            <li class="lz-about-build-panel__option" data-lz-each="options">
+              <strong data-lz-key="name"></strong>
+              <small data-lz-if="note" data-lz-key="note"></small>
+            </li>
+          </ul>
+        </li>
+      </ol>
+      <aside class="lz-about-build-panel__panel" data-lz-if="panelTitle">
+        <p class="lz-about-build-panel__panel-head">
+          <span data-lz-key="panelTitle"></span>
+          <span class="lz-about-build-panel__panel-tag" data-lz-if="panelTag" data-lz-key="panelTag"></span>
+        </p>
+        <dl class="lz-about-build-panel__rows">
+          <div class="lz-about-build-panel__row" data-lz-each="stats">
+            <dt data-lz-key="label"></dt>
+            <dd data-lz-key="value"></dd>
+          </div>
+        </dl>
+        <p class="lz-about-build-panel__panel-note" data-lz-if="panelNote" data-lz-key="panelNote"></p>
+        <a data-lz-if="cta" href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary lz-about-build-panel__cta" data-lz-key="cta"></a>
+      </aside>
+    </div>
+  </div>
+</section>

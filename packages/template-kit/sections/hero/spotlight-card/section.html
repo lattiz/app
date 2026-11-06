@@ -1,0 +1,30 @@
+<section id="hero" data-lz-slot="hero" data-lz-variant="spotlight-card" data-lz-fit class="lz-section lz-hero-spotlight-card">
+  <div class="lz-container lz-hero-spotlight-card__wrap">
+    <div class="lz-hero-spotlight-card__copy">
+      <p class="lz-hero-spotlight-card__eyebrow" data-lz-key="eyebrow"></p>
+      <h1 class="lz-title lz-hero-spotlight-card__title" data-lz-key="title"></h1>
+      <p class="lz-hero-spotlight-card__text" data-lz-key="text"></p>
+      <div class="lz-hero-spotlight-card__actions">
+        <a href="{{whatsappUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary" data-lz-key="primaryCta"></a>
+        <a class="lz-button lz-button--secondary" data-lz-if="secondaryCta" data-lz-attr-href="secondaryHref" data-lz-key="secondaryCta"></a>
+      </div>
+      <ul class="lz-hero-spotlight-card__chips" data-lz-if="chips">
+        <li class="lz-hero-spotlight-card__chip" data-lz-each="chips" data-lz-key="."></li>
+      </ul>
+    </div>
+    <figure class="lz-hero-spotlight-card__card">
+      <span class="lz-hero-spotlight-card__tag" data-lz-if="sticker" data-lz-key="sticker"></span>
+      <div class="lz-hero-spotlight-card__frame">
+        <img fetchpriority="high" width="1000" height="800" class="lz-hero-spotlight-card__image" data-lz-attr-src="image" data-lz-attr-alt="imageAlt">
+        <figcaption class="lz-hero-spotlight-card__caption" data-lz-if="spotlightTitle">
+          <strong class="lz-hero-spotlight-card__caption-title" data-lz-key="spotlightTitle"></strong>
+          <span class="lz-hero-spotlight-card__caption-text" data-lz-if="spotlightText" data-lz-key="spotlightText"></span>
+        </figcaption>
+      </div>
+      <p class="lz-hero-spotlight-card__meta" data-lz-if="metaLabel">
+        <span data-lz-key="metaLabel"></span>
+        <strong data-lz-if="metaValue" data-lz-key="metaValue"></strong>
+      </p>
+    </figure>
+  </div>
+</section>

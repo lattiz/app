@@ -1,14 +1,28 @@
 {
   "version": 1,
-  "count": 30,
+  "count": 31,
   "by_status": {
     "collected": 7,
-    "harvested": 19,
+    "harvested": 20,
     "promoted": 1,
     "shelved": 3,
     "rejected": 0
   },
   "candidates": [
+    {
+      "id": "academia-combate-dojo-ciruelo-horario-grid-01",
+      "giro": "academia-combate",
+      "status": "collected",
+      "tags": [
+        "dojo",
+        "familiar",
+        "captura"
+      ],
+      "spin": "horario-tabla",
+      "created_at": "2026-10-28T00:16:53.075Z",
+      "harvested": false,
+      "path": "stitch/academia-combate/academia-combate-dojo-ciruelo-horario-grid-01"
+    },
     {
       "id": "academia-combate-matriz-ember-captura-01-01",
       "giro": "academia-combate",
@@ -359,6 +373,22 @@
       "path": "stitch/restaurante/restaurante-trigo-brasa-tandas-01"
     },
     {
+      "id": "tienda-barra-saludable-01",
+      "giro": "tienda",
+      "status": "harvested",
+      "tags": [
+        "smoothies",
+        "barra",
+        "saludable",
+        "proteina",
+        "constructor"
+      ],
+      "spin": "barra-saludable",
+      "created_at": "2026-11-06T07:42:38.724Z",
+      "harvested": true,
+      "path": "stitch/tienda/tienda-barra-saludable-01"
+    },
+    {
       "id": "tienda-caramelo-pop-bandas-01",
       "giro": "tienda",
       "status": "harvested",
@@ -419,20 +449,6 @@
       "created_at": "2026-10-21T03:52:57.256Z",
       "harvested": true,
       "path": "stitch/veterinaria/veterinaria-editorial-agenda-01"
-    },
-    {
-      "id": "academia-combate-dojo-ciruelo-horario-grid-01",
-      "giro": "academia-combate",
-      "status": "collected",
-      "tags": [
-        "dojo",
-        "familiar",
-        "captura"
-      ],
-      "spin": "horario-tabla",
-      "created_at": "2026-10-28T00:16:53.075Z",
-      "harvested": false,
-      "path": "stitch/academia-combate/academia-combate-dojo-ciruelo-horario-grid-01"
     }
   ]
 }

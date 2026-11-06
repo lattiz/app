@@ -1,0 +1,23 @@
+{
+  "id": "tienda-barra-saludable-01",
+  "giro": "tienda",
+  "source": "stitch",
+  "status": "harvested",
+  "tags": [
+    "smoothies",
+    "barra",
+    "saludable",
+    "proteina",
+    "constructor"
+  ],
+  "spin": "barra-saludable",
+  "license_ref": "docs/design-stitch-flow.md#licencia",
+  "created_at": "2026-11-06T07:42:38.724Z",
+  "stitch": {
+    "project_id": "3203101053151921129",
+    "screen_ids": [
+      "3e8b7efbdddb4c7ea5e97e421f6d1fc3"
+    ]
+  },
+  "direction": "tinta-papel"
+}

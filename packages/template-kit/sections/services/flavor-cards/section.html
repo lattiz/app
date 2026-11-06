@@ -1,0 +1,26 @@
+<section id="servicios" data-lz-slot="services" data-lz-variant="flavor-cards" class="lz-section lz-services-flavor-cards">
+  <div class="lz-container">
+    <div class="lz-services-flavor-cards__head">
+      <div class="lz-services-flavor-cards__heading">
+        <p class="lz-services-flavor-cards__kicker" data-lz-key="kicker"></p>
+        <h2 class="lz-title lz-services-flavor-cards__title" data-lz-key="title"></h2>
+      </div>
+      <p class="lz-services-flavor-cards__intro" data-lz-if="intro" data-lz-key="intro"></p>
+    </div>
+    <ul class="lz-services-flavor-cards__grid">
+      <li class="lz-services-flavor-cards__card" data-lz-each="products">
+        <span class="lz-services-flavor-cards__flag" data-lz-if="flag" data-lz-key="flag"></span>
+        <p class="lz-services-flavor-cards__top">
+          <span class="lz-services-flavor-cards__badge" data-lz-if="badge" data-lz-key="badge"></span>
+          <strong class="lz-services-flavor-cards__price" data-lz-key="price"></strong>
+        </p>
+        <h3 class="lz-services-flavor-cards__name" data-lz-key="name"></h3>
+        <p class="lz-services-flavor-cards__desc" data-lz-key="description"></p>
+        <ul class="lz-services-flavor-cards__tags" data-lz-if="tags">
+          <li class="lz-services-flavor-cards__tag" data-lz-each="tags" data-lz-key="."></li>
+        </ul>
+        <a target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary lz-services-flavor-cards__cta" data-lz-attr-href="href" data-lz-key="cta"></a>
+      </li>
+    </ul>
+  </div>
+</section>

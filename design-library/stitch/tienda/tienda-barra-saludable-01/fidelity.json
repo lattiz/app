@@ -1,0 +1,840 @@
+{
+  "hero": {
+    "ref": "hero",
+    "slot": "hero",
+    "theme": "tienda-caramelo-pop-v1",
+    "measured": [
+      {
+        "variant": "hero/offset-card",
+        "structure": 0.289,
+        "heightRatio": 1.29,
+        "match": false
+      },
+      {
+        "variant": "hero/vertical-slip",
+        "structure": 0.322,
+        "heightRatio": 0.86,
+        "match": false
+      },
+      {
+        "variant": "hero/index-panel",
+        "structure": 0.383,
+        "heightRatio": 0.98,
+        "match": false
+      },
+      {
+        "variant": "hero/bento",
+        "structure": 0.479,
+        "heightRatio": 1.19,
+        "match": false
+      },
+      {
+        "variant": "hero/split",
+        "structure": 0.488,
+        "heightRatio": 1.25,
+        "match": false
+      },
+      {
+        "variant": "hero/split-mosaic",
+        "structure": 0.598,
+        "heightRatio": 0.98,
+        "match": false
+      },
+      {
+        "variant": "hero/image-bg",
+        "structure": 0.62,
+        "heightRatio": 1.09,
+        "match": false
+      },
+      {
+        "variant": "hero/arch-sticker",
+        "structure": 0.695,
+        "heightRatio": 1.21,
+        "match": false
+      },
+      {
+        "variant": "hero/panel",
+        "structure": 0.732,
+        "heightRatio": 1.21,
+        "match": false
+      },
+      {
+        "variant": "hero/ticket-board",
+        "structure": 0.745,
+        "heightRatio": 0.85,
+        "match": false
+      },
+      {
+        "variant": "hero/duo-arch",
+        "structure": 0.773,
+        "heightRatio": 1.21,
+        "match": false
+      },
+      {
+        "variant": "hero/framed",
+        "structure": 0.8,
+        "heightRatio": 1.19,
+        "match": false
+      },
+      {
+        "variant": "hero/photo-ribbon",
+        "structure": 0.855,
+        "heightRatio": 1.09,
+        "match": false
+      },
+      {
+        "variant": "hero/columns",
+        "structure": 0.86,
+        "heightRatio": 1.21,
+        "match": false
+      },
+      {
+        "variant": "hero/overlap",
+        "structure": 0.968,
+        "heightRatio": 1.19,
+        "match": false
+      },
+      {
+        "variant": "hero/stack",
+        "structure": 0.974,
+        "heightRatio": 1.19,
+        "match": false
+      },
+      {
+        "variant": "hero/rail",
+        "structure": 0.985,
+        "heightRatio": 1.19,
+        "match": false
+      },
+      {
+        "variant": "hero/centered-arch",
+        "structure": 1,
+        "heightRatio": 1.74,
+        "match": false
+      },
+      {
+        "variant": "hero/poster",
+        "structure": 1,
+        "heightRatio": 1.09,
+        "match": false
+      }
+    ],
+    "best": "hero/offset-card",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "datos": {
+    "ref": "datos",
+    "slot": "about",
+    "theme": "tienda-caramelo-pop-v1",
+    "measured": [
+      {
+        "variant": "about/booking-steps",
+        "structure": 0.525,
+        "heightRatio": 4.04,
+        "match": false
+      },
+      {
+        "variant": "about/coal-log",
+        "structure": 0.526,
+        "heightRatio": 3.83,
+        "match": false
+      },
+      {
+        "variant": "about/stats-strip",
+        "structure": 0.528,
+        "heightRatio": 4.23,
+        "match": false
+      },
+      {
+        "variant": "about/framed-craft",
+        "structure": 0.677,
+        "heightRatio": 4.59,
+        "match": false
+      },
+      {
+        "variant": "about/text-image-offset",
+        "structure": 0.784,
+        "heightRatio": 5.01,
+        "match": false
+      },
+      {
+        "variant": "about/brief",
+        "structure": 0.803,
+        "heightRatio": 3.21,
+        "match": false
+      },
+      {
+        "variant": "about/statement",
+        "structure": 0.88,
+        "heightRatio": 5.84,
+        "match": false
+      },
+      {
+        "variant": "about/clock-rail",
+        "structure": 0.984,
+        "heightRatio": 4.06,
+        "match": false
+      },
+      {
+        "variant": "about/care-pathway",
+        "structure": 1,
+        "heightRatio": 5.94,
+        "match": false
+      },
+      {
+        "variant": "about/order-steps",
+        "structure": 1,
+        "heightRatio": 4.04,
+        "match": false
+      },
+      {
+        "variant": "about/portrait",
+        "structure": 1,
+        "heightRatio": 5.55,
+        "match": false
+      }
+    ],
+    "best": "about/booking-steps",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "menu": {
+    "ref": "menu",
+    "slot": "services",
+    "theme": "tienda-caramelo-pop-v1",
+    "measured": [
+      {
+        "variant": "services/editorial-table",
+        "structure": 0.425,
+        "heightRatio": 2.04,
+        "match": false
+      },
+      {
+        "variant": "services/ritual-cards",
+        "structure": 0.427,
+        "heightRatio": 1.63,
+        "match": false
+      },
+      {
+        "variant": "services/party-tiers",
+        "structure": 0.45,
+        "heightRatio": 1.84,
+        "match": false
+      },
+      {
+        "variant": "services/price-list",
+        "structure": 0.455,
+        "heightRatio": 1.87,
+        "match": false
+      },
+      {
+        "variant": "services/treatment-rows",
+        "structure": 0.47,
+        "heightRatio": 2.05,
+        "match": false
+      },
+      {
+        "variant": "services/schedule-cards",
+        "structure": 0.487,
+        "heightRatio": 2.49,
+        "match": false
+      },
+      {
+        "variant": "services/menu-leaders",
+        "structure": 0.506,
+        "heightRatio": 1.77,
+        "match": false
+      },
+      {
+        "variant": "services/collection-cards",
+        "structure": 0.515,
+        "heightRatio": 1.9,
+        "match": false
+      },
+      {
+        "variant": "services/photo-rows",
+        "structure": 0.55,
+        "heightRatio": 1.9,
+        "match": false
+      },
+      {
+        "variant": "services/dish-spotlight",
+        "structure": 0.57,
+        "heightRatio": 2.02,
+        "match": false
+      },
+      {
+        "variant": "services/chalk-board",
+        "structure": 0.576,
+        "heightRatio": 1.38,
+        "match": false
+      },
+      {
+        "variant": "services/index-table",
+        "structure": 0.582,
+        "heightRatio": 1.59,
+        "match": false
+      },
+      {
+        "variant": "services/discipline-schedule",
+        "structure": 0.585,
+        "heightRatio": 2.74,
+        "match": false
+      },
+      {
+        "variant": "services/menu-columns",
+        "structure": 0.644,
+        "heightRatio": 1.58,
+        "match": false
+      },
+      {
+        "variant": "services/alternating-bands",
+        "structure": 0.723,
+        "heightRatio": 4.02,
+        "match": false
+      },
+      {
+        "variant": "services/cards",
+        "structure": 0.73,
+        "heightRatio": 1.75,
+        "match": false
+      },
+      {
+        "variant": "services/product-grid",
+        "structure": 0.747,
+        "heightRatio": 2.97,
+        "match": false
+      }
+    ],
+    "best": "services/editorial-table",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "proceso": {
+    "ref": "proceso",
+    "slot": "about",
+    "theme": "tienda-caramelo-pop-v1",
+    "measured": [
+      {
+        "variant": "about/coal-log",
+        "structure": 0.537,
+        "heightRatio": 0.83,
+        "match": false
+      },
+      {
+        "variant": "about/framed-craft",
+        "structure": 0.759,
+        "heightRatio": 0.99,
+        "match": false
+      },
+      {
+        "variant": "about/stats-strip",
+        "structure": 0.777,
+        "heightRatio": 0.91,
+        "match": false
+      },
+      {
+        "variant": "about/booking-steps",
+        "structure": 0.868,
+        "heightRatio": 0.87,
+        "match": false
+      },
+      {
+        "variant": "about/brief",
+        "structure": 0.872,
+        "heightRatio": 0.69,
+        "match": false
+      },
+      {
+        "variant": "about/statement",
+        "structure": 0.965,
+        "heightRatio": 1.26,
+        "match": false
+      },
+      {
+        "variant": "about/text-image-offset",
+        "structure": 0.973,
+        "heightRatio": 1.08,
+        "match": false
+      },
+      {
+        "variant": "about/portrait",
+        "structure": 0.98,
+        "heightRatio": 1.2,
+        "match": false
+      },
+      {
+        "variant": "about/care-pathway",
+        "structure": 1,
+        "heightRatio": 1.28,
+        "match": false
+      },
+      {
+        "variant": "about/clock-rail",
+        "structure": 1,
+        "heightRatio": 0.87,
+        "match": false
+      },
+      {
+        "variant": "about/order-steps",
+        "structure": 1,
+        "heightRatio": 0.87,
+        "match": false
+      }
+    ],
+    "best": "about/coal-log",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "snacks": {
+    "ref": "snacks",
+    "slot": "services",
+    "theme": "tienda-caramelo-pop-v1",
+    "measured": [
+      {
+        "variant": "services/photo-rows",
+        "structure": 0.187,
+        "heightRatio": 1.7,
+        "match": false
+      },
+      {
+        "variant": "services/dish-spotlight",
+        "structure": 0.288,
+        "heightRatio": 1.81,
+        "match": false
+      },
+      {
+        "variant": "services/menu-columns",
+        "structure": 0.359,
+        "heightRatio": 1.41,
+        "match": false
+      },
+      {
+        "variant": "services/discipline-schedule",
+        "structure": 0.381,
+        "heightRatio": 2.45,
+        "match": false
+      },
+      {
+        "variant": "services/price-list",
+        "structure": 0.423,
+        "heightRatio": 1.68,
+        "match": false
+      },
+      {
+        "variant": "services/ritual-cards",
+        "structure": 0.446,
+        "heightRatio": 1.45,
+        "match": false
+      },
+      {
+        "variant": "services/editorial-table",
+        "structure": 0.534,
+        "heightRatio": 1.82,
+        "match": false
+      },
+      {
+        "variant": "services/treatment-rows",
+        "structure": 0.536,
+        "heightRatio": 1.84,
+        "match": false
+      },
+      {
+        "variant": "services/index-table",
+        "structure": 0.569,
+        "heightRatio": 1.42,
+        "match": false
+      },
+      {
+        "variant": "services/collection-cards",
+        "structure": 0.573,
+        "heightRatio": 1.7,
+        "match": false
+      },
+      {
+        "variant": "services/menu-leaders",
+        "structure": 0.582,
+        "heightRatio": 1.58,
+        "match": false
+      },
+      {
+        "variant": "services/cards",
+        "structure": 0.583,
+        "heightRatio": 1.57,
+        "match": false
+      },
+      {
+        "variant": "services/party-tiers",
+        "structure": 0.622,
+        "heightRatio": 1.65,
+        "match": false
+      },
+      {
+        "variant": "services/chalk-board",
+        "structure": 0.671,
+        "heightRatio": 1.23,
+        "match": false
+      },
+      {
+        "variant": "services/product-grid",
+        "structure": 0.678,
+        "heightRatio": 2.65,
+        "match": false
+      },
+      {
+        "variant": "services/schedule-cards",
+        "structure": 0.737,
+        "heightRatio": 2.22,
+        "match": false
+      },
+      {
+        "variant": "services/alternating-bands",
+        "structure": 0.802,
+        "heightRatio": 3.6,
+        "match": false
+      }
+    ],
+    "best": "services/photo-rows",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "resenas": {
+    "ref": "resenas",
+    "slot": "testimonials",
+    "theme": "tienda-caramelo-pop-v1",
+    "measured": [
+      {
+        "variant": "testimonials/paper-trio",
+        "structure": 0.15,
+        "heightRatio": 1.57,
+        "match": false
+      },
+      {
+        "variant": "testimonials/hairline-trio",
+        "structure": 0.186,
+        "heightRatio": 1.44,
+        "match": false
+      },
+      {
+        "variant": "testimonials/feature-stack",
+        "structure": 0.338,
+        "heightRatio": 1.75,
+        "match": false
+      },
+      {
+        "variant": "testimonials/rating-wall",
+        "structure": 0.415,
+        "heightRatio": 1.27,
+        "match": false
+      },
+      {
+        "variant": "testimonials/cards",
+        "structure": 0.423,
+        "heightRatio": 1.44,
+        "match": false
+      },
+      {
+        "variant": "testimonials/order-slips",
+        "structure": 0.64,
+        "heightRatio": 1.55,
+        "match": false
+      },
+      {
+        "variant": "testimonials/quote-feature",
+        "structure": 0.641,
+        "heightRatio": 1.83,
+        "match": false
+      }
+    ],
+    "best": "testimonials/paper-trio",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "preguntas": {
+    "ref": "preguntas",
+    "slot": "faq",
+    "theme": "tienda-caramelo-pop-v1",
+    "measured": [
+      {
+        "variant": "faq/grid",
+        "structure": 0.044,
+        "heightRatio": 1.42,
+        "match": false
+      },
+      {
+        "variant": "faq/numbered-cards",
+        "structure": 0.095,
+        "heightRatio": 1.69,
+        "match": false
+      },
+      {
+        "variant": "faq/column-panels",
+        "structure": 0.4,
+        "heightRatio": 2.1,
+        "match": false
+      },
+      {
+        "variant": "faq/two-col",
+        "structure": 0.444,
+        "heightRatio": 1.83,
+        "match": false
+      },
+      {
+        "variant": "faq/list",
+        "structure": 0.53,
+        "heightRatio": 1.93,
+        "match": false
+      },
+      {
+        "variant": "faq/index-answers",
+        "structure": 0.695,
+        "heightRatio": 1.65,
+        "match": false
+      }
+    ],
+    "best": "faq/grid",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "cierre": {
+    "ref": "cierre",
+    "slot": "cta",
+    "theme": "tienda-caramelo-pop-v1",
+    "measured": [
+      {
+        "variant": "cta/closing-band",
+        "structure": 0.204,
+        "heightRatio": 1.4,
+        "match": false
+      },
+      {
+        "variant": "cta/aside-note",
+        "structure": 0.213,
+        "heightRatio": 1.49,
+        "match": false
+      },
+      {
+        "variant": "cta/ritual-panels",
+        "structure": 0.727,
+        "heightRatio": 1.68,
+        "match": false
+      },
+      {
+        "variant": "cta/ticket-stub-bill",
+        "structure": 0.741,
+        "heightRatio": 1.38,
+        "match": false
+      },
+      {
+        "variant": "cta/included-panel",
+        "structure": 0.795,
+        "heightRatio": 0.82,
+        "match": false
+      },
+      {
+        "variant": "cta/band",
+        "structure": 0.982,
+        "heightRatio": 0.77,
+        "match": false
+      },
+      {
+        "variant": "cta/urgent-line",
+        "structure": 1,
+        "heightRatio": 0.68,
+        "match": false
+      }
+    ],
+    "best": "cta/closing-band",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "contacto": {
+    "ref": "contacto",
+    "slot": "locations",
+    "theme": "tienda-caramelo-pop-v1",
+    "measured": [
+      {
+        "variant": "locations/map-link",
+        "structure": 0.465,
+        "heightRatio": 1.32,
+        "match": false
+      },
+      {
+        "variant": "locations/split-panel",
+        "structure": 0.524,
+        "heightRatio": 2.46,
+        "match": false
+      },
+      {
+        "variant": "locations/arch-visit",
+        "structure": 0.544,
+        "heightRatio": 1.71,
+        "match": false
+      },
+      {
+        "variant": "locations/single-card",
+        "structure": 0.548,
+        "heightRatio": 1.1,
+        "match": false
+      },
+      {
+        "variant": "locations/cards",
+        "structure": 0.668,
+        "heightRatio": 1.62,
+        "match": false
+      },
+      {
+        "variant": "locations/with-contact",
+        "structure": 0.716,
+        "heightRatio": 2.09,
+        "match": false
+      },
+      {
+        "variant": "locations/pickup-board",
+        "structure": 0.745,
+        "heightRatio": 4.18,
+        "match": false
+      },
+      {
+        "variant": "locations/booking-panel",
+        "structure": 0.752,
+        "heightRatio": 1.71,
+        "match": false
+      },
+      {
+        "variant": "locations/table-map",
+        "structure": 0.833,
+        "heightRatio": 3.22,
+        "match": false
+      },
+      {
+        "variant": "locations/corner-postcard",
+        "structure": 1,
+        "heightRatio": 3.28,
+        "match": false
+      },
+      {
+        "variant": "locations/single",
+        "structure": 1,
+        "heightRatio": 1.41,
+        "match": false
+      }
+    ],
+    "best": "locations/map-link",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  },
+  "footer": {
+    "ref": "footer",
+    "slot": "footer",
+    "theme": "tienda-caramelo-pop-v1",
+    "measured": [
+      {
+        "variant": "footer/signature-bar",
+        "structure": 0.576,
+        "heightRatio": 1.62,
+        "match": false
+      },
+      {
+        "variant": "footer/ledger",
+        "structure": 0.746,
+        "heightRatio": 4.17,
+        "match": false
+      },
+      {
+        "variant": "footer/columns",
+        "structure": 0.808,
+        "heightRatio": 3.17,
+        "match": false
+      },
+      {
+        "variant": "footer/big-wordmark",
+        "structure": 0.83,
+        "heightRatio": 5.9,
+        "match": false
+      },
+      {
+        "variant": "footer/hours-blocks",
+        "structure": 0.846,
+        "heightRatio": 2.52,
+        "match": false
+      },
+      {
+        "variant": "footer/minimal-centered",
+        "structure": 1,
+        "heightRatio": 3.44,
+        "match": false
+      },
+      {
+        "variant": "footer/receipt",
+        "structure": 1,
+        "heightRatio": 7.07,
+        "match": false
+      }
+    ],
+    "best": "footer/signature-bar",
+    "verdict": "different",
+    "thresholds": {
+      "structure": 0.15,
+      "heightRatio": [
+        0.7,
+        1.4
+      ]
+    }
+  }
+}

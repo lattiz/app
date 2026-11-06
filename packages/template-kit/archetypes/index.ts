@@ -245,8 +245,8 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
     sections: {
       pro: [
         s('header', 'notice-bar'),
-        s('hero', 'framed', 'bento', 'split', 'ticket-board'),
-        s('about', 'stats-strip', 'order-steps'),
+        s('hero', 'framed', 'bento', 'split', 'ticket-board', 'spotlight-card'),
+        s('about', 'stats-strip', 'order-steps', 'build-panel'),
         s(
           'catalog',
           'menu-columns',
@@ -258,9 +258,10 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
           'photo-rows',
           'dish-spotlight',
           'menu-leaders',
+          'flavor-cards',
         ),
-        s('proof', 'grid'),
-        s('testimonials', 'cards'),
+        s('proof', 'grid', 'priced-rows'),
+        s('testimonials', 'cards', 'avatar-cards'),
         s('faq', 'grid'),
         s(
           'cta',
@@ -277,7 +278,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
       ],
       basic: [
         s('header', 'notice-bar'),
-        s('hero', 'framed', 'split', 'ticket-board'),
+        s('hero', 'framed', 'split', 'ticket-board', 'spotlight-card'),
         s(
           'catalog',
           'menu-columns',
@@ -288,6 +289,7 @@ export const ARCHETYPES: Record<ArchetypeId, Archetype> = {
           'photo-rows',
           'dish-spotlight',
           'menu-leaders',
+          'flavor-cards',
         ),
         s('faq', 'grid', 'list'),
         s(

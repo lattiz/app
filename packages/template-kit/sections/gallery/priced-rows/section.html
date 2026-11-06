@@ -1,0 +1,22 @@
+<section id="galeria" data-lz-slot="gallery" data-lz-variant="priced-rows" class="lz-section lz-gallery-priced-rows">
+  <div class="lz-container">
+    <div class="lz-gallery-priced-rows__head">
+      <p class="lz-gallery-priced-rows__kicker" data-lz-key="kicker"></p>
+      <h2 class="lz-title lz-gallery-priced-rows__title" data-lz-key="title"></h2>
+      <p class="lz-gallery-priced-rows__intro" data-lz-if="intro" data-lz-key="intro"></p>
+    </div>
+    <ul class="lz-gallery-priced-rows__list">
+      <li class="lz-gallery-priced-rows__row" data-lz-each="items">
+        <img loading="lazy" width="400" height="400" class="lz-gallery-priced-rows__image" data-lz-attr-src="image" data-lz-attr-alt="alt">
+        <div class="lz-gallery-priced-rows__body">
+          <p class="lz-gallery-priced-rows__line">
+            <span class="lz-gallery-priced-rows__name" data-lz-key="caption"></span>
+            <strong class="lz-gallery-priced-rows__price" data-lz-if="price" data-lz-key="price"></strong>
+          </p>
+          <p class="lz-gallery-priced-rows__text" data-lz-if="text" data-lz-key="text"></p>
+          <a class="lz-gallery-priced-rows__link" data-lz-if="href" target="_blank" rel="noopener noreferrer" data-lz-attr-href="href" data-lz-key="linkLabel"></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>

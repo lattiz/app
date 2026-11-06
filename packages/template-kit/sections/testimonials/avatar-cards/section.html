@@ -1,0 +1,29 @@
+<section id="resenas" data-lz-slot="testimonials" data-lz-variant="avatar-cards" class="lz-section lz-testimonials-avatar-cards">
+  <div class="lz-container">
+    <div class="lz-testimonials-avatar-cards__head">
+      <p class="lz-testimonials-avatar-cards__kicker" data-lz-key="kicker"></p>
+      <p class="lz-testimonials-avatar-cards__rating">
+        <span class="lz-testimonials-avatar-cards__score" data-lz-key="score"></span>
+        <span aria-label="5 estrellas" class="lz-testimonials-avatar-cards__stars">★★★★★</span>
+        <span class="lz-testimonials-avatar-cards__summary" data-lz-key="summary"></span>
+      </p>
+    </div>
+    <div class="lz-testimonials-avatar-cards__grid">
+      <figure class="lz-testimonials-avatar-cards__card" data-lz-each="reviews">
+        <span aria-hidden="true" class="lz-testimonials-avatar-cards__stars">★★★★★</span>
+        <blockquote class="lz-testimonials-avatar-cards__quote" data-lz-key="text"></blockquote>
+        <figcaption class="lz-testimonials-avatar-cards__who">
+          <span aria-hidden="true" class="lz-testimonials-avatar-cards__avatar" data-lz-if="initial" data-lz-key="initial"></span>
+          <span class="lz-testimonials-avatar-cards__person">
+            <strong class="lz-testimonials-avatar-cards__author" data-lz-key="author"></strong>
+            <small class="lz-testimonials-avatar-cards__place" data-lz-if="place" data-lz-key="place"></small>
+          </span>
+        </figcaption>
+      </figure>
+    </div>
+    <div class="lz-testimonials-avatar-cards__actions">
+      <a href="{{googleReviewsUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--secondary" data-lz-key="allReviewsCta"></a>
+      <a href="{{googleReviewUrl}}" target="_blank" rel="noopener noreferrer" class="lz-button lz-button--primary" data-lz-if="writeReviewCta" data-lz-key="writeReviewCta"></a>
+    </div>
+  </div>
+</section>

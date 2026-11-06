@@ -23,6 +23,7 @@ export default {
         'booking-steps',
         'care-pathway',
         'clock-rail',
+        'build-panel',
       ],
     },
     catalog: roles.catalog,
