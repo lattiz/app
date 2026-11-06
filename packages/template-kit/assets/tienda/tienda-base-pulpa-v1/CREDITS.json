@@ -1,0 +1,16 @@
+{
+  "$lattiz": "GENERATED from specs/tienda-base-pulpa-v1.spec.json (spec 24604ee80ca9, file 398378339952). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "5e2c32407fcbe5635af4d5106c0d7a24e71cd0336106ed596fddc584be8adbe6",
+      "query": "green smoothie glass mint wooden counter",
+      "providerId": 7320560,
+      "pageUrl": "https://pixabay.com/photos/smoothie-vegetable-smoothie-7320560/",
+      "photographer": "silviarita",
+      "photographerUrl": "https://pixabay.com/users/3142410/",
+      "tags": "smoothie, vegetable smoothie, healthy smoothie, vegetable juice, healthy, juice, drink, refreshment, detox, colon, detoxify, vitamins, immune system, virus"
+    }
+  ]
+}

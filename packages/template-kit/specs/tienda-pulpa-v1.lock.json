@@ -1,0 +1,39 @@
+{
+  "$lattiz": "LOCK: choices the compiler resolved for this spec. `lattiz build` reuses them so a growing catalog never changes these templates; `pnpm lattiz spec lock <stem> --refresh` re-resolves on purpose.",
+  "lockVersion": 1,
+  "spec": "specs/tienda-pulpa-v1.spec.json",
+  "catalog": "extended",
+  "catalogVersion": 2,
+  "tiers": {
+    "tienda-pulpa-v1": {
+      "tier": "pro",
+      "palette": "pal-oliva-crema",
+      "fontPair": "outfit+dm-sans",
+      "shape": "suave",
+      "archetype": "editorial-atelier",
+      "sections": [
+        { "role": "header", "slot": "navbar", "variant": "notice-bar" },
+        { "role": "hero", "slot": "hero", "variant": "spotlight-card" },
+        { "role": "marquee", "slot": "marquee", "variant": "ticker" },
+        { "role": "about", "slot": "about", "variant": "build-panel" },
+        { "role": "catalog", "slot": "services", "variant": "flavor-cards" },
+        { "role": "proof", "slot": "gallery", "variant": "priced-rows" },
+        {
+          "role": "testimonials",
+          "slot": "testimonials",
+          "variant": "avatar-cards"
+        },
+        { "role": "faq", "slot": "faq", "variant": "grid" },
+        { "role": "cta", "slot": "cta", "variant": "closing-band" },
+        { "role": "contact", "slot": "locations", "variant": "with-contact" },
+        {
+          "role": "whatsapp",
+          "slot": "floating-whatsapp",
+          "variant": "bubble"
+        },
+        { "role": "footer", "slot": "footer", "variant": "columns" }
+      ],
+      "layout": { "archetype": "catalog" }
+    }
+  }
+}

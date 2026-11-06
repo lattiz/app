@@ -1,0 +1,410 @@
+{
+  "$schema": "./spec.schema.json",
+  "specVersion": 1,
+  "giro": "tienda",
+  "business": {
+    "name": "Pulpa",
+    "shortName": "Pulpa",
+    "tagline": "Smoothies y healthy snacks",
+    "city": "CDMX",
+    "branch": "Polanco",
+    "address": "Calle Lamartine 0000, Col. Polanco V Sección, CDMX",
+    "hours": "Lun–Vie 7:00–20:00 · Sáb y Dom 8:00–17:00",
+    "phone": "+52 55 0000 0000",
+    "whatsapp": "5215500000000",
+    "whatsappMessage": "Hola, quiero pedir un smoothie",
+    "email": "hola@pulpabar.mx"
+  },
+  "brand": {
+    "catalog": "extended",
+    "palette": {
+      "preset": "pal-menta-esmeralda"
+    },
+    "fontPair": "sora+inter",
+    "shape": "suave"
+  },
+  "sections": {
+    "basico": [
+      {
+        "role": "header"
+      },
+      {
+        "role": "hero",
+        "variant": "spotlight-card"
+      },
+      {
+        "role": "about",
+        "variant": "build-panel"
+      },
+      {
+        "role": "catalog",
+        "variant": "flavor-cards"
+      },
+      {
+        "role": "faq",
+        "variant": "grid"
+      },
+      {
+        "role": "contact"
+      },
+      {
+        "role": "whatsapp"
+      },
+      {
+        "role": "footer"
+      }
+    ]
+  },
+  "copy": {
+    "head": {
+      "title": "{{name}} · Smoothies y snacks saludables en {{branch}}",
+      "description": "Barra de smoothies en {{branch}}, {{city}}: vasos con proteína, bowls y snacks. Haz tu pedido por WhatsApp."
+    },
+    "navbar": {
+      "notice": "Abierto hoy desde las 7:00",
+      "cta": "Pedir",
+      "links": [
+        {
+          "label": "Arma tu vaso",
+          "href": "#nosotros"
+        },
+        {
+          "label": "Smoothies",
+          "href": "#servicios"
+        },
+        {
+          "label": "Bowls y snacks",
+          "href": "#galeria"
+        },
+        {
+          "label": "Reseñas",
+          "href": "#resenas"
+        },
+        {
+          "label": "Preguntas",
+          "href": "#preguntas"
+        },
+        {
+          "label": "Visítanos",
+          "href": "#ubicacion"
+        }
+      ]
+    },
+    "hero": {
+      "image": "hero.jpg",
+      "imageAlt": "Smoothie verde sobre una barra de jugos con fruta fresca",
+      "eyebrow": "Smoothies y snacks · {{branch}}",
+      "title": "Smoothies con proteína y <span class=\"lz-title__serif\">sin azúcar añadida</span>",
+      "text": "Vasos hechos al momento con fruta, verdura y proteína. Pide por WhatsApp y pasa por ellos a la barra.",
+      "primaryCta": "Pedir por WhatsApp",
+      "secondaryCta": "Ver el menú",
+      "secondaryHref": "#servicios",
+      "chips": [
+        "Proteína en cada vaso",
+        "Receta base sin azúcar añadida",
+        "Ingredientes que sí reconoces"
+      ],
+      "sticker": "Recién preparado",
+      "spotlightTitle": "Vaso verde",
+      "spotlightText": "Apio, espinaca y lima.",
+      "metaLabel": "Listo en unos minutos",
+      "metaValue": "Con tu nombre en el vaso"
+    },
+    "about": {
+      "kicker": "{{index}} — Tu mezcla",
+      "title": "Tu vaso, a tu <span class=\"lz-title__serif\">medida</span>",
+      "summary": "Escoge líquido, proteína y topping. Nosotros lo licuamos frente a ti.",
+      "features": [
+        {
+          "title": "Escoge tu líquido",
+          "text": "Vegetales o fermentados, tú decides.",
+          "options": [
+            {
+              "name": "Leche de almendra"
+            },
+            {
+              "name": "Leche de avena"
+            },
+            {
+              "name": "Agua de coco"
+            }
+          ]
+        },
+        {
+          "title": "Suma proteína",
+          "text": "Con los gramos por porción a la vista.",
+          "options": [
+            {
+              "name": "Whey",
+              "note": "24 g"
+            },
+            {
+              "name": "Chícharo",
+              "note": "22 g"
+            }
+          ]
+        },
+        {
+          "title": "Cierra con un topping",
+          "text": "Un toque crujiente o cremoso.",
+          "options": [
+            {
+              "name": "Chía"
+            },
+            {
+              "name": "Cacao nibs"
+            }
+          ]
+        }
+      ],
+      "panelTitle": "Un ejemplo de pedido",
+      "panelTag": "Muestra",
+      "stats": [
+        {
+          "label": "Líquido",
+          "value": "Avena"
+        },
+        {
+          "label": "Proteína",
+          "value": "Chícharo"
+        },
+        {
+          "label": "Topping",
+          "value": "Chía"
+        },
+        {
+          "label": "Tiempo",
+          "value": "~4 minutos"
+        }
+      ],
+      "panelNote": "Mándanos tu mezcla por WhatsApp y te avisamos cuando esté.",
+      "cta": "Pedir esta mezcla",
+      "image": "about.jpg",
+      "imageAlt": "Barra de jugos con ingredientes frescos",
+      "statement": "Pocas cosas, bien claras: lo que lleva el vaso lo ves en la barra.",
+      "paragraphs": [
+        "Licuamos al momento, con fruta y verdura de la semana.",
+        "Pides por WhatsApp y tu vaso te espera con tu nombre."
+      ]
+    },
+    "services": {
+      "kicker": "{{index}} — Carta",
+      "title": "Los de la <span class=\"lz-title__serif\">casa</span>",
+      "intro": "Precios de muestra en pesos. Los tamaños se confirman por WhatsApp.",
+      "cta": "Lo quiero",
+      "products": [
+        {
+          "name": "Matcha verde",
+          "price": "$115",
+          "description": "Espinaca, matcha y plátano con leche de almendra.",
+          "href": "{{whatsappUrl:Hola, quiero el matcha verde}}",
+          "badge": "22 g de proteína",
+          "tags": [
+            "Verde"
+          ]
+        },
+        {
+          "name": "Bosque rojo",
+          "price": "$120",
+          "description": "Fresa, frambuesa y zarzamora con proteína de vainilla.",
+          "href": "{{whatsappUrl:Hola, quiero el bosque rojo}}",
+          "badge": "25 g de proteína",
+          "tags": [
+            "Post-entreno"
+          ],
+          "flag": "Favorito"
+        },
+        {
+          "name": "Cacao y cacahuate",
+          "price": "$125",
+          "description": "Cacao, cacahuate y avena con plátano maduro.",
+          "href": "{{whatsappUrl:Hola, quiero el de cacao y cacahuate}}",
+          "badge": "24 g de proteína",
+          "tags": [
+            "Fibra"
+          ]
+        },
+        {
+          "name": "Azul coco",
+          "price": "$130",
+          "description": "Espirulina azul, piña y coco rallado en agua de coco.",
+          "href": "{{whatsappUrl:Hola, quiero el azul coco}}",
+          "badge": "20 g de proteína",
+          "tags": [
+            "Refrescante"
+          ]
+        }
+      ],
+      "prices": [
+        {
+          "name": "Matcha verde",
+          "price": "$115",
+          "description": "Espinaca, matcha y plátano con leche de almendra."
+        },
+        {
+          "name": "Bosque rojo",
+          "price": "$120",
+          "description": "Fresa, frambuesa y zarzamora con proteína de vainilla."
+        },
+        {
+          "name": "Cacao y cacahuate",
+          "price": "$125",
+          "description": "Cacao, cacahuate y avena con plátano maduro."
+        },
+        {
+          "name": "Azul coco",
+          "price": "$130",
+          "description": "Espirulina azul, piña y coco rallado en agua de coco."
+        }
+      ],
+      "promos": [
+        {
+          "tag": "Pedidos grandes",
+          "title": "Para tu clase o tu oficina",
+          "text": "Escríbenos un día antes y los dejamos por tandas.",
+          "cta": "Escribir",
+          "href": "{{whatsappUrl:Hola, quiero un pedido grande}}"
+        }
+      ]
+    },
+    "faq": {
+      "kicker": "{{index}} — Dudas",
+      "title": "Lo que <span class=\"lz-title__serif\">preguntan</span>",
+      "intro": "Respuestas rápidas sobre pedidos, ingredientes y proteínas.",
+      "cta": "Escribirnos",
+      "items": [
+        {
+          "question": "¿Hay opciones sin lácteos?",
+          "answer": "Sí: las bases son vegetales y la proteína puede ser de chícharo, sin costo extra."
+        },
+        {
+          "question": "¿Qué lleva para endulzar?",
+          "answer": "Solo la fruta de cada receta. Si quieres un toque extra, te ofrecemos dátil."
+        },
+        {
+          "question": "¿Puedo recoger mi pedido?",
+          "answer": "Claro. Mándanos tu orden por WhatsApp y te avisamos cuando esté listo en la barra."
+        },
+        {
+          "question": "¿De cuántos gramos es la proteína?",
+          "answer": "Cada vaso muestra su porción: entre 20 y 25 g según la receta."
+        },
+        {
+          "question": "¿Hay alérgenos?",
+          "answer": "Usamos nueces, lácteos, gluten y cacahuate. Cuéntanos tu alergia al pedir."
+        }
+      ]
+    },
+    "locations": {
+      "kicker": "{{index}} — Ven por el tuyo",
+      "title": "Estamos en <span class=\"lz-title__serif\">Polanco</span>",
+      "contactText": "Atendemos pedidos por WhatsApp mientras la barra está abierta. Afuera hay biciletero.",
+      "whatsappLabel": "WhatsApp",
+      "whatsappValue": "Hacer pedido",
+      "callLabel": "Teléfono",
+      "emailLabel": "Correo",
+      "directionsLabel": "Cómo llegar",
+      "hoursLabel": "Horario",
+      "whatsappCta": "Pedir por WhatsApp",
+      "callCta": "Llamar"
+    },
+    "floating-whatsapp": {
+      "label": "Hacer un pedido por WhatsApp"
+    },
+    "footer": {
+      "about": "Smoothies, bowls y snacks en {{city}}, hechos al momento y listos por WhatsApp.",
+      "branchesTitle": "Barra",
+      "linksTitle": "Secciones",
+      "contactTitle": "Contacto",
+      "links": [
+        {
+          "label": "Arma tu vaso",
+          "href": "#nosotros"
+        },
+        {
+          "label": "Smoothies",
+          "href": "#servicios"
+        },
+        {
+          "label": "Bowls y snacks",
+          "href": "#galeria"
+        },
+        {
+          "label": "Reseñas",
+          "href": "#resenas"
+        },
+        {
+          "label": "Preguntas",
+          "href": "#preguntas"
+        },
+        {
+          "label": "Visítanos",
+          "href": "#ubicacion"
+        }
+      ],
+      "placeTitle": "Ubicación",
+      "placeNote": "Polanco, CDMX. Biciletero afuera.",
+      "scheduleTitle": "Horario",
+      "schedule": [
+        {
+          "label": "Lunes a viernes",
+          "value": "7:00–20:00"
+        },
+        {
+          "label": "Sábado y domingo",
+          "value": "8:00–17:00"
+        }
+      ]
+    },
+    "testimonials": {
+      "kicker": "{{index}} — Reseñas",
+      "score": "4.8",
+      "summary": "96 reseñas en Google",
+      "allReviewsCta": "Ver reseñas",
+      "writeReviewCta": "Escribir una reseña",
+      "reviews": [
+        {
+          "text": "El vaso verde con proteína vegetal me sacó de apuros después del gimnasio.",
+          "author": "Valeria T.",
+          "place": "Polanco",
+          "initial": "V"
+        },
+        {
+          "text": "Me avisan por WhatsApp cuando está listo y no hago fila.",
+          "author": "Andrés L.",
+          "place": "Anzures",
+          "initial": "A"
+        },
+        {
+          "text": "Los toppings cambian cada semana y siempre sabe a fruta de verdad.",
+          "author": "Paola S.",
+          "place": "Clienta frecuente",
+          "initial": "P"
+        }
+      ]
+    }
+  },
+  "images": [
+    {
+      "key": "hero",
+      "source": {
+        "search": "green smoothie glass mint wooden counter"
+      },
+      "orientation": "landscape"
+    },
+    {
+      "key": "about",
+      "source": {
+        "search": "juice bar fresh fruit counter"
+      },
+      "orientation": "portrait"
+    }
+  ],
+  "todo": [],
+  "layout": {
+    "archetype": "catalog"
+  },
+  "id": "tienda-base-pulpa-v1",
+  "tier": "basico",
+  "name": "Pulpa (Básico)"
+}

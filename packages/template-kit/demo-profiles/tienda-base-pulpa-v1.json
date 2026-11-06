@@ -1,0 +1,63 @@
+{
+  "$lattiz": "GENERATED from specs/tienda-base-pulpa-v1.spec.json (spec 24604ee80ca9, file eed7e2cf3559). Do not edit: use the spec, or freeze.",
+  "name": "Pulpa",
+  "category": "store",
+  "phone": "+525500000000",
+  "whatsapp": "+5215500000000",
+  "email": "hola@pulpabar.mx",
+  "address": {
+    "street": "Calle Lamartine 0000, Col. Polanco V Sección",
+    "city": "CDMX",
+    "country": "MX"
+  },
+  "hours": {
+    "mon": [
+      {
+        "open": "11:00",
+        "close": "20:00"
+      }
+    ],
+    "tue": [
+      {
+        "open": "11:00",
+        "close": "20:00"
+      }
+    ],
+    "wed": [
+      {
+        "open": "11:00",
+        "close": "20:00"
+      }
+    ],
+    "thu": [
+      {
+        "open": "11:00",
+        "close": "20:00"
+      }
+    ],
+    "fri": [
+      {
+        "open": "11:00",
+        "close": "20:00"
+      }
+    ],
+    "sat": [
+      {
+        "open": "11:00",
+        "close": "20:00"
+      }
+    ],
+    "sun": [
+      {
+        "open": "11:00",
+        "close": "16:00"
+      }
+    ]
+  },
+  "timezone": "America/Mexico_City",
+  "priceRange": "$$",
+  "social": {
+    "instagram": "https://instagram.com",
+    "facebook": "https://facebook.com"
+  }
+}

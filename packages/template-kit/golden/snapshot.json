@@ -1514,6 +1514,34 @@
         }
       }
     },
+    "tienda-base-pulpa-v1": {
+      "manifest": "templates/tienda-base-pulpa-v1.ts",
+      "hashes": {
+        "project": "a9c4c1d8e1057f1d",
+        "html": "24e36511ae82b53b",
+        "css": "89180664f41e3e21",
+        "rootCss": "cd4afe5a705135dd",
+        "theme": "46d0b14d208041bd",
+        "pack": "1888c8b08ff0efda",
+        "meta": "68a04314f798c941",
+        "assets": "e2f31afccede692f"
+      },
+      "assets": 1,
+      "size": {
+        "css": {
+          "raw": 33349,
+          "gzip": 5676
+        },
+        "html": {
+          "raw": 19100,
+          "gzip": 4961
+        },
+        "index": {
+          "raw": 52465,
+          "gzip": 10571
+        }
+      }
+    },
     "tienda-lote-doce-v1": {
       "manifest": "templates/tienda-lote-doce-v1.ts",
       "hashes": {
@@ -1539,6 +1567,34 @@
         "index": {
           "raw": 57416,
           "gzip": 12389
+        }
+      }
+    },
+    "tienda-pulpa-v1": {
+      "manifest": "templates/tienda-pulpa-v1.ts",
+      "hashes": {
+        "project": "8a36e06541506f13",
+        "html": "15f93c833b439930",
+        "css": "e54d08bea67d02bd",
+        "rootCss": "d02e0068bd9cbfea",
+        "theme": "1ba33ef0523718db",
+        "pack": "d3afff83585f9eb3",
+        "meta": "29d3957b5b5b41fe",
+        "assets": "462566a6ae52a46b"
+      },
+      "assets": 5,
+      "size": {
+        "css": {
+          "raw": 43323,
+          "gzip": 6792
+        },
+        "html": {
+          "raw": 31472,
+          "gzip": 7289
+        },
+        "index": {
+          "raw": 74811,
+          "gzip": 14025
         }
       }
     },
@@ -2658,6 +2714,33 @@
       ],
       "locked": true
     },
+    "specs/tienda-base-pulpa-v1.spec.json": {
+      "ids": [
+        "tienda-base-pulpa-v1"
+      ],
+      "specHash": "24604ee80ca9",
+      "files": {
+        "templates/tienda-base-pulpa-v1.ts": "a6b729ba64cb",
+        "themes/tienda-base-pulpa-v1.json": "d0237c216107",
+        "demo-profiles/tienda-base-pulpa-v1.json": "eed7e2cf3559",
+        "content/tienda.base-pulpa-v1.es-MX.ts": "1888c8b08ff0"
+      },
+      "choices": {
+        "tienda-base-pulpa-v1": [
+          "arquetipo: catalog"
+        ]
+      },
+      "peers": [
+        "tienda-base-caramelo-pop-v1",
+        "tienda-base-caramelo-pop-v2",
+        "tienda-base-lote-doce-v1",
+        "tienda-caramelo-pop-v1",
+        "tienda-caramelo-pop-v2",
+        "tienda-lote-doce-v1",
+        "tienda-pulpa-v1"
+      ],
+      "locked": true
+    },
     "specs/tienda-lote-doce.spec.json": {
       "ids": [
         "tienda-lote-doce-v1",
@@ -2682,6 +2765,33 @@
         ]
       },
       "peers": []
+    },
+    "specs/tienda-pulpa-v1.spec.json": {
+      "ids": [
+        "tienda-pulpa-v1"
+      ],
+      "specHash": "53a17b9d18d0",
+      "files": {
+        "templates/tienda-pulpa-v1.ts": "7c84dbe4cba7",
+        "themes/tienda-pulpa-v1.json": "2ca8915e6417",
+        "demo-profiles/tienda-pulpa-v1.json": "eed7e2cf3559",
+        "content/tienda.pulpa-v1.es-MX.ts": "d3afff83585f"
+      },
+      "choices": {
+        "tienda-pulpa-v1": [
+          "arquetipo: catalog"
+        ]
+      },
+      "peers": [
+        "tienda-base-caramelo-pop-v1",
+        "tienda-base-caramelo-pop-v2",
+        "tienda-base-lote-doce-v1",
+        "tienda-base-pulpa-v1",
+        "tienda-caramelo-pop-v1",
+        "tienda-caramelo-pop-v2",
+        "tienda-lote-doce-v1"
+      ],
+      "locked": true
     },
     "specs/veterinaria-clinica-nogal.spec.json": {
       "ids": [

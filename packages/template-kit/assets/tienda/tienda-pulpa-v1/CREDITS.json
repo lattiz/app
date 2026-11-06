@@ -1,0 +1,60 @@
+{
+  "$lattiz": "GENERATED from specs/tienda-pulpa-v1.spec.json (spec 53a17b9d18d0, file 90b5ced83ea2). Do not edit: use the spec, or freeze.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "pixabay",
+      "sha256": "5e2c32407fcbe5635af4d5106c0d7a24e71cd0336106ed596fddc584be8adbe6",
+      "query": "green smoothie glass mint wooden counter",
+      "providerId": 7320560,
+      "pageUrl": "https://pixabay.com/photos/smoothie-vegetable-smoothie-7320560/",
+      "photographer": "silviarita",
+      "photographerUrl": "https://pixabay.com/users/3142410/",
+      "tags": "smoothie, vegetable smoothie, healthy smoothie, vegetable juice, healthy, juice, drink, refreshment, detox, colon, detoxify, vitamins, immune system, virus"
+    },
+    {
+      "file": "gallery-01.jpg",
+      "source": "pixabay",
+      "sha256": "582d6edc61fb25973462a6849882b253f426422413923b78d34dcd259b7bb60f",
+      "query": "yogurt bowl granola berries",
+      "providerId": 5712343,
+      "pageUrl": "https://pixabay.com/photos/cereal-food-breakfast-strawberries-5712343/",
+      "photographer": "lizziet5",
+      "photographerUrl": "https://pixabay.com/users/2690626/",
+      "tags": "cereal, food, breakfast, strawberries, sliced strawberries, fruit, healthy, nutrition, bowl"
+    },
+    {
+      "file": "gallery-02.jpg",
+      "source": "pixabay",
+      "sha256": "fb6ab5bcbd80db4a98572ae05b18cb55b146917096ec69b089e4a11255f99b7f",
+      "query": "bagel sandwich",
+      "providerId": 8694162,
+      "pageUrl": "https://pixabay.com/photos/bagel-sandwich-egg-sandwich-8694162/",
+      "photographer": "catceeq",
+      "photographerUrl": "https://pixabay.com/users/14180496/",
+      "tags": "bagel, sandwich, egg sandwich, breakfast, cheese, lunch"
+    },
+    {
+      "file": "gallery-03.jpg",
+      "source": "pixabay",
+      "sha256": "66c2c07734787d7781b8faea9b744a97918b376bef528e831f83d98fb103503c",
+      "query": "vegetable chips",
+      "providerId": 285040,
+      "pageUrl": "https://pixabay.com/photos/manioc-crisps-meal-food-285040/",
+      "photographer": "falco",
+      "photographerUrl": "https://pixabay.com/users/81448/",
+      "tags": "manioc, crisps, meal, food, nourishment, costa rica, central america, tropics"
+    },
+    {
+      "file": "gallery-04.jpg",
+      "source": "pixabay",
+      "sha256": "c2caff9f95ade010ba2e4024c70d17c5ef24398f34b15aebe11e1e9e82c9e45f",
+      "query": "healthy sandwich",
+      "providerId": 2273725,
+      "pageUrl": "https://pixabay.com/photos/asparagus-egg-breakfast-snack-food-2273725/",
+      "photographer": "DagnyWalter",
+      "photographerUrl": "https://pixabay.com/users/5216941/",
+      "tags": "asparagus, egg, breakfast, snack, food, meal, cooking, dish, croutons, tost, vegetarian, morning, fried egg, fried"
+    }
+  ]
+}
